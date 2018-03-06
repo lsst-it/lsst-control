@@ -39,9 +39,6 @@ class profile::dm::dm_header_service{
 	package { 'ipython':
 		ensure => present,
 	}
-	package { 'git':
-		ensure => present,
-	}
 	package { 'patch':
 		ensure => present,
 	}

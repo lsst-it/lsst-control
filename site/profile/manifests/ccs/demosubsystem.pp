@@ -38,6 +38,7 @@ class profile::ccs::demosubsystem {
 	service { 'demoSubsystemService':
 		ensure => running,
 		enable => true,
+		require => Exec['update-java-alternatives'],
 	}
 
 # From installscript.pp

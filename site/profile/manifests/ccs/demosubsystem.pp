@@ -7,7 +7,7 @@ class profile::ccs::demosubsystem {
 
 	file { '/lsst/ccsadmin/package-lists/ccsApplications.txt' :
 		ensure => file, 
-		content => "[ccs]\norg-lsst-ccs-subsystem-demo-main = 5.0.5-SNAPSHOT\norg-lsst-ccs-subsystem-demo-gui = 5.0.5-SNAPSHOT\nexecutable.RunDemoSubsystem = org-lsst-ccs-subsystem-demo-main\nexecutable.RunDemoSubsystem = org-lsst-ccs-subsystem-demo-main\nexecutable.CCS_Console = org-lsst-ccs-subsystem-demo-gui\nexecutable.ShellCommandConsole = org-lsst-ccs-subsystem-demo-gui\n",
+		content => "[ccs]\norg-lsst-ccs-subsystem-demo-main = 5.0.5\norg-lsst-ccs-subsystem-demo-gui = 5.0.5\nexecutable.RunDemoSubsystem = org-lsst-ccs-subsystem-demo-main\nexecutable.RunDemoSubsystem = org-lsst-ccs-subsystem-demo-main\nexecutable.CCS_Console = org-lsst-ccs-subsystem-demo-gui\nexecutable.ShellCommandConsole = org-lsst-ccs-subsystem-demo-gui\n",
 	}	
 
 	exec { 'doit': 

@@ -53,8 +53,8 @@ class profile::ccs::demosubsystem {
 	# Not clear why this is needed, but without it java is left pointing to openjdk
 	exec { 'update-java-alternatives':
 		path    => '/usr/bin:/usr/sbin',
-		command => "alternatives --set java /usr/java/jdk1.8.0_151/jre/bin/java" ,
-		unless  => "test /etc/alternatives/java -ef '/usr/java/jdk1.8.0_151/jre/bin/java'",
+		command => "alternatives --set java /usr/java/jdk1.8.0_161/jre/bin/java" ,
+		unless  => "test /etc/alternatives/java -ef '/usr/java/jdk1.8.0_161/jre/bin/java'",
 	}
 
 }

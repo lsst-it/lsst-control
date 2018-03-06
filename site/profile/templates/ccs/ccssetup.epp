@@ -1,0 +1,85 @@
+#!/bin/bash
+
+usage()
+{
+cat >&2 << EOF
+ccssetup [<version>]
+
+where version is prod or dev or any named release in /lsst/ccs/
+The specified version of CCS will be set up (added to PATH) and any
+other version will be removed from PATH.
+If no version is specified the prod version will be set up.
+
+ccsetup -l
+
+List avaialable versions
+
+ccssetup -h
+
+Print this message
+EOF
+}
+
+builds="/lsst/ccs"
+type="csh"
+list=0
+
+while getopts “hlbs:” OPTION
+do
+     case $OPTION in
+         h)
+             usage
+             exit 1
+             ;;
+         l)
+             list=1
+             ;;
+         s)
+             full=`readlink -f $0`
+             case $OPTARG in
+                 bash) 
+                   echo "ccssetup() { eval \`$full -b \"\$@\"\`; }"
+                   ;;
+                 csh)
+                   echo "alias ccssetup eval \\\`$full \\!\\*\\\`"
+                   ;;
+             esac
+             exit 0
+             ;;
+         b)
+             type="bash"
+             ;;
+         ?)
+             usage
+             exit 1
+             ;;
+     esac
+done
+shift $((OPTIND -1))
+setup=${1:-prod} 
+
+if [ "$list" -eq 1 ] ; then
+   ls $builds/ >&2
+   exit 0
+fi
+
+if [ ! -e "$builds/$setup/bin" ] ; then
+   echo "Requested version \`$setup\` does not exist" >&2
+   exit 2
+fi
+
+oldPath=""
+for path in ${PATH//:/ }; do
+    if ! [[ $path =~ $builds/.+/bin ]] ; then 
+       oldPath+=":$path"
+    fi
+done
+
+case $type in
+   bash)
+      echo "export PATH=$builds/$setup/bin/$oldPath"
+      ;;
+   csh)
+      echo "setenv PATH $builds/$setup/bin/$oldPath"
+      ;;
+esac

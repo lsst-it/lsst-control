@@ -4,11 +4,18 @@ class profile::ccs::demosubsystem {
 		ensure => installed,
 	}
 
-
 	file { '/lsst/ccsadmin/package-lists/ccsApplications.txt' :
 		ensure => file, 
 		content => "[ccs]\norg-lsst-ccs-subsystem-demo-main = 5.0.5\norg-lsst-ccs-subsystem-demo-gui = 5.0.5\nexecutable.RunDemoSubsystem = org-lsst-ccs-subsystem-demo-main\nexecutable.RunDemoSubsystem = org-lsst-ccs-subsystem-demo-main\nexecutable.CCS_Console = org-lsst-ccs-subsystem-demo-gui\nexecutable.ShellCommandConsole = org-lsst-ccs-subsystem-demo-gui\n",
-	}	
+		require => Exec['doit'],
+	}
+
+	vcsrepo { '/lsst/ccsadmin/release':
+		ensure => present,
+		provider => git,
+		source => 'https://github.com/lsst-camera-dh/release',
+		before => Exec['doit'],
+	}
 
 	exec { 'doit': 
 		command => '/lsst/ccsadmin/release/bin/install.py --ccs_inst_dir /lsst/ccs/prod /lsst/ccsadmin/package-lists/ccsApplications.txt',
@@ -21,6 +28,7 @@ class profile::ccs::demosubsystem {
 		group   => 'root',
 		content => epp('profile/ccs/service.epp', { 'serviceName' => 'DemoSubsystemService', 'serviceCommand' => '/lsst/ccs/prod/bin/RunDemoSubsystem'}),
 	}
+
 	exec { 'demoSubsystemService-systemd-reload':
 		command     => 'systemctl daemon-reload',
 		path        => [ '/usr/bin', '/bin', '/usr/sbin' ],
@@ -32,14 +40,7 @@ class profile::ccs::demosubsystem {
 		enable => true,
 	}
 
-
 # From installscript.pp
-
-	vcsrepo { '/lsst/ccsadmin/release':
-		ensure => present,
-		provider => git,
-		source => 'https://github.com/lsst-camera-dh/release',
-	}
 
 	java::oracle { 'jdk8' :
 		ensure  => 'present',

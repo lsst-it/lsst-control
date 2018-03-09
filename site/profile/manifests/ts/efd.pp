@@ -101,7 +101,7 @@ class profile::ts::efd{
 # Source download
 
 	# Install SAL and then modify ownerships
-	vcsrepo { '/opt/':
+	vcsrepo { '/opt/ts_sal':
 		ensure => present,
 		provider => git,
 		source => 'https://github.com/lsst-ts/ts_sal.git',
@@ -109,7 +109,7 @@ class profile::ts::efd{
 	}
 
 	# Download opensplice and then modify ownerships
-	vcsrepo { '/opt/':
+	vcsrepo { '/opt/ts_opensplice':
 		ensure => present,
 		provider => git,
 		source => 'https://github.com/lsst-ts/ts_opensplice.git',

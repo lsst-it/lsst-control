@@ -45,6 +45,18 @@ class profile::ts::efd{
 		ensure => installed,
 	}
 
+# Services definition
+
+	service { 'mysql':
+		ensure => running,
+		enable => true,
+	}
+`
+	service { 'firewalld':
+		ensure => running,
+		enable => true,
+	}
+
 # group/user creation
 
 	group { 'lsst':
@@ -104,17 +116,34 @@ class profile::ts::efd{
 		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
 	}
 
-# Missing firewall configuration
+# Firewall configuration
 	firewalld_zone { 'lsst_zone':
 		ensure => present,
 		target => '%%REJECT%%',
+		notify => Exec['firewalld-custom-command'],
+		require => Service['firewalld'],
 	}
 
 	firewalld_port { 'DDS ports':
 		ensure   => present,
 		zone     => 'lsst_zone',
-		port     => [ {'port' => '250:251', 'protocol' => 'udp'} , {'port' => '7400:7413', 'protocol' => 'udp'} ] ,
-		protocol => 'igmp',
+		port     => 250-251,
+		protocol => 'udp',
+		require => Service['firewalld'],
+	}
+
+	firewalld_port { 'DDS ports':
+		ensure   => present,
+		zone     => 'lsst_zone',
+		port     => 7400-7413,
+		protocol => 'udp',
+		require => Service['firewalld'],
+	}
+
+	exec { 'firewalld-custom-command':
+		path    => '/usr/bin:/usr/sbin',
+		command => 'firewall-cmd --permanent --zone=lsst_zone --add-protocol=igmp',
+		require => Service['firewalld'],
 	}
 
 # Source download

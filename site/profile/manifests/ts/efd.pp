@@ -130,6 +130,7 @@ class profile::ts::efd{
 		port     => '250-251',
 		protocol => 'udp',
 		require => Service['firewalld'],
+		before => Exec['firewalld-custom-command'],
 	}
 
 	firewalld_port { 'DDS_port_app':
@@ -138,11 +139,12 @@ class profile::ts::efd{
 		port     => '7400-7413',
 		protocol => 'udp',
 		require => Service['firewalld'],
+		before => Exec['firewalld-custom-command'],
 	}
 
 	exec { 'firewalld-custom-command':
 		path    => '/usr/bin:/usr/sbin',
-		command => 'firewall-cmd --permanent --zone=lsst_zone --add-protocol=igmp',
+		command => 'firewall-cmd --permanent --zone=lsst_zone --add-protocol=igmp ; firewall-cmd --reload',
 		require => Service['firewalld'],
 	}
 

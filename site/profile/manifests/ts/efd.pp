@@ -124,7 +124,7 @@ class profile::ts::efd{
 		require => Service['firewalld'],
 	}
 
-	firewalld_port { 'DDS ports':
+	firewalld_port { 'DDS_port_os':
 		ensure   => present,
 		zone     => 'lsst_zone',
 		port     => 250-251,
@@ -132,7 +132,7 @@ class profile::ts::efd{
 		require => Service['firewalld'],
 	}
 
-	firewalld_port { 'DDS ports':
+	firewalld_port { 'DDS_port_app':
 		ensure   => present,
 		zone     => 'lsst_zone',
 		port     => 7400-7413,

@@ -195,5 +195,8 @@ class profile::ts::efd{
 	}
 
 	# Download DB schema
-
+	exec { 'schema_download':
+		path    => '/usr/bin:/usr/sbin',
+		command => 'cd /var/lib/mysql/ ; wget ftp://ftp.noao.edu/pub/dmills/efd-bootstrap.tgz ; tar xvzpPf efd-bootstrap.tgz ; rm efd-bootstrap.tgz',
+	}
 }

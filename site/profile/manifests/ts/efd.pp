@@ -1,40 +1,48 @@
 class profile::ts::efd{
 	package { 'gcc-c++':
-		ensure => present,
+		ensure => installed,
 	}
 	package { 'make':
-		ensure => present,
+		ensure => installed,
 	}
 
 	package { 'ncurses-libs':
-		ensure => present,
+		ensure => installed,
 	}
 	package { 'xterm':
-		ensure => present,
+		ensure => installed,
 	}
 	package { 'xorg-x11-fonts-misc':
-		ensure => present,
+		ensure => installed,
 	}
 	package { 'java-1.7.0-openjdk-devel':
-		ensure => present,
+		ensure => installed,
 	}
 	package { 'boost-python':
-		ensure => present,
+		ensure => installed,
 	}
 	package { 'boost-python-devel':
-		ensure => present,
+		ensure => installed,
 	}
 	package { 'maven':
-		ensure => present,
+		ensure => installed,
 	}
 	package { 'python-devel':
-		ensure => present,
+		ensure => installed,
 	}
 	package { 'swig':
-		ensure => present,
+		ensure => installed,
 	}
 	package { 'tk-devel':
-		ensure => present,
+		ensure => installed,
+	}
+
+	package { 'mariadb':
+		ensure => installed,
+	}
+
+	package { 'mariadb-server':
+		ensure => installed,
 	}
 
 # group/user creation
@@ -97,6 +105,17 @@ class profile::ts::efd{
 	}
 
 # Missing firewall configuration
+	firewalld_zone { 'lsst_zone':
+		ensure => present,
+		target => '%%REJECT%%',
+	}
+
+	firewalld_port { 'DDS ports':
+		ensure   => present,
+		zone     => 'lsst_zone',
+		port     => [ {'port' => '250:251', 'protocol' => 'udp'} , {'port' => '7400:7413', 'protocol' => 'udp'} ] ,
+		protocol => 'igmp',
+	}
 
 # Source download
 
@@ -113,7 +132,7 @@ class profile::ts::efd{
 		ensure => present,
 		provider => git,
 		source => 'https://github.com/lsst-ts/ts_opensplice.git',
-		before => 'sal_dds_path_update',
+		before => Exec['sal_dds_path_update'],
 		notify => File['/opt/ts_opensplice'],
 	}
 
@@ -143,5 +162,7 @@ class profile::ts::efd{
 		path    => '/usr/bin:/usr/sbin',
 		command => 'echo -e "source /opt/ts_sal/setup.env" > /etc/profile.d/sal.sh',
 	}
+
+	# Download DB schema
 
 }

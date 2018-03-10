@@ -119,7 +119,7 @@ class profile::ts::efd{
 # Firewall configuration
 	firewalld_zone { 'lsst_zone':
 		ensure => present,
-		target => 'drop',
+		target => 'DROP',
 		notify => Exec['firewalld-custom-command'],
 		require => Service['firewalld'],
 	}

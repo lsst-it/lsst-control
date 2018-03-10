@@ -47,7 +47,7 @@ class profile::ts::efd{
 
 # Services definition
 
-	service { 'mysql':
+	service { 'mariadb':
 		ensure => running,
 		enable => true,
 	}
@@ -127,7 +127,7 @@ class profile::ts::efd{
 	firewalld_port { 'DDS_port_os':
 		ensure   => present,
 		zone     => 'lsst_zone',
-		port     => 250:251,
+		port     => '250-251',
 		protocol => 'udp',
 		require => Service['firewalld'],
 	}
@@ -135,7 +135,7 @@ class profile::ts::efd{
 	firewalld_port { 'DDS_port_app':
 		ensure   => present,
 		zone     => 'lsst_zone',
-		port     => 7400:7413,
+		port     => '7400-7413',
 		protocol => 'udp',
 		require => Service['firewalld'],
 	}

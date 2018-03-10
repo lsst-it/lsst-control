@@ -119,7 +119,7 @@ class profile::ts::efd{
 # Firewall configuration
 	firewalld_zone { 'lsst_zone':
 		ensure => present,
-		target => '%%REJECT%%',
+		target => 'drop',
 		notify => Exec['firewalld-custom-command'],
 		require => Service['firewalld'],
 	}
@@ -198,5 +198,6 @@ class profile::ts::efd{
 	exec { 'schema_download':
 		path    => '/usr/bin:/usr/sbin',
 		command => 'cd /var/lib/mysql/ ; wget ftp://ftp.noao.edu/pub/dmills/efd-bootstrap.tgz ; tar xvzpPf efd-bootstrap.tgz ; rm efd-bootstrap.tgz',
+		timeout => 0,
 	}
 }

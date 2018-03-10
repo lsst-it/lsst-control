@@ -51,7 +51,7 @@ class profile::ts::efd{
 		ensure => running,
 		enable => true,
 	}
-`
+
 	service { 'firewalld':
 		ensure => running,
 		enable => true,

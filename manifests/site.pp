@@ -27,3 +27,7 @@ node /^ts-sw-container/ {
 node /^ats-shutter-hcu/{
 	include role::ccs::ats_shutter_hcu
 }
+
+node /^ts-efd/ {
+	include role::ts::efd
+}

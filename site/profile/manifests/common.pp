@@ -1,6 +1,6 @@
 #This base installation is based on the procedure
 # https://confluence.lsstcorp.org/display/IT/Linux+CentOS+Setup
-class profile::base {
+class profile::common {
  	include profile::ssh_server
 
 	#class{ 'ntp':

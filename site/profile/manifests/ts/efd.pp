@@ -71,7 +71,7 @@ class profile::ts::efd{
 		uid => '500' ,
 		gid => '500',
 		home => '/home/lsstmgr',
-		managehome => 'true',
+		managehome => true,
 		require => Group['lsst'],
 		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
 	}
@@ -81,7 +81,7 @@ class profile::ts::efd{
 		uid => '501' ,
 		gid => '500',
 		home => '/home/salmgr',
-		managehome => 'true',
+		managehome => true,
 		require => Group['lsst'],
 		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
 	}
@@ -91,7 +91,7 @@ class profile::ts::efd{
 		uid => '502' ,
 		gid => '500',
 		home => '/home/tcsmgr',
-		managehome => 'true',
+		managehome => true,
 		require => Group['lsst'],
 		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
 	}
@@ -101,7 +101,7 @@ class profile::ts::efd{
 		uid => '503' ,
 		gid => '500',
 		home => '/home/sal',
-		managehome => 'true',
+		managehome => true,
 		require => Group['lsst'],
 		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
 	}
@@ -111,7 +111,7 @@ class profile::ts::efd{
 		uid => '504' ,
 		gid => '500',
 		home => '/home/tcs',
-		managehome => 'true',
+		managehome => true,
 		require => Group['lsst'],
 		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
 	}

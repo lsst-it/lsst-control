@@ -92,7 +92,7 @@ class profile::base {
 		uid => '777' ,
 		gid => '777',
 		home => '/home/sysadmin',
-		managehome => 'true'
+		managehome => true
 	}
 
 	file{ '/home/sysadmin':

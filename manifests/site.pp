@@ -1,7 +1,7 @@
 node default {
 	file { '/root/README' :
 		ensure => file,
-		content => "Welcome to ${fqdn}, this is a default server, uptime about ${system_uptime}\n",
+		content => "Welcome to ${fqdn}, this is a default server ${::site_motd}\n",
 	}
 }
 

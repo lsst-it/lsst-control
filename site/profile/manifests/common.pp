@@ -3,11 +3,6 @@
 class profile::common {
  	include profile::ssh_server
 
-	#class{ 'ntp':
-	#	servers => ['140.252.1.140','140.252.1.141','140.252.1.142'],
-	#	restrict => ['127.0.0.1'],
-	#}
-
 	package { 'nmap':
 		ensure => installed,
 	}
@@ -118,6 +113,5 @@ class profile::common {
 	package { 'git':
 		ensure => present,
 	}
-
 
 }

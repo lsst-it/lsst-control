@@ -1,15 +1,39 @@
 ---
 version: 5
 defaults:
-  # The default value for "datadir" is "data" under the same directory as the hiera.yaml
-  # file (this file)
-  # When specifying a datadir, make sure the directory exists.
-  # See https://docs.puppet.com/puppet/latest/environments.html for further details on environments.
-  # datadir: data
-  # data_hash: yaml_data
+# The default value for "datadir" is "data" under the same directory as the hiera.yaml
+# file (this file)
+# When specifying a datadir, make sure the directory exists.
+# See https://docs.puppet.com/puppet/latest/environments.html for further details on environments.
+# datadir: data
+# data_hash: yaml_data
+defaults:
+        datadir: "/etc/puppetlabs/code/hieradata/%{environment}/"
+        data_hash: yaml_data
+
 hierarchy:
-  - name: "Per-node data (yaml version)"
-    path: "nodes/%{::trusted.certname}.yaml"
-  - name: "Other YAML hierarchy levels"
-    paths:
-      - "common.yaml"
+        - name: "[1] - Nodes properties"
+          path: "country/site/enclave/datacenter/cluster/node/%{hostname}.yaml"
+
+        #TODO - Define how to get custom cluster_name from facter 
+        - name: "[2] - Cluster properties"
+          path: "country/site/enclave/datacenter/cluster/%{cluster}.yaml"
+
+        #TODO - Define how to get custom datacenter name from facter
+        - name: "[3] - Datacenter properties"
+          path: "country/site/enclave/datacenter/%{datacenter}.yaml"
+
+        #TODO - Define how to get custom enclave name from facter
+        - name: "[4] - Enclave properties"
+          path: "country/site/enclave/%{enclave}.yaml"
+
+        #TODO - Define how to get custom site name from facter
+        - name: "[5] - Site properties"
+          path: "country/site/%{site}.yaml"
+
+        #TODO - Define how to get custom country name from facter
+        - name: "[6] - Country properties"
+          path: "country/%{country}.yaml"
+
+        - name: "[7] - Common"
+          path: "common.yaml"

@@ -49,18 +49,20 @@ class profile::common {
 	}
 
 ################################################################################
+	$ntp = lookup('ntp')
 	class { '::chrony':
 		servers         => {
-			'140.252.1.140' => ['iburst'],
-			'140.252.1.141' => ['iburst'],
-			'140.252.1.142' => ['iburst'],
+			"${$ntp[ntp_server_1]}" => ['iburst'],
+			"${$ntp[ntp_server_2]}" => ['iburst'],
+			"${$ntp[ntp_server_3]}" => ['iburst'],
 		},
 	}
 
-	#service { 'chronyd':
-	#	ensure => running,
-	#	enabled => true,
-	#}
+	$motd_msg = lookup('motd')
+	file { '/etc/motd' :
+		ensure => file,
+		content => $motd_msg,
+	}
 
 ################################################################################
 
@@ -102,7 +104,7 @@ class profile::common {
 		match => '^SELINUX=+',
 	}
 
-	# Set timezone as defualt to UTC
+	# Set timezone as default to UTC
 	exec { 'set-timezone':
 		command => '/bin/timedatectl set-timezone UTC',
 		returns => [0],

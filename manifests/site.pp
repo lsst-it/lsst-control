@@ -1,8 +1,7 @@
+#TODO This have to be changed by an ENC script
+
 node default {
-	file { '/root/README' :
-		ensure => file,
-		content => "Welcome to ${fqdn}, this is a default server ${::site_motd}\n",
-	}
+	include role::default
 }
 
 node /^puppet-master/ {

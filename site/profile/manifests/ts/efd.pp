@@ -1,12 +1,8 @@
 class profile::ts::efd{
-	#Class style definition to pass password to the users
-	class{'sal':
-		#Data provided by Hiera, default values defined on users.pp
-		sal_pwd => lookup("sal_pwd"),
-		salmgr_pwd => lookup("salmgr_pwd"),
-		lsst_users_home_dir => lookup("lsst_users_home_dir"),
-		firewall_dds_zone_name => lookup("lsst_firewall_zone_name")
-	}
+
+	#Parameters for SAL module comes from HIERA
+	include sal
+
 	package { 'mariadb':
 		ensure => installed,
 	}
@@ -15,7 +11,7 @@ class profile::ts::efd{
 		ensure => installed,
 	}
 
-# Services definition
+	# Services definition
 
 	service { 'mariadb':
 		ensure => running,

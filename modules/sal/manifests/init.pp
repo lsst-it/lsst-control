@@ -1,8 +1,8 @@
 class sal(
-	$sal_pwd ,
-	$salmgr_pwd,
-	$lsst_users_home_dir,
-	$firewall_dds_zone_name
+	String $sal_pwd ,
+	String $salmgr_pwd,
+	String $lsst_users_home_dir,
+	String $firewall_dds_zone_name
 ){
 
 	include '::sal::python'
@@ -88,15 +88,35 @@ class sal(
 		require => [User['salmgr'] , Group['lsst'], ],
 		recurse    => true,
 	}
-
+ 
 	exec { 'sal_dds_path_update':
 		path    => '/bin:/usr/bin:/usr/sbin',
 		command => 'sed -i "s/^### export LSST_SDK_INSTALL=.*/export LSST_SDK_INSTALL=\/opt\/ts_sal\//g;s/^### export OSPL_HOME=.*/export OSPL_HOME=\/opt\/ts_opensplice\/OpenSpliceDDS\/V6.4.1\/HDE\/x86_64.linux\//g" /opt/ts_sal/setup.env',
 		require => File['/opt/ts_sal'],
 	}
+	
+	file_line{ 'sal_dds_path_update':
+		
+	}
+
+	file_line{"Update python build version":
+		ensure => present,
+		line => "export PYTHON_BUILD_VERSION=3.6m",
+		match => "### export PYTHON_BUILD_VERSION=3.6m",
+		path => "/opt/ts_sal/setup.env",
+		require => [ Exec['install-custom-python'], Exec["sal_dds_path_update"] ] ,
+	}
+	
+	file_line{"Update python build location":
+		ensure => present,
+		line => "export PYTHON_BUILD_LOCATION=/usr/local",
+		match => "### export PYTHON_BUILD_LOCATION=/usr/local",
+		path => "/opt/ts_sal/setup.env",
+		require => [ Exec['install-custom-python'], Exec["sal_dds_path_update"] ] ,
+	}
 
 	exec { 'environment_configuration':
-		path    => '/usr/bin:/usr/sbin',
+		path => '/usr/bin:/usr/sbin',
 		command => 'echo -e "source /opt/ts_sal/setup.env" > /etc/profile.d/sal.sh',
 	}
 

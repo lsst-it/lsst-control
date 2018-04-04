@@ -28,7 +28,7 @@ class sal::dds_firewall ($firewall_dds_zone_name = "lsst_zone"){
 
 	exec { 'firewalld-custom-command':
 		path    => '/usr/bin:/usr/sbin',
-		command => "firewall-cmd --permanent --zone=${$firewall_dds_zone_name} --add-protocol=igmp ; firewall-cmd --reload",
+		command => "firewall-cmd --permanent --zone=${firewall_dds_zone_name} --add-protocol=igmp ; firewall-cmd --reload",
 		require => Service['firewalld'],
 	}
 }

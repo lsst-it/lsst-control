@@ -75,6 +75,26 @@ class profile::common {
 
 ################################################################################
 
+	file_line { 'SELINUX=permissive':
+		path  => '/etc/selinux/config',
+		line => 'SELINUX=enforce',
+		match => '^SELINUX=+',
+	}
+
+	# Set timezone as default to UTC
+	exec { 'set-timezone':
+		command => '/bin/timedatectl set-timezone UTC',
+		returns => [0],
+	}
+  
+# Shared resources from all the teams
+
+	package { 'git':
+		ensure => present,
+	}
+	
+# group/user creation
+
 	# as per /etc/login.defs, max uid is 999, so we have set 777 as the default group admin account
 	group { 'sysadmin':
 		ensure => present,
@@ -98,7 +118,8 @@ class profile::common {
 		uid => '777' ,
 		gid => '777',
 		home => '/home/sysadmin',
-		managehome => true
+		managehome => true,
+		password => lookup("lsst_sysadmin_pwd")
 	}
 
 	file{ '/home/sysadmin':
@@ -107,32 +128,12 @@ class profile::common {
 		require => User['sysadmin'],
 	}
 
-	file_line { 'SELINUX=permissive':
-		path  => '/etc/selinux/config',
-		line => 'SELINUX=enforce',
-		match => '^SELINUX=+',
-	}
-
-	# Set timezone as default to UTC
-	exec { 'set-timezone':
-		command => '/bin/timedatectl set-timezone UTC',
-		returns => [0],
-	}
-  
-# Shared resources from all the teams
-
-	package { 'git':
-		ensure => present,
-	}
-
 	group { 'lsst':
 		ensure => present,
 		gid => 500,
 		auth_membership => true,
 		members => ['sysadmin'],
 	}
-	
-# group/user creation
 
 	#TODO Move password to hiera
 	user{ 'lsstmgr':
@@ -142,17 +143,17 @@ class profile::common {
 		home => '/home/lsstmgr',
 		managehome => true,
 		require => Group['lsst'],
-		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
+		password => lookup("lsstmgr_pwd"),
 	}
 
 	user{ 'tcsmgr':
 		ensure => 'present',
-		uid => '502' ,
+		uid => '502',
 		gid => '500',
 		home => '/home/tcsmgr',
 		managehome => true,
 		require => Group['lsst'],
-		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
+		password => lookup("tcsmgr_pwd"),
 	}
 
 	user{ 'tcs':
@@ -162,7 +163,11 @@ class profile::common {
 		home => '/home/tcs',
 		managehome => true,
 		require => Group['lsst'],
-		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
+		password => lookup("tcs_pwd"),
+	}
+	
+	user{'root':
+		password => lookup("root_pwd"),
 	}
 
 }

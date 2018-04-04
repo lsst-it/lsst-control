@@ -48,6 +48,15 @@ class profile::common {
 		ensure => installed,
 	}
 
+	package { 'firewalld':
+		ensure => installed,
+	}
+	
+	service{ 'firewalld':
+		ensure => running,
+		enable => true,
+	}
+
 ################################################################################
 	$ntp = lookup('ntp')
 	class { '::chrony':
@@ -114,6 +123,46 @@ class profile::common {
 
 	package { 'git':
 		ensure => present,
+	}
+
+	group { 'lsst':
+		ensure => present,
+		gid => 500,
+		auth_membership => true,
+		members => ['sysadmin'],
+	}
+	
+# group/user creation
+
+	#TODO Move password to hiera
+	user{ 'lsstmgr':
+		ensure => 'present',
+		uid => '500' ,
+		gid => '500',
+		home => '/home/lsstmgr',
+		managehome => true,
+		require => Group['lsst'],
+		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
+	}
+
+	user{ 'tcsmgr':
+		ensure => 'present',
+		uid => '502' ,
+		gid => '500',
+		home => '/home/tcsmgr',
+		managehome => true,
+		require => Group['lsst'],
+		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
+	}
+
+	user{ 'tcs':
+		ensure => 'present',
+		uid => '504' ,
+		gid => '500',
+		home => '/home/tcs',
+		managehome => true,
+		require => Group['lsst'],
+		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
 	}
 
 }

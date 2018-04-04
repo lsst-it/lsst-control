@@ -51,7 +51,7 @@ class profile::common {
 ################################################################################
 	$ntp = lookup('ntp')
 	class { '::chrony':
-		servers         => {
+		servers => {
 			"${$ntp[ntp_server_1]}" => ['iburst'],
 			"${$ntp[ntp_server_2]}" => ['iburst'],
 			"${$ntp[ntp_server_3]}" => ['iburst'],

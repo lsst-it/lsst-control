@@ -1,8 +1,19 @@
-class sal{
+class sal(
+	$sal_pwd ,
+	$salmgr_pwd,
+	$lsst_users_home_dir,
+	$firewall_dds_zone_name
+){
 
-	include '::sal::dds_firewall'
 	include '::sal::python'
-	include '::sal::users'
+	class{"::sal::dds_firewall":
+		firewall_dds_zone_name => $firewall_dds_zone_name
+	}
+	class{"::sal::users":
+		sal_pwd => $sal_pwd,
+		salmgr_pwd => $salmgr_pwd,
+		lsst_users_home_dir => $lsst_users_home_dir
+	}
 
 	#Software requirement
  	package { 'gcc-c++':

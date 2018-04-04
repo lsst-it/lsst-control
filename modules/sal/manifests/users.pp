@@ -1,14 +1,13 @@
-class sal::users{
-		
+class sal::users( $sal_pwd = '$1$LSST$clNeErmKCl0HbZmB9d2Bb.' , $salmgr_pwd = '$1$LSST$clNeErmKCl0HbZmB9d2Bb.' ,$lsst_users_home_dir = "/home" ) {
 	#TODO Move all this data to hiera
 	user{ 'sal':
 		ensure => 'present',
 		uid => '503' ,
 		gid => '500',
-		home => '/home/sal',
+		home => "${lsst_users_home_dir}/sal",
 		managehome => true,
 		require => Group['lsst'],
-		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
+		password => $sal_pwd,
 	}
 
 	#TODO Move all this data to hiera
@@ -16,9 +15,9 @@ class sal::users{
 		ensure => 'present',
 		uid => '501' ,
 		gid => '500',
-		home => '/home/salmgr',
+		home => "${lsst_users_home_dir}/salmgr",
 		managehome => true,
 		require => Group['lsst'],
-		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
+		password => $salmgr_pwd,
 	}
 }

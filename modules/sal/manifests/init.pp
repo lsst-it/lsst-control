@@ -2,7 +2,11 @@ class sal(
 	String $sal_pwd ,
 	String $salmgr_pwd,
 	String $lsst_users_home_dir,
-	String $firewall_dds_zone_name
+	String $firewall_dds_zone_name,
+	String $ts_sal_path,
+	String $ts_opensplice_path,
+	$ts_sal_branch = "master",
+	$ts_opensplice_branch = "master"
 ){
 
 	include '::sal::python'
@@ -57,54 +61,62 @@ class sal(
 	# Source download
 
 	# Install SAL and then modify ownerships
-	vcsrepo { '/opt/ts_sal':
+	vcsrepo { $ts_sal_path:
 		ensure => present,
 		provider => git,
 		source => 'https://github.com/lsst-ts/ts_sal.git',
-		notify => File['/opt/ts_sal'],
+		revision => $ts_sal_branch,
+		notify => File[$ts_sal_path],
 	}
 
 	# Download opensplice and then modify ownerships
-	vcsrepo { '/opt/ts_opensplice':
+	vcsrepo { $ts_opensplice_path:
 		ensure => present,
 		provider => git,
 		source => 'https://github.com/lsst-ts/ts_opensplice.git',
-		before => Exec['sal_dds_path_update'],
-		notify => File['/opt/ts_opensplice'],
+		revision => $ts_opensplice_branch,
+		notify => File[$ts_opensplice_path],
 	}
 
-	file { '/opt/ts_sal':
+	file { $ts_sal_path:
+		ensure => directory,
+		owner => 'salmgr',
+		group => 'lsst',
+		require => [User['salmgr'] , Group['lsst'], Vcsrepo["/opt/ts_opensplice"]],
+		recurse => true,
+	}
+
+	file { $ts_opensplice_path:
 		ensure => directory,
 		owner => 'salmgr',
 		group => 'lsst',
 		require => [User['salmgr'] , Group['lsst'], ],
-		recurse    => true,
-	}
-
-	file { '/opt/ts_opensplice':
-		ensure => directory,
-		owner => 'salmgr',
-		group => 'lsst',
-		require => [User['salmgr'] , Group['lsst'], ],
-		recurse    => true,
-	}
- 
-	exec { 'sal_dds_path_update':
-		path    => '/bin:/usr/bin:/usr/sbin',
-		command => 'sed -i "s/^### export LSST_SDK_INSTALL=.*/export LSST_SDK_INSTALL=\/opt\/ts_sal\//g;s/^### export OSPL_HOME=.*/export OSPL_HOME=\/opt\/ts_opensplice\/OpenSpliceDDS\/V6.4.1\/HDE\/x86_64.linux\//g" /opt/ts_sal/setup.env',
-		require => File['/opt/ts_sal'],
+		recurse  => true,
 	}
 	
-	file_line{ 'sal_dds_path_update':
-		
+	file_line{ 'sal_dds_path_update_sdk':
+		ensure => present,
+		line => "export LSST_SDK_INSTALL=${ts_sal_path}",
+		match => "### export LSST_SDK_INSTALL=*",
+		path => "${ts_sal_path}/setup.env",
+		require => [ Vcsrepo[$ts_sal_path], Vcsrepo[$ts_opensplice_path], File[$ts_sal_path], File[$ts_opensplice_path]],
 	}
 
+	file_line{ 'sal_dds_path_update_ospl':
+		ensure => present,
+		line => "export OSPL_HOME=${ts_opensplice_path}/OpenSpliceDDS/V6.4.1/HDE/x86_64.linux/",
+		match => "### export OSPL_HOME=*",
+		path => "${ts_sal_path}/setup.env",
+		require => [ Vcsrepo[$ts_sal_path], Vcsrepo[$ts_opensplice_path], File[$ts_sal_path], File[$ts_opensplice_path]],
+	}
+	
+	
 	file_line{"Update python build version":
 		ensure => present,
 		line => "export PYTHON_BUILD_VERSION=3.6m",
 		match => "### export PYTHON_BUILD_VERSION=3.6m",
 		path => "/opt/ts_sal/setup.env",
-		require => [ Exec['install-custom-python'], Exec["sal_dds_path_update"] ] ,
+		require => [ File_line["sal_dds_path_update_sdk"], File_line["sal_dds_path_update_ospl"] ] ,
 	}
 	
 	file_line{"Update python build location":
@@ -112,12 +124,13 @@ class sal(
 		line => "export PYTHON_BUILD_LOCATION=/usr/local",
 		match => "### export PYTHON_BUILD_LOCATION=/usr/local",
 		path => "/opt/ts_sal/setup.env",
-		require => [ Exec['install-custom-python'], Exec["sal_dds_path_update"] ] ,
+		require => [ File_line["sal_dds_path_update_sdk"], File_line["sal_dds_path_update_ospl"] ] ,
 	}
 
 	exec { 'environment_configuration':
 		path => '/usr/bin:/usr/sbin',
 		command => 'echo -e "source /opt/ts_sal/setup.env" > /etc/profile.d/sal.sh',
+		require => [File_line["sal_dds_path_update_sdk"], File_line["sal_dds_path_update_ospl"]]
 	}
 
 }

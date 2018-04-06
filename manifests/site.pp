@@ -11,7 +11,7 @@ node /^puppet-master/ {
 	}
 }
 
-node /^dm-dev-farm/ {
+node /^dm-hs/ {
 	include role::dm::dm_header_service
 }
 

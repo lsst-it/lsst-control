@@ -1,15 +1,15 @@
 class profile::ts::efd{
 
-	$efd_user = lookup("efd::user")
-	$efd_user_pwd = lookup("efd::user_pwd")
-	$ts_sal_path = lookup("sal::ts_sal_path")
+	$efd_user = lookup("ts::efd::user")
+	$efd_user_pwd = lookup("ts::efd::user_pwd")
+	$ts_sal_path = lookup("ts::sal::ts_sal_path")
 	#Parameters for SAL module comes from HIERA
 	include sal
 	
 	class{"ts_xml":
 		ts_xml_path => lookup("ts_xml::ts_xml_path"),
-		ts_xml_subsystems => lookup("efd::ts_xml_subsystems"),
-		ts_xml_languages => lookup("efd::ts_xml_languages"),
+		ts_xml_subsystems => lookup("ts::efd::ts_xml_subsystems"),
+		ts_xml_languages => lookup("ts::efd::ts_xml_languages"),
 		ts_sal_path => $ts_sal_path,
 	}
 

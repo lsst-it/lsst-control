@@ -127,6 +127,14 @@ class sal(
 		require => [ File_line["sal_dds_path_update_sdk"], File_line["sal_dds_path_update_ospl"] ] ,
 	}
 
+	file_line{"Update PYTHONPATH":
+		ensure => present,
+		line => 'export PYTHONPATH=$PYTHONPATH:${SAL_WORK_DIR}/lib:/usr/lib/python3.6/site-packages/',
+		match => 'export PYTHONPATH=$PYTHONPATH:${SAL_WORK_DIR}/lib',
+		path => "/opt/ts_sal/setup.env",
+		require => [ File_line["sal_dds_path_update_sdk"], File_line["sal_dds_path_update_ospl"] ] ,
+	}
+
 	exec { 'environment_configuration':
 		path => '/usr/bin:/usr/sbin',
 		command => 'echo -e "source /opt/ts_sal/setup.env" > /etc/profile.d/sal.sh',

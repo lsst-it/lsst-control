@@ -10,4 +10,5 @@ modules/ntp
 modules/ssh_keygen
 modules/stdlib
 modules/vcsrepo
+modules/yum
 .DS_Store

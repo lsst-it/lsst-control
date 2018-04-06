@@ -19,7 +19,7 @@ node /^ts-sw-env/ {
 	include role::ts::ts_dev_env_basic
 }
 
-node /^ts-sw-container/ {
+node /^ts-visitsim/ {
 	include role::ts::ts_sw_env_container
 }
 

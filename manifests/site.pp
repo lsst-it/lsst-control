@@ -20,7 +20,7 @@ node /^ts-sw-env/ {
 }
 
 node /^ts-visitsim/ {
-	include role::ts::ts_sw_env_container
+	include role::ts::ts_visit_simulator
 }
 
 node /^ats-shutter-hcu/{

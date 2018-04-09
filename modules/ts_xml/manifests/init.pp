@@ -30,8 +30,10 @@ class ts_xml(
 		exec {"salgenerator-${subsystem}-validate":
 			path => '/bin:/usr/bin:/usr/sbin',
 			user => "salmgr",
+			group => "lsst",
 			cwd => "${ts_sal_path}/test/",
 			command => "/bin/bash -c 'source ${ts_sal_path}/setup.env ; ${ts_sal_path}/lsstsal/scripts/salgenerator ${subsystem} validate'",
+			timeout => 0,
 		}
 		$ts_xml_languages.each | String $lang | {
 			if $lang == "labview"{
@@ -42,8 +44,10 @@ class ts_xml(
 			exec{ "salgenerator-${subsystem}-sal-${lang}" :
 				path => '/bin:/usr/bin:/usr/sbin',
 				user => "salmgr",
+				group => "lsst",
 				cwd => "${ts_sal_path}/test/",
 				command => $salgenerator_cmd,
+				timeout => 0,
 			}
 		}
 	}

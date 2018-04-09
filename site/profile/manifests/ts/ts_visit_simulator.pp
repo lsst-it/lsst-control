@@ -66,7 +66,7 @@ class profile::ts::ts_visit_simulator{
 		require => [ Vcsrepo[$ts_visit_simulator_path] ],
 	}
 	
-	# LSST_EFD_HOST pending for definition
+	#TODO LSST_EFD_HOST pending for definition
 	file_line{ "ts_visit_simulator_custom_variables" :
 		path => "${ts_visit_simulator_path}/setup.env",
 		line => "export TCSSIM_QUIET=true"

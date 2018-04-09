@@ -5,13 +5,15 @@ class sal(
 	String $firewall_dds_zone_name,
 	String $ts_sal_path,
 	String $ts_opensplice_path,
+	String $sal_network_interface,
 	$ts_sal_branch = "master",
 	$ts_opensplice_branch = "master"
 ){
 
 	include '::sal::python'
 	class{"::sal::dds_firewall":
-		firewall_dds_zone_name => $firewall_dds_zone_name
+		firewall_dds_zone_name => $firewall_dds_zone_name,
+		firewall_dds_interface => $sal_network_interface
 	}
 	class{"::sal::users":
 		sal_pwd => $sal_pwd,
@@ -96,6 +98,14 @@ class sal(
 		owner => "salmgr",
 		group => "lsst",
 		require => File[$ts_opensplice_path],
+	}
+	
+	file_line{ "sal_network_interface" :
+		ensure => present,
+		path => "${ts_opensplice_path}/OpenSpliceDDS/V6.4.1/HDE/x86_64.linux/etc/config/ospl.xml",
+		line => "<NetworkInterfaceAddress>${sal_network_interface}</NetworkInterfaceAddress>",
+		match => "<NetworkInterfaceAddress>AUTO</NetworkInterfaceAddress>",
+		require => Vcsrepo[$ts_opensplice_path]
 	}
 	
 	file_line{ 'sal_dds_path_update_sdk':

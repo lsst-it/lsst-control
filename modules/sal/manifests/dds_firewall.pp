@@ -1,4 +1,4 @@
-class sal::dds_firewall ($firewall_dds_zone_name = "lsst_zone"){
+class sal::dds_firewall ($firewall_dds_zone_name = "lsst_zone", $firewall_dds_interface ){
 	# Firewall configuration
 	#TODO define sources for this zone
 	firewalld_zone { $firewall_dds_zone_name:
@@ -6,6 +6,7 @@ class sal::dds_firewall ($firewall_dds_zone_name = "lsst_zone"){
 		target => 'DROP',
 		notify => Exec['firewalld-custom-command'],
 		require => Service['firewalld'],
+		interfaces => ["${firewall_dds_interface}"]
 	}
 
 	firewalld_port { 'DDS_port_os':

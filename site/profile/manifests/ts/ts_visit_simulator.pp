@@ -77,7 +77,7 @@ class profile::ts::ts_visit_simulator{
 		mode    => '0644',
 		owner   => 'root',
 		group   => 'root',
-		content => epp('profile/ts/tsVisitSimulator.epp', 
+		content => epp('profile/ts/tsSystemdUnitTemplate.epp', 
 			{ 'serviceDescription' => 'Telescope and Site Visit Simulator',
 			  'startDemoPath' => "${ts_visit_simulator_path}/test/tcs/tcs/bin" , 
 			  'serviceCommand' => "/bin/bash -c 'source ${ts_visit_simulator_path}/setup.env && /usr/bin/xvfb-run ./startdemo'"}),

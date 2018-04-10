@@ -3,7 +3,9 @@ class sal(
 	String $salmgr_pwd,
 	String $lsst_users_home_dir,
 	String $firewall_dds_zone_name,
+	String $ts_sal_repo,
 	String $ts_sal_path,
+	String $ts_opensplice_repo,
 	String $ts_opensplice_path,
 	String $sal_network_interface,
 	$ts_sal_branch = "master",
@@ -82,7 +84,7 @@ class sal(
 	vcsrepo { $ts_sal_path:
 		ensure => present,
 		provider => git,
-		source => 'https://github.com/lsst-ts/ts_sal.git',
+		source => $ts_sal_repo,
 		revision => $ts_sal_branch,
 		owner => "salmgr",
 		group => "lsst",
@@ -93,7 +95,7 @@ class sal(
 	vcsrepo { $ts_opensplice_path:
 		ensure => present,
 		provider => git,
-		source => 'https://github.com/lsst-ts/ts_opensplice.git',
+		source => $ts_opensplice_repo,
 		revision => $ts_opensplice_branch,
 		owner => "salmgr",
 		group => "lsst",

@@ -2,6 +2,7 @@ class ts_xml(
 	String $ts_xml_path,
 	Array $ts_xml_subsystems, # This can be either a String or an Array
 	Array $ts_xml_languages,
+	String $ts_xml_repo,
 	String $ts_sal_path,
 	String $ts_xml_branch = "master",
 ){
@@ -9,7 +10,7 @@ class ts_xml(
 		ensure => present,
 		provider => git,
 		revision => $ts_xml_branch,
-		source => 'https://github.com/lsst-ts/ts_xml.git',
+		source => $ts_xml_repo,
 		notify => File["${ts_xml_path}"]
 	}
 	

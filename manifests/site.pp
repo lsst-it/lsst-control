@@ -1,8 +1,7 @@
+#TODO This have to be changed by an ENC script
+
 node default {
-	file { '/root/README' :
-		ensure => file,
-		content => "Welcome to ${fqdn}, this is a default server, uptime about ${system_uptime}\n",
-	}
+	include role::default
 }
 
 node /^puppet-master/ {
@@ -12,7 +11,7 @@ node /^puppet-master/ {
 	}
 }
 
-node /^dm-dev-farm/ {
+node /^dm-hs/ {
 	include role::dm::dm_header_service
 }
 
@@ -20,8 +19,8 @@ node /^ts-sw-env/ {
 	include role::ts::ts_dev_env_basic
 }
 
-node /^ts-sw-container/ {
-	include role::ts::ts_sw_env_container
+node /^ts-visitsim/ {
+	include role::ts::ts_visit_simulator
 }
 
 node /^ats-shutter-hcu/{

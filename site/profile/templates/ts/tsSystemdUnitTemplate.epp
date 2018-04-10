@@ -1,0 +1,14 @@
+[Unit]
+Description=<%= $serviceDescription %>
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=<%= $startDemoPath %>
+ExecStart=<%= $serviceCommand %>
+Restart=on-failure
+User=salmgr
+
+[Install]
+WantedBy=multi-user.target

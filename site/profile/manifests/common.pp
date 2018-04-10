@@ -1,12 +1,7 @@
 #This base installation is based on the procedure
 # https://confluence.lsstcorp.org/display/IT/Linux+CentOS+Setup
-class profile::base {
+class profile::common {
  	include profile::ssh_server
-
-	#class{ 'ntp':
-	#	servers => ['140.252.1.140','140.252.1.141','140.252.1.142'],
-	#	restrict => ['127.0.0.1'],
-	#}
 
 	package { 'nmap':
 		ensure => installed,
@@ -53,21 +48,52 @@ class profile::base {
 		ensure => installed,
 	}
 
+	package { 'firewalld':
+		ensure => installed,
+	}
+	
+	service{ 'firewalld':
+		ensure => running,
+		enable => true,
+	}
+
 ################################################################################
+	$ntp = lookup('ntp')
 	class { '::chrony':
-		servers         => {
-			'140.252.1.140' => ['iburst'],
-			'140.252.1.141' => ['iburst'],
-			'140.252.1.142' => ['iburst'],
+		servers => {
+			"${$ntp[ntp_server_1]}" => ['iburst'],
+			"${$ntp[ntp_server_2]}" => ['iburst'],
+			"${$ntp[ntp_server_3]}" => ['iburst'],
 		},
 	}
 
-	#service { 'chronyd':
-	#	ensure => running,
-	#	enabled => true,
-	#}
+	$motd_msg = lookup('motd')
+	file { '/etc/motd' :
+		ensure => file,
+		content => $motd_msg,
+	}
 
 ################################################################################
+
+	file_line { 'SELINUX=permissive':
+		path  => '/etc/selinux/config',
+		line => 'SELINUX=enforce',
+		match => '^SELINUX=+',
+	}
+
+	# Set timezone as default to UTC
+	exec { 'set-timezone':
+		command => '/bin/timedatectl set-timezone UTC',
+		returns => [0],
+	}
+  
+# Shared resources from all the teams
+
+	package { 'git':
+		ensure => present,
+	}
+	
+# group/user creation
 
 	# as per /etc/login.defs, max uid is 999, so we have set 777 as the default group admin account
 	group { 'sysadmin':
@@ -92,7 +118,8 @@ class profile::base {
 		uid => '777' ,
 		gid => '777',
 		home => '/home/sysadmin',
-		managehome => 'true'
+		managehome => true,
+		password => lookup("lsst_sysadmin_pwd")
 	}
 
 	file{ '/home/sysadmin':
@@ -101,23 +128,46 @@ class profile::base {
 		require => User['sysadmin'],
 	}
 
-	file_line { 'SELINUX=permissive':
-		path  => '/etc/selinux/config',
-		line => 'SELINUX=enforce',
-		match => '^SELINUX=+',
-	}
-
-	# Set timezone as defualt to UTC
-	exec { 'set-timezone':
-		command => '/bin/timedatectl set-timezone UTC',
-		returns => [0],
-	}
-  
-# Shared resources from all the teams
-
-	package { 'git':
+	group { 'lsst':
 		ensure => present,
+		gid => 500,
+		auth_membership => true,
+		members => ['sysadmin'],
 	}
 
+	#TODO Move password to hiera
+	user{ 'lsstmgr':
+		ensure => 'present',
+		uid => '500' ,
+		gid => '500',
+		home => '/home/lsstmgr',
+		managehome => true,
+		require => Group['lsst'],
+		password => lookup("lsstmgr_pwd"),
+	}
+
+	user{ 'tcsmgr':
+		ensure => 'present',
+		uid => '502',
+		gid => '500',
+		home => '/home/tcsmgr',
+		managehome => true,
+		require => Group['lsst'],
+		password => lookup("tcsmgr_pwd"),
+	}
+
+	user{ 'tcs':
+		ensure => 'present',
+		uid => '504' ,
+		gid => '500',
+		home => '/home/tcs',
+		managehome => true,
+		require => Group['lsst'],
+		password => lookup("tcs_pwd"),
+	}
+	
+	user{'root':
+		password => lookup("root_pwd"),
+	}
 
 }

@@ -1,40 +1,26 @@
 class profile::ts::efd{
-	package { 'gcc-c++':
-		ensure => installed,
-	}
-	package { 'make':
-		ensure => installed,
+
+	$efd_user = lookup("ts::efd::user")
+	$efd_user_pwd = lookup("ts::efd::user_pwd")
+	$ts_sal_path = lookup("sal::ts_sal_path")
+	$ts_xml_subsystems = lookup("ts::efd::ts_xml_subsystems")
+	$ts_efd_writers = lookup("ts::efd::ts_efd_writers")
+	#Parameters for SAL module comes from HIERA
+	include sal
+
+	class{"ts_xml":
+		ts_xml_path => lookup("ts_xml::ts_xml_path"),
+		ts_xml_subsystems => $ts_xml_subsystems,
+		ts_xml_languages => lookup("ts::efd::ts_xml_languages"),
+		ts_sal_path => $ts_sal_path,
 	}
 
-	package { 'ncurses-libs':
-		ensure => installed,
-	}
-	package { 'xterm':
-		ensure => installed,
-	}
-	package { 'xorg-x11-fonts-misc':
-		ensure => installed,
-	}
-	package { 'java-1.7.0-openjdk-devel':
-		ensure => installed,
-	}
-	package { 'boost-python':
-		ensure => installed,
-	}
-	package { 'boost-python-devel':
-		ensure => installed,
-	}
-	package { 'maven':
-		ensure => installed,
-	}
-	package { 'python-devel':
-		ensure => installed,
-	}
-	package { 'swig':
-		ensure => installed,
-	}
-	package { 'tk-devel':
-		ensure => installed,
+	exec{ "gengenericefd" :
+		user => "salmgr",
+		group => "lsst",
+		path => '/bin:/usr/bin:/usr/sbin',
+		command => "/bin/bash -c 'source ${ts_sal_path}/setup.env ; echo \"source ${ts_sal_path}/lsstsal/scripts/gengenericefd.tcl ; updateefdschema\" | tclsh'",
+		require => Class["ts_xml"]
 	}
 
 	package { 'mariadb':
@@ -45,159 +31,56 @@ class profile::ts::efd{
 		ensure => installed,
 	}
 
-# Services definition
+	file{ "/etc/my.cnf.d/efd.cnf" :
+		ensure => present,
+		content => "[mysql]\nuser=${efd_user}\npassword=${efd_user_pwd}\n",
+		require => [Package["mariadb"], Package["mariadb-server"]]
+	}
+
+	package { 'mariadb-devel':
+		ensure => installed,
+	}
+
+	# Services definition
 
 	service { 'mariadb':
 		ensure => running,
 		enable => true,
+		require => File["/etc/my.cnf.d/efd.cnf"],
 	}
-
-	service { 'firewalld':
-		ensure => running,
-		enable => true,
-	}
-
-# group/user creation
-
-	group { 'lsst':
-		ensure => present,
-		gid => 500,
-		auth_membership => true,
-		members => ['sysadmin'],
-	}
-
-	user{ 'lsstmgr':
-		ensure => 'present',
-		uid => '500' ,
-		gid => '500',
-		home => '/home/lsstmgr',
-		managehome => 'true',
-		require => Group['lsst'],
-		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
-	}
-
-	user{ 'salmgr':
-		ensure => 'present',
-		uid => '501' ,
-		gid => '500',
-		home => '/home/salmgr',
-		managehome => 'true',
-		require => Group['lsst'],
-		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
-	}
-
-	user{ 'tcsmgr':
-		ensure => 'present',
-		uid => '502' ,
-		gid => '500',
-		home => '/home/tcsmgr',
-		managehome => 'true',
-		require => Group['lsst'],
-		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
-	}
-
-	user{ 'sal':
-		ensure => 'present',
-		uid => '503' ,
-		gid => '500',
-		home => '/home/sal',
-		managehome => 'true',
-		require => Group['lsst'],
-		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
-	}
-
-	user{ 'tcs':
-		ensure => 'present',
-		uid => '504' ,
-		gid => '500',
-		home => '/home/tcs',
-		managehome => 'true',
-		require => Group['lsst'],
-		password => '$1$PMfYrt2j$DAkeHmsz1q5h2XUsMZ9xn.',
-	}
-
-# Firewall configuration
-	firewalld_zone { 'lsst_zone':
-		ensure => present,
-		target => 'DROP',
-		notify => Exec['firewalld-custom-command'],
-		require => Service['firewalld'],
-	}
-
-	firewalld_port { 'DDS_port_os':
-		ensure   => present,
-		zone     => 'lsst_zone',
-		port     => '250-251',
-		protocol => 'udp',
-		require => Service['firewalld'],
-		before => Exec['firewalld-custom-command'],
-	}
-
-	firewalld_port { 'DDS_port_app':
-		ensure   => present,
-		zone     => 'lsst_zone',
-		port     => '7400-7413',
-		protocol => 'udp',
-		require => Service['firewalld'],
-		before => Exec['firewalld-custom-command'],
-	}
-
-	exec { 'firewalld-custom-command':
-		path    => '/usr/bin:/usr/sbin',
-		command => 'firewall-cmd --permanent --zone=lsst_zone --add-protocol=igmp ; firewall-cmd --reload',
-		require => Service['firewalld'],
-	}
-
-# Source download
-
-	# Install SAL and then modify ownerships
-	vcsrepo { '/opt/ts_sal':
-		ensure => present,
-		provider => git,
-		source => 'https://github.com/lsst-ts/ts_sal.git',
-		notify => File['/opt/ts_sal'],
-	}
-
-	# Download opensplice and then modify ownerships
-	vcsrepo { '/opt/ts_opensplice':
-		ensure => present,
-		provider => git,
-		source => 'https://github.com/lsst-ts/ts_opensplice.git',
-		before => Exec['sal_dds_path_update'],
-		notify => File['/opt/ts_opensplice'],
-	}
-
-	file { '/opt/ts_sal':
-		ensure => directory,
-		owner => 'salmgr',
-		group => 'lsst',
-		require => [User['salmgr'] , Group['lsst'], ],
-		recurse    => true,
-	}
-
-	file { '/opt/ts_opensplice':
-		ensure => directory,
-		owner => 'salmgr',
-		group => 'lsst',
-		require => [User['salmgr'] , Group['lsst'], ],
-		recurse    => true,
-	}
-
-	exec { 'sal_dds_path_update':
-		path    => '/bin:/usr/bin:/usr/sbin',
-		command => 'sed -i "s/^### export LSST_SDK_INSTALL=.*/export LSST_SDK_INSTALL=\/opt\/ts_sal\//g;s/^### export OSPL_HOME=.*/export OSPL_HOME=\/opt\/ts_opensplice\/OpenSpliceDDS\/V6.4.1\/HDE\/x86_64.linux\//g" /opt/ts_sal/setup.env',
-		require => File['/opt/ts_sal'],
-	}
-
-	exec { 'environment_configuration':
-		path    => '/usr/bin:/usr/sbin',
-		command => 'echo -e "source /opt/ts_sal/setup.env" > /etc/profile.d/sal.sh',
+	
+	#Creates a unit file with the efd writers for each subsystem
+	$ts_xml_subsystems.each | String $subsystem | {
+		$ts_efd_writers.each | String $writer | {
+			file { "/etc/systemd/system/${subsystem}_${writer}_efdwriter.service":
+				mode    => '0644',
+				owner   => 'root',
+				group   => 'root',
+				content => epp('profile/ts/tsSystemdUnitTemplate.epp', 
+					{ 'serviceDescription' => "EFD ${subsystem} ${writer} writer",
+					  'startDemoPath' => "${ts_sal_path}/test/${subsystem}/cpp/src" , 
+					  'serviceCommand' => "/bin/bash -c 'source ${ts_sal_path}/setup.env && ./sacpp_${subsystem}_${writer}_efdwriter'"}),
+			}
+			service { "${subsystem}_${writer}_efdwriter":
+				ensure => running,
+				enable => true,
+				require => File["/etc/systemd/system/${subsystem}_${writer}_efdwriter.service"],
+			}
+		
+		}
 	}
 
 	# Download DB schema
 	exec { 'schema_download':
 		path    => '/usr/bin:/usr/sbin',
-		command => 'cd /var/lib/mysql/ ; wget ftp://ftp.noao.edu/pub/dmills/efd-bootstrap.tgz ; tar xvzpPf efd-bootstrap.tgz ; rm efd-bootstrap.tgz',
+		command => 'cd /var/lib/mysql/ ; wget ftp://ftp.noao.edu/pub/dmills/efd-bootstrap.tgz ; tar xvzpPf efd-bootstrap.tgz',
 		timeout => 0,
+		onlyif => "test ! -f /var/lib/mysql/efd-bootstrap.tgz"
+	}
+	
+	
+	file_line{ "Add LSST_EFD_HOST variable" :
+		path => "${ts_sal_path}/setup.env",
+		line => "export LSST_EFD_HOST=localhost",
 	}
 }

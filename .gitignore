@@ -1,0 +1,14 @@
+modules/archive
+modules/chrony
+modules/concat
+modules/docker
+modules/dockeragent
+modules/firewalld
+modules/java
+modules/nginx
+modules/ntp
+modules/ssh_keygen
+modules/stdlib
+modules/vcsrepo
+modules/yum
+.DS_Store

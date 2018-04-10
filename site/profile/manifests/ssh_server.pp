@@ -4,7 +4,7 @@ class profile::ssh_server {
 	}
 	service { 'sshd':
 		ensure => 'running',
-		enable => 'true',
+		enable => true,
 	}
 	if $trusted['hostname'] =~ /^puppet_master/ {
 		ssh_keygen { 'root':

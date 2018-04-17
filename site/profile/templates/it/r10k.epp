@@ -1,0 +1,10 @@
+:cachedir: '/var/cache/r10k'
+
+:sources:
+        :<%= $r10k_org %>:
+                remote: '<%= $controlRepo%>'
+                basedir: '/etc/puppetlabs/code/environments'
+        :<%= $r10k_hiera_org %>:
+                remote: '<%= $hieraRepo%>'
+                basedir: '/etc/puppetlabs/code/hieradata'
+                private_key: '<%= $idRsaPath%>'

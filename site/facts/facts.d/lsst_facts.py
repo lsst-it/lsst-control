@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/bin/env python
 import os
 
 def process_full_name(hostname_list, data):

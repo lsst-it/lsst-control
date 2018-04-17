@@ -79,7 +79,7 @@ data["country"] = "default"
 # 3: LSST
 # 4: ORG
 hostname_value = os.environ['HOSTNAME'].split(".")
-if hostname_value == "localhost":
+if hostname_value[0] == "localhost":
 	hostname_file = open("/etc/hostname")
 	hostname_value = hostname_file.read().replace("\n","")
 #hostname_value = "cr-a1-gs-puppet-01.ls.cl.lsst.org".split(".")

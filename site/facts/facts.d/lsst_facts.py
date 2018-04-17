@@ -78,7 +78,13 @@ data["country"] = "default"
 # 2: Country
 # 3: LSST
 # 4: ORG
-hostname_value = os.environ['HOSTNAME'].split(".")
+
+# I'm using localhost as default value because in case the environment variable doesn't exist
+# still being a case for the second if without further conditions
+hostname_value = ["localhost"]
+if "HOSTNAME" in os.environ:
+	hostname_value = os.environ['HOSTNAME'].split(".")
+
 if hostname_value[0] == "localhost":
 	hostname_file = open("/etc/hostname")
 	hostname_value = hostname_file.read().replace("\n","").split(".")

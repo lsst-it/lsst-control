@@ -81,7 +81,7 @@ data["country"] = "default"
 hostname_value = os.environ['HOSTNAME'].split(".")
 if hostname_value[0] == "localhost":
 	hostname_file = open("/etc/hostname")
-	hostname_value = hostname_file.read().replace("\n","")
+	hostname_value = hostname_file.read().replace("\n","").split(".")
 #hostname_value = "cr-a1-gs-puppet-01.ls.cl.lsst.org".split(".")
 fqdn = None
 #Full name received

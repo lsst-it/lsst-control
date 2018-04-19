@@ -20,6 +20,11 @@ class profile::it::puppet_master {
 		require => Package["puppetserver"],
 	}
 	
+	file{ "/etc/hosts":
+		ensure => present,
+		content => "${ipaddress}\t${fqdn}",
+	}
+	
 	file_line{"update_path_root":
 		ensure => present,
 		line => '$PATH:/opt/puppetlabs/puppet/bin:$HOME/bin',
@@ -35,6 +40,8 @@ class profile::it::puppet_master {
 		ensure => directory,
 	}
 	
+	$hiera_id_rsa_path = lookup("hiera_repo_id_path")
+	
 	file{"/etc/puppetlabs/r10k/r10k.yaml":
 		ensure => file,
 		require => File["/etc/puppetlabs/r10k"],
@@ -44,23 +51,46 @@ class profile::it::puppet_master {
 				'controlRepo' => lookup("control_repo") ,
 				'r10k_hiera_org' => lookup("r10k_hiera_org") ,
 				'hieraRepo' => lookup("hiera_repo"),
-				'idRsaPath' => lookup("hiera_repo_id_path")
+				'idRsaPath' => $hiera_id_rsa_path
 			}
 		)
 	}
 	
-	# Ensure the full path to the ID RSA is created
-	file{ "":
-	        
+	if $hiera_id_rsa_path =~ /(.*\/)(.*\id_rsa)/ { 
+		$base_path = $1
+		$dir = split($base_path, "/")
+		$filename = $2
+
+		$aux_dir = [""]
+		$dir.each | $index, $sub_dir | {
+		
+			if join( $dir[ 1,$index] , "/" ) == "" {
+ 				$aux_dir = "/"
+ 			}else{
+ 				$aux_dir = join( $aux_dir + $dir[1, $index] , "/")
+			}
+			file{ $aux_dir:
+				ensure => directory,
+			}
+		}
+		file{ $hiera_id_rsa_path:
+			ensure => file,
+			content => lookup("hiera_repo_id_rsa"),
+			require => File[$base_path],
+			mode => "600",
+		}
+		
+	}else{
+		notify { $hiera_id_rsa_path:
+			message => "Hiera ID RSA isn't a full path!, path received was: ${hiera_id_rsa_path}",
+		}
 	}
 	
-	file{lookup("hiera_repo_id_path"):
-		ensure => file,
-		content => lookup("hiera_repo_id_rsa"),
-		#require => File["${ts_salmgr_home}/.ssh"],
-		mode => "600",
-		owner => "salmgr",
-		group => "lsst",
+	firewalld_port { 'Puppet_port':
+		ensure   => present,
+		zone     => 'public',
+		port     => '8140',
+		protocol => 'tcp',
+		require => Service['firewalld'],
 	}
-	#TODO add som code to automaticly deploy puppet itself
 }

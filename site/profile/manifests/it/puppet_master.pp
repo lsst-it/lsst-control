@@ -14,9 +14,10 @@ class profile::it::puppet_master {
 		enable => true
 	}
 	
-	file{"/etc/puppetlabs/puppet/puppet.conf":
+	file_line{"/etc/puppetlabs/puppet/puppet.conf":
+		path => "/etc/puppetlabs/puppet/puppet.conf",
 		ensure => file,
-		content => "\n[agent]\nserver = ${fqdn}",
+		line => "\n[agent]\nserver = ${fqdn}",
 		require => Package["puppetserver"],
 	}
 	
@@ -92,5 +93,10 @@ class profile::it::puppet_master {
 		port     => '8140',
 		protocol => 'tcp',
 		require => Service['firewalld'],
+	}
+	
+	exec{"firewalld-reload":
+		command => "/bin/firewalld-cmd --reload ",
+		require => Firewalld_port["Puppet-port"],
 	}
 }

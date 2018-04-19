@@ -14,9 +14,12 @@ class profile::it::puppet_master {
 		enable => true
 	}
 	
+	file{"/etc/puppetlabs/puppet/puppet.conf":
+		ensure => present,
+	}
+	
 	file_line{"/etc/puppetlabs/puppet/puppet.conf":
 		path => "/etc/puppetlabs/puppet/puppet.conf",
-		ensure => file,
 		line => "\n[agent]\nserver = ${fqdn}",
 		require => Package["puppetserver"],
 	}

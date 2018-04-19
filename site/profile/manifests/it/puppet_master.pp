@@ -93,10 +93,10 @@ class profile::it::puppet_master {
 		port     => '8140',
 		protocol => 'tcp',
 		require => Service['firewalld'],
+		notify => Exec["firewalld-reload"]
 	}
 	
 	exec{"firewalld-reload":
 		command => "/bin/firewalld-cmd --reload ",
-		require => Firewalld_port["Puppet-port"],
 	}
 }

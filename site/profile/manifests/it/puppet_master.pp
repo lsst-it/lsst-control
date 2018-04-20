@@ -90,11 +90,6 @@ class profile::it::puppet_master {
 		}
 	}
 	
-	service{"firewalld":
-		ensure => running,
-		enable => true,
-	}
-	
 	firewalld_port { 'Puppet_port':
 		ensure   => present,
 		zone     => 'public',
@@ -105,7 +100,7 @@ class profile::it::puppet_master {
 	}
 	
 	exec{"firewalld-reload":
-		command => "/bin/firewalld-cmd --reload ",
+		command => "/bin/firewall-cmd --reload ",
 		require => Service["firewalld"],
 	}
 }

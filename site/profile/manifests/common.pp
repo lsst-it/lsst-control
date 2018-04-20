@@ -52,6 +52,10 @@ class profile::common {
 		ensure => installed,
 	}
 	
+	package { 'bash-completion':
+		ensure => installed,
+	}
+	
 	service{ 'firewalld':
 		ensure => running,
 		enable => true,

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/bin/env python
 import os
 
 def process_full_name(hostname_list, data):
@@ -28,14 +28,18 @@ def no_loc_name(hostname_list, data):
 def processDomain(fqdn, data):
 	# We are not expecting to have more than 1 datacenter per site, hence, the datanceter
 	# can be named as the site
-	if len(fqdn) >= 5:
+	if len(fqdn) == 5:
 		data["datacenter"] = fqdn[1]
 
-	if len(fqdn) >= 5:
+	if len(fqdn) == 5:
 		data["site"] = fqdn[1]
 
-	if len(fqdn) >= 5:
+	if len(fqdn) == 5:
 		data["country"] = fqdn[2]
+		
+	if len(fqdn) == 4:
+		data["country"] = fqdn[1]
+		
 	return data
 
 def facts_generator(fqdn, data):
@@ -78,11 +82,20 @@ data["country"] = "default"
 # 2: Country
 # 3: LSST
 # 4: ORG
-hostname_value = os.environ['HOSTNAME'].split(".")
+
+# I'm using localhost as default value because in case the environment variable doesn't exist
+# still being a case for the second if without further conditions
+hostname_value = ["localhost"]
+if "HOSTNAME" in os.environ:
+	hostname_value = os.environ['HOSTNAME'].split(".")
+
+if hostname_value[0] == "localhost":
+	hostname_file = open("/etc/hostname")
+	hostname_value = hostname_file.read().replace("\n","").split(".")
 #hostname_value = "cr-a1-gs-puppet-01.ls.cl.lsst.org".split(".")
 fqdn = None
-#Full name received
-if len(hostname_value) >= 5:
+#Full name received or Full nume without a site (ie: A country server)
+if len(hostname_value) >= 4:
 	fqdn = hostname_value
 #Only hostname received
 elif len(hostname_value) >= 1:

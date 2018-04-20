@@ -5,10 +5,7 @@ node default {
 }
 
 node /^puppet-master/ {
-	include role::master_server
-	file { '/root/master-README' :
-		ensure => file,
-	}
+	include role::it::puppet_master
 }
 
 node /^dm-hs/ {

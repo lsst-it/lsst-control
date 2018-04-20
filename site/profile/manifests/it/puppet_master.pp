@@ -17,7 +17,12 @@ class profile::it::puppet_master {
 	file{"/etc/puppetlabs/puppet/puppet.conf":
 		ensure => present,
 	}
-	
+
+	file{"/etc/puppetlabs/puppet/autosign.conf":
+		ensure => present,
+		content => lookup("autosign_servers"),
+	}
+
 	file_line{"/etc/puppetlabs/puppet/puppet.conf":
 		path => "/etc/puppetlabs/puppet/puppet.conf",
 		line => "\n[agent]\nserver = ${fqdn}",

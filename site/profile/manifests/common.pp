@@ -59,31 +59,27 @@ class profile::common {
 	
 	class { "firewalld":
 		default_zone => $lsst_firewall_default_zone,
-		require => Service["firewalld"]
 	}
 	
 	firewalld_zone { $lsst_firewall_default_zone:
 		ensure => present,
 		target => lookup("lsst_firewall_default_target"),
-		require => Class["firewalld"],
 		sources => lookup("lsst_firewall_default_sources")
 	}
 	
 	firewalld_service { 'Enable SSH':
 		ensure  => 'present',
 		service => 'ssh',
-		require => Service["firewalld"] 
 	}
 
 	firewalld_service { 'Enable DHCP':
 		ensure  => 'present',
 		service => 'dhcpv6-client',
-		require => Service["firewalld"]
 	}
 	
 	exec{"enable_icmp":
 		command => "/usr/bin/firewall-cmd --add-protocol=icmp --permanent && /usr/bin/firewall-cmd --reload",
-		require => [Package["firewalld"], Service["firewalld"], Class["firewalld"]]
+		require => Class["firewalld"]
 	}
 
 ################################################################################

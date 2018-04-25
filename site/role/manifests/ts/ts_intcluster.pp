@@ -1,4 +1,4 @@
 class role::ts::ts_intcluster{
-	include profile::common
+	include profile::default
 	include profile::ts::ts_intcluster
 }

@@ -1,4 +1,6 @@
 class profile::ts::ts_intcluster {
+	include profile::it::ssh_server
+	
 	package{"virtualbox":
 		ensure => installed,
 		source => "https://download.virtualbox.org/virtualbox/5.2.10/VirtualBox-5.2-5.2.10_122088_el7-1.x86_64.rpm"

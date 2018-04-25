@@ -54,11 +54,6 @@ class profile::common {
 
 # Firewall and security measurements
 ################################################################################
-
-	service{ 'firewalld':
-		ensure => running,
-		enable => true,
-	}
 	
 	$lsst_firewall_default_zone = lookup("lsst_firewall_default_zone")
 	

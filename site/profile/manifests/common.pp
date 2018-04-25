@@ -55,10 +55,44 @@ class profile::common {
 	package { 'bash-completion':
 		ensure => installed,
 	}
-	
+
+# Firewall and security measurements
+################################################################################
+
 	service{ 'firewalld':
 		ensure => running,
 		enable => true,
+	}
+	
+	$lsst_firewall_default_zone = lookup("lsst_firewall_default_zone")
+	
+	class { "firewalld":
+		default_zone => $lsst_firewall_default_zone,
+		require => Service["firewalld"]
+	}
+	
+	firewalld_zone { $lsst_firewall_default_zone:
+		ensure => present,
+		target => lookup("lsst_firewall_default_target"),
+		require => Class["firewalld"],
+		sources => lookup("lsst_firewall_default_sources")
+	}
+	
+	firewalld_service { 'Enable SSH':
+		ensure  => 'present',
+		service => 'ssh',
+		require => Service["firewalld"] 
+	}
+
+	firewalld_service { 'Enable DHCP':
+		ensure  => 'present',
+		service => 'dhcpv6-client',
+		require => Service["firewalld"]
+	}
+	
+	exec{"enable_icmp":
+		command => "/usr/bin/firewall-cmd --add-protocol=icmp --permanent && /usr/bin/firewall-cmd --reload",
+		require => [Package["firewalld"], Service["firewalld"], Class["firewalld"]]
 	}
 
 ################################################################################
@@ -90,7 +124,7 @@ class profile::common {
 		command => '/bin/timedatectl set-timezone UTC',
 		returns => [0],
 	}
-  
+
 # Shared resources from all the teams
 
 	package { 'git':

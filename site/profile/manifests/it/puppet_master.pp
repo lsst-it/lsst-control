@@ -94,7 +94,8 @@ class profile::it::puppet_master {
 			message => "Hiera ID RSA isn't a full path!, path received was: ${hiera_id_rsa_path}",
 		}
 	}
-	
+
+/** 
 	firewalld_port { 'Puppet_port':
 		ensure   => present,
 		zone     => 'public',
@@ -102,6 +103,27 @@ class profile::it::puppet_master {
 		protocol => 'tcp',
 		require => Service['firewalld'],
 		notify => Exec["firewalld-reload"]
+	}
+*/	
+	firewalld::custom_service{'puppet':
+		short => 'puppet',
+		description => 'Puppet Client access Puppet Server',
+		port => [
+				{
+					'port'     => '8140',
+					'protocol' => 'tcp',
+				},
+				{
+					'port'     => '8140',
+					'protocol' => 'udp',
+				},
+			],
+		module => ['nf_conntrack_netbios_ns'],
+	}
+	
+	firewalld_service { 'Allow puppet port on this server':
+		ensure  => 'present',
+		service => 'puppet',
 	}
 	
 	exec{"firewalld-reload":

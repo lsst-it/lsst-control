@@ -27,3 +27,7 @@ node /^ats-shutter-hcu/{
 node /^ts-efd/ {
 	include role::ts::efd
 }
+
+node /^ts-intcluster/{
+	include role::ts::int_cluster
+}

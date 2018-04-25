@@ -47,10 +47,6 @@ class profile::common {
 	package { 'lvm2':
 		ensure => installed,
 	}
-
-	package { 'firewalld':
-		ensure => installed,
-	}
 	
 	package { 'bash-completion':
 		ensure => installed,

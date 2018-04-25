@@ -29,5 +29,5 @@ node /^ts-efd/ {
 }
 
 node /^ts-intcluster/{
-	include role::ts::int_cluster
+	include role::ts::ts_intcluster
 }

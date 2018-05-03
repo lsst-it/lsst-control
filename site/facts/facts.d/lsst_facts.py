@@ -56,7 +56,7 @@ def facts_generator(fqdn, data):
 
 	if len(hostname_list) == 5:
 		data = process_full_name(hostname_list, data)
-	elif len(hostname_list) == 3:
+	elif len(hostname_list) >= 3:
 		data = no_loc_name(hostname_list, data)
 
 	data = processDomain(fqdn, data)

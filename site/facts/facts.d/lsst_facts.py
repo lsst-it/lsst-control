@@ -18,7 +18,8 @@ def no_loc_name(hostname_list, data):
 		data["node_name"] = hostname_list[2]
 
 	if len(hostname_list) >= 2:
-		data["service_cluster"] = hostname_list[1]
+		data["cluster"] = hostname_list[1]
+		data["service"] = hostname_list[1]
 
 	# We are translating backbone to enclave
 	if len(hostname_list) >= 1:

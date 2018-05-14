@@ -6,7 +6,7 @@ class profile::ts::efd{
 	$ts_xml_subsystems = lookup("ts::efd::ts_xml_subsystems")
 	$ts_efd_writers = lookup("ts::efd::ts_efd_writers")
 	#Parameters for SAL module comes from HIERA
-	include sal
+	include ts_sal
 
 	class{"ts_xml":
 		ts_xml_path => lookup("ts_xml::ts_xml_path"),

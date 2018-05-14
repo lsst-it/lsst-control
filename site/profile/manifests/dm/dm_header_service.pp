@@ -1,6 +1,6 @@
 class profile::dm::dm_header_service{
 
-	include sal
+	include ts_sal
 	$ts_sal_path = lookup("sal::ts_sal_path")
 	#pending ts_xml because I'm not sure which subsystems has to be created for the Header Services
 	class{"ts_xml":

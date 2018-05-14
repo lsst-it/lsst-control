@@ -1,5 +1,5 @@
 class profile::ts::ts_visit_simulator{
-	include sal
+	include ts_sal
 	
 	$ts_visit_simulator_path = lookup("ts::ts:visit_simulator::path")
 	$ts_visit_simulator_id_rsa = lookup("ts::ts_visit_simulator::id_rsa")

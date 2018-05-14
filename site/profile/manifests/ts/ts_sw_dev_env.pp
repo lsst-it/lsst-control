@@ -1,5 +1,5 @@
 class profile::ts::ts_sw_dev_env{
 
-	include sal
+	include ts_sal
 
 }

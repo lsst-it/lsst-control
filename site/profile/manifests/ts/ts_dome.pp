@@ -1,5 +1,5 @@
 class profile::ts::ts_dome{
-	include sal
+	include ts_sal
 	$labview_version = lookup("ts::ts_dome::labview_version")
 	
 	class{"ts_xml":

@@ -13,6 +13,7 @@ class profile::ts::efd{
 		ts_xml_subsystems => $ts_xml_subsystems,
 		ts_xml_languages => lookup("ts::efd::ts_xml_languages"),
 		ts_sal_path => $ts_sal_path,
+		before => Exec["gengenericefd"]
 	}
 
 	exec{ "gengenericefd" :

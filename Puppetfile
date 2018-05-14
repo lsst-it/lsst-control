@@ -12,3 +12,7 @@ mod 'crayfishx-firewalld'
 mod 'puppet-yum'
 mod 'puppet-virtualbox'
 mod 'ghoneycutt-ssh'
+mod 'ts_sal',
+	:git => 'https://github.com/lsst/ts_sal.git'
+mod 'ts_xml',
+	:git => 'https://github.com/lsst/ts_xml.git'

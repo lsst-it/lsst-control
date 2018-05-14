@@ -11,4 +11,8 @@ modules/ssh_keygen
 modules/stdlib
 modules/vcsrepo
 modules/yum
+modules/virtualbox
+modules/ssh
+modules/ts_sal
+modules/ts_xml
 .DS_Store

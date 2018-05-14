@@ -31,3 +31,7 @@ node /^ts-efd/ {
 node /^ts-intcluster/{
 	include role::ts::ts_intcluster
 }
+
+node /^tcs-dome/{
+	include role::ts::ts_dome
+}

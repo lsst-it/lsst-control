@@ -52,6 +52,10 @@ class profile::default {
 		ensure => installed,
 	}
 
+	package { 'tree':
+		ensure => installed,
+	}
+
 # Firewall and security measurements
 ################################################################################
 	

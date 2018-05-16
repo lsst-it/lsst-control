@@ -1,7 +1,5 @@
 mod 'puppetlabs/stdlib'
 mod 'puppetlabs/concat'
-mod 'pltraining/dockeragent'
-mod 'garethr/docker'
 mod 'puppetlabs/vcsrepo'
 mod 'puppet/ssh_keygen'
 mod 'puppetlabs/ntp'
@@ -16,3 +14,4 @@ mod 'ts_sal',
 	:git => 'https://github.com/lsst/ts_sal.git'
 mod 'ts_xml',
 	:git => 'https://github.com/lsst/ts_xml.git'
+mod 'puppetlabs-inifile'

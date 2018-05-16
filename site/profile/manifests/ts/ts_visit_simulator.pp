@@ -5,7 +5,7 @@ class profile::ts::ts_visit_simulator{
 	$ts_visit_simulator_id_rsa = lookup("ts::ts_visit_simulator::id_rsa")
 	$ts_visit_simulator_branch = lookup("ts::ts_visit_simulator::branch")
 
-	$ts_home = lookup("sal::lsst_users_home_dir")
+	$ts_home = lookup("ts_sal::lsst_users_home_dir")
 	$ts_salmgr_home = "${ts_home}/salmgr"
 
 	package{ "xorg-x11-server-Xvfb":

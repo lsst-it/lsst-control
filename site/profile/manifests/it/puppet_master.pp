@@ -23,13 +23,6 @@ class profile::it::puppet_master {
 		content => lookup("autosign_servers"),
 	}
 
-	file_line{"/etc/puppetlabs/puppet/puppet.conf":
-		path => "/etc/puppetlabs/puppet/puppet.conf",
-		match => "\n[agent]\nserver = ",
-		line => "\n[agent]\nserver = ${fqdn}",
-		require => Package["puppetserver"],
-	}
-	
 	file{ "/etc/hosts":
 		ensure => present,
 		content => "${ipaddress}\t${fqdn}",

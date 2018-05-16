@@ -15,4 +15,5 @@ modules/virtualbox
 modules/ssh
 modules/ts_sal
 modules/ts_xml
+modules/inifile
 .DS_Store

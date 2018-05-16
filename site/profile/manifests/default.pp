@@ -103,14 +103,31 @@ class profile::default {
 	}
 
 	$puppet_agent_run_interval = lookup("puppet_agent_run_interval")
+	/* 
 	file_line { "Puppet Run Interval":
 		path => "/etc/puppetlabs/puppet/puppet.conf",
 		line => "runinterval=${puppet_agent_run_interval}",
 		match => "runinterval=*"
 	}
+	*/
+	ini_setting { "Puppet agent runinterval":
+		ensure  => present,
+		path    => '/etc/puppetlabs/puppet/puppet.conf',
+		section => 'agent',
+		setting => 'runinterval',
+		value   => "${puppet_agent_run_interval}",
+	}
+	
+	ini_setting { "Puppet agent server":
+		ensure  => present,
+		path    => '/etc/puppetlabs/puppet/puppet.conf',
+		section => 'agent',
+		setting => 'server',
+		value   => lookup("puppet_master_server"),
+	}
 	
 	service{ "puppet":
-		ensure => running
+		ensure => lookup("puppet_agent_service_state")
 	}
 
 ################################################################################

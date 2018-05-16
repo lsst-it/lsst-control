@@ -13,21 +13,24 @@ class profile::ts::ts_dome{
 		exec{ "get_labview":
 			path => ["/bin","/usr/sbin", "/usr/bin"],
 			command => "mkdir /tmp/lvruntime2015 && /usr/bin/wget http://download.ni.com/support/softlib/labview/labview_runtime/2015/Linux/f3/LabVIEW2015RTE_Linux.tgz -O /tmp/lvruntime2015/LabVIEW2015RTE_Linux.tgz",
-			notify => Exec["install_labview"]
+			notify => Exec["install_labview"],
+			onlyif => "test ! -d /tmp/lvruntime2015"
 		}
 		
 	}elsif $labview_version == "2016"{
 		exec{ "get_labview":
 			path => ["/bin","/usr/sbin"],
 			command => "mkdir /tmp/lvruntime2016 && /usr/bin/wget http://download.ni.com/support/softlib/labview/labview_runtime/2016/Linux/f5/64-bit/LabVIEW2016RTE_Linux.tgz -O /tmp/lvruntime2016/LabVIEW2016RTE_Linux.tgz",
-			notify => Exec["install_labview"]
+			notify => Exec["install_labview"],
+			onlyif => "test ! -d /tmp/lvruntime2016"
 		}
 	}
 	
 	exec{"install_labview":
 		path => ["/bin","/usr/sbin", "/usr/bin"],
 		command => "cd /tmp/lvruntime${$labview_version}/ && tar -xvzf LabVIEW${$labview_version}RTE_Linux.tgz && ./INSTALL",
-		require => Exec["get_labview"]
+		require => Exec["get_labview"],
+		onlyif => "test ! -f /tmp/lvruntime${$labview_version}/LabVIEW${$labview_version}RTE_Linux.tgz"
 	}
 	
 }

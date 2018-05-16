@@ -102,6 +102,17 @@ class profile::default {
 		content => $motd_msg,
 	}
 
+	$puppet_agent_run_interval = lookup("puppet_agent_run_interval")
+	file_line { "Puppet Run Interval":
+		path => "/etc/puppetlabs/puppet/puppet.conf",
+		line => "runinterval=${puppet_agent_run_interval}",
+		match => "runinterval=*"
+	}
+	
+	service{ "puppet":
+		ensure => running
+	}
+
 ################################################################################
 
 	file_line { 'SELINUX=permissive':

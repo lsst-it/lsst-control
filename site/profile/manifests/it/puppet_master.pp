@@ -25,6 +25,7 @@ class profile::it::puppet_master {
 
 	file_line{"/etc/puppetlabs/puppet/puppet.conf":
 		path => "/etc/puppetlabs/puppet/puppet.conf",
+		match => "\n[agent]\nserver = ",
 		line => "\n[agent]\nserver = ${fqdn}",
 		require => Package["puppetserver"],
 	}

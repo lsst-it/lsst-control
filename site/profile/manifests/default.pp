@@ -2,7 +2,8 @@
 # https://confluence.lsstcorp.org/display/IT/Linux+CentOS+Setup
 class profile::default {
  	include profile::it::ssh_server
-
+ 	# All telegraf configuration came from Hiera
+	include telegraf
 	package { 'nmap':
 		ensure => installed,
 	}
@@ -54,6 +55,26 @@ class profile::default {
 
 	package { 'tree':
 		ensure => installed,
+	}
+
+	package { 'sudo':
+		ensure => installed,
+	}	
+
+	if ! $is_virtual {
+		package { 'smartmontools':
+			ensure => installed,
+		}
+		package { 'lm_sensors':
+			ensure => installed,
+		}
+		file_line { 'Adding smartcl permissions to sudoers':
+			ensure => present,
+			path  => '/etc/sudoers',
+			line => 'telegraf  ALL= NOPASSWD: /usr/sbin/smartctl',
+			match => '^telegraf',
+			require => Package["sudo"]
+		}
 	}
 
 # Firewall and security measurements

@@ -32,6 +32,6 @@ node /^ts-intcluster/{
 	include role::ts::ts_intcluster
 }
 
-node /^tcs-dome/{
+node /tcs-dome/{
 	include role::ts::ts_dome
 }

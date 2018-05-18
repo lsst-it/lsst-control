@@ -15,20 +15,23 @@ hierarchy:
         - name: "[1] - Nodes properties"
           path: "country/site/enclave/datacenter/cluster/node/%{networking.hostname}.yaml"
 
-        - name: "[2] - Cluster properties"
+        - name: "[2] - Type"
+          path: "type/%{virtual}.yaml"
+
+        - name: "[3] - Cluster properties"
           path: "country/site/enclave/datacenter/cluster/%{cluster}.yaml"
 
-        - name: "[3] - Datacenter properties"
+        - name: "[4] - Datacenter properties"
           path: "country/site/enclave/datacenter/%{datacenter}.yaml"
 
-        - name: "[4] - Enclave properties"
+        - name: "[5] - Enclave properties"
           path: "country/site/enclave/%{enclave}.yaml"
 
-        - name: "[5] - Site properties"
+        - name: "[6] - Site properties"
           path: "country/site/%{site}.yaml"
 
-        - name: "[6] - Country properties"
+        - name: "[7] - Country properties"
           path: "country/%{country}.yaml"
 
-        - name: "[7] - Common"
+        - name: "[8] - Common"
           path: "common.yaml"

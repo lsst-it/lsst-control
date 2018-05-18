@@ -16,4 +16,5 @@ modules/ssh
 modules/ts_sal
 modules/ts_xml
 modules/inifile
+modules/telegraf
 .DS_Store

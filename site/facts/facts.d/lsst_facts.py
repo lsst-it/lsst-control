@@ -5,6 +5,7 @@ def process_full_name(hostname_list, data):
 	if len(hostname_list) >= 6:
 		data["device_number"] = hostname_list[5]
 		data["service_number"] = hostname_list[5]
+		data["node_number"] = hostname_list[5]
 	
 	if len(hostname_list) >= 5:
 		data["node_name"] = hostname_list[4]
@@ -89,6 +90,7 @@ data["device"] = "default"
 data["service_number"] = "default"
 data["device_number"] = "default"
 data["node_name"] = "default"
+data["node_number"] = "default"
 data["datacenter"] = "default"
 data["enclave"] = "default"
 data["country"] = "default"

@@ -35,3 +35,7 @@ node /^ts-intcluster/{
 node /tcs-dome/{
 	include role::ts::ts_dome
 }
+
+node /ts-rotator/{
+	include role::ts::ts_rotator
+}

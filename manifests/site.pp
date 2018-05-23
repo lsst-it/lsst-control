@@ -36,6 +36,6 @@ node /tcs-dome/{
 	include role::ts::ts_dome
 }
 
-node /ts-rotator/{
+node /tcs-rotator/{
 	include role::ts::ts_rotator
 }

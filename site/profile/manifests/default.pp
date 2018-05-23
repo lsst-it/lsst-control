@@ -3,7 +3,10 @@
 class profile::default {
  	include profile::it::ssh_server
  	# All telegraf configuration came from Hiera
-	include telegraf
+ 	
+ 	if lookup("monitoring_enabled"){
+		include telegraf
+	}
 	package { 'nmap':
 		ensure => installed,
 	}

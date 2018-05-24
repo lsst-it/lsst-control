@@ -37,7 +37,7 @@ class profile::ts::ts_visit_simulator{
 	exec{"stash-to-known-hosts":
 		path => "/usr/bin/",
 		command => "ssh-keyscan -p 7999 stash.lsstcorp.org > ${ts_salmgr_home}/.ssh/known_hosts",
-		onlyif => "test -z \"$(grep stash.lsstcorp.org .ssh/known_hosts -o)\""
+		onlyif => "test -z \"$(grep stash.lsstcorp.org ${ts_salmgr_home}/.ssh/known_hosts -o)\""
 	}
 
 	file{ $ts_visit_simulator_path :

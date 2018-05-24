@@ -106,8 +106,10 @@ class profile::default {
 	}
 	
 	exec{"enable_icmp":
+		provider => "shell",
 		command => "/usr/bin/firewall-cmd --add-protocol=icmp --permanent && /usr/bin/firewall-cmd --reload",
-		require => Class["firewalld"]
+		require => Class["firewalld"],
+		onlyif => "[[ \"\$(firewall-cmd --list-protocols\" != *\"icmp\"* ]]"
 	}
 
 ################################################################################

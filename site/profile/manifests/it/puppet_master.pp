@@ -18,9 +18,22 @@ class profile::it::puppet_master {
 		ensure => present,
 	}
 
-	file{"/etc/puppetlabs/puppet/autosign.conf":
-		ensure => present,
-		content => lookup("autosign_servers"),
+	file{'/etc/puppetlabs/puppet/autosign.conf':
+		ensure => present
+	}
+
+	$autosign_domain_list = lookup("autosign_servers")
+	
+	$autosign_domain_list.each | $domain | {
+
+		file_line { "Ensure ${$domain} in autosign.conf":
+			ensure => present,
+			path  => '/etc/puppetlabs/puppet/autosign.conf',
+			line => "*.${domain}",
+			match => "${domain}",
+			require => File['/etc/puppetlabs/puppet/autosign.conf']
+		}
+
 	}
 
 	file{ "/etc/hosts":
@@ -36,7 +49,8 @@ class profile::it::puppet_master {
 	}
 
 	exec{"install R10K":
-		command => "/opt/puppetlabs/puppet/bin/gem install r10k"
+		command => "/opt/puppetlabs/puppet/bin/gem install r10k",
+		onlyif => "/usr/bin/test ! -x /opt/puppetlabs/puppet/bin/r10k"
 	}
 	
 	file{"/etc/puppetlabs/r10k/":
@@ -118,10 +132,5 @@ class profile::it::puppet_master {
 	firewalld_service { 'Allow puppet port on this server':
 		ensure  => 'present',
 		service => 'puppet',
-	}
-	
-	exec{"firewalld-reload":
-		command => "/bin/firewall-cmd --reload ",
-		require => Service["firewalld"],
 	}
 }

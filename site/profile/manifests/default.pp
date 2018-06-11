@@ -6,6 +6,10 @@ class profile::default {
  	
  	if lookup("monitoring_enabled"){
 		include telegraf
+	}else{
+		service{"telegraf":
+			ensure => stopped,
+		}
 	}
 	package { 'nmap':
 		ensure => installed,
@@ -109,7 +113,7 @@ class profile::default {
 		provider => "shell",
 		command => "/usr/bin/firewall-cmd --add-protocol=icmp --permanent && /usr/bin/firewall-cmd --reload",
 		require => Class["firewalld"],
-		onlyif => "[[ \"\$(firewall-cmd --list-protocols\" != *\"icmp\"* ]]"
+		onlyif => "[[ \"\$(firewall-cmd --list-protocols)\" != *\"icmp\"* ]]"
 	}
 
 ################################################################################
@@ -152,6 +156,11 @@ class profile::default {
 		value   => lookup("puppet_master_server"),
 	}
 	
+	file{"/opt/puppetlabs/puppet/cache":
+		ensure => "directory",
+		mode => "755",
+	}
+	
 	service{ "puppet":
 		ensure => lookup("puppet_agent_service_state")
 	}
@@ -166,8 +175,10 @@ class profile::default {
 
 	# Set timezone as default to UTC
 	exec { 'set-timezone':
+		provider => "shell",
 		command => '/bin/timedatectl set-timezone UTC',
 		returns => [0],
+		onlyif => "test -z \"$(ls -l /etc/localtime | grep -o UTC)\""
 	}
 
 # Shared resources from all the teams

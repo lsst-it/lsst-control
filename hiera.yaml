@@ -30,5 +30,9 @@ hierarchy:
         - name: "[6] - Country properties"
           path: "country/%{country}.yaml"
 
-        - name: "[7] - Common"
+        - name: "[7] - Type"
+          path: "type/%{virtual}.yaml"
+          path: "type/default.yaml"
+
+        - name: "[8] - Common"
           path: "common.yaml"

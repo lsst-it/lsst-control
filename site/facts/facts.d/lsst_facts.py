@@ -2,23 +2,41 @@
 import os
 
 def process_full_name(hostname_list, data):
+	if len(hostname_list) >= 6:
+		data["device_number"] = hostname_list[5]
+		data["service_number"] = hostname_list[5]
+		data["node_number"] = hostname_list[5]
+	
 	if len(hostname_list) >= 5:
 		data["node_name"] = hostname_list[4]
 
 	if len(hostname_list) >= 4:
-		data["service_cluster"] = hostname_list[3]
+		data["cluster"] = hostname_list[3]
+		data["service"] = hostname_list[3]
 
 	# We are translating backbone to enclave
 	if len(hostname_list) >= 3:
 		data["enclave"] = hostname_list[2]
+		
+	if len(hostname_list) >= 2:
+		data["rack"] = hostname_list[1]
+	
+	if len(hostname_list) >= 1:
+		data["room"] = hostname_list[0]
 	return data
 
 def no_loc_name(hostname_list, data):
+	
+	if len(hostname_list) >= 4:
+		data["device_number"] = hostname_list[3]
+		data["service_number"] = hostname_list[3]	
+	
 	if len(hostname_list) >= 3:
 		data["node_name"] = hostname_list[2]
 
 	if len(hostname_list) >= 2:
-		data["service_cluster"] = hostname_list[1]
+		data["cluster"] = hostname_list[1]
+		data["service"] = hostname_list[1]
 
 	# We are translating backbone to enclave
 	if len(hostname_list) >= 1:
@@ -54,9 +72,9 @@ def facts_generator(fqdn, data):
 	#Reference: https://confluence.lsstcorp.org/display/SYSENG/LSST+ITC+DNS+Infrastructure
 	#Full name with location
 
-	if len(hostname_list) == 5:
+	if len(hostname_list) >= 5:
 		data = process_full_name(hostname_list, data)
-	elif len(hostname_list) == 3:
+	elif len(hostname_list) >= 3:
 		data = no_loc_name(hostname_list, data)
 
 	data = processDomain(fqdn, data)
@@ -72,9 +90,13 @@ data["device"] = "default"
 data["service_number"] = "default"
 data["device_number"] = "default"
 data["node_name"] = "default"
+data["node_number"] = "default"
 data["datacenter"] = "default"
 data["enclave"] = "default"
 data["country"] = "default"
+# useful information for telegraf monitoring
+data["room"] = "default"
+data["rack"] = "default"
 
 # Breakdown:
 # 0: Hostname

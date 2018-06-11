@@ -1,4 +1,4 @@
 class role::ts::ts_sw_env_container{
-	include profile::common
+	include profile::default
 	include profile::ts::ts_sw_env_container
 }

@@ -27,3 +27,15 @@ node /^ats-shutter-hcu/{
 node /^ts-efd/ {
 	include role::ts::efd
 }
+
+node /^ts-intcluster/{
+	include role::ts::ts_intcluster
+}
+
+node /tcs-dome/{
+	include role::ts::ts_dome
+}
+
+node /tcs-rotator/{
+	include role::ts::ts_rotator
+}

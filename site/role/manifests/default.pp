@@ -1,3 +1,3 @@
 class role::default{
-	include profile::common
+	include profile::default
 }

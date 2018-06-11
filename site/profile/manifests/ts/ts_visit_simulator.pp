@@ -1,11 +1,18 @@
 class profile::ts::ts_visit_simulator{
-	include sal
+	include ts_sal
+	
+	class{"ts_xml":
+		ts_xml_path => lookup("ts_xml::ts_xml_path"),
+		ts_xml_subsystems => lookup("visitsim::ts_xml_subsystems"),
+		ts_xml_languages => lookup("visitsim::ts_xml_languages"),
+		ts_sal_path => lookup("ts_sal::ts_sal_path")
+	}
 	
 	$ts_visit_simulator_path = lookup("ts::ts:visit_simulator::path")
 	$ts_visit_simulator_id_rsa = lookup("ts::ts_visit_simulator::id_rsa")
 	$ts_visit_simulator_branch = lookup("ts::ts_visit_simulator::branch")
 
-	$ts_home = lookup("sal::lsst_users_home_dir")
+	$ts_home = lookup("ts_sal::lsst_users_home_dir")
 	$ts_salmgr_home = "${ts_home}/salmgr"
 
 	package{ "xorg-x11-server-Xvfb":
@@ -30,6 +37,7 @@ class profile::ts::ts_visit_simulator{
 	exec{"stash-to-known-hosts":
 		path => "/usr/bin/",
 		command => "ssh-keyscan -p 7999 stash.lsstcorp.org > ${ts_salmgr_home}/.ssh/known_hosts",
+		onlyif => "test -z \"$(grep stash.lsstcorp.org ${ts_salmgr_home}/.ssh/known_hosts -o)\""
 	}
 
 	file{ $ts_visit_simulator_path :
@@ -55,6 +63,7 @@ class profile::ts::ts_visit_simulator{
 		match => "###export LSST_SDK_INSTALL=*",
 		path => "${ts_visit_simulator_path}/setup.env",
 		require => [ Vcsrepo[$ts_visit_simulator_path] ],
+		replace => true,
 	}
 
 
@@ -64,16 +73,21 @@ class profile::ts::ts_visit_simulator{
 		match => "###export OSPL_HOME=*",
 		path => "${ts_visit_simulator_path}/setup.env",
 		require => [ Vcsrepo[$ts_visit_simulator_path] ],
+		replace => true,
 	}
 	
 	#TODO LSST_EFD_HOST pending for definition
 	file_line{ "ts_visit_simulator_custom_variables" :
+		ensure => present,
 		path => "${ts_visit_simulator_path}/setup.env",
-		line => "export TCSSIM_QUIET=true"
+		line => "export TCSSIM_QUIET=true",
+		match => "^export TCSSIM_QUIET",
+		replace => true
 	}
 	
 	
 	file { '/etc/systemd/system/tsVisitSimulator.service':
+		ensure => "present",
 		mode    => '0644',
 		owner   => 'root',
 		group   => 'root',
@@ -87,12 +101,13 @@ class profile::ts::ts_visit_simulator{
 		command     => 'systemctl daemon-reload',
 		path        => [ '/usr/bin', '/bin', '/usr/sbin' ],
 		refreshonly => true,
-		require => [File['/etc/systemd/system/tsVisitSimulator.service'], Vcsrepo[$ts_visit_simulator_path]]
+		require => [File['/etc/systemd/system/tsVisitSimulator.service'], Vcsrepo[$ts_visit_simulator_path]],
+		onlyif => "test $(systemctl list-unit-files | grep tsVisitSimulator | awk '{print \$2}') != 'enabled'",
+		notify => Service["tsVisitSimulator"]
 	}
 
 	service { 'tsVisitSimulator':
 		ensure => running,
 		enable => true,
-		require => Exec['tsVisitSimulator-systemd-reload'],
 	}
 }

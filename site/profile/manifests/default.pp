@@ -1,8 +1,16 @@
 #This base installation is based on the procedure
 # https://confluence.lsstcorp.org/display/IT/Linux+CentOS+Setup
-class profile::common {
- 	include profile::ssh_server
-
+class profile::default {
+ 	include profile::it::ssh_server
+ 	# All telegraf configuration came from Hiera
+ 	
+ 	if lookup("monitoring_enabled"){
+		include telegraf
+	}else{
+		service{"telegraf":
+			ensure => stopped,
+		}
+	}
 	package { 'nmap':
 		ensure => installed,
 	}
@@ -47,18 +55,65 @@ class profile::common {
 	package { 'lvm2':
 		ensure => installed,
 	}
-
-	package { 'firewalld':
-		ensure => installed,
-	}
 	
 	package { 'bash-completion':
 		ensure => installed,
 	}
+
+	package { 'tree':
+		ensure => installed,
+	}
+
+	package { 'sudo':
+		ensure => installed,
+	}	
+
+	if ! $is_virtual {
+		package { 'smartmontools':
+			ensure => installed,
+		}
+		package { 'lm_sensors':
+			ensure => installed,
+		}
+		file_line { 'Adding smartcl permissions to sudoers':
+			ensure => present,
+			path  => '/etc/sudoers',
+			line => 'telegraf  ALL= NOPASSWD: /usr/sbin/smartctl',
+			match => '^telegraf',
+			require => Package["sudo"]
+		}
+	}
+
+# Firewall and security measurements
+################################################################################
 	
-	service{ 'firewalld':
-		ensure => running,
-		enable => true,
+	$lsst_firewall_default_zone = lookup("lsst_firewall_default_zone")
+	
+	class { "firewalld":
+		default_zone => $lsst_firewall_default_zone,
+	}
+	
+	firewalld_zone { $lsst_firewall_default_zone:
+		ensure => present,
+		target => lookup("lsst_firewall_default_target"),
+		sources => lookup("lsst_firewall_default_sources")
+	}
+	
+	firewalld_service { 'Enable SSH':
+		ensure  => 'present',
+		service => 'ssh',
+	}
+
+	firewalld_service { 'Enable DHCP':
+		ensure  => 'present',
+		service => 'dhcpv6-client',
+	}
+	
+	exec{"enable_icmp":
+		provider => "shell",
+		command => "/usr/bin/firewall-cmd --add-protocol=icmp --permanent && /usr/bin/firewall-cmd --reload",
+		require => Class["firewalld"],
+		onlyif => "[[ \"\$(firewall-cmd --list-protocols)\" != *\"icmp\"* ]]"
 	}
 
 ################################################################################
@@ -77,6 +132,39 @@ class profile::common {
 		content => $motd_msg,
 	}
 
+	$puppet_agent_run_interval = lookup("puppet_agent_run_interval")
+	/* 
+	file_line { "Puppet Run Interval":
+		path => "/etc/puppetlabs/puppet/puppet.conf",
+		line => "runinterval=${puppet_agent_run_interval}",
+		match => "runinterval=*"
+	}
+	*/
+	ini_setting { "Puppet agent runinterval":
+		ensure  => present,
+		path    => '/etc/puppetlabs/puppet/puppet.conf',
+		section => 'agent',
+		setting => 'runinterval',
+		value   => "${puppet_agent_run_interval}",
+	}
+	
+	ini_setting { "Puppet agent server":
+		ensure  => present,
+		path    => '/etc/puppetlabs/puppet/puppet.conf',
+		section => 'agent',
+		setting => 'server',
+		value   => lookup("puppet_master_server"),
+	}
+	
+	file{"/opt/puppetlabs/puppet/cache":
+		ensure => "directory",
+		mode => "755",
+	}
+	
+	service{ "puppet":
+		ensure => lookup("puppet_agent_service_state")
+	}
+
 ################################################################################
 
 	file_line { 'SELINUX=permissive':
@@ -87,10 +175,12 @@ class profile::common {
 
 	# Set timezone as default to UTC
 	exec { 'set-timezone':
+		provider => "shell",
 		command => '/bin/timedatectl set-timezone UTC',
 		returns => [0],
+		onlyif => "test -z \"$(ls -l /etc/localtime | grep -o UTC)\""
 	}
-  
+
 # Shared resources from all the teams
 
 	package { 'git':

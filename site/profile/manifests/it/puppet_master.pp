@@ -18,17 +18,24 @@ class profile::it::puppet_master {
 		ensure => present,
 	}
 
-	file{"/etc/puppetlabs/puppet/autosign.conf":
-		ensure => present,
-		content => lookup("autosign_servers"),
+	file{'/etc/puppetlabs/puppet/autosign.conf':
+		ensure => present
 	}
 
-	file_line{"/etc/puppetlabs/puppet/puppet.conf":
-		path => "/etc/puppetlabs/puppet/puppet.conf",
-		line => "\n[agent]\nserver = ${fqdn}",
-		require => Package["puppetserver"],
-	}
+	$autosign_domain_list = lookup("autosign_servers")
 	
+	$autosign_domain_list.each | $domain | {
+
+		file_line { "Ensure ${$domain} in autosign.conf":
+			ensure => present,
+			path  => '/etc/puppetlabs/puppet/autosign.conf',
+			line => "*.${domain}",
+			match => "${domain}",
+			require => File['/etc/puppetlabs/puppet/autosign.conf']
+		}
+
+	}
+
 	file{ "/etc/hosts":
 		ensure => present,
 		content => "${ipaddress}\t${fqdn}",
@@ -42,7 +49,8 @@ class profile::it::puppet_master {
 	}
 
 	exec{"install R10K":
-		command => "/opt/puppetlabs/puppet/bin/gem install r10k"
+		command => "/opt/puppetlabs/puppet/bin/gem install r10k",
+		onlyif => "/usr/bin/test ! -x /opt/puppetlabs/puppet/bin/r10k"
 	}
 	
 	file{"/etc/puppetlabs/r10k/":
@@ -94,7 +102,8 @@ class profile::it::puppet_master {
 			message => "Hiera ID RSA isn't a full path!, path received was: ${hiera_id_rsa_path}",
 		}
 	}
-	
+
+/** 
 	firewalld_port { 'Puppet_port':
 		ensure   => present,
 		zone     => 'public',
@@ -103,9 +112,25 @@ class profile::it::puppet_master {
 		require => Service['firewalld'],
 		notify => Exec["firewalld-reload"]
 	}
+*/	
+	firewalld::custom_service{'puppet':
+		short => 'puppet',
+		description => 'Puppet Client access Puppet Server',
+		port => [
+				{
+					'port'     => '8140',
+					'protocol' => 'tcp',
+				},
+				{
+					'port'     => '8140',
+					'protocol' => 'udp',
+				},
+			],
+		module => ['nf_conntrack_netbios_ns'],
+	}
 	
-	exec{"firewalld-reload":
-		command => "/bin/firewall-cmd --reload ",
-		require => Service["firewalld"],
+	firewalld_service { 'Allow puppet port on this server':
+		ensure  => 'present',
+		service => 'puppet',
 	}
 }

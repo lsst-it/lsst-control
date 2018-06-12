@@ -1,12 +1,10 @@
 class profile::it::ssh_server {
-	package {'openssh-server':
-		ensure => present,
+	
+	class { "ssh":
+		permit_root_login => "no",
 	}
-	service { 'sshd':
-		ensure => 'running',
-		enable => true,
-	}
-	if $trusted['hostname'] =~ /^puppet_master/ {
+	
+	if $hostname =~ /puppet-master/ {
 		file{"/etc/ssh/puppet_id_rsa_key":
 			ensure => file,
 			mode => "600",

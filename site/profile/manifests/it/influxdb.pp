@@ -14,14 +14,14 @@ class profile::it::influxdb {
 		influxd_opts           => lookup("influxdb_opts"),
 	}
 
-	firewalld_port { 'InfluxDB Port':
+	firewalld_port { 'InfluxDB Main Port':
 		ensure   => present,
 		port     => '8086',
 		protocol => 'tcp',
 		require => Service['firewalld'],
 	}
 
-	firewalld_port { 'InfluxDB Port':
+	firewalld_port { 'InfluxDB Internodes Port':
 		ensure   => present,
 		port     => '8091',
 		protocol => 'tcp',

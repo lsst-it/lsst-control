@@ -17,5 +17,8 @@ modules/ts_sal
 modules/ts_xml
 modules/inifile
 modules/telegraf
+modules/influxdb
+modules/firewall
+modules/epel
 .pydevproject
 .DS_Store

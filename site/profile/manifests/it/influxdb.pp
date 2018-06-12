@@ -8,9 +8,9 @@ class profile::it::influxdb {
 		http_log_enabled       => true,
 		http_write_tracing     => false,
 		http_pprof_enabled     => true,
-		meta_bind_address      => "${::fqdn}:8088",
-		meta_http_bind_address => "${::fqdn}:8091",
-		http_bind_address      => "${::fqdn}:8086",
+		meta_bind_address      => "localhost:8088",
+		meta_http_bind_address => "localhost:8091",
+		http_bind_address      => "localhost:8086",
 		influxd_opts           => lookup("influxdb_opts"),
 	}
 

@@ -19,3 +19,4 @@ mod 'ts_xml',
 mod 'puppetlabs-inifile'
 mod 'datacentred-telegraf'
 mod 'stahnma-epel'
+mod 'golja-influxdb'

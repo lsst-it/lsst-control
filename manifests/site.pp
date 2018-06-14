@@ -39,3 +39,11 @@ node /tcs-dome/{
 node /tcs-rotator/{
 	include role::ts::ts_rotator
 }
+
+node /influxdb/{
+	include role::it::influxdb
+}
+
+node /grafana/{
+	include role::it::grafana
+}

@@ -20,5 +20,6 @@ modules/telegraf
 modules/influxdb
 modules/firewall
 modules/epel
+modules/grafana
 .pydevproject
 .DS_Store

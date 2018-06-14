@@ -50,6 +50,10 @@ class profile::ts::efd{
 		enable => true,
 		require => File["/etc/my.cnf.d/efd.cnf"],
 	}
+	firewalld_service { 'Allow mysql port on firewalld':
+		ensure  => 'present',
+		service => 'mysql',
+	}
 	
 	#Creates a unit file with the efd writers for each subsystem
 	$ts_xml_subsystems.each | String $subsystem | {

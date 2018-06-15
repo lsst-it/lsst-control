@@ -12,6 +12,15 @@ class profile::it::influxdb {
 		meta_http_bind_address => ":8091",
 		http_bind_address      => ":8086",
 		influxd_opts           => lookup("influxdb_opts"),
+		http_https_enabled     => true,
+		http_https_certificate => "/etc/ssl/influxdb.crt",
+		http_https_private_key      => "/etc/ssl/influxdb.key"
+	}
+
+	exec{"Create Selfsigned cert":
+		path => "/usr/bin/",
+		command => "openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/ssl/influxdb.key -out /etc/ssl/influxdb.crt -days 365 -subj \"/C=CL/ST=Coquimbo/L=La Serena/O=LSST/CN=lsst.org\"",
+		onlyif => "test ! -f /etc/ssl/influxdb.crt"
 	}
 
 	firewalld_port { 'InfluxDB Main Port':

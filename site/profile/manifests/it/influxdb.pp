@@ -17,9 +17,14 @@ class profile::it::influxdb {
 		http_https_private_key      => "/etc/ssl/influxdb.key"
 	}
 
+	$openssl_country = lookup("country")
+	$openssl_state = lookup("state")
+	$openssl_locality = lookup("locality")
+	$openssl_cn = $trusted['certname']
+
 	exec{"Create Selfsigned cert":
 		path => "/usr/bin/",
-		command => "openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/ssl/influxdb.key -out /etc/ssl/influxdb.crt -days 365 -subj \"/C=CL/ST=Coquimbo/L=La Serena/O=LSST/CN=lsst.org\"",
+		command => "openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/ssl/influxdb.key -out /etc/ssl/influxdb.crt -days 365 -subj \"/C=${openssl_country}/ST=${openssl_state}/L=${openssl_locality}/O=LSST/CN=${openssl_cn}\"",
 		onlyif => "test ! -f /etc/ssl/influxdb.crt"
 	}
 

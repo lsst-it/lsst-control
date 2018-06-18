@@ -12,13 +12,16 @@ class profile::it::graylog {
 		bind_ip => ['127.0.0.1'],
 	}
 
+	$xms = lookup("elasticsearch_xms")
+	$xmx = lookup("elasticsearch_xmx")
+
 	class { 'elasticsearch':
 		version      => '5.5.1',
 		repo_version => '5.x',
 		manage_repo  => true,
 		jvm_options => [
-			'-Xms512m',
-			'-Xmx512m'
+			"-Xms${xms}",
+			"-Xmx${xmx}"
 		]
 	}
 
@@ -36,8 +39,10 @@ class profile::it::graylog {
 	class { 'graylog::server':
 		package_version => '2.4.0-9',
 		config          => {
-			'password_secret' => 'root4uroot4uroot4u',    # Fill in your password secret, must have more than 16 characters
-			'root_password_sha2' => 'ADA6995028C231EFF4F2BF1B647B2E120459D0EA972138E89AD394F6E8698B8C', # Fill in your root password hash
+			password_secret => lookup("graylog_server_password_secret"),    # Fill in your password secret, must have more than 16 characters
+			root_password_sha2 => lookup("graylog_server_root_password_sha2"), # Fill in your root password hash
+			web_listen_uri => "http://10.0.0.253:9000",
+			rest_listen_uri => "http://10.0.0.253:9000/api",
 		}
 	}
 
@@ -50,8 +55,8 @@ class profile::it::graylog {
 	# to use port 514, graylog should be executed as root, hence adding a listener in other port.
 	firewalld_port { 'Syslog Port':
 		ensure   => present,
-		port     => '5514',
-		protocol => 'udp',
+		port     => lookup("graylog_rsyslog_port"),
+		protocol => lookup("graylog_rsyslog_proto"),
 		require => Service['firewalld'],
 	}
 

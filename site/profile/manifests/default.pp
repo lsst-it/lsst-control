@@ -84,15 +84,15 @@ class profile::default {
 		}
 	}
 
-# Logging
+	#Remote Logging
 	class{'rsyslog::client':
 		log_local => true,
 		remote_servers => [
 			{
-				host => '10.0.0.253',
-				port => '5514',
-				protocol  => 'udp',
-				pattern => "*.info;mail.none;authpriv.none;cron.none"
+				host => lookup("rsyslog_host"),
+				port => lookup("rsyslog_port"),
+				protocol  => lookup("rsyslog_proto"),
+				pattern => lookup("rsyslog_patterns")
     			},
   		]
 	}

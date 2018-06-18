@@ -84,6 +84,19 @@ class profile::default {
 		}
 	}
 
+# Logging
+	class{'rsyslog::client':
+		log_local => true,
+		remote_servers => [
+			{
+				host => '10.0.0.253',
+				port => '5514',
+				protocol  => 'udp',
+				pattern => "*.info;mail.none;authpriv.none;cron.none"
+    			},
+  		]
+	}
+
 # Firewall and security measurements
 ################################################################################
 	

@@ -16,8 +16,6 @@ class profile::it::graylog {
 	$xmx = lookup("elasticsearch_xmx")
 
 	class { 'elasticsearch':
-		version      => '5.5.1',
-		repo_version => '5.x',
 		manage_repo  => true,
 		jvm_options => [
 			"-Xms${xms}",

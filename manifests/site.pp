@@ -47,3 +47,7 @@ node /influxdb/{
 node /grafana/{
 	include role::it::grafana
 }
+
+node /graylog/{
+	include role::it::graylog
+}

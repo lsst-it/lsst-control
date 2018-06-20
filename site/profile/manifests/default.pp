@@ -84,6 +84,19 @@ class profile::default {
 		}
 	}
 
+	#Remote Logging
+	class{'rsyslog::client':
+		log_local => true,
+		remote_servers => [
+			{
+				host => lookup("rsyslog_host"),
+				port => lookup("rsyslog_port"),
+				protocol  => lookup("rsyslog_proto"),
+				pattern => lookup("rsyslog_patterns")
+    			},
+  		]
+	}
+
 # Firewall and security measurements
 ################################################################################
 	

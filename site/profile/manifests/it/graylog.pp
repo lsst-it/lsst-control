@@ -44,8 +44,8 @@ class profile::it::graylog {
 		config          => {
 			password_secret => lookup("graylog_server_password_secret"),    # Fill in your password secret, must have more than 16 characters
 			root_password_sha2 => lookup("graylog_server_root_password_sha2"), # Fill in your root password hash
-			web_listen_uri => "http://10.0.0.253:9000",
-			rest_listen_uri => "http://10.0.0.253:9000/api",
+			web_listen_uri => "http://${ipaddress}:9000",
+			rest_listen_uri => "http://${ipaddress}:9000/api",
 		}
 	}
 

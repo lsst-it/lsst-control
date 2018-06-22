@@ -2,7 +2,8 @@ class profile::ts::ts_intcluster {
 	include profile::it::ssh_server
 	$kernel_devel = lookup("kernel_devel")
 	class {"virtualbox":
-		require => Package[$kernel_devel]
+		require => Package[$kernel_devel],
+		package_name => lookup("virtualbox_version"),
 	}
 
 	package{"vagrant":

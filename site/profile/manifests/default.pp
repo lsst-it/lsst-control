@@ -175,7 +175,8 @@ class profile::default {
 	}
 	
 	service{ "puppet":
-		ensure => lookup("puppet_agent_service_state")
+		ensure => lookup("puppet_agent_service_state"),
+		enable => true,
 	}
 
 ################################################################################

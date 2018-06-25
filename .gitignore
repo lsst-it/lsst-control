@@ -21,5 +21,11 @@ modules/influxdb
 modules/firewall
 modules/epel
 modules/grafana
+modules/elasticsearch
+modules/elastic_stack
+modules/mongodb
+modules/rsyslog
+modules/datacat
+modules/graylog
 .pydevproject
 .DS_Store

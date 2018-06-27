@@ -6,6 +6,18 @@ class profile::default {
  	
  	if lookup("monitoring_enabled"){
 		include telegraf
+		#Remote Logging
+		class{'rsyslog::client':
+			log_local => true,
+			remote_servers => [
+				{
+					host => lookup("rsyslog_host"),
+					port => lookup("rsyslog_port"),
+					protocol  => lookup("rsyslog_proto"),
+					pattern => lookup("rsyslog_patterns")
+				},
+			]
+		}
 	}else{
 		service{"telegraf":
 			ensure => stopped,
@@ -82,19 +94,6 @@ class profile::default {
 			match => '^telegraf',
 			require => Package["sudo"]
 		}
-	}
-
-	#Remote Logging
-	class{'rsyslog::client':
-		log_local => true,
-		remote_servers => [
-			{
-				host => lookup("rsyslog_host"),
-				port => lookup("rsyslog_port"),
-				protocol  => lookup("rsyslog_proto"),
-				pattern => lookup("rsyslog_patterns")
-    			},
-  		]
 	}
 
 # Firewall and security measurements

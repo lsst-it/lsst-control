@@ -17,6 +17,14 @@ class profile::it::puppet_master {
 	file{"/etc/puppetlabs/puppet/puppet.conf":
 		ensure => present,
 	}
+	
+	ini_setting { "Puppet master Alternative DNS names":
+		ensure  => present,
+		path    => '/etc/puppetlabs/puppet/puppet.conf',
+		section => 'master',
+		setting => 'dns_alt_names',
+		value   => lookup("dns_alt_names"),
+	}
 
 	file{'/etc/puppetlabs/puppet/autosign.conf':
 		ensure => present

@@ -27,5 +27,6 @@ modules/mongodb
 modules/rsyslog
 modules/datacat
 modules/graylog
+modules/dhcp
 .pydevproject
 .DS_Store

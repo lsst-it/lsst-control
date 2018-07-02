@@ -1,4 +1,4 @@
-class profile::it::dhcp_master{
+class profile::it::lsst_dhcp{
 	class { 'dhcp':
 		service_ensure => running,
 		dnsdomain      => lookup("dnsdomains"),

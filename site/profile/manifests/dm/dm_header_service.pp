@@ -18,7 +18,7 @@ class profile::dm::dm_header_service{
 	exec{ 'install-custom-fitsio':
 		path => '/bin/:/usr/local/bin',
 		cwd => "/tmp/",
-		command => "tar xvfz fitsio-master.tar.gz && cd fitsio-master && python3 setup.py install --prefix=/usr",
+		command => "tar xvfz fitsio-master.tar.gz && cd fitsio-master && python setup.py install --prefix=/usr",
 		onlyif => "test -f /tmp/fitsio-master.tar.gz"
 	}
 }

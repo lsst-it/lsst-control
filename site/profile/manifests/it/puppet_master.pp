@@ -26,6 +26,14 @@ class profile::it::puppet_master {
 		value   => lookup("dns_alt_names"),
 	}
 
+	ini_setting { "Puppet master certname":
+		ensure  => present,
+		path    => '/etc/puppetlabs/puppet/puppet.conf',
+		section => 'master',
+		setting => 'certname',
+		value   => lookup("puppet_master_certname"),
+	}
+
 	file{'/etc/puppetlabs/puppet/autosign.conf':
 		ensure => present
 	}

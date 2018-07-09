@@ -14,6 +14,10 @@ class profile::dm::dm_header_service{
 		ensure => installed,
 	}
 
+	package { 'PyYAML':
+		ensure => installed,
+	}
+
 	exec { 'get-custom-fitsio':
 		command => 'wget https://github.com/menanteau/fitsio/archive/master.tar.gz -O /tmp/fitsio-master.tar.gz && cd /tmp/',
 		path => '/bin/',

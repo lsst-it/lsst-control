@@ -18,6 +18,18 @@ class profile::dm::dm_header_service{
 		ensure => installed,
 	}
 
+	# EPEL is required to install astropy afterwards
+	package{ 'epel-release-latest':
+		ensure => installed,
+		source => "http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+	}
+
+	# Required by the Header service
+	package{ 'python-astropy':
+		ensure => installed,
+		require => Package['epel-release-latest']
+	}
+
 	exec { 'get-custom-fitsio':
 		command => 'wget https://github.com/menanteau/fitsio/archive/master.tar.gz -O /tmp/fitsio-master.tar.gz && cd /tmp/',
 		path => '/bin/',

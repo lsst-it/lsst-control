@@ -22,7 +22,7 @@ class profile::ts::efd{
 		path => '/bin:/usr/bin:/usr/sbin',
 		command => "/bin/bash -c 'source ${ts_sal_path}/setup.env ; echo \"source ${ts_sal_path}/lsstsal/scripts/gengenericefd.tcl ; updateefdschema\" | tclsh'",
 		require => Class["ts_xml"],
-		onlyif => "test $(find ${ts_sal_path}/test/ -name sacpp_*efdwriter.cpp | wc -l) -eq 0"
+		onlyif => "test $(find ${ts_sal_path}/test/ -name sacpp_*efdwriter | wc -l) -eq 0"
 	}
 
 	package { 'mariadb':
@@ -45,10 +45,11 @@ class profile::ts::efd{
 
 	# Services definition
 
+	# The service must start just after the schema is downloaded.
 	service { 'mariadb':
 		ensure => running,
 		enable => true,
-		require => File["/etc/my.cnf.d/efd.cnf"],
+		require => [File["/etc/my.cnf.d/efd.cnf"], Exec["schema_download"]]
 	}
 	firewalld_service { 'Allow mysql port on firewalld':
 		ensure  => 'present',
@@ -70,7 +71,7 @@ class profile::ts::efd{
 			service { "${subsystem}_${writer}_efdwriter":
 				ensure => running,
 				enable => true,
-				require => File["/etc/systemd/system/${subsystem}_${writer}_efdwriter.service"],
+				require => [File["/etc/systemd/system/${subsystem}_${writer}_efdwriter.service"], Service["mariadb"]]
 			}
 		
 		}

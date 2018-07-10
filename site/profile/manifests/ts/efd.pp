@@ -22,7 +22,7 @@ class profile::ts::efd{
 		path => '/bin:/usr/bin:/usr/sbin',
 		command => "/bin/bash -c 'source ${ts_sal_path}/setup.env ; echo \"source ${ts_sal_path}/lsstsal/scripts/gengenericefd.tcl ; updateefdschema\" | tclsh'",
 		require => Class["ts_xml"],
-		onlyif => "test $(find ${ts_sal_path}/test/ -name *efdwriter* | wc -l) -gt 0"
+		onlyif => "test $(find ${ts_sal_path}/test/ -name sacpp_*efdwriter.cpp | wc -l) -eq 0"
 	}
 
 	package { 'mariadb':

@@ -102,6 +102,7 @@ class profile::default {
 	$lsst_firewall_default_zone = lookup("lsst_firewall_default_zone")
 	
 	class { "firewalld":
+		service_ensure => lookup("firewalld_status"),
 		default_zone => $lsst_firewall_default_zone,
 	}
 	

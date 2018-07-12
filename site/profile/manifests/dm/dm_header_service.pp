@@ -19,15 +19,15 @@ class profile::dm::dm_header_service{
 	}
 
 	# EPEL is required to install astropy afterwards
-	package{ 'epel-release-latest':
+	package{ 'epel-release':
 		ensure => installed,
-		source => "http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+		source => "http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
 	}
 
 	# Required by the Header service
 	package{ 'python-astropy':
 		ensure => installed,
-		require => Package['epel-release-latest']
+		require => Package['epel-release']
 	}
 
 	exec { 'get-custom-fitsio':

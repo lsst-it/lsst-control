@@ -11,11 +11,28 @@ class profile::it::puppet_master {
 
 	service{"puppetserver":
 		ensure => running,
-		enable => true
+		enable => true,
+		require => [ Ini_setting["Puppet master Alternative DNS names"], Ini_setting["Puppet master certname"],File['/etc/puppetlabs/puppet/autosign.conf']]
 	}
 	
 	file{"/etc/puppetlabs/puppet/puppet.conf":
 		ensure => present,
+	}
+	
+	ini_setting { "Puppet master Alternative DNS names":
+		ensure  => present,
+		path    => '/etc/puppetlabs/puppet/puppet.conf',
+		section => 'master',
+		setting => 'dns_alt_names',
+		value   => lookup("dns_alt_names"),
+	}
+
+	ini_setting { "Puppet master certname":
+		ensure  => present,
+		path    => '/etc/puppetlabs/puppet/puppet.conf',
+		section => 'master',
+		setting => 'certname',
+		value   => lookup("puppet_master_certname"),
 	}
 
 	file{'/etc/puppetlabs/puppet/autosign.conf':
@@ -48,6 +65,17 @@ class profile::it::puppet_master {
 		path => "/root/.bash_profile",
 	}
 
+	# Can be fixed once we manage to fix the issue with Hiera ssh key
+	#file{ "/root/.ssh":
+	#	ensure => directory,
+	#	mode => "600"
+	#}
+
+	file{ "/root/.ssh/known_hosts":
+		ensure => present,
+		require => File["/root/.ssh/"]
+	}
+
 	exec{"install R10K":
 		command => "/opt/puppetlabs/puppet/bin/gem install r10k",
 		onlyif => "/usr/bin/test ! -x /opt/puppetlabs/puppet/bin/r10k"
@@ -55,6 +83,13 @@ class profile::it::puppet_master {
 	
 	file{"/etc/puppetlabs/r10k/":
 		ensure => directory,
+	}
+	
+	exec{"github-to-known-hosts":
+		path => "/usr/bin/",
+		command => "ssh-keyscan github.com > /root/.ssh/known_hosts",
+		onlyif => "test -z \"$(grep github.com /root/.ssh/known_hosts -o)\"",
+		require => File["/root/.ssh/known_hosts"]
 	}
 	
 	$hiera_id_rsa_path = lookup("hiera_repo_id_path")
@@ -95,6 +130,12 @@ class profile::it::puppet_master {
 			content => lookup("hiera_repo_id_rsa"),
 			require => File[$base_path],
 			mode => "600",
+		}
+		file{"${base_path}/id_rsa.pub":
+			ensure => present,
+			content => lookup("hiera_repo_id_rsa_pub"),
+			require => File[$base_path],
+			mode => "600"
 		}
 		
 	}else{

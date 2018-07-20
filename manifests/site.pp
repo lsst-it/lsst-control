@@ -4,7 +4,7 @@ node default {
 	include role::default
 }
 
-node /^puppet-master/ {
+node /puppet-master/ {
 	include role::it::puppet_master
 }
 
@@ -50,4 +50,15 @@ node /grafana/{
 
 node /graylog/{
 	include role::it::graylog
+}
+
+node /gs-it-master/{
+	include role::it::gs_master
+}
+node /gs-it-slave/{
+	include role::it::gs_slave
+}
+
+node /gs-it-failover/{
+	include role::it::gs_failover
 }

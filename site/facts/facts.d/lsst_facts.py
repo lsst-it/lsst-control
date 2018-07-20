@@ -94,6 +94,7 @@ data["node_number"] = "default"
 data["datacenter"] = "default"
 data["enclave"] = "default"
 data["country"] = "default"
+data["site"] = "default"
 # useful information for telegraf monitoring
 data["room"] = "default"
 data["rack"] = "default"

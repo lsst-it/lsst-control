@@ -6,6 +6,18 @@ class profile::default {
  	
  	if lookup("monitoring_enabled"){
 		include telegraf
+		#Remote Logging
+		class{'rsyslog::client':
+			log_local => true,
+			remote_servers => [
+				{
+					host => lookup("rsyslog_host"),
+					port => lookup("rsyslog_port"),
+					protocol  => lookup("rsyslog_proto"),
+					pattern => lookup("rsyslog_patterns")
+				},
+			]
+		}
 	}else{
 		service{"telegraf":
 			ensure => stopped,
@@ -84,25 +96,13 @@ class profile::default {
 		}
 	}
 
-	#Remote Logging
-	class{'rsyslog::client':
-		log_local => true,
-		remote_servers => [
-			{
-				host => lookup("rsyslog_host"),
-				port => lookup("rsyslog_port"),
-				protocol  => lookup("rsyslog_proto"),
-				pattern => lookup("rsyslog_patterns")
-    			},
-  		]
-	}
-
 # Firewall and security measurements
 ################################################################################
 	
 	$lsst_firewall_default_zone = lookup("lsst_firewall_default_zone")
 	
 	class { "firewalld":
+		service_ensure => lookup("firewalld_status"),
 		default_zone => $lsst_firewall_default_zone,
 	}
 	

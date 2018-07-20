@@ -53,9 +53,10 @@ class profile::it::puppet_master {
 
 	}
 
-	file{ "/etc/hosts":
+	file_line{"Make sure local dns record":
 		ensure => present,
-		content => "${ipaddress}\t${fqdn}",
+		line => "${ipaddress}\t${fqdn}",
+		path => "/etc/hosts",
 	}
 	
 	file_line{"update_path_root":

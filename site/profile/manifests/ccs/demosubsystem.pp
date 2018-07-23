@@ -6,7 +6,7 @@ class profile::ccs::demosubsystem {
 
 	file { '/lsst/ccsadmin/package-lists/ccsApplications.txt' :
 		ensure => file, 
-		content => "[ccs]\norg-lsst-ccs-subsystem-demo-main = 5.0.5\norg-lsst-ccs-subsystem-demo-gui = 5.0.5\nexecutable.RunDemoSubsystem = org-lsst-ccs-subsystem-demo-main\nexecutable.RunDemoSubsystem = org-lsst-ccs-subsystem-demo-main\nexecutable.CCS_Console = org-lsst-ccs-subsystem-demo-gui\nexecutable.ShellCommandConsole = org-lsst-ccs-subsystem-demo-gui\n",
+		content => "[ccs]\norg-lsst-ccs-subsystem-demo-main = 5.1.6\norg-lsst-ccs-subsystem-demo-gui = 5.1.6\nexecutable.RunDemoSubsystem = org-lsst-ccs-subsystem-demo-main\nexecutable.demo-subsystem = org-lsst-ccs-subsystem-demo-main\nexecutable.ccs-console = org-lsst-ccs-subsystem-demo-gui\nexecutable.ccs-shell = org-lsst-ccs-subsystem-demo-gui\n",
 		require => Exec['doit'],
 	}
 
@@ -22,20 +22,21 @@ class profile::ccs::demosubsystem {
 		timeout => 0,
 	}
 
-	file { '/etc/systemd/system/demoSubsystemService.service':
+	file { '/etc/systemd/system/demo-subsystem.service':
 		mode    => '0644',
 		owner   => 'root',
 		group   => 'root',
-		content => epp('profile/ccs/service.epp', { 'serviceName' => 'DemoSubsystemService', 'serviceCommand' => '/lsst/ccs/prod/bin/RunDemoSubsystem'}),
+		content => epp('profile/ccs/service.epp', { 'serviceName' => 'demo-subsystem', 'serviceCommand' => '/lsst/ccs/prod/bin/demo-subsystem'}),
 	}
 
 	exec { 'demoSubsystemService-systemd-reload':
 		command     => 'systemctl daemon-reload',
 		path        => [ '/usr/bin', '/bin', '/usr/sbin' ],
 		refreshonly => true,
+		onlyif => "test ! -f /etc/systemd/system/demo-subsystem.service"
 	}
 
-	service { 'demoSubsystemService':
+	service { 'demo-subsystem':
 		ensure => running,
 		enable => true,
 		require => Exec['update-java-alternatives'],
@@ -45,9 +46,9 @@ class profile::ccs::demosubsystem {
 
 	java::oracle { 'jdk8' :
 		ensure  => 'present',
-		version_major => '8u161',
-		version_minor => 'b12',
-		url_hash => '2f38c3b165be4555a1fa6e98c45e0808',
+		version_major => lookup("ccs::java_version_major"),
+		version_minor => lookup("ccs::java_version_minor"),
+		url_hash => lookup("ccs::java_url_hash"),
 		java_se => 'jdk',
 		before => Exec['update-java-alternatives']
 	}
@@ -55,8 +56,8 @@ class profile::ccs::demosubsystem {
 	# Not clear why this is needed, but without it java is left pointing to openjdk
 	exec { 'update-java-alternatives':
 		path    => '/usr/bin:/usr/sbin',
-		command => "alternatives --set java /usr/java/jdk1.8.0_161/jre/bin/java" ,
-		unless  => "test /etc/alternatives/java -ef '/usr/java/jdk1.8.0_161/jre/bin/java'",
+		command => "alternatives --set java /usr/java/jdk*/jre/bin/java" ,
+		unless  => "test /etc/alternatives/java -ef '/usr/java/jdk*/jre/bin/java'",
 	}
 
 }

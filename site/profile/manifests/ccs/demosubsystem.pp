@@ -7,19 +7,19 @@ class profile::ccs::demosubsystem {
 	file { '/lsst/ccsadmin/package-lists/ccsApplications.txt' :
 		ensure => file, 
 		content => "[ccs]\norg-lsst-ccs-subsystem-demo-main = 5.1.6\norg-lsst-ccs-subsystem-demo-gui = 5.1.6\nexecutable.RunDemoSubsystem = org-lsst-ccs-subsystem-demo-main\nexecutable.demo-subsystem = org-lsst-ccs-subsystem-demo-main\nexecutable.ccs-console = org-lsst-ccs-subsystem-demo-gui\nexecutable.ccs-shell = org-lsst-ccs-subsystem-demo-gui\n",
-		require => Exec['doit'],
 	}
 
 	vcsrepo { '/lsst/ccsadmin/release':
 		ensure => present,
 		provider => git,
 		source => 'https://github.com/lsst-camera-dh/release',
-		before => Exec['doit'],
 	}
 
-	exec { 'doit': 
+	exec { 'doit':
+		path        => [ '/usr/bin', '/bin', '/usr/sbin' ], 
 		command => '/lsst/ccsadmin/release/bin/install.py --ccs_inst_dir /lsst/ccs/prod /lsst/ccsadmin/package-lists/ccsApplications.txt',
-		timeout => 0,
+		onlyif => "test ! -d /lsst/ccs/prod/bin/",
+		require => [Vcsrepo["/lsst/ccsadmin/release"], File["/lsst/ccsadmin/package-lists/ccsApplications.txt"] ]
 	}
 
 	file { '/etc/systemd/system/demo-subsystem.service':

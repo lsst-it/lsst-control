@@ -1,3 +1,8 @@
+# Note, while deploying Graylog, the elastic and elasticsearch modules should go into /etc/puppet/modules. Somehow
+# with this deployment some functions are not well captured, particularlly the oss_xpack.rb provider.
+# Notes:
+#	* Firewall rules configured on Hiera
+
 class profile::it::graylog {
 
 	class { 'java' :
@@ -48,19 +53,4 @@ class profile::it::graylog {
 			rest_listen_uri => "http://${ipaddress}:9000/api",
 		}
 	}
-
-	firewalld_port { 'Graylog Main Port':
-		ensure   => present,
-		port     => '9000',
-		protocol => 'tcp',
-		require => Service['firewalld'],
-	}
-	# to use port 514, graylog should be executed as root, hence adding a listener in other port.
-	firewalld_port { 'Syslog Port':
-		ensure   => present,
-		port     => lookup("graylog_rsyslog_port"),
-		protocol => lookup("graylog_rsyslog_proto"),
-		require => Service['firewalld'],
-	}
-
 }

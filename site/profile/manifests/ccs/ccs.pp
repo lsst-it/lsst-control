@@ -43,10 +43,4 @@ class profile::ccs::ccs {
 		ensure => present,
 		managehome => true,
 	}
-
-	# I'm strongly in disagreement with this, we should actually define a zone per team or a zone for the LSST, as I did for SAL and DDS
-	service { 'firewalld':
-		enable => false, 
-		ensure => stopped,
-	}
 }

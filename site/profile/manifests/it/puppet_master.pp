@@ -66,6 +66,13 @@ class profile::it::puppet_master {
 		path => "/root/.bash_profile",
 	}
 
+	file_line{ "Update Ruby libs puppetserver configuration" :
+		ensure => present,
+		line => "    ruby-load-path: [/opt/puppetlabs/puppet/lib/ruby/vendor_ruby, /opt/puppetlabs/puppet/cache/lib]",
+		match => "ruby-load-path*",
+		path => "/etc/puppetlabs/puppetserver/conf.d/puppetserver.conf",
+	}
+
 	# Can be fixed once we manage to fix the issue with Hiera ssh key
 	#file{ "/root/.ssh":
 	#	ensure => directory,

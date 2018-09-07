@@ -136,7 +136,7 @@ class profile::it::graylog {
 
 	# Setup Graylog server
 
-	$tls_password_array = split(ssl_key_passout_phrase, /:/)
+	$tls_password_array = split($ssl_key_passout_phrase, /:/)
 	$tls_cert_pass = $tls_password_array[1] 
 	class { 'graylog::server':
 		package_version => '2.4.0-9',

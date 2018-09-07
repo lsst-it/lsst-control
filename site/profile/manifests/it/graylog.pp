@@ -148,11 +148,11 @@ class profile::it::graylog {
 			rest_enable_tls => true,
 			rest_tls_cert_file => "${ssl_config_dir}/${ssl_graylog_cert_filename}",
 			rest_tls_key_file => "${ssl_config_dir}/${ssl_graylog_key_filename}",
-			rest_tls_password => "${tls_cert_pass}",
+			rest_tls_key_password => "${tls_cert_pass}",
 			web_enable_tls => true,
 			web_tls_cert_file => "${ssl_config_dir}/${ssl_graylog_cert_filename}",
 			web_tls_key_file => "${ssl_config_dir}/${ssl_graylog_key_filename}",
-			web_tls_password => "${tls_cert_pass}"
+			web_tls_key_password => "${tls_cert_pass}"
 		},
 	}
 

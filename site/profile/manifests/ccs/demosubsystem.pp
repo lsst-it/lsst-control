@@ -6,13 +6,26 @@ class profile::ccs::demosubsystem {
 
 	file { '/lsst/ccsadmin/package-lists/ccsApplications.txt' :
 		ensure => file, 
-		content => "[ccs]\norg-lsst-ccs-subsystem-demo-main = 5.1.6\norg-lsst-ccs-subsystem-demo-gui = 5.1.6\nexecutable.RunDemoSubsystem = org-lsst-ccs-subsystem-demo-main\nexecutable.demo-subsystem = org-lsst-ccs-subsystem-demo-main\nexecutable.ccs-console = org-lsst-ccs-subsystem-demo-gui\nexecutable.ccs-shell = org-lsst-ccs-subsystem-demo-gui\n",
 	}
 
 	vcsrepo { '/lsst/ccsadmin/release':
 		ensure => present,
 		provider => git,
 		source => 'https://github.com/lsst-camera-dh/release',
+	}
+
+	$ccsApplications_array = lookup("ccsApplications")
+
+	$ccsApplications_array.each | $property_hash| {
+		$property_hash.each | $property_key, $property_value| {
+			ini_setting { "Updating property ${property_key} in ccsApplications.txt file":
+				ensure  => present,
+				path    => '/lsst/ccsadmin/package-lists/ccsApplications.txt',
+				section => 'ccs',
+				setting => $property_key,
+				value   => $property_value,
+			}
+		}
 	}
 
 	exec { 'doit':

@@ -119,11 +119,19 @@ class profile::it::graylog {
 	#Copy the current CA Cert into graylog's directory
 	
 	$graylog_cacert_filename = "graylog-cacerts"
+	/*
 	file{ "${ssl_config_dir}/${graylog_cacert_filename}" :
 		ensure => present,
 		links => follow,
 		source => "/etc/pki/java/cacerts",
 		require => File["${ssl_config_dir}"]
+	}
+	*/
+	
+	exec{ "Copy JAVA cacerts into graylog's directory":
+		path  => [ '/usr/bin', '/bin', '/usr/sbin' ],
+		command => "cp /etc/pki/java/cacerts ${ssl_config_dir}/${graylog_cacert_filename}",
+		onlyif => "test ! -f ${ssl_config_dir}/${graylog_cacert_filename}"
 	}
 	
 	$ssl_graylog_cert_pass = lookup("ssl_graylog_cert_pass")

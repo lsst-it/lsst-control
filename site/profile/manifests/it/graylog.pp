@@ -118,20 +118,19 @@ class profile::it::graylog {
 	
 	#Copy the current CA Cert into graylog's directory
 	
-	$graylog_cacert_filename = "graylog-cacerts"
-	file{ "${ssl_config_dir}/${graylog_cacert_filename}" :
-		ensure => present,
-		links => follow,
-		source => "/etc/pki/java/cacerts",
-		require => File["${ssl_config_dir}"]
+	$graylog_cacert_filename = "graylog-cacerts"	
+	exec{ "Copy JAVA cacerts into graylog's directory":
+		path  => [ '/usr/bin', '/bin', '/usr/sbin' ],
+		command => "cp /etc/pki/java/cacerts ${ssl_config_dir}/${graylog_cacert_filename}",
+		onlyif => "test ! -f ${ssl_config_dir}/${graylog_cacert_filename}"
 	}
 	
 	$ssl_graylog_cert_pass = lookup("ssl_graylog_cert_pass")
 	exec{ "Update keytool" :
 		path  => [ '/usr/bin', '/bin', '/usr/sbin' ],
 		command => "keytool -noprompt -importcert -keystore ${ssl_config_dir}/${graylog_cacert_filename} -storepass ${ssl_graylog_cert_pass} -alias graylog-self-signed -file ${ssl_config_dir}/${ssl_graylog_cert_filename}",
-		onlyif => "test ! -f ${ssl_config_dir}/${graylog_cacert_filename}",
-		require => [Exec["Create graylog SSL key"], File["${ssl_config_dir}/${graylog_cacert_filename}"]]
+		onlyif => "test -z $(keytool -keystore ${ssl_config_dir}/${graylog_cacert_filename} -storepass ${ssl_graylog_cert_pass} -list | grep graylog-self-signed)",
+		require => [Exec["Create graylog SSL key"], Exec["Copy JAVA cacerts into graylog's directory"]]
 	}
 
 	# Setup Graylog server

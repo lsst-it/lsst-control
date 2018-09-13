@@ -139,7 +139,7 @@ class profile::it::graylog {
 		path  => [ '/usr/bin', '/bin', '/usr/sbin' ],
 		command => "keytool -noprompt -importcert -keystore ${ssl_config_dir}/${graylog_cacert_filename} -storepass ${ssl_graylog_cert_pass} -alias graylog-self-signed -file ${ssl_config_dir}/${ssl_graylog_cert_filename}",
 		onlyif => "test -z $(keytool -keystore ${ssl_config_dir}/${graylog_cacert_filename} -storepass ${ssl_graylog_cert_pass} -list | grep graylog-self-signed)",
-		require => [Exec["Create graylog SSL key"], File["${ssl_config_dir}/${graylog_cacert_filename}"]]
+		require => [Exec["Create graylog SSL key"], Exec["Copy JAVA cacerts into graylog's directory"]]
 	}
 
 	# Setup Graylog server

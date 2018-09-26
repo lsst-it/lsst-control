@@ -1,4 +1,4 @@
-class profile::ccs::demosubsystem {
+class profile::ccs::ccsService {
 
 	include profile::ccs::ccs
 

@@ -306,6 +306,7 @@ class profile::default {
 		mode => "600",
 		owner => root,
 		group => root,
+		require => Package["sssd-common"]
 	}
 	
 	file{ "/etc/pki/ca-trust/source/anchors/incommon-ca.pem":

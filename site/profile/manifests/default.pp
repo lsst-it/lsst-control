@@ -98,6 +98,10 @@ class profile::default {
 	package{ 'sssd-ldap':
 		ensure => installed
 	}
+	
+	package{ "sssd-krb5":
+		ensure => installed
+	}
 
 	if ! $is_virtual {
 		package { 'smartmontools':
@@ -334,7 +338,8 @@ class profile::default {
 	#TODO Define a condition to start SSSD, it must be after all the configurations are written
 	
 	service{ "sssd" :
-		ensure => running
+		ensure => running,
+		require => [Package["sssd-common"],Package["sssd-krb5"]]
 	}
 	
 	# Make sure home is created if doesn't exist

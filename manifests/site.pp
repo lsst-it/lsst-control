@@ -52,7 +52,7 @@ node /graylog/{
 	include role::it::graylog
 }
 
-node /gs-it-dhcp/{
+node /gs-dhcp/{
 	include role::it::gs_dhcp
 }
 /*

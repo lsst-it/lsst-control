@@ -27,7 +27,8 @@ class profile::default {
 					protocol  => lookup("rsyslog_proto"),
 					pattern => lookup("rsyslog_patterns")
 				},
-			]
+			],
+			imfiles => lookup("rsyslog::imfiles", {default_value => undef})
 		}
 	}else{
 		service{"telegraf":

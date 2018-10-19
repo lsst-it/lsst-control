@@ -89,7 +89,6 @@ class profile::ccs::ccs {
 	file { $ccsGlobalProperties_filepath :
 		ensure => file,
 		mode => '1764',
-		#content => epp('profile/ccs/ccsGlobal.properties.epp'),
 	}
 
 	# Values from hiera are dynamic, computed values are static and must be added on the puppet script
@@ -101,7 +100,8 @@ class profile::ccs::ccs {
 			file_line{ "Updating CCS Global property ${property_key} = ${property_value}" :
 				path => $ccsGlobalProperties_filepath,
 				line => "${property_key} = ${property_value}",
-				match => "${property_key}",
+				match => "^${property_key} = *",
+				replace => true,
 				require => File["${ccsGlobalProperties_filepath}"]
 			}
 		}
@@ -111,7 +111,6 @@ class profile::ccs::ccs {
 	file { $udpCCSProperties_filepath :
 		ensure => file,
 		mode => '1764',
-		content => epp('profile/ccs/udp_ccs.properties.epp'),
 	}
 
 	$udpCCSProperties_array = lookup({"name" => "udpCCSProperties", "default_value" => []})
@@ -120,9 +119,10 @@ class profile::ccs::ccs {
 	$udpCCSProperties_array.each | $property_hash|{
 		$property_hash.each | $property_key, $property_value | {
 			file_line{ "Updating UDP CCS Global property ${property_key} = ${property_value}" :
-				path => $ccsGlobalProperties_filepath,
+				path => $udpCCSProperties_filepath,
 				line => "${property_key} = ${property_value}",
-				match => "${property_key}",
+				match => "^${property_key} = *",
+				replace => true,
 				require => File[$udpCCSProperties_filepath]
 			}
 		}

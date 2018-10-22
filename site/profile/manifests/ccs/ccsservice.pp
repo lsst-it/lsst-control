@@ -1,4 +1,4 @@
-class profile::ccs::ccsService {
+class profile::ccs::ccsservice {
 
 	include profile::ccs::ccs
 

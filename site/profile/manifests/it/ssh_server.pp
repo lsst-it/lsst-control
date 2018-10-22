@@ -2,6 +2,8 @@ class profile::it::ssh_server {
 	
 	class { "ssh":
 		permit_root_login => "no",
+		sshd_config_banner => "/etc/issue",
+		sshd_banner_content => lookup("sshd_banner_content")
 	}
 	
 	if $hostname =~ /puppet-master/ {

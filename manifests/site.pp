@@ -52,9 +52,10 @@ node /graylog/{
 	include role::it::graylog
 }
 
-node /gs-it-master/{
-	include role::it::gs_master
+node /gs-dhcp/{
+	include role::it::gs_dhcp
 }
+/*
 node /gs-it-slave/{
 	include role::it::gs_slave
 }
@@ -62,3 +63,4 @@ node /gs-it-slave/{
 node /gs-it-failover/{
 	include role::it::gs_failover
 }
+*/

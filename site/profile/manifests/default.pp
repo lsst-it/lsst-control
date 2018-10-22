@@ -27,7 +27,8 @@ class profile::default {
 					protocol  => lookup("rsyslog_proto"),
 					pattern => lookup("rsyslog_patterns")
 				},
-			]
+			],
+			imfiles => lookup("rsyslog::imfiles", {default_value => undef})
 		}
 	}else{
 		service{"telegraf":
@@ -96,6 +97,10 @@ class profile::default {
 	}
 	
 	package{ 'sssd-ldap':
+		ensure => installed
+	}
+	
+	package{ "sssd-krb5":
 		ensure => installed
 	}
 
@@ -334,7 +339,8 @@ class profile::default {
 	#TODO Define a condition to start SSSD, it must be after all the configurations are written
 	
 	service{ "sssd" :
-		ensure => running
+		ensure => running,
+		require => [Package["sssd-common"],Package["sssd-krb5"]]
 	}
 	
 	# Make sure home is created if doesn't exist

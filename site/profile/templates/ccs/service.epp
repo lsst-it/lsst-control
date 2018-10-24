@@ -1,5 +1,5 @@
 [Unit]
-Description=<%= $serviceName %>
+Description=<%= $description %>
 Wants=network-online.target
 After=network-online.target
 

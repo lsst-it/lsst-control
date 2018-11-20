@@ -77,7 +77,9 @@ class profile::ccs::ccs {
 		path        => [ '/usr/bin', '/bin', '/usr/sbin' ], 
 		command => "/lsst/ccsadmin/release/bin/install.py --ccs_inst_dir ${ccsInstallationDir} /lsst/ccsadmin/package-lists/ccsApplications.txt",
 		onlyif => "test ! -d ${ccsInstallationDir}/bin/",
-		require => [Vcsrepo["/lsst/ccsadmin/release"], File["/lsst/ccsadmin/package-lists/ccsApplications.txt"] ]
+		require => [Vcsrepo["/lsst/ccsadmin/release"], File["/lsst/ccsadmin/package-lists/ccsApplications.txt"] ],
+		subscribe => File["/lsst/ccsadmin/package-lists/ccsApplications.txt"],
+		refreshonly => true
 	}
 
 	################################################################################################################
@@ -156,4 +158,10 @@ class profile::ccs::ccs {
 		ensure => present,
 		managehome => true,
 	}
+	
+	$ccs_systemd_units = lookup("ccs_systemd_units")
+		class{'profile::ccs::ccsservice':
+			ccs_systemd_units => $ccs_systemd_units,
+		}
+	
 }

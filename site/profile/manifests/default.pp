@@ -260,6 +260,7 @@ class profile::default {
 		require => User['sysadmin'],
 	}
 
+	/* This is not longer a general configuration, it should be defined bt each group
 	group { 'lsst':
 		ensure => present,
 		gid => 500,
@@ -297,7 +298,8 @@ class profile::default {
 		require => Group['lsst'],
 		password => lookup("tcs_pwd"),
 	}
-	
+	*/
+
 	user{'root':
 		password => lookup("root_pwd"),
 	}

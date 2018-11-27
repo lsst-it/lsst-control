@@ -20,10 +20,6 @@ node /^ts-visitsim/ {
 	include role::ts::ts_visit_simulator
 }
 
-node /^ats-shutter-hcu/{
-	include role::ccs::ats_shutter_hcu
-}
-
 node /^ts-efd/ {
 	include role::ts::efd
 }
@@ -55,6 +51,19 @@ node /graylog/{
 node /gs-dhcp/{
 	include role::it::gs_dhcp
 }
+
+node /^ats-shutter-hcu/{
+	include role::ccs::ats_shutter_hcu
+}
+
+node /^ats-ccs-localdb/{
+	include role::ccs::ats_ccs_localdb
+}
+
+node /^ats-ccs/{
+	include role::ccs::ats_ccs_default
+}
+
 /*
 node /gs-it-slave/{
 	include role::it::gs_slave

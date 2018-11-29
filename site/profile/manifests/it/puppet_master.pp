@@ -148,7 +148,7 @@ class profile::it::puppet_master {
 	
 	file_line{"update_path_root":
 		ensure => present,
-		line => 'PATH=$PATH:/opt/puppetlabs/puppet/bin:$HOME/bin',
+		line => 'PATH=$PATH:/opt/puppetlabs/puppet/bin:$HOME/bin:$enc_path/bin/',
 		match => "^PATH=*",
 		path => "/root/.bash_profile",
 	}

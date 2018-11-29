@@ -61,11 +61,6 @@ class profile::it::puppet_master {
 		ensure => directory
 	}
 
-	file{ $enc_config_path:
-		ensure => directory,
-		require => File[$enc_path]
-	}
-
 	vcsrepo { $enc_path:
 		ensure => present,
 		provider => git,
@@ -74,12 +69,25 @@ class profile::it::puppet_master {
 		require => File[$enc_path]
 	}
 
+	file{ $enc_config_path:
+		ensure => directory,
+		require => [File[$enc_path],Vcsrepo[$enc_path]]
+	}
+
 	vcsrepo { $enc_config_path:
 		ensure => present,
 		provider => git,
 		source => lookup("puppet_enc_config_repo"),
 		branch => lookup("puppet_enc_config_branch"),
 		require => File[$enc_config_path]
+	}
+
+	exec{ "Configure and import ENC DB" :
+		path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+		cwd => $enc_path,
+		command => "make configure import",
+		onlyif => "test ! -f ${enc_path}/data || test ! -f ${enc_path}/data/puppet_enc.sqlite",
+		require => [Package["python36"], Exec["Ensure pip3.6 exists"]]
 	}
 
 		ini_setting { "Node terminus":

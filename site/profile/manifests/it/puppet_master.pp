@@ -55,9 +55,15 @@ class profile::it::puppet_master {
 	}
 	
 	$enc_path = lookup("puppet_enc_path")
+	$enc_config_path = "${enc_path}/config/"
 
 	file{ $enc_path:
 		ensure => directory
+	}
+
+	file{ $enc_config_path:
+		ensure => directory,
+		require => File[$enc_path]
 	}
 
 	vcsrepo { $enc_path:
@@ -66,6 +72,14 @@ class profile::it::puppet_master {
 		source => lookup("puppet_enc_repo"),
 		branch => lookup("puppet_enc_branch"),
 		require => File[$enc_path]
+	}
+
+	vcsrepo { $enc_config_path:
+		ensure => present,
+		provider => git,
+		source => lookup("puppet_enc_config_repo"),
+		branch => lookup("puppet_enc_config_branch"),
+		require => File[$enc_config_path]
 	}
 
 		ini_setting { "Node terminus":

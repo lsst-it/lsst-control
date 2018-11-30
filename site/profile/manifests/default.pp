@@ -123,13 +123,7 @@ class profile::default {
 	}
 
 	$puppet_agent_run_interval = lookup("puppet_agent_run_interval")
-	/* 
-	file_line { "Puppet Run Interval":
-		path => "/etc/puppetlabs/puppet/puppet.conf",
-		line => "runinterval=${puppet_agent_run_interval}",
-		match => "runinterval=*"
-	}
-	*/
+
 	ini_setting { "Puppet agent runinterval":
 		ensure  => present,
 		path    => '/etc/puppetlabs/puppet/puppet.conf',
@@ -212,46 +206,6 @@ class profile::default {
 		mode => '700',
 		require => User['sysadmin'],
 	}
-
-	/* This is not longer a general configuration, it should be defined bt each group
-	group { 'lsst':
-		ensure => present,
-		gid => 500,
-		auth_membership => true,
-		members => ['sysadmin'],
-	}
-
-	#TODO Move password to hiera
-	user{ 'lsstmgr':
-		ensure => 'present',
-		uid => '500' ,
-		gid => '500',
-		home => '/home/lsstmgr',
-		managehome => true,
-		require => Group['lsst'],
-		password => lookup("lsstmgr_pwd"),
-	}
-
-	user{ 'tcsmgr':
-		ensure => 'present',
-		uid => '502',
-		gid => '500',
-		home => '/home/tcsmgr',
-		managehome => true,
-		require => Group['lsst'],
-		password => lookup("tcsmgr_pwd"),
-	}
-
-	user{ 'tcs':
-		ensure => 'present',
-		uid => '504' ,
-		gid => '500',
-		home => '/home/tcs',
-		managehome => true,
-		require => Group['lsst'],
-		password => lookup("tcs_pwd"),
-	}
-	*/
 
 	user{'root':
 		password => lookup("root_pwd"),

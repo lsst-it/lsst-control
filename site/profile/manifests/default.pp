@@ -2,6 +2,9 @@
 # https://confluence.lsstcorp.org/display/IT/Linux+CentOS+Setup
 class profile::default {
  	include profile::it::ssh_server
+	include profile::it::monitoring
+	include profile::it::lsst_users
+	include profile::it::ims
  	# All telegraf configuration came from Hiera
  	
 	package { 'nmap':
@@ -59,18 +62,6 @@ class profile::default {
 
 	package { 'sudo':
 		ensure => installed,
-	}
-	
-	package { 'sssd-common':
-		ensure => installed
-	}
-	
-	package{ 'sssd-ldap':
-		ensure => installed
-	}
-	
-	package{ "sssd-krb5":
-		ensure => installed
 	}
 
 # Firewall and security measurements
@@ -172,97 +163,4 @@ class profile::default {
 		ensure => present,
 	}
 	
-# group/user creation
-
-	# as per /etc/login.defs, max uid is 999, so we have set 777 as the default group admin account
-	group { 'sysadmin':
-		ensure => present,
-		gid => 777,
-		auth_membership => true,
-		members => ['sysadmin']
-	}
-
-	#current user for sudo access is wheel, in centos 7 it has GID=10
-	group { 'wheel':
-		ensure => present,
-		gid => 10,
-		auth_membership => true,
-		members => ['sysadmin'],
-		require => Group['sysadmin'],
-	}
-
-	# as per /etc/login.defs, max uid is 999, so we have set 777 as the default group admin account
-	user{ 'sysadmin':
-		ensure => 'present',
-		uid => '777' ,
-		gid => '777',
-		home => '/home/sysadmin',
-		managehome => true,
-		password => lookup("lsst_sysadmin_pwd")
-	}
-
-	file{ '/home/sysadmin':
-		ensure => directory,
-		mode => '700',
-		require => User['sysadmin'],
-	}
-
-	user{'root':
-		password => lookup("root_pwd"),
-	}
-
-	$ims_configuration = lookup("IMS_Configuration")
-
-	## SSSD Configuration
-
-	file{"/etc/sssd/sssd.conf":
-		ensure => present,
-		mode => "600",
-		owner => root,
-		group => root,
-		require => Package["sssd-common"]
-	}
-	
-	file{ "/etc/pki/ca-trust/source/anchors/incommon-ca.pem":
-		ensure => present,
-		source => "http://certmgr.techservices.illinois.edu/intermediate1.txt"
-	}
-
-	$sssd_config_array = $ims_configuration["SSSD"]
-	
-	$sssd_config_array.each | $section_name , $section_list| {
-		$section_list.each | $property_hash| {
-			$property_hash.each | $property_key, $property_value| {
-				ini_setting { "Updating property ${property_key} = ${property_value} in SSSD configuration file":
-					ensure  => present,
-					path    => "/etc/sssd/sssd.conf",
-					section => $section_name,
-					setting => $property_key,
-					value   => $property_value,
-					require => File['/etc/sssd/sssd.conf']
-				}
-			}
-		}
-	}
-	
-	#TODO Define a condition to start SSSD, it must be after all the configurations are written
-	
-	service{ "sssd" :
-		ensure => running,
-		require => [Package["sssd-common"],Package["sssd-krb5"]]
-	}
-	
-	# Make sure home is created if doesn't exist
-	
-	file_line{ "Adding mkhomedir support when Login" :
-		path => "/etc/pam.d/login",
-		line => "session         required     pam_mkhomedir.so skel=/etc/skel/ umask=0022",
-		match => "^session( )+required( )+pam_mkhomedir.so",
-	}
-
-	file_line{ "Adding mkhomedir support when using su":
-		path => "/etc/pam.d/su",
-		line => "session         required     pam_mkhomedir.so skel=/etc/skel/ umask=0022",
-		match => "^session( )+required( )+pam_mkhomedir.so",
-	}
 }

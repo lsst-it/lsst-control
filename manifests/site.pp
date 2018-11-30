@@ -1,6 +1,6 @@
 # This is the very default configuration, in case no match found in ENC
 node default {
-	include role::default
+#	include role::default
 }
 
 # There is one situation, when deploying a new puppet master, in where the ENC doesn't exists in the puppet environment

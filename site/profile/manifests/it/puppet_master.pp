@@ -82,15 +82,29 @@ class profile::it::puppet_master {
 		require => File[$enc_config_path]
 	}
 
+ 	file{ "${enc_path}/data/puppet_enc.sqlite" :
+		ensure => present,
+		owner => "puppet",
+		group => "puppet"
+	}
+
+	file{ "${enc_path}/data/" :
+		ensure => directory,
+		owner => "puppet",
+		group => "puppet"
+	}
+
+	# Checks if the path to data doesn't exists, if the sqlite DB file doesn't exists or if the sqlite DB is empty
 	exec{ "Configure and import ENC DB" :
 		path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
 		cwd => $enc_path,
 		command => "make configure import",
-		onlyif => "test ! -f ${enc_path}/data || test ! -f ${enc_path}/data/puppet_enc.sqlite",
-		require => [Package["python36"], Exec["Ensure pip3.6 exists"]]
+		# This will be executed only if the DB is empty, the file creation and directory structure is from the file resource and the dependency list below
+		onlyif => "test ! -s ${enc_path}/data/puppet_enc.sqlite",
+		require => [Package["python36"], Exec["Ensure pip3.6 exists"], File["${enc_path}/data/puppet_enc.sqlite"], File["${enc_path}/data/"]]
 	}
 
-		ini_setting { "Node terminus":
+	ini_setting { "Node terminus":
 			ensure  => present,
 			path    => '/etc/puppetlabs/puppet/puppet.conf',
 			section => 'master',

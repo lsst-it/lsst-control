@@ -1,6 +1,5 @@
 ---
 version: 5
-defaults:
 # The default value for "datadir" is "data" under the same directory as the hiera.yaml
 # file (this file)
 # When specifying a datadir, make sure the directory exists.
@@ -31,8 +30,9 @@ hierarchy:
           path: "%{country}/%{country}.yaml"
 
         - name: "[7] - Type"
-          path: "type/%{virtual}.yaml"
-          path: "type/default.yaml"
+          paths: 
+            - "type/%{virtual}.yaml"
+            - "type/default.yaml"
 
         - name: "[8] - Common"
           path: "common.yaml"

@@ -4,6 +4,40 @@ class profile::it::puppet_master {
 		content => "Welcome to ${fqdn}, this is a Puppet Master Server\n",
 	}
 	
+	package{"epel-release":
+		ensure => installed
+	}
+
+	package{"python36":
+		ensure => installed,
+		require => Package["epel-release"]
+	}
+
+	package{"sqlite":
+		ensure => installed,
+	}
+
+	exec{"Ensure pip3.6 exists":
+		path  => [ '/usr/bin', '/bin', '/usr/sbin' ], 
+		command => "python3.6 -m ensurepip",
+		onlyif => "test ! -f /usr/local/bin/pip3.6",
+		require => Package["python36"]
+	}
+
+	exec{"Installing PyYAML":
+		path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+		command => "pip3.6 install PyYAML",
+		onlyif => "[ -z \"$(pip3.6 list | grep PyYAML -o)\" ]",
+		require => [Package["python36"], Exec["Ensure pip3.6 exists"]]
+	}
+
+	exec{"Installing PrettyTable":
+		path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+		command => "pip3.6 install prettytable",
+		onlyif => "[ -z \"$(pip3.6 list | grep prettytable -o)\" ]",
+		require => [Package["python36"], Exec["Ensure pip3.6 exists"]]
+	}
+
 	package{"puppetserver":
 		ensure => installed,
 		source => 'https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm',
@@ -17,8 +51,75 @@ class profile::it::puppet_master {
 	
 	file{"/etc/puppetlabs/puppet/puppet.conf":
 		ensure => present,
+		require => Package["puppetserver"]
 	}
 	
+	$enc_path = lookup("puppet_enc_path")
+	$enc_config_path = "${enc_path}/config/"
+
+	file{ $enc_path:
+		ensure => directory
+	}
+
+	vcsrepo { $enc_path:
+		ensure => present,
+		provider => git,
+		source => lookup("puppet_enc_repo"),
+		branch => lookup("puppet_enc_branch"),
+		require => File[$enc_path]
+	}
+
+	file{ $enc_config_path:
+		ensure => directory,
+		require => [File[$enc_path],Vcsrepo[$enc_path]]
+	}
+
+	vcsrepo { $enc_config_path:
+		ensure => present,
+		provider => git,
+		source => lookup("puppet_enc_config_repo"),
+		branch => lookup("puppet_enc_config_branch"),
+		require => File[$enc_config_path]
+	}
+
+ 	file{ "${enc_path}/data/puppet_enc.sqlite" :
+		ensure => present,
+		owner => "puppet",
+		group => "puppet"
+	}
+
+	file{ "${enc_path}/data/" :
+		ensure => directory,
+		owner => "puppet",
+		group => "puppet"
+	}
+
+	# Checks if the path to data doesn't exists, if the sqlite DB file doesn't exists or if the sqlite DB is empty
+	exec{ "Configure and import ENC DB" :
+		path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+		cwd => $enc_path,
+		command => "make configure import",
+		# This will be executed only if the DB is empty, the file creation and directory structure is from the file resource and the dependency list below
+		onlyif => "test ! -s ${enc_path}/data/puppet_enc.sqlite",
+		require => [Package["python36"], Exec["Ensure pip3.6 exists"], File["${enc_path}/data/puppet_enc.sqlite"], File["${enc_path}/data/"]]
+	}
+
+	ini_setting { "Node terminus":
+			ensure  => present,
+			path    => '/etc/puppetlabs/puppet/puppet.conf',
+			section => 'master',
+			setting => 'node_terminus',
+			value   => "exec",
+		}
+
+		ini_setting { "ENC script path":
+			ensure  => present,
+			path    => '/etc/puppetlabs/puppet/puppet.conf',
+			section => 'master',
+			setting => 'external_nodes',
+			value   => "${enc_path}/bin/lsst_enc.py",
+		}
+
 	ini_setting { "Puppet master Alternative DNS names":
 		ensure  => present,
 		path    => '/etc/puppetlabs/puppet/puppet.conf',
@@ -61,7 +162,7 @@ class profile::it::puppet_master {
 	
 	file_line{"update_path_root":
 		ensure => present,
-		line => 'PATH=$PATH:/opt/puppetlabs/puppet/bin:$HOME/bin',
+		line => "PATH=\$PATH:/opt/puppetlabs/puppet/bin:\$HOME/bin:${enc_path}/bin/",
 		match => "^PATH=*",
 		path => "/root/.bash_profile",
 	}

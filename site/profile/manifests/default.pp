@@ -2,39 +2,11 @@
 # https://confluence.lsstcorp.org/display/IT/Linux+CentOS+Setup
 class profile::default {
  	include profile::it::ssh_server
+	include profile::it::monitoring
+	include profile::it::lsst_users
+	include profile::it::ims
  	# All telegraf configuration came from Hiera
  	
- 	if lookup("monitoring_enabled"){
-		include telegraf
-		#TODO Until telegraf's puppet module doesn't allow multiple procstat definitions from hiera, a fixed script/variable is defined to configure the required services to be monitored. 
-		$monitored_services = lookup("monitored_services")
-		$monitored_services.each | $service | {
-			telegraf::input { $service:
-				plugin_type => 'procstat',
-				options =>
-					{
-						'systemd_unit' => "${service}.service",
-					},
-			}
-		}
-		#Remote Logging
-		class{'rsyslog::client':
-			log_local => true,
-			remote_servers => [
-				{
-					host => lookup("rsyslog_host"),
-					port => lookup("rsyslog_port"),
-					protocol  => lookup("rsyslog_proto"),
-					pattern => lookup("rsyslog_patterns")
-				},
-			],
-			imfiles => lookup("rsyslog::imfiles", {default_value => undef})
-		}
-	}else{
-		service{"telegraf":
-			ensure => stopped,
-		}
-	}
 	package { 'nmap':
 		ensure => installed,
 	}
@@ -91,34 +63,6 @@ class profile::default {
 	package { 'sudo':
 		ensure => installed,
 	}
-	
-	package { 'sssd-common':
-		ensure => installed
-	}
-	
-	package{ 'sssd-ldap':
-		ensure => installed
-	}
-	
-	package{ "sssd-krb5":
-		ensure => installed
-	}
-
-	if ! $is_virtual {
-		package { 'smartmontools':
-			ensure => installed,
-		}
-		package { 'lm_sensors':
-			ensure => installed,
-		}
-		file_line { 'Adding smartcl permissions to sudoers':
-			ensure => present,
-			path  => '/etc/sudoers',
-			line => 'telegraf  ALL= NOPASSWD: /usr/sbin/smartctl',
-			match => '^telegraf',
-			require => Package["sudo"]
-		}
-	}
 
 # Firewall and security measurements
 ################################################################################
@@ -170,13 +114,7 @@ class profile::default {
 	}
 
 	$puppet_agent_run_interval = lookup("puppet_agent_run_interval")
-	/* 
-	file_line { "Puppet Run Interval":
-		path => "/etc/puppetlabs/puppet/puppet.conf",
-		line => "runinterval=${puppet_agent_run_interval}",
-		match => "runinterval=*"
-	}
-	*/
+
 	ini_setting { "Puppet agent runinterval":
 		ensure  => present,
 		path    => '/etc/puppetlabs/puppet/puppet.conf',
@@ -225,137 +163,4 @@ class profile::default {
 		ensure => present,
 	}
 	
-# group/user creation
-
-	# as per /etc/login.defs, max uid is 999, so we have set 777 as the default group admin account
-	group { 'sysadmin':
-		ensure => present,
-		gid => 777,
-		auth_membership => true,
-		members => ['sysadmin']
-	}
-
-	#current user for sudo access is wheel, in centos 7 it has GID=10
-	group { 'wheel':
-		ensure => present,
-		gid => 10,
-		auth_membership => true,
-		members => ['sysadmin'],
-		require => Group['sysadmin'],
-	}
-
-	# as per /etc/login.defs, max uid is 999, so we have set 777 as the default group admin account
-	user{ 'sysadmin':
-		ensure => 'present',
-		uid => '777' ,
-		gid => '777',
-		home => '/home/sysadmin',
-		managehome => true,
-		password => lookup("lsst_sysadmin_pwd")
-	}
-
-	file{ '/home/sysadmin':
-		ensure => directory,
-		mode => '700',
-		require => User['sysadmin'],
-	}
-
-	/* This is not longer a general configuration, it should be defined bt each group
-	group { 'lsst':
-		ensure => present,
-		gid => 500,
-		auth_membership => true,
-		members => ['sysadmin'],
-	}
-
-	#TODO Move password to hiera
-	user{ 'lsstmgr':
-		ensure => 'present',
-		uid => '500' ,
-		gid => '500',
-		home => '/home/lsstmgr',
-		managehome => true,
-		require => Group['lsst'],
-		password => lookup("lsstmgr_pwd"),
-	}
-
-	user{ 'tcsmgr':
-		ensure => 'present',
-		uid => '502',
-		gid => '500',
-		home => '/home/tcsmgr',
-		managehome => true,
-		require => Group['lsst'],
-		password => lookup("tcsmgr_pwd"),
-	}
-
-	user{ 'tcs':
-		ensure => 'present',
-		uid => '504' ,
-		gid => '500',
-		home => '/home/tcs',
-		managehome => true,
-		require => Group['lsst'],
-		password => lookup("tcs_pwd"),
-	}
-	*/
-
-	user{'root':
-		password => lookup("root_pwd"),
-	}
-
-	$ims_configuration = lookup("IMS_Configuration")
-
-	## SSSD Configuration
-
-	file{"/etc/sssd/sssd.conf":
-		ensure => present,
-		mode => "600",
-		owner => root,
-		group => root,
-		require => Package["sssd-common"]
-	}
-	
-	file{ "/etc/pki/ca-trust/source/anchors/incommon-ca.pem":
-		ensure => present,
-		source => "http://certmgr.techservices.illinois.edu/intermediate1.txt"
-	}
-
-	$sssd_config_array = $ims_configuration["SSSD"]
-	
-	$sssd_config_array.each | $section_name , $section_list| {
-		$section_list.each | $property_hash| {
-			$property_hash.each | $property_key, $property_value| {
-				ini_setting { "Updating property ${property_key} = ${property_value} in SSSD configuration file":
-					ensure  => present,
-					path    => "/etc/sssd/sssd.conf",
-					section => $section_name,
-					setting => $property_key,
-					value   => $property_value,
-					require => File['/etc/sssd/sssd.conf']
-				}
-			}
-		}
-	}
-	
-	#TODO Define a condition to start SSSD, it must be after all the configurations are written
-	
-	service{ "sssd" :
-		ensure => running,
-		require => [Package["sssd-common"],Package["sssd-krb5"]]
-	}
-	
-	# Make sure home is created if doesn't exist
-	
-	file_line{ "Adding mkhomedir support when Login" :
-		path => "/etc/pam.d/login",
-		line => "session         required     pam_mkhomedir.so skel=/etc/skel/ umask=0022",
-		match => "^session( )+required( )+pam_mkhomedir.so",
-	}
-
-	file_line{ "Adding mkhomedir support when using su":
-		path => "/etc/pam.d/su",
-		line => "session         required     pam_mkhomedir.so skel=/etc/skel/ umask=0022",
-		match => "^session( )+required( )+pam_mkhomedir.so",
-	}
 }

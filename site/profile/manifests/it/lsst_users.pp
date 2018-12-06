@@ -38,4 +38,11 @@ class profile::it::lsst_users {
 		password => lookup("root_pwd"),
 	}
  
+	group { 'lsst':
+		ensure => present,
+		gid => 500,
+		auth_membership => true,
+		members => ['sysadmin'],
+	}
+
 }

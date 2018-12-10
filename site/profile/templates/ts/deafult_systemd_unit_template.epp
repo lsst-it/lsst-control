@@ -1,0 +1,13 @@
+[Unit]
+Description=<%= $serviceDescription %>
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=<%= $serviceCommand %>
+Restart=on-failure
+User=<%= $systemdUser %>
+
+[Install]
+WantedBy=multi-user.target

@@ -175,10 +175,10 @@ class profile::it::puppet_master {
 	}
 
 	# Can be fixed once we manage to fix the issue with Hiera ssh key
-	#file{ "/root/.ssh":
-	#	ensure => directory,
-	#	mode => "600"
-	#}
+	file{ "/root/.ssh":
+		ensure => directory,
+		mode => "600"
+	}
 
 	file{ "/root/.ssh/known_hosts":
 		ensure => present,
@@ -201,7 +201,7 @@ class profile::it::puppet_master {
 		require => File["/root/.ssh/known_hosts"]
 	}
 	
-	$hiera_id_rsa_path = lookup("hiera_repo_id_path")
+	$hiera_id_rsa_path = lookup("hiera_repo_id_path", {default_value => undef})
 	
 	file{"/etc/puppetlabs/r10k/r10k.yaml":
 		ensure => file,
@@ -210,14 +210,14 @@ class profile::it::puppet_master {
 			{ 
 				'r10k_org' => lookup("r10k_org"),
 				'controlRepo' => lookup("control_repo") ,
-				'r10k_hiera_org' => lookup("r10k_hiera_org") ,
-				'hieraRepo' => lookup("hiera_repo"),
+				'r10k_hiera_org' => lookup("r10k_hiera_org", {default_value => undef}) ,
+				'hieraRepo' => lookup("hiera_repo", {default_value => undef}),
 				'idRsaPath' => $hiera_id_rsa_path
 			}
 		)
 	}
 	
-	if $hiera_id_rsa_path =~ /(.*\/)(.*\id_rsa)/ { 
+	if $hiera_id_rsa_path and $hiera_id_rsa_path =~ /(.*\/)(.*\id_rsa)/ { 
 		$base_path = $1
 		$dir = split($base_path, "/")
 		$filename = $2
@@ -230,8 +230,10 @@ class profile::it::puppet_master {
  			}else{
  				$aux_dir = join( $aux_dir + $dir[1, $index] , "/")
 			}
-			file{ $aux_dir:
-				ensure => directory,
+			if ! defined(File[$aux_dir]) {
+				file{ $aux_dir:
+					ensure => directory,
+				}
 			}
 		}
 		file{ $hiera_id_rsa_path:
@@ -247,10 +249,12 @@ class profile::it::puppet_master {
 			mode => "600"
 		}
 		
-	}else{
+	}elsif $hiera_id_rsa_path {
 		notify { $hiera_id_rsa_path:
 			message => "Hiera ID RSA isn't a full path!, path received was: ${hiera_id_rsa_path}",
 		}
+	}else{
+		notify { "No hiera values provided":}
 	}
 	
 	firewalld::custom_service{'puppet':

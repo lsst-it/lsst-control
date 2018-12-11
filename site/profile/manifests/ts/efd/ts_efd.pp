@@ -16,10 +16,16 @@ class profile::ts::efd::ts_efd{
 
 	$rpm_package_name = regsubst($rpm_basename, ".rpm", "")
 
+	if ! defined(Package["epel-release"]){
+		package{"epel-release":
+			ensure => installed,
+		}
+	}
+
   package{ "$rpm_package_name":
-		ensure => present,
+		ensure => installed,
 	  provider => yum,
-	  source => lookup("mysql_cluster_rpm")
+	  source => $rpm_url
   }
 
 	$mysql_cluster_repo = lookup("mysql_cluster_repo")

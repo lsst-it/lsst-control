@@ -66,15 +66,11 @@ class profile::ts::efd::ts_efd_writers {
         ),
         before => File["/etc/systemd/system/${subsystem}_efdwriter.service"]
 			}
-			service { "${subsystem}_${writer}_efdwriter":
-				ensure => running,
-				enable => true,
-        # TODO Add here a require statement for the mysql_cluster configuration 
-				require => [File["/etc/systemd/system/${subsystem}_${writer}_efdwriter.service"]]
-			}
-		
 		}
 	}
+
+  $runningEFDWriters = lookup("ts_efd::RunningEFDWriters")
+
   $ts_xml_subsystems.each | String $subsystem | {
     file{ "/etc/systemd/system/${subsystem}_efdwriter.service":
       ensure => present,
@@ -104,6 +100,15 @@ class profile::ts::efd::ts_efd_writers {
       }
   }
 
+  $runningEFDWriters.each | String $subsystem | {
+    service { "${subsystem}_efdwriter":
+      ensure => running,
+      enable => true,
+      # TODO Add here a require statement for the mysql_cluster configuration 
+      require => [File["/etc/systemd/system/${subsystem}_efdwriter.service"]]
+    }
+  }
+
   file{"/etc/systemd/system/efdwriters.service":
     ensure => present,
     mode => '0644',
@@ -117,14 +122,21 @@ class profile::ts::efd::ts_efd_writers {
       }
     ),
   } ~> 
-  exec{ "Generic EFD Writers systemd unit":
-    path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
-    cwd => "/etc/systemd/system/",
-    command => "find ./ -maxdepth 1 -regex './[a-zA-Z]*_efdwriter.service' -printf \"%f \" | xargs -I X sed -i \"s/Wants=.*/Wants=X/\" efdwriters.service",
-    #onlyif => "test ! -f /etc/systemd/system/efdwriter.service",
-    require => File["/etc/systemd/system/efdwriters.service"],
-    refreshonly => true,
-    notify => Exec["Systemd daemon reload"]
+    exec{ "Generic EFD Writers systemd unit":
+      path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+      cwd => "/etc/systemd/system/efdwriters.service.wants",
+      command => "find ./ -maxdepth 1 -regex './[a-zA-Z]*_efdwriter.service' -printf \"%f \" | xargs -I X sed -i \"s/Wants=.*/Wants=X/\" /etc/systemd/system/efdwriters.service",
+      #onlyif => "test ! -f /etc/systemd/system/efdwriter.service",
+      require => File["/etc/systemd/system/efdwriters.service"],
+      refreshonly => true,
+      notify => Exec["Systemd daemon reload"]
+    }
+
+  service { "efdwriters":
+    ensure => running,
+    enable => true,
+    # TODO Add here a require statement for the mysql_cluster configuration 
+    require => [File["/etc/systemd/system/efdwriters.service"]]
   }
 
   exec{"Systemd daemon reload":

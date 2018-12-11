@@ -61,7 +61,7 @@ class profile::ts::efd::ts_efd_srv{
   # TODO Add a timer to verify that the MYSQL server is online
   exec{ "Executing initial setup" :
     path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
-    command => "sleep 5; mysql -e \" ALTER USER 'root'@'localhost' IDENTIFIED BY '${mysql_admin_password}'; CREATE DATABASE EFD; CREATE USER ${efd_user}@localhost IDENTIFIED BY '${efd_user_pwd}'; GRANT ALL PRIVILEGES ON EFD.* TO ${efd_user}@localhost ; \"  ",
+    command => "sleep 15; mysql -e \" ALTER USER 'root'@'localhost' IDENTIFIED BY '${mysql_admin_password}'; CREATE DATABASE EFD; CREATE USER ${efd_user}@localhost IDENTIFIED BY '${efd_user_pwd}'; GRANT ALL PRIVILEGES ON EFD.* TO ${efd_user}@localhost ; \"  ",
     refreshonly => true,
     require => [Package["mysql-cluster-community-server"], Exec["Mysql Initialization"], Service["efd_mysqld"]]
   }

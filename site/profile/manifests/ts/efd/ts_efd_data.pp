@@ -9,12 +9,7 @@ class profile::ts::efd::ts_efd_data{
   $dir = $tmp[1,-2]
   $aux_dir = [""]
   $dir.each | $index, $sub_dir | {
-      
-    if join( $dir[ 1,$index] , "/" ) == "" {
-      $aux_dir = "/"
-    }else{
-      $aux_dir = join( $aux_dir + $dir[1, $index] , "/")
-    }
+    $aux_dir = join( $aux_dir + $dir[0,$index+1] , "/")
     file{ $aux_dir:
       ensure => directory,
     }
@@ -23,6 +18,17 @@ class profile::ts::efd::ts_efd_data{
   file{$mgmt_datanode_config_path:
     ensure => present,
     require => Package["mysql-cluster-community-data-node"]
+  }
+
+  $mysql_cluster_datanode_datapath = lookup("mysql_cluster_datanode_datapath")
+  $data_tmp = split($mysql_cluster_datanode_datapath, "/")
+  $data_dir = $data_tmp[1,-1]
+  $data_aux_dir = [""]
+  $data_dir.each | $index, $sub_dir | {
+    $data_aux_dir = join( $data_aux_dir + $data_dir[0,$index+1] , "/")
+    file{ $data_aux_dir:
+      ensure => directory,
+    }
   }
 
   ################################################################################

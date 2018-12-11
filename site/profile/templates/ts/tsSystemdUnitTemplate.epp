@@ -1,14 +1,35 @@
 [Unit]
 Description=<%= $serviceDescription %>
 Wants=network-online.target
+<% if $partOf { -%>
+PartOf=<%= $partOf %>
+<% } -%>
+<% if $after { -%>
+After=<%= $after %>
+<% }else { -%>
 After=network-online.target
+<% } -%>
 
 [Service]
+<% if $systemdUnitType and $systemdUnitType =~ "oneshot"{ -%>
+Type=<%= $systemdUnitType %>
+Restart=no 
+RemainAfterExit=yes
+<% } elsif $systemdUnitType { -%>
+Type=<%= $systemdUnitType %>
+<% } else { -%>
 Type=simple
-WorkingDirectory=<%= $startDemoPath %>
-ExecStart=<%= $serviceCommand %>
 Restart=on-failure
+<% } %>
+<% if $startPath { -%>
+WorkingDirectory=<%= $startPath %>
+<% } -%>
+ExecStart=<%= $serviceCommand %>
 User=salmgr
 
 [Install]
+<% if $wantedBy { -%>
+WantedBy=<%= $wantedBy %>
+<% }else { -%>
 WantedBy=multi-user.target
+<% } -%>

@@ -43,13 +43,26 @@ class profile::ts::efd::ts_efd_data{
 	$efdDataNodeConfig_hash.each | $sections_key, $sections_hash| {
     
     $sections_hash.each | $config_key, $config_value| {
-      ini_setting { "Updating property in section ${sections_key} : ${config_key} = ${config_value} in ${mgmt_datanode_config_path} file":
-        ensure  => present,
-        path    => $mgmt_datanode_config_path,
-        section => $sections_key,
-        setting => $config_key,
-        value   => $config_value,
-        require => File[$mgmt_datanode_config_path]
+
+      if $config_value == ""{
+        ini_setting { "Updating property in section ${sections_key} : ${config_key} in ${mgmt_datanode_config_path} file":
+          ensure  => present,
+          path    => $mgmt_datanode_config_path,
+          section => $sections_key,
+          setting => $config_key,
+          value   => "",
+          key_val_separator => " ",
+          require => File[$mgmt_datanode_config_path]
+        }
+      }else{
+        ini_setting { "Updating property in section ${sections_key} : ${config_key} = ${config_value} in ${mgmt_datanode_config_path} file":
+          ensure  => present,
+          path    => $mgmt_datanode_config_path,
+          section => $sections_key,
+          setting => $config_key,
+          value   => $config_value,
+          require => File[$mgmt_datanode_config_path]
+        }
       }
     }
   }

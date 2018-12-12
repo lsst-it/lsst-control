@@ -28,6 +28,7 @@ class profile::ts::efd::ts_efd_data{
     $data_aux_dir = join( $data_aux_dir + $data_dir[0,$index+1] , "/")
     file{ $data_aux_dir:
       ensure => directory,
+      seltype => mysqld_db_t,
     }
   }
 

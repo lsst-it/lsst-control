@@ -73,10 +73,10 @@ class profile::ts::efd::ts_efd_srv{
 
   exec{ "Mysql Initialization":
     path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
-    command => "mysqld --initialize-insecure --datadir=${mysql_cluster_dir}",
+    command => "mysqld --initialize-insecure --datadir=${mysql_cluster_dir}; setsebool -P nis_enabled 1 ; setsebool -P mysql_connect_any 1",
     refreshonly => true,
     user => mysql,
-    require => Package["mysql-cluster-community-server"],
+    require => [Package["mysql-cluster-community-server"],File[$mysql_cluster_dir]],
     notify => Exec["Executing initial setup"]
   }
 

@@ -88,7 +88,8 @@ class profile::ts::efd::ts_efd_writers {
           'efdwriters' => $ts_efd_writers 
         }
       ),
-      before => File["/etc/systemd/system/efdwriters.service"]
+      before => File["/etc/systemd/system/efdwriters.service"],
+      notify => Exec["Systemd daemon reload"]
     }
   }
 
@@ -113,6 +114,7 @@ class profile::ts::efd::ts_efd_writers {
         'subsystems' => $runningEFDWriters
       }
     ),
+    notify => Exec["Systemd daemon reload"]
   }
 
   service { "efdwriters":

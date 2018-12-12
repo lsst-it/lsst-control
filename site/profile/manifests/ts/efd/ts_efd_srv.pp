@@ -38,13 +38,42 @@ class profile::ts::efd::ts_efd_srv{
     ensure => directory,
     owner => mysql,
     group => mysql,
+    seltype => mysqld_db_t,
     notify => Exec["Mysql Initialization"],
     require => Package["mysql-cluster-community-server"]
   }
 
+  # This is just in case someone try to start mysqld systemd unit, It will try to use the same socket as the efd_mysqld
+  ini_setting { "Updating [mysqld] datadir=${mysql_cluster_dir} in /etc/my.cnf":
+    ensure  => present,
+    path    => "/etc/my.cnf",
+    section => "mysqld",
+    setting => "datadir",
+    value   => $mysql_cluster_dir
+  }
+
+  # This is just in case someone try to start mysqld systemd unit, It will try to use the same socket as the efd_mysqld
+  $efd_mysqld_socket = $efdMysqlServerConfig_hash["mysqld"]["socket"]
+
+  ini_setting { "Updating [mysqld] socket=${efd_mysqld_socket} in /etc/my.cnf":
+    ensure  => present,
+    path    => "/etc/my.cnf",
+    section => "mysqld",
+    setting => "socket",
+    value   => $efd_mysqld_socket
+  }
+
+  ini_setting { "Updating [mysql] section socket=${efd_mysqld_socket} in /etc/my.cnf":
+    ensure  => present,
+    path    => "/etc/my.cnf",
+    section => "mysql",
+    setting => "socket",
+    value   => $efd_mysqld_socket
+  }
+
   exec{ "Mysql Initialization":
     path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
-    command => "mysqld --initialize-insecure",
+    command => "mysqld --initialize-insecure --datadir=${mysql_cluster_dir}",
     refreshonly => true,
     user => mysql,
     require => Package["mysql-cluster-community-server"],
@@ -61,9 +90,9 @@ class profile::ts::efd::ts_efd_srv{
   # TODO Add a timer to verify that the MYSQL server is online
   exec{ "Executing initial setup" :
     path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
-    command => "sleep 15; mysql -e \" ALTER USER 'root'@'localhost' IDENTIFIED BY '${mysql_admin_password}'; CREATE DATABASE EFD; CREATE USER ${efd_user}@localhost IDENTIFIED BY '${efd_user_pwd}'; GRANT ALL PRIVILEGES ON EFD.* TO ${efd_user}@localhost ; \"  ",
+    command => "sleep 10; mysql -e \" ALTER USER 'root'@'localhost' IDENTIFIED BY '${mysql_admin_password}'; CREATE DATABASE EFD; CREATE USER ${efd_user}@localhost IDENTIFIED BY '${efd_user_pwd}'; GRANT ALL PRIVILEGES ON EFD.* TO ${efd_user}@localhost ; \" --socket=${efd_mysqld_socket} ",
     refreshonly => true,
-    require => [Package["mysql-cluster-community-server"], Exec["Mysql Initialization"], Service["efd_mysqld"]]
+    require => [Package["mysql-cluster-community-server"], Exec["Mysql Initialization"], Service["efd_mysqld"], Ini_setting["Updating [mysql] section socket=${efd_mysqld_socket} in /etc/my.cnf"]]
   }
 
   ################################################################################
@@ -104,7 +133,7 @@ class profile::ts::efd::ts_efd_srv{
     group   => 'root',
     content => epp('profile/ts/deafult_systemd_unit_template.epp', 
       { 'serviceDescription' => "EFD MySQL daemon",
-        'serviceCommand' => "/sbin/mysqld --defaults-file=${mysql_server_config_path} --ndbcluster",
+        'serviceCommand' => "/sbin/mysqld --defaults-file=${mysql_server_config_path} --ndbcluster --datadir=${mysql_cluster_dir}",
         'systemdUser' => 'mysql'
       }),
     notify => Exec["MYSQL Reload deamon"]

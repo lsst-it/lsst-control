@@ -1,6 +1,13 @@
 [Unit]
 Description=<%= $serviceDescription %>
+<% if $wants and $efdwriters { -%>
+Wants=<% $efdwriters.each  | $writer | { -%>  <%=$wants-%>_<%= $writer -%>_efdwriter.service <% } -%>
+<%} elsif $subsystems { -%>
+Wants=<% $subsystems.each  | $s | { -%>  <%=$s-%>_efdwriter.service <% } -%>
+<%} else { -%>
 Wants=network-online.target
+<%} -%>
+
 <% if $partOf { -%>
 PartOf=<%= $partOf %>
 <% } -%>

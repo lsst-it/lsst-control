@@ -77,27 +77,19 @@ class profile::ts::efd::ts_efd_writers {
       mode => '0644',
       owner   => 'root',
       group   => 'root',
-      notify => Exec["Create $subsystem general systemd unit"],
       content => epp('profile/ts/tsSystemdUnitTemplate.epp', 
         { 'serviceDescription' => "EFD - ${subsystem} efdwriter control unit",
           'serviceCommand' => "/bin/true",
           'wantedBy' => "efdwriters.service",
           'partOf' => "efdwriters.service",
           'after' => "efdwriters.service",
-          'systemdUnitType' => "oneshot" 
+          'systemdUnitType' => "oneshot",
+          'wants' => $subsystem,
+          'efdwriters' => $ts_efd_writers 
         }
       ),
       before => File["/etc/systemd/system/efdwriters.service"]
-    } ~> 
-      exec{ "Create $subsystem general systemd unit":
-        path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
-        cwd => "/etc/systemd/system/",
-        command => "ls -x ${subsystem}_* | xargs -I X sed -i \"s/Wants=.*/Wants=X/\" ${subsystem}_efdwriter.service",
-        #onlyif => "test ! -f /etc/systemd/system/${subsystem}_efdwriter.service",
-        require => File["/etc/systemd/system/${subsystem}_efdwriter.service"],
-        refreshonly => true,
-        notify => Exec["Systemd daemon reload"]
-      }
+    }
   }
 
   $runningEFDWriters.each | String $subsystem | {
@@ -114,23 +106,14 @@ class profile::ts::efd::ts_efd_writers {
     mode => '0644',
     owner   => 'root',
     group   => 'root',
-    notify => Exec["Generic EFD Writers systemd unit"],
     content => epp('profile/ts/tsSystemdUnitTemplate.epp', 
       { 'serviceDescription' => "EFD - efdwriter control unit",
         'serviceCommand' => "/bin/true",
-        'systemdUnitType' => "oneshot" 
+        'systemdUnitType' => "oneshot",
+        'subsystems' => $runningEFDWriters
       }
     ),
-  } ~> 
-    exec{ "Generic EFD Writers systemd unit":
-      path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
-      cwd => "/etc/systemd/system/efdwriters.service.wants",
-      command => "find ./ -maxdepth 1 -regex './[a-zA-Z]*_efdwriter.service' -printf \"%f \" | xargs -I X sed -i \"s/Wants=.*/Wants=X/\" /etc/systemd/system/efdwriters.service",
-      #onlyif => "test ! -f /etc/systemd/system/efdwriter.service",
-      require => File["/etc/systemd/system/efdwriters.service"],
-      refreshonly => true,
-      notify => Exec["Systemd daemon reload"]
-    }
+  }
 
   service { "efdwriters":
     ensure => running,

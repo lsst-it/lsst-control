@@ -18,6 +18,9 @@ After=network-online.target
 <% } -%>
 
 [Service]
+<% if $environmentFile { -%>
+EnvironmentFile=<%= $environmentFile %>
+<% } %>
 <% if $systemdUnitType and $systemdUnitType =~ "oneshot"{ -%>
 Type=<%= $systemdUnitType %>
 Restart=no 

@@ -32,6 +32,15 @@ class profile::ts::efd::ts_efd_writers {
 		before => Exec["gengenericefd"]
 	}
 
+  exec{ "Create efdwriters environment file for systemd unit":
+    user => "salmgr",
+		group => "lsst",
+    path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+    command => "/bin/bash -c 'source ${ts_sal_path}/setup.env ; env > ${ts_sal_path}/efdwriters.env'",
+    onlyif => "test ! -f ${ts_sal_path}/efdwriters.env",
+    require => Class["ts_sal"]
+  }
+
 	exec{ "gengenericefd" :
 		user => "salmgr",
 		group => "lsst",
@@ -58,10 +67,11 @@ class profile::ts::efd::ts_efd_writers {
 				content => epp('profile/ts/tsSystemdUnitTemplate.epp', 
 					{ 'serviceDescription' => "EFD - ${subsystem} ${writer} writer",
 					  'startPath' => "${ts_sal_path}/${ts_xml_build_dir}/${subsystem}/cpp/src" , 
-					  'serviceCommand' => "/bin/bash -c 'source ${ts_sal_path}/setup.env && ./sacpp_${subsystem}_${writer}_efdwriter'",
+					  'serviceCommand' => "${ts_sal_path}/${ts_xml_build_dir}/${subsystem}/cpp/src/sacpp_${subsystem}_${writer}_efdwriter",
             'wantedBy' => "${subsystem}_efdwriter.service",
             'partOf' => "${subsystem}_efdwriter.service",
-            'after' => "${subsystem}_efdwriter.service"
+            'after' => "${subsystem}_efdwriter.service",
+            'environmentFile' => "${ts_sal_path}/efdwriters.env"
           }
         ),
         before => File["/etc/systemd/system/${subsystem}_efdwriter.service"]

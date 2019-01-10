@@ -4,7 +4,9 @@
         :<%= $r10k_org %>:
                 remote: '<%= $controlRepo%>'
                 basedir: '/etc/puppetlabs/code/environments'
+<% if $r10k_hiera_org { -%>
         :<%= $r10k_hiera_org %>:
                 remote: '<%= $hieraRepo%>'
                 basedir: '/etc/puppetlabs/code/hieradata'
                 private_key: '<%= $idRsaPath%>'
+<% } %>

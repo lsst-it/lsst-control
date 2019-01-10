@@ -1,4 +1,4 @@
-class profile::ts::efd{
+class profile::ts::efd::efd{
 
 	$efd_user = lookup("ts::efd::user")
 	$efd_user_pwd = lookup("ts::efd::user_pwd")

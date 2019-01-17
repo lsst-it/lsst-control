@@ -49,7 +49,6 @@ class profile::ts::efd::ts_efd_srv{
       }else{
         $aux_dir = join( $aux_dir + $dir_1[0, $index] , "/")
       }
-      notify{ " ${tier_key} ${index} subdir: ${aux_dir}": }
       if ! defined(File[$aux_dir]){
         file{ $aux_dir:
           ensure => directory,

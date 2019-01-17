@@ -145,7 +145,7 @@ class profile::ts::efd::ts_efd_writers {
 		line => "export LSST_EFD_HOST=localhost",
 	}
 
-  $mysqld_socket = lookup("mysql_server.mysqld.socket") 
+  $mysqld_socket = lookup("efd_tiers.tier1.mysql_server.mysqld.socket") 
   file_line{ "Add MYSQL_UNIX_PORT variable" :
 		path => "${ts_sal_path}/setup.env",
 		line => "export MYSQL_UNIX_PORT=${mysqld_socket}",

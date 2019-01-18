@@ -17,14 +17,14 @@ class profile::ts::efd::ts_efd_srv{
     ################################################################################
     # Last item will be the filename which is a file and is declared later
     $tmp = split($mysql_server_config_path, "/")
-    $dir = $tmp[1,-2]
+    $dir = $tmp[1,-1]
     $aux_dir = [""]
     $dir.each | $index, $sub_dir | {
         
       if join( $dir[ 1,$index] , "/" ) == "" {
         $aux_dir = "/"
       }else{
-        $aux_dir = join( $aux_dir + $dir[1, $index] , "/")
+        $aux_dir = join( $aux_dir + $dir[0, $index] , "/")
       }
       if ! defined( File[$aux_dir]){
         file{ $aux_dir:
@@ -35,6 +35,8 @@ class profile::ts::efd::ts_efd_srv{
 
     file{$mysql_server_config_path:
       ensure => present,
+      owner => mysql,
+      group => mysql,
       require => Package["mysql-cluster-community-server"]
     }
 
@@ -102,10 +104,18 @@ class profile::ts::efd::ts_efd_srv{
 
     exec{ "Mysql Initialization - ${tier_key}":
       path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
-      command => "mysqld --user=mysql --initialize-insecure --datadir=${mysql_cluster_dir}; setsebool -P nis_enabled 1 ; setsebool -P mysql_connect_any 1",
+      command => "mysqld --user=mysql --initialize-insecure --datadir=${mysql_cluster_dir}",
       refreshonly => true,
       require => [Package["mysql-cluster-community-server"],File[$mysql_cluster_dir]],
-      notify => Exec["Executing initial setup - ${tier_key}"]
+      notify => [Exec["Executing initial setup - ${tier_key}"], Exec["Adjust SELinux to allow MySQL - ${tier_key}"]]
+    }
+
+    exec{ "Adjust SELinux to allow MySQL - ${tier_key}":
+      path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+      refreshonly => true,
+      require => File[$mysql_cluster_dir],
+      command => "setsebool -P nis_enabled 1 ; setsebool -P mysql_connect_any 1",
+      onlyif => "test -z $\"(which setsebool)\"" # This executes the command only if setsebool command exists
     }
 
     $mysql_admin_password = lookup("ts::efd::mysql_admin_password")

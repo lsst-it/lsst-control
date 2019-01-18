@@ -45,6 +45,31 @@ class profile::ts::efd::ts_efd_data{
       }
     }
 
+    #############################################################################
+
+    $mysql_cluster_datadir = lookup("efd_tiers_vars.${tier_key}.mysql_cluster_datadir")
+
+    $tmp_2 = split($mysql_cluster_datadir, "/")
+    $dir_2 = $tmp_2[1,-1]
+    $aux_dir_2 = [""]
+    $dir_2.each | $index, $sub_dir | {
+      if join( $dir_2[ 1,$index] , "/" ) == "" {
+        $aux_dir_2 = "/"
+      }else{
+        $aux_dir_2 = join( $aux_dir_2 + $dir_2[0, $index+1] , "/")
+      }
+      if ! defined(File[$aux_dir_2]){
+        file{ $aux_dir_2:
+          ensure => directory,
+        }
+      }
+    }
+
+    file{ "${mysql_cluster_datadir}/data/":
+      ensure => directory,
+      require => File["${mysql_cluster_datadir}"]
+    }
+
     ################################################################################
     $efdDataNodeConfig_hash = $tier_hash["ndb_node"]
 

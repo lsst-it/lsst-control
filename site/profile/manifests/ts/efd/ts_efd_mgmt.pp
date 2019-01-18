@@ -16,7 +16,7 @@ class profile::ts::efd::ts_efd_mgmt{
 
   $efd_tiers.each | $tier_key, $tier_hash | {
     #tier 1 -> hash
-    $mgmt_config_path = lookup("efd_tiers_vars.${tier_key}.mysql_cluster_mgmt_config_path")
+    $mgmt_config_path = lookup("efd_tiers_vars.${tier_key}.mysql_cluster_mgmt_config_path") 
       # This block of code, will check the full path given and create all the directories if required
     ################################################################################
     # Last item will be the filename which is a file and is declared later
@@ -44,16 +44,53 @@ class profile::ts::efd::ts_efd_mgmt{
     $aux_dir_1 = [""]
     $dir_1.each | $index, $sub_dir | {
       if join( $dir_1[ 1,$index] , "/" ) == "" {
-        $aux_dir = "/"
+        $aux_dir_1 = "/"
       }else{
-        $aux_dir = join( $aux_dir + $dir_1[0, $index+1] , "/")
+        $aux_dir_1 = join( $aux_dir_1 + $dir_1[0, $index+1] , "/")
       }
-      notify{ " ${tier_key} ${index} subdir: ${aux_dir}": }
-      if ! defined(File[$aux_dir]){
-        file{ $aux_dir:
+      notify{ " ${tier_key} ${index} subdir: ${aux_dir_1}": }
+      if ! defined(File[$aux_dir_1]){
+        file{ $aux_dir_1:
           ensure => directory,
         }
       }
+    }
+
+    $mysql_cluster_config_dir = "${mysql_cluster_dir}/mgmt/"
+
+    file{ $mysql_cluster_config_dir:
+      ensure => directory,
+      owner => mysql,
+      group => mysql,
+      seltype => mysqld_db_t,
+    }
+
+    #############################################################################
+
+    $mysql_cluster_datadir = lookup("efd_tiers_vars.${tier_key}.mysql_cluster_datadir")
+
+    $tmp_2 = split($mysql_cluster_datadir, "/")
+    $dir_2 = $tmp_2[1,-1]
+    $aux_dir_2 = [""]
+    $dir_2.each | $index, $sub_dir | {
+      if join( $dir_2[ 1,$index] , "/" ) == "" {
+        $aux_dir_2 = "/"
+      }else{
+        $aux_dir_2 = join( $aux_dir_2 + $dir_2[0, $index+1] , "/")
+      }
+      if ! defined(File[$aux_dir_2]){
+        file{ $aux_dir_2:
+          ensure => directory,
+        }
+      }
+    }
+
+    file{ "${mysql_cluster_datadir}/mgmt/":
+      ensure => directory,
+      owner => mysql,
+      group => mysql,
+      seltype => mysqld_db_t,
+      require => File["${mysql_cluster_datadir}"]
     }
 
     ################################################################################
@@ -75,7 +112,7 @@ class profile::ts::efd::ts_efd_mgmt{
       group   => 'root',
       content => epp('profile/ts/deafult_systemd_unit_template.epp', 
         { 'serviceDescription' => "[${tier_key}] EFD Node DB Management daemon",
-          'serviceCommand' => "/sbin/ndb_mgmd --config-file=${mgmt_config_path} --nodaemon --config-dir=${mysql_cluster_dir}",
+          'serviceCommand' => "/sbin/ndb_mgmd --config-file=${mgmt_config_path} --nodaemon --config-dir=${mysql_cluster_config_dir}",
           'systemdUser' => 'root'
         }),
       notify => Exec["NDB_MGMD Reload deamon"]

@@ -144,7 +144,7 @@ class profile::ts::efd::ts_efd_srv{
       refreshonly => true,
       require => File[$mysql_cluster_dir],
       command => "setsebool -P nis_enabled 1 ; setsebool -P mysql_connect_any 1",
-      onlyif => "test -z $\"(which setsebool)\"" # This executes the command only if setsebool command exists
+      onlyif => "test ! -z $\"(which setsebool)\"" # This executes the command only if setsebool command exists
     }
 
     $mysql_admin_password = lookup("ts::efd::mysql_admin_password")

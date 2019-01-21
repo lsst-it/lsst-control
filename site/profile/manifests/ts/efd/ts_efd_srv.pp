@@ -62,6 +62,7 @@ class profile::ts::efd::ts_efd_srv{
       ensure => directory,
       owner => mysql,
       group => mysql,
+      seltype => mysqld_db_t,
       notify => Exec["Mysql Initialization - ${tier_key}"],
       require => Package["mysql-cluster-community-server"]
     }

@@ -217,6 +217,7 @@ class profile::ts::efd::ts_efd_srv{
   file{ "/etc/my.cnf":
     ensure => "link",
     target => "/etc/my-tier1.cnf",
+    seltype => "mysqld_etc_t",
     require => File["/etc/my-tier1.cnf"]
   }
 

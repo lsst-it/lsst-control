@@ -5,6 +5,13 @@ class profile::ts::efd::ts_efd_data{
     ensure => installed,
   }
 
+  exec{ "Adjust SELinux to allow MySQL":
+    path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+    refreshonly => true,
+    command => "setsebool -P nis_enabled 1 ; setsebool -P mysql_connect_any 1",
+    onlyif => "test ! -z $\"(which setsebool)\"" # This executes the command only if setsebool command exists
+  }
+
   $efd_tiers = lookup("efd_tiers" )
 
   $efd_tiers.each | $tier_key, $tier_hash | {
@@ -118,7 +125,7 @@ class profile::ts::efd::ts_efd_data{
           'serviceCommand' => "/sbin/ndbd --defaults-file=${mgmt_datanode_config_path} --nodaemon  --initial-start ${nowait_nodes}",
           'systemdUser' => 'root'
         }),
-      notify => Exec["NDBD Reload deamon"]
+      notify => [Exec["NDBD Reload deamon"], Exec["Adjust SELinux to allow MySQL"]]
     }
 
     service{ "${ndbd_systemd_unit_name}":

@@ -104,9 +104,9 @@ class profile::ts::efd::ts_efd_data{
     $ndbd_systemd_unit = "/etc/systemd/system/${ndbd_systemd_unit_name}.service"
 
     if has_key( $tier_hash , "mysql_cluster_datanode_nowait_nodeid" ) {
-        $nowait_nodeid = "--nowait-nodes=${tier_hash["mysql_cluster_datanode_nowait_nodeid"]}"
+        $nowait_nodes = "--nowait-nodes=${tier_hash["mysql_cluster_datanode_nowait_nodeid"]}"
     }else{
-      $nowait_nodeid = ""
+      $nowait_nodes = ""
     }
 
     file { $ndbd_systemd_unit:
@@ -115,7 +115,7 @@ class profile::ts::efd::ts_efd_data{
       group   => 'root',
       content => epp('profile/ts/deafult_systemd_unit_template.epp', 
         { 'serviceDescription' => "EFD Data Node daemon",
-          'serviceCommand' => "/sbin/ndbd --defaults-file=${mgmt_datanode_config_path} --nodaemon  --initial-start ${nowait_nodeid}",
+          'serviceCommand' => "/sbin/ndbd --defaults-file=${mgmt_datanode_config_path} --nodaemon  --initial-start ${nowait_nodes}",
           'systemdUser' => 'root'
         }),
       notify => Exec["NDBD Reload deamon"]

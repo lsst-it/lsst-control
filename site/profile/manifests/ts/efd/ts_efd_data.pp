@@ -104,7 +104,7 @@ class profile::ts::efd::ts_efd_data{
     $ndbd_systemd_unit = "/etc/systemd/system/${ndbd_systemd_unit_name}.service"
 
     if has_key( $tier_hash , "mysql_cluster_datanode_nowait_nodeid" ) {
-        $nowait_nodeid = "--nowait-nodeid=${tier_hash["mysql_cluster_datanode_nowait_nodeid"]}"
+        $nowait_nodeid = "--nowait-nodes=${tier_hash["mysql_cluster_datanode_nowait_nodeid"]}"
     }else{
       $nowait_nodeid = ""
     }

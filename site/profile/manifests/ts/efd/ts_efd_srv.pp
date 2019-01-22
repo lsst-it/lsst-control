@@ -5,6 +5,13 @@ class profile::ts::efd::ts_efd_srv{
     ensure => installed,
   }
 
+  exec{ "Adjust SELinux to allow MySQL":
+    path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+    refreshonly => true,
+    command => "setsebool -P nis_enabled 1 ; setsebool -P mysql_connect_any 1",
+    onlyif => "test ! -z $\"(which setsebool)\"" # This executes the command only if setsebool command exists
+  }
+
   $efd_tiers = lookup("efd_tiers")
 
   $efd_tiers.each | $tier_key, $tier_hash | {
@@ -137,15 +144,7 @@ class profile::ts::efd::ts_efd_srv{
       command => "mysqld --user=mysql --initialize-insecure --datadir=${mysql_cluster_datadir}/srv/",
       refreshonly => true,
       require => [Package["mysql-cluster-community-server"],File[$mysql_cluster_dir]],
-      notify => [Exec["Executing initial setup - ${tier_key}"], Exec["Adjust SELinux to allow MySQL - ${tier_key}"]]
-    }
-
-    exec{ "Adjust SELinux to allow MySQL - ${tier_key}":
-      path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
-      refreshonly => true,
-      require => File[$mysql_cluster_dir],
-      command => "setsebool -P nis_enabled 1 ; setsebool -P mysql_connect_any 1",
-      onlyif => "test ! -z $\"(which setsebool)\"" # This executes the command only if setsebool command exists
+      notify => [Exec["Executing initial setup - ${tier_key}"], Exec["Adjust SELinux to allow MySQL"]]
     }
 
     $mysql_admin_password = lookup("ts::efd::mysql_admin_password")
@@ -160,7 +159,7 @@ class profile::ts::efd::ts_efd_srv{
       path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
       command => "sleep 10; mysql -P ${mysql_cluster_mysqld_port}  -e \" ALTER USER 'root'@'localhost' IDENTIFIED BY '${mysql_admin_password}'; CREATE DATABASE EFD; CREATE USER ${efd_user}@localhost IDENTIFIED BY '${efd_user_pwd}'; GRANT ALL PRIVILEGES ON EFD.* TO ${efd_user}@localhost ; \" --socket=${efd_mysqld_socket} ",
       refreshonly => true,
-      require => [Package["mysql-cluster-community-server"], Exec["Mysql Initialization - ${tier_key}"], Service["efd_mysqld_${tier_key}"], Ini_setting["Updating [mysql] section socket=${efd_mysqld_socket} in /etc/my-${tier_key}.cnf"]]
+      require => [Package["mysql-cluster-community-server"], Exec["Mysql Initialization - ${tier_key}"], Service["efd_mysqld_${tier_key}"], Ini_setting["Updating [mysql] section socket=${efd_mysqld_socket} in /etc/my-${tier_key}.cnf"], Exec["Adjust SELinux to allow MySQL"]]
     }
 
     ################################################################################

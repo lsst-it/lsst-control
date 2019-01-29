@@ -32,13 +32,26 @@ class profile::ts::efd::ts_efd_writers {
 		before => Exec["gengenericefd"]
 	}
 
+	file_line{ "Add LSST_EFD_HOST variable" :
+		path => "${ts_sal_path}/setup.env",
+		line => "export LSST_EFD_HOST=localhost",
+	}
+
+  #EFD Writers will always use TIER1 only.
+  $mysqld_socket = lookup("efd_tiers.tier1.mysql_server.mysqld.socket") 
+  file_line{ "Add MYSQL_UNIX_PORT variable" :
+		path => "${ts_sal_path}/setup.env",
+		line => "export MYSQL_UNIX_PORT=${mysqld_socket}",
+    require => Class["ts_sal"]
+	}
+
   exec{ "Create efdwriters environment file for systemd unit":
     user => "salmgr",
 		group => "lsst",
     path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
     command => "/bin/bash -c 'source ${ts_sal_path}/setup.env ; env > ${ts_sal_path}/efdwriters.env'",
     onlyif => "test ! -f ${ts_sal_path}/efdwriters.env",
-    require => Class["ts_sal"]
+    require => [Class["ts_sal"], File_line["Add LSST_EFD_HOST variable"], File_line["Add MYSQL_UNIX_PORT variable"]]
   }
 
 	exec{ "gengenericefd" :
@@ -74,7 +87,8 @@ class profile::ts::efd::ts_efd_writers {
             'environmentFile' => "${ts_sal_path}/efdwriters.env"
           }
         ),
-        before => File["/etc/systemd/system/${subsystem}_efdwriter.service"]
+        before => File["/etc/systemd/system/${subsystem}_efdwriter.service"],
+        require => Exec["Create efdwriters environment file for systemd unit"]
 			}
 		}
 	}
@@ -99,7 +113,8 @@ class profile::ts::efd::ts_efd_writers {
         }
       ),
       before => File["/etc/systemd/system/efdwriters.service"],
-      notify => Exec["Systemd daemon reload"]
+      notify => Exec["Systemd daemon reload"],
+      require => Exec["Create efdwriters environment file for systemd unit"]
     }
   }
 
@@ -139,16 +154,5 @@ class profile::ts::efd::ts_efd_writers {
     command => "systemctl daemon-reload",
     refreshonly => true
   }
-	
-	file_line{ "Add LSST_EFD_HOST variable" :
-		path => "${ts_sal_path}/setup.env",
-		line => "export LSST_EFD_HOST=localhost",
-	}
 
-  $mysqld_socket = lookup("mysql_server.mysqld.socket") 
-  file_line{ "Add MYSQL_UNIX_PORT variable" :
-		path => "${ts_sal_path}/setup.env",
-		line => "export MYSQL_UNIX_PORT=${mysqld_socket}",
-    require => Class["ts_sal"]
-	}
 }

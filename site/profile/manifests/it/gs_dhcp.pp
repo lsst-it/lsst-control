@@ -10,6 +10,7 @@ class profile::it::gs_dhcp{
 		extra_config => [lookup("failover_configuration")],
 		dhcp_conf_extra => "INTERNAL_TEMPLATE",
 		pools => lookup("dhcp_pools"),
-		ignoredsubnets => lookup("ignored_subnets")
+		ignoredsubnets => lookup("ignored_subnets"),
+		hosts => lookup({"name" => "dhcp_hosts", "default_value" => {}})
 	}
 }

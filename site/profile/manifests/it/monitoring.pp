@@ -22,18 +22,8 @@ class profile::it::monitoring {
 			}
 		}
 		#Remote Logging
-		class{'rsyslog::client':
-			log_local => true,
-			remote_servers => [
-				{
-					host => lookup("rsyslog_host"),
-					port => lookup("rsyslog_port"),
-					protocol  => lookup("rsyslog_proto"),
-					pattern => lookup("rsyslog_patterns")
-				},
-			],
-			imfiles => lookup("rsyslog::imfiles", {default_value => undef})
-		}
+		#All definitions come from hiera.
+		class{'rsyslog::client':}
 	}else{
 		service{"telegraf":
 			ensure => stopped,

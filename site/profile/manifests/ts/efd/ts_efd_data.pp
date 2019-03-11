@@ -122,7 +122,7 @@ class profile::ts::efd::ts_efd_data{
       group   => 'root',
       content => epp('profile/ts/deafult_systemd_unit_template.epp', 
         { 'serviceDescription' => "EFD Data Node daemon",
-          'serviceCommand' => "/sbin/ndbd --defaults-file=${mgmt_datanode_config_path} --nodaemon  --initial-start ${nowait_nodes}",
+          'serviceCommand' => "/sbin/ndbd --defaults-file=${mgmt_datanode_config_path} --nodaemon ${nowait_nodes}",
           'systemdUser' => 'root'
         }),
       notify => [Exec["NDBD Reload deamon"], Exec["Adjust SELinux to allow MySQL"]]

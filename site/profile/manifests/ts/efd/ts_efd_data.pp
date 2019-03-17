@@ -1,3 +1,4 @@
+# Class to create a mysql data node
 class profile::ts::efd::ts_efd_data{
 
   package{ "mysql-cluster-community-data-node" :
@@ -78,14 +79,14 @@ class profile::ts::efd::ts_efd_data{
     }
 
     ################################################################################
-    $efdDataNodeConfig_hash = $tier_hash["ndb_node"]
+    $efd_data_dode_config_hash = $tier_hash["ndb_node"]
 
-    $efdDataNodeConfig_hash.each | $sections_key, $sections_hash| {
+    $efd_data_dode_config_hash.each | $sections_key, $sections_hash| {
       
       $sections_hash.each | $config_key, $config_value| {
 
         if $config_value == ""{
-          ini_setting { "Updating property in section ${sections_key} : ${config_key} in ${mgmt_datanode_config_path} file":
+          ini_setting { "Updating property in section ${sections_key} : ${config_key} in ${mgmt_datanode_config_path}":
             ensure  => present,
             path    => $mgmt_datanode_config_path,
             section => $sections_key,
@@ -95,7 +96,7 @@ class profile::ts::efd::ts_efd_data{
             require => File[$mgmt_datanode_config_path]
           }
         }else{
-          ini_setting { "Updating property in section ${sections_key} : ${config_key} = ${config_value} in ${mgmt_datanode_config_path} file":
+          ini_setting { "Updating property in section ${sections_key} : ${config_key} = ${config_value} in ${mgmt_datanode_config_path}":
             ensure  => present,
             path    => $mgmt_datanode_config_path,
             section => $sections_key,

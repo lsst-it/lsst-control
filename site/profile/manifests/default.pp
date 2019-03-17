@@ -120,7 +120,7 @@ class profile::default {
     path    => '/etc/puppetlabs/puppet/puppet.conf',
     section => 'agent',
     setting => 'runinterval',
-    value   => "${puppet_agent_run_interval}",
+    value   => $puppet_agent_run_interval,
   }
 
   ini_setting { 'Puppet agent server':

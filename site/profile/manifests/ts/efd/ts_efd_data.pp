@@ -7,7 +7,7 @@ class profile::ts::efd::ts_efd_data{
   }
 
   exec{ "Adjust SELinux to allow MySQL":
-    path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+    path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'],
     refreshonly => true,
     command => "setsebool -P nis_enabled 1 ; setsebool -P mysql_connect_any 1",
     onlyif => "test ! -z $\"(which setsebool)\"" # This executes the command only if setsebool command exists
@@ -82,7 +82,7 @@ class profile::ts::efd::ts_efd_data{
     $efd_data_dode_config_hash = $tier_hash["ndb_node"]
 
     $efd_data_dode_config_hash.each | $sections_key, $sections_hash| {
-      
+
       $sections_hash.each | $config_key, $config_value| {
 
         if $config_value == ""{
@@ -121,7 +121,7 @@ class profile::ts::efd::ts_efd_data{
       mode    => '0644',
       owner   => 'root',
       group   => 'root',
-      content => epp('profile/ts/deafult_systemd_unit_template.epp', 
+      content => epp('profile/ts/deafult_systemd_unit_template.epp',
         { 'serviceDescription' => "EFD Data Node daemon",
           'serviceCommand' => "/sbin/ndbd --defaults-file=${mgmt_datanode_config_path} --nodaemon ${nowait_nodes}",
           'systemdUser' => 'root'
@@ -137,7 +137,7 @@ class profile::ts::efd::ts_efd_data{
   }
 
   exec{ "NDBD Reload deamon":
-    path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+    path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'],
     command => "systemctl daemon-reload",
     refreshonly => true,
   }

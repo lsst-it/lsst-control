@@ -6,8 +6,10 @@ class profile::ts::efd::ts_efd_writers {
     ensure => installed,
   }
 
-  package{'python36-devel':
-    ensure => installed,
+  if ! defined(Package['python-devel']){
+    package{'python36-devel':
+      ensure => installed,
+    }
   }
 
   $efd_user = lookup('ts::efd::user')

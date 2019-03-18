@@ -6,7 +6,7 @@ class profile::ts::efd::ts_efd_writers {
     ensure => installed,
   }
 
-  if ! defined(Package['python-devel']){
+  if ! defined(Package['python36-devel']){
     package{'python36-devel':
       ensure => installed,
     }

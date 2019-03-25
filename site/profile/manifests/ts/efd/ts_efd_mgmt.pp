@@ -1,3 +1,4 @@
+# Class responsible of deploying a mysql cluster management node
 class profile::ts::efd::ts_efd_mgmt{
 
   package{ "mysql-cluster-community-server":
@@ -16,7 +17,7 @@ class profile::ts::efd::ts_efd_mgmt{
 
   $efd_tiers.each | $tier_key, $tier_hash | {
     #tier 1 -> hash
-    $mgmt_config_path = lookup("efd_tiers_vars.${tier_key}.mysql_cluster_mgmt_config_path") 
+    $mgmt_config_path = lookup("efd_tiers_vars.${tier_key}.mysql_cluster_mgmt_config_path")
       # This block of code, will check the full path given and create all the directories if required
     ################################################################################
     # Last item will be the filename which is a file and is declared later
@@ -24,7 +25,7 @@ class profile::ts::efd::ts_efd_mgmt{
     $dir = $tmp[1,-2]
     $aux_dir = [""]
     $dir.each | $index, $sub_dir | {
-        
+
       if join( $dir[ 1,$index] , "/" ) == "" {
         $aux_dir = "/"
       }else{
@@ -109,7 +110,7 @@ class profile::ts::efd::ts_efd_mgmt{
       mode    => '0644',
       owner   => 'root',
       group   => 'root',
-      content => epp('profile/ts/deafult_systemd_unit_template.epp', 
+      content => epp('profile/ts/deafult_systemd_unit_template.epp',
         { 'serviceDescription' => "[${tier_key}] EFD Node DB Management daemon",
           'serviceCommand' => "/sbin/ndb_mgmd --config-file=${mgmt_config_path} --nodaemon --config-dir=${mysql_cluster_config_dir}",
           'systemdUser' => 'root'
@@ -124,7 +125,7 @@ class profile::ts::efd::ts_efd_mgmt{
   }
 
   exec{ "NDB_MGMD Reload deamon":
-    path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+    path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'],
     command => "systemctl daemon-reload",
     refreshonly => true,
   }

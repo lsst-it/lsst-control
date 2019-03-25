@@ -1,3 +1,3 @@
 class role::it::gs_failover{
-	include profile::default
+  include profile::default
 }

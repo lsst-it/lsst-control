@@ -1,3 +1,4 @@
+# This class is responsible of deploying the mysql clients
 class profile::ts::efd::ts_efd_srv{
 
   package{ "mysql-cluster-community-server" :
@@ -6,7 +7,7 @@ class profile::ts::efd::ts_efd_srv{
   }
 
   exec{ "Adjust SELinux to allow MySQL":
-    path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+    path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'],
     refreshonly => true,
     command => "setsebool -P nis_enabled 1 ; setsebool -P mysql_connect_any 1",
     onlyif => "test ! -z $\"(which setsebool)\"" # This executes the command only if setsebool command exists
@@ -18,7 +19,7 @@ class profile::ts::efd::ts_efd_srv{
 
     $mysql_server_config_path = lookup("efd_tiers_vars.${tier_key}.mysql_cluster_server_config_path")
 
-    $efdMysqlServerConfig_hash = $tier_hash["mysql_server"] 
+    $efd_mysql_server_config_hash = $tier_hash["mysql_server"]
 
     # This block of code, will check the full path given and create all the directories if required plus the file
     ################################################################################
@@ -27,7 +28,7 @@ class profile::ts::efd::ts_efd_srv{
     $dir = $tmp[1,-1]
     $aux_dir = [""]
     $dir.each | $index, $sub_dir | {
-        
+
       if join( $dir[ 1,$index] , "/" ) == "" {
         $aux_dir = "/"
       }else{
@@ -119,7 +120,7 @@ class profile::ts::efd::ts_efd_srv{
     }
 
     # This is just in case someone try to start mysqld systemd unit, It will try to use the same socket as the efd_mysqld
-    $efd_mysqld_socket = $efdMysqlServerConfig_hash["mysqld"]["socket"]
+    $efd_mysqld_socket = $efd_mysql_server_config_hash["mysqld"]["socket"]
 
     ini_setting { "Updating [mysqld] socket=${efd_mysqld_socket} in /etc/my-${tier_key}.cnf":
       ensure  => present,
@@ -140,7 +141,7 @@ class profile::ts::efd::ts_efd_srv{
     }
 
     exec{ "Mysql Initialization - ${tier_key}":
-      path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+      path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'],
       command => "mysqld --user=mysql --initialize-insecure --datadir=${mysql_cluster_datadir}/srv/",
       refreshonly => true,
       require => [Package["mysql-cluster-community-server"],File[$mysql_cluster_dir]],
@@ -156,20 +157,29 @@ class profile::ts::efd::ts_efd_srv{
     # TODO Add an onlyif condition as well
     # TODO Add a timer to verify that the MYSQL server is online
     exec{ "Executing initial setup - ${tier_key}" :
-      path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
-      command => "sleep 10; mysql -P ${mysql_cluster_mysqld_port}  -e \" ALTER USER 'root'@'localhost' IDENTIFIED BY '${mysql_admin_password}'; CREATE DATABASE EFD; CREATE USER ${efd_user}@localhost IDENTIFIED BY '${efd_user_pwd}'; GRANT ALL PRIVILEGES ON EFD.* TO ${efd_user}@localhost ; \" --socket=${efd_mysqld_socket} ",
+      path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'],
+      command => "sleep 10; mysql -P ${mysql_cluster_mysqld_port}  \
+                  -e \" ALTER USER 'root'@'localhost' IDENTIFIED BY '${mysql_admin_password}'; \
+                  CREATE DATABASE EFD; CREATE USER ${efd_user}@localhost IDENTIFIED BY '${efd_user_pwd}'; \
+                  GRANT ALL PRIVILEGES ON EFD.* TO ${efd_user}@localhost ; \" --socket=${efd_mysqld_socket} ",
       refreshonly => true,
-      require => [Package["mysql-cluster-community-server"], Exec["Mysql Initialization - ${tier_key}"], Service["efd_mysqld_${tier_key}"], Ini_setting["Updating [mysql] section socket=${efd_mysqld_socket} in /etc/my-${tier_key}.cnf"], Exec["Adjust SELinux to allow MySQL"]]
+      require => [
+                    Package['mysql-cluster-community-server'],
+                    Exec["Mysql Initialization - ${tier_key}"],
+                    Service["efd_mysqld_${tier_key}"],
+                    Ini_setting["Updating [mysql] section socket=${efd_mysqld_socket} in /etc/my-${tier_key}.cnf"],
+                    Exec['Adjust SELinux to allow MySQL']
+                  ]
     }
 
     ################################################################################
 
-    $efdMysqlServerConfig_hash.each | $sections_key, $sections_hash| {
-      
+    $efd_mysql_server_config_hash.each | $sections_key, $sections_hash| {
+
       $sections_hash.each | $config_key, $config_value| {
 
         if $config_value == "" {
-          ini_setting { "Updating property in section ${sections_key} : ${config_key} in ${mysql_server_config_path} file":
+          ini_setting { "Updating property in section ${sections_key} : ${config_key} in ${mysql_server_config_path}":
             ensure  => present,
             path    => $mysql_server_config_path,
             section => $sections_key,
@@ -179,7 +189,7 @@ class profile::ts::efd::ts_efd_srv{
             require => [File[$mysql_server_config_path], Package["mysql-cluster-community-server"]]
           }
         }else{
-          ini_setting { "Updating property in section ${sections_key} : ${config_key} = ${config_value} in ${mysql_server_config_path} file":
+          ini_setting { "Updating property in section ${sections_key} : ${config_key} = ${config_value} in ${mysql_server_config_path}":
             ensure  => present,
             path    => $mysql_server_config_path,
             section => $sections_key,
@@ -199,9 +209,12 @@ class profile::ts::efd::ts_efd_srv{
       mode    => '0644',
       owner   => 'root',
       group   => 'root',
-      content => epp('profile/ts/deafult_systemd_unit_template.epp', 
+      content => epp('profile/ts/deafult_systemd_unit_template.epp',
         { 'serviceDescription' => "EFD MySQL daemon",
-          'serviceCommand' => "/sbin/mysqld --defaults-file=${mysql_server_config_path} --ndbcluster --datadir=${mysql_cluster_datadir}/srv/",
+          'serviceCommand' => "/sbin/mysqld \
+                               --defaults-file=${mysql_server_config_path} \
+                               --ndbcluster \
+                               --datadir=${mysql_cluster_datadir}/srv/",
           'systemdUser' => 'mysql'
         }),
       notify => Exec["MYSQL Reload deamon"]
@@ -214,7 +227,7 @@ class profile::ts::efd::ts_efd_srv{
   }
 
   exec{ "MYSQL Reload deamon":
-    path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'], 
+    path  => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'],
     command => "systemctl daemon-reload",
     refreshonly => true,
   }

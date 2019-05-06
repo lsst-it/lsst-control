@@ -28,5 +28,8 @@ modules/rsyslog
 modules/datacat
 modules/graylog
 modules/dhcp
+modules/headerservice
+modules/ccs
+modules/efd
 .pydevproject
 .DS_Store

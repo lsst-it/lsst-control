@@ -1,6 +1,19 @@
 # This is the main class for the EFD, all the nodes uses this class, and its implementaiton depend on the hostname
 class profile::ts::efd::ts_efd{
 
+  if $node_name == 'influxdb' {
+    include efd::efd_writers
+    include efd::efd_influxdb
+  } elsif $node_name == 'mysql' {
+    include efd::efd_writers
+    include efd::efd_mysql
+  } elsif $node_name == 'writers' {
+    include efd::efd_writers
+  } else {
+    include efd
+  }
+
+
 # $efd_user = lookup("ts::efd::user")
 
 # $efd_user_pwd = lookup("ts::efd::user_pwd")
@@ -13,6 +26,8 @@ class profile::ts::efd::ts_efd{
   #include firewalld
 
   # Install MySQL Cluster
+
+/**
 
   $rpm_url = lookup('mysql_cluster_rpm')
 
@@ -66,5 +81,5 @@ class profile::ts::efd::ts_efd{
 
   #Parameters for SAL module comes from HIERA
   # TODO ts_sal module is using Dave's provided python pre-compiled, however there is another way of installing python3.6 from epel.
-
+ */
 }

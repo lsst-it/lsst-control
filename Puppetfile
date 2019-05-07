@@ -26,3 +26,9 @@ mod 'elastic-elastic_stack'
 mod 'elastic-elasticsearch'
 mod 'puppet-rsyslog'
 mod 'puppet-dhcp'
+mod 'ccs',
+	:git => 'https://github.com/LSST-IT/puppet-ccs.git'
+mod 'efd',
+	:git => 'https://github.com/LSST-IT/puppet-efd.git'
+mod 'headerservice',
+	:git => 'https://github.com/LSST-IT/puppet-headerservice.git'

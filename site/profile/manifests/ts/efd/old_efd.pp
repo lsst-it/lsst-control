@@ -1,5 +1,5 @@
 # EFD based on mysql server
-class profile::ts::efd::efd{
+class profile::ts::efd::old_efd{
 
   $efd_user = lookup('ts::efd::user')
   $efd_user_pwd = lookup('ts::efd::user_pwd')

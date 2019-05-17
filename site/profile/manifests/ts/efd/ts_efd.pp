@@ -13,4 +13,15 @@ class profile::ts::efd::ts_efd{
     include efd
   }
 
+  #This is the user to be used within the EFD Writers
+  user{ 'salmgr':
+    ensure     => 'present',
+    uid        => '501' ,
+    gid        => '500',
+    home       => '/home/salmgr',
+    managehome => true,
+    require    => Group['lsst'],
+    password   => lookup('salmgr_pwd'),
+  }
+
 }

@@ -20,8 +20,7 @@ class profile::it::monitoring {
         options     =>[
           {
             'systemd_unit' => "${service}.service",
-          },
-        ]
+          }],
       }
     }
     #Remote Logging

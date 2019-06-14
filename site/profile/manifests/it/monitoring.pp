@@ -17,10 +17,11 @@ class profile::it::monitoring {
     $monitored_services.each | $service | {
       telegraf::input { $service:
         plugin_type => 'procstat',
-        options     =>
+        options     =>[
           {
             'systemd_unit' => "${service}.service",
           },
+        ]
       }
     }
     #Remote Logging

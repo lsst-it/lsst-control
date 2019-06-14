@@ -7,7 +7,7 @@ class profile::it::monitoring {
       $backup_outputs.each | $output | {
         telegraf::output{ $output["name"]:
           plugin_type => $output["plugintype"],
-          options     => $output["options"]
+          options     => [$output["options"]]
         }
       }
     }

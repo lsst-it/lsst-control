@@ -15,7 +15,8 @@ mod 'ts_sal',
 mod 'ts_xml',
 	:git => 'https://github.com/lsst/ts_xml.git'
 mod 'puppetlabs-inifile'
-mod 'puppet-telegraf', '1.5.0'
+mod 'puppet-telegraf', '2.1.0'
+# This requires toml-rb which has to be manually installed - should only happen on the puppet master
 mod 'stahnma-epel'
 mod 'golja-influxdb'
 mod 'puppet-grafana'

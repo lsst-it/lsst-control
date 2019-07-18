@@ -15,7 +15,7 @@ mod 'ts_sal',
 mod 'ts_xml',
 	:git => 'https://github.com/lsst/ts_xml.git'
 mod 'puppetlabs-inifile'
-mod 'puppet/telegraf'
+mod 'puppet-telegraf', '1.5.0'
 mod 'stahnma-epel'
 mod 'golja-influxdb'
 mod 'puppet-grafana'

@@ -7,18 +7,10 @@ class profile::it::ssh_server {
     sshd_banner_content => lookup('sshd_banner_content')
   }
 
-  if $::hostname =~ /puppet-master/ {
-    file{'/etc/ssh/puppet_id_rsa_key':
-      ensure  => file,
-      mode    => '0600',
-      content => lookup('puppet_ssh_id_rsa')
-    }
-  }else{
-    ssh_authorized_key { 'puppet-master':
-      ensure => present,
-      user   => 'root',
-      type   => 'ssh-rsa',
-      key    => lookup('puppet_ssh_id_rsa_pub')
-    }
+  ssh_authorized_key { 'puppet-master':
+    ensure => present,
+    user   => 'root',
+    type   => 'ssh-rsa',
+    key    => lookup('puppet_ssh_id_rsa_pub')
   }
 }

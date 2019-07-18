@@ -191,6 +191,12 @@ class profile::it::puppet_master {
     require => File['/root/.ssh/']
   }
 
+  file{'/etc/ssh/puppet_id_rsa_key':
+    ensure  => file,
+    mode    => '0600',
+    content => lookup('puppet_ssh_id_rsa')
+  }
+
   exec{'install R10K':
     command => '/opt/puppetlabs/puppet/bin/gem install r10k',
     onlyif  => '/usr/bin/test ! -x /opt/puppetlabs/puppet/bin/r10k'

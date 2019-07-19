@@ -91,7 +91,7 @@ class profile::ts::efd::ts_efd_writers {
     }
   }
 
-  $runningEFDWriters = lookup('ts_efd::RunningEFDWriters')
+  $runningefdwriters = lookup('ts_efd::RunningEFDWriters')
 
   $ts_xml_subsystems.each | String $subsystem | {
     file{ "/etc/systemd/system/${subsystem}_efdwriter.service":
@@ -116,7 +116,7 @@ class profile::ts::efd::ts_efd_writers {
     }
   }
 
-  $runningEFDWriters.each | String $subsystem | {
+  $runningefdwriters.each | String $subsystem | {
     service { "${subsystem}_efdwriter":
       ensure  => running,
       enable  => true,
@@ -134,7 +134,7 @@ class profile::ts::efd::ts_efd_writers {
       { 'serviceDescription' => 'EFD - efdwriter control unit',
         'serviceCommand'     => '/bin/true',
         'systemdUnitType'    => 'oneshot',
-        'subsystems'         => $runningEFDWriters
+        'subsystems'         => $runningefdwriters
       }
     ),
     notify  => Exec['Systemd daemon reload']

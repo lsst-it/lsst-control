@@ -2,7 +2,7 @@
 class profile::it::puppet_master {
   file{ '/root/README':
     ensure  => file,
-    content => "Welcome to ${fqdn}, this is a Puppet Master Server\n",
+    content => "Welcome to ${::fqdn}, this is a Puppet Master Server\n",
   }
 
   package{'epel-release':
@@ -162,7 +162,7 @@ class profile::it::puppet_master {
 
   file_line{'Make sure local dns record':
     ensure => present,
-    line   => "${ipaddress}\t${fqdn}",
+    line   => "${::ipaddress}\t${::fqdn}",
     path   => '/etc/hosts',
   }
 

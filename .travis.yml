@@ -16,7 +16,7 @@ rvm:
 matrix:
   fast_finish: true
   include:
-    - env: "CHECK=check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
+    - env: "CHECK='check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint'"
     - env: "TEST=yamllint"
       language: "minimal"
       services:

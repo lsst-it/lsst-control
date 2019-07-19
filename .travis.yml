@@ -16,7 +16,15 @@ rvm:
 matrix:
   fast_finish: true
   include:
-    -
-      env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
+    - env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
+    - env: "TEST=yamllint"
+      services:
+        - "docker"
+      script: "./tests/yamllint.sh"
+
+    - env: "TEST=markdownlint"
+      services:
+        - "docker"
+      script: "./tests/mdl.sh"
 notifications:
   email: false

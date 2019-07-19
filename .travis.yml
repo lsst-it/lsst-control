@@ -18,16 +18,19 @@ matrix:
   include:
     - env: "CHECK=check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
     - env: "TEST=yamllint"
+      language: "minimal"
       services:
         - "docker"
       script: "./tests/yamllint.sh"
 
     - env: "TEST=markdownlint"
+      language: "minimal"
       services:
         - "docker"
       script: "./tests/mdl.sh"
 
     - env: "TEST=shellcheck"
+      language: "minimal"
       services:
         - "docker"
       script: "./tests/shellcheck.sh"

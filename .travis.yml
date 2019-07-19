@@ -12,7 +12,7 @@ script:
   - 'bundle exec rake $CHECK'
 bundler_args: "--without system_tests"
 rvm:
-  - 2.5.3
+  - "2.5.3"
 matrix:
   fast_finish: true
   include:
@@ -26,5 +26,10 @@ matrix:
       services:
         - "docker"
       script: "./tests/mdl.sh"
+
+    - env: "TEST=shellcheck"
+      services:
+        - "docker"
+      script: "./tests/shellcheck.sh"
 notifications:
   email: false

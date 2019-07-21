@@ -1,2 +1,4 @@
-# itconf_l1ts
-IT Configuration (Puppet scripts) for the L1 Test Stands at NCSA and Tucson
+lsst-itconf
+===
+
+[![Build Status](https://travis-ci.org/lsst-it/lsst-itconf.png)](https://travis-ci.org/lsst-it/lsst-itconf)

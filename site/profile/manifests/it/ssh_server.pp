@@ -7,7 +7,7 @@ class profile::it::ssh_server {
     sshd_banner_content => lookup('sshd_banner_content')
   }
 
-  if $hostname =~ /puppet-master/ {
+  if $::hostname =~ /puppet-master/ {
     file{'/etc/ssh/puppet_id_rsa_key':
       ensure  => file,
       mode    => '0600',

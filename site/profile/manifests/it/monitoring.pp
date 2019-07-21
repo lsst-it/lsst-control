@@ -32,7 +32,7 @@ class profile::it::monitoring {
     }
   }
 
-  if ! $is_virtual {
+  if ! $::is_virtual {
     package { 'smartmontools':
       ensure => installed,
     }

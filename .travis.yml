@@ -34,5 +34,11 @@ matrix:
       services:
         - "docker"
       script: "./tests/shellcheck.sh"
+
+    - env: "TEST=r10k"
+      install: "gem install r10k -v 3.3.0"
+      script:
+        - "r10k puppetfile check"
+        - "r10k puppetfile install -vt"
 notifications:
   email: false

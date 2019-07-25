@@ -14,6 +14,7 @@ mod 'puppetlabs/accounts', '4.1.0'
 mod 'puppetlabs/translate', '1.2.0'
 mod 'saz/sudo', '6.0.0'
 mod 'puppetlabs/puppet_agent', '2.1.2'
+mod 'saz/resolv_conf', '4.1.0'
 
 mod 'aboe/chrony', '0.2.5'
 mod 'crayfishx/firewalld', '3.4.0'

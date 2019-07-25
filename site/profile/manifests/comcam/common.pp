@@ -10,6 +10,7 @@ class profile::comcam::common {
   include sudo
   include accounts
   include puppet_agent
+  include resolv_conf
 
   # XXX write some glue code and move this to hiera -JCH
   sshd_config { "PermitRootLogin":

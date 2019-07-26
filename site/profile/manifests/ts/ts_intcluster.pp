@@ -1,6 +1,7 @@
 # Class used to install virtualbox in server to be used as hypervisors for deployments tests
 class profile::ts::ts_intcluster {
-  include profile::it::ssh_server
+  include ssh
+
   $kernel_devel = lookup('kernel_devel')
   class {'virtualbox':
     require      => Package[$kernel_devel],

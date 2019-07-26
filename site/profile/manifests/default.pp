@@ -1,7 +1,7 @@
 #This base installation is based on the procedure
 # https://confluence.lsstcorp.org/display/IT/Linux+CentOS+Setup
 class profile::default {
-  include profile::it::ssh_server
+  include ssh
   include profile::it::monitoring
   include profile::it::lsst_users
   include profile::it::ims

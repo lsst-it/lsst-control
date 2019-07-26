@@ -1,4 +1,5 @@
 /bin/
+Gemfile.lock
 /.bundle/
 /convert_report.txt
 /coverage/

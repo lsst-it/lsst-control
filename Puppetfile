@@ -17,6 +17,7 @@ mod 'puppet/cron', '1.3.1'
 mod 'puppet/r10k', '7.0.0'
 mod 'puppetlabs/git', '0.5.0'
 mod 'puppetlabs/ruby', '1.0.1'
+mod 'camptocamp/systemd', '2.6.0'
 
 mod 'aboe/chrony', '0.2.5'
 mod 'crayfishx/firewalld', '3.4.0'

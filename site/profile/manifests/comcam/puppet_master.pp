@@ -1,4 +1,4 @@
-class profile::comcam::cc_daq {
+class profile::comcam::puppet_master {
   include cron
   include r10k
   include r10k::webhook

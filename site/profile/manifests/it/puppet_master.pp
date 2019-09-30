@@ -1,5 +1,11 @@
 # This class installs the puppet server
-class profile::it::puppet_master {
+class profile::it::puppet_master(
+  Stdlib::HTTPSUrl $control_repo_url,
+  String $hiera_private_repo_url,
+  Stdlib::HTTPSUrl $hiera_public_repo_url,
+  String $hiera_sshkey,
+  Stdlib::Absolutepath $hiera_sshkey_path = '/root/.ssh/id_rsa',
+) {
   file{ '/root/README':
     ensure  => file,
     content => "Welcome to ${::fqdn}, this is a Puppet Master Server\n",
@@ -59,73 +65,6 @@ class profile::it::puppet_master {
     require => Package['puppetserver']
   }
 
-  $enc_path = lookup('puppet_enc_path')
-  $enc_config_path = "${enc_path}/config/"
-
-  file{ $enc_path:
-    ensure => directory
-  }
-
-  vcsrepo { $enc_path:
-    ensure   => present,
-    provider => git,
-    source   => lookup('puppet_enc_repo'),
-    branch   => lookup('puppet_enc_branch'),
-    require  => File[$enc_path]
-  }
-
-  file{ $enc_config_path:
-    ensure  => directory,
-    require => [File[$enc_path],Vcsrepo[$enc_path]]
-  }
-
-  vcsrepo { $enc_config_path:
-    ensure   => present,
-    provider => git,
-    source   => lookup('puppet_enc_config_repo'),
-    branch   => lookup('puppet_enc_config_branch'),
-    require  => File[$enc_config_path]
-  }
-
-  file{ "${enc_path}/data/puppet_enc.sqlite" :
-    ensure => present,
-    owner  => 'puppet',
-    group  => 'puppet'
-  }
-
-  file{ "${enc_path}/data/" :
-    ensure => directory,
-    owner  => 'puppet',
-    group  => 'puppet'
-  }
-
-  # Checks if the path to data doesn't exists, if the sqlite DB file doesn't exists or if the sqlite DB is empty
-  exec{ 'Configure and import ENC DB' :
-    path    => [ '/usr/bin', '/bin', '/usr/sbin' , '/usr/local/bin'],
-    cwd     => $enc_path,
-    command => 'make configure import',
-    # This will be executed only if the DB is empty, the file creation and directory structure is from the file resource and the 
-    # dependency list below
-    onlyif  => "test ! -s ${enc_path}/data/puppet_enc.sqlite",
-    require => [Package['python36'], Exec['Ensure pip3.6 exists'], File["${enc_path}/data/puppet_enc.sqlite"], File["${enc_path}/data/"]]
-  }
-
-  ini_setting { 'Node terminus':
-      ensure  => present,
-      path    => '/etc/puppetlabs/puppet/puppet.conf',
-      section => 'master',
-      setting => 'node_terminus',
-      value   => 'exec',
-    }
-
-    ini_setting { 'ENC script path':
-      ensure  => present,
-      path    => '/etc/puppetlabs/puppet/puppet.conf',
-      section => 'master',
-      setting => 'external_nodes',
-      value   => "${enc_path}/bin/lsst_enc.py",
-    }
-
   ini_setting { 'Puppet master Alternative DNS names':
     ensure  => present,
     path    => '/etc/puppetlabs/puppet/puppet.conf',
@@ -166,13 +105,6 @@ class profile::it::puppet_master {
     path   => '/etc/hosts',
   }
 
-  file_line{'update_path_root':
-    ensure => present,
-    line   => "PATH=\$PATH:/opt/puppetlabs/puppet/bin:\$HOME/bin:${enc_path}/bin/",
-    match  => '^PATH=*',
-    path   => '/root/.bash_profile',
-  }
-
   file_line{ 'Update Ruby libs puppetserver configuration' :
     ensure => present,
     line   => '    ruby-load-path: [/opt/puppetlabs/puppet/lib/ruby/vendor_ruby, /opt/puppetlabs/puppet/cache/lib]',
@@ -180,15 +112,27 @@ class profile::it::puppet_master {
     path   => '/etc/puppetlabs/puppetserver/conf.d/puppetserver.conf',
   }
 
-  # Can be fixed once we manage to fix the issue with Hiera ssh key
-  file{ '/root/.ssh':
-    ensure => directory,
-    mode   => '0600'
-  }
+  ensure_resources('file', {
+    '/root/.ssh' => {
+      mode   => '0700',
+      owner  => 'root',
+      group  => 'root',
+      ensure => directory,
+    },
+  })
 
   file{ '/root/.ssh/known_hosts':
-    ensure  => present,
-    require => File['/root/.ssh/']
+    ensure => present,
+    mode   => '0600',
+    owner  => 'root',
+    group  => 'root',
+  }
+
+  # XXX What is this key used for? -JCH
+  file{'/etc/ssh/puppet_id_rsa_key':
+    ensure  => file,
+    mode    => '0600',
+    content => lookup('puppet_ssh_id_rsa')
   }
 
   exec{'install R10K':
@@ -207,75 +151,43 @@ class profile::it::puppet_master {
     require => File['/root/.ssh/known_hosts']
   }
 
-  $hiera_id_rsa_path = lookup('hiera_repo_id_path', {default_value => undef})
-
   file{'/etc/puppetlabs/r10k/r10k.yaml':
     ensure  => file,
-    require => File['/etc/puppetlabs/r10k'],
     content => epp('profile/it/r10k.epp',
       {
-        'r10k_org'       => lookup('r10k_org'),
-        'controlRepo'    => lookup('control_repo') ,
-        'r10k_hiera_org' => lookup('r10k_hiera_org', {default_value => undef}) ,
-        'hieraRepo'      => lookup('hiera_repo', {default_value => undef}),
-        'idRsaPath'      => $hiera_id_rsa_path
+        'control_repo_url'       => $control_repo_url,
+        'hiera_private_repo_url' => $hiera_private_repo_url,
+        'hiera_public_repo_url'  => $hiera_public_repo_url,
       }
     )
   }
 
-  if $hiera_id_rsa_path and $hiera_id_rsa_path =~ /(.*\/)(.*\id_rsa)/ {
-    $base_path = $1
-    $dir = split($base_path, '/')
-    $filename = $2
+  ensure_resources('file', {
+    dirname($hiera_sshkey_path) => {
+      mode    => '0700',
+      ensure => directory,
+    },
+  })
 
-    $aux_dir = ['']
-    $dir.each | $index, $sub_dir | {
-
-      if join( $dir[ 1,$index] , '/' ) == '' {
-          $aux_dir = '/'
-      }else{
-          $aux_dir = join( $aux_dir + $dir[1, $index] , '/')
-      }
-      if ! defined(File[$aux_dir]) {
-        file{ $aux_dir:
-          ensure => directory,
-        }
-      }
-    }
-    file{ $hiera_id_rsa_path:
-      ensure  => file,
-      content => lookup('hiera_repo_id_rsa'),
-      require => File[$base_path],
-      mode    => '0600',
-    }
-    file{"${base_path}/id_rsa.pub":
-      ensure  => present,
-      content => lookup('hiera_repo_id_rsa_pub'),
-      require => File[$base_path],
-      mode    => '0600'
-    }
-
-  }elsif $hiera_id_rsa_path {
-    notify { $hiera_id_rsa_path:
-      message => "Hiera ID RSA isn't a full path!, path received was: ${hiera_id_rsa_path}",
-    }
-  }else{
-    notify { 'No hiera values provided':}
+  file{ $hiera_sshkey_path:
+    ensure  => file,
+    mode    => '0600',
+    content => $hiera_sshkey,
   }
 
   firewalld::custom_service{'puppet':
     short       => 'puppet',
     description => 'Puppet Client access Puppet Server',
     port        => [
-        {
-          'port'     => '8140',
-          'protocol' => 'tcp',
-        },
-        {
-          'port'     => '8140',
-          'protocol' => 'udp',
-        },
-      ],
+      {
+        'port'     => '8140',
+        'protocol' => 'tcp',
+      },
+      {
+        'port'     => '8140',
+        'protocol' => 'udp',
+      },
+    ],
   }
 
   firewalld_service { 'Allow puppet port on this server':

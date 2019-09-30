@@ -1,10 +1,11 @@
-# This is the very default configuration, in case no match found in ENC
-node default {
-#	include role::default
-}
+lookup('classes', Array[String], 'unique').include
 
-# There is one situation, when deploying a new puppet master, in where the ENC doesn't exists in the puppet environment
-# that's why, puppet-master is the only definition here.
-node /puppet-master/ {
-  include role::it::puppet_master
+$files = lookup(
+  name          => 'files',
+  value_type    => Variant[Hash[String, Hash], Undef],
+  default_value => undef,
+)
+
+if ($files) {
+  ensure_resources('file', $files)
 }

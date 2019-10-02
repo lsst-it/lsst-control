@@ -23,6 +23,7 @@ mod 'theforeman/dhcp', '5.0.1'
 mod 'theforeman/dns', '6.2.0'
 mod 'duritong/sysctl', '0.0.12'
 mod 'example42/network', '3.5.1'
+mod 'cirrax/libvirt', '4.1.2'
 
 mod 'aboe/chrony', '0.2.5'
 mod 'crayfishx/firewalld', '3.4.0'

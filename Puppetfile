@@ -21,6 +21,7 @@ mod 'camptocamp/systemd', '2.6.0'
 mod 'bodgit/scl', '1.0.1'
 mod 'theforeman/dns', '6.2.0'
 mod 'duritong/sysctl', '0.0.12'
+mod 'example42/network', '3.5.1'
 
 mod 'aboe/chrony', '0.2.5'
 mod 'crayfishx/firewalld', '3.4.0'

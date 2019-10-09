@@ -31,6 +31,7 @@ mod 'ghoneycutt/hosts', '2.7.0'
 mod 'camptocamp/postfix', '1.8.0'
 mod 'camptocamp/augeas', '1.8.0'
 mod 'puppet/alternatives', '3.0.0'
+mod 'puppetlabs/mailalias_core', '1.0.5'
 
 mod 'aboe/chrony', '0.2.5'
 mod 'crayfishx/firewalld', '3.4.0'

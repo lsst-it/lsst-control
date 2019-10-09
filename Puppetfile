@@ -29,6 +29,7 @@ mod 'puppetlabs/cron_core', '1.0.2'
 mod 'puppetlabs/k5login_core', '1.0.2'
 mod 'ghoneycutt/hosts', '2.7.0'
 mod 'camptocamp/postfix', '1.8.0'
+mod 'camptocamp/augeas', '1.8.0'
 
 mod 'aboe/chrony', '0.2.5'
 mod 'crayfishx/firewalld', '3.4.0'

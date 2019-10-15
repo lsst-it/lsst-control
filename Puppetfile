@@ -24,7 +24,10 @@ mod 'theforeman/dns', '6.2.0'
 mod 'duritong/sysctl', '0.0.12'
 mod 'example42/network', '3.5.1'
 mod 'cirrax/libvirt', '4.1.2'
-mod 'puppetfinland/easy_ipa', '2.2.0'
+#mod 'puppetfinland/easy_ipa', '2.2.0'
+mod 'puppetfinland/easy_ipa',
+    git: 'https://github.com/lsst-it/puppet-ipa.git',
+    ref: 'production'
 mod 'puppetlabs/cron_core', '1.0.2'
 mod 'puppetlabs/k5login_core', '1.0.2'
 mod 'ghoneycutt/hosts', '2.7.0'

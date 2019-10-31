@@ -12,4 +12,5 @@ class profile::core::common {
   include puppet_agent
   include resolv_conf
   include ssh
+  include easy_ipa
 }

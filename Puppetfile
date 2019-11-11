@@ -55,9 +55,6 @@ mod 'lsst/ts_xml',
 mod 'lsst/ccs',
     git: 'https://github.com/lsst-it/puppet-ccs.git',
     ref: '0.1.0'
-mod 'lsst/efd',
-    git: 'https://github.com/lsst-it/puppet-efd.git',
-    ref: '0.1.0'
 mod 'lsst/headerservice',
     git: 'https://github.com/lsst-it/puppet-headerservice.git',
     ref: '0.1.0'

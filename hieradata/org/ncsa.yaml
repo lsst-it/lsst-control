@@ -1,0 +1,23 @@
+---
+# Lookup options stay at the top (sort subkeys alphabetically)
+
+lookup_options:
+  sudo::configs:
+    merge:
+      strategy: "deep"
+      merge_hash_arrays: true
+
+# Everything else should be sorted alphabetically
+
+baseline_cfg::networkmanager::enable: true
+baseline_cfg::networkmanager::ensure: "running"
+
+chrony::leapsectz: "right/UTC"
+
+rsyslog::use_upstream_repo: true
+rsyslog::feature_packages:
+  - rsyslog-relp
+
+sudo::content: "system_authnz/sudoers.erb"
+
+timezone::timezone: "UTC"

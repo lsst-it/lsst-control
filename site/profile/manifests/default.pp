@@ -106,12 +106,6 @@ class profile::default {
 
 ################################################################################
 
-  file_line { 'SELINUX=permissive':
-    path  => '/etc/selinux/config',
-    line  => 'SELINUX=enforce',
-    match => '^SELINUX=+',
-  }
-
   # Set timezone as default to UTC
   exec { 'set-timezone':
     provider => 'shell',

@@ -1,4 +1,4 @@
-class profile::comcam::common {
+class profile::core::common {
   include timezone
   include tuned
   include chrony

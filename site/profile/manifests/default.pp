@@ -106,14 +106,6 @@ class profile::default {
 
 ################################################################################
 
-  # Set timezone as default to UTC
-  exec { 'set-timezone':
-    provider => 'shell',
-    command  => '/bin/timedatectl set-timezone UTC',
-    returns  => [0],
-    onlyif   => "test -z \"$(ls -l /etc/localtime | grep -o UTC)\""
-  }
-
 # Shared resources from all the teams
 
   package { 'git':

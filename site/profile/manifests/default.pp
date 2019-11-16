@@ -97,14 +97,6 @@ class profile::default {
   }
 
 ################################################################################
-  $ntp = lookup('ntp')
-  class { '::chrony':
-    servers => {
-      "${$ntp[ntp_server_1]}" => ['iburst'],
-      "${$ntp[ntp_server_2]}" => ['iburst'],
-      "${$ntp[ntp_server_3]}" => ['iburst'],
-    },
-  }
 
   $motd_msg = lookup('motd')
   file { '/etc/motd' :

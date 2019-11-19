@@ -97,14 +97,6 @@ class profile::default {
   }
 
 ################################################################################
-  $ntp = lookup('ntp')
-  class { '::chrony':
-    servers => {
-      "${$ntp[ntp_server_1]}" => ['iburst'],
-      "${$ntp[ntp_server_2]}" => ['iburst'],
-      "${$ntp[ntp_server_3]}" => ['iburst'],
-    },
-  }
 
   $motd_msg = lookup('motd')
   file { '/etc/motd' :
@@ -112,49 +104,7 @@ class profile::default {
     content => $motd_msg,
   }
 
-  $puppet_agent_run_interval = lookup('puppet_agent_run_interval')
-
-  ini_setting { 'Puppet agent runinterval':
-    ensure  => present,
-    path    => '/etc/puppetlabs/puppet/puppet.conf',
-    section => 'agent',
-    setting => 'runinterval',
-    value   => $puppet_agent_run_interval,
-  }
-
-  ini_setting { 'Puppet agent server':
-    ensure  => present,
-    path    => '/etc/puppetlabs/puppet/puppet.conf',
-    section => 'agent',
-    setting => 'server',
-    value   => lookup('puppet_master_server'),
-  }
-
-  file{'/opt/puppetlabs/puppet/cache':
-    ensure => 'directory',
-    mode   => '0755',
-  }
-
-  service{ 'puppet':
-    ensure => lookup('puppet_agent_service_state'),
-    enable => true,
-  }
-
 ################################################################################
-
-  file_line { 'SELINUX=permissive':
-    path  => '/etc/selinux/config',
-    line  => 'SELINUX=enforce',
-    match => '^SELINUX=+',
-  }
-
-  # Set timezone as default to UTC
-  exec { 'set-timezone':
-    provider => 'shell',
-    command  => '/bin/timedatectl set-timezone UTC',
-    returns  => [0],
-    onlyif   => "test -z \"$(ls -l /etc/localtime | grep -o UTC)\""
-  }
 
 # Shared resources from all the teams
 

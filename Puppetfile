@@ -60,12 +60,6 @@ mod 'puppet/yum', '4.0.0'
 mod 'richardc/datacat', '0.6.2'
 mod 'stahnma/epel', '1.3.1'
 
-mod 'lsst/ts_sal',
-    git: 'https://github.com/lsst-it/puppet-ts_sal.git',
-    ref: '0.1.0'
-mod 'lsst/ts_xml',
-    git: 'https://github.com/lsst-it/puppet-ts_xml.git',
-    ref: '0.1.0'
 mod 'lsst/ccs',
     git: 'https://github.com/lsst-it/puppet-ccs.git',
     ref: '0.1.0'

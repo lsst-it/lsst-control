@@ -3,7 +3,6 @@
 class profile::default {
   include ssh
   include profile::it::monitoring
-  include profile::it::lsst_users
   # All telegraf configuration came from Hiera
 
   package { 'nmap':

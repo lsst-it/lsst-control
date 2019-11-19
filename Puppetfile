@@ -62,6 +62,3 @@ mod 'stahnma/epel', '1.3.1'
 mod 'lsst/ccs',
     git: 'https://github.com/lsst-it/puppet-ccs.git',
     ref: '0.1.0'
-mod 'lsst/headerservice',
-    git: 'https://github.com/lsst-it/puppet-headerservice.git',
-    ref: '0.1.0'

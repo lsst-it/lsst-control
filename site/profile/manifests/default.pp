@@ -58,10 +58,6 @@ class profile::default {
     ensure => installed,
   }
 
-  package { 'sudo':
-    ensure => installed,
-  }
-
 # Firewall and security measurements
 ################################################################################
 

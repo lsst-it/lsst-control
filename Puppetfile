@@ -41,7 +41,7 @@ mod 'puppet/python', '3.0.1'
 
 mod 'aboe/chrony', '0.2.5'
 mod 'crayfishx/firewalld', '3.4.0'
-mod 'elastic/elasticsearch', '6.3.3'
+mod 'elastic/elasticsearch', '6.4.0'
 mod 'elastic/elastic_stack', '6.3.1'
 mod 'golja/influxdb', '4.0.0'
 mod 'graylog/graylog', '0.8.0'

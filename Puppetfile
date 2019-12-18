@@ -43,6 +43,7 @@ mod 'puppet/python', '3.0.1'
 mod 'attachmentgenie/ufw',
   git: 'https://github.com/attachmentgenie/attachmentgenie-ufw',
   commit: '58e0e9de'
+mod 'stm/debconf', '3.0.0'
 
 mod 'aboe/chrony', '0.2.5'
 mod 'crayfishx/firewalld', '3.4.0'

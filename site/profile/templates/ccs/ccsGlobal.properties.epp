@@ -1,2 +1,0 @@
-org.lsst.ccs.logdir=/var/log/ccs
-org.lsst.ccs.level=INFO

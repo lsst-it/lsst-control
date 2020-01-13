@@ -23,9 +23,8 @@ class profile::it::monitoring {
           }],
       }
     }
-    #Remote Logging
-    #All definitions come from hiera.
-    class{'rsyslog::client':}
+    include rsyslog
+    include rsyslog::config
   }else{
     service{'telegraf':
       ensure => stopped,

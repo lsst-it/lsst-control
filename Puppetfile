@@ -39,6 +39,12 @@ mod 'puppetlabs/docker', '3.8.0'
 mod 'puppetlabs/reboot', '2.2.0'
 mod 'puppet/python', '3.0.1'
 
+# 2019-12-18 athebo: added for DIMM Ubuntu VM, we can remove this when the node is rebuilt
+mod 'attachmentgenie/ufw',
+  git: 'https://github.com/attachmentgenie/attachmentgenie-ufw',
+  commit: '58e0e9de'
+mod 'stm/debconf', '3.0.0'
+
 mod 'aboe/chrony', '0.2.5'
 mod 'crayfishx/firewalld', '3.4.0'
 mod 'elastic/elasticsearch', '6.4.0'

@@ -1,4 +1,6 @@
-class profile::core::puppet_master {
+class profile::core::puppet_master(
+  Stdlib::HTTPSUrl $smee_url
+) {
   include cron
   include r10k
   include r10k::webhook
@@ -27,7 +29,7 @@ class profile::core::puppet_master {
     ],
   }
 
-  $service_unit = @(EOT)
+  $service_unit = @("EOT")
     [Unit]
     Description=smee.io webhook daemon
 
@@ -35,7 +37,7 @@ class profile::core::puppet_master {
     Type=simple
     ExecStart=/usr/bin/scl enable rh-nodejs10 -- \
       /opt/rh/rh-nodejs10/root/usr/bin/smee \
-      --url https://smee.io/1qBdVgdiCC9jFw3g \
+      --url ${smee_url} \
       -P /payload \
       -p 8088
     Restart=on-failure

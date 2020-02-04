@@ -17,7 +17,7 @@ hierarchy:
       - "role/%{role}/type/%{virtual}.yaml"
       - "type/%{virtual}.yaml"
       - "type/default.yaml"
-      - "common.yaml"
+      - "org/%{org}.yaml"
   - name: "public hiera"
     datadir: "/etc/puppetlabs/code/hieradata/public/%{environment}"
     paths:
@@ -32,4 +32,4 @@ hierarchy:
       - "role/%{role}/type/%{virtual}.yaml"
       - "type/%{virtual}.yaml"
       - "type/default.yaml"
-      - "common.yaml"
+      - "org/%{org}.yaml"

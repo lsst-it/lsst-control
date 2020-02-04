@@ -38,6 +38,7 @@ mod 'puppetlabs/mailalias_core', '1.0.5'
 mod 'puppetlabs/docker', '3.8.0'
 mod 'puppetlabs/reboot', '2.2.0'
 mod 'puppet/python', '3.0.1'
+mod 'derdanne/nfs', '2.1.2'
 
 # 2019-12-18 athebo: added for DIMM Ubuntu VM, we can remove this when the node is rebuilt
 mod 'attachmentgenie/ufw',

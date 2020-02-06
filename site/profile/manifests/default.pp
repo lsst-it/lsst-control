@@ -37,15 +37,4 @@ class profile::default {
     require  => Class['firewalld'],
     onlyif   => "[[ \"\$(firewall-cmd --list-protocols)\" != *\"icmp\"* ]]"
   }
-
-################################################################################
-
-  $motd_msg = lookup('motd')
-  file { '/etc/motd' :
-    ensure  => file,
-    content => $motd_msg,
-  }
-
-################################################################################
-
 }

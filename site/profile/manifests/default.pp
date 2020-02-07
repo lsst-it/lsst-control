@@ -5,73 +5,23 @@ class profile::default {
   include profile::it::monitoring
   # All telegraf configuration came from Hiera
 
-  package { 'nmap':
-    ensure => installed,
-  }
-
-  package { 'vim':
-    ensure => installed,
-  }
-
-  package { 'wget':
-    ensure => installed,
-  }
-
-  # I would like to confirm if there is any particular version of gcc to be installed
-  package { 'gcc':
-    ensure => installed,
-  }
-
-  package { 'xinetd':
-    ensure => installed,
-  }
-
-  package { 'tcpdump':
-    ensure => installed,
-  }
-
-  package { 'openssl':
-    ensure => installed,
-  }
-
-  package { 'openssl-devel':
-    ensure => installed,
-  }
-
-  package { 'telnet':
-    ensure => installed,
-  }
-
-  package { 'acpid':
-    ensure => installed,
-  }
-
-  package { 'lvm2':
-    ensure => installed,
-  }
-
-  package { 'bash-completion':
-    ensure => installed,
-  }
-
-  package { 'tree':
-    ensure => installed,
-  }
-
-# Firewall and security measurements
-################################################################################
-
-  $lsst_firewall_default_zone = lookup('lsst_firewall_default_zone')
-
+  # Firewall and security measurements
   class { 'firewalld':
-    service_ensure => lookup('firewalld_status'),
-    default_zone   => $lsst_firewall_default_zone,
+    service_ensure => 'running',
+    default_zone   => 'public',
   }
 
-  firewalld_zone { $lsst_firewall_default_zone:
+  firewalld_zone { 'public':
     ensure  => present,
-    target  => lookup('lsst_firewall_default_target'),
-    sources => lookup('lsst_firewall_default_sources')
+    target  => 'DROP',
+    sources => [
+      '139.229.136.0/24',
+      '139.229.162.0/24',
+      '140.252.32.0/22',
+      '140.252.90.64/27',  #  VPN
+      '140.252.115.0/24',  # Steward Observatory
+      '140.252.201.0/24',  # DMZ
+    ],
   }
 
   firewalld_service { 'Enable SSH':
@@ -90,21 +40,4 @@ class profile::default {
     require  => Class['firewalld'],
     onlyif   => "[[ \"\$(firewall-cmd --list-protocols)\" != *\"icmp\"* ]]"
   }
-
-################################################################################
-
-  $motd_msg = lookup('motd')
-  file { '/etc/motd' :
-    ensure  => file,
-    content => $motd_msg,
-  }
-
-################################################################################
-
-# Shared resources from all the teams
-
-  package { 'git':
-    ensure => present,
-  }
-
 }

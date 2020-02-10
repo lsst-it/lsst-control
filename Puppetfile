@@ -48,7 +48,7 @@ mod 'stm/debconf', '3.0.0'
 mod 'aboe/chrony',
   git: 'https://github.com/lsst-it/puppet-chrony',
   ref: 'ffa20883a41d7177da0d09f259b52ca463b778d8'
-mod 'crayfishx/firewalld', '3.4.0'
+mod 'puppet/firewalld', '4.2.2'
 mod 'elastic/elasticsearch', '6.4.0'
 mod 'elastic/elastic_stack', '6.3.1'
 mod 'golja/influxdb', '4.0.0'

@@ -1,0 +1,3 @@
+---
+easy_ipa::ipa_server_fqdn: "%{facts.fqdn}"
+easy_ipa::ip_address: "%{facts.networking.ip}"

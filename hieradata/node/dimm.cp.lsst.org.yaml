@@ -1,0 +1,43 @@
+# The temporary DIMM server running on ESXi
+---
+# See lsst-itconf/site/profile/manifests/core/common.pp
+classes:
+  - timezone
+#  - chrony    # skipped: not strictly necessary right now, dimm has ntp configured
+#  - ssh       # skipped: too intrusive
+#  - sudo      # skipped: too intrusive, there's about 15 manual sudo entries for the DIMM user
+  - accounts
+  - puppet_agent
+  - easy_ipa
+  - ufw
+ufw::allow:
+  "dimm-webserver-16200":
+    direction: "IN"
+    from: "139.229.164.0/19"
+    ip: "any"
+    port: "16200"
+  "dimm-webserver-16300":
+    direction: "IN"
+    from: "139.229.164.0/19"
+    ip: "any"
+    port: "16300"
+  "dimm-webserver-16301":
+    direction: "IN"
+    from: "139.229.164.0/19"
+    ip: "any"
+    port: "16301"
+  "dimm-webserver-16302":
+    direction: "IN"
+    from: "139.229.164.0/19"
+    ip: "any"
+    port: "16302"
+  "dimm-webserver-16400":
+    direction: "IN"
+    from: "139.229.164.0/19"
+    ip: "any"
+    port: "16400"
+  "dimm-webserver-16500":
+    direction: "IN"
+    from: "139.229.164.0/19"
+    ip: "any"
+    port: "16500"

@@ -1,0 +1,43 @@
+---
+country: "CL"
+state: "Coquimbo"
+locality: "La Serena"
+organization: "LSST"
+division: "IT"
+
+canonical_name: "gs-graylog-node-01.ls.cl.lsst.org"
+server_ip_address: "139.229.136.244"
+alternative_dns_1: "gs-graylog-node-01.ls.cl.lsst.org"
+
+firewalld::zones:
+  internal:
+    ensure: "present"
+    target: "DROP"
+    sources:
+      - "192.168.255.0/29"
+firewalld::ports:
+  "Opening port for Graylog service":
+    ensure: "present"
+    zone: "public"
+    port: 9000
+    protocol: "tcp"
+  "Opening port for Syslog in public zone":
+    ensure: "present"
+    zone: "public"
+    port: 5514
+    protocol: "udp"
+  "Opening port for pfsense in public zone":
+    ensure: "present"
+    zone: "public"
+    port: 6514
+    protocol: "udp"
+  "Opening port for Syslog in internal zone":
+    ensure: "present"
+    zone: "internal"
+    port: 5514
+    protocol: "udp"
+  "Opening port for pfsense in internal zone":
+    ensure: "present"
+    zone: "internal"
+    port: 6514
+    protocol: "udp"

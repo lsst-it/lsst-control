@@ -1,0 +1,12 @@
+---
+classes:
+  "network"
+
+network::mroutes_hash:
+  p2p2:
+    # auxtel-control-01 is multihomed and has a default gateway of
+    # 139.229.162.126. These explicit routes are required to direct
+    # SAL traffic (and only SAL traffic) over the control network.
+    routes:
+      "139.229.178.0/24": "139.229.170.254"
+      "139.229.167.0/24": "139.229.170.254"

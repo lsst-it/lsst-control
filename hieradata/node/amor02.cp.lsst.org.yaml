@@ -1,0 +1,32 @@
+---
+classes:
+  - "network"
+
+network::interfaces_hash:
+  p2p1:
+    bootproto: "none"
+    master: "bond0"
+    slave: "yes"
+    onboot: "yes"
+    hwaddr: "%{facts.networking.interfaces.p2p1.mac}"
+  p2p2:
+    bootproto: "none"
+    master: "bond0"
+    slave: "yes"
+    onboot: "yes"
+    hwaddr: "%{facts.networking.interfaces.p2p2.mac}"
+  bond0:
+    type: "Bond"
+    bootproto: "none"
+    onboot: "yes"
+    ipaddress: "139.229.167.17"
+    netmask: "255.255.255.0"
+    bonding_opts: "mode=4 miimon=100"
+    bonding_master: "yes"
+    defroute: "no"
+
+network::mroutes_hash:
+  bond0:
+    routes:
+      "139.229.170.0/24": "139.229.167.254"
+      "139.229.178.0/24": "139.229.167.254"

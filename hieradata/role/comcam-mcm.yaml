@@ -1,0 +1,16 @@
+---
+classes:
+  - "profile::comcam::common"
+  - "profile::comcam::postfix"
+  - "network"
+network::interfaces_hash:
+  # fqdn
+  em1:
+    bootproto: "dhcp"
+    onboot: "yes"
+    type: "Ethernet"
+  # sal/control
+  em2:
+    bootproto: "dhcp"
+    onboot: "yes"
+    type: "Ethernet"

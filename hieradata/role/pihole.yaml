@@ -1,0 +1,12 @@
+---
+classes:
+  - "profile::default"
+rsyslog::client::inputs:
+  test_input:
+    type: "imfile"
+    config:
+      file: "/var/log/pihole.log"
+      Tag: "pihole"
+      Severity: "notice"
+      Facility: "local0"
+      reopenOnTruncate: "on"

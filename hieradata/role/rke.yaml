@@ -1,0 +1,25 @@
+---
+classes:
+  - "profile::core::common"
+  - "docker"
+  - "sysctl::values"
+# disabling the kernel version check is needed on el7
+docker::overlay2_override_kernel_check: true
+docker::storage_driver: "overlay2"
+docker::version: "19.03.4"
+# ipa docker group is 70014
+docker::socket_group: "70014"
+docker::socket_override: true
+sysctl::values::args:
+  net.bridge.bridge-nf-call-iptables:
+    value: 1
+    target: "/etc/sysctl.d/80-rke.conf"
+# currently inherited from common layer
+#ssh::server_options:
+#  AllowTcpForwarding: "yes"
+# enable k5 ssh client auth
+ssh::client_options:
+  GSSAPIAuthentication: "yes"
+  GSSAPIDelegateCredentials: "yes"
+# XXX short term
+firewall::ensure: "stopped"

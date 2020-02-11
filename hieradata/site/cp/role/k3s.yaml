@@ -1,0 +1,13 @@
+---
+# resolv.conf only allows for 6 search domains, and Kubernetes uses 3 for
+# service discovery. Additional search domains are ignored. To ensure
+# reasonable behavior we remove all domains that will not be readily used
+# within Kubernetes - if other domains are needed they must be referred to
+# by FQDN.
+#
+# @see man 5 resolv.conf
+# @see site/cp.yaml
+# @see https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/#known-issues
+resolv_conf::searchpath:
+  - "cp.lsst.org"
+  - "lsst.org"

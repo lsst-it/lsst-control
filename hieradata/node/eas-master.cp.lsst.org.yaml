@@ -1,0 +1,28 @@
+---
+classes:
+  - "network"
+
+network::interfaces_hash:
+  p2p1:
+    bootproto: "none"
+    master: "bond0"
+    slave: "yes"
+    nm_controlled: "no"
+  p2p2:
+    bootproto: "none"
+    master: "bond0"
+    slave: "yes"
+    nm_controlled: "no"
+  bond0:
+    type: "Bond"
+    bootproto: "none"
+    ipaddress: "139.229.178.59"
+    netmask: "255.255.255.0"
+    bonding_opts: "mode=4 miimon=100"
+    bonding_master: "yes"
+    nm_controlled: "no"
+network::mroutes_hash:
+  bond0:
+    routes:
+      "139.229.170.0/24": "139.229.178.254"
+      "139.229.167.0/24": "139.229.178.254"

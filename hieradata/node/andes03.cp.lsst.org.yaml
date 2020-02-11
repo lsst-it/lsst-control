@@ -1,0 +1,5 @@
+---
+network::interfaces_hash:
+  bond0.1301:
+    ipaddr: "139.229.167.4"
+    netmask: "255.255.255.0"

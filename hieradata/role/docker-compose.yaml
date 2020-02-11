@@ -1,0 +1,22 @@
+---
+classes:
+  - "profile::core::common"
+  - "docker"
+  - "python"
+# disabling the kernel version check is needed on el7
+docker::overlay2_override_kernel_check: true
+docker::storage_driver: "overlay2"
+docker::version: "19.03.4"
+# ipa docker group is 70014
+docker::socket_group: "70014"
+docker::socket_override: true
+# install docker-compose at system level
+python::version: "python36"
+python::pip: "present"
+python::dev: "present"
+python::virtualenv: "present"
+# docker-compose is python3 only
+python::python_pips:
+  "docker-compose":
+    virtualenv: "system"
+    ensure: "1.25.0"

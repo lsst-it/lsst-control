@@ -1,0 +1,5 @@
+---
+classes:
+  - "profile::default"
+  - "profile::it::grafana"
+grafana_version: "5.4.2"

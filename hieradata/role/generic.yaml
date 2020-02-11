@@ -1,0 +1,5 @@
+---
+# Classification for managed nodes with no specific configuration/role. This
+# can be used to bootstrap nodes while a more specific role is being developed.
+classes:
+  - "profile::core::common"

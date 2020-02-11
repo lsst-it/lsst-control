@@ -1,0 +1,4 @@
+---
+classes:
+  - "profile::core::common"
+  - "dhcp"

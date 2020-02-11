@@ -1,0 +1,18 @@
+---
+# special snow flake class inclusion is similar to role/generic but removes:
+# * firewall (existing iptables rules)
+# * selinux (known if there are mods)
+# * chrony (ptp is running)
+# * resolv_conf (140.252.32/23 can not access dns1/2)
+classes:
+  - "timezone"
+  - "tuned"
+  - "irqbalance"
+  - "sysstat"
+  - "epel"
+  - "sudo"
+  - "accounts"
+  - "puppet_agent"
+  - "ssh"
+  - "easy_ipa"
+  - "augeas"

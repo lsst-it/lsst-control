@@ -1,0 +1,110 @@
+---
+# IT Services Layout
+# Network List at La Serena Base camp:
+#       * 139.229.136.0/24 - Users' Network
+#
+# Services List
+# DHCP Master Server            : 139.229.136.23
+# DNS Master                    : 139.229.136.23
+# Graylog Master                : 139.229.136.36
+# Grafana                       : 139.229.136.37
+# InfluxDB Master               : 139.229.136.38
+# Puppet Master                 : 139.229.136.22 (Not deployed yet)
+rsyslog::client::global_config:
+  workDirectory:
+    value: "/var/log"
+  maxMessageSize:
+    value: "64k"
+  preserveFQDN:
+    value: "on"
+rsyslog::client::actions:
+  primary_log_server:
+    type: "omfwd"
+    facility: "*.*;auth,authpriv.none"
+    config:
+      Target: "gs-graylog-node-01.ls.cl.lsst.org"
+      Port: 5514
+      Protocol: "udp"
+  backup_log_server:
+    type: "omfwd"
+    facility: "*.*;auth,authpriv.none"
+    config:
+      Target: "gs-graylog-node-01.cp.cl.lsst.org"
+      Port: 5514
+      Protocol: "udp"
+  all_logs_local:
+    type: "omfile"
+    facility: "*.*;auth,authpriv.none"
+    config:
+      file: "/var/log/messages"
+  mail_logs:
+    type: "omfile"
+    facility: "mail.*"
+    config:
+      file: "-/var/log/maillog"
+  cron_logs:
+    type: "omfile"
+    facility: "cron.*"
+    config:
+      file: "/var/log/cron"
+  boot_logs:
+    type: "omfile"
+    facility: "local7.*"
+    config:
+      file: "-/var/log/boot.log"
+rsyslog::client::modules:
+  imuxsock: {}
+  imjournal:
+    config:
+      StateFile: "imjournal.state"
+      IgnorePreviousMessages: "off"
+      Ratelimit.Interval: 600
+      Ratelimit.Burst: 20000
+  imklog: {}
+  immark: {}
+  imfile:
+    config:
+      PollingInterval: 10
+#=============================================================================
+# Telegraf common configuration
+telegraf::global_tags:
+  service: "%{::service}"
+  cluster: "%{::cluster}"
+  device: "%{::device}"
+  service_number: "%{::service_number}"
+  device_number: "%{::device_number}"
+  node_name: "%{::node_name}"
+  datacenter: "%{::datacenter}"
+  type: "%{::virtual}"
+telegraf::interval: "1m"
+telegraf::round_interval: true
+telegraf::metric_batch_size: 1000
+telegraf::metric_buffer_limit: 10000
+telegraf::collection_jitter: "0s"
+telegraf::flush_interval: "1m"
+telegraf::flush_jitter: "0m"
+telegraf::debug: false
+telegraf::quiet: false
+telegraf::hostname: ""
+telegraf::omit_hostname: false
+# Common configuration for both, master and slave.
+# TODO check if it is ok to use CP servers
+dhcp_pools:
+  - domain: "users.cp.cl.lsst.org"
+    values:
+      network: "139.229.160.0"
+      mask: "255.255.255.0"
+      range:
+        - '139.229.160.1 139.229.160.100'
+        - '139.229.160.150 139.229.160.200'
+      gateway: "139.229.160.254"
+dnsdomains:
+  - "cp.cl.lsst.org"
+  - "160.229.136.in-addr.arpa"
+nameservers:
+  - "139.229.136.32"
+  - "140.252.32.45"
+ntpservers:
+  - "us.pool.ntp.org"
+dhcp_interfaces:
+  - "eth0"

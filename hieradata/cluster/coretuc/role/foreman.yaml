@@ -1,0 +1,70 @@
+---
+classes:
+  - "dhcp"
+  - "sysctl::values"
+dhcp::interfaces:
+  - "eth1"
+  - "eth4"
+  - "eth5"
+  - "eth6"
+dhcp::default_lease_time: 43200
+dhcp::max_lease_time: 86400
+dhcp::authoritative: false
+dhcp::ddns_update_style: "none"
+# dnsdomain requires an array but only uses the first element to set the domain
+dhcp::dnsdomain: &dnsdomain
+  - "tuc.lsst.cloud"
+  - "lsst.cloud"
+  - "lsst.org"
+  - "tuc.noao.edu"
+  - "noao.edu"
+dhcp::nameservers:
+  - "140.252.34.140"
+  - "1.0.0.1"
+  - "8.8.8.8"
+dhcp::ntpservers:
+  - "140.252.1.140"
+  - "140.252.1.141"
+  - "140.252.1.142"
+dhcp::bootp: true
+dhcp::pxeserver: "140.252.34.132"
+# theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
+dhcp::pools:
+  vlan700:
+    network: "140.252.34.0"
+    mask: "255.255.255.192"
+    gateway: "140.252.34.1"
+    range: "140.252.34.5 140.252.34.62"
+    search_domains: *dnsdomain
+  vlan703:
+    network: "140.252.34.64"
+    mask: "255.255.255.192"
+    gateway: "140.252.34.65"
+    range: "140.252.34.69 140.252.34.126"
+    search_domains: *dnsdomain
+  vlan800:
+    network: "140.252.34.128"
+    mask: "255.255.255.192"
+    gateway: "140.252.34.129"
+    range: "140.252.34.133 140.252.34.190"
+    search_domains: *dnsdomain
+  vlan801:
+    network: "140.252.35.0"
+    mask: "255.255.255.128"
+    gateway: "140.252.35.1"
+    range: "140.252.35.5 140.252.35.126"
+    search_domains: *dnsdomain
+sysctl::values::args:
+  net.ipv4.conf.all.arp_filter:
+    value: 1
+    target: "/etc/sysctl.d/91-arp_filter.conf"
+  net.ipv4.conf.default.arp_filter:
+    value: 1
+    target: "/etc/sysctl.d/91-arp_filter.conf"
+  net.ipv4.conf.all.rp_filter:
+    value: 0
+    target: "/etc/sysctl.d/92-rp_filter.conf"
+  net.ipv4.conf.default.rp_filter:
+    value: 0
+    target: "/etc/sysctl.d/92-rp_filter.conf"
+profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"

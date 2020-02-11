@@ -1,0 +1,187 @@
+---
+# IT Services Layout
+# Network List at Cerro Pachon:
+#       * 139.229.160.0/24 - General Services Servers
+#       * 139.229.162.0/24 - Users' Network
+#
+# Services List
+# DHCP Master Server            : 139.229.162.120
+# DHCP Slave Server             : 139.229.160.121
+# DNS Master                    : 139.229.160.248 (Not deployed yet)
+# DNS Slave                     : 139.229.160.247 (Not deployed yet)
+# DNS Cache 1                   : 139.229.160.246 (Not deployed yet)
+# DNS Cache 2                   : 139.229.160.245 (Not deployed yet)
+# Graylog Master                : 139.229.162.106
+# Graylog Slave                 : 139.229.160.243 (Not deployed yet)
+# InfluxDB Master               : 139.229.162.104
+# InfluxDB Slave                : 139.229.160.241 (Not deployed yet)
+# Grafana                       : 139.229.162.105
+# Puppet Master                 : 139.229.160.239 (Not deployed yet)
+
+easy_ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
+
+# Rsyslog configuration is based on the default rsyslog.conf shipping with CentOS 7.7
+rsyslog::config::global_config:
+  workDirectory:
+    value: "/var/lib/rsyslog"
+  maxMessageSize:
+    value: "64k"
+  preserveFQDN:
+    value: "on"
+rsyslog::config::modules:
+  imuxsock: {}
+  imjournal:
+    config:
+      StateFile: "imjournal.state"
+      IgnorePreviousMessages: "off"
+      Ratelimit.Interval: 600
+      Ratelimit.Burst: 20000
+  imklog: {}
+  immark: {}
+  imfile: {}
+rsyslog::config::actions:
+  graylog:
+    type: "omfwd"
+    facility: "*.*;auth,authpriv.none"
+    config:
+      Target: "gs-graylog-node-01.cp.lsst.org"
+      Port: 5514
+      Protocol: "udp"
+  # Log anything (except mail) of level info or higher.
+  # Don't log private authentication messages!
+  #
+  # local6 is used for logs that should only be forwarded to a central log
+  # server and should never be stored locally. See IT-1734.
+  messages:
+    type: "omfile"
+    facility: "*.info;mail.none;authpriv.none;cron.none;local6.none"
+    config:
+      file: "/var/log/messages"
+  # The authpriv file has restricted access.
+  secure:
+    type: "omfile"
+    facility: "authpriv.*"
+    config:
+      file: "/var/log/secure"
+  # Everybody gets emergency messages
+  emerg:
+    type: "omusrmsg"
+    facility: "*.emerg"
+    config:
+      users: "*"
+  maillog:
+    type: "omfile"
+    facility: "mail.*"
+    config:
+      file: "-/var/log/maillog"
+  cron:
+    type: "omfile"
+    facility: "cron.*"
+    config:
+      file: "/var/log/cron"
+  # local7 does not appear to be used by CentOS 7, but for the sake of
+  # consistency we preserve it to match the CentOS configuration.
+  boot:
+    type: "omfile"
+    facility: "local7.*"
+    config:
+      file: "-/var/log/boot.log"
+
+# Telegraf common configuration
+telegraf::global_tags:
+  service: "%{::service}"
+  cluster: "%{::cluster}"
+  device: "%{::device}"
+  service_number: "%{::service_number}"
+  device_number: "%{::device_number}"
+  node_name: "%{::node_name}"
+  datacenter: "%{::datacenter}"
+  type: "%{::virtual}"
+telegraf::interval: "1m"
+telegraf::round_interval: true
+telegraf::metric_batch_size: 1000
+telegraf::metric_buffer_limit: 10000
+telegraf::collection_jitter: "0s"
+telegraf::flush_interval: "1m"
+telegraf::flush_jitter: "0m"
+telegraf::debug: false
+telegraf::quiet: false
+telegraf::hostname: ""
+telegraf::omit_hostname: false
+
+# The following keys are shared between the `dhcp` and `resolv_conf` classes:
+# - dhcp::dnsdomain
+# - dhcp::nameservers
+# - dhcp::ntpservers
+#
+# @see clusters/corecp/dhcp.yaml
+
+# resolv.conf allows for a maximum of 6 search domains with a max length of 256
+# characters.
+# @see man 5 resolv.conf
+dhcp::dnsdomain: &dnsdomains
+  - "cp.lsst.org"
+  - "cp.cl.lsst.org"
+  - "cl.lsst.org"
+  - "lsst.org"
+  - "lsst.local"
+# resolv.conf allows for a maximum of 3 nameservers
+# @see man 5 resolv.conf
+dhcp::nameservers: &nameservers
+  - "139.229.162.22"  # dns1.cp.lsst.org
+  - "139.229.162.87"  # dns2.cp.lsst.org
+  - "208.67.222.222"  # resolver1.opendns.com
+dhcp::ntpservers: &ntpservers
+  - "139.229.167.1"
+  - "ntp.shoa.cl"
+  - "1.cl.pool.ntp.org"
+  - "1.south-america.pool.ntp.org"
+
+chrony::servers: *ntpservers
+resolv_conf::nameservers: *nameservers
+resolv_conf::searchpath: *dnsdomains
+
+sudo::config_file_replace: false
+sudo::purge: false
+sudo::configs:
+  wheel_b:  # backup wheel group in case of LDAP failure.
+    content: "%wheel_b ALL=(ALL) NOPASSWD: ALL"
+lookup_options:
+  accounts::user_list:
+    merge:
+      strategy: "deep"
+accounts::group_list:
+  wheel_b: {}
+accounts::user_defaults:
+  groups:
+    - "wheel_b"
+  managehome: true
+  system: false
+  managevim: false
+accounts::user_list:
+  root:
+    password: "%{root_pw}"
+    sshkeys:
+      # foreman
+      # XXX changeme
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDUB0OC/01VRh98rWDLta493+SlN8UNbMKGC8QdHGOy844Ae2eHijlZqmasrJaUA0UH56hmdTVKD7HDjKFN107t1P9TN1SvMV+exL54mUKgETya9V9juRy2/gYhdT55A4i+wGPNcRK1hgS4mCNJHKXhaSl8xufFU95Q0xNnhz0xoBc73EpkrGaUvzmYJAshQokknO66G2u9nEy4yvy0Q1IsSjq5BDt3rtPSD6RKLg+1mWeHNdd8ky3Pe9TXZLo4wav//WnSmfTSE1P8JsNVpcWKvsT5y5rnmnPn5siLYlqvUC4xfUXxR95NX1alPfsIzEHNERzCLcDK9KyqGaKLBVjtyu0LQHu2WadhPY1h9n1ey0haps8QCfNSmNGSVedSTfm5Nf90EtZ7d/eDXuzlBd2nIVn+o0BUa2zBUEI9KzX8t/H+HJabBo9cl2nQ9/EurN1OsgH6bwiTt5sQkHKcJl24bfgyo8sXC5mi2T8cQLQrkY4kuBKV7X3fImdERc4c+fk= comcam-cluter"
+  jhoblitt_b:  # backup access in case LDAP fails
+    sshkeys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDZFV9AL2qPh6CV+DeY32oyg0jCkxkbCHVSPHOoikDkwzwMW/7QQdRI8TJ0h8vpFi15pNyu+n7s7MJSWdg5yUvTCataVpOndDElDz10DaEcGIHNq8/qjEPiHulj/KUoDkEU+yMoWY8jRs3ARyL+6p6LDUBsWpzIY8jMOaEVUJjlVt+0ih2a/D3re0daws6w3mBbmLjitHLS5f2YJKlStIHWCWjMXvP5tqUsvhHvIQH/csBQGXnUiRxR8YSJK9u3CMvTzx6PnC7p98yRCOOrMRQ7yT7vuXyXsk7qoUpArUe/T5nEcwRA/21QVurJ1s3in/mpFI0Ogg5kD7NpFqoTq6itBxbPz7DwaOyjEltJBjQAEvuvfHDJYsBTM3fpfEt5jR8ieuDta1214tr5qVOmR17JonssV7/ksizATm1KkMA7+Q8CWCgrFdZmEMaFjav2U72EWyLRe5utxQV+dWPnxd13NxVu6sgM3CBEC4HzOBMf+upt8tMvjLBjci1sbhCAvvU= github2"
+  athebo_b:  # backup access in case LDAP fails
+    sshkeys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8XVjITG6l2q37rDrL037aB2vDr0HsdXAl1ffmhj9TK adrien@faraday"
+  lssttech:
+    ensure: "absent"
+    managehome: true
+    purge_user_home: true
+  sysadmin:
+    ensure: "absent"
+    managehome: true
+    purge_user_home: true
+
+# Use NFSv4 on NFS enabled hosts.
+# @see site/cp/role/nfsserver.yaml
+nfs::nfs_v4: true
+nfs::nfs_v4_client: true
+nfs::nfs_v4_idmap_domain: "%{::domain}"

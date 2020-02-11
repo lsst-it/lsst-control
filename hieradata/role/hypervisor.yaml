@@ -1,0 +1,39 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::libvirt"
+  - "network"
+  - "libvirt"
+packages:
+  - "qemu-guest-agent"
+  - "qemu-kvm-tools"
+  - "virt-top"
+  - "virt-viewer"
+  - "libguestfs"
+  - "virt-who"
+  - "virt-what"
+  - "virt-install"
+  - "virt-manager"
+libvirt::libvirtd_conf:
+  # yamllint disable-line rule:quoted-strings
+  access_drivers: '[ "polkit" ]'
+files:
+  # no current forge module has support for the modern polkit json rules
+  /etc/polkit-1/rules.d/80-libvirt.rules:
+    content: |
+      // Allow any user in the 'libvirt' group to connect to system libvirtd
+      // without entering a password.
+
+      polkit.addRule(function(action, subject) {
+          //if (action.id == "org.libvirt.unix.manage" &&
+          if (subject.isInGroup("libvirt")) {
+              return polkit.Result.YES;
+          }
+      });
+
+      polkit.addAdminRule(function(action, subject) {
+          return ["unix-group:libvirt"];
+      });
+    owner: "root"
+    group: "root"
+    mode: "0644"

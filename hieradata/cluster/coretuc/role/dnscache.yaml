@@ -1,0 +1,8 @@
+---
+dns::forwarders:
+  - "1.0.0.1"
+  - "8.8.8.8"
+dns::allow_recursion:
+  - "140.252.32.0/22"
+  - "localnets"
+  - "localhost"

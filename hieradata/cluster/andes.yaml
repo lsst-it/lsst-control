@@ -1,0 +1,33 @@
+---
+lookup_options:
+  network::interfaces_hash:
+    merge:
+      strategy: "deep"
+
+classes:
+  - "network"
+
+network::interfaces_hash:
+  p2p1:
+    bootproto: "none"
+    master: "bond0"
+    slave: "yes"
+    nm_controlled: "no"
+  p2p2:
+    bootproto: "none"
+    master: "bond0"
+    slave: "yes"
+    nm_controlled: "no"
+  bond0:
+    type: "Bond"
+    bootproto: "none"
+    bonding_opts: "mode=4 miimon=100"
+    bonding_master: "yes"
+    nm_controlled: "no"
+  bond0.1300:
+    ensure: "absent"
+  bond0.1301:
+    vlan: "yes"
+    bootproto: "none"
+    nm_controlled: "no"
+    userctl: "no"

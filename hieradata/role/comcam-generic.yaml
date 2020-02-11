@@ -1,0 +1,4 @@
+---
+classes:
+  - "profile::comcam::common"
+  - "profile::comcam::postfix"

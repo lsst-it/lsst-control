@@ -1,0 +1,7 @@
+---
+# SSL Information
+country: "US"
+state: "Arizona"
+locality: "Tucson"
+influxdb_opts: ""
+influx_telegraf_db_name: "telegraf"

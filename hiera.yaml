@@ -19,7 +19,7 @@ hierarchy:
       - "type/default.yaml"
       - "org/%{org}.yaml"
   - name: "public hiera"
-    datadir: "/etc/puppetlabs/code/hieradata/public/%{environment}"
+    datadir: "/etc/puppetlabs/code/environments/%{environment}/hieradata"
     paths:
       - "node/%{fqdn}.yaml"
       - "site/%{site}/cluster/%{cluster}/role/%{role}.yaml"

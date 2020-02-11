@@ -1,0 +1,22 @@
+---
+firewalld::ports:
+  "Opening ports for Chronograf":
+    ensure: "present"
+    zone: "public"
+    port: 8888
+    protocol: "tcp"
+  "Opening ports for Kapacitor - UDP":
+    ensure: "present"
+    zone: "public"
+    port: 8888
+    protocol: "udp"
+  "Opening ports for Kapacitor - TCP":
+    ensure: "present"
+    zone: "public"
+    port: 8888
+    protocol: "tcp"
+
+monitored_services:
+  - "grafana-server"
+  - "kapacitord"
+  - "chronograf"

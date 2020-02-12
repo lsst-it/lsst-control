@@ -3,6 +3,9 @@ classes:
   - "profile::core::common"
   - "docker"
   - "sysctl::values"
+  - "yum"
+packages:
+  - "kubectl"
 # disabling the kernel version check is needed on el7
 docker::overlay2_override_kernel_check: true
 docker::storage_driver: "overlay2"
@@ -21,3 +24,13 @@ sysctl::values::args:
 ssh::client_options:
   GSSAPIAuthentication: "yes"
   GSSAPIDelegateCredentials: "yes"
+yum::managed_repos:
+  - "kubernetes"
+yum::repos:
+  "kubernetes":
+    ensure: "present"
+    enabled: true
+    baseurl: "https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64"
+    gpgcheck: true
+    gpgkey: "https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"
+    target: "/etc/yum.repos.d/kubernetes.repo"

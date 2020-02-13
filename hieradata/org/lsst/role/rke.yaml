@@ -2,6 +2,7 @@
 classes:
   - "profile::core::common"
   - "profile::app::helm"
+  - "profile::app::rke"
   - "docker"
   - "sysctl::values"
   - "yum"
@@ -36,3 +37,4 @@ yum::repos:
     gpgkey: "https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"
     target: "/etc/yum.repos.d/kubernetes.repo"
 profile::app::helm::version: "3.0.3"
+profile::app::rke::version: "1.0.4"

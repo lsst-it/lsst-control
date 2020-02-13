@@ -93,6 +93,15 @@ dhcp::pools:
     range:
       - "139.229.174.1 139.229.174.99"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  tcs_app:
+    network: "139.229.178.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.178.254"
+    range:
+      # We allocate 139.229.178.0/26 for DHCP, minus .178.1 as that
+      # host is statically allocated.
+      - "139.229.178.2 139.229.178.62"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   it_ipmi_srv:
     network: "10.18.3.0"
     mask: "255.255.255.0"

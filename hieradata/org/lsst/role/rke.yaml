@@ -3,6 +3,7 @@ classes:
   - "profile::core::common"
   - "profile::app::helm"
   - "profile::app::rke"
+  - "profile::app::macvlan"
   - "docker"
   - "sysctl::values"
   - "yum"

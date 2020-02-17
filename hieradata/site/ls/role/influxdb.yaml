@@ -1,7 +1,0 @@
----
-# SSL Information
-country: "CL"
-state: "Coquimbo"
-locality: "La Serena"
-influxdb_opts: ""
-influx_telegraf_db_name: "telegraf"

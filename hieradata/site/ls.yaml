@@ -1,58 +1,20 @@
 ---
-# IT Services Layout
-# Network List at La Serena Base camp:
-#       * 139.229.136.0/24 - Users' Network
-#
-# Services List
-# DHCP Master Server            : 139.229.136.23
-# DNS Master                    : 139.229.136.23
-# Graylog Master                : 139.229.136.36
-# Grafana                       : 139.229.136.37
-# InfluxDB Master               : 139.229.136.38
-# Puppet Master                 : 139.229.136.22 (Not deployed yet)
-rsyslog::client::global_config:
+lookup_options:
+  accounts::user_list:
+    merge:
+      strategy: "deep"
+
+easy_ipa::ipa_master_fqdn: "ipa1.ls.lsst.org"
+
+# Rsyslog configuration is based on the default rsyslog.conf shipping with CentOS 7.7
+rsyslog::config::global_config:
   workDirectory:
-    value: "/var/log"
+    value: "/var/lib/rsyslog"
   maxMessageSize:
     value: "64k"
   preserveFQDN:
     value: "on"
-rsyslog::client::actions:
-  primary_log_server:
-    type: "omfwd"
-    facility: "*.*;auth,authpriv.none"
-    config:
-      Target: "gs-graylog-node-01.ls.cl.lsst.org"
-      Port: 5514
-      Protocol: "udp"
-  backup_log_server:
-    type: "omfwd"
-    facility: "*.*;auth,authpriv.none"
-    config:
-      Target: "gs-graylog-node-01.cp.cl.lsst.org"
-      Port: 5514
-      Protocol: "udp"
-  all_logs_local:
-    type: "omfile"
-    facility: "*.*;auth,authpriv.none"
-    config:
-      file: "/var/log/messages"
-  mail_logs:
-    type: "omfile"
-    facility: "mail.*"
-    config:
-      file: "-/var/log/maillog"
-  cron_logs:
-    type: "omfile"
-    facility: "cron.*"
-    config:
-      file: "/var/log/cron"
-  boot_logs:
-    type: "omfile"
-    facility: "local7.*"
-    config:
-      file: "-/var/log/boot.log"
-rsyslog::client::modules:
+rsyslog::config::modules:
   imuxsock: {}
   imjournal:
     config:
@@ -62,49 +24,120 @@ rsyslog::client::modules:
       Ratelimit.Burst: 20000
   imklog: {}
   immark: {}
-  imfile:
+  imfile: {}
+rsyslog::config::actions:
+  graylog:
+    type: "omfwd"
+    facility: "*.*;auth,authpriv.none"
     config:
-      PollingInterval: 10
-#=============================================================================
-# Telegraf common configuration
-telegraf::global_tags:
-  service: "%{::service}"
-  cluster: "%{::cluster}"
-  device: "%{::device}"
-  service_number: "%{::service_number}"
-  device_number: "%{::device_number}"
-  node_name: "%{::node_name}"
-  datacenter: "%{::datacenter}"
-  type: "%{::virtual}"
-telegraf::interval: "1m"
-telegraf::round_interval: true
-telegraf::metric_batch_size: 1000
-telegraf::metric_buffer_limit: 10000
-telegraf::collection_jitter: "0s"
-telegraf::flush_interval: "1m"
-telegraf::flush_jitter: "0m"
-telegraf::debug: false
-telegraf::quiet: false
-telegraf::hostname: ""
-telegraf::omit_hostname: false
-# Common configuration for both, master and slave.
-# TODO check if it is ok to use CP servers
-dhcp_pools:
-  - domain: "users.cp.cl.lsst.org"
-    values:
-      network: "139.229.160.0"
-      mask: "255.255.255.0"
-      range:
-        - '139.229.160.1 139.229.160.100'
-        - '139.229.160.150 139.229.160.200'
-      gateway: "139.229.160.254"
-dnsdomains:
-  - "cp.cl.lsst.org"
-  - "160.229.136.in-addr.arpa"
-nameservers:
-  - "139.229.136.32"
-  - "140.252.32.45"
-ntpservers:
-  - "us.pool.ntp.org"
-dhcp_interfaces:
-  - "eth0"
+      Target: "gs-graylog-node-01.cp.lsst.org"
+      Port: 5514
+      Protocol: "udp"
+  # Log anything (except mail) of level info or higher.
+  # Don't log private authentication messages!
+  #
+  # local6 is used for logs that should only be forwarded to a central log
+  # server and should never be stored locally. See IT-1734.
+  messages:
+    type: "omfile"
+    facility: "*.info;mail.none;authpriv.none;cron.none;local6.none"
+    config:
+      file: "/var/log/messages"
+  # The authpriv file has restricted access.
+  secure:
+    type: "omfile"
+    facility: "authpriv.*"
+    config:
+      file: "/var/log/secure"
+  # Everybody gets emergency messages
+  emerg:
+    type: "omusrmsg"
+    facility: "*.emerg"
+    config:
+      users: "*"
+  maillog:
+    type: "omfile"
+    facility: "mail.*"
+    config:
+      file: "-/var/log/maillog"
+  cron:
+    type: "omfile"
+    facility: "cron.*"
+    config:
+      file: "/var/log/cron"
+  # local7 does not appear to be used by CentOS 7, but for the sake of
+  # consistency we preserve it to match the CentOS configuration.
+  boot:
+    type: "omfile"
+    facility: "local7.*"
+    config:
+      file: "-/var/log/boot.log"
+
+# The following keys are shared between the `dhcp` and `resolv_conf` classes:
+# - dhcp::dnsdomain
+# - dhcp::nameservers
+# - dhcp::ntpservers
+#
+# @see clusters/corels/dhcp.yaml
+
+# resolv.conf allows for a maximum of 6 search domains with a max length of 256
+# characters.
+# @see man 5 resolv.conf
+dhcp::dnsdomain: &dnsdomains
+  - "ls.lsst.org"
+  - "lsst.org"
+# resolv.conf allows for a maximum of 3 nameservers
+# @see man 5 resolv.conf
+dhcp::nameservers: &nameservers
+  - "139.229.135.53"  # dns1.ls.lsst.org
+  - "139.229.162.54"  # dns2.ls.lsst.org
+  - "208.67.222.222"  # resolver1.opendns.com
+dhcp::ntpservers: &ntpservers
+  - "139.229.167.1"
+  - "ntp.shoa.cl"
+  - "1.cl.pool.ntp.org"
+  - "1.south-america.pool.ntp.org"
+
+chrony::servers: *ntpservers
+resolv_conf::nameservers: *nameservers
+resolv_conf::searchpath: *dnsdomains
+
+sudo::config_file_replace: false
+sudo::purge: false
+sudo::configs:
+  wheel_b:  # backup wheel group in case of LDAP failure.
+    content: "%wheel_b ALL=(ALL) NOPASSWD: ALL"
+
+accounts::group_list:
+  wheel_b: {}
+accounts::user_defaults:
+  groups:
+    - "wheel_b"
+  managehome: true
+  system: false
+  managevim: false
+accounts::user_list:
+  root:
+    password: "%{root_pw}"
+    sshkeys: []
+      # foreman remote execution public key
+      # TODO add the current key
+  jhoblitt_b:  # backup access in case LDAP fails
+    sshkeys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDZFV9AL2qPh6CV+DeY32oyg0jCkxkbCHVSPHOoikDkwzwMW/7QQdRI8TJ0h8vpFi15pNyu+n7s7MJSWdg5yUvTCataVpOndDElDz10DaEcGIHNq8/qjEPiHulj/KUoDkEU+yMoWY8jRs3ARyL+6p6LDUBsWpzIY8jMOaEVUJjlVt+0ih2a/D3re0daws6w3mBbmLjitHLS5f2YJKlStIHWCWjMXvP5tqUsvhHvIQH/csBQGXnUiRxR8YSJK9u3CMvTzx6PnC7p98yRCOOrMRQ7yT7vuXyXsk7qoUpArUe/T5nEcwRA/21QVurJ1s3in/mpFI0Ogg5kD7NpFqoTq6itBxbPz7DwaOyjEltJBjQAEvuvfHDJYsBTM3fpfEt5jR8ieuDta1214tr5qVOmR17JonssV7/ksizATm1KkMA7+Q8CWCgrFdZmEMaFjav2U72EWyLRe5utxQV+dWPnxd13NxVu6sgM3CBEC4HzOBMf+upt8tMvjLBjci1sbhCAvvU= github2"
+  athebo_b:  # backup access in case LDAP fails
+    sshkeys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8XVjITG6l2q37rDrL037aB2vDr0HsdXAl1ffmhj9TK adrien@faraday"
+  lssttech:
+    ensure: "absent"
+    managehome: true
+    purge_user_home: true
+  sysadmin:
+    ensure: "absent"
+    managehome: true
+    purge_user_home: true
+
+# Use NFSv4 on NFS enabled hosts.
+nfs::nfs_v4: true
+nfs::nfs_v4_client: true
+nfs::nfs_v4_idmap_domain: "%{::domain}"

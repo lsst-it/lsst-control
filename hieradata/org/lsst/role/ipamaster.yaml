@@ -14,3 +14,5 @@ easy_ipa::install_epel: false
 easy_ipa::install_autofs: false
 easy_ipa::install_sssdtools: false
 easy_ipa::install_kstart: false
+easy_ipa::ipa_server_fqdn: "%{facts.fqdn}"
+easy_ipa::ip_address: "%{facts.networking.ip}"

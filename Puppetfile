@@ -1,6 +1,6 @@
 forge 'https://forgeapi.puppetlabs.com'
 
-mod 'andylytical/tuned', git: 'https://github.com/andylytical/puppet-tuned', ref: 'topic/fix_error_on_tuned_version_fact'
+mod 'ceritsc/tuned', '1.0.1'
 mod 'saz/timezone', '5.1.1'
 mod 'puppet/selinux', '3.0.0'
 mod 'puppetlabs/firewall', '2.0.0'

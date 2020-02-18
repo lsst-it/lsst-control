@@ -1,0 +1,4 @@
+---
+classes:
+  - profile::baseline_cfg
+  - profile::system_authnz

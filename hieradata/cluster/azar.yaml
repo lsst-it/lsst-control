@@ -1,0 +1,36 @@
+---
+tuned::profile: "latency-performance"
+selinux::mode: "disabled"
+firewall::ensure: "stopped"
+puppet_agent::package_version: "6.7.0"
+puppet_agent::collection: "puppet6"
+
+classes:
+  - "network"
+
+lookup_options:
+  network::interfaces_hash:
+    merge:
+      strategy: "deep"
+network::interfaces_hash:
+  em1:  # fqn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # trunk
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em2.1400:  # 139.229.170.0/24
+    bootproto: "dhcp"
+    defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
+network::mroutes_hash:
+  em2.1400:
+    routes:
+      "139.229.167.0/24": "139.229.170.254"
+      "139.229.178.0/24": "139.229.170.254"

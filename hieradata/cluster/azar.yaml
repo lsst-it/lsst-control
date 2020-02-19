@@ -8,6 +8,8 @@ puppet_agent::collection: "puppet6"
 classes:
   - "profile::core::nfsclient"
   - "network"
+packages:
+  - "git"
 
 lookup_options:
   network::interfaces_hash:

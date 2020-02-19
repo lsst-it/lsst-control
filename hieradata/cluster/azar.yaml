@@ -6,6 +6,7 @@ puppet_agent::package_version: "6.7.0"
 puppet_agent::collection: "puppet6"
 
 classes:
+  - "profile::core::nfsclient"
   - "network"
 
 lookup_options:
@@ -34,3 +35,34 @@ network::mroutes_hash:
     routes:
       "139.229.167.0/24": "139.229.170.254"
       "139.229.178.0/24": "139.229.170.254"
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /net/project:
+    share: "project"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/scratch:
+    share: "scratch"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/home:
+    share: "home"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/lsstdata:
+    share: "lsstdata"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /mnt/dmcs/data:
+    share: "/data/staging/dbb"
+    server: "atarchiver.cp.lsst.org"
+    atboot: true
+  /mnt/dmcs/oods_butler_repo:
+    share: "/data/butler"
+    server: "atarchiver.cp.lsst.org"
+    atboot: true
+  /mnt/data:
+    share: "/data"
+    server: "atsdaq1.cp.lsst.org"
+    atboot: true

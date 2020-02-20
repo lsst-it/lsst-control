@@ -54,7 +54,7 @@ rsyslog::config::actions:
 # - dhcp::nameservers
 # - dhcp::ntpservers
 #
-# @see clusters/corels/dhcp.yaml
+# @see site/ls/role/foreman.yaml
 
 # resolv.conf allows for a maximum of 6 search domains with a max length of 256
 # characters.

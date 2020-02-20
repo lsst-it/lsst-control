@@ -1,10 +1,4 @@
 ---
-# XXX these values should be migrated to the site layer
-tuned::profile: "latency-performance"
-selinux::mode: "disabled"
-firewall::ensure: "stopped"
-puppet_agent::package_version: "6.7.0"
-puppet_agent::collection: "puppet6"
 sudo::configs:
   auxtel_ccs_cmd:
     content: "%auxtel-ccs-cmd ALL=(ccs) NOPASSWD: ALL"

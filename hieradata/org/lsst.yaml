@@ -97,3 +97,9 @@ accounts::user_list:
     ensure: "absent"
     managehome: true
     purge_user_home: true
+
+tuned::profile: "latency-performance"
+selinux::mode: "disabled"
+firewall::ensure: "stopped"
+puppet_agent::package_version: "6.7.0"
+puppet_agent::collection: "puppet6"

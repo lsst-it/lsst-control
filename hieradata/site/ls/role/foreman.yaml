@@ -19,26 +19,26 @@ dhcp::logfacility: "daemon"
 # - dhcp::ntpservers
 
 dhcp::bootp: true
-dhcp::pxeserver: "139.229.135.5" # foreman.ls.lsst.org
+dhcp::pxeserver: "139.229.135.5"  # foreman.ls.lsst.org
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:
-  IT-Services: # https://jira.lsstcorp.org/browse/IT-1676
+  IT-Services:  # https://jira.lsstcorp.org/browse/IT-1676
     network: "139.229.135.0"
     mask: "255.255.255.0"
     gateway: "139.229.135.254"
     range: "139.229.135.192 139.229.135.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  commissioning-cluster: # https://jira.lsstcorp.org/browse/IT-1679
+  commissioning-cluster:  # https://jira.lsstcorp.org/browse/IT-1679
     network: "139.229.147.0"
     mask: "255.255.255.0"
     gateway: "139.229.147.254"
     range: "139.229.147.192 139.229.147.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  BDC-BMC: # https://jira.lsstcorp.org/browse/IT-1679
+  BDC-BMC:  # https://jira.lsstcorp.org/browse/IT-1679
     network: "10.50.3.0"
     mask: "255.255.255.0"
     gateway: "10.50.3.254"
     range: "10.50.3.1 10.50.3.253"
-    search_domains: "%{alias('dhcp::dnsdomain')}"   
+    search_domains: "%{alias('dhcp::dnsdomain')}"
 
 profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"

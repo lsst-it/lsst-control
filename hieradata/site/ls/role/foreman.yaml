@@ -34,5 +34,11 @@ dhcp::pools:
     gateway: "139.229.147.254"
     range: "139.229.147.192 139.229.147.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-BMC: # https://jira.lsstcorp.org/browse/IT-1679
+    network: "10.50.3.0"
+    mask: "255.255.255.0"
+    gateway: "10.50.3.254"
+    range: "10.50.3.1 10.50.3.253"
+    search_domains: "%{alias('dhcp::dnsdomain')}"   
 
 profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"

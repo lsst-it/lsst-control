@@ -1,0 +1,70 @@
+---
+tuned::profile: "latency-performance"
+selinux::mode: "disabled"
+firewall::ensure: "stopped"
+puppet_agent::package_version: "6.7.0"
+puppet_agent::collection: "puppet6"
+
+classes:
+  - "profile::core::nfsclient"
+  - "network"
+packages:
+  - "git"
+
+lookup_options:
+  network::interfaces_hash:
+    merge:
+      strategy: "deep"
+network::interfaces_hash:
+  em1:  # fqn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # trunk
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em2.1400:  # 139.229.170.0/24
+    bootproto: "dhcp"
+    defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
+network::mroutes_hash:
+  em2.1400:
+    routes:
+      "139.229.167.0/24": "139.229.170.254"
+      "139.229.178.0/24": "139.229.170.254"
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /net/project:
+    share: "project"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/scratch:
+    share: "scratch"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/home:
+    share: "home"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/lsstdata:
+    share: "lsstdata"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /mnt/dmcs/data:
+    share: "/data/staging/dbb"
+    server: "atarchiver.cp.lsst.org"
+    atboot: true
+  /mnt/dmcs/oods_butler_repo:
+    share: "/data/butler"
+    server: "atarchiver.cp.lsst.org"
+    atboot: true
+  /mnt/data:
+    share: "/data"
+    server: "atsdaq1.cp.lsst.org"
+    atboot: true

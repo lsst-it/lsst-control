@@ -21,5 +21,3 @@ sysctl::values::args:
 ssh::client_options:
   GSSAPIAuthentication: "yes"
   GSSAPIDelegateCredentials: "yes"
-# XXX short term
-firewall::ensure: "stopped"

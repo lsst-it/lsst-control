@@ -32,4 +32,3 @@ python::python_pips:
     ensure: "1.25.0"
 packages:
   - "git"
-firewall::ensure: "stopped"

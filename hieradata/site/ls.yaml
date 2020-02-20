@@ -1,9 +1,4 @@
 ---
-lookup_options:
-  accounts::user_list:
-    merge:
-      strategy: "deep"
-
 easy_ipa::ipa_master_fqdn: "ipa1.ls.lsst.org"
 
 rsyslog::config::actions:
@@ -82,41 +77,6 @@ dhcp::ntpservers: &ntpservers
 chrony::servers: *ntpservers
 resolv_conf::nameservers: *nameservers
 resolv_conf::searchpath: *dnsdomains
-
-sudo::config_file_replace: false
-sudo::purge: false
-sudo::configs:
-  wheel_b:  # backup wheel group in case of LDAP failure.
-    content: "%wheel_b ALL=(ALL) NOPASSWD: ALL"
-
-accounts::group_list:
-  wheel_b: {}
-accounts::user_defaults:
-  groups:
-    - "wheel_b"
-  managehome: true
-  system: false
-  managevim: false
-accounts::user_list:
-  root:
-    password: "%{root_pw}"
-    sshkeys: []
-      # foreman remote execution public key
-      # TODO add the current key
-  jhoblitt_b:  # backup access in case LDAP fails
-    sshkeys:
-      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDZFV9AL2qPh6CV+DeY32oyg0jCkxkbCHVSPHOoikDkwzwMW/7QQdRI8TJ0h8vpFi15pNyu+n7s7MJSWdg5yUvTCataVpOndDElDz10DaEcGIHNq8/qjEPiHulj/KUoDkEU+yMoWY8jRs3ARyL+6p6LDUBsWpzIY8jMOaEVUJjlVt+0ih2a/D3re0daws6w3mBbmLjitHLS5f2YJKlStIHWCWjMXvP5tqUsvhHvIQH/csBQGXnUiRxR8YSJK9u3CMvTzx6PnC7p98yRCOOrMRQ7yT7vuXyXsk7qoUpArUe/T5nEcwRA/21QVurJ1s3in/mpFI0Ogg5kD7NpFqoTq6itBxbPz7DwaOyjEltJBjQAEvuvfHDJYsBTM3fpfEt5jR8ieuDta1214tr5qVOmR17JonssV7/ksizATm1KkMA7+Q8CWCgrFdZmEMaFjav2U72EWyLRe5utxQV+dWPnxd13NxVu6sgM3CBEC4HzOBMf+upt8tMvjLBjci1sbhCAvvU= github2"
-  athebo_b:  # backup access in case LDAP fails
-    sshkeys:
-      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8XVjITG6l2q37rDrL037aB2vDr0HsdXAl1ffmhj9TK adrien@faraday"
-  lssttech:
-    ensure: "absent"
-    managehome: true
-    purge_user_home: true
-  sysadmin:
-    ensure: "absent"
-    managehome: true
-    purge_user_home: true
 
 # Use NFSv4 on NFS enabled hosts.
 nfs::nfs_v4: true

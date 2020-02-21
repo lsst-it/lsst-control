@@ -103,3 +103,23 @@ selinux::mode: "disabled"
 firewall::ensure: "stopped"
 puppet_agent::package_version: "6.7.0"
 puppet_agent::collection: "puppet6"
+
+# Rsyslog configuration is based on the default rsyslog.conf shipping with CentOS 7.7
+rsyslog::config::global_config:
+  workDirectory:
+    value: "/var/lib/rsyslog"
+  maxMessageSize:
+    value: "64k"
+  preserveFQDN:
+    value: "on"
+rsyslog::config::modules:
+  imuxsock: {}
+  imjournal:
+    config:
+      StateFile: "imjournal.state"
+      IgnorePreviousMessages: "off"
+      Ratelimit.Interval: 600
+      Ratelimit.Burst: 20000
+  imklog: {}
+  immark: {}
+  imfile: {}

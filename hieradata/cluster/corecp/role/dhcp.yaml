@@ -1,8 +1,8 @@
 ---
 dhcp::interfaces:
   - "ens192"
-dhcp::default_lease_time: 3600
-dhcp::max_lease_time: 3600
+dhcp::default_lease_time: 43200
+dhcp::max_lease_time: 86400
 dhcp::authoritative: false
 dhcp::ddns_update_style: "none"
 dhcp::logfacility: "daemon"

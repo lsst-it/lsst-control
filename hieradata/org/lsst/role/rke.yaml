@@ -9,6 +9,17 @@ classes:
   - "yum"
 packages:
   - "kubectl"
+  # debugging utils
+  - "tcpdump"
+  - "net-tools"
+  - "dhcping"
+  - "iperf"
+  - "iperf3"
+  - "nmap-ncat"
+  - "nmap"
+  - "iftop"
+  - "powertop"
+  - "traceroute"
 # disabling the kernel version check is needed on el7
 docker::overlay2_override_kernel_check: true
 docker::storage_driver: "overlay2"

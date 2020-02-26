@@ -1,6 +1,7 @@
 ---
 classes:
   - "profile::core::common"
+  - "profile::core::kernel"
   - "profile::app::helm"
   - "profile::app::rke"
   - "profile::app::macvlan"
@@ -51,3 +52,4 @@ yum::repos:
     target: "/etc/yum.repos.d/kubernetes.repo"
 profile::app::helm::version: "3.0.3"
 profile::app::rke::version: "1.0.4"
+profile::core::kernel::version: "3.10.0-1062.4.3.el7.x86_64"

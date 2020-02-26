@@ -11,6 +11,8 @@ classes:
   - "yum"
 packages:
   - "kubectl"
+  # convenience utils
+  - "ack"
   # debugging utils
   - "tcpdump"
   - "net-tools"

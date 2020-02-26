@@ -2,6 +2,7 @@
 classes:
   - "profile::core::common"
   - "profile::core::kernel"
+  - "profile::core::kernel::pquota"
   - "profile::app::helm"
   - "profile::app::rke"
   - "profile::app::macvlan"

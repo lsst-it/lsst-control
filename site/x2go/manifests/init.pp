@@ -1,10 +1,13 @@
 # x2go
 #
 #
+
 class x2go {
   notify { "x2go-header":
     message => "This is the x2go module"
   }
+
+  include mate
 
   # install the x2go package
   package {"x2goserver":

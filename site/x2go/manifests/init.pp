@@ -12,11 +12,18 @@ class x2go {
 
 
   }
+  # install the x2go package
+  package {"x2goserver-xsession":
+    ensure => present,
 
+
+  }
   # configure x2go config file
   # file { "/etc/x2go/not-a-real-file":
   #   ensure  => present,
   #   content => "hello!"
   # }
   # start the x2go service
+
+  # manage the x2goserver sudo rule
 }

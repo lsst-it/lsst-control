@@ -8,6 +8,15 @@ classes:
   - "network"
 
 network::interfaces_hash:
+  em1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
   p2p1:
     bootproto: "none"
     master: "bond0"
@@ -24,10 +33,20 @@ network::interfaces_hash:
     bonding_opts: "mode=4 miimon=100"
     bonding_master: "yes"
     nm_controlled: "no"
+  bond0.1301:  # 139.229.167.0/24
+    bootproto: "dhcp"
+    defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
   bond0.1300:
     ensure: "absent"
+network::mroutes_hash:
   bond0.1301:
-    vlan: "yes"
-    bootproto: "none"
-    nm_controlled: "no"
-    userctl: "no"
+    routes:
+      "139.229.170.0/24": "139.229.167.254"
+      "139.229.178.0/24": "139.229.167.254"
+  bond0.1300:
+    ensure: "absent"
+    routes: {}

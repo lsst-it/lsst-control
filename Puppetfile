@@ -39,6 +39,12 @@ mod 'puppetlabs/reboot', '2.2.0'
 mod 'puppet/python', '3.0.1'
 mod 'derdanne/nfs', '2.1.2'
 
+# for mate
+mod 'simp/dconf',        '0.0.3'
+mod 'simp/mate',         '1.0.2'
+mod 'simp/polkit',       '6.1.2'
+mod 'simp/simplib',      '3.15.3'
+
 # 2019-12-18 athebo: added for DIMM Ubuntu VM, we can remove this when the node is rebuilt
 mod 'attachmentgenie/ufw',
   git: 'https://github.com/attachmentgenie/attachmentgenie-ufw',

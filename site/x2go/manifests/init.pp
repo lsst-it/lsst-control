@@ -8,7 +8,7 @@ class x2go {
 #  }
 
 #  include mate
-  include xfce
+
   # install the x2go package
   package {"x2goserver":
     ensure => present,

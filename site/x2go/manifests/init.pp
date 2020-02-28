@@ -8,10 +8,13 @@ class x2go {
 #  }
 
   include mate
-  include 'yum'
+  class { "yum": 
+    managed_repos => 'base',
+  }
 
-  yum::managed_repos:
-    - 'base'
+  #yum::managed_repos:
+  #  - 'base'
+
 
   # install the x2go package
   package {"x2goserver":

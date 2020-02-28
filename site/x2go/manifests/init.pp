@@ -8,7 +8,8 @@ class x2go {
 #  }
 
   include mate
-  
+  include perl
+           
   # install the x2go package
   package {"x2goserver":
     ensure => present,
@@ -16,8 +17,6 @@ class x2go {
   # install the x2go package
   package {"x2goserver-xsession":
     ensure => present,
-
-
   }
   # configure x2go config file
   # file { "/etc/x2go/not-a-real-file":

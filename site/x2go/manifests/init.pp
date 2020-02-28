@@ -7,11 +7,6 @@ class x2go {
 #    message => "This is the x2go module"
 #  }
 
-  include mate
-  class  { "yum":  
-    managed_repos => ['base'],
-  }
-
   # install the x2go package
   package {"x2goserver":
     ensure => present,

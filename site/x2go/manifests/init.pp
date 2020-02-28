@@ -3,9 +3,9 @@
 #
 
 class x2go {
-  notify { "x2go-header":
-    message => "This is the x2go module"
-  }
+#  notify { "x2go-header":
+#    message => "This is the x2go module"
+#  }
 
   include mate
 

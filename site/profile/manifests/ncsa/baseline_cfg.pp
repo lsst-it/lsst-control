@@ -2,7 +2,7 @@
 #
 # @example
 #   include profile::baseline_cfg
-class profile::baseline_cfg {
+class profile::ncsa::baseline_cfg {
     include ::augeasproviders::instances
     include ::baseline_cfg
     include ::chrony

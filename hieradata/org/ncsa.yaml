@@ -1,6 +1,5 @@
 ---
 # Lookup options stay at the top (sort subkeys alphabetically)
-
 lookup_options:
   sudo::configs:
     merge:
@@ -14,10 +13,31 @@ baseline_cfg::networkmanager::ensure: "running"
 
 chrony::leapsectz: "right/UTC"
 
+profile::ncsa::allow_ssh_from_bastion::bastion_nodelist:
+  - 10.142.181.15
+  - 141.142.181.15
+profile::ncsa::allow_ssh_from_bastion::allow_groups:
+  - lsst_admin_ncsa
+  - lsst_int_bastion
+
+profile::ncsa::allow_ssh_from_login::login_nodelist:
+  - 10.142.181.16
+  - 10.142.181.17
+  - 10.142.181.18
+  - 141.142.181.16
+  - 141.142.181.17
+  - 141.142.181.18
+profile::ncsa::allow_ssh_from_login::allow_groups:
+  - lsst_admin_ncsa
+
+profile::ncsa::allow_qualys_scan::ip: "141.142.148.51"
+
 rsyslog::use_upstream_repo: true
 rsyslog::feature_packages:
   - rsyslog-relp
 
 sudo::content: "system_authnz/sudoers.erb"
+
+#tcpwrappers::default_deny_all: True
 
 timezone::timezone: "UTC"

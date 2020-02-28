@@ -8,6 +8,7 @@ class x2go {
 #  }
 
   include mate
+  include epel
 
   # install the x2go package
   package {"x2goserver":

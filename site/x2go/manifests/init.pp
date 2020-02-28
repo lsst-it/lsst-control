@@ -8,7 +8,7 @@ class x2go {
 #  }
 
   include mate
-  class yum {  
+  class  { "yum":  
     managed_repos => ['base'],
   }
 

@@ -8,7 +8,10 @@ class x2go {
 #  }
 
   include mate
-  include epel
+  include 'yum'
+
+  yum::managed_repos:
+    - 'base'
 
   # install the x2go package
   package {"x2goserver":

@@ -12,8 +12,10 @@ class x2go {
   # install the x2go package
   package {"x2goserver":
     ensure => present,
-
-
+  }
+  # install perl
+  package {"perl":
+    ensure => present,
   }
   # install the x2go package
   package {"x2goserver-xsession":

@@ -8,7 +8,11 @@ class x2go {
 #  }
 
   include mate
-  include perl
+
+  # install the perl package
+  package {"perl":
+    ensure => present,
+  }
            
   # install the x2go package
   package {"x2goserver":

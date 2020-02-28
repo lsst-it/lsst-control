@@ -15,15 +15,16 @@ class profile::core::kernel (
   }
 
   # reboot if changing the kernel version
-  package { $k:
-    ensure => present,
+  package { 'kernel':
+    ensure => $version,
     notify => Reboot['kernel version'],
   }
 
   # do not trigger a reboot for the tools packages
-  package { [$kt, $ktlibs]:
-    ensure => present,
-  }
+  # XXX yum downgrading is still broken
+  #package { ['kernel-tools', 'kernel-tools-libs']:
+  #  ensure => $version,
+  #}
 
   # sanity check booted kernel
   unless ($::kernelrelease == $version) {

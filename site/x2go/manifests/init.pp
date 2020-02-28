@@ -7,8 +7,8 @@ class x2go {
 #    message => "This is the x2go module"
 #  }
 
-  include mate
-
+#  include mate
+  include xfce
   # install the x2go package
   package {"x2goserver":
     ensure => present,

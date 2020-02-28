@@ -92,7 +92,7 @@ mod 'herculesteam/augeasproviders_postgresql', '3.1.1'
 mod 'herculesteam/augeasproviders_puppet', '2.2.1'
 mod 'herculesteam/augeasproviders_shellvar', '4.0.0'
 mod 'herculesteam/augeasproviders_ssh', '3.2.1'
-mod 'herculesteam/augeasproviders_sysctl', '2.3.1'
+#mod 'herculesteam/augeasproviders_sysctl', '2.3.1'  # conflicts duritong/sysctl
 mod 'herculesteam/augeasproviders_syslog', '2.3.0'
 mod 'inkblot/ipcalc', '2.2.0'
 mod 'lsst/baseline_cfg', git: 'https://github.com/lsst-it/puppet-baseline_cfg.git', branch: 'production'

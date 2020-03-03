@@ -3,10 +3,16 @@ lookup_options:
   network::interfaces_hash:
     merge:
       strategy: "deep"
-
+  yum::managed_repos:
+    merge:
+      strategy: "unique"
+  yum::repos:
+    merge:
+      strategy: "deep"
 classes:
   - "network"
-
+packages:
+  - "perccli"  # from dell repo
 network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"
@@ -50,3 +56,13 @@ network::mroutes_hash:
   bond0.1300:
     ensure: "absent"
     routes: {}
+yum::managed_repos:
+  - "dell"
+yum::repos:
+  "dell":
+    ensure: "present"
+    descr: "Dell"
+    enabled: true
+    baseurl: "https://repo-nexus.lsst.org/nexus/repository/dell/"
+    gpgcheck: false
+    target: "/etc/yum.repos.d/dell.repo"

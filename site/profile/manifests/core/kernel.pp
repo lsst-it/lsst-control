@@ -26,6 +26,17 @@ class profile::core::kernel (
   #  ensure => $version,
   #}
 
+  if $::augeasprovider_grub_version != 2 {
+    # the augeas grub2 provider does not work on EFI systems!
+    # https://github.com/hercules-team/augeasproviders_grub/blob/3.1.0/lib/puppet/provider/grub_config/grub2.rb#L76
+    grub_config { 'GRUB_DEFAULT':
+      ensure   => present,
+      value    => "vmlinuz-${version}",
+      notify   => Reboot['kernel version'],
+      provider => 'grub2',
+    }
+  }
+
   # sanity check booted kernel
   unless ($::kernelrelease == $version) {
     notify { "system is running ${::kernelrelease}, desrired version is ${version}":

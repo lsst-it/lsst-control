@@ -94,3 +94,4 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "yes"
     type: "bridge"
+    

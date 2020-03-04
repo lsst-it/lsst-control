@@ -1,0 +1,96 @@
+---
+lookup_options:
+  accounts::user_list:
+    merge:
+      strategy: "deep"
+accounts::user_list:
+  # foreman role user to access libvirt over ssh
+  foreman:
+    groups:
+      - "libvirt"
+    managehome: true
+    system: true
+    sshkeys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGCCYvVfrd3RvPlGtXh+e3NWWw7OVzvIyX9jj1jT2omYt07gPv2nx9xgHqtkr1n39aezN4T2/9PuuCinN/dCOAmDd1J3lV+4rbWVUQD1o356ElxnVgdDm7RLwFfGjNW+WnVVOSXudZaO8wN6JqzG0SM21bmaIrT5b8pmXI9aafIEtnVhUKpVrqXOMQR8RNF9nvnzQulRkX7y/Kcy//a1v6/1lt4D+0Y5QaQujt04i8+QkcUBNe9sukjYWfzcPW9FpdJAiiydxwJl27f8OvJ4OMp1LJkB8lI5BLvJQpJ6u0DlfjkrSusDx60MSU3LQKP9TsaOW16b+/FqcHpkSpLGy/ foreman@foreman.tuc.lsst.cloud"
+network::interfaces_hash:
+  em2:
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em2.32:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br32"
+    type: "none"
+    nozeroconf: "yes"
+  em2.700:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br700"
+    type: "none"
+    nozeroconf: "yes"
+  em2.701:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br701"
+    type: "none"
+    nozeroconf: "yes"
+  em2.702:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br702"
+    type: "none"
+    nozeroconf: "yes"
+  em2.703:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br703"
+    type: "none"
+    nozeroconf: "yes"
+  em2.800:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br800"
+    type: "none"
+    nozeroconf: "yes"
+  em2.801:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br801"
+    type: "none"
+    nozeroconf: "yes"
+  br32:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"
+  br700:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"
+  br701:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"
+  br702:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"
+  br703:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"
+  br800:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"
+  br801:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"

@@ -26,7 +26,7 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "yes"
     vlan: "yes"
-    bridge: "br1621"
+    bridge: "br1800"
     type: "none"
     nozeroconf: "yes"
   br1800:

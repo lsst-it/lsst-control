@@ -26,10 +26,10 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "yes"
     vlan: "yes"
-    bridge: "1621"
+    bridge: "br1621"
     type: "none"
     nozeroconf: "yes"
-  1621:
+  br1621:
     bootproto: "none"
     onboot: "yes"
     type: "bridge"

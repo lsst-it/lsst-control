@@ -13,6 +13,7 @@ classes:
 packages:
   - "kubectl"
   - "ipmitool"
+  - "git"
   # convenience utils
   - "ack"
   - "bash-completion"

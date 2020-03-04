@@ -12,6 +12,7 @@ classes:
   - "yum"
 packages:
   - "kubectl"
+  - "ipmitool"
   # convenience utils
   - "ack"
   - "bash-completion"

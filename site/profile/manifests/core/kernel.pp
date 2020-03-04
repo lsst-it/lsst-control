@@ -16,7 +16,8 @@ class profile::core::kernel (
 
   # reboot if changing the kernel version
   package { 'kernel':
-    ensure => $version,
+    ensure => present,
+    name   => $k,
     notify => Reboot['kernel version'],
   }
 

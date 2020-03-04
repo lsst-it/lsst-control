@@ -533,3 +533,8 @@ unbound::reverse_overrides:
   - [29.172.in-addr.arpa., 141.142.2.2, 141.142.230.144]
   - [30.172.in-addr.arpa., 141.142.2.2, 141.142.230.144]
   - [31.172.in-addr.arpa., 141.142.2.2, 141.142.230.144]
+
+xcat::network_mgmt: "172.30.18.0/23"
+xcat::network_ipmi: "192.168.28.0/23"
+
+xcat::client::ssh::master_node_ip: "172.30.18.6"

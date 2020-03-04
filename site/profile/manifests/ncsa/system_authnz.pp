@@ -2,7 +2,7 @@
 #
 # @example
 #   include profile::system_authnz
-class profile::system_authnz {
+class profile::ncsa::system_authnz {
 
     include ::system_authnz
     include ::sshd

@@ -1,4 +1,7 @@
 ---
 classes:
-  - profile::baseline_cfg
-  - profile::system_authnz
+  - profile::ncsa::allow_qualys_scan
+  - profile::ncsa::allow_ssh_from_login
+  - profile::ncsa::baseline_cfg
+  - profile::ncsa::system_authnz
+  - profile::ncsa::xcat_client

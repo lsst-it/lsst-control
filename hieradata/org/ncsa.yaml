@@ -13,6 +13,13 @@ baseline_cfg::networkmanager::ensure: "running"
 
 chrony::leapsectz: "right/UTC"
 
+docker::overlay2_override_kernel_check: true
+docker::storage_driver: "overlay2"
+docker::version: "19.03.4"
+
+#epel::epel_baseurl: "http://lsst-repos01.ncsa.illinois.edu/centos/$releasever/$basearch/epel/2020-02-19-1582151101/"
+#epel::epel_exclude: "singularity*"
+
 profile::ncsa::allow_ssh_from_bastion::bastion_nodelist:
   - 10.142.181.15
   - 141.142.181.15
@@ -31,6 +38,16 @@ profile::ncsa::allow_ssh_from_login::allow_groups:
   - lsst_admin_ncsa
 
 profile::ncsa::allow_qualys_scan::ip: "141.142.148.51"
+
+python::dev: "present"
+python::pip: "present"
+python::python_pips:
+  "docker-compose":
+    virtualenv: "system"
+    ensure: "1.25.0"
+python::use_epel: false
+python::version: "python36"
+python::virtualenv: "present"
 
 rsyslog::use_upstream_repo: true
 rsyslog::feature_packages:

@@ -1,5 +1,5 @@
 ---
-pakrat_client::default_snapshot: "2019-09-16-1568669101"
+pakrat_client::default_snapshot: "2020-02-19-1582151101"
 pakrat_client::default_yumserver_url: "http://lsst-repos01.ncsa.illinois.edu"
 pakrat_client::repos:
   base:

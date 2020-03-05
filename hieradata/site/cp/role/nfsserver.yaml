@@ -6,19 +6,28 @@ classes:
 
 # Server configuration
 nfs::server_enabled: true
-nfs::nfs_v4_export_root_clients: "139.229.170.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)"
+nfs::nfs_v4_export_root_clients: >-
+  139.229.162.0/25(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.170.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
 nfs::nfs_exports_global:
   /data/home:
-    clients: "139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)"
+    clients: >-
+      139.229.162.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/lsstdata:
     clients: >-
+      139.229.162.0/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.170.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
       atarchiver.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.170.21(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/project:
-    clients: "139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)"
+    clients: >-
+      139.229.162.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/scratch:
-    clients: "139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)"
+    clients: >-
+      139.229.162.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
 
 nfs::client_enabled: true
 nfs::client_mounts:

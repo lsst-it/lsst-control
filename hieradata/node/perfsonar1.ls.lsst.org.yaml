@@ -1,0 +1,71 @@
+---
+network::interfaces_hash:
+  ## Fiber Interfaces
+  p2p1:
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+    mtu: "9000"
+  p2p2:
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+    mtu: "9000"
+  # VLAN tags interface p2p1
+  p2p1.726:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    type: "vlan"
+    ipaddress: "10.7.26.2"
+    netmask: "255.255.255.0"
+    nozeroconf: "yes"
+    mtu: "9000"
+  # VLAN tags Summit p2p1  
+  p2p1.728:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    type: "vlan"
+    ipaddress: "10.7.28.1"
+    netmask: "255.255.255.0"
+    nozeroconf: "yes"
+    mtu: "9000"
+  ## VLAN tags interface p2p2
+  p2p2.727:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    type: "vlan"
+    ipaddress: "10.7.27.2"
+    netmask: "255.255.255.0"
+    nozeroconf: "yes"
+    mtu: "9000"
+  # VLAN tags Summit p2p2  
+  p2p2.729:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    type: "vlan"
+    ipaddress: "10.7.29.1"
+    netmask: "255.255.255.0"
+    nozeroconf: "yes"
+    mtu: "9000"  
+  ##Clean Slate
+  # p2p1.726: 
+  #   ensure: absent
+  # p2p1.727: 
+  #   ensure: absent
+  # p2p1.728: 
+  #   ensure: absent
+  # p2p1.729: 
+  #   ensure: absent
+  # p2p2.726: 
+  #   ensure: absent
+  # p2p2.727: 
+  #   ensure: absent
+  # p2p2.728: 
+  #   ensure: absent
+  # p2p2.729: 
+  #   ensure: absent
+  

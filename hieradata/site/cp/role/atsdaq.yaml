@@ -8,6 +8,7 @@ nfs::server_enabled: true
 nfs::nfs_v4_export_root_clients: >-
   192.168.100.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.162.0/25(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.167.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.170.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.175.0/25(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
 nfs::nfs_exports_global:
@@ -20,5 +21,6 @@ nfs::nfs_exports_global:
   /data:
     clients: >-
       139.229.162.0/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.167.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)

@@ -39,6 +39,6 @@ nfs::client_mounts:
     server: "atarchiver.cp.lsst.org"
     atboot: true
   /mnt/data:
-    share: "/data"
+    share: "data"
     server: "atsdaq1.cp.lsst.org"
     atboot: true

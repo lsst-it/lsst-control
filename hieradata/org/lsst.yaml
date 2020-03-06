@@ -123,3 +123,7 @@ rsyslog::config::modules:
   imklog: {}
   immark: {}
   imfile: {}
+
+yum::plugin::versionlock:
+  # trigger `yum clean all`
+  clean: true

@@ -16,6 +16,12 @@ nfs::nfs_exports_global:
       139.229.162.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.167.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+  /data/jhome:
+    # nublado needs to be able to create user home dirs as root
+    clients: >-
+      139.229.162.0/25(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
+      139.229.167.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
+      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
   /data/lsstdata:
     clients: >-
       139.229.162.0/25(ro,nohide,insecure,no_subtree_check,async,root_squash)

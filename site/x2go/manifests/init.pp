@@ -8,3 +8,4 @@ class x2go {
     ensure => present,
   }
 }
+

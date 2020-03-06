@@ -1,0 +1,12 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::nfsclient"
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /data:
+    share: "data"
+    server: "atsdaq1.cp.lsst.org"
+    atboot: true
+    options_nfsv4: "rw,sync,hard,intr"

@@ -51,11 +51,11 @@ nfs::client_mounts:
     server: "nfs1.cp.lsst.org"
     atboot: true
   /mnt/dmcs/data:
-    share: "/data/staging/dbb"
+    share: "dbb"
     server: "atarchiver.cp.lsst.org"
     atboot: true
   /mnt/dmcs/oods_butler_repo:
-    share: "/data/butler"
+    share: "butler/repo"
     server: "atarchiver.cp.lsst.org"
     atboot: true
   /mnt/data:

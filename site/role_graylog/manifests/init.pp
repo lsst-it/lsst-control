@@ -10,6 +10,9 @@ class role_graylog {
   class { 'elasticsearch':
     version      => '6.6.0',
     manage_repo  => true,
+    require => Class[
+      '::java',
+    ],
   }->
   elasticsearch::instance { 'graylog':
     config => {

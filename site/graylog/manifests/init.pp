@@ -8,7 +8,6 @@ class graylog {
   }
   class { 'elasticsearch':
     version      => '6.6.0',
-    repo_version => '6.x',
     manage_repo  => true,
   }->
   elasticsearch::instance { 'graylog':

@@ -1,4 +1,4 @@
-class graylog { 
+class role_graylog { 
   class { 'mongodb::globals':
     manage_package_repo => true,
     version => '4.2.3'

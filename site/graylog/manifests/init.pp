@@ -22,9 +22,5 @@ class { 'graylog':
   }->
   class { 'graylog::server':
     package_version => '3.0.0-12',
-    config          => {
-      'password_secret' => '...',    # Fill in your password secret
-      'root_password_sha2' => '...', # Fill in your root password hash
-    }
   }
 }

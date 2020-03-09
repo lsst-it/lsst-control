@@ -34,3 +34,5 @@ r10k::webhook::config::protected: false
 r10k::webhook::use_mcollective: false
 r10k::webhook::user: "root"
 r10k::webhook::group: "root"
+r10k::deploy_settings:
+  generate_types: true

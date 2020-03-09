@@ -60,7 +60,7 @@ mod 'puppetlabs/inifile', '3.0.0'
 mod 'puppetlabs/java', '4.1.0'
 mod 'puppetlabs/stdlib', '6.0.0'
 mod 'puppetlabs/vcsrepo', '3.0.0'
-mod 'puppet/mongodb', '3.0.0'
+mod 'puppet/mongodb', '3.1.0'
 mod 'puppet/rsyslog', '4.0.0'
 mod 'puppet/ssh_keygen', '4.0.0'
 # This requires toml/rb which has to be manually installed - should only happen

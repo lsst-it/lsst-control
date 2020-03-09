@@ -1,11 +1,10 @@
-class { 'graylog':
+class graylog { 
   class { 'mongodb::globals':
     manage_package_repo => true,
   }->
   class { 'mongodb::server':
     bind_ip => ['127.0.0.1'],
   }
-
   class { 'elasticsearch':
     version      => '6.6.0',
     repo_version => '6.x',

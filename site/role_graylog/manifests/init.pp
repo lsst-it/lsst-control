@@ -1,4 +1,5 @@
 class role_graylog { 
+  include java
   class { 'mongodb::globals':
     manage_package_repo => true,
     version => '4.2.3'
@@ -21,8 +22,9 @@ class role_graylog {
   }->
   class { 'graylog::server':
     package_version => '3.0.0-12',
+    require => Class[
+      '::java',
+    ],
   }
-  require => Class[
-    '::java',
-  ],
 }
+

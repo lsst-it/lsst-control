@@ -1,6 +1,7 @@
 class graylog { 
   class { 'mongodb::globals':
     manage_package_repo => true,
+    version => '4.2.3'
   }->
   class { 'mongodb::server':
     bind_ip => ['127.0.0.1'],

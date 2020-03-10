@@ -1,0 +1,57 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::nfsserver"
+  - "profile::core::nfsclient"
+
+# Server configuration
+nfs::server_enabled: true
+nfs::nfs_v4_export_root_clients: >-
+  139.229.162.0/25(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.167.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.170.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+nfs::nfs_exports_global:
+  /data/export:
+    clients: >-
+      139.229.162.0/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.167.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+  /data/butler:
+    clients: >-
+      139.229.162.0/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.167.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+  /data/staging/atforwarder:
+    clients: >-
+      139.229.162.0/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.167.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+  /data/staging/dbb:
+    clients: >-
+      139.229.162.0/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.167.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+  /data/staging/oods:
+    clients: >-
+      139.229.162.0/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.167.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /net/project:
+    share: "project"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/scratch:
+    share: "scratch"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/lsstdata:
+    share: "lsstdata"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/home:
+    share: "home"
+    server: "nfs1.cp.lsst.org"
+    atboot: true

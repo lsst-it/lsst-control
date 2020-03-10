@@ -30,3 +30,15 @@ nfs::client_mounts:
     share: "lsstdata"
     server: "nfs1.cp.lsst.org"
     atboot: true
+  /mnt/dmcs/data:
+    share: "dbb"
+    server: "atarchiver.cp.lsst.org"
+    atboot: true
+  /mnt/dmcs/oods_butler_repo:
+    share: "butler/repo"
+    server: "atarchiver.cp.lsst.org"
+    atboot: true
+  /mnt/data:
+    share: "data"
+    server: "atsdaq1.cp.lsst.org"
+    atboot: true

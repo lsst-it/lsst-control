@@ -6,7 +6,7 @@ rsyslog::config::actions:
     type: "omfwd"
     facility: "*.*;auth,authpriv.none"
     config:
-      Target: "gs-graylog-node-01.cp.lsst.org"
+      Target: "graylog.ls.lsst.org"
       Port: 5514
       Protocol: "udp"
   # Log anything (except mail) of level info or higher.

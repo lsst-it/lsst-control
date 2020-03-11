@@ -1,10 +1,10 @@
-class role_graylog { 
+class role_graylog {
   include java
   class { 'mongodb::globals':
     manage_package_repo => true,
     version => '4.2.3'
-  }->
-  class { 'mongodb::server':
+  }
+  -> class { 'mongodb::server':
     bind_ip => ['127.0.0.1'],
   }
   class { 'elasticsearch':
@@ -13,8 +13,8 @@ class role_graylog {
     require => Class[
       '::java',
     ],
-  }->
-  elasticsearch::instance { 'graylog':
+  }
+  -> elasticsearch::instance { 'graylog':
     config => {
       'cluster.name' => 'graylog',
       'network.host' => '127.0.0.1',
@@ -22,8 +22,8 @@ class role_graylog {
   }
   class { 'graylog::repository':
     version => '3.0'
-  }->
-  class { 'graylog::server':
+  }
+  -> class { 'graylog::server':
     package_version => '3.0.0-12',
     require => Class[
       '::java',

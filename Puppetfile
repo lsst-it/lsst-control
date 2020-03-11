@@ -63,9 +63,12 @@ mod 'puppetlabs/vcsrepo', '3.0.0'
 mod 'puppet/mongodb', '3.1.0'
 mod 'puppet/rsyslog', '4.0.0'
 mod 'puppet/ssh_keygen', '4.0.0'
-# This requires toml/rb which has to be manually installed - should only happen
-# on the puppet master
-mod 'puppet/telegraf', '2.1.0'
+
+# This requires toml-rb, which should be installed on the puppet master.
+# @see profile::core::puppet_master
+mod 'puppet/telegraf', '3.0.0'
+mod 'puppetlabs-puppetserver_gem', '1.1.1'
+
 mod 'puppet/yum', '4.0.0'
 mod 'richardc/datacat', '0.6.2'
 mod 'stahnma/epel', '1.3.1'

@@ -55,4 +55,12 @@ class profile::core::puppet_master(
     enable    => true,
     subscribe => Exec['install-smee'],
   }
+
+  # The toml-rb gem is required for the telegraf module.
+  #
+  # Note that if the telegraf module is used then Puppet will fail during a catalog
+  # compilation, so we might need to manually install this gem in that scenario.
+  package { 'toml-rb':
+    provider => 'puppetserver_gem',
+  }
 }

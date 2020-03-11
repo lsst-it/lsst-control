@@ -48,6 +48,9 @@ pakrat_client::repos:
     # if we use GPG key checking, it's probably because we have only CentOS-built RPMs in the repo
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"
 
+profile::ncsa::allow_ssh_from_login::allow_groups:
+  - lsst_level1_adm
+
 rsyslog::client::actions:
   ncsa_security_loghost:
     type: "omrelp"

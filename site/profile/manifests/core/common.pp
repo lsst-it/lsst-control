@@ -16,4 +16,5 @@ class profile::core::common {
   include augeas
   include rsyslog
   include rsyslog::config
+  include profile::core::telegraf
 }

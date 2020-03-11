@@ -3,6 +3,7 @@ lookup('classes', Array[String], 'unique').include
 $files = lookup(
   name          => 'files',
   value_type    => Variant[Hash[String, Hash], Undef],
+  merge         => 'deep',
   default_value => undef,
 )
 

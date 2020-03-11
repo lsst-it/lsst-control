@@ -41,6 +41,29 @@ nfs::nfs_exports_global:
       139.229.167.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
 
+files:
+  /data/project/shared:
+    ensure: "directory"
+    mode: "0755"
+  /data/project/shared/auxTel:
+    ensure: "directory"
+    mode: "2775"
+    owner: 0
+    group: 768  # jovyan, in the LSP context
+  /data/project/shared/auxTel/_parent:
+    ensure: "link"
+    target: "/readonly/repo"
+  /data/project/shared/auxTel/rerun:
+    ensure: "directory"
+    mode: "2775"
+    owner: 0
+    group: 768  # jovyan, in the LSP context
+  /data/project/shared/auxTel/CALIB:
+    ensure: "directory"
+    mode: "2775"
+    owner: 0
+    group: 768  # jovyan, in the LSP context
+
 nfs::client_enabled: true
 nfs::client_mounts:
   /net/project:

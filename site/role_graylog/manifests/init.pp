@@ -1,8 +1,7 @@
 class role_graylog {
   include java
   class { 'mongodb::globals':
-    manage_package_repo
-                        => true,
+    manage_package_repo => true,
     version             => '4.2.3',
   }
   -> class { 'mongodb::server':

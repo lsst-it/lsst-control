@@ -6,7 +6,7 @@ class role_graylog {
     version             => '4.2.3',
   }
   -> class { 'mongodb::server':
-    bind_ip=> ['127.0.0.1'],
+    bind_ip => ['127.0.0.1'],
   }
   class { 'elasticsearch':
     version     => '6.6.0',

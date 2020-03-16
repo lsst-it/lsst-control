@@ -14,6 +14,10 @@ packages:
   - "virt-what"
   - "virt-install"
   - "virt-manager"
+  - "vim"
+  - "bash-completion"
+  - "bash-completion-extras"
+
 libvirt::libvirtd_conf:
   # yamllint disable-line rule:quoted-strings
   access_drivers: '[ "polkit" ]'

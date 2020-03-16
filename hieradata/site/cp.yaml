@@ -1,31 +1,21 @@
 ---
-# IT Services Layout
-# Network List at Cerro Pachon:
-#       * 139.229.160.0/24 - General Services Servers
-#       * 139.229.162.0/24 - Users' Network
-#
-# Services List
-# DHCP Master Server            : 139.229.162.120
-# DHCP Slave Server             : 139.229.160.121
-# DNS Master                    : 139.229.160.248 (Not deployed yet)
-# DNS Slave                     : 139.229.160.247 (Not deployed yet)
-# DNS Cache 1                   : 139.229.160.246 (Not deployed yet)
-# DNS Cache 2                   : 139.229.160.245 (Not deployed yet)
-# Graylog Master                : 139.229.162.106
-# Graylog Slave                 : 139.229.160.243 (Not deployed yet)
-# InfluxDB Master               : 139.229.162.104
-# InfluxDB Slave                : 139.229.160.241 (Not deployed yet)
-# Grafana                       : 139.229.162.105
-# Puppet Master                 : 139.229.160.239 (Not deployed yet)
-
 easy_ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
 
 rsyslog::config::actions:
-  graylog:
+#Send copy to logs to Base Graylog instance
+  graylogBase:
     type: "omfwd"
     facility: "*.*;auth,authpriv.none"
     config:
-      Target: "gs-graylog-node-01.cp.lsst.org"
+      Target: "graylog.ls.lsst.org"
+      Port: 5514
+      Protocol: "udp"
+  #Send copy to logs to Summit's Graylog instance
+  graylogSummit:
+    type: "omfwd"
+    facility: "*.*;auth,authpriv.none"
+    config:
+      Target: "graylog.cp.lsst.org"
       Port: 5514
       Protocol: "udp"
   # Log anything (except mail) of level info or higher.

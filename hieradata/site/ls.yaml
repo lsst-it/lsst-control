@@ -1,12 +1,21 @@
 ---
 easy_ipa::ipa_master_fqdn: "ipa1.ls.lsst.org"
-
+#
 rsyslog::config::actions:
-  graylog:
+#Send copy to logs to Base Graylog instance
+  graylogBase:
     type: "omfwd"
     facility: "*.*;auth,authpriv.none"
     config:
-      Target: "gs-graylog-node-01.cp.lsst.org"
+      Target: "graylog.ls.lsst.org"
+      Port: 5514
+      Protocol: "udp"
+  #Send copy to logs to Summit's Graylog instance
+  graylogSummit:
+    type: "omfwd"
+    facility: "*.*;auth,authpriv.none"
+    config:
+      Target: "graylog.cp.lsst.org"
       Port: 5514
       Protocol: "udp"
   # Log anything (except mail) of level info or higher.
@@ -48,7 +57,6 @@ rsyslog::config::actions:
     facility: "local7.*"
     config:
       file: "-/var/log/boot.log"
-
 # The following keys are shared between the `dhcp` and `resolv_conf` classes:
 # - dhcp::dnsdomain
 # - dhcp::nameservers

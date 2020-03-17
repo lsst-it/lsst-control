@@ -1,0 +1,36 @@
+---
+lookup_options:
+  accounts::user_list:
+    merge:
+      strategy: "deep"
+accounts::user_list:
+  # foreman role user to access libvirt over ssh
+  foreman:
+    groups:
+      - "libvirt"
+    managehome: true
+    system: true
+##Needs to be change
+#    sshkeys:
+#      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDC2HnZjyVotvxCC2lIGNsxAyH3lQkl+zThq7zvWB42alReex6Zil5K9Ff87ulwlhhfNM/C39i1gEs2DZNiZEcbA5TgfEOoJ8qaqqnuv1CB2s9kqNRSeH/QQq+43gYSh7JVTWvQdJwwQUGXMzGDm2U7oIZSBW3VL3PPI2LB0DWU0NXI6lzBjRA/6dhrDKwQH2+FlbWqAxkOc2lAfTKl+QvpXcp12Mj71+uOHBn7TGgnncTRfKCJ3WExptltxj1SDzlPJAmAg0wi64y2u+IqZVVQk91qdKjQ7r203XoujJLoJ45YmIeOLnhrkxsqfsqddxtHbvocuupL58PP0OSoIvE5 foreman@foreman.ls.lsst.org"
+network::interfaces_hash:
+  # Note: em1 is not managed since this will apply to multiple hypervisors
+  em2:  # em2 is not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p1:
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+  p2p1.1800:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br1800"
+    type: "none"
+    nozeroconf: "yes"
+  br1800:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"

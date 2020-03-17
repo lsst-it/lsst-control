@@ -1,3 +1,5 @@
+# @summary
+#   Common functionality needed by standard nodes.
 class profile::core::common {
   include timezone
   include tuned

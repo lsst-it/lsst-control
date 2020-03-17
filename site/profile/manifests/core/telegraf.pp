@@ -1,3 +1,20 @@
+# @summary
+#   Monitor system metrics.
+#
+# @param password
+#   The InfluxDB password for the telegraf user
+#
+# @param username
+#   The InfluxDB username for node metrics (as opposed to summit power metrics).
+#
+# @param database
+#   The InfluxDB database for node metrics (as opposed to summit power metrics).
+#
+# @param host
+#   The backing InfluxDB instance. At present the default DNS record is a CNAME.
+#
+# @param port
+#   The backing InfluxDB port.
 class profile::core::telegraf(
   String $password,
   String $username = 'telegraf-nodes',

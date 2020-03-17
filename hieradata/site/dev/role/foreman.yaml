@@ -1,0 +1,25 @@
+---
+classes:
+  - "dhcp"
+
+dhcp::interfaces:
+  - "eth0"
+
+dhcp::default_lease_time: 43200
+dhcp::max_lease_time: 86400
+dhcp::authoritative: true
+dhcp::ddns_update_style: "none"
+dhcp::logfacility: "daemon"
+dhcp::bootp: true
+##Needs to be change
+#dhcp::pxeserver: "139.229.135.5"  # foreman.ls.lsst.org
+# theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
+dhcp::pools:
+  IT-Services:  # https://jira.lsstcorp.org/browse/IT-1676
+    network: "139.229.134.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.134.254"
+    range: "139.229.134.192 139.229.134.253"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+
+profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"

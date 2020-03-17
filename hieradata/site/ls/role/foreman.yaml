@@ -29,8 +29,8 @@ dhcp::pools:
     range: "139.229.135.192 139.229.135.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   commissioning-cluster:  # https://jira.lsstcorp.org/browse/IT-1679
-    network: "139.229.147.0"
-    mask: "255.255.255.0"
+    network: "139.229.146.0"
+    mask: "255.255.254.0"
     gateway: "139.229.147.254"
     range: "139.229.147.192 139.229.147.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"

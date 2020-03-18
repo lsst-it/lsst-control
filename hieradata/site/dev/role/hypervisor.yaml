@@ -11,7 +11,7 @@ accounts::user_list:
     managehome: true
     system: true
     sshkeys:
-      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtvyzidP6afkJS9pNj7Eq8/JONZAkPvRrK1/Z4B3XpxcPSXdkw73IpRzU+G+XeWJ27W/Xr95MNIDbWMgiFkKFWLqqfijFlA194VqBwQYa23LBLOmcGC3zyi/ON+TenCMr3V/XxJ9wNW/549C21WDWuonFlCAw4/jyzUru/kgAiOU6PFFexgnGPJfbfdzmca7SQk7pUJNUd8f8OAgVSyVSwbU6BrwZfvaqZsAP4ynboGzdmDVfIM+N/QG+MyTbfszznXK+mwnvZaJH05JLyCOU1PDeVO7aOpLA2IlwtB5wShJ4NI0rgUV9QL2xAVpQK5UzgsuHMeEO4eSs0yyY69zyr foreman@foreman.dev.lsst.org"
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDC2HnZjyVotvxCC2lIGNsxAyH3lQkl+zThq7zvWB42alReex6Zil5K9Ff87ulwlhhfNM/C39i1gEs2DZNiZEcbA5TgfEOoJ8qaqqnuv1CB2s9kqNRSeH/QQq+43gYSh7JVTWvQdJwwQUGXMzGDm2U7oIZSBW3VL3PPI2LB0DWU0NXI6lzBjRA/6dhrDKwQH2+FlbWqAxkOc2lAfTKl+QvpXcp12Mj71+uOHBn7TGgnncTRfKCJ3WExptltxj1SDzlPJAmAg0wi64y2u+IqZVVQk91qdKjQ7r203XoujJLoJ45YmIeOLnhrkxsqfsqddxtHbvocuupL58PP0OSoIvE5 foreman@foreman.dev.lsst.org"
 network::interfaces_hash:
   # Note: em1 is not managed since this will apply to multiple hypervisors
   em2:  # em2 is not connected

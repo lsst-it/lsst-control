@@ -11,9 +11,8 @@ dns::zones:
   lsst.local:
     zonetype: "forward"
     forward: "only"
-#    forwarders:
-##Needs to be change
-#      - "139.229.136.35"
+    forwarders:
+      - "139.229.136.35"
 dns::additional_directives:
   - "logging {"
   - "    channel queries_syslog {"

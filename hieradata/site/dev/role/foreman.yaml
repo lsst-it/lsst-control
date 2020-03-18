@@ -11,11 +11,10 @@ dhcp::authoritative: true
 dhcp::ddns_update_style: "none"
 dhcp::logfacility: "daemon"
 dhcp::bootp: true
-##Needs to be change
-#dhcp::pxeserver: "139.229.135.5"  # foreman.ls.lsst.org
+dhcp::pxeserver: "139.229.134.5"  # foreman.dev.lsst.org
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:
-  IT-Services:  # https://jira.lsstcorp.org/browse/IT-1676
+  IT-Services: 
     network: "139.229.134.0"
     mask: "255.255.255.0"
     gateway: "139.229.134.254"

@@ -12,26 +12,22 @@
 #
 # @param host
 #   The backing InfluxDB instance. At present the default DNS record is a CNAME.
-#
-# @param port
-#   The backing InfluxDB port.
 class profile::core::telegraf(
   String $password,
   String $username = 'telegraf-nodes',
   String $database = 'nodes',
   String $host     = 'metrics-ingress.ls.lsst.org',
-  String $port     = '8086'
 ) {
   class { '::telegraf':
     hostname    => $::facts['fqdn'],
-    global_tags => {"site" => $::site},
+    global_tags => {'site' => $::site},
   }
 
   $default_inputs = {
     'cpu'        => [{}],
     'chrony'     => [{}],
     'conntrack'  => [{}],
-    'disk'       => [{"ignore_fs" => ["tmpfs", "devtmpfs", "overlay"]}],
+    'disk'       => [{'ignore_fs' => ['tmpfs', 'devtmpfs', 'overlay']}],
     'diskio'     => [{}],
     'interrupts' => [{}],
     'mem'        => [{}],
@@ -49,8 +45,8 @@ class profile::core::telegraf(
     }
   }
 
-  $influxdb_url = "http://${host}:${port}"
-  telegraf::output { 'chile-influxdb':
+  $influxdb_url = "http://${host}:8086"
+  telegraf::output { 'metrics-ingress':
     plugin_type => 'influxdb',
     options     => [
       {

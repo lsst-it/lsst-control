@@ -74,7 +74,7 @@ dhcp::dnsdomain: &dnsdomains
 # @see man 5 resolv.conf
 dhcp::nameservers: &nameservers
   - "139.229.135.53"  # dns1.ls.lsst.org
-  - "139.229.162.54"  # dns2.ls.lsst.org
+  - "139.229.135.54"  # dns2.ls.lsst.org
   - "208.67.222.222"  # resolver1.opendns.com
 dhcp::ntpservers: &ntpservers
   - "ntp.cp.lsst.org"

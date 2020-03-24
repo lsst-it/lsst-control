@@ -89,6 +89,9 @@ accounts::user_list:
   athebo_b:  # backup access in case LDAP fails
     sshkeys:
       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8XVjITG6l2q37rDrL037aB2vDr0HsdXAl1ffmhj9TK adrien@faraday"
+  hreinking_b:  # backup access in case LDAP fails
+    sshkeys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCn8ssc5uxsHRdhvykrrQWiDMLzpjH/GC2011SyQBpBS43grDpxpGXXSL28LTMRxw3TZhAL4F1szLWR0O7kmKwTcK5OyF/7X/qvZ+w8ZtOxIU/FsSWEXbG2wrkX7fT+SvF/1WS97cu/EacjmFdQUQyYwPcF3MvmBMp3Hk1eSgJA97I7dUiUJjPda2iNFCnaTW9yJIUYfBPvXeO2FePzCUp8ImBZSkst/VLMTrTQ9DFB+Aj0E8npet8JFn2pUxG198yS2MH7tr3s9XKCUcpUXqySQNwIbtNsEKXljpxpQ3ftcaxo3fw0tgjdBr5BDjrBXbVsw+eVz3vwT7GvGHCGTeDP hreinking@NBB40230-1-A.local"
   lssttech:
     ensure: "absent"
     managehome: true

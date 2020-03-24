@@ -21,7 +21,7 @@ network::interfaces_hash:
     bootproto: "dhcp"
     onboot: "yes"
     vlan: "yes"
-    bridge: "br1800"
+    bridge: "br2101"
     type: "none"
     nozeroconf: "yes"
   br2101:

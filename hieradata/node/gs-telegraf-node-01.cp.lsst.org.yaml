@@ -2,11 +2,16 @@
 classes:
   - "profile::core::common"
   - "profile::it::monitoring"
+
+# Disable standard host level monitoring on this node, it's using the legacy
+# `profile::it::monitoring` module.
+profile::core::common::collect_metrics: false
+
 telegraf::inputs:
   snmp:
     - agents:
         - "139.229.162.122"  # Auxtel UPS
-        - "139.229.162.126"
+        - "139.229.162.126"  # Computer room router - provides computer room temp monitoring.
       community: "lsst_network"
       version: 1
       field:

@@ -39,6 +39,7 @@ mod 'puppetlabs/reboot', '2.2.0'
 mod 'puppet/python', '3.0.1'
 mod 'derdanne/nfs', '2.1.2'
 mod 'jhoblitt/ipmi', '2.3.0'
+mod 'puppet/lldpd', '2.2.0'
 
 # 2019-12-18 athebo: added for DIMM Ubuntu VM, we can remove this when the node is rebuilt
 mod 'attachmentgenie/ufw',

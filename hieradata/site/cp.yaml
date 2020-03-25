@@ -58,28 +58,6 @@ rsyslog::config::actions:
     config:
       file: "-/var/log/boot.log"
 
-# Telegraf common configuration
-telegraf::global_tags:
-  service: "%{::service}"
-  cluster: "%{::cluster}"
-  device: "%{::device}"
-  service_number: "%{::service_number}"
-  device_number: "%{::device_number}"
-  node_name: "%{::node_name}"
-  datacenter: "%{::datacenter}"
-  type: "%{::virtual}"
-telegraf::interval: "1m"
-telegraf::round_interval: true
-telegraf::metric_batch_size: 1000
-telegraf::metric_buffer_limit: 10000
-telegraf::collection_jitter: "0s"
-telegraf::flush_interval: "1m"
-telegraf::flush_jitter: "0m"
-telegraf::debug: false
-telegraf::quiet: false
-telegraf::hostname: ""
-telegraf::omit_hostname: false
-
 # The following keys are shared between the `dhcp` and `resolv_conf` classes:
 # - dhcp::dnsdomain
 # - dhcp::nameservers

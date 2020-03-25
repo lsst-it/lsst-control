@@ -12,7 +12,6 @@ classes:
   - "yum"
 packages:
   - "kubectl"
-  - "ipmitool"
   - "git"
   - "gdisk"
   # convenience utils

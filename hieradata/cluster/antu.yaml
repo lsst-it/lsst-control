@@ -23,6 +23,13 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
+  em2.2400:  # 139.229.147.0/24
+    bootproto: "dhcp"
+    defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
 yum::managed_repos:
   - "dell"
 yum::repos:

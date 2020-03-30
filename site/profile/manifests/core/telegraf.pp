@@ -21,6 +21,7 @@ class profile::core::telegraf(
   class { '::telegraf':
     hostname    => $::facts['fqdn'],
     global_tags => {'site' => $::site},
+    outputs     => {},  # suppress class defaults, it populates an empty influx instance
   }
 
   $default_inputs = {

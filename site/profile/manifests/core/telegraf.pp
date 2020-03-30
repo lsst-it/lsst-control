@@ -14,8 +14,8 @@
 #   The backing InfluxDB instance. At present the default DNS record is a CNAME.
 class profile::core::telegraf(
   String $password,
-  String $username = 'telegraf-nodes',
-  String $database = 'nodes',
+  String $username = 'telegraf',
+  String $database = 'telegraf',
   String $host     = 'metrics-ingress.ls.lsst.org',
 ) {
   class { '::telegraf':

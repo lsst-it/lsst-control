@@ -8,6 +8,11 @@ lookup_options:
 
 # Everything else should be sorted alphabetically
 
+baseline_cfg::additional_packages::pkg_list:
+  RedHat:
+    tcsh:
+    zsh:
+
 baseline_cfg::networkmanager::enable: true
 baseline_cfg::networkmanager::ensure: "running"
 

@@ -50,10 +50,11 @@ class profile::core::telegraf(
     plugin_type => 'influxdb',
     options     => [
       {
-        'urls'     => [$influxdb_url],
-        'database' => $database,
-        'username' => $username,
-        'password' => $password
+        'urls'                   => [$influxdb_url],
+        'database'               => $database,
+        'username'               => $username,
+        'password'               => $password,
+        'skip_database_creation' => true
       }
     ]
   }

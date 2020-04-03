@@ -47,10 +47,10 @@ dhcp::pools:
     range: "139.229.150.112 139.229.150.125"  # ~ /28
     search_domains: "%{alias('dhcp::dnsdomain')}"
   base-archive:
-    network: "139.229.140.0"
+    network: "139.229.149.0"
     mask: "255.255.255.0"
-    gateway: "139.229.140.254"
-    range: "139.229.140.225 139.229.140.253"  # ~ /27
+    gateway: "139.229.149.254"
+    range: "139.229.149.225 139.229.149.253"  # ~ /27
     search_domains: "%{alias('dhcp::dnsdomain')}"
   BDC-BMC:  # https://jira.lsstcorp.org/browse/IT-1679
     network: "10.50.3.0"

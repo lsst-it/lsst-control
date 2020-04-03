@@ -40,6 +40,12 @@ dhcp::pools:
     gateway: "139.229.147.254"
     range: "139.229.147.225 139.229.147.253"  # ~ /27
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  cds-nas:
+    network: "139.229.148.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.148.254"
+    range: "139.229.148.225 139.229.148.253"  # ~ /27
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   base-archive:
     network: "139.229.149.0"
     mask: "255.255.255.0"

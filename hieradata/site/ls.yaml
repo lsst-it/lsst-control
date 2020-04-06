@@ -2,20 +2,12 @@
 easy_ipa::ipa_master_fqdn: "ipa1.ls.lsst.org"
 #
 rsyslog::config::actions:
-#Send copy to logs to Base Graylog instance
+#Send copy to logs to GKE Graylog instance
   graylogBase:
     type: "omfwd"
     facility: "*.*;auth,authpriv.none"
     config:
-      Target: "graylog.ls.lsst.org"
-      Port: 5514
-      Protocol: "udp"
-  #Send copy to logs to Summit's Graylog instance
-  graylogSummit:
-    type: "omfwd"
-    facility: "*.*;auth,authpriv.none"
-    config:
-      Target: "graylog.cp.lsst.org"
+      Target: "collector.lsst.cloud"
       Port: 5514
       Protocol: "udp"
   # Log anything (except mail) of level info or higher.

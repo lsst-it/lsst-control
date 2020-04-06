@@ -39,7 +39,6 @@ class profile::core::telegraf(
   $default_inputs = {
     'cpu'        => [{}],
     'chrony'     => [{}],
-    'conntrack'  => [{}],
     'disk'       => [{'ignore_fs' => ['tmpfs', 'devtmpfs', 'overlay']}],
     'diskio'     => [{}],
     'interrupts' => [{}],

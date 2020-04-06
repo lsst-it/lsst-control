@@ -20,9 +20,10 @@ class profile::core::telegraf(
 ) {
   $influxdb_url = "http://${host}:8086"
   class { '::telegraf':
-    hostname    => $::facts['fqdn'],
-    global_tags => {'site' => $::site},
-    outputs     => {
+    hostname               => $::facts['fqdn'],
+    global_tags            => {'site' => $::site},
+    purge_config_fragments => true,
+    outputs                => {
       'influxdb' => [
         {
           'urls'                   => [$influxdb_url],

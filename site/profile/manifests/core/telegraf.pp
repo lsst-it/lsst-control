@@ -14,13 +14,25 @@
 #   The backing InfluxDB instance. At present the default DNS record is a CNAME.
 class profile::core::telegraf(
   String $password,
-  String $username = 'telegraf-nodes',
-  String $database = 'nodes',
+  String $username = 'telegraf',
+  String $database = 'telegraf',
   String $host     = 'metrics-ingress.ls.lsst.org',
 ) {
+  $influxdb_url = "http://${host}:8086"
   class { '::telegraf':
     hostname    => $::facts['fqdn'],
     global_tags => {'site' => $::site},
+    outputs     => {
+      'influxdb' => [
+        {
+          'urls'                   => [$influxdb_url],
+          'database'               => $database,
+          'username'               => $username,
+          'password'               => $password,
+          'skip_database_creation' => true
+        }
+      ]
+    }
   }
 
   $default_inputs = {
@@ -43,19 +55,5 @@ class profile::core::telegraf(
       plugin_type => $type,
       options     => $options
     }
-  }
-
-  $influxdb_url = "http://${host}:8086"
-  telegraf::output { 'metrics-ingress':
-    plugin_type => 'influxdb',
-    options     => [
-      {
-        'urls'                   => [$influxdb_url],
-        'database'               => $database,
-        'username'               => $username,
-        'password'               => $password,
-        'skip_database_creation' => true
-      }
-    ]
   }
 }

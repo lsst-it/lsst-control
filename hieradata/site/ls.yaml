@@ -2,20 +2,12 @@
 easy_ipa::ipa_master_fqdn: "ipa1.ls.lsst.org"
 #
 rsyslog::config::actions:
-#Send copy to logs to Base Graylog instance
+#Send copy to logs to GKE Graylog instance
   graylogBase:
     type: "omfwd"
     facility: "*.*;auth,authpriv.none"
     config:
-      Target: "graylog.ls.lsst.org"
-      Port: 5514
-      Protocol: "udp"
-  #Send copy to logs to Summit's Graylog instance
-  graylogSummit:
-    type: "omfwd"
-    facility: "*.*;auth,authpriv.none"
-    config:
-      Target: "graylog.cp.lsst.org"
+      Target: "collector.lsst.cloud"
       Port: 5514
       Protocol: "udp"
   # Log anything (except mail) of level info or higher.
@@ -77,10 +69,10 @@ dhcp::nameservers: &nameservers
   - "139.229.135.54"  # dns2.ls.lsst.org
   - "208.67.222.222"  # resolver1.opendns.com
 dhcp::ntpservers: &ntpservers
-  - "ntp.cp.lsst.org"
   - "ntp.shoa.cl"
   - "1.cl.pool.ntp.org"
   - "1.south-america.pool.ntp.org"
+  - "ntp.cp.lsst.org"
 
 chrony::servers: *ntpservers
 resolv_conf::nameservers: *nameservers

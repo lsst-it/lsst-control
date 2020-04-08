@@ -4,13 +4,14 @@ classes:
   - "profile::comcam::postfix"
   - "network"
 network::interfaces_hash:
-  # fqdn
-  em1:
+  em1:  # fqdn
     bootproto: "dhcp"
+    defroute: "yes"
     onboot: "yes"
     type: "Ethernet"
-  # sal/control
-  em2:
+  em2:  # sal/control
     bootproto: "dhcp"
+    defroute: "no"
+    nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"

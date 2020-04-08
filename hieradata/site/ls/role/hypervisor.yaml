@@ -22,14 +22,14 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "yes"
     type: "Ethernet"
-  p2p1.1800:
+  p2p1.2102:
     bootproto: "none"
     onboot: "yes"
     vlan: "yes"
-    bridge: "br1800"
+    bridge: "br2102"
     type: "none"
     nozeroconf: "yes"
-  br1800:
+  br2102:
     bootproto: "none"
     onboot: "yes"
     type: "bridge"

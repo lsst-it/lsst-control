@@ -1,13 +1,13 @@
 ---
 easy_ipa::ipa_master_fqdn: "ipa1.dev.lsst.org"
-
+#
 rsyslog::config::actions:
-#Send copy to logs to Base Graylog instance
+#Send copy to logs to GKE Graylog instance
   graylogBase:
     type: "omfwd"
     facility: "*.*;auth,authpriv.none"
     config:
-      Target: "collector.lsst.cloud"
+      Target: "collector.lsst.org"
       Port: 5514
       Protocol: "udp"
   # Log anything (except mail) of level info or higher.
@@ -49,51 +49,24 @@ rsyslog::config::actions:
     facility: "local7.*"
     config:
       file: "-/var/log/boot.log"
-
-# Telegraf common configuration
-telegraf::global_tags:
-  service: "%{::service}"
-  cluster: "%{::cluster}"
-  device: "%{::device}"
-  service_number: "%{::service_number}"
-  device_number: "%{::device_number}"
-  node_name: "%{::node_name}"
-  datacenter: "%{::datacenter}"
-  type: "%{::virtual}"
-telegraf::interval: "1m"
-telegraf::round_interval: true
-telegraf::metric_batch_size: 1000
-telegraf::metric_buffer_limit: 10000
-telegraf::collection_jitter: "0s"
-telegraf::flush_interval: "1m"
-telegraf::flush_jitter: "0m"
-telegraf::debug: false
-telegraf::quiet: false
-telegraf::hostname: ""
-telegraf::omit_hostname: false
-
 # The following keys are shared between the `dhcp` and `resolv_conf` classes:
 # - dhcp::dnsdomain
 # - dhcp::nameservers
 # - dhcp::ntpservers
 #
-# @see clusters/corecp/dhcp.yaml
+# @see site/ls/role/foreman.yaml
 
 # resolv.conf allows for a maximum of 6 search domains with a max length of 256
 # characters.
 # @see man 5 resolv.conf
 dhcp::dnsdomain: &dnsdomains
-  - "cp.lsst.org"
-  - "cp.cl.lsst.org"
-  - "cl.lsst.org"
-  - "dev.lsst.org"
+  - "ls.lsst.org"
   - "lsst.org"
-  - "lsst.local"
 # resolv.conf allows for a maximum of 3 nameservers
 # @see man 5 resolv.conf
 dhcp::nameservers: &nameservers
-  - "139.229.134.7"  # dns1.dev.lsst.org
-  - "139.229.136.35"  # pihole.lsst.local
+  - "139.229.134.7"  # dns1.ls.lsst.org
+  - "139.229.135.54"  # dns2.ls.lsst.org
   - "208.67.222.222"  # resolver1.opendns.com
 dhcp::ntpservers: &ntpservers
   - "ntp.shoa.cl"
@@ -103,8 +76,17 @@ dhcp::ntpservers: &ntpservers
 chrony::servers: *ntpservers
 resolv_conf::nameservers: *nameservers
 resolv_conf::searchpath: *dnsdomains
+
 # Use NFSv4 on NFS enabled hosts.
-# @see site/cp/role/nfsserver.yaml
 nfs::nfs_v4: true
 nfs::nfs_v4_client: true
 nfs::nfs_v4_idmap_domain: "%{::domain}"
+
+accounts::user_list:
+  root:
+    sshkeys:
+      # foreman-proxy
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIAmA8aQ9Qf8ok+zPUSwFWfEgNxUW1RptUhZE9/9PFGzhAi7XMnt6qaSFINlLxiECUXKeK3iwHI3rLxMsJpcGRGkkL9GGpUYNgyDVZt82AFN2rt7nvuYqm9M7M4Q6NeLlMEGUf9iSnzE/IpT4459iOiKdaB3SifuXWjJeUSOoNACugJcQCZm4nQGo9ZUVJcbhYael++pcobApctOOFjlaVi6s+iB4qdidMJ9CUEyQ8HBSDomBnj2dZ5QB/bDHUW1OKo/i+LbMdF1HrnEcI9AkSHfkW+OP7L5mkmRJBNsK5R6YzIb41LHCvO1Fvoinb71JkWD5ElzTLY5e7YkjRXkQV foreman-proxy@foreman.dev.lsst.org"
+# Stop iptables by default - the default rules are highly restrictive to the
+# point of harm and we don't have a meaningful permission set to make this useful.
+firewall::ensure: "stopped"

@@ -1,14 +1,4 @@
 ---
-# IT Services Layout
-# Network List at Cerro Pachon:
-#       * 139.229.160.0/24 - General Services Servers
-#       * 139.229.162.0/24 - Users' Network
-#
-# Services List
-# Graylog Master                : 140.252.32.157
-# InfluxDB Master               : 140.252.32.159
-# Grafana                       : 140.252.32.158
-# Puppet Master                 : 140.252.32.139
 lookup_options:
   sudo::configs:
     merge:

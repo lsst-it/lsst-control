@@ -64,5 +64,11 @@ dhcp::pools:
     gateway: "10.50.3.254"
     range: "10.50.3.1 10.50.3.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  TS-Kueyen:  # https://jira.lsstcorp.org/browse/IT-2128
+    network: "139.229.144.0"
+    mask: "255.255.255.128"
+    gateway: "139.229.144.126"
+    range: "139.229.144.100 139.229.144.125"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
 
 profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"

@@ -82,6 +82,13 @@ mod 'lsst/headerservice',
     git: 'https://github.com/lsst-it/puppet-headerservice.git',
     ref: '0.1.0'
 
+mod 'simp/x2go', '0.2.1'
+mod 'simp/mate', '1.0.2'
+mod 'simp/dconf', '0.0.3'
+mod 'simp/gnome', '8.1.1'
+mod 'simp/polkit', '6.2.0'
+mod 'simp/simplib', '3.15.3'
+
 # Needed by NCSA (sort into above later)
 mod 'MiamiOH/pam_access', '1.0.1'
 mod 'bodgit/bodgitlib', '2.0.1'

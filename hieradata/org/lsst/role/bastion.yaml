@@ -1,0 +1,6 @@
+# Bastion hosts provide SSH and/or graphical shells, and provide an entry
+# point to otherwise isolated networks.
+---
+classes:
+  - profile::core::common
+  - profile::core::remote_desktop

@@ -14,7 +14,11 @@ classes:
 packages:
   - "perccli"  # from dell repo
 network::interfaces_hash:
-  em1:  # fqdn
+  em1:  # only for PXE
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p2:  # fqdn
     bootproto: "dhcp"
     defroute: "yes"
     onboot: "yes"

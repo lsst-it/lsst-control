@@ -18,6 +18,7 @@ packages:
   - "ack"
   - "bash-completion"
   - "bash-completion-extras"
+  - "vim"
   # debugging utils
   - "tcpdump"
   - "net-tools"

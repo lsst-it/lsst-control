@@ -5,7 +5,7 @@ rsyslog::config::actions:
 #Send copy to logs to GKE Graylog instance
   graylogBase:
     type: "omfwd"
-    facility: "*.*;auth,authpriv.none"
+    facility: "*.*"
     config:
       Target: "collector.lsst.cloud"
       Port: 5514

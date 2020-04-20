@@ -1,7 +1,7 @@
 ---
 classes:
   - "profile::core::common"
-  - "profile::comcam::postfix"
+  - "profile::ccs::postfix"
   - "network"
 network::interfaces_hash:
   em1:  # fqdn

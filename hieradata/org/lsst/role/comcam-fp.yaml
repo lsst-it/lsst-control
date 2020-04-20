@@ -1,7 +1,7 @@
 ---
 classes:
   - "profile::core::common"
-  - "profile::comcam::postfix"
+  - "profile::ccs::postfix"
 # enable ntp server for DAQ
 chrony::port: 123
 chrony::queryhosts:

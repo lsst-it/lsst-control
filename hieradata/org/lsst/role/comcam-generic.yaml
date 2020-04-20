@@ -1,4 +1,4 @@
 ---
 classes:
   - "profile::core::common"
-  - "profile::comcam::postfix"
+  - "profile::ccs::postfix"

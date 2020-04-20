@@ -1,6 +1,6 @@
 ---
 classes:
-  - "profile::comcam::common"
+  - "profile::core::common"
   - "profile::comcam::postfix"
 # enable ntp server for DAQ
 chrony::port: 123

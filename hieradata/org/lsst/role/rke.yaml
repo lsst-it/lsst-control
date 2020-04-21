@@ -31,6 +31,7 @@ packages:
   - "powertop"
   - "traceroute"
   - "bridge-utils"
+  - "pciutils"
 # disabling the kernel version check is needed on el7
 docker::overlay2_override_kernel_check: true
 docker::storage_driver: "overlay2"

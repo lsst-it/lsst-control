@@ -3,7 +3,7 @@
 # and/or cluster configuration is developed for the comcam/archive hosts.  This
 # role should be removed once more appropriate roles have been developed.
 classes:
-  - "profile::comcam::common"
+  - "profile::core::common"
   - "network"
 network::interfaces_hash:
   em1:  # fqdn

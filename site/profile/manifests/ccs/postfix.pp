@@ -1,4 +1,4 @@
-class profile::comcam::postfix(
+class profile::ccs::postfix(
   String $auth,
 ) {
   include postfix

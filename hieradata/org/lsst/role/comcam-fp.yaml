@@ -1,0 +1,9 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::ccs::postfix"
+# enable ntp server for DAQ
+chrony::port: 123
+chrony::queryhosts:
+  - "192.168.100/24"
+chrony::clientlog: true

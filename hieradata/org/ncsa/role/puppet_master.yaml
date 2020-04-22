@@ -3,6 +3,7 @@ classes:
   - "::profile::docker"
   - "::profile::ncsa::allow_qualys_scan"
   - "::profile::ncsa::allow_ssh_from_login"
+  - "::profile::ncsa::allow_ssh_from_bastion"
   - "::profile::ncsa::baseline_cfg"
   - "::profile::ncsa::puppet_master"
   - "::profile::ncsa::system_authnz"

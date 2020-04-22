@@ -1,0 +1,46 @@
+---
+lookup_options:
+  network::interfaces_hash:
+    merge:
+      strategy: "deep"
+  yum::managed_repos:
+    merge:
+      strategy: "unique"
+  yum::repos:
+    merge:
+      strategy: "deep"
+classes:
+  - "network"
+packages:
+  - "perccli"  # from dell repo
+network::interfaces_hash:
+  em1:  # only for PXE
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p2:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  p2p1:
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p1.2400:  # 139.229.147.0/24
+    bootproto: "dhcp"
+    defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
+yum::managed_repos:
+  - "dell"
+yum::repos:
+  "dell":
+    ensure: "present"
+    descr: "Dell"
+    enabled: true
+    baseurl: "https://repo-nexus.lsst.org/nexus/repository/dell/"
+    gpgcheck: false
+    target: "/etc/yum.repos.d/dell.repo"

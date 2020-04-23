@@ -27,7 +27,7 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-  p2p1.2301:  # 139.229.144.128/25
+  p2p1.2101:  # 139.229.134.0/24
     bootproto: "dhcp"
     defroute: "no"
     nozeroconf: "yes"

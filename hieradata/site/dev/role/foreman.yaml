@@ -18,7 +18,7 @@ dhcp::pools:
     network: "139.229.134.0"
     mask: "255.255.255.0"
     gateway: "139.229.134.254"
-    range: "139.229.134.192 139.229.134.253"
+    range: "139.229.134.120 139.229.134.149"
     search_domains: "%{alias('dhcp::dnsdomain')}"
 
 profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"

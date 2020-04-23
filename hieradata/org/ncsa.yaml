@@ -141,9 +141,6 @@ sssd::domains:
       - ldaps://ldap-lsst-ncsa1.ncsa.illinois.edu
       - ldaps://ldap-lsst-ncsa2.ncsa.illinois.edu
     ldap_user_search_base: "dc=ncsa,dc=illinois,dc=edu?subtree?(&(objectclass=inetOrgPerson)(memberOf=cn=all_lsst,ou=groups,dc=ncsa,dc=illinois,dc=edu))"
-    simple_allow_groups:
-      - lsst_sysadmin
-      - from_nts_yaml
     simple_deny_groups:
       - all_disabled_usr
       - lsst_disabled
@@ -360,13 +357,13 @@ sudo::configs:
   common_lsst_admins:
     priority: 10
     content:
-      - '%lsst_sysadm ALL=(ALL) NOPASSWD: ALL'
+      - '%lsst_admin_ncsa ALL=(ALL) NOPASSWD: ALL'
 
 sudo::content: "system_authnz/sudoers.erb"
 
 system_authnz::access::access_allow:
-  'Allow group lsst_sysadm from ALL':
-    group: "lsst_sysadm"
+  'Allow group lsst_admin_ncsa from ALL':
+    group: "lsst_admin_ncsa"
     origin: "ALL"
 system_authnz::access::access_deny_before:
   'Deny group lsst_disabled from ALL':

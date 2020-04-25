@@ -6,8 +6,8 @@ class profile::core::ifdown (
   $interface,
 )
 {
-  $command = "ifconfig ${interface} down"
-  $runif   = "ifconfig ${interface} | grep ${interface} | grep UP"
+  $command = "ip link set ${interface} down"
+  $runif   = "ip add show dev ${interface} | grep ${interface} | grep UP"
   exec { $command:
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],

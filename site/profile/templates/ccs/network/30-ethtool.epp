@@ -1,0 +1,24 @@
+<%- | String $interface | -%>
+#!/bin/sh
+
+# This file is managed by Puppet; changes may be overwritten
+
+# https://access.redhat.com/solutions/2841131
+
+myname=${0##*/}
+log() { logger -p user.info -t "${myname}" "$*"; }
+IFACE=$1
+ACTION=$2
+
+log "IFACE = $1, ACTION = $2"
+
+DAQ=<%= $interface %>
+
+if [ "$IFACE" == "$DAQ" ] && [ "$ACTION" == "up" ]; then
+    log "ethool set-ring ${IFACE} rx 4096 tx 4096"
+    /sbin/ethtool --set-ring ${IFACE} rx 4096 tx 4096
+    log "ethool pause ${IFACE} autoneg off rx on tx on"
+    /sbin/ethtool --pause ${IFACE} autoneg off rx on tx on
+fi
+
+exit 0

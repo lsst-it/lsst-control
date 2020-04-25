@@ -2,9 +2,25 @@
 classes:
   # XXX this should be included as part of specific ccs roles, once those are known
   - "profile::ccs::sysctl"
+  - "profile::ccs::common"
 packages:
   # required for postfix sasl auth
   - "cyrus-sasl-plain"
+  # ccs stuff
+  - "epel-release"
+  - "git"
+  - "rsync"
+  - "emacs"
+  - "nano"
+  - "screen"
+  - "sysstat"
+  - "attr"
+  - "parallel"
+  - "gcc"
+  ## TODO only on "development" nodes.
+  - "maven"
+  - "devtoolset-8"
+
 postfix::manage_root_alias: false
 postfix::inet_interfaces: "localhost"
 postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"
@@ -24,3 +40,64 @@ postfix::configs:
 sudo::configs:
   comcam_ccs_cmd:
     content: "%comcam-ccs-cmd ALL=(ccs) NOPASSWD: ALL"
+
+profile::ccs::users::groups:
+  "lsstadm":
+    ensure: "present"
+    gid: 24000
+
+profile::ccs::users::users:
+  "ccs":
+    ensure: "present"
+    uid: 23000
+    groups:
+      - "dialout"
+      - "lsstadm"
+    comment: "CCS Operator Account"
+    managehome: true
+  "dh":
+    ensure: "present"
+    uid: 23001
+    groups:
+      - "dialout"
+      - "lsstadm"
+    comment: "LSST Data Handling Account"
+    managehome: true
+
+## present or latest
+profile::ccs::git::ensure: "present"
+
+ccs_software::dirs:
+  "etc":
+    path: "/etc/ccs"
+    owner: "root"
+    group: "ccs"
+    mode: "2775"
+  "opt":
+    path: "/opt/lsst"
+  "ccs":
+    path: "/opt/lsst/ccs"
+    owner: "ccs"
+    group: "ccs"
+    mode: "0755"
+  "ccsadm":
+    path: "/opt/lsst/ccsadm"
+    owner: "ccs"
+    group: "ccs"
+    mode: "0755"
+  "log":
+    path: "/var/log/ccs"
+    owner: "root"
+    group: "ccs"
+    ## FIXME
+    mode: "2777"
+
+## FIXME
+ccs_pkgarchive: "/root"
+
+ccs_database::database: "ccsdbprod"
+
+ccs_monit::mailhost: "mail.lsst.org"
+ccs_monit::alert:
+  ## comcam-alerts
+  - "x7z0x9c0t2k4r1n1@lsstc.slack.com"

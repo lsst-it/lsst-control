@@ -11,6 +11,7 @@ lookup_options:
       strategy: "deep"
 classes:
   - "network"
+  - "profile::core::ifdown"
 packages:
   - "perccli"  # from dell repo
 network::interfaces_hash:

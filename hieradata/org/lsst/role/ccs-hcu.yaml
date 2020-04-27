@@ -1,5 +1,7 @@
 ---
 classes:
+  - "profile::core::common"
+  - "profile::ccs::common"
   - "ccs_hcu"
   ## Ultimately, next item should not be present, but people
   ## are currently using HCUs in graphical mode.

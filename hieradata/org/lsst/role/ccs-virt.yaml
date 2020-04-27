@@ -1,3 +1,6 @@
 ---
+classes:
+  - "profile::core::common"
+  - "profile::ccs::common"
 ccs_monit::hwraid: false
 ccs_monit::network: false

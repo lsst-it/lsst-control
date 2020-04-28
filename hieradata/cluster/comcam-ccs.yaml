@@ -82,6 +82,8 @@ ccs_software::dirs:
     ## FIXME
     mode: "2777"
 
+profile::ccs::clustershell::config: "comcam-local.cfg"
+
 ## FIXME
 ccs_pkgarchive: "/root"
 

@@ -53,14 +53,6 @@ profile::ccs::users::users:
       - "lsstadm"
     comment: "CCS Operator Account"
     managehome: true
-  "dh":
-    ensure: "present"
-    uid: 23001
-    groups:
-      - "dialout"
-      - "lsstadm"
-    comment: "LSST Data Handling Account"
-    managehome: true
 
 ## present or latest
 profile::ccs::git::ensure: "present"

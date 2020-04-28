@@ -6,3 +6,5 @@ profile::ccs::daq_interface::hwaddr: "b4:96:91:4d:d2:9c"
 profile::ccs::daq_interface::uuid: "9c22d92a-3fc8-48c8-9ef4-a48b7d24b274"
 profile::ccs::daq_interface::was: "p1p1"
 profile::ccs::daq_interface::mode: "dhcp-client"
+
+profile::ccs::facts::daq: false

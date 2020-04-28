@@ -1,0 +1,6 @@
+---
+classes:
+  - "profile::ccs::daq_interface"
+
+profile::ccs::daq_interface::hwaddr: "b4:96:91:4d:d2:5c"
+profile::ccs::daq_interface::uuid: "995511a3-a10e-490d-b65e-c0e40fc3e233"

@@ -5,7 +5,7 @@ class profile::ccs::clustershell {
   $ptitle = regsubst($title, '::', '/', 'G')
 
   $file = '/etc/clustershell/groups.d/local.cfg'
-  $src = "${facts['site']}-local.cfg"
+  $src = "${::site}-local.cfg"
 
   file { $file:
       ensure => present,

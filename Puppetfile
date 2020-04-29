@@ -75,13 +75,6 @@ mod 'puppet/yum', '4.0.0'
 mod 'richardc/datacat', '0.6.2'
 mod 'stahnma/epel', '1.3.1'
 
-mod 'lsst/ccs',
-    git: 'https://github.com/lsst-it/puppet-ccs.git',
-    ref: '0.1.0'
-mod 'lsst/headerservice',
-    git: 'https://github.com/lsst-it/puppet-headerservice.git',
-    ref: '0.1.0'
-
 mod 'simp/x2go', '0.2.1'
 mod 'simp/mate', '1.0.2'
 mod 'simp/dconf', '0.0.3'

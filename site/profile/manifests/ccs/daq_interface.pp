@@ -34,4 +34,21 @@ class profile::ccs::daq_interface(
   network::interface { $was:
     ensure => absent,
   }
+
+  # restarting the network service isn't sufficent to rename an existing
+  # interface.  The host has to be rebooted.
+  $daq_int = $facts['networking']['interfaces']['lsst-daq']
+
+  unless ($daq_int) {
+    notify { 'lsst-daq network interface is missing':
+      notify => Reboot['lsst-daq'],
+    }
+  }
+
+  Class['network']
+  ~> reboot { 'lsst-daq':
+    apply   => finished,
+    message => 'setup lsst-daq network interface',
+    when    => refreshed,
+  }
 }

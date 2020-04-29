@@ -74,6 +74,8 @@ pakrat_client::repos:
     # if we use GPG key checking, it's probably because we have only CentOS-built RPMs in the repo
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"
 
+profile::ncsa::allow_qualys_scan::ip: "141.142.148.51"
+
 profile::ncsa::allow_ssh_from_bastion::bastion_nodelist:
   - 10.142.181.15
   - 141.142.181.15
@@ -91,7 +93,8 @@ profile::ncsa::allow_ssh_from_login::login_nodelist:
 profile::ncsa::allow_ssh_from_login::allow_groups:
   - lsst_admin_ncsa
 
-profile::ncsa::allow_qualys_scan::ip: "141.142.148.51"
+profile::ncsa::allow_sudo::groups:
+  - lsst_admin_ncsa
 
 python::dev: "present"
 python::pip: "present"
@@ -331,8 +334,8 @@ sssd::services:
       - wireshark
   pam: {}
 
+# Default sudo setup
 sudo::configs:
-  # Defaults should probably move to common.yaml
   defaults:
     priority: 0
     content:
@@ -354,17 +357,9 @@ sudo::configs:
       - '%all_disabled_usr ALL=(ALL) !ALL'
       - '#deny users in lsst_disabled LDAP group'
       - '%lsst_disabled ALL=(ALL) !ALL'
-  common_lsst_admins:
-    priority: 10
-    content:
-      - '%lsst_admin_ncsa ALL=(ALL) NOPASSWD: ALL'
 
 sudo::content: "system_authnz/sudoers.erb"
 
-system_authnz::access::access_allow:
-  'Allow group lsst_admin_ncsa from ALL':
-    group: "lsst_admin_ncsa"
-    origin: "ALL"
 system_authnz::access::access_deny_before:
   'Deny group lsst_disabled from ALL':
     group: "lsst_disabled"

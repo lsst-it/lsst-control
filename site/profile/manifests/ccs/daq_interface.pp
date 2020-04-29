@@ -5,6 +5,7 @@
 class profile::ccs::daq_interface(
   String $hwaddr,
   String $uuid,
+  String $was,
   Enum['dhcp-client', 'dhcp-server'] $mode,
 ) {
 
@@ -28,5 +29,9 @@ class profile::ccs::daq_interface(
     type         => 'Ethernet',
     uuid         => $uuid,
     *            => $netconf,
+  }
+
+  network::interface { $was:
+    ensure => absent,
   }
 }

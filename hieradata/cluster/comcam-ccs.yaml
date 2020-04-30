@@ -53,6 +53,13 @@ profile::ccs::users::users:
       - "lsstadm"
     comment: "CCS Operator Account"
     managehome: true
+  "ccsadm":
+    ensure: "present"
+    uid: 23010
+    groups:
+      - "lsstadm"
+    comment: "CCS Administrative Account"
+    managehome: true
 
 ## present or latest
 profile::ccs::git::ensure: "present"
@@ -60,8 +67,8 @@ profile::ccs::git::ensure: "present"
 ccs_software::dirs:
   "etc":
     path: "/etc/ccs"
-    owner: "root"
-    group: "ccs"
+    owner: "ccsadm"
+    group: "ccsadm"
     mode: "2775"
   "opt":
     path: "/opt/lsst"

@@ -24,7 +24,7 @@ class profile::ccs::daq_interface(
   network::interface { $interface:
     defroute => 'no',  # this was yes on comcam-fp01
     hwaddr   => $hwaddr,
-    ipv6init => false,
+    ipv6init => 'no',
     onboot   => true,
     type     => 'Ethernet',
     uuid     => $uuid,

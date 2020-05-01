@@ -8,6 +8,7 @@ class profile::ccs::daq_interface(
   String $was,
   Enum['dhcp-client', 'dhcp-server'] $mode,
 ) {
+  $interface = 'lsst-daq'
 
   $netconf = $mode ? {
     'dhcp-client'  => {
@@ -20,15 +21,14 @@ class profile::ccs::daq_interface(
     },
   }
 
-  network::interface { 'lsst-daq':
-    defroute     => 'no',  # this was yes on comcam-fp01
-    ethtool_opts => '--set-ring ${DEVICE} rx 4096 tx 4096; --pause ${DEVICE} autoneg off rx on tx on',
-    hwaddr       => $hwaddr,
-    ipv6init     => 'no',
-    onboot       => true,
-    type         => 'Ethernet',
-    uuid         => $uuid,
-    *            => $netconf,
+  network::interface { $interface:
+    defroute => 'no',  # this was yes on comcam-fp01
+    hwaddr   => $hwaddr,
+    ipv6init => false,
+    onboot   => true,
+    type     => 'Ethernet',
+    uuid     => $uuid,
+    *        => $netconf,
   }
 
   network::interface { $was:
@@ -37,18 +37,29 @@ class profile::ccs::daq_interface(
 
   # restarting the network service isn't sufficent to rename an existing
   # interface.  The host has to be rebooted.
-  $daq_int = $facts['networking']['interfaces']['lsst-daq']
-
-  unless ($daq_int) {
-    notify { 'lsst-daq network interface is missing':
+  unless ($facts['networking']['interfaces'][$interface]) {
+    notify { "${interface} network interface is missing":
       notify => Reboot['lsst-daq'],
     }
   }
 
   Class['network']
-  ~> reboot { 'lsst-daq':
+  -> reboot { $interface:
     apply   => finished,
-    message => 'setup lsst-daq network interface',
+    message => "setup ${interface} network interface",
     when    => refreshed,
+  }
+
+  # NM apears to ignore ETHTOOL_OPTS and requires a dispatch script to be used
+  # to set device parameters
+  $ptitle = regsubst($title, '::', '/', 'G')
+  $file = '30-ethtool'
+
+  # XXX we need to have a discussion as to wether or not it is appropriate for
+  # a template to live in a profile.
+  file { "/etc/NetworkManager/dispatcher.d/${file}":
+    ensure  => file,
+    content => epp("${ptitle}/${file}", {'interface' => $interface}),
+    mode    => '0755',
   }
 }

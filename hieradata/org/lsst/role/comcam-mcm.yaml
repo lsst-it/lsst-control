@@ -2,16 +2,3 @@
 classes:
   - "profile::core::common"
   - "profile::ccs::postfix"
-  - "network"
-network::interfaces_hash:
-  em1:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  em2:  # sal/control
-    bootproto: "dhcp"
-    defroute: "no"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"

@@ -8,4 +8,9 @@ class profile::ccs::tomcat {
     catalina_home => '/opt/tomcat/apache-tomcat-9.0.33',
   }
 
+  # XXX appears to be broken... hardwired to look at $catalina_base/conf/context.xml
+  tomcat::config::context::manager { 'org.apache.catalina.valves.RemoteAddrValve':
+    ensure        => 'absent',
+    catalina_base => '/opt/tomcat/apache-tomcat-9.0.33',
+  }
 }

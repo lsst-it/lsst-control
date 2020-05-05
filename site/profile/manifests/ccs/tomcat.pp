@@ -1,4 +1,6 @@
 class profile::ccs::tomcat {
+  include ::nginx
+
   $root_path     = '/opt/tomcat'
   $catalina_home = "${root_path}/apache-tomcat-9.0.33"
   $catalina_base = $catalina_home
@@ -59,5 +61,30 @@ class profile::ccs::tomcat {
     ensure    => 'running',
     enable    => true,
     subscribe => Tomcat::Instance['latest'],
+  }
+
+  $access_log = '/var/log/nginx/tomcat.access.log'
+  $error_log  = '/var/log/nginx/tomcat.error.log'
+
+  nginx::resource::upstream { 'tomcat':
+    ensure  => present,
+    members => {
+      'localhost:8080' => {
+        server => 'localhost',
+        port   => 8080,
+      },
+    },
+  }
+
+  nginx::resource::server { 'tomcat-http':
+    ensure                => present,
+    listen_port           => 80,
+    ssl                   => false,
+    access_log            => $access_log,
+    error_log             => $error_log,
+    use_default_location  => true,
+    proxy                 => 'http://tomcat',
+    proxy_redirect        => 'default',
+    proxy_connect_timeout => '150',
   }
 }

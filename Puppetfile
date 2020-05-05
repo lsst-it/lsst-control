@@ -46,6 +46,7 @@ mod 'puppet/lldpd', '2.2.0'
 mod 'puppet/rabbitmq', '10.0.1'
 mod 'puppet/redis', '6.0.0'
 mod 'puppetlabs/tomcat', '4.0.0'
+mod 'puppet/nginx', '1.1.0'
 
 # 2019-12-18 athebo: added for DIMM Ubuntu VM, we can remove this when the node is rebuilt
 mod 'attachmentgenie/ufw',

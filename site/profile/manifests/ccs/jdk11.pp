@@ -17,7 +17,7 @@ class profile::ccs::jdk11 ( String $ensure = 'present' ) {
     ## TODO delete if ensure is absent.
     $jdkdest = "${jvmdir}/jdk-${jdkver}"
 
-    archive { "/tmp/${jdktar}":
+    archive { "/var/tmp/${jdktar}":
       ensure       => present,
       extract      => true,
       extract_path => $jvmdir,
@@ -34,7 +34,7 @@ class profile::ccs::jdk11 ( String $ensure = 'present' ) {
     ## TODO delete if install is false.
     $jfxdest = "${jvmdir}/javafx-sdk-${jfxver}"
 
-    archive { "/tmp/${jfxzip}":
+    archive { "/var/tmp/${jfxzip}":
       ensure       => present,
       extract      => true,
       extract_path => $jvmdir,

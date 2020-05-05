@@ -91,8 +91,8 @@ ccs_software::dirs:
 
 profile::ccs::clustershell::config: "comcam-local.cfg"
 
-## FIXME
-ccs_pkgarchive: "/root"
+## Temporary, until nexus works.
+ccs_pkgarchive: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"
 
 ccs_database::database: "ccsdbprod"
 

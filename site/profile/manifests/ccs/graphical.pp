@@ -58,11 +58,20 @@ class profile::ccs::graphical (
 
     $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
 
+    $zoomrpm = 'zoom.x86_64.rpm'
+    $zoomfile = "/var/tmp/${zoomrpm}"
+
+    archive { $zoomfile:
+      ensure => present,
+      source => "${ccs_pkgarchive}/${zoomrpm}",
+    }
+
     ## FIXME use a local yum repository.
     exec { 'Install zoom':
-      path    => ['/usr/bin'],
-      unless  => 'rpm -q zoom',
-      command => "sh -c \"rpm -U ${ccs_pkgarchive}/zoom*.rpm\"",
+      path      => ['/usr/bin'],
+      unless    => 'rpm -q zoom',
+      command   => "sh -c 'rpm -U ${zoomfile}'",
+      subscribe => Archive[$zoomfile],
     }
   }
 

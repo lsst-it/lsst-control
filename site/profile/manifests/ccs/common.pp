@@ -4,6 +4,7 @@
 class profile::ccs::common {
 
   include profile::ccs::facts
+  include profile::ccs::home
   include profile::ccs::users
   include profile::ccs::clustershell
 

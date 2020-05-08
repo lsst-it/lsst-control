@@ -2,7 +2,7 @@
 easy_ipa::ipa_master_fqdn: "ipa1.dev.lsst.org"
 #
 rsyslog::config::actions:
-#Send copy to logs to GKE Graylog instance
+#Send copy to logs to Ruka Cluster
   graylogBase:
     type: "omfwd"
     facility: "*.*"
@@ -60,6 +60,7 @@ rsyslog::config::actions:
 # characters.
 # @see man 5 resolv.conf
 dhcp::dnsdomain: &dnsdomains
+  - "dev.lsst.org"
   - "ls.lsst.org"
   - "lsst.org"
 # resolv.conf allows for a maximum of 3 nameservers

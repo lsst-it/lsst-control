@@ -1,0 +1,23 @@
+---
+classes:
+  - "profile::ccs::daq_interface"
+  - "profile::ccs::sysctl"
+  - "network"
+
+profile::ccs::daq_interface::hwaddr: "f8:f2:1e:56:a3:a1"
+profile::ccs::daq_interface::uuid: "56f47977-8916-3977-9087-2016581606bc"
+profile::ccs::daq_interface::was: "p2p2"
+profile::ccs::daq_interface::mode: "dhcp-client"
+
+network::interfaces_hash:
+  em1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # sal/control
+    bootproto: "dhcp"
+    defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"

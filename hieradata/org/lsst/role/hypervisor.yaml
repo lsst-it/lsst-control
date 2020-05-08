@@ -2,7 +2,6 @@
 classes:
   - "profile::core::common"
   - "profile::core::libvirt"
-  - "network"
   - "libvirt"
 packages:
   - "qemu-guest-agent"

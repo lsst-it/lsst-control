@@ -66,12 +66,11 @@ class profile::ccs::graphical (
       source => "${ccs_pkgarchive}/${zoomrpm}",
     }
 
-    ## FIXME use a local yum repository.
-    exec { 'Install zoom':
-      path      => ['/usr/bin'],
-      unless    => 'rpm -q zoom',
-      command   => "sh -c 'rpm -U ${zoomfile}'",
-      subscribe => Archive[$zoomfile],
+    ## TODO use a local yum repository?
+    package { 'zoom':
+      ensure   => 'latest',
+      provider => 'rpm',
+      source   => $zoomfile,
     }
   }
 

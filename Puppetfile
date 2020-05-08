@@ -18,7 +18,9 @@ mod 'puppetlabs/git', '0.5.0'
 mod 'puppetlabs/ruby', '1.0.1'
 mod 'camptocamp/systemd', '2.6.0'
 mod 'bodgit/scl', '1.0.1'
-mod 'theforeman/dhcp', '5.1.1'
+mod 'theforeman/dhcp',
+  git: 'https://github.com/lsst-it/puppet-dhcp',
+  ref: 'c9304257d4a800008baa3406e453fc9393faf7b7'
 mod 'theforeman/dns', '6.2.0'
 mod 'duritong/sysctl', '0.0.12'
 mod 'example42/network', '3.5.1'
@@ -74,13 +76,6 @@ mod 'puppetlabs-puppetserver_gem', '1.1.1'
 mod 'puppet/yum', '4.0.0'
 mod 'richardc/datacat', '0.6.2'
 mod 'stahnma/epel', '1.3.1'
-
-mod 'lsst/ccs',
-    git: 'https://github.com/lsst-it/puppet-ccs.git',
-    ref: '0.1.0'
-mod 'lsst/headerservice',
-    git: 'https://github.com/lsst-it/puppet-headerservice.git',
-    ref: '0.1.0'
 
 mod 'simp/x2go', '0.2.1'
 mod 'simp/mate', '1.0.2'

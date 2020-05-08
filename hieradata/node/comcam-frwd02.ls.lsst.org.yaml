@@ -1,0 +1,9 @@
+---
+classes:
+  - "profile::ccs::daq_interface"
+  - "profile::ccs::sysctl"
+
+profile::ccs::daq_interface::hwaddr: "f8:f2:1e:56:95:f1"
+profile::ccs::daq_interface::uuid: "02b6f32f-f0a0-4178-9ecf-7bf349c68897"
+profile::ccs::daq_interface::was: "p2p2"
+profile::ccs::daq_interface::mode: "dhcp-client"

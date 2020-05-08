@@ -1,4 +1,7 @@
 ---
+classes:
+  # XXX this should be included as part of specific ccs roles, once those are known
+  - "profile::ccs::sysctl"
 packages:
   # required for postfix sasl auth
   - "cyrus-sasl-plain"

@@ -14,7 +14,7 @@ dhcp::bootp: true
 dhcp::pxeserver: "139.229.134.5"  # foreman.dev.lsst.org
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:
-  IT-Services: 
+  IT-Services:
     network: "139.229.134.0"
     mask: "255.255.255.0"
     gateway: "139.229.134.254"

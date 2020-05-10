@@ -1,0 +1,36 @@
+---
+dns::forwarders:
+  - "208.67.222.222"
+  - "208.67.220.220"
+dns::allow_recursion:
+  - "139.229.0.0/16"
+  - "198.19.0.0/16"
+  - "localnets"
+  - "localhost"
+dns::zones:
+  lsst.local:
+    zonetype: "forward"
+    forward: "only"
+    forwarders:
+      - "139.229.136.35"
+dns::additional_directives:
+  - "logging {"
+  - "    channel queries_syslog {"
+  - "        severity info;"
+  - "        print-category yes;"
+  - "        syslog local6;"
+  - "    };"
+  - ""
+  - "    category queries {"
+  - "        queries_syslog;"
+  - "    };"
+  - "};"
+
+files:
+  "/var/log/named":
+    ensure: "directory"
+    owner: "named"
+    group: "named"
+    mode: "0750"
+    backup: false
+    purge: false

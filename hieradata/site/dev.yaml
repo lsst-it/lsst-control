@@ -2,15 +2,23 @@
 easy_ipa::ipa_master_fqdn: "ipa1.dev.lsst.org"
 #
 rsyslog::config::actions:
-#Send copy to logs to Ruka Cluster
-  graylogBase:
+#Send copy to logs to GKE Graylog instance
+  graylogCloud:
     type: "omfwd"
     facility: "*.*"
     config:
       Target: "collector.lsst.cloud"
       Port: 5514
       Protocol: "udp"
-  # Log anything (except mail) of level info or higher.
+#Send copy to logs to Base Graylog instance
+  graylogBase:
+    type: "omfwd"
+    facility: "*.*"
+    config:
+      Target: "collector.ls.lsst.org"
+      Port: 5514
+      Protocol: "udp"
+    # Log anything (except mail) of level info or higher.
   # Don't log private authentication messages!
   #
   # local6 is used for logs that should only be forwarded to a central log

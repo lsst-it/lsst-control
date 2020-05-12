@@ -1,0 +1,6 @@
+---
+classes:
+  - "profile::core::common"
+  - "rabbitmq"
+rabbitmq::admin_enable: true
+rabbitmq::management_enable: true

@@ -10,15 +10,14 @@
 # @param database
 #   The InfluxDB database for node metrics (as opposed to summit power metrics).
 #
-# @param host
+# @param influxdb_url
 #   The backing InfluxDB instance. At present the default DNS record is a CNAME.
 class profile::core::telegraf(
   String $password,
-  String $username = 'telegraf',
-  String $database = 'telegraf',
-  String $host     = 'metrics-ingress.ls.lsst.org',
+  String $username     = 'telegraf',
+  String $database     = 'telegraf',
+  String $influxdb_url = 'https://it-influxdb.ls.lsst.org:443',
 ) {
-  $influxdb_url = "http://${host}:8086"
   class { '::telegraf':
     hostname               => $::facts['fqdn'],
     global_tags            => {'site' => $::site},

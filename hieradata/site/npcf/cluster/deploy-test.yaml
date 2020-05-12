@@ -1,8 +1,6 @@
+---
 profile::ncsa::allow_ssh_from_login::allow_groups:
   - "lsst_level1_adm"
 
-sudo::configs:
-  npcf_cluster_deploy_test:
-    priority: 20
-    content:
-      - "%lsst_level1_adm ALL=(ALL) NOPASSWD: ALL"
+profile::ncsa::allow_sudo::groups:
+  - "lsst_level1_adm"

@@ -5,6 +5,10 @@ lookup_options:
     merge: "unique"
   profile::ncsa::allow_ssh_from_bastion::allow_groups:
     merge: "unique"
+  profile::ncsa::allow_sudo::groups:
+    merge: "unique"
+  profile::ncsa::allow_sudo::users:
+    merge: "unique"
 
 # Everything else goes down below. Sort keys alphabetically
 

@@ -2,5 +2,10 @@
 classes:
   - "profile::core::common"
   - "profile::archive::rabbitmq"
+  - "redis"
 rabbitmq::admin_enable: true
 rabbitmq::management_enable: true
+redis::bind: "127.0.0.1"
+redis::manage_repo: true
+redis::scl: true
+redis::globals::scl: "rh-redis5"

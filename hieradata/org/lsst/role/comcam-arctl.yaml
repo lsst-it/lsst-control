@@ -3,9 +3,19 @@ classes:
   - "profile::core::common"
   - "profile::archive::rabbitmq"
   - "redis"
+  - "python"
 rabbitmq::admin_enable: true
 rabbitmq::management_enable: true
+rabbitmq::manage_python: false
 redis::bind: "127.0.0.1"
 redis::manage_repo: true
 redis::scl: true
 redis::globals::scl: "rh-redis5"
+python::version: "python36"
+python::pip: "present"
+python::dev: "present"
+python::virtualenv: "present"
+python::python_pips:
+  "redis":
+    virtualenv: "system"
+    ensure: "3.2.1"

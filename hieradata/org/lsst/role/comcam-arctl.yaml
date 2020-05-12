@@ -1,6 +1,6 @@
 ---
 classes:
   - "profile::core::common"
-  - "rabbitmq"
+  - "profile::archive::rabbitmq"
 rabbitmq::admin_enable: true
 rabbitmq::management_enable: true

@@ -20,6 +20,7 @@ docker::socket_override: true
 rabbitmq::admin_enable: true
 rabbitmq::management_enable: true
 rabbitmq::manage_python: false
+rabbitmq::repos_ensure: true
 profile::archive::rabbitmq::vhosts:
   "/test_at":
     ensure: "present"

@@ -20,6 +20,9 @@ docker::socket_override: true
 rabbitmq::admin_enable: true
 rabbitmq::management_enable: true
 rabbitmq::manage_python: false
+profile::archive::rabbitmq::vhosts:
+  "/test_at":
+    ensure: "present"
 redis::bind: "127.0.0.1"
 redis::manage_repo: true
 redis::scl: true

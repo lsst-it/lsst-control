@@ -24,6 +24,13 @@ rabbitmq::repos_ensure: true
 profile::archive::rabbitmq::vhosts:
   "/test_at":
     ensure: "present"
+  "/test_cc":
+    ensure: "present"
+profile::archive::rabbitmq::user_permissions:
+  "iip@/test_cc":
+    configure_permission: ".*"
+    read_permission:      ".*"
+    write_permission:     ".*"
 redis::bind: "127.0.0.1"
 redis::manage_repo: true
 redis::scl: true

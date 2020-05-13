@@ -4,9 +4,8 @@ profile::ncsa::allow_ssh_from_login::allow_groups:
   - "lsst_level1_adm"
 
 profile::ncsa::puppet_master::firewall_allow_from:
-  - "141.142.182.64/27"
   - "141.142.237.0/24"
-  - "141.142.238.0/24"
+  - "141.142.238.0/23"
   - "172.30.18.0/23"
   - "172.30.20.0/25"
 

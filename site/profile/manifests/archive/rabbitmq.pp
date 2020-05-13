@@ -8,6 +8,12 @@ class profile::archive::rabbitmq(
 ){
   include ::rabbitmq
 
+  yum::install { 'erlang':
+    ensure => present,
+    source => 'https://github.com/rabbitmq/erlang-rpm/releases/download/v22.3.4/erlang-22.3.4-1.el7.x86_64.rpm',
+    notify => Class['rabbitmq'],
+  }
+
   # XXX hiera support should be upstreamed
   unless (empty($users)) {
     ensure_resources('rabbitmq_user', $users)

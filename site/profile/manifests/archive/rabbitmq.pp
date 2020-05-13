@@ -3,6 +3,7 @@ class profile::archive::rabbitmq(
   Hash[String, Hash] $vhosts    = {},
   Hash[String, Hash] $exchanges = {},
   Hash[String, Hash] $queues    = {},
+  Hash[String, Hash] $bindings  = {},
 ){
   include ::rabbitmq
 
@@ -18,5 +19,8 @@ class profile::archive::rabbitmq(
   }
   unless (empty($queues)) {
     ensure_resources('rabbitmq_queue', $queues)
+  }
+  unless (empty($bindings)) {
+    ensure_resources('rabbitmq_binding', $bindings)
   }
 }

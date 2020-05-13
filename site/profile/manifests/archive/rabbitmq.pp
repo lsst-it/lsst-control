@@ -1,6 +1,7 @@
 class profile::archive::rabbitmq(
-  Hash[String, Hash] $users = {},
-  Hash[String, Hash] $vhosts = {},
+  Hash[String, Hash] $users     = {},
+  Hash[String, Hash] $vhosts    = {},
+  Hash[String, Hash] $exchanges = {},
 ){
   include ::rabbitmq
 
@@ -10,5 +11,8 @@ class profile::archive::rabbitmq(
   }
   unless (empty($vhosts)) {
     ensure_resources('rabbitmq_vhost', $vhosts)
+  }
+  unless (empty($exchanges)) {
+    ensure_resources('rabbitmq_exchange', $exchanges)
   }
 }

@@ -29,8 +29,26 @@ profile::archive::rabbitmq::vhosts:
 profile::archive::rabbitmq::user_permissions:
   "iip@/test_cc":
     configure_permission: ".*"
-    read_permission:      ".*"
-    write_permission:     ".*"
+    read_permission: ".*"
+    write_permission: ".*"
+profile::archive::rabbitmq::arc_queues:
+  - "at_foreman_consume"
+  - "at_foreman_ack_publish"
+  - "archive_ctrl_publish"
+  - "archive_ctrl_consume"
+  - "dmcs_consume"
+  - "dmcs_ack_consume"
+  - "ocs_dmcs_consume"
+  - "dmcs_ocs_publish"
+  - "dmcs_fault_consume"
+  - "gen_dmcs_consume"
+  - "at_forwarder_publish"
+  - "f99_consume"
+  - "f91_consume"
+  - "f92_consume"
+  - "f93_consume"
+  - "ar_foreman_ack_publish"
+  - "telemetry_queue"
 redis::bind: "127.0.0.1"
 redis::manage_repo: true
 redis::scl: true

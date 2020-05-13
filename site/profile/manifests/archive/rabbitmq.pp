@@ -5,6 +5,9 @@ class profile::archive::rabbitmq(
   Hash[String, Hash] $queues           = {},
   Hash[String, Hash] $bindings         = {},
   Hash[String, Hash] $user_permissions = {},
+  Array              $arc_queues       = [],
+  Optional[String]   $queue_user       = undef,
+  Optional[String]   $queue_password   = undef,
 ){
   include ::rabbitmq
 
@@ -32,5 +35,23 @@ class profile::archive::rabbitmq(
   }
   unless (empty($user_permissions)) {
     ensure_resources('rabbitmq_user_permissions', $user_permissions)
+  }
+
+  unless (empty($arc_queues)) {
+    $arc_queues.each |String $q| {
+      rabbitmq_queue { "${q}@/test_cc":
+        ensure   => present,
+        user     => $queue_user,
+        password => $queue_password,
+        durable  => true,
+      }
+      rabbitmq_binding { "message@${q}@/test_cc":
+        ensure           => present,
+        user             => $queue_user,
+        password         => $queue_password,
+        destination_type => 'queue',
+        routing_key      => $q,
+      }
+    }
   }
 }

@@ -1,9 +1,10 @@
 class profile::archive::rabbitmq(
-  Hash[String, Hash] $users     = {},
-  Hash[String, Hash] $vhosts    = {},
-  Hash[String, Hash] $exchanges = {},
-  Hash[String, Hash] $queues    = {},
-  Hash[String, Hash] $bindings  = {},
+  Hash[String, Hash] $users            = {},
+  Hash[String, Hash] $vhosts           = {},
+  Hash[String, Hash] $exchanges        = {},
+  Hash[String, Hash] $queues           = {},
+  Hash[String, Hash] $bindings         = {},
+  Hash[String, Hash] $user_permissions = {},
 ){
   include ::rabbitmq
 
@@ -22,5 +23,8 @@ class profile::archive::rabbitmq(
   }
   unless (empty($bindings)) {
     ensure_resources('rabbitmq_binding', $bindings)
+  }
+  unless (empty($user_permissions)) {
+    ensure_resources('rabbitmq_user_permissions', $user_permissions)
   }
 }

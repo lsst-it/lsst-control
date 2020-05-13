@@ -39,4 +39,4 @@ python::python_pips:
     ensure: "1.25.0"
   "redis":
     virtualenv: "system"
-    ensure: "3.2.1"
+    ensure: "3.5.1"

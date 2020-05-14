@@ -9,6 +9,12 @@ packages:
   - "git"
   - "cmake"
   - "gcc-c++"
+files:
+  "/etc/profile.d/rh-redis5.sh":
+    mode: "0644"
+    owner: "root"
+    group: "root"
+    content: ". /opt/rh/rh-redis5/enable"
 # disabling the kernel version check is needed on el7
 docker::overlay2_override_kernel_check: true
 docker::storage_driver: "overlay2"

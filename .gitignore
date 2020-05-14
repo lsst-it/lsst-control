@@ -1,11 +1,12 @@
+.DS_Store
 /bin/
-Gemfile.lock
 /.bundle/
 /convert_report.txt
 /coverage/
 /doc/
 .envrc
 /Gemfile.local
+Gemfile.lock
 .git/
 /.idea/
 *.iml
@@ -13,6 +14,7 @@ Gemfile.lock
 /junit/
 /log/
 .metadata
+/modules
 /pkg/
 .project
 /spec/fixtures/manifests/
@@ -24,4 +26,3 @@ Gemfile.lock
 /vendor/
 .yardoc
 .yardwarns
-/modules

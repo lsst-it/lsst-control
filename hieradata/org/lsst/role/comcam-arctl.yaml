@@ -78,3 +78,7 @@ python::python_pips:
   "redis":
     virtualenv: "system"
     ensure: "3.5.1"
+accounts::user_list:
+  arc:
+    uid: 61000
+    gid: 61000

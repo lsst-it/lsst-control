@@ -31,6 +31,13 @@ profile::archive::rabbitmq::user_permissions:
     configure_permission: ".*"
     read_permission: ".*"
     write_permission: ".*"
+profile::archive::rabbitmq::exchanges:
+  "message@/test_cc":
+    ensure: "present"
+    type: "direct"
+    durable: true
+    user: "%{lookup('profile::archive::rabbitmq::queue_user')}"  # secret
+    password: "%{lookup('profile::archive::rabbitmq::queue_password')}"  # secret
 profile::archive::rabbitmq::arc_queues:
   - "at_foreman_consume"
   - "at_foreman_ack_publish"

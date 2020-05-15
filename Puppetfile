@@ -88,6 +88,10 @@ mod 'simp/gnome', '8.1.1'
 mod 'simp/polkit', '6.2.0'
 mod 'simp/simplib', '3.15.3'
 
+mod 'lsst/ccs_software',
+  git: 'https://github.com/lsst-it/puppet-ccs_software.git',
+  ref: 'v0.1.0'
+
 # Needed by NCSA (sort into above later)
 mod 'MiamiOH/pam_access', '1.0.1'
 mod 'bodgit/bodgitlib', '2.0.1'

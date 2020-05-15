@@ -103,6 +103,9 @@ mod 'lsst/ccs_mrtg',
 mod 'lsst/ccs_sal',
   git: 'https://github.com/lsst-it/puppet-ccs_sal.git',
   ref: 'v0.1.0'
+mod 'lsst/ccs_software',
+  git: 'https://github.com/lsst-it/puppet-ccs_software.git',
+  ref: 'v0.1.0'
 
 # Needed by NCSA (sort into above later)
 #mod 'herculesteam/augeasproviders_sysctl', '2.3.1'  # conflicts duritong/sysctl

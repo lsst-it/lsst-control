@@ -85,3 +85,6 @@ accounts::user_list:
   atadbot:
     uid: 61002
     gid: 61002
+sudo::configs:
+  comcam_archive_cmd:
+    content: "%comcam-archive-sudo ALL=(arc,atadbot) NOPASSWD: ALL"

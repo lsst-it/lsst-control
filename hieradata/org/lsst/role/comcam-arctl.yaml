@@ -27,6 +27,7 @@ rabbitmq::admin_enable: true
 rabbitmq::management_enable: true
 rabbitmq::manage_python: false
 rabbitmq::repos_ensure: true
+rabbitmq::package_ensure: "3.8.3-1.el7.noarch"
 profile::archive::rabbitmq::vhosts:
   "/test_at":
     ensure: "present"

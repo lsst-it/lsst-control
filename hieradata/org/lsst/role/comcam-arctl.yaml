@@ -82,3 +82,6 @@ accounts::user_list:
   arc:
     uid: 61000
     gid: 61000
+  atadbot:
+    uid: 61002
+    gid: 61002

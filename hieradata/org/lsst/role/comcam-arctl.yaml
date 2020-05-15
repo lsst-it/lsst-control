@@ -66,6 +66,7 @@ redis::bind: "127.0.0.1"
 redis::manage_repo: true
 redis::scl: true
 redis::globals::scl: "rh-redis5"
+redis::package_ensure: "5.0.5-1.el7.x86_64"
 python::version: "python36"
 python::pip: "present"
 python::dev: "present"

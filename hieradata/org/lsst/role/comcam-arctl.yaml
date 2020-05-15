@@ -1,0 +1,92 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::archive::rabbitmq"
+  - "redis"
+  - "python"
+  - "docker"
+packages:
+  - "git"
+  - "cmake"
+  - "gcc-c++"
+files:
+  "/etc/profile.d/rh-redis5.sh":
+    mode: "0644"
+    owner: "root"
+    group: "root"
+    content: ". /opt/rh/rh-redis5/enable"
+# disabling the kernel version check is needed on el7
+docker::overlay2_override_kernel_check: true
+docker::storage_driver: "overlay2"
+docker::version: "19.03.4"
+# ipa docker group is 70014
+docker::socket_group: "70014"
+docker::socket_override: true
+# install docker-compose at system level - "docker"
+rabbitmq::admin_enable: true
+rabbitmq::management_enable: true
+rabbitmq::manage_python: false
+rabbitmq::repos_ensure: true
+rabbitmq::package_ensure: "3.8.3-1.el7.noarch"
+profile::archive::rabbitmq::vhosts:
+  "/test_at":
+    ensure: "present"
+  "/test_cc":
+    ensure: "present"
+profile::archive::rabbitmq::user_permissions:
+  "iip@/test_cc":
+    configure_permission: ".*"
+    read_permission: ".*"
+    write_permission: ".*"
+profile::archive::rabbitmq::exchanges:
+  "message@/test_cc":
+    ensure: "present"
+    type: "direct"
+    durable: true
+    user: "%{lookup('profile::archive::rabbitmq::queue_user')}"  # secret
+    password: "%{lookup('profile::archive::rabbitmq::queue_password')}"  # secret
+profile::archive::rabbitmq::arc_queues:
+  - "at_foreman_consume"
+  - "at_foreman_ack_publish"
+  - "archive_ctrl_publish"
+  - "archive_ctrl_consume"
+  - "dmcs_consume"
+  - "dmcs_ack_consume"
+  - "ocs_dmcs_consume"
+  - "dmcs_ocs_publish"
+  - "dmcs_fault_consume"
+  - "gen_dmcs_consume"
+  - "at_forwarder_publish"
+  - "f99_consume"
+  - "f91_consume"
+  - "f92_consume"
+  - "f93_consume"
+  - "ar_foreman_ack_publish"
+  - "telemetry_queue"
+redis::bind: "127.0.0.1"
+redis::manage_repo: true
+redis::scl: true
+redis::globals::scl: "rh-redis5"
+redis::package_ensure: "5.0.5-1.el7.x86_64"
+python::version: "python36"
+python::pip: "present"
+python::dev: "present"
+python::virtualenv: "present"
+python::python_pips:
+  # docker-compose is python3 only
+  "docker-compose":
+    virtualenv: "system"
+    ensure: "1.25.0"
+  "redis":
+    virtualenv: "system"
+    ensure: "3.5.1"
+accounts::user_list:
+  arc:
+    uid: 61000
+    gid: 61000
+  atadbot:
+    uid: 61002
+    gid: 61002
+sudo::configs:
+  comcam_archive_cmd:
+    content: "%comcam-archive-sudo ALL=(arc,atadbot) NOPASSWD: ALL"

@@ -1,6 +1,0 @@
-classes:
-  - timezone
-  - accounts
-  - puppet_agent
-  - easy_ipa
-  

@@ -1,0 +1,16 @@
+---
+classes:
+  - "network"
+network::interfaces_hash:
+  # el7 network scripts don't support configuring macvlan interfaces which
+  # means only one vlan interface per trunk can be assigned via dhcp... and it
+  # is not this one
+  em2.2500:
+    bootproto: "none"
+    defroute: "no"
+    ipaddress: "139.229.150.11"
+    netmask: "255.255.255.128"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"

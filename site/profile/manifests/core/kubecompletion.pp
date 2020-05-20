@@ -4,12 +4,7 @@
 class profile::core::kubecompletion
 {
   $command = "kubectl completion bash > /etc/bash_completion.d/kubectl"
-  $runif   = "find /etc/bash_completion.d/ -name kubectl"
-
-  file { '/etc/bash_completion.d/kubectl':
-    ensure => '/etc/bash_completion.d/kubectl',
-    onlyif   => $runif,
-  }
+  $runif   = "test ! -f /etc/bash_completion.d/kubectl"
 
   exec { $command:
     cwd      => '/var/tmp',

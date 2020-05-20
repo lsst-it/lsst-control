@@ -1,8 +1,5 @@
 ---
 classes:
-  - "timezone"
-  - "sysstat"
-  - "epel"
   - "sudo"
   - "accounts"
   - "puppet_agent"

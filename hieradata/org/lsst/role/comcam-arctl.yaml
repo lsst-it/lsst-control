@@ -38,6 +38,10 @@ profile::archive::rabbitmq::user_permissions:
     configure_permission: ".*"
     read_permission: ".*"
     write_permission: ".*"
+  "guest@/test_cc":
+    configure_permission: ".*"
+    read_permission: ".*"
+    write_permission: ".*"
 profile::archive::rabbitmq::exchanges:
   "message@/test_cc":
     ensure: "present"
@@ -63,7 +67,7 @@ profile::archive::rabbitmq::arc_queues:
   - "f93_consume"
   - "ar_foreman_ack_publish"
   - "telemetry_queue"
-redis::bind: "127.0.0.1"
+redis::bind: "0.0.0.0"
 redis::manage_repo: true
 redis::scl: true
 redis::globals::scl: "rh-redis5"

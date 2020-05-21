@@ -63,7 +63,7 @@ profile::archive::rabbitmq::arc_queues:
   - "f93_consume"
   - "ar_foreman_ack_publish"
   - "telemetry_queue"
-redis::bind: "127.0.0.1"
+redis::bind: "0.0.0.0"
 redis::manage_repo: true
 redis::scl: true
 redis::globals::scl: "rh-redis5"

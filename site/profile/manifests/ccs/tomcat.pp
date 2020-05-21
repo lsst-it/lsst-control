@@ -1,4 +1,6 @@
-class profile::ccs::tomcat {
+class profile::ccs::tomcat(
+  Hash[String, Hash] $wars = {},
+) {
   include ::nginx
 
   $root_path     = '/opt/tomcat'
@@ -26,6 +28,14 @@ class profile::ccs::tomcat {
   tomcat::config::context::manager { 'org.apache.catalina.valves.RemoteAddrValve':
     ensure        => 'absent',
     catalina_base => $catalina_base,
+  }
+
+  unless (empty($wars)) {
+    $wars.each |String $n, Hash $conf| {
+      tomcat::war { $n:
+        * => $conf,
+      }
+    }
   }
 
   $service_unit = @("EOT")

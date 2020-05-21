@@ -2,7 +2,7 @@ class profile::ccs::tomcat {
   include ::nginx
 
   $root_path     = '/opt/tomcat'
-  $catalina_home = "${root_path}/apache-tomcat-9.0.33"
+  $catalina_home = "${root_path}/apache-tomcat-9.0.35"
   $catalina_base = $catalina_home
 
   file { $root_path:
@@ -10,7 +10,7 @@ class profile::ccs::tomcat {
   }
 
   tomcat::install { $catalina_home:
-    source_url => 'https://www-eu.apache.org/dist/tomcat/tomcat-9/v9.0.33/bin/apache-tomcat-9.0.33.tar.gz',
+    source_url => 'https://downloads.apache.org/tomcat/tomcat-9/v9.0.35/bin/apache-tomcat-9.0.35.tar.gz',
   }
 
   # XXX shockingly, puppetlabs-tomcat is not able to create an init script

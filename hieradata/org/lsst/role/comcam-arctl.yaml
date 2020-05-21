@@ -38,6 +38,10 @@ profile::archive::rabbitmq::user_permissions:
     configure_permission: ".*"
     read_permission: ".*"
     write_permission: ".*"
+  "guest@/test_cc":
+    configure_permission: ".*"
+    read_permission: ".*"
+    write_permission: ".*"
 profile::archive::rabbitmq::exchanges:
   "message@/test_cc":
     ensure: "present"

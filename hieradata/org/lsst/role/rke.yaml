@@ -8,6 +8,7 @@ classes:
   - "profile::app::rke"
   - "profile::app::macvlan"
   - "profile::core::kubecompletion"
+  - "profile::core::debugutils"
   - "docker"
   - "sysctl::values"
   - "yum"
@@ -20,19 +21,6 @@ packages:
   - "bash-completion"
   - "bash-completion-extras"
   - "vim"
-  # debugging utils
-  - "tcpdump"
-  - "net-tools"
-  - "dhcping"
-  - "iperf"
-  - "iperf3"
-  - "nmap-ncat"
-  - "nmap"
-  - "iftop"
-  - "powertop"
-  - "traceroute"
-  - "bridge-utils"
-  - "pciutils"
 # disabling the kernel version check is needed on el7
 docker::overlay2_override_kernel_check: true
 docker::storage_driver: "overlay2"

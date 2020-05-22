@@ -5,6 +5,7 @@ dns::forwarders:
 dns::allow_recursion:
   - "139.229.0.0/16"
   - "198.19.0.0/16"
+  - "10.0.0.0/8"
   - "localnets"
   - "localhost"
 dns::zones:

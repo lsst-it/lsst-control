@@ -7,6 +7,7 @@ classes:
   - "profile::app::helm"
   - "profile::app::rke"
   - "profile::app::macvlan"
+  - "profile::core::kubecompletion"
   - "docker"
   - "sysctl::values"
   - "yum"

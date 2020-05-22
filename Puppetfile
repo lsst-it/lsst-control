@@ -23,7 +23,9 @@ mod 'theforeman/dhcp',
   ref: 'c9304257d4a800008baa3406e453fc9393faf7b7'
 mod 'theforeman/dns', '6.2.0'
 mod 'duritong/sysctl', '0.0.12'
-mod 'example42/network', '3.5.3'
+mod 'example42/network',
+  git: 'https://github.com/example42/puppet-network',
+  ref: 'b34d44d7818140d724333dfa00688fc46f6dae1a'  # post v3.5.3
 mod 'cirrax/libvirt', '4.1.2'
 #mod 'puppetfinland/easy_ipa', '2.2.0'
 mod 'puppetfinland/easy_ipa',

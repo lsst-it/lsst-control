@@ -1,0 +1,15 @@
+---
+profile::core::debugutils::packages:
+  - "bridge-utils"
+  - "dhcping"
+  - "iftop"
+  - "iperf"
+  - "iperf3"
+  - "mtr"
+  - "net-tools"
+  - "nmap"
+  - "nmap-ncat"
+  - "pciutils"
+  - "powertop"
+  - "tcpdump"
+  - "traceroute"

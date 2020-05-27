@@ -1,0 +1,24 @@
+---
+classes:
+  - "network"
+
+network::interfaces_hash:
+  em2:  # em2 is not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p2:
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+  p2p2.2101:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br2101"
+    type: "none"
+    nozeroconf: "yes"
+  br2101:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"

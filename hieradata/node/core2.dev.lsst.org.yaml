@@ -1,0 +1,20 @@
+---
+classes:
+  - "network"
+
+network::interfaces_hash:
+  p1p2:
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+  p1p2.2101:
+    bootproto: "dhcp"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br2101"
+    type: "none"
+    nozeroconf: "yes"
+  br2101:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"

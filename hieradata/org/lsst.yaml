@@ -12,6 +12,9 @@ lookup_options:
   sudo::configs:
     merge:
       strategy: "deep"
+  sysctl::values::args:
+    merge:
+      strategy: "deep"
   yum::managed_repos:
     merge:
       strategy: "unique"

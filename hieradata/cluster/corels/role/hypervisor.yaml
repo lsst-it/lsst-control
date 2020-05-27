@@ -1,0 +1,24 @@
+---
+classes:
+  - "network"
+network::interfaces_hash:
+  # Note: em1 is not managed since this will apply to multiple hypervisors
+  em2:  # em2 is not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p1:
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+  p2p1.2102:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br2102"
+    type: "none"
+    nozeroconf: "yes"
+  br2102:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"

@@ -1,14 +1,4 @@
 ---
-lookup_options:
-  network::interfaces_hash:
-    merge:
-      strategy: "deep"
-  yum::managed_repos:
-    merge:
-      strategy: "unique"
-  yum::repos:
-    merge:
-      strategy: "deep"
 classes:
   - "network"
   - "profile::core::ifdown"

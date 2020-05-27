@@ -1,15 +1,4 @@
 ---
-lookup_options:
-  sudo::configs:
-    merge:
-      strategy: "deep"
-  accounts::group_list:
-    merge:
-      strategy: "deep"
-  accounts::user_list:
-    merge:
-      strategy: "deep"
-
 chrony::servers:
   - "0.us.pool.ntp.org"
   - "1.us.pool.ntp.org"

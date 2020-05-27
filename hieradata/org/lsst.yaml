@@ -1,4 +1,24 @@
 ---
+lookup_options:
+  accounts::group_list:
+    merge:
+      strategy: "deep"
+  accounts::user_list:
+    merge:
+      strategy: "deep"
+  network::interfaces_hash:
+    merge:
+      strategy: "deep"
+  sudo::configs:
+    merge:
+      strategy: "deep"
+  yum::managed_repos:
+    merge:
+      strategy: "unique"
+  yum::repos:
+    merge:
+      strategy: "deep"
+
 timezone::timezone: "UTC"
 chrony::leapsectz: "right/UTC"
 ssh::storeconfigs_enabled: false
@@ -64,10 +84,7 @@ sudo::purge: false
 sudo::configs:
   wheel_b:  # backup wheel group in case of LDAP failure.
     content: "%wheel_b ALL=(ALL) NOPASSWD: ALL"
-lookup_options:
-  accounts::user_list:
-    merge:
-      strategy: "deep"
+
 accounts::group_list:
   wheel_b: {}
 accounts::user_defaults:

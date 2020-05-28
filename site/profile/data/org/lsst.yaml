@@ -9,6 +9,7 @@ profile::core::debugutils::packages:
   - "net-tools"
   - "nmap"
   - "nmap-ncat"
+  - "numactl"
   - "pciutils"
   - "powertop"
   - "tcpdump"

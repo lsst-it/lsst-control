@@ -11,7 +11,7 @@ network::interfaces_hash:
     type: "Ethernet"
   em2:
     bootproto: "none"
-    onboot: "no"
+    onboot: "yes"
     type: "Ethernet"
   em2.2500:  # 139.229.150.0/25
     bootproto: "none"

@@ -22,6 +22,8 @@ class profile::core::telegraf(
     hostname               => $::facts['fqdn'],
     global_tags            => {'site' => $::site},
     purge_config_fragments => true,
+    flush_interval         => '20s',
+    flush_jitter           => '5s',
     outputs                => {
       'influxdb' => [
         {
@@ -29,6 +31,7 @@ class profile::core::telegraf(
           'database'               => $database,
           'username'               => $username,
           'password'               => $password,
+          'timeout'                => '10s',
           'skip_database_creation' => true
         }
       ]

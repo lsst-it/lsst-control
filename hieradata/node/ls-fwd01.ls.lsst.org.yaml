@@ -1,0 +1,35 @@
+---
+classes:
+  - "network"
+  - "sysctl::values"
+
+network::interfaces_hash:
+  em1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+  em2.2500:  # 139.229.150.0/25
+    bootproto: "none"
+    bridge: "br2500"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
+  br2500:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"
+
+sysctl::values::args:
+  # disable ipv6
+  net.ipv6.conf.all.disable_ipv6:
+    value: 1
+    target: "/etc/sysctl.d/50-ipv6.conf"
+  net.ipv6.conf.default.disable_ipv6:
+    value: 1
+    target: "/etc/sysctl.d/50-ipv6.conf"

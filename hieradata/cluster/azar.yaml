@@ -5,10 +5,6 @@ classes:
 packages:
   - "git"
 
-lookup_options:
-  network::interfaces_hash:
-    merge:
-      strategy: "deep"
 network::interfaces_hash:
   em1:  # fqn
     bootproto: "dhcp"

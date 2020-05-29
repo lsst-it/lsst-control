@@ -1,8 +1,4 @@
 ---
-lookup_options:
-  accounts::user_list:
-    merge:
-      strategy: "deep"
 classes:
   - "network"
 accounts::user_list:

@@ -21,7 +21,7 @@ docker::overlay2_override_kernel_check: true
 docker::storage_driver: "overlay2"
 docker::version: "19.03.4"
 # ipa docker group is 70014
-docker::socket_group: "70014"
+docker::socket_group: &docker_gid "70014"
 docker::socket_override: true
 # install docker-compose at system level - "docker"
 rabbitmq::admin_enable: true
@@ -85,6 +85,12 @@ python::python_pips:
   "redis":
     virtualenv: "system"
     ensure: "3.5.1"
+accounts::group_list:
+  # this is duplicating the ipa gid as a local group
+  &docker_name docker-%{facts.hostname}:
+    ensure: "present"
+    gid: *docker_gid
+    forcelocal: true
 accounts::user_list:
   arc:
     uid: 61000
@@ -92,6 +98,8 @@ accounts::user_list:
   atadbot:
     uid: 61002
     gid: 61002
+    groups:
+      - *docker_name
 sudo::configs:
   comcam_archive_cmd:
     content: "%comcam-archive-sudo ALL=(arc,atadbot) NOPASSWD: ALL"

@@ -1,5 +1,6 @@
 ---
 classes:
+  - "profile::core::debugutils"  # XXX mv to permanent role (when known)
   - "profile::ccs::daq_interface"
   - "profile::ccs::sysctl"
   - "network"
@@ -53,6 +54,12 @@ sysctl::values::args:
     value: 1
     target: "/etc/sysctl.d/50-ipv6.conf"
   # allow icmp messages from lhn device loopback addresses that are not reachable via the lhn
+  net.ipv4.conf.all.rp_filter:
+    value: 0
+    target: "/etc/sysctl.d/92-rp_filter.conf"
+  net.ipv4.conf.default.rp_filter:
+    value: 0
+    target: "/etc/sysctl.d/92-rp_filter.conf"
   net.ipv4.conf.p2p1.rp_filter:
     value: 0
     target: "/etc/sysctl.d/92-rp_filter.conf"

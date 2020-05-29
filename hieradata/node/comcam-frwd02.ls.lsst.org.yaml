@@ -1,5 +1,6 @@
 ---
 classes:
+  - "profile::core::debugutils"  # XXX mv to permanent role (when known)
   - "profile::ccs::daq_interface"
   - "profile::ccs::sysctl"
 

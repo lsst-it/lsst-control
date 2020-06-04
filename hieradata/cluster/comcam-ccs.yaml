@@ -90,9 +90,10 @@ ccs_software::dirs:
     ## FIXME
     mode: "2777"
 
-ccs_software::jdk8::rpm: "jdk-8u251-linux-x64.rpm"
+ccs_software::jdk8::rpm: "jdk-8u202-linux-x64.rpm"
 ccs_software::jdk8::package: "jdk1.8"
-ccs_software::jdk8::dir: "jdk1.8.0_251-amd64"
+ccs_software::jdk8::dir: "jdk1.8.0_202-amd64"
+ccs_software::jdk8::version: "2000:1.8.0_202-fcs"
 
 profile::ccs::clustershell::config: "comcam-local.cfg"
 

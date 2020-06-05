@@ -100,7 +100,7 @@ profile::ccs::clustershell::config: "comcam-local.cfg"
 ## Temporary, until nexus works.
 ccs_pkgarchive: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"
 
-ccs_database::database: "ccsdbprod"
+ccs_database::database: "comcamdbprod"
 
 ccs_sal::rpms:
   OpenSpliceDDS: "OpenSpliceDDS-6.9.0-5.x86_64.rpm"

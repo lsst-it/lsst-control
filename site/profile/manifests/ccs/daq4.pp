@@ -24,7 +24,7 @@ class profile::ccs::daq4 ($instrument = 'comcam') {
 
   file { ["${dir}/store.app", "${dir}/${instrument}-ih.app"]:
     ensure  => file,
-    content => "system.pre-execute=${daq4file}",
+    content => "system.pre-execute=${daq4file}\n",
     *       => $attributes,
   }
 

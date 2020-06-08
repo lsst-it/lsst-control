@@ -94,6 +94,9 @@ mod 'lsst/ccs_software',
 mod 'lsst/maven',
   git: 'https://github.com/lsst-it/puppet-maven.git',
   ref: 'v1.0.0'
+mod 'lsst/java_artisanal',
+  git: 'https://github.com/lsst-it/puppet-java_artisanal.git',
+  ref: 'v1.0.0'
 
 # Needed by NCSA (sort into above later)
 mod 'MiamiOH/pam_access', '1.0.1'

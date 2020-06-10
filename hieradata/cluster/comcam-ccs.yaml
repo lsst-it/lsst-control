@@ -40,28 +40,6 @@ sudo::configs:
   comcam_ccs_cmd:
     content: "%comcam-ccs-cmd ALL=(ccs) NOPASSWD: ALL"
 
-profile::ccs::users::groups:
-  "lsstadm":
-    ensure: "present"
-    gid: 24000
-
-profile::ccs::users::users:
-  "ccs":
-    ensure: "present"
-    uid: 23000
-    groups:
-      - "dialout"
-      - "lsstadm"
-    comment: "CCS Operator Account"
-    managehome: true
-  "ccsadm":
-    ensure: "present"
-    uid: 23010
-    groups:
-      - "lsstadm"
-    comment: "CCS Administrative Account"
-    managehome: true
-
 ## present or latest
 profile::ccs::git::ensure: "present"
 
@@ -118,3 +96,22 @@ ccs_monit::alert:
 
 java_artisanal::package: "jdk1.8"
 java_artisanal::dir: "jdk1.8.0_202-amd64"
+
+accounts::group_list:
+  lsstadm:
+    gid: 24000  # XXX reserve GID
+
+accounts::user_list:
+  ccs:
+    uid: 23000  # XXX 62000
+    gid: 23000
+    groups:
+      - "dialout"
+      - "lsstadm"
+    comment: "CCS Operator Account"
+  ccsadm:
+    uid: 23010  # XXX 62001
+    gid: 23010
+    groups:
+      - "lsstadm"
+    comment: "CCS Administrative Account"

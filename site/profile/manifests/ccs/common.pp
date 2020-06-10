@@ -10,6 +10,7 @@ class profile::ccs::common {
   include profile::ccs::profile_d
   include profile::ccs::sudo
   include profile::ccs::monitoring
+  include profile::ccs::sysctl
 
   include ccs_software
   include java_artisanal

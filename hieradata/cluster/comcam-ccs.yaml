@@ -24,3 +24,6 @@ postfix::configs:
 sudo::configs:
   comcam_ccs_cmd:
     content: "%comcam-ccs-cmd ALL=(ccs) NOPASSWD: ALL"
+
+java_artisanal::package: "jdk1.8"
+java_artisanal::dir: "jdk1.8.0_202-amd64"

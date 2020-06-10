@@ -3,7 +3,7 @@ class profile::sal (
   Array $miniconda_pkgs,
 ) {
 
-  #include ::sal
+  include ::sal2
   include ::miniconda
   include ::python
 

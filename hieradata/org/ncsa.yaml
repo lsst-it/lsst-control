@@ -26,6 +26,7 @@ docker::version: "19.03.4"
 #epel::epel_exclude: "singularity*"
 
 miniconda::config::channels:
+  - lsstts
   - conda-forge
 
 pakrat_client::default_snapshot: "2020-02-19-1582151101"

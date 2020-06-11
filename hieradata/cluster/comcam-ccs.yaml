@@ -37,9 +37,6 @@ sudo::configs:
   comcam_ccs_cmd:
     content: "%comcam-ccs-cmd ALL=(ccs) NOPASSWD: ALL"
 
-## present or latest
-profile::ccs::git::ensure: "present"
-
 ccs_software::dirs:
   "etc":
     path: "/etc/ccs"

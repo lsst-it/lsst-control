@@ -52,14 +52,13 @@ class profile::ccs::daq_interface(
 
   # NM apears to ignore ETHTOOL_OPTS and requires a dispatch script to be used
   # to set device parameters
-  $ptitle = regsubst($title, '::', '/', 'G')
   $file = '30-ethtool'
 
   # XXX we need to have a discussion as to wether or not it is appropriate for
   # a template to live in a profile.
   file { "/etc/NetworkManager/dispatcher.d/${file}":
     ensure  => file,
-    content => epp("${ptitle}/${file}", {'interface' => $interface}),
+    content => epp("${module_name}/ccs/daq_interface/${file}", {'interface' => $interface}),
     mode    => '0755',
   }
 }

@@ -8,8 +8,6 @@ class profile::ccs::clustershell (String $config = '') {
 
   ensure_packages(['clustershell'])
 
-  $ptitle = regsubst($title, '::', '/', 'G')
-
   $dest = '/etc/clustershell/groups.d/local.cfg'
   $src = empty($config) ? {
     true    => "${::site}-local.cfg",
@@ -18,7 +16,7 @@ class profile::ccs::clustershell (String $config = '') {
 
   file { $dest:
       ensure => present,
-      source => "puppet:///modules/${ptitle}/${src}",
+      source => "puppet:///modules/${module_name}/ccs/clustershell/${src}",
     }
 
 }

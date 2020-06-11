@@ -10,13 +10,11 @@
 
 class profile::ccs::sudo {
 
-  $ptitle = regsubst($title, '::', '/', 'G')
-
   $file = 'ccs-sudoers-services'
 
   file { "/etc/cron.hourly/${file}":
     ensure => present,
-    source => "puppet:///modules/${ptitle}/${file}",
+    source => "puppet:///modules/${module_name}/ccs/sudo/${file}",
     mode   => '0755',
   }
 

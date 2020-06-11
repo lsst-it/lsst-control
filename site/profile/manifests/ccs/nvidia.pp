@@ -7,8 +7,6 @@
 ## TODO actually install the driver if possible.
 class profile::ccs::nvidia (String $ensure = 'present') {
 
-  $ptitle = regsubst($title, '::', '/', 'G')
-
   if $ensure =~ /(present|absent)/ {
 
     ## This takes care of the /etc/kernel/postinst.d/ part,
@@ -20,7 +18,7 @@ class profile::ccs::nvidia (String $ensure = 'present') {
 
     file { "/etc/modprobe.d/${file}":
       ensure => $ensure,
-      source => "puppet:///modules/${ptitle}/${file}",
+      source => "puppet:///modules/${module_name}/ccs/nvidia/${file}",
     }
 
 

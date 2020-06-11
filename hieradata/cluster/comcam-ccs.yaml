@@ -1,7 +1,5 @@
 ---
 packages:
-  # required for postfix sasl auth
-  - "cyrus-sasl-plain"
   # ccs stuff
   - "epel-release"
   - "git"

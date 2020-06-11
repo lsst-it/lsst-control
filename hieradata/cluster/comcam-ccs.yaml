@@ -37,31 +37,6 @@ sudo::configs:
   comcam_ccs_cmd:
     content: "%comcam-ccs-cmd ALL=(ccs) NOPASSWD: ALL"
 
-ccs_software::dirs:
-  "etc":
-    path: "/etc/ccs"
-    owner: "ccsadm"
-    group: "ccsadm"
-    mode: "2775"
-  "opt":
-    path: "/opt/lsst"
-  "ccs":
-    path: "/opt/lsst/ccs"
-    owner: "ccs"
-    group: "ccs"
-    mode: "0755"
-  "ccsadm":
-    path: "/opt/lsst/ccsadm"
-    owner: "ccs"
-    group: "ccs"
-    mode: "0755"
-  "log":
-    path: "/var/log/ccs"
-    owner: "root"
-    group: "ccs"
-    ## FIXME
-    mode: "2777"
-
 ccs_software::jdk8::rpm: "jdk-8u202-linux-x64.rpm"
 ccs_software::jdk8::package: "jdk1.8"
 ccs_software::jdk8::dir: "jdk1.8.0_202-amd64"

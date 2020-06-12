@@ -72,8 +72,12 @@ for s; do
     comma=
 
     for a in $actions; do
-        printf "%s \\\\\n/usr/bin/systemctl %s %s" "$comma" "$a" "$s"
-        comma=","
+        ## People wanted to use eg "start name.service" as well as
+        ## "start name", so now we have this duplication.
+        for s2 in $s $s.service; do
+            printf "%s \\\\\n/usr/bin/systemctl %s %s" "$comma" "$a" "$s2"
+            comma=","
+        done
     done
 
     printf "\n\n"

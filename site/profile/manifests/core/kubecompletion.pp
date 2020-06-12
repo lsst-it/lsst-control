@@ -4,12 +4,13 @@
 class profile::core::kubecompletion
 {
   $command = 'kubectl completion bash > /etc/bash_completion.d/kubectl'
-  $runif   = 'test ! -f /etc/bash_completion.d/kubectl'
+  $runif1  = 'test ! -f /etc/bash_completion.d/kubectl'
+  $runif2  = 'test -f /usr/bin/kubectl'
 
   exec { $command:
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $runif,
+    onlyif   => [$runif1, $runif2],
   }
 }

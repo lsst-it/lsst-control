@@ -16,6 +16,8 @@ class profile::ccs::sudo {
     ensure => present,
     source => "puppet:///modules/${module_name}/ccs/sudo/${file}",
     mode   => '0755',
+    owner  => 'root',
+    group  => 'root',
   }
 
 }

@@ -33,3 +33,16 @@ ccs_monit::ping_hosts:
   - "comcam-lion02"
   - "comcam-lion03"
   - "pathfinder-lion01"
+
+ccs_software::services:
+  prod:
+    - "comcam-daq-monitor"
+    - "comcam-fp"
+    # XXX
+    # - "cantaloupe"
+    # - "dsid"
+    # - "dss"
+    # - "emu"
+    # - "comcam-ih"
+    # - "rce"
+    # - "ssu"

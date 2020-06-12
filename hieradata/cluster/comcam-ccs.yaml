@@ -82,3 +82,11 @@ accounts::user_list:
     groups:
       - "lsstadm"
     comment: "CCS Administrative Account"
+
+# XXX should all hosts be a desktop?
+ccs_software::desktop: true
+ccs_software::env: "ComCam"
+ccs_software::installations:
+  8343ad4:
+    aliases:
+      - "puppet-1.0.3"

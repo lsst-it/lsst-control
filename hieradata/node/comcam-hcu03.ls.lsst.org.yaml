@@ -1,2 +1,7 @@
 ---
 ccs_hcu::filter_changer: true
+
+ccs_software::services:
+  prod:
+    - "bonn-shutter"
+    - "comcam-fcs"

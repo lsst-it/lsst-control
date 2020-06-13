@@ -13,14 +13,14 @@ network::interfaces_hash:
   em2:  # comcam-sm
     bootproto: "none"
     defroute: "no"
-    ipaddress: &ip "10.0.0.1"
+    ipaddress: "10.0.0.1"
     ipv6init: "no"
     netmask: "255.255.255.0"
     onboot: "yes"
     type: "Ethernet"
 hosts::host_entries:
   "comcam-sm":
-    ip: *ip
+    ip: "10.0.0.212"
 
 ccs_monit::temp: true
 ccs_monit::ping_hosts:

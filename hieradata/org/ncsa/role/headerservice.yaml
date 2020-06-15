@@ -1,6 +1,7 @@
 ---
 classes:
   - profile::ncsa::allow_qualys_scan
+  - profile::ncsa::allow_ssh_from_bastion
   - profile::ncsa::allow_ssh_from_login
   - profile::ncsa::baseline_cfg
   - profile::ncsa::system_authnz
@@ -8,11 +9,6 @@ classes:
   - profile::sal
     #  - profile::sal_firewall
 
-profile::sal::miniconda_pkgs:
-  - pyyaml
-  - astropy=4.0.1
-  - setuptools==41.0.1
-  - jsonschema==3.0.1
-  - Cython==0.29.12
-  - boto3==1.11.14
-  - moto=1.3.14
+sal2::ospl_version: "6.9.0"
+sal2::ts_idl_version: "1.2.0_5.1.0"
+sal2::ts_salobj_version: "5.14.0"

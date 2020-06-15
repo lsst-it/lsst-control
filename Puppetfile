@@ -88,6 +88,7 @@ mod 'simp/polkit', '6.2.0'
 mod 'simp/simplib', '3.15.3'
 
 # Needed by NCSA (sort into above later)
+#mod 'herculesteam/augeasproviders_sysctl', '2.3.1'  # conflicts duritong/sysctl
 mod 'MiamiOH/pam_access', '1.0.1'
 mod 'bodgit/bodgitlib', '2.0.1'
 mod 'herculesteam/augeasproviders', '2.4.1'
@@ -102,12 +103,12 @@ mod 'herculesteam/augeasproviders_postgresql', '3.1.1'
 mod 'herculesteam/augeasproviders_puppet', '2.2.1'
 mod 'herculesteam/augeasproviders_shellvar', '4.0.0'
 mod 'herculesteam/augeasproviders_ssh', '3.2.1'
-#mod 'herculesteam/augeasproviders_sysctl', '2.3.1'  # conflicts duritong/sysctl
 mod 'herculesteam/augeasproviders_syslog', '2.3.0'
 mod 'inkblot/ipcalc', '2.2.0'
 mod 'lsst/baseline_cfg', git: 'https://github.com/lsst-it/puppet-baseline_cfg.git', branch: 'production'
 mod 'lsst/miniconda', git: 'https://github.com/lsst-it/puppet-miniconda', branch: 'IT-2267/miniconda_for_headerservice'
 mod 'lsst/pakrat_client', git: 'https://github.com/lsst-it/puppet-pakrat_client', branch: 'production'
+mod 'lsst/sal2', git: 'https://github.com/lsst-it/puppet-sal2', branch: 'production'
 mod 'lsst/sshd', git: 'https://github.com/lsst-it/puppet-sshd.git', branch: 'production'
 mod 'lsst/sssd', git: 'https://github.com/lsst-it/puppet-sssd.git', branch: 'production'
 mod 'lsst/system_authnz', git: 'https://github.com/lsst-it/puppet-system_authnz.git', branch: 'production'

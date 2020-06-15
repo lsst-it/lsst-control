@@ -19,7 +19,6 @@ class profile::core::telegraf(
   String $influxdb_url = 'https://it-influxdb.ls.lsst.org:443',
 ) {
   class { '::telegraf':
-    service_ensure         => 'stopped',
     hostname               => $::facts['fqdn'],
     global_tags            => {'site' => $::site},
     purge_config_fragments => true,

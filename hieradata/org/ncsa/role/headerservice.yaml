@@ -7,8 +7,11 @@ classes:
   - profile::ncsa::system_authnz
   - profile::ncsa::xcat_client
   - profile::sal
-    #  - profile::sal_firewall
+  - profile::headerservice_conda
 
 sal2::ospl_version: "6.9.0"
 sal2::ts_idl_version: "1.2.0_5.1.0"
 sal2::ts_salobj_version: "5.14.0"
+
+profile::headerservice_conda::fitsio_version: "1.0.4"
+profile::headerservice_conda::headerservice_version: "2.2.0"

@@ -13,7 +13,7 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-  em2.703:  # 140.252.34.64/26
+  em2.700:  # 140.252.34.0/26
     bootproto: "dhcp"
     defroute: "no"
     nozeroconf: "yes"

@@ -14,6 +14,7 @@ dhcp::ddns_update_style: "none"
 # dnsdomain requires an array but only uses the first element to set the domain
 dhcp::dnsdomain: &dnsdomain
   - "tuc.lsst.cloud"
+  - "tu.lsst.org"
   - "lsst.cloud"
   - "lsst.org"
   - "tuc.noao.edu"
@@ -34,7 +35,7 @@ dhcp::pools:
     network: "140.252.34.0"
     mask: "255.255.255.192"
     gateway: "140.252.34.1"
-    range: "140.252.34.5 140.252.34.62"
+    range: "140.252.34.5 140.252.34.39"
     search_domains: *dnsdomain
   vlan703:
     network: "140.252.34.64"

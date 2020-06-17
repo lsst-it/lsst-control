@@ -15,10 +15,6 @@ dhcp::ddns_update_style: "none"
 dhcp::dnsdomain: &dnsdomain
   - "tuc.lsst.cloud"
   - "tu.lsst.org"
-  - "lsst.cloud"
-  - "lsst.org"
-  - "tuc.noao.edu"
-  - "noao.edu"
 dhcp::nameservers:
   - "140.252.34.140"
   - "1.0.0.1"

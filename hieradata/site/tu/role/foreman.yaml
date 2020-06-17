@@ -41,13 +41,16 @@ dhcp::pools:
     network: "140.252.34.64"
     mask: "255.255.255.192"
     gateway: "140.252.34.65"
-    range: "140.252.34.69 140.252.34.126"
+    range: "140.252.34.69 140.252.34.99"
     search_domains: *dnsdomain
   vlan800:
     network: "140.252.34.128"
     mask: "255.255.255.192"
     gateway: "140.252.34.129"
-    range: "140.252.34.133 140.252.34.190"
+    #Excluding 150 for rancher.tu
+    range:
+      - "140.252.34.133 140.252.34.149"
+      - "140.252.34.151 140.252.34.190"
     search_domains: *dnsdomain
   vlan801:
     network: "140.252.35.0"

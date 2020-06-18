@@ -1,0 +1,13 @@
+---
+classes:
+  - profile::ncsa::allow_qualys_scan
+  - profile::ncsa::allow_ssh_from_bastion
+  - profile::ncsa::allow_ssh_from_login
+  - profile::ncsa::baseline_cfg
+  - profile::ncsa::system_authnz
+  - profile::ncsa::xcat_client
+  - profile::sal
+
+sal2::ospl_version: "6.9.0"
+sal2::ts_idl_version: "1.2.0_5.1.0"
+sal2::ts_salobj_version: "5.14.0"

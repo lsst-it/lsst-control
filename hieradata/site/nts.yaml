@@ -9,6 +9,9 @@ profile::ncsa::puppet_master::firewall_allow_from:
   - "172.30.18.0/23"
   - "172.30.20.0/25"
 
+profile::headerservice_conda::allowed_subnets:
+  - "141.142.238.0/23"
+
 rsyslog::client::actions:
   ncsa_security_loghost:
     type: "omrelp"
@@ -91,6 +94,15 @@ rsyslog::client::global_config:
     value: "64k"
   preserveFQDN:
     value: "on"
+
+sal2::firewall::multicast_cidr: "239.255.0.1/32"
+sal2::firewall::omgdds_subnets:
+  - "141.142.237.0/24"
+  - "141.142.238.0/23"
+sal2::firewall::opensplice_subnets:
+  - "141.142.237.0/24"
+  - "141.142.238.0/23"
+
 
 xcat::network_mgmt: "172.30.18.0/23"
 xcat::network_ipmi: "192.168.28.0/23"

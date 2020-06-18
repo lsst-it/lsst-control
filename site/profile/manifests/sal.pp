@@ -4,6 +4,7 @@ class profile::sal (
 ) {
 
   include ::sal2
+  include ::sal2::firewall
   include ::miniconda
   include ::python
 

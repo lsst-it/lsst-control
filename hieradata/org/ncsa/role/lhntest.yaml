@@ -1,0 +1,17 @@
+---
+classes:
+  - profile::ncsa::allow_qualys_scan
+  - profile::ncsa::allow_ssh_from_bastion
+  - profile::ncsa::allow_ssh_from_login
+  - profile::ncsa::baseline_cfg
+  - profile::ncsa::lhn_target_from_bdc
+  - profile::ncsa::system_authnz
+  - profile::ncsa::xcat_client
+  - profile::sal
+
+profile::ncsa::allow_sudo::groups:
+  - "lsst_admin_tucson"
+
+sal2::ospl_version: "6.9.0"
+sal2::ts_idl_version: "1.2.2_4.1.1_6.0.0"
+sal2::ts_salobj_version: "5.15.0"

@@ -7,7 +7,7 @@ nfs::nfs_v4_export_root_clients: >-
 nfs::nfs_exports_global:
   /data/:
     clients: >-
-      140.252.34.0/23(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+      140.252.34.0/23(ro,fsid=root,insecure,no_subtree_check,async,no_root_squash)
 packages:
   - "perccli"  # from dell repo
 yum::managed_repos:

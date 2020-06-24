@@ -47,23 +47,23 @@ files:
 nfs::client_enabled: true
 nfs::client_mounts:
   /net/home:
-    share: "home"
+    share: "/data/exports-lsp/home"
     server: "nfs01.tu.lsst.org"
     atboot: true
   /net/project:
-    share: "project"
+    share: "/data/exports-lsp/project"
     server: "nfs01.tu.lsst.org"
     atboot: true
   /net/scratch:
-    share: "scratch"
+    share: "/data/exports-lsp/scratch"
     server: "nfs01.tu.lsst.org"
     atboot: true
   /net/datasets:
-    share: "datasets"
+    share: "/data/exports-lsp/datasets"
     server: "nfs01.tu.lsst.org"
     atboot: true
   /net/teststand:
-    share: "teststand"
+    share: "/data/exports-lsp/teststand"
     server: "nfs01.tu.lsst.org"
     atboot: true
 

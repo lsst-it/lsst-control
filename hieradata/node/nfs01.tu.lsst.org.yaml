@@ -1,0 +1,23 @@
+---
+classes:
+  - "profile::core::nfsserver"
+nfs::server_enabled: true
+nfs::nfs_v4_export_root_clients: >-
+  140.252.34.0/23(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+nfs::nfs_exports_global:
+  /data/:
+    clients: >-
+      140.252.34.0/23(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+packages:
+  - "perccli"  # from dell repo
+yum::managed_repos:
+  - "dell"
+yum::repos:
+  "dell":
+    ensure: "present"
+    descr: "Dell"
+    enabled: true
+    baseurl: "https://repo-nexus.lsst.org/nexus/repository/dell/"
+    gpgcheck: false
+    target: "/etc/yum.repos.d/dell.repo"
+profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"

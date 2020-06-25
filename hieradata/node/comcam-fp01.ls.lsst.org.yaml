@@ -38,11 +38,11 @@ ccs_software::services:
   prod:
     - "comcam-daq-monitor"
     - "comcam-fp"
+    - "comcam-ih"
     # XXX
     # - "cantaloupe"
     # - "dsid"
     # - "dss"
     # - "emu"
-    # - "comcam-ih"
     # - "rce"
     # - "ssu"

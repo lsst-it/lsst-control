@@ -105,7 +105,7 @@ mod 'lsst/ccs_sal',
   ref: 'v0.1.0'
 mod 'lsst/ccs_software',
   git: 'https://github.com/lsst-it/puppet-ccs_software.git',
-  branch: 'IT-2306/ccs_software'
+  ref: 'v0.3.0'
 mod 'lsst/maven',
   git: 'https://github.com/lsst-it/puppet-maven.git',
   ref: 'v1.0.0'

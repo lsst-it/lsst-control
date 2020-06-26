@@ -1,0 +1,5 @@
+---
+ccs_software::services:
+  prod:
+    - "rest-server"
+    - "localdb"

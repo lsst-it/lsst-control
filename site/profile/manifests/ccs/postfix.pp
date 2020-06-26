@@ -1,5 +1,6 @@
 class profile::ccs::postfix(
-  String $auth,
+  String        $auth,
+  Array[String] $packages,
 ) {
   include postfix
 
@@ -7,4 +8,7 @@ class profile::ccs::postfix(
     ensure  => 'present',
     content => $auth,
   }
+
+  ensure_packages($packages)
+  Package[$packages] -> Class[postfix]
 }

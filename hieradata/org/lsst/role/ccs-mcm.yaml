@@ -1,4 +1,5 @@
 ---
 classes:
   - "profile::core::common"
-  - "profile::ccs::postfix"
+  - "profile::ccs::common"
+  - "ccs_sal"

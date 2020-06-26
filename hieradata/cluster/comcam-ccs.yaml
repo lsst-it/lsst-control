@@ -1,10 +1,20 @@
 ---
-classes:
-  # XXX this should be included as part of specific ccs roles, once those are known
-  - "profile::ccs::sysctl"
 packages:
-  # required for postfix sasl auth
-  - "cyrus-sasl-plain"
+  # ccs stuff
+  - "epel-release"
+  - "git"
+  - "rsync"
+  - "emacs"
+  - "nano"
+  - "screen"
+  - "attr"
+  - "parallel"
+  - "gcc"
+  ## TODO only on "development" nodes.
+  - "maven"
+  - "centos-release-scl-rh"
+  - "devtoolset-8"
+
 postfix::manage_root_alias: false
 postfix::inet_interfaces: "localhost"
 postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"
@@ -24,3 +34,59 @@ postfix::configs:
 sudo::configs:
   comcam_ccs_cmd:
     content: "%comcam-ccs-cmd ALL=(ccs) NOPASSWD: ALL"
+
+ccs_software::jdk8::rpm: "jdk-8u202-linux-x64.rpm"
+ccs_software::jdk8::package: "jdk1.8"
+ccs_software::jdk8::dir: "jdk1.8.0_202-amd64"
+ccs_software::jdk8::version: "2000:1.8.0_202-fcs"
+
+profile::ccs::clustershell::config: "comcam-local.cfg"
+
+## Temporary, until nexus works.
+ccs_pkgarchive: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"
+
+ccs_database::database: "comcamdbprod"
+
+ccs_sal::rpms:
+  OpenSpliceDDS: "OpenSpliceDDS-6.9.0-5.x86_64.rpm"
+  ts_sal_utils: "ts_sal_utils-4.0.0-1.x86_64.rpm"
+
+ccs_sal::address: "139.229.147.15"
+ccs_sal::dds_domain: "base"
+ccs_sal::instrument: "comcam"
+
+
+ccs_monit::mailhost: "mail.lsst.org"
+ccs_monit::alert:
+  ## comcam-alerts
+  - "x7z0x9c0t2k4r1n1@lsstc.slack.com"
+
+java_artisanal::package: "jdk1.8"
+java_artisanal::dir: "jdk1.8.0_202-amd64"
+
+accounts::group_list:
+  lsstadm:
+    gid: 24000  # XXX reserve GID
+
+accounts::user_list:
+  ccs:
+    uid: 23000  # XXX 62000
+    gid: 23000
+    groups:
+      - "dialout"
+      - "lsstadm"
+    comment: "CCS Operator Account"
+  ccsadm:
+    uid: 23010  # XXX 62001
+    gid: 23010
+    groups:
+      - "lsstadm"
+    comment: "CCS Administrative Account"
+
+# XXX should all hosts be a desktop?
+ccs_software::desktop: true
+ccs_software::env: "ComCam"
+ccs_software::installations:
+  comcam-software-1.0.3:
+    aliases:
+      - "puppet-1.0.3"

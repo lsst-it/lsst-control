@@ -87,6 +87,32 @@ mod 'simp/gnome', '8.1.1'
 mod 'simp/polkit', '6.2.0'
 mod 'simp/simplib', '3.15.3'
 
+mod 'lsst/ccs_database',
+  git: 'https://github.com/lsst-it/puppet-ccs_database.git',
+  ref: 'v0.1.0'
+mod 'puppetlabs/mysql', '10.4.0'
+mod 'lsst/ccs_hcu',
+  git: 'https://github.com/lsst-it/puppet-ccs_hcu.git',
+  ref: 'v0.1.0'
+mod 'lsst/ccs_monit',
+  git: 'https://github.com/lsst-it/puppet-ccs_monit.git',
+  ref: 'v0.1.0'
+mod 'lsst/ccs_mrtg',
+  git: 'https://github.com/lsst-it/puppet-ccs_mrtg.git',
+  ref: 'v0.1.0'
+mod 'lsst/ccs_sal',
+  git: 'https://github.com/lsst-it/puppet-ccs_sal.git',
+  ref: 'v0.1.0'
+mod 'lsst/ccs_software',
+  git: 'https://github.com/lsst-it/puppet-ccs_software.git',
+  ref: 'v0.3.0'
+mod 'lsst/maven',
+  git: 'https://github.com/lsst-it/puppet-maven.git',
+  ref: 'v1.0.0'
+mod 'lsst/java_artisanal',
+  git: 'https://github.com/lsst-it/puppet-java_artisanal.git',
+  ref: 'v1.0.0'
+
 # Needed by NCSA (sort into above later)
 #mod 'herculesteam/augeasproviders_sysctl', '2.3.1'  # conflicts duritong/sysctl
 mod 'MiamiOH/pam_access', '1.0.1'

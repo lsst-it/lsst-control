@@ -1,0 +1,3 @@
+<%- | String $bindir | -%>
+# This file is managed by Puppet; changes may be overwritten.
+export PATH=<%= $bindir %>:$PATH

@@ -13,11 +13,36 @@ network::interfaces_hash:
   em2:  # comcam-sm
     bootproto: "none"
     defroute: "no"
-    ipaddress: &ip "10.0.0.1"
+    ipaddress: "10.0.0.1"
     ipv6init: "no"
     netmask: "255.255.255.0"
     onboot: "yes"
     type: "Ethernet"
 hosts::host_entries:
   "comcam-sm":
-    ip: *ip
+    ip: "10.0.0.212"
+
+ccs_monit::temp: true
+ccs_monit::ping_hosts:
+  - "comcam-db01"
+  - "comcam-dc01"
+  - "comcam-mcm"
+  - "comcam-vw01"
+  - "comcam-hcu03"
+  - "comcam-lion01"
+  - "comcam-lion02"
+  - "comcam-lion03"
+  - "pathfinder-lion01"
+
+ccs_software::services:
+  prod:
+    - "comcam-daq-monitor"
+    - "comcam-fp"
+    - "comcam-ih"
+    # XXX
+    # - "cantaloupe"
+    # - "dsid"
+    # - "dss"
+    # - "emu"
+    # - "rce"
+    # - "ssu"

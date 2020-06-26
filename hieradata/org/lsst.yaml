@@ -21,6 +21,9 @@ lookup_options:
   yum::repos:
     merge:
       strategy: "deep"
+  ccs_software::installations:
+    merge:
+      strategy: "deep"
 
 timezone::timezone: "UTC"
 chrony::leapsectz: "right/UTC"

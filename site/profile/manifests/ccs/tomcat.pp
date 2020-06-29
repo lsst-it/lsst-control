@@ -3,8 +3,9 @@ class profile::ccs::tomcat(
 ) {
   include ::nginx
 
+  $version       = '9.0.36'
   $root_path     = '/opt/tomcat'
-  $catalina_home = "${root_path}/apache-tomcat-9.0.35"
+  $catalina_home = "${root_path}/apache-tomcat-${version}"
   $catalina_base = $catalina_home
 
   file { $root_path:
@@ -12,7 +13,7 @@ class profile::ccs::tomcat(
   }
 
   tomcat::install { $catalina_home:
-    source_url => 'https://downloads.apache.org/tomcat/tomcat-9/v9.0.35/bin/apache-tomcat-9.0.35.tar.gz',
+    source_url => "https://downloads.apache.org/tomcat/tomcat-9/v${version}/bin/apache-tomcat-${version}.tar.gz",
   }
 
   # XXX shockingly, puppetlabs-tomcat is not able to create an init script
@@ -22,6 +23,15 @@ class profile::ccs::tomcat(
   tomcat::instance { 'latest':
     catalina_home  => $catalina_home,
     manage_service => false,
+  }
+
+  file { "${catalina_home}/conf/Catalina/localhost/mrtg.xml":
+    ensure  => "file",
+    owner   => "tomcat",
+    group   => "tomcat",
+    mode    => "0664",
+    content => '<Context docBase="/home/mrtg/comcam" path="/mrtg" />',
+    require => Service['tomcat'],  # creates dirs
   }
 
   # XXX appears to be broken... hardwired to look at $catalina_base/conf/context.xml

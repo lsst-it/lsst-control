@@ -25,13 +25,21 @@ class profile::ccs::tomcat(
     manage_service => false,
   }
 
+  # XXX https://stackoverflow.com/a/8247293
+  # tomcat may take a moment to startup and create the correct directly paths. Basically, we are busy waiting on the tomcat service -- this is UGLY
+  exec { 'wait for tomcat':
+    command     => '/usr/bin/wget --spider --tries 10 --retry-connrefused --no-check-certificate http://localhost:8080',
+    refreshonly => true,
+    subscribe   => Service['tomcat'],
+  }
+
   file { "${catalina_home}/conf/Catalina/localhost/mrtg.xml":
-    ensure  => "file",
-    owner   => "tomcat",
-    group   => "tomcat",
-    mode    => "0664",
+    ensure  => file,
+    owner   => 'tomcat',
+    group   => 'tomcat',
+    mode    => '0664',
     content => '<Context docBase="/home/mrtg/comcam" path="/mrtg" />',
-    require => Service['tomcat'],  # creates dirs
+    require => Exec['wait for tomcat'],  # config dir creation
   }
 
   # XXX appears to be broken... hardwired to look at $catalina_base/conf/context.xml

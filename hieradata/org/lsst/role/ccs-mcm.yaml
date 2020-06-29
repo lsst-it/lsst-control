@@ -16,7 +16,7 @@ nginx::gzip_proxied: "any"
 profile::ccs::tomcat::wars:
   CCSWebTrending.war:
     catalina_base: "/opt/tomcat/apache-tomcat-9.0.35"
-    war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2-snapshots/org/lsst/CCSWebTrending/1.0-SNAPSHOT/CCSWebTrending-1.0-20200429.225521-1.war"
+    war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2-snapshots/org/lsst/CCSWebTrending/2.1-SNAPSHOT/CCSWebTrending-2.1-20200623.212832-4.war"
 files:
   "/opt/tomcat/apache-tomcat-9.0.35/conf/Catalina/localhost/mrtg.xml":
     ensure: "file"

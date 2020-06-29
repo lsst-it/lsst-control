@@ -90,3 +90,7 @@ ccs_software::installations:
   comcam-software-1.0.3:
     aliases:
       - "puppet-1.0.3"
+
+  comcam-software-1.0.4:
+    aliases:
+      - "puppet-1.0.4"

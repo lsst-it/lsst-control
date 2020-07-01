@@ -3,8 +3,63 @@ classes:
   - "profile::core::debugutils"  # XXX mv to permanent role (when known)
   - "profile::ccs::daq_interface"
   - "profile::ccs::sysctl"
+  - "network"
+  - "sysctl::values"
 
 profile::ccs::daq_interface::hwaddr: "f8:f2:1e:56:95:f1"
 profile::ccs::daq_interface::uuid: "02b6f32f-f0a0-4178-9ecf-7bf349c68897"
 profile::ccs::daq_interface::was: "p2p2"
 profile::ccs::daq_interface::mode: "dhcp-client"
+network::interfaces_hash:
+  em1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  p2p1:  # lhn
+    bootproto: "dhcp"
+    defroute: "no"
+    mtu: "9000"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+    iprule:
+      # NM doesn't use table names
+      - "priority 100 from %{facts.networking.interfaces.p2p1.ip} lookup 100"
+network::hostname: "%{facts.fqdn}"
+network::tables_hash:
+  lhn:
+    table_id: 100
+network::mroutes_hash:
+  p2p1:
+    routes:
+      "139.229.140.0/27": "p2p1"
+      "139.229.140.0/22": &via "139.229.140.1"
+      "139.229.144.248/32": *via
+      "141.142.141.64/26": *via
+      "141.142.176.0/24": *via
+      "141.142.180.0/24": *via
+      "141.142.181.0/24": *via
+      "141.142.191.1/32": *via
+      "141.142.191.2/32": *via
+      "198.17.196.0/24": *via  # approximated
+      "198.32.252.0/24": *via  # approximated
+    table: 100
+sysctl::values::args:
+  # disable ipv6
+  net.ipv6.conf.all.disable_ipv6:
+    value: 1
+    target: "/etc/sysctl.d/50-ipv6.conf"
+  net.ipv6.conf.default.disable_ipv6:
+    value: 1
+    target: "/etc/sysctl.d/50-ipv6.conf"
+  # allow icmp messages from lhn device loopback addresses that are not reachable via the lhn
+  net.ipv4.conf.all.rp_filter:
+    value: 0
+    target: "/etc/sysctl.d/92-rp_filter.conf"
+  net.ipv4.conf.default.rp_filter:
+    value: 0
+    target: "/etc/sysctl.d/92-rp_filter.conf"
+  net.ipv4.conf.p2p1.rp_filter:
+    value: 0
+    target: "/etc/sysctl.d/92-rp_filter.conf"

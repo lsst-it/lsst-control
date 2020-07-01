@@ -43,8 +43,12 @@ network::mroutes_hash:
       "141.142.181.0/24": *via
       "141.142.191.1/32": *via
       "141.142.191.2/32": *via
+      # non-routable
+      "10.128.0.0/20": *via
+      "10.125.0.0/20": *via
       "198.17.196.0/24": *via  # approximated
       "198.32.252.0/24": *via  # approximated
+      "199.36.153.8/30": *via
     table: 100
 sysctl::values::args:
   # allow icmp messages from lhn device loopback addresses that are not reachable via the lhn

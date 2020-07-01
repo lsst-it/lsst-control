@@ -1,6 +1,7 @@
 ---
 classes:
   - "profile::core::debugutils"  # XXX mv to permanent role (when known)
+  - "profile::core::disable_ipv6"
   - "profile::ccs::daq_interface"
   - "network"
   - "sysctl::values"
@@ -45,13 +46,6 @@ network::mroutes_hash:
       "198.32.252.0/24": *via  # approximated
     table: 100
 sysctl::values::args:
-  # disable ipv6
-  net.ipv6.conf.all.disable_ipv6:
-    value: 1
-    target: "/etc/sysctl.d/50-ipv6.conf"
-  net.ipv6.conf.default.disable_ipv6:
-    value: 1
-    target: "/etc/sysctl.d/50-ipv6.conf"
   # allow icmp messages from lhn device loopback addresses that are not reachable via the lhn
   net.ipv4.conf.all.rp_filter:
     value: 0

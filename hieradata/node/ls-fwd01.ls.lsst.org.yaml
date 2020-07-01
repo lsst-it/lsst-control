@@ -1,5 +1,6 @@
 ---
 classes:
+  - "profile::core::disable_ipv6"
   - "network"
   - "sysctl::values"
 
@@ -24,12 +25,3 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "yes"
     type: "bridge"
-
-sysctl::values::args:
-  # disable ipv6
-  net.ipv6.conf.all.disable_ipv6:
-    value: 1
-    target: "/etc/sysctl.d/50-ipv6.conf"
-  net.ipv6.conf.default.disable_ipv6:
-    value: 1
-    target: "/etc/sysctl.d/50-ipv6.conf"

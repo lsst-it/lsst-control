@@ -1,6 +1,7 @@
 ---
 classes:
   - "profile::core::ifdown"
+  - "profile::core::velero"
 packages:
   - "perccli"  # from dell repo
 profile::core::ifdown::interface: "em1"

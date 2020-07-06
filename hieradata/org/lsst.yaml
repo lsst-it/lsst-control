@@ -105,24 +105,21 @@ accounts::user_list:
       - "wheel_b"
     sshkeys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDZFV9AL2qPh6CV+DeY32oyg0jCkxkbCHVSPHOoikDkwzwMW/7QQdRI8TJ0h8vpFi15pNyu+n7s7MJSWdg5yUvTCataVpOndDElDz10DaEcGIHNq8/qjEPiHulj/KUoDkEU+yMoWY8jRs3ARyL+6p6LDUBsWpzIY8jMOaEVUJjlVt+0ih2a/D3re0daws6w3mBbmLjitHLS5f2YJKlStIHWCWjMXvP5tqUsvhHvIQH/csBQGXnUiRxR8YSJK9u3CMvTzx6PnC7p98yRCOOrMRQ7yT7vuXyXsk7qoUpArUe/T5nEcwRA/21QVurJ1s3in/mpFI0Ogg5kD7NpFqoTq6itBxbPz7DwaOyjEltJBjQAEvuvfHDJYsBTM3fpfEt5jR8ieuDta1214tr5qVOmR17JonssV7/ksizATm1KkMA7+Q8CWCgrFdZmEMaFjav2U72EWyLRe5utxQV+dWPnxd13NxVu6sgM3CBEC4HzOBMf+upt8tMvjLBjci1sbhCAvvU= github2"
-  athebo_b:  # backup access in case LDAP fails
-    groups:
-      - "wheel_b"
-    sshkeys:
-      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8XVjITG6l2q37rDrL037aB2vDr0HsdXAl1ffmhj9TK adrien@faraday"
   hreinking_b:  # backup access in case LDAP fails
     groups:
       - "wheel_b"
     sshkeys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCn8ssc5uxsHRdhvykrrQWiDMLzpjH/GC2011SyQBpBS43grDpxpGXXSL28LTMRxw3TZhAL4F1szLWR0O7kmKwTcK5OyF/7X/qvZ+w8ZtOxIU/FsSWEXbG2wrkX7fT+SvF/1WS97cu/EacjmFdQUQyYwPcF3MvmBMp3Hk1eSgJA97I7dUiUJjPda2iNFCnaTW9yJIUYfBPvXeO2FePzCUp8ImBZSkst/VLMTrTQ9DFB+Aj0E8npet8JFn2pUxG198yS2MH7tr3s9XKCUcpUXqySQNwIbtNsEKXljpxpQ3ftcaxo3fw0tgjdBr5BDjrBXbVsw+eVz3vwT7GvGHCGTeDP hreinking@NBB40230-1-A.local"
-  lssttech:
+  lssttech: &rm_user
     ensure: "absent"
     managehome: true
     purge_user_home: true
   sysadmin:
-    ensure: "absent"
-    managehome: true
-    purge_user_home: true
+    <<: *rm_user
+  athebo:
+    <<: *rm_user
+  athebo_b:
+    <<: *rm_user
 
 tuned::profile: "latency-performance"
 selinux::mode: "disabled"

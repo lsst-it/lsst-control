@@ -1,4 +1,0 @@
----
-classes:
-  - "profile::default"
-  - "profile::it::influxdb"

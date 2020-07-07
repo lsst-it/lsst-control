@@ -2,7 +2,6 @@
 classes:
   - "profile::core::disable_ipv6"
   - "network"
-  - "sysctl::values"
 
 network::interfaces_hash:
   em1:  # fqdn

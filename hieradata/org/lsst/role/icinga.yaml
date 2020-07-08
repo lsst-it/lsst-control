@@ -1,10 +1,28 @@
 ---
 classes:
-  - "profile::core::common"
   - "icinga2"
+  - "profile::core::common"
+  - "icinga2::pki::ca"
 packages:
   - "bash-completion"
   - "bash-completion-extras"
   - "vim"
-
+icinga2::manage_repo: true
+icinga2::confd: false
+icinga2::constants:
+  ZoneName: "master"
+  TicketSalt: "5a3d695b8aef8f18452fc494593056a4"
+icinga2::feature::api::pki: "none"
+icinga2::feature::api::accept_commands: true
+icinga2::feature::api::accept_config: true
+icinga2::feature::api::endpoints:
+  - "it-icinga.ls.lsst.org"
+  - "foreman.ls.lsst.org"
+icinga2::feature::api::zones:
+  - "master":
+      "endpoints": "it-icinga.ls.lsst.org"
+  - "BDC":
+      "endpoints": "foreman.ls.lsst.org"
+      "parent": "master"
+icinga2::object::zone::global-templates::global: true
 profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"

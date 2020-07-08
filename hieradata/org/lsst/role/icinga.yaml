@@ -52,9 +52,17 @@ icingaweb2::config::groupbackend:
     ldap_base_dn: "cn=groups,cn=accounts,dc=lsst,dc=cloud"
     domain: "lsst.org"
 icingaweb2::config::role:
- 'Admin Users':
+  'Admin Users':
     groups: "icinga-admins"
-    permissions: '*'
+    permissions: "*"
+icingaweb2::module::monitoring:ido_host: "it-icinga.ls.lsst.org"
+icingaweb2::module::monitoring:ido_db_type: "mysql"
+icingaweb2::module::monitoring:ido_db_name: "icinga2"
+icingaweb2::module::monitoring:ido_db_username: "icinga2"
+icingaweb2::module::monitoring:ido_db_password: "supersecret"
+icingaweb2::module::monitoring:commandtransports::icinga2:
+  transport: "api"
+  username: "icingaweb2"
+  password: "supersecret"
 icinga2::object::zone::global-templates::global: true
 profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"
-

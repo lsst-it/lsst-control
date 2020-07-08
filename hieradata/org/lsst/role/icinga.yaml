@@ -1,12 +1,17 @@
 ---
 classes:
   - "icinga2"
-  - "profile::core::common"
   - "icinga2::pki::ca"
+  - "icingaweb2"
+  - "profile::core::common"
 packages:
   - "bash-completion"
   - "bash-completion-extras"
   - "vim"
+  - "git"
+  - "php-common"
+  - "rh-php73"
+  - "rh-php73-php-cli"
 icinga2::manage_repo: true
 icinga2::confd: false
 icinga2::constants:
@@ -24,5 +29,20 @@ icinga2::feature::api::zones:
   - "BDC":
       "endpoints": "foreman.ls.lsst.org"
       "parent": "master"
+icingaweb2::config::resource:
+  "rubinobs":
+    type: "ldap"
+    host: "139.229.135.6"
+    port: "389"
+    ldap_root_dn: "cn=users,cn=accounts,dc=lsst,dc=cloud"
+    ldap_bind_dn: "uid=svc_graylog,cn=users,cn=accounts,dc=lsst,dc=cloud"
+    ldap_bind_pw: "um0l7BmP;$WU"
+icingaweb2::config::authmethod:
+  "ldap-auth":
+    backend: "ldap"
+    resource: "rubinops"
+    ldap_user_class: "user"
+    ldap_filter: "memberof=cn=icinga-admins,cn=groups,cn=accounts,dc=lsst,dc=cloud"
+    ldap_user_name_attribute: "cn"
 icinga2::object::zone::global-templates::global: true
 profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"

@@ -1,0 +1,10 @@
+---
+classes:
+  - "profile::core::common"
+  - "icinga2"
+packages:
+  - "bash-completion"
+  - "bash-completion-extras"
+  - "vim"
+
+profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"

@@ -5,9 +5,8 @@
 #   Enable or disable metrics collection. Metrics collection may be disabled on development
 #   nodes, nodes that don't have uptime requirements, or nodes that should only have minimal
 #   software load.
-class profile::core::common(
-  Boolean $collect_metrics = true,
-) {
+class profile::core::common
+{
   include timezone
   include tuned
   include chrony

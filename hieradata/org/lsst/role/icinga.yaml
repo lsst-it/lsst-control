@@ -3,7 +3,9 @@ classes:
   - "icinga2"
   - "icinga2::pki::ca"
   - "icingaweb2"
+  - "mysql::server"
   - "profile::core::common"
+  - "profile::core::icingaweb2conf"
 packages:
   - "bash-completion"
   - "bash-completion-extras"
@@ -66,3 +68,9 @@ icingaweb2::module::monitoring:commandtransports::icinga2:
   password: "supersecret"
 icinga2::object::zone::global-templates::global: true
 profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"
+mysql::db:
+  "icinga2":
+    user: "myuser"
+    password: "mypass"
+    host: "localhost"
+    grant: ['SELECT', 'UPDATE']

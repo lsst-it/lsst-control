@@ -15,6 +15,13 @@ class profile::core::icinga2conf
   ::apache::namevirtualhost { '*:443': }
   ::apache::listen { '443': }
 
+mysql::db { 'icinga2':
+  user     => 'icinga2',
+  password => 'supersecret',
+  host     => 'localhost',
+  grant    => [ 'ALL' ],
+}
+
 class { '::icinga2::feature::api':
   pki             => 'none',
   accept_commands => true,

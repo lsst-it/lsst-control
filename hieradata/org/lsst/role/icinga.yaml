@@ -6,12 +6,14 @@ classes:
   - "mysql::server"
   - "profile::core::common"
   - "profile::core::icingaweb2conf"
+  - "yum"
 packages:
   - "bash-completion"
   - "bash-completion-extras"
   - "vim"
   - "git"
   - "centos-release-scl"
+  - "https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
 icinga2::manage_repo: true
 icinga2::confd: false
 icinga2::constants:

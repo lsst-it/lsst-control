@@ -51,6 +51,7 @@ mod 'puppetlabs/tomcat', '4.0.0'
 mod 'puppet/nginx', '1.1.0'
 mod 'icinga/icinga2', '2.4.1'
 mod 'icinga/icingaweb2', '2.4.0'
+mod 'puppet/php', '7.1.0'
 # 2019-12-18 athebo: added for DIMM Ubuntu VM, we can remove this when the node is rebuilt
 mod 'attachmentgenie/ufw',
   git: 'https://github.com/attachmentgenie/attachmentgenie-ufw',

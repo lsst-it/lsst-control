@@ -18,6 +18,6 @@ packages:
   - "php73-php-mysqlnd"
   - "php73-php-pgsql"
   - "php73-php-pdo"
-  - "icinga2-ido-mysql"
+  - "nagios-plugins-all"
 
 profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"

@@ -33,6 +33,9 @@ class profile::core::icinga2conf (
   $ssl_fqdn_nossl = "${ssl_fqdn} non-ssl"
   $ssl_fqdn_wssl  = "${ssl_fqdn} ssl"
   $ssl_fqdn_https = "https://${ssl_fqdn}"
+  $command = "sed 's#RewriteBase /icingaweb2/#RewriteBase /#g' /var/tmp/icingaweb2.conf > /var/tmp/transition.conf"
+  $onlyif = 'test ! -f /etc/httpd/conf.d/icingaweb2.conf'
+  $unless = 'grep "RewriteBase /icingaweb2/" /etc/httpd/conf.d/icingaweb2.conf 2>/dev/null'
 
   openssl::certificate::x509 { $ssl_name:
     country      => $ssl_country,
@@ -134,9 +137,16 @@ class profile::core::icinga2conf (
     ensure => file,
     source => 'puppet:///modules/icingaweb2/examples/apache2/for-mod_proxy_fcgi.conf',
   }
+  exec { $command:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $onlyif,
+    unless   => $unless,
+  }
   file { '/etc/httpd/conf.d/icingaweb2.conf':
     ensure => file,
-    source => '/var/tmp/icingaweb2.conf',
+    source => '/var/tmp/transition.conf',
     notify => Service['httpd'],
   }
 }

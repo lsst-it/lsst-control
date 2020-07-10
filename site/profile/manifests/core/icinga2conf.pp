@@ -33,26 +33,34 @@ class profile::core::icinga2conf (
   ::apache::namevirtualhost { '*:443': }
   ::apache::listen { '443': }
 
+  $ssl_fqdn_ssl = "${ssl_fqdn} ssl"
+
   openssl::certificate::x509 { $ssl_name:
     country      => $ssl_country,
     organization => $ssl_org,
     commonname   => $ssl_fqdn,
   }
-
   mysql::db { $icinga_db:
     user     => $icinga_user,
     password => $icinga_pwd,
     host     => 'localhost',
     grant    => [ 'ALL' ],
   }
-
+  apache::vhost { $ssl_fqdn_ssl:
+    servername       => $ssl_fqdn,
+    port             => '443',
+    docroot          => '/usr/share/icingaweb2/public',
+    ssl              => true,
+    ssl_cert         => '/etc/ssl/certs/icinga.crt',
+    ssl_key          => '/etc/ssl/certs/icinga.key',
+    fallbackresource => '/icingaweb2/index.php',
+  }
   class { '::icinga2::feature::idomysql':
         user          => $icinga_user,
         password      => $icinga_pwd,
         database      => $icinga_db,
         import_schema => true,
   }
-
   class { '::icinga2::feature::api':
     pki             => 'none',
     accept_commands => true,

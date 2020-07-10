@@ -16,13 +16,8 @@ class profile::core::icinga2conf (
   $ldap_group_base,
   $ssl_name,
   $ssl_country,
-  $ssl_domain,
+  $ssl_org,
   $ssl_fqdn,
-  $ssl_state,
-  $ssl_locality,
-  $ssl_unit,
-  $ssl_altname,
-  $ssl_email,
 )
 {
   include '::apache'
@@ -38,27 +33,10 @@ class profile::core::icinga2conf (
   ::apache::namevirtualhost { '*:443': }
   ::apache::listen { '443': }
 
-  class { '::openssl':
-    package_ensure         => latest,
-    ca_certificates_ensure => latest,
-  }
-
   openssl::certificate::x509 { $ssl_name:
-    ensure       => present,
     country      => $ssl_country,
-    organization => $ssl_domain,
+    organization => $ssl_org,
     commonname   => $ssl_fqdn,
-    state        => $ssl_state,
-    locality     => $ssl_locality,
-    unit         => $ssl_unit,
-    altnames     => $ssl_altname,
-    email        => $ssl_email,
-    days         => 3456,
-    base_dir     => '/var/www/ssl',
-    owner        => 'www-data',
-    group        => 'www-data',
-    force        => false,
-    cnf_tpl      => 'my_module/cert.cnf.erb'
   }
 
   mysql::db { $icinga_db:

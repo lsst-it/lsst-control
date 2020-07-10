@@ -1,9 +1,5 @@
 ---
 classes:
-  - "icinga2"
-  - "icinga2::pki::ca"
-  - "icingaweb2"
-  - "mysql::server"
   - "profile::core::common"
   - "profile::core::icinga2conf"
   - "profile::core::remi"

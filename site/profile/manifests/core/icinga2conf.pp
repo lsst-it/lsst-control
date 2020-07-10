@@ -7,7 +7,6 @@ class profile::core::icinga2conf
   include '::apache::mod::proxy'
   include '::apache::mod::proxy_fcgi'
   include '::apache::mod::ssl'
-  include '::icinga2'
   include '::icinga2::pki::ca'
   include '::icingaweb2'
   include '::mysql::server'
@@ -15,23 +14,34 @@ class profile::core::icinga2conf
   ::apache::namevirtualhost { '*:443': }
   ::apache::listen { '443': }
 
-mysql::db { 'icinga2':
+$icinga_db = 'icinga2'
+$icinga_hostname = 'it-icinga.ls.lsst.org'
+
+mysql::db { $icinga_db:
   user     => 'icinga2',
   password => 'supersecret',
   host     => 'localhost',
   grant    => [ 'ALL' ],
 }
 
+class { '::icinga2':
+  manage_repo => true,
+  confd       => false,
+  features    => ['checker','mainlog','notification','ido-mysql'],
+  constants   => {
+    'ZoneName' => 'dmz',
+  },
+}
+
 class { '::icinga2::feature::api':
   pki             => 'none',
   accept_commands => true,
-  accept_config   => true,
   endpoints       => {
-    'it-icinga.ls.lsst.org' => {},
+    $icinga_hostname => {},
   },
   zones           => {
     'master' => {
-      'endpoints' => ['it-icinga.ls.lsst.org'],
+      'endpoints' => [$icinga_hostname],
     },
   }
 }
@@ -74,7 +84,7 @@ icingaweb2::config::role { 'Admin User':
 
 class {'icingaweb2::module::monitoring':
   ido_host          => 'localhost',
-  ido_db_name       => 'icinga2',
+  ido_db_name       => $icinga_db,
   ido_db_username   => 'icinga2',
   ido_db_password   => 'supersecret',
   commandtransports => {
@@ -90,4 +100,21 @@ class {'icingaweb2::module::monitoring':
     source => 'puppet:///modules/icingaweb2/examples/apache2/for-mod_proxy_fcgi.conf',
     notify => Service['httpd'],
   }
+
+  $command1 = "mysql -u root ${icinga_db} < /usr/share/icinga2-ido-mysql/schema/mysql.sql; touch /var/lock/icinga.lock"
+  $runif1  = 'test ! -f /var/lock/icinga.lock'
+  exec { $command1:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $runif1,
+  }
+  # $command2 = 'icinga2 feature enable ido-mysql;systemctl restart icinga2'
+  # $runif2   = 'test ! -f /etc/icinga2/features-enabled/ido-mysql.conf'
+  # exec { $command2:
+  #   cwd      => '/var/tmp',
+  #   path     => ['/sbin', '/usr/sbin', '/bin'],
+  #   provider => shell,
+  #   onlyif   => $runif2,
+  # }
 }

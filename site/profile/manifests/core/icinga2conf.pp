@@ -30,10 +30,9 @@ class profile::core::icinga2conf (
   include '::icingaweb2'
   include '::openssl'
 
-  ::apache::namevirtualhost { '*:443': }
-  ::apache::listen { '443': }
-
-  $ssl_fqdn_ssl = "${ssl_fqdn} ssl"
+  $ssl_fqdn_nossl = "${ssl_fqdn} non-ssl"
+  $ssl_fqdn_wssl  = "${ssl_fqdn} ssl"
+  $ssl_fqdn_https = "https://${ssl_fqdn}"
 
   openssl::certificate::x509 { $ssl_name:
     country      => $ssl_country,
@@ -46,14 +45,22 @@ class profile::core::icinga2conf (
     host     => 'localhost',
     grant    => [ 'ALL' ],
   }
-  apache::vhost { $ssl_fqdn_ssl:
-    servername       => $ssl_fqdn,
-    port             => '443',
-    docroot          => '/usr/share/icingaweb2/public',
-    ssl              => true,
-    ssl_cert         => '/etc/ssl/certs/icinga.crt',
-    ssl_key          => '/etc/ssl/certs/icinga.key',
-    fallbackresource => '/icingaweb2/index.php',
+  apache::vhost { $ssl_fqdn_nossl:
+    servername      => $ssl_fqdn,
+    port            => '80',
+    docroot         => '/usr/share/icingaweb2/public',
+    redirect_status => 'permanent',
+    redirect_dest   => $ssl_fqdn_https,
+  }
+  apache::vhost { $ssl_fqdn_wssl:
+    servername    => $ssl_fqdn,
+    port          => '443',
+    docroot       => '/usr/share/icingaweb2/public',
+    ssl           => true,
+    ssl_cert      => '/etc/ssl/certs/icinga.crt',
+    ssl_key       => '/etc/ssl/certs/icinga.key',
+    docroot_owner => 'www-data',
+    docroot_group => 'www-data',
   }
   class { '::icinga2::feature::idomysql':
         user          => $icinga_user,
@@ -123,9 +130,13 @@ class profile::core::icinga2conf (
       }
     }
   }
-    file { '/etc/httpd/conf.d/icingaweb2.conf':
-      ensure => file,
-      source => 'puppet:///modules/icingaweb2/examples/apache2/for-mod_proxy_fcgi.conf',
-      notify => Service['httpd'],
-    }
+  file { '/var/tmp/icingaweb2.conf':
+    ensure => file,
+    source => 'puppet:///modules/icingaweb2/examples/apache2/for-mod_proxy_fcgi.conf',
+  }
+  file { '/etc/httpd/conf.d/icingaweb2.conf':
+    ensure => file,
+    source => '/var/tmp/icingaweb2.conf',
+    notify => Service['httpd'],
+  }
 }

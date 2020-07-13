@@ -1,7 +1,7 @@
 # @summary
 #   Ensure icinga2.conf file
 
-class profile::core::icinga2conf (
+class profile::core::icinga_master (
   $icinga_user,
   $icinga_pwd,
   $icinga_db ,

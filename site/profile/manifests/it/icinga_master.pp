@@ -1,7 +1,7 @@
 # @summary
-#   Ensure icinga2.conf file
+#   Definition of icinga and icinga master module
 
-class profile::core::icinga_master (
+class profile::it::icinga_master (
   $icinga_user,
   $icinga_pwd,
   $icinga_db ,
@@ -97,12 +97,18 @@ class profile::core::icinga_master (
       $icinga_hostname => {},
     },
     zones           => {
-      'master' => {
+      'Chile'  => {
         'endpoints' => [$icinga_hostname],
       },
     }
   }
-
+  class { '::icinga2':
+    confd     => false,
+    constants => {
+      'ZoneName'   => 'Chile',
+      'TicketSalt' => '5a3d695b8aef8f18452fc494593056a4',
+    },
+  }
   icinga2::object::zone { 'global-templates':
     global => true,
   }

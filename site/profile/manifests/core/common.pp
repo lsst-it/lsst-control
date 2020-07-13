@@ -5,7 +5,9 @@
 #   Enable or disable metrics collection. Metrics collection may be disabled on development
 #   nodes, nodes that don't have uptime requirements, or nodes that should only have minimal
 #   software load.
-class profile::core::common
+class profile::core::common(
+  Boolean $collect_metrics = false,
+)
 {
   include timezone
   include tuned
@@ -26,4 +28,9 @@ class profile::core::common
   include rsyslog::config
   include profile::core::hardware
   include profile::core::dielibwrapdie
+  include profile::it::icinga_agent
+
+  if $collect_metrics {
+    include profile::core::telegraf
+  }
 }

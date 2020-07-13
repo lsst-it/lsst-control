@@ -1,6 +1,6 @@
 # Class responsible for the monitoring of servers.
 class profile::it::monitoring {
-  $monitoring_enabled = true
+  $monitoring_enabled = false
   if $monitoring_enabled {
     include telegraf
     $backup_outputs = lookup('backup_outputs', {default_value => undef})

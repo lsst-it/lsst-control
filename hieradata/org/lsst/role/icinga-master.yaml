@@ -19,6 +19,7 @@ packages:
   - "nagios-plugins-all"
 
 profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"
+profile::it::icinga_master::icinga_ip: "139.229.135.27"
 profile::it::icinga_master::icinga_user: "icinga2"
 profile::it::icinga_master::icinga_pwd: "supersecret"
 profile::it::icinga_master::icinga_db: "icinga2"

@@ -2,6 +2,7 @@
 #   Definition of icinga and icinga master module
 
 class profile::it::icinga_master (
+  $icinga_ip,
   $icinga_user,
   $icinga_pwd,
   $icinga_db ,
@@ -95,6 +96,8 @@ class profile::it::icinga_master (
   class { '::icinga2::feature::api':
     pki             => 'none',
     accept_commands => true,
+    ca_host         => $icinga_ip,
+    ticket_salt     => '5a3d695b8aef8f18452fc494593056a4',
     endpoints       => {
       $icinga_hostname => {},
     },

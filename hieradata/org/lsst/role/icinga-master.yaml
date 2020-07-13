@@ -30,7 +30,7 @@ profile::it::icinga_master::ldap_group_base: "cn=groups,cn=accounts,dc=lsst,dc=c
 profile::it::icinga_master::ssl_name: "icinga"
 profile::it::icinga_master::ssl_country: "CL"
 profile::it::icinga_master::ssl_org: "LSST"
-profile::it::icinga_master::ssl_fqdn: "it-icinga.ls.lsst.org"
+profile::it::icinga_master::ssl_fqdn: "icinga-master.ls.lsst.org"
 profile::it::icinga_master::mysql_db: "icinga"
 profile::it::icinga_master::mysql_user: "rubinobs"
 profile::it::icinga_master::mysql_pwd: "icinga-rubinobs"

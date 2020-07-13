@@ -32,7 +32,6 @@ class profile::it::icinga_master (
 
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
-  $ssl_https      = "^/(.*) https://${ssl_fqdn}/icingaweb2/$1 permanent"
 
 ## SSL Certificate Creation
   openssl::certificate::x509 { $ssl_name:
@@ -48,30 +47,17 @@ class profile::it::icinga_master (
     ssl_cert             => $ssl_cert,
     ssl_key              => $ssl_key,
     ssl_redirect         => true,
-    index_files          => [],
+    index_files          => ['index.php'],
     use_default_location => false,
+    www_root             => '/usr/share/icingaweb2/public',
   }
   nginx::resource::location { 'root':
-    location            => '/',
-    server              => 'icingaweb2',
-    index_files         => [],
-    location_cfg_append => {
-      rewrite => "${ssl_https}",
-    }
-  }
-  nginx::resource::location { 'icingaweb2_index':
-    location      => '~ ^/icingaweb2/index\.php(.*)$',
-    server        => 'icingaweb2',
-    ssl           => true,
-    ssl_only      => true,
-    index_files   => [],
-    fastcgi       => '127.0.0.1:9000',
-    fastcgi_index => 'index.php',
-    fastcgi_param => {
-      'ICINGAWEB_CONFIGDIR' => '/etc/icingaweb2',
-      'REMOTE_USER'         => '$remote_user',
-      'SCRIPT_FILENAME'     => '/usr/share/icingaweb2/public/index.php',
-    },
+    location    => '/',
+    server      => 'icingaweb2',
+    try_files   => ['$1', '$uri', '$uri/', '/index.php$is_args$args'],
+    index_files => [],
+    ssl         => true,
+    ssl_only    => true,
   }
   nginx::resource::location { 'icingaweb':
     location       => '~ ^/icingaweb2(.+)?',
@@ -81,6 +67,21 @@ class profile::it::icinga_master (
     server         => 'icingaweb2',
     ssl            => true,
     ssl_only       => true,
+  }
+  nginx::resource::location { 'icingaweb2_index':
+    location      => '~ ^/index\.php(.*)$',
+    server        => 'icingaweb2',
+    ssl           => true,
+    ssl_only      => true,
+    index_files   => [],
+    try_files     => ['$uri =404'],
+    fastcgi       => '127.0.0.1:9000',
+    fastcgi_index => 'index.php',
+    fastcgi_param => {
+      'ICINGAWEB_CONFIGDIR' => '/etc/icingaweb2',
+      'REMOTE_USER'         => '$remote_user',
+      'SCRIPT_FILENAME'     => '/usr/share/icingaweb2/public/index.php',
+    },
   }
 ##MySQL definition
   mysql::db { $mysql_db:

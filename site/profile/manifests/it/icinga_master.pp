@@ -1,12 +1,7 @@
 # @summary
-#   Definition of icinga and icinga master module
+#   Definition of icinga and icingaweb master module
 
 class profile::it::icinga_master (
-  $icinga_ip,
-  $icinga_user,
-  $icinga_pwd,
-  $icinga_db ,
-  $icinga_hostname,
   $ldap_server,
   $ldap_root,
   $ldap_user,
@@ -19,98 +14,140 @@ class profile::it::icinga_master (
   $ssl_country,
   $ssl_org,
   $ssl_fqdn,
+  $mysql_db,
+  $mysql_user,
+  $mysql_pwd,
+  $icinga_satellite,
 )
 {
-  include timezone
-  include tuned
-  include chrony
-  include selinux
-  include firewall
-  include irqbalance
-  include sysstat
-  include epel
-  include sudo
-  include accounts
-  include puppet_agent
-  include resolv_conf
-  include ssh
-  include easy_ipa
-  include augeas
-  include rsyslog
-  include rsyslog::config
-  include profile::core::hardware
-  include profile::core::dielibwrapdie
+  include profile::core::uncommon
   include profile::core::remi
-  include '::apache'
-  include '::apache::mod::proxy'
-  include '::apache::mod::proxy_fcgi'
-  include '::apache::mod::ssl'
-  include '::mysql::server'
-  include '::icinga2'
-  include '::icinga2::repo'
-  include '::icinga2::pki::ca'
-  include '::icingaweb2'
-  include '::openssl'
+  include ::openssl
+  include ::nginx
+  include ::mysql::server
+  include ::icinga2
+  include ::icinga2::repo
+  include ::icinga2::pki::ca
+  include ::icingaweb2
 
-  $ssl_fqdn_nossl = "${ssl_fqdn} non-ssl"
-  $ssl_fqdn_wssl  = "${ssl_fqdn} ssl"
-  $ssl_fqdn_https = "https://${ssl_fqdn}"
-  $command = "sed 's#RewriteBase /icingaweb2/#RewriteBase /#g' /var/tmp/icingaweb2.conf > /var/tmp/transition.conf"
-  $onlyif = 'test ! -f /etc/httpd/conf.d/icingaweb2.conf'
-  $unless = 'grep "RewriteBase /icingaweb2/" /etc/httpd/conf.d/icingaweb2.conf 2>/dev/null'
+  $ssl_cert       = '/etc/ssl/certs/icinga.crt'
+  $ssl_key        = '/etc/ssl/certs/icinga.key'
+  $ssl_https      = "^/(.*) https://${ssl_fqdn}/icingaweb2/$1 permanent"
 
+## SSL Certificate Creation
   openssl::certificate::x509 { $ssl_name:
     country      => $ssl_country,
     organization => $ssl_org,
     commonname   => $ssl_fqdn,
   }
-  mysql::db { $icinga_db:
-    user     => $icinga_user,
-    password => $icinga_pwd,
-    host     => 'localhost',
-    grant    => [ 'ALL' ],
+
+##Nginx Resource Definition
+  nginx::resource::server { 'icingaweb2':
+    server_name          => [$ssl_fqdn],
+    ssl                  => true,
+    ssl_cert             => $ssl_cert,
+    ssl_key              => $ssl_key,
+    ssl_redirect         => true,
+    index_files          => [],
+    use_default_location => false,
   }
-  apache::vhost { $ssl_fqdn_nossl:
-    servername      => $ssl_fqdn,
-    port            => '80',
-    docroot         => '/usr/share/icingaweb2/public',
-    redirect_status => 'permanent',
-    redirect_dest   => $ssl_fqdn_https,
-  }
-  apache::vhost { $ssl_fqdn_wssl:
-    servername    => $ssl_fqdn,
-    port          => '443',
-    docroot       => '/usr/share/icingaweb2/public',
+  # nginx::resource::location { 'root':
+  #   location            => '/',
+  #   server              => 'icingaweb2',
+  #   index_files         => [],
+  #   location_cfg_append => {
+  #     rewrite => "${ssl_https}",
+  #   }
+  # }
+  nginx::resource::location { 'icingaweb2_index':
+    location      => '~ ^/icingaweb2/index\.php(.*)$',
+    server        => 'icingaweb2',
     ssl           => true,
-    ssl_cert      => '/etc/ssl/certs/icinga.crt',
-    ssl_key       => '/etc/ssl/certs/icinga.key',
-    docroot_owner => 'www-data',
-    docroot_group => 'www-data',
+    ssl_only      => true,
+    index_files   => [],
+    fastcgi       => '127.0.0.1:9000',
+    fastcgi_index => 'index.php',
+    fastcgi_param => {
+      'ICINGAWEB_CONFIGDIR' => '/etc/icingaweb2',
+      'REMOTE_USER'         => '$remote_user',
+      'SCRIPT_FILENAME'     => '/usr/share/icingaweb2/public/index.php',
+    },
   }
+  nginx::resource::location { 'icingaweb':
+    location       => '~ ^/icingaweb2(.+)?',
+    location_alias => '/usr/share/icingaweb2/public',
+    try_files      => ['$1', '$uri', '$uri/', '/icingaweb2/index.php$is_args$args'],
+    index_files    => ['index.php'],
+    server         => 'icingaweb2',
+    ssl            => true,
+    ssl_only       => true,
+  }
+##MySQL definition
+  mysql::db { $mysql_db:
+    user     => $mysql_user,
+    password => $mysql_pwd,
+    host     => 'localhost',
+    grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
+  }
+
+##IcingaWeb Config
+  class {'icingaweb2':
+    manage_repo   => true,
+    import_schema => true,
+    db_type       => 'mysql',
+    db_host       => 'localhost',
+    db_port       => 3306,
+    db_username   => $mysql_user,
+    db_password   => $mysql_pwd,
+    conf_user     => 'nginx',
+    require       => Mysql::Db[$mysql_db],
+  }
+
+  class {'icingaweb2::module::monitoring':
+    ido_host          => 'localhost',
+    ido_db_name       => $mysql_db,
+    ido_db_username   => $mysql_user,
+    ido_db_password   => $mysql_pwd,
+    commandtransports => {
+      icinga2 => {
+        transport => 'api',
+        username  => 'root',
+        password  => 'icinga',
+      }
+    }
+  }
+
+##Icinga2 Config
   class { '::icinga2::feature::idomysql':
-        user          => $icinga_user,
-        password      => $icinga_pwd,
-        database      => $icinga_db,
+        user          => $mysql_user,
+        password      => $mysql_pwd,
+        database      => $mysql_db,
         import_schema => true,
   }
   class { '::icinga2::feature::api':
     pki             => 'none',
     accept_commands => true,
-    ca_host         => $icinga_ip,
+    ca_host         => $facts['ipaddress'],
     ticket_salt     => '5a3d695b8aef8f18452fc494593056a4',
     endpoints       => {
-      $icinga_hostname => {},
+      $facts['fqdn']    => {},
+      $icinga_satellite => {},
     },
     zones           => {
-      'Chile'  => {
-        'endpoints' => [$icinga_hostname],
+      'master'    => {
+        'endpoints' => [$facts['fqdn']],
       },
-    }
+      'satellite' => {
+        'endpoints' => [$icinga_satellite],
+        'parent'    => 'master',
+      },
+    },
   }
   icinga2::object::zone { 'global-templates':
     global => true,
   }
 
+##IcingaWeb LDAP Config
   icingaweb2::config::resource{ $ldap_resource:
     type         => 'ldap',
     host         => $ldap_server,
@@ -119,7 +156,6 @@ class profile::it::icinga_master (
     ldap_bind_dn => $ldap_user,
     ldap_bind_pw => $ldap_pwd,
   }
-
   icingaweb2::config::authmethod { 'ldap-auth':
     backend                  => 'ldap',
     resource                 => $ldap_resource,
@@ -128,7 +164,6 @@ class profile::it::icinga_master (
     ldap_user_name_attribute => 'uid',
     order                    => '05',
   }
-
   icingaweb2::config::groupbackend { 'ldap-groups':
     backend                   => 'ldap',
     resource                  => $ldap_resource,
@@ -137,17 +172,15 @@ class profile::it::icinga_master (
     ldap_group_filter         => $ldap_group_filter,
     ldap_base_dn              => $ldap_group_base,
   }
-
   icingaweb2::config::role { 'Admin User':
     groups      => 'icinga-admins',
     permissions => '*',
   }
-
   class {'icingaweb2::module::monitoring':
     ido_host          => 'localhost',
-    ido_db_name       => $icinga_db,
-    ido_db_username   => $icinga_user,
-    ido_db_password   => $icinga_pwd,
+    ido_db_name       => $mysql_db,
+    ido_db_username   => $mysql_user,
+    ido_db_password   => $mysql_pwd,
     commandtransports => {
       icinga2 => {
         transport => 'api',
@@ -155,21 +188,5 @@ class profile::it::icinga_master (
         password  => 'supersecret',
       }
     }
-  }
-  file { '/var/tmp/icingaweb2.conf':
-    ensure => file,
-    source => 'puppet:///modules/icingaweb2/examples/apache2/for-mod_proxy_fcgi.conf',
-  }
-  exec { $command:
-    cwd      => '/var/tmp',
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $onlyif,
-    unless   => $unless,
-  }
-  file { '/etc/httpd/conf.d/icingaweb2.conf':
-    ensure => file,
-    source => '/var/tmp/transition.conf',
-    notify => Service['httpd'],
   }
 }

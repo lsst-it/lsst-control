@@ -51,14 +51,14 @@ class profile::it::icinga_master (
     index_files          => [],
     use_default_location => false,
   }
-  # nginx::resource::location { 'root':
-  #   location            => '/',
-  #   server              => 'icingaweb2',
-  #   index_files         => [],
-  #   location_cfg_append => {
-  #     rewrite => "${ssl_https}",
-  #   }
-  # }
+  nginx::resource::location { 'root':
+    location            => '/',
+    server              => 'icingaweb2',
+    index_files         => [],
+    location_cfg_append => {
+      rewrite => "${ssl_https}",
+    }
+  }
   nginx::resource::location { 'icingaweb2_index':
     location      => '~ ^/icingaweb2/index\.php(.*)$',
     server        => 'icingaweb2',
@@ -91,18 +91,6 @@ class profile::it::icinga_master (
   }
 
 ##IcingaWeb Config
-  class {'icingaweb2':
-    manage_repo   => true,
-    import_schema => true,
-    db_type       => 'mysql',
-    db_host       => 'localhost',
-    db_port       => 3306,
-    db_username   => $mysql_user,
-    db_password   => $mysql_pwd,
-    conf_user     => 'nginx',
-    require       => Mysql::Db[$mysql_db],
-  }
-
   class {'icingaweb2::module::monitoring':
     ido_host          => 'localhost',
     ido_db_name       => $mysql_db,
@@ -175,18 +163,5 @@ class profile::it::icinga_master (
   icingaweb2::config::role { 'Admin User':
     groups      => 'icinga-admins',
     permissions => '*',
-  }
-  class {'icingaweb2::module::monitoring':
-    ido_host          => 'localhost',
-    ido_db_name       => $mysql_db,
-    ido_db_username   => $mysql_user,
-    ido_db_password   => $mysql_pwd,
-    commandtransports => {
-      icinga2 => {
-        transport => 'api',
-        username  => 'icingaweb2',
-        password  => 'supersecret',
-      }
-    }
   }
 }

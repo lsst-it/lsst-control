@@ -39,12 +39,14 @@ class profile::it::icinga_master (
   include rsyslog::config
   include profile::core::hardware
   include profile::core::dielibwrapdie
+  include profile::core::remi
   include '::apache'
   include '::apache::mod::proxy'
   include '::apache::mod::proxy_fcgi'
   include '::apache::mod::ssl'
   include '::mysql::server'
   include '::icinga2'
+  include '::icinga2::repo'
   include '::icinga2::pki::ca'
   include '::icingaweb2'
   include '::openssl'

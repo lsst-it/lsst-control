@@ -4,6 +4,7 @@
 class profile::it::icinga_agent{
 
   include '::icinga2'
+  include '::icinga2::repo'
 
   $icinga_hostname = $facts['fqdn']
 

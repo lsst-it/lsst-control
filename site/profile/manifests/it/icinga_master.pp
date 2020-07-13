@@ -102,13 +102,6 @@ class profile::it::icinga_master (
       },
     }
   }
-  class { '::icinga2':
-    confd     => false,
-    constants => {
-      'ZoneName'   => 'Chile',
-      'TicketSalt' => '5a3d695b8aef8f18452fc494593056a4',
-    },
-  }
   icinga2::object::zone { 'global-templates':
     global => true,
   }

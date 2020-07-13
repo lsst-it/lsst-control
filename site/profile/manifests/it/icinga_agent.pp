@@ -8,6 +8,7 @@ class profile::it::icinga_agent{
   $icinga_hostname = $facts['fqdn']
 
   class { '::icinga2::feature::api':
+    pki           => 'none',
     accept_config => true,
     endpoints     => {
         $icinga_hostname => {},

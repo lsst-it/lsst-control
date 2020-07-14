@@ -28,9 +28,6 @@ class profile::it::icinga_master (
   include ::openssl
   include ::nginx
   include ::mysql::server
-  include ::icinga2
-  include ::icinga2::repo
-  include ::icinga2::pki::ca
   include ::icingaweb2
 
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
@@ -110,21 +107,18 @@ class profile::it::icinga_master (
   }
 
 ##Icinga2 Config
-  class { '::icinga2::feature::idomysql':
-        user          => $mysql_user,
-        password      => $mysql_pwd,
-        database      => $mysql_db,
-        import_schema => true,
-  }
   class { '::icinga2':
-    confd     => false,
-    constants => {
+    manage_repo => true,
+    confd       => false,
+    constants   => {
+      'NodeName'   => $facts['fqdn'],
       'ZoneName'   => 'master',
       'TicketSalt' => $salt,
     },
+    features    => ['checker','mainlog','notification','statusdata','compatlog','command'],
   }
   class { '::icinga2::feature::api':
-    pki             => 'none',
+    pki             => 'puppet',
     accept_commands => true,
     endpoints       => {
       $facts['fqdn']         => {},
@@ -141,6 +135,12 @@ class profile::it::icinga_master (
         'parent'    => 'master',
       },
     },
+  }
+  class { '::icinga2::feature::idomysql':
+        user          => $mysql_user,
+        password      => $mysql_pwd,
+        database      => $mysql_db,
+        import_schema => true,
   }
   icinga2::object::zone { 'global-templates':
     global => true,

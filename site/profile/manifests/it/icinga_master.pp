@@ -26,6 +26,7 @@ class profile::it::icinga_master (
   include ::openssl
   include ::nginx
   include ::mysql::server
+  include ::icinga2
   include ::icinga2::repo
   include ::icinga2::pki::ca
   include ::icingaweb2
@@ -107,12 +108,6 @@ class profile::it::icinga_master (
   }
 
 ##Icinga2 Config
-  class { '::icinga2':
-    confd     => false,
-    constants => {
-      'ZoneName'   => 'master',
-    },
-  }
   class { '::icinga2::feature::idomysql':
         user          => $mysql_user,
         password      => $mysql_pwd,

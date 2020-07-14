@@ -10,16 +10,16 @@ class profile::it::icinga_satellite (
   include ::icinga2::repo
 
   class { '::icinga2':
-  confd       => false,
-  features    => ['checker','mainlog'],
+    confd     => false,
+    features  => ['checker','mainlog'],
     constants => {
       'ZoneName' => 'satellite',
     },
   }
   class { '::icinga2::feature::api':
+    pki             => 'none',
     accept_config   => true,
     accept_commands => true,
-    ca_host         => $icinga_master_ip,
     endpoints       => {
       $facts['fqdn']      => {},
       $icinga_master_fqdn => {

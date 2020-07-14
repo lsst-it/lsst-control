@@ -11,3 +11,5 @@ packages:
 profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"
 profile::it::icinga_satellite::icinga_master_fqdn: "icinga-master.ls.lsst.org"
 profile::it::icinga_satellite::icinga_master_ip: "139.229.135.31"
+profile::it::icinga_satellite::salt: "5a3d695b8aef8f18452fc494593056a4"
+profile::it::icinga_satellite::sat_zone: "BDC"

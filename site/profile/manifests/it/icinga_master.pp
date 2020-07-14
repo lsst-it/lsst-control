@@ -19,6 +19,8 @@ class profile::it::icinga_master (
   $mysql_pwd,
   $icinga_satellite_fqdn,
   $icinga_satellite_ip,
+  $salt,
+  $sat_zone,
 )
 {
   include profile::core::uncommon
@@ -114,6 +116,13 @@ class profile::it::icinga_master (
         database      => $mysql_db,
         import_schema => true,
   }
+  class { '::icinga2':
+    confd     => false,
+    constants => {
+      'ZoneName'   => 'master',
+      'TicketSalt' => $salt,
+    },
+  }
   class { '::icinga2::feature::api':
     pki             => 'none',
     accept_commands => true,
@@ -124,10 +133,10 @@ class profile::it::icinga_master (
       },
     },
     zones           => {
-      'master'    => {
+      'master'  => {
         'endpoints' => [$facts['fqdn']],
       },
-      'satellite' => {
+      $sat_zone => {
         'endpoints' => [$icinga_satellite_fqdn],
         'parent'    => 'master',
       },

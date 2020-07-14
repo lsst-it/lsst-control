@@ -4,6 +4,8 @@
 class profile::it::icinga_satellite (
   $icinga_master_fqdn,
   $icinga_master_ip,
+  $salt,
+  $sat_zone,
 ){
   include profile::core::uncommon
   include profile::core::remi
@@ -13,13 +15,20 @@ class profile::it::icinga_satellite (
     confd     => false,
     features  => ['checker','mainlog'],
     constants => {
-      'ZoneName' => 'satellite',
+      'ZoneName' => $sat_zone,
+    },
+  }
+  class { '::icinga2':
+    confd     => false,
+    constants => {
+      'ZoneName'   => 'master',
+      'TicketSalt' => $salt,
     },
   }
   class { '::icinga2::feature::api':
-    pki             => 'none',
     accept_config   => true,
     accept_commands => true,
+    ca_host         => $icinga_master_ip,
     endpoints       => {
       $facts['fqdn']      => {},
       $icinga_master_fqdn => {

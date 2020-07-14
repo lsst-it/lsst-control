@@ -2,7 +2,8 @@
 #   Same as common but excludes icinga agent
 
 class profile::it::icinga_satellite (
-  $icinga_master,
+  $icinga_master_fqdn,
+  $icinga_master_ip,
 ){
   include profile::core::uncommon
   include profile::core::remi
@@ -10,16 +11,15 @@ class profile::it::icinga_satellite (
   include ::icinga2::repo
 
   class { '::icinga2::feature::api':
-    pki             => 'none',
-    accept_config   => true,
-    accept_commands => true,
-    endpoints       => {
-      $icinga_master => {},
-      $facts['fqdn'] => {},
+    pki       => 'none',
+    ca_host   => $icinga_master_ip,
+    endpoints => {
+      $icinga_master_fqdn => {},
+      $facts['fqdn']      => {},
     },
-    zones           => {
+    zones     => {
       'master'    => {
-        'endpoints'  => [$icinga_master],
+        'endpoints'  => [$icinga_master_fqdn],
       },
       'satellite' => {
         'endpoints' => [$facts['fqdn']],

@@ -17,8 +17,8 @@ class profile::it::icinga_master (
   $mysql_db,
   $mysql_user,
   $mysql_pwd,
-  $icinga_satellite,
-  $salt,
+  $icinga_satellite_fqdn,
+  $icinga_satellite_ip,
 )
 {
   include profile::core::uncommon
@@ -26,7 +26,6 @@ class profile::it::icinga_master (
   include ::openssl
   include ::nginx
   include ::mysql::server
-  include ::icinga2
   include ::icinga2::repo
   include ::icinga2::pki::ca
   include ::icingaweb2
@@ -108,6 +107,12 @@ class profile::it::icinga_master (
   }
 
 ##Icinga2 Config
+  class { '::icinga2':
+    confd     => false,
+    constants => {
+      'ZoneName'   => 'master',
+    },
+  }
   class { '::icinga2::feature::idomysql':
         user          => $mysql_user,
         password      => $mysql_pwd,
@@ -117,18 +122,18 @@ class profile::it::icinga_master (
   class { '::icinga2::feature::api':
     pki             => 'none',
     accept_commands => true,
-    ca_host         => $facts['ipaddress'],
-    ticket_salt     => $salt,
     endpoints       => {
-      $facts['fqdn']    => {},
-      $icinga_satellite => {},
+      $facts['fqdn']         => {},
+      $icinga_satellite_fqdn => {
+        'host'  =>  $icinga_satellite_ip,
+      },
     },
     zones           => {
       'master'    => {
         'endpoints' => [$facts['fqdn']],
       },
       'satellite' => {
-        'endpoints' => [$icinga_satellite],
+        'endpoints' => [$icinga_satellite_fqdn],
         'parent'    => 'master',
       },
     },

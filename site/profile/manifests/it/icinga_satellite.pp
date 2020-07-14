@@ -7,17 +7,26 @@ class profile::it::icinga_satellite (
 ){
   include profile::core::uncommon
   include profile::core::remi
-  include ::icinga2
   include ::icinga2::repo
 
-  class { '::icinga2::feature::api':
-    pki       => 'none',
-    ca_host   => $icinga_master_ip,
-    endpoints => {
-      $icinga_master_fqdn => {},
-      $facts['fqdn']      => {},
+  class { '::icinga2':
+  confd       => false,
+  features    => ['checker','mainlog'],
+    constants => {
+      'ZoneName' => 'satellite',
     },
-    zones     => {
+  }
+  class { '::icinga2::feature::api':
+    accept_config   => true,
+    accept_commands => true,
+    ca_host         => $icinga_master_ip,
+    endpoints       => {
+      $facts['fqdn']      => {},
+      $icinga_master_fqdn => {
+        'host'  =>  $icinga_master_ip,
+      },
+    },
+    zones           => {
       'master'    => {
         'endpoints'  => [$icinga_master_fqdn],
       },

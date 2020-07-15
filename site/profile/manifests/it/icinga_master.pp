@@ -126,46 +126,6 @@ class profile::it::icinga_master (
       }
     }
   }
-
-##Icinga2 Config
-  class { '::icinga2':
-    manage_repo => false,
-    confd       => false,
-    constants   => {
-      'NodeName' => $facts['fqdn'],
-      'ZoneName' => 'master',
-    },
-    features    => ['checker','mainlog','notification','statusdata','compatlog','command'],
-  }
-  class { '::icinga2::feature::api':
-    pki             => 'puppet',
-    accept_commands => true,
-    endpoints       => {
-      'NodeName'             => {},
-      $icinga_satellite_fqdn => {
-        'host'  =>  $icinga_satellite_ip,
-      },
-    },
-    zones           => {
-      'ZoneName'    => {
-        'endpoints' => ['NodeName'],
-      },
-      "${sat_zone}" => {
-        'endpoints' => [$icinga_satellite_fqdn],
-        'parent'    => 'master',
-      },
-    },
-  }
-  class { '::icinga2::feature::idomysql':
-        user          => $mysql_user,
-        password      => $mysql_pwd,
-        database      => $mysql_db,
-        import_schema => true,
-  }
-  icinga2::object::zone { 'global-templates':
-    global => true,
-  }
-
 ##IcingaWeb LDAP Config
   icingaweb2::config::resource{ $ldap_resource:
     type         => 'ldap',
@@ -194,5 +154,44 @@ class profile::it::icinga_master (
   icingaweb2::config::role { 'Admin User':
     groups      => 'icinga-admins',
     permissions => '*',
+  }
+
+##Icinga2 Config
+  class { '::icinga2':
+    manage_repo => false,
+    confd       => false,
+    constants   => {
+      'NodeName' => $facts['fqdn'],
+      'ZoneName' => 'master',
+    },
+    features    => ['checker','mainlog','notification','statusdata','compatlog','command'],
+  }
+  class { '::icinga2::feature::idomysql':
+        user          => $mysql_user,
+        password      => $mysql_pwd,
+        database      => $mysql_db,
+        import_schema => true,
+  }
+  class { '::icinga2::feature::api':
+    pki             => 'puppet',
+    accept_commands => true,
+    endpoints       => {
+      'NodeName'             => {},
+      $icinga_satellite_fqdn => {
+        'host'  =>  $icinga_satellite_ip,
+      },
+    },
+    zones           => {
+      'ZoneName'    => {
+        'endpoints' => ['NodeName'],
+      },
+      "${sat_zone}" => {
+        'endpoints' => [$icinga_satellite_fqdn],
+        'parent'    => 'master',
+      },
+    },
+  }
+  icinga2::object::zone { 'global-templates':
+    global => true,
   }
 }

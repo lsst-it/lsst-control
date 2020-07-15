@@ -110,8 +110,8 @@ class profile::it::icinga_master (
     manage_repo => true,
     confd       => false,
     constants   => {
-      'NodeName'   => $facts['fqdn'],
-      'ZoneName'   => 'master',
+      'NodeName' => $facts['fqdn'],
+      'ZoneName' => 'master',
     },
     features    => ['checker','mainlog','notification','statusdata','compatlog','command'],
   }
@@ -126,10 +126,10 @@ class profile::it::icinga_master (
     },
     zones           => {
       'ZoneName'    => {
-        'endpoints' => [$facts['ipaddress']],
+        'endpoints' => ['NodeName'],
       },
       "${sat_zone}" => {
-        'endpoints' => ["${icinga_satellite_ip}"],
+        'endpoints' => [$icinga_satellite_fqdn],
         'parent'    => 'master',
       },
     },

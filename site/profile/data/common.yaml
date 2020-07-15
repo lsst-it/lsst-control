@@ -1,21 +1,9 @@
 ---
 # Override default hiera lookup options (keep this at the top)
 lookup_options:
-  profile::ncsa::allow_ssh_from_login::allow_groups:
-    merge: "unique"
-  profile::ncsa::allow_ssh_from_bastion::allow_groups:
-    merge: "unique"
-  profile::ncsa::allow_sudo::groups:
-    merge: "unique"
-  profile::ncsa::allow_sudo::users:
-    merge: "unique"
   profile::sal::miniconda_pkgs:
     merge: "unique"
 
 # Everything else goes down below. Sort keys alphabetically
-
-profile::ncsa::allow_ssh_from_bastion::custom_cfg: {}
-
-profile::ncsa::allow_ssh_from_login::custom_cfg: {}
 
 profile::sal::miniconda_pkgs: []

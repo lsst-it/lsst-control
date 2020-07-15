@@ -78,28 +78,6 @@ pakrat_client::repos:
     # if we use GPG key checking, it's probably because we have only CentOS-built RPMs in the repo
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"
 
-profile::ncsa::allow_qualys_scan::ip: "141.142.148.51"
-
-profile::ncsa::allow_ssh_from_bastion::bastion_nodelist:
-  - 10.142.181.15
-  - 141.142.181.15
-profile::ncsa::allow_ssh_from_bastion::allow_groups:
-  - lsst_admin_ncsa
-  - lsst_int_bastion
-
-profile::ncsa::allow_ssh_from_login::login_nodelist:
-  - 10.142.181.16
-  - 10.142.181.17
-  - 10.142.181.18
-  - 141.142.181.16
-  - 141.142.181.17
-  - 141.142.181.18
-profile::ncsa::allow_ssh_from_login::allow_groups:
-  - lsst_admin_ncsa
-
-profile::ncsa::allow_sudo::groups:
-  - lsst_admin_ncsa
-
 python::dev: "present"
 python::pip: "present"
 python::python_pips:

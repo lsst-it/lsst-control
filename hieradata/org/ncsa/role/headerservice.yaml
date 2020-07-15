@@ -14,4 +14,4 @@ sal2::ts_idl_version: "1.2.2_4.1.1_6.0.0"
 sal2::ts_salobj_version: "5.15.0"
 
 profile::headerservice_conda::fitsio_version: "1.0.4"
-profile::headerservice_conda::headerservice_version: "2.3.0"
+profile::headerservice_conda::headerservice_version: "2.3.1"

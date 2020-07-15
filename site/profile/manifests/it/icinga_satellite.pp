@@ -30,10 +30,10 @@ class profile::it::icinga_satellite (
       },
     },
     zones           => {
-      'master'    => {
+      'master'   => {
         'endpoints'  => [$icinga_master_fqdn],
       },
-      'satellite' => {
+      'ZoneName' => {
         'endpoints' => [$facts['fqdn']],
         'parent'    => 'master',
       },

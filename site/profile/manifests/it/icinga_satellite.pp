@@ -4,7 +4,6 @@
 class profile::it::icinga_satellite (
   $icinga_master_fqdn,
   $icinga_master_ip,
-  $salt,
   $sat_zone,
 ){
   include profile::core::uncommon
@@ -17,14 +16,12 @@ class profile::it::icinga_satellite (
     constants => {
       'NodeName'   => $facts[fqdn],
       'ZoneName'   => "${sat_zone}",
-      'TicketSalt' => $salt,
     },
   }
   class { '::icinga2::feature::api':
     pki             => 'puppet',
     accept_config   => true,
     accept_commands => true,
-    ticket_salt     => 'TicketSalt',
     endpoints       => {
       'NodeName'          => {},
       $icinga_master_fqdn => {

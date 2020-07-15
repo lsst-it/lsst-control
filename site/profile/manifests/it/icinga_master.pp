@@ -112,6 +112,7 @@ class profile::it::icinga_master (
 ##IcingaWeb Config
   class { 'icingaweb2':
     manage_repo => true,
+    conf_user   => 'nginx',
   }
   class {'icingaweb2::module::monitoring':
     ido_host          => 'localhost',

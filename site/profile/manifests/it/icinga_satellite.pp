@@ -14,8 +14,8 @@ class profile::it::icinga_satellite (
     confd     => false,
     features  => ['checker','mainlog'],
     constants => {
-      'NodeName'   => $facts[fqdn],
-      'ZoneName'   => "${sat_zone}",
+      'NodeName' => $facts[fqdn],
+      'ZoneName' => "${sat_zone}",
     },
   }
   class { '::icinga2::feature::api':

@@ -170,14 +170,15 @@ class profile::it::icinga_master (
     features    => ['checker','mainlog','notification','statusdata','compatlog','command'],
   }
   class { '::icinga2::feature::idomysql':
-        user          => $mysql_user,
-        password      => $mysql_pwd,
-        database      => $mysql_db,
-        import_schema => true,
-        require       => Mysql::Db[$mysql_db],
+    user          => $mysql_user,
+    password      => $mysql_pwd,
+    database      => $mysql_db,
+    import_schema => true,
+    require       => Mysql::Db[$mysql_db],
   }
   class { '::icinga2::feature::api':
     pki             => 'puppet',
+    accept_config   => true,
     accept_commands => true,
     endpoints       => {
       'NodeName'             => {},

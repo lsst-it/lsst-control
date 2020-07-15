@@ -19,7 +19,6 @@ class profile::it::icinga_master (
   $mysql_pwd,
   $icinga_satellite_fqdn,
   $icinga_satellite_ip,
-  $salt,
   $sat_zone,
 )
 {
@@ -113,14 +112,12 @@ class profile::it::icinga_master (
     constants   => {
       'NodeName'   => $facts['fqdn'],
       'ZoneName'   => 'master',
-      'TicketSalt' => $salt,
     },
     features    => ['checker','mainlog','notification','statusdata','compatlog','command'],
   }
   class { '::icinga2::feature::api':
     pki             => 'puppet',
     accept_commands => true,
-    ticket_salt     => 'TicketSalt',
     endpoints       => {
       'NodeName'             => {},
       $icinga_satellite_fqdn => {

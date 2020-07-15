@@ -120,18 +120,19 @@ class profile::it::icinga_master (
   class { '::icinga2::feature::api':
     pki             => 'puppet',
     accept_commands => true,
+    ticket_salt     => 'TicketSalt',
     endpoints       => {
-      $facts['fqdn']         => {},
+      'NodeName'             => {},
       $icinga_satellite_fqdn => {
         'host'  =>  $icinga_satellite_ip,
       },
     },
     zones           => {
-      'master'  => {
-        'endpoints' => [$facts['fqdn']],
+      'ZoneName'    => {
+        'endpoints' => [$facts['ipaddress']],
       },
-      $sat_zone => {
-        'endpoints' => [$icinga_satellite_fqdn],
+      "${sat_zone}" => {
+        'endpoints' => ["${icinga_satellite_ip}"],
         'parent'    => 'master',
       },
     },

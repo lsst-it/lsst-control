@@ -15,13 +15,15 @@ class profile::it::icinga_agent(
     confd       => false,
     constants   => {
       'NodeName'   => $facts['fqdn'],
+      'ZoneName'   => "${sat_zone}",
+      'TicketSalt' => $salt,
     },
     features    => ['mainlog'],
   }
   class { '::icinga2::feature::api':
     pki           => 'puppet',
     accept_config => true,
-    ticket_salt   => $salt,
+    ticket_salt   => 'TicketSalt',
     endpoints     => {
         $icinga_hostname       => {},
         $icinga_satellite_fqdn => {
@@ -29,12 +31,12 @@ class profile::it::icinga_agent(
       },
       },
       zones       => {
-        "${facts['fqdn']}" => {
-          'endpoints' => [$icinga_hostname],
-          'parent'    => $sat_zone,
-        },
-        $sat_zone          => {
+        'ZoneName'         => {
           'endpoints' => [$icinga_satellite_fqdn],
+        },
+        "${facts['fqdn']}" => {
+          'endpoints' => ['NodeName'],
+          'parent'    => 'ZoneName',
         },
       }
   }

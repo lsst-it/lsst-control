@@ -27,10 +27,29 @@ class profile::it::icinga_master (
   include ::openssl
   include ::nginx
   include ::mysql::server
-  include ::icingaweb2
 
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
+
+  $php_packages = [
+    'php73-php-fpm',
+    'php73-php-ldap',
+    'php73-php-intl',
+    'php73-php-dom',
+    'php73-php-gd',
+    'php73-php-imagick',
+    'php73-php-mysqlnd',
+    'php73-php-pgsql',
+    'php73-php-pdo',
+  ]
+##Ensure php73 packages and services
+  package { $php_packages:
+    ensure => 'present',
+  }
+  service { 'php73-php-fpm':
+    ensure  => 'running',
+    require => Package[$php_packages],
+  }
 
 ## SSL Certificate Creation
   openssl::certificate::x509 { $ssl_name:
@@ -91,6 +110,9 @@ class profile::it::icinga_master (
   }
 
 ##IcingaWeb Config
+  class { 'icingaweb2':
+    manage_repo => true,
+  }
   class {'icingaweb2::module::monitoring':
     ido_host          => 'localhost',
     ido_db_name       => $mysql_db,
@@ -99,15 +121,15 @@ class profile::it::icinga_master (
     commandtransports => {
       icinga2 => {
         transport => 'api',
-        username  => 'root',
-        password  => 'icinga',
+        username  => $mysql_user,
+        password  => $mysql_pwd,
       }
     }
   }
 
 ##Icinga2 Config
   class { '::icinga2':
-    manage_repo => true,
+    manage_repo => false,
     confd       => false,
     constants   => {
       'NodeName' => $facts['fqdn'],

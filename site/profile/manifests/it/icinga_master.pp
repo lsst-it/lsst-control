@@ -109,7 +109,7 @@ class profile::it::icinga_master (
 ##Icinga2 Config
   class { '::icinga2':
     manage_repo => true,
-    confd       => false,
+    confd       => true,
     constants   => {
       'NodeName'   => $facts['fqdn'],
       'ZoneName'   => 'master',

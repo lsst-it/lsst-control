@@ -115,15 +115,17 @@ class profile::it::icinga_master (
     conf_user   => 'nginx',
   }
   class {'icingaweb2::module::monitoring':
+    ensure            => present,
     ido_host          => 'localhost',
+    ido_type          => 'mysql',
     ido_db_name       => $mysql_db,
     ido_db_username   => $mysql_user,
     ido_db_password   => $mysql_pwd,
     commandtransports => {
       icinga2 => {
         transport => 'api',
-        username  => $mysql_user,
-        password  => $mysql_pwd,
+        username  => 'root',
+        password  => 'icinga',
       }
     }
   }
@@ -172,6 +174,7 @@ class profile::it::icinga_master (
         password      => $mysql_pwd,
         database      => $mysql_db,
         import_schema => true,
+        require       => Mysql::Db[$mysql_db],
   }
   class { '::icinga2::feature::api':
     pki             => 'puppet',

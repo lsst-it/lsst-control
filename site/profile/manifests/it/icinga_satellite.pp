@@ -9,6 +9,7 @@ class profile::it::icinga_satellite (
   include profile::core::uncommon
   include profile::core::remi
   include ::icinga2::repo
+  include ::icinga2::pki::ca
 
   class { '::icinga2':
     confd     => false,
@@ -19,7 +20,7 @@ class profile::it::icinga_satellite (
     },
   }
   class { '::icinga2::feature::api':
-    pki             => 'puppet',
+    pki             => 'none',
     accept_config   => true,
     accept_commands => true,
     endpoints       => {

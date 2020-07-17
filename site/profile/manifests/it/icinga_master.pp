@@ -28,8 +28,6 @@ class profile::it::icinga_master (
   include openssl
   include nginx
   include mysql::server
-  include icinga2::pki::ca
-  include icingaweb2
 
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
@@ -109,6 +107,8 @@ class profile::it::icinga_master (
       },
     },
   }
+  include ::icinga2::pki::ca
+
   icinga2::object::zone { 'global-templates':
     global => true,
   }

@@ -20,9 +20,9 @@ class profile::it::icinga_satellite (
     },
   }
   class { '::icinga2::feature::api':
-    pki             => 'none',
     accept_config   => true,
     accept_commands => true,
+    ca_host         => $icinga_master_ip,
     endpoints       => {
       'NodeName'          => {},
       $icinga_master_fqdn => {

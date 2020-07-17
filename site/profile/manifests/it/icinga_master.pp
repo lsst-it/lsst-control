@@ -29,7 +29,7 @@ class profile::it::icinga_master (
   include nginx
   include mysql::server
   include icinga2::pki::ca
-  include ::icingaweb2
+  include icingaweb2
 
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
@@ -68,6 +68,49 @@ class profile::it::icinga_master (
     password => $mysql_pwd,
     host     => 'localhost',
     grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
+  }
+
+##Icinga2 Config
+  class { '::icinga2':
+    manage_repo => true,
+    confd       => false,
+    constants   => {
+      'NodeName'   => $icinga_master_fqdn,
+      'TicketSalt' => $salt,
+      'ZoneName'   => 'master',
+    },
+  }
+  class { '::icinga2::feature::idomysql':
+    user          => $mysql_user,
+    password      => $mysql_pwd,
+    database      => $mysql_db,
+    import_schema => true,
+    require       => Mysql::Db[$mysql_db],
+  }
+  class { '::icinga2::feature::api':
+    pki             => 'none',
+    accept_config   => true,
+    accept_commands => true,
+    endpoints       => {
+      $icinga_master_fqdn    => {
+        'host'  =>  $icinga_master_ip
+      },
+      $icinga_satellite_fqdn => {
+        'host'  =>  $icinga_satellite_ip,
+      },
+    },
+    zones           => {
+      'master'  => {
+        'endpoints'  => [$icinga_master_fqdn],
+      },
+      $sat_zone => {
+        'endpoints' => [$icinga_satellite_fqdn],
+        'parent'    => 'master',
+      },
+    },
+  }
+  icinga2::object::zone { 'global-templates':
+    global => true,
   }
 
 ##IcingaWeb Config
@@ -114,49 +157,6 @@ class profile::it::icinga_master (
   icingaweb2::config::role { 'Admin User':
     groups      => 'icinga-admins',
     permissions => '*',
-  }
-
-##Icinga2 Config
-  class { '::icinga2':
-    manage_repo => false,
-    confd       => false,
-    constants   => {
-      'NodeName'   => $icinga_master_fqdn,
-      'TicketSalt' => $salt,
-      'ZoneName'   => 'master',
-    },
-  }
-  class { '::icinga2::feature::idomysql':
-    user          => $mysql_user,
-    password      => $mysql_pwd,
-    database      => $mysql_db,
-    import_schema => true,
-    require       => Mysql::Db[$mysql_db],
-  }
-  class { '::icinga2::feature::api':
-    pki             => 'none',
-    accept_config   => true,
-    accept_commands => true,
-    endpoints       => {
-      $icinga_master_fqdn    => {
-        'host'  =>  $icinga_master_ip
-      },
-      $icinga_satellite_fqdn => {
-        'host'  =>  $icinga_satellite_ip,
-      },
-    },
-    zones           => {
-      'master'  => {
-        'endpoints'  => [$icinga_master_fqdn],
-      },
-      $sat_zone => {
-        'endpoints' => [$icinga_satellite_fqdn],
-        'parent'    => 'master',
-      },
-    },
-  }
-  icinga2::object::zone { 'global-templates':
-    global => true,
   }
 
 ##Nginx Resource Definition

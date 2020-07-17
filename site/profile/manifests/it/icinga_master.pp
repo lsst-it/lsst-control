@@ -169,7 +169,7 @@ class profile::it::icinga_master (
     constants   => {
       'NodeName'   => $icinga_master_fqdn,
       'TicketSalt' => $salt,
-      'ZoneName'   => $sat_zone,
+      'ZoneName'   => 'master',
     },
   }
   class { '::icinga2::feature::idomysql':
@@ -180,7 +180,7 @@ class profile::it::icinga_master (
     require       => Mysql::Db[$mysql_db],
   }
   class { '::icinga2::feature::api':
-    pki             => 'none',
+    pki             => 'puppet',
     accept_config   => true,
     accept_commands => true,
     endpoints       => {

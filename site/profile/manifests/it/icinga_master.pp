@@ -25,9 +25,9 @@ class profile::it::icinga_master (
 {
   include profile::core::uncommon
   include profile::core::remi
-  include openssl
-  include nginx
-  include mysql::server
+  include ::openssl
+  include ::nginx
+  include ::mysql::server
 
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
@@ -70,7 +70,7 @@ class profile::it::icinga_master (
 
 ##Icinga2 Config
   class { '::icinga2':
-    manage_repo => true,
+    manage_repo => false,
     confd       => false,
     constants   => {
       'NodeName'   => $icinga_master_fqdn,
@@ -114,6 +114,9 @@ class profile::it::icinga_master (
   }
 
 ##IcingaWeb Config
+  class {'icingaweb2':
+    manage_repo    => true,
+  }
   class {'icingaweb2::module::monitoring':
     ensure            => present,
     ido_host          => 'localhost',

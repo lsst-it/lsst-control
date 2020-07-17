@@ -30,7 +30,7 @@ class profile::it::icinga_agent(
       },
       },
       zones         => {
-        'ZoneName'         => {
+        "${sat_zone}"      => {
           'endpoints' => [$icinga_satellite_fqdn],
         },
         "${facts['fqdn']}" => {

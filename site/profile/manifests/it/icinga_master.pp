@@ -25,13 +25,15 @@ class profile::it::icinga_master (
 {
   include profile::core::uncommon
   include profile::core::remi
-  include ::openssl
-  include ::nginx
-  include ::mysql::server
+  include openssl
+  include nginx
+  include mysql::server
+  include icinga2::pki::ca
 
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
-
+  $icinga_master_fqdn  = $facts[fqdn]
+  $icinga_master_ip  = $facts[ipaddress]
   $php_packages = [
     'php73-php-fpm',
     'php73-php-ldap',
@@ -112,7 +114,7 @@ class profile::it::icinga_master (
 
 ##IcingaWeb Config
   class { 'icingaweb2':
-    manage_repo => true,
+    manage_repo => false,
     conf_user   => 'nginx',
   }
   class {'icingaweb2::module::monitoring':
@@ -162,14 +164,13 @@ class profile::it::icinga_master (
 
 ##Icinga2 Config
   class { '::icinga2':
-    manage_repo => false,
+    manage_repo => true,
     confd       => false,
     constants   => {
-      'NodeName'   => $facts['fqdn'],
+      'NodeName'   => $icinga_master_fqdn,
       'TicketSalt' => $salt,
-      'ZoneName'   => 'master',
+      'ZoneName'   => $sat_zone,
     },
-    features    => ['checker','mainlog','notification','statusdata','compatlog','command'],
   }
   class { '::icinga2::feature::idomysql':
     user          => $mysql_user,
@@ -179,22 +180,23 @@ class profile::it::icinga_master (
     require       => Mysql::Db[$mysql_db],
   }
   class { '::icinga2::feature::api':
+    pki             => 'none',
     accept_config   => true,
     accept_commands => true,
-    ca_host         => $facts['ipaddress'],
-    ticket_salt     => 'TicketSalt',
     endpoints       => {
-      'NodeName'             => {},
+      $icinga_master_fqdn    => {
+        'host'  =>  $icinga_master_ip
+      },
       $icinga_satellite_fqdn => {
         'host'  =>  $icinga_satellite_ip,
       },
     },
     zones           => {
-      'ZoneName'    => {
-        'endpoints' => ['NodeName'],
+      'master'  => {
+        'endpoints'  => [$icinga_master_fqdn],
       },
-      "${sat_zone}" => {
-        'endpoints' => [$icinga_satellite_fqdn],
+      $sat_zone => {
+        'endpoints' => [$icinga_master_fqdn],
         'parent'    => 'master',
       },
     },

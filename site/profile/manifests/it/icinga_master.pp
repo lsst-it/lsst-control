@@ -29,6 +29,7 @@ class profile::it::icinga_master (
   include nginx
   include mysql::server
   include icinga2::pki::ca
+  include ::icingaweb2
 
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
@@ -61,49 +62,6 @@ class profile::it::icinga_master (
     commonname   => $ssl_fqdn,
   }
 
-##Nginx Resource Definition
-  nginx::resource::server { 'icingaweb2':
-    server_name          => [$ssl_fqdn],
-    ssl                  => true,
-    ssl_cert             => $ssl_cert,
-    ssl_key              => $ssl_key,
-    ssl_redirect         => true,
-    index_files          => ['index.php'],
-    use_default_location => false,
-    www_root             => '/usr/share/icingaweb2/public',
-  }
-  nginx::resource::location { 'root':
-    location    => '/',
-    server      => 'icingaweb2',
-    try_files   => ['$1', '$uri', '$uri/', '/index.php$is_args$args'],
-    index_files => [],
-    ssl         => true,
-    ssl_only    => true,
-  }
-  nginx::resource::location { 'icingaweb':
-    location       => '~ ^/icingaweb2(.+)?',
-    location_alias => '/usr/share/icingaweb2/public',
-    try_files      => ['$1', '$uri', '$uri/', '/icingaweb2/index.php$is_args$args'],
-    index_files    => ['index.php'],
-    server         => 'icingaweb2',
-    ssl            => true,
-    ssl_only       => true,
-  }
-  nginx::resource::location { 'icingaweb2_index':
-    location      => '~ ^/index\.php(.*)$',
-    server        => 'icingaweb2',
-    ssl           => true,
-    ssl_only      => true,
-    index_files   => [],
-    try_files     => ['$uri =404'],
-    fastcgi       => '127.0.0.1:9000',
-    fastcgi_index => 'index.php',
-    fastcgi_param => {
-      'ICINGAWEB_CONFIGDIR' => '/etc/icingaweb2',
-      'REMOTE_USER'         => '$remote_user',
-      'SCRIPT_FILENAME'     => '/usr/share/icingaweb2/public/index.php',
-    },
-  }
 ##MySQL definition
   mysql::db { $mysql_db:
     user     => $mysql_user,
@@ -113,10 +71,6 @@ class profile::it::icinga_master (
   }
 
 ##IcingaWeb Config
-  class { 'icingaweb2':
-    manage_repo => false,
-    conf_user   => 'nginx',
-  }
   class {'icingaweb2::module::monitoring':
     ensure            => present,
     ido_host          => 'localhost',
@@ -164,7 +118,7 @@ class profile::it::icinga_master (
 
 ##Icinga2 Config
   class { '::icinga2':
-    manage_repo => true,
+    manage_repo => false,
     confd       => false,
     constants   => {
       'NodeName'   => $icinga_master_fqdn,
@@ -180,7 +134,7 @@ class profile::it::icinga_master (
     require       => Mysql::Db[$mysql_db],
   }
   class { '::icinga2::feature::api':
-    pki             => 'puppet',
+    pki             => 'none',
     accept_config   => true,
     accept_commands => true,
     endpoints       => {
@@ -196,12 +150,56 @@ class profile::it::icinga_master (
         'endpoints'  => [$icinga_master_fqdn],
       },
       $sat_zone => {
-        'endpoints' => [$icinga_master_fqdn],
+        'endpoints' => [$icinga_satellite_fqdn],
         'parent'    => 'master',
       },
     },
   }
   icinga2::object::zone { 'global-templates':
     global => true,
+  }
+
+##Nginx Resource Definition
+  nginx::resource::server { 'icingaweb2':
+    server_name          => [$ssl_fqdn],
+    ssl                  => true,
+    ssl_cert             => $ssl_cert,
+    ssl_key              => $ssl_key,
+    ssl_redirect         => true,
+    index_files          => ['index.php'],
+    use_default_location => false,
+    www_root             => '/usr/share/icingaweb2/public',
+  }
+  nginx::resource::location { 'root':
+    location    => '/',
+    server      => 'icingaweb2',
+    try_files   => ['$1', '$uri', '$uri/', '/index.php$is_args$args'],
+    index_files => [],
+    ssl         => true,
+    ssl_only    => true,
+  }
+  nginx::resource::location { 'icingaweb':
+    location       => '~ ^/icingaweb2(.+)?',
+    location_alias => '/usr/share/icingaweb2/public',
+    try_files      => ['$1', '$uri', '$uri/', '/icingaweb2/index.php$is_args$args'],
+    index_files    => ['index.php'],
+    server         => 'icingaweb2',
+    ssl            => true,
+    ssl_only       => true,
+  }
+  nginx::resource::location { 'icingaweb2_index':
+    location      => '~ ^/index\.php(.*)$',
+    server        => 'icingaweb2',
+    ssl           => true,
+    ssl_only      => true,
+    index_files   => [],
+    try_files     => ['$uri =404'],
+    fastcgi       => '127.0.0.1:9000',
+    fastcgi_index => 'index.php',
+    fastcgi_param => {
+      'ICINGAWEB_CONFIGDIR' => '/etc/icingaweb2',
+      'REMOTE_USER'         => '$remote_user',
+      'SCRIPT_FILENAME'     => '/usr/share/icingaweb2/public/index.php',
+    },
   }
 }

@@ -179,9 +179,10 @@ class profile::it::icinga_master (
     require       => Mysql::Db[$mysql_db],
   }
   class { '::icinga2::feature::api':
-    pki             => 'none',
     accept_config   => true,
     accept_commands => true,
+    ca_host         => $facts['ipaddress'],
+    ticket_salt     => 'TicketSalt',
     endpoints       => {
       'NodeName'             => {},
       $icinga_satellite_fqdn => {

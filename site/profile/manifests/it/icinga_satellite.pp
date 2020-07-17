@@ -5,6 +5,7 @@ class profile::it::icinga_satellite (
   $icinga_master_fqdn,
   $icinga_master_ip,
   $sat_zone,
+  $salt,
 ){
   include profile::core::uncommon
   include profile::core::remi
@@ -22,6 +23,7 @@ class profile::it::icinga_satellite (
     accept_config   => true,
     accept_commands => true,
     ca_host         => $icinga_master_ip,
+    ticket_salt     => $salt,
     endpoints       => {
       'NodeName'          => {},
       $icinga_master_fqdn => {

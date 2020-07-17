@@ -20,6 +20,7 @@ class profile::it::icinga_master (
   $icinga_satellite_fqdn,
   $icinga_satellite_ip,
   $sat_zone,
+  $salt,
 )
 {
   include profile::core::uncommon
@@ -164,8 +165,9 @@ class profile::it::icinga_master (
     manage_repo => false,
     confd       => false,
     constants   => {
-      'NodeName' => $facts['fqdn'],
-      'ZoneName' => 'master',
+      'NodeName'   => $facts['fqdn'],
+      'TicketSalt' => $salt,
+      'ZoneName'   => 'master',
     },
     features    => ['checker','mainlog','notification','statusdata','compatlog','command'],
   }
@@ -177,7 +179,7 @@ class profile::it::icinga_master (
     require       => Mysql::Db[$mysql_db],
   }
   class { '::icinga2::feature::api':
-    pki             => 'puppet',
+    pki             => 'none',
     accept_config   => true,
     accept_commands => true,
     endpoints       => {

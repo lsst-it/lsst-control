@@ -19,7 +19,6 @@ class profile::it::icinga_agent(
     features    => ['mainlog'],
   }
   class { '::icinga2::feature::api':
-    pki           => 'icinga2',
     ca_host       => '139.229.135.31',
     accept_config => true,
     endpoints     => {

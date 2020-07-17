@@ -8,15 +8,14 @@ class profile::it::icinga_satellite (
 ){
   include profile::core::uncommon
   include profile::core::remi
-  include ::icinga2::repo
-  include ::icinga2::pki::ca
 
   class { '::icinga2':
-    confd     => false,
-    features  => ['checker','mainlog'],
-    constants => {
+    manage_repo => true,
+    confd       => false,
+    features    => ['checker','mainlog'],
+    constants   => {
       'NodeName' => $facts[fqdn],
-      'ZoneName' => "${sat_zone}",
+      'ZoneName' => $sat_zone,
     },
   }
   class { '::icinga2::feature::api':

@@ -77,6 +77,7 @@ class profile::it::icinga_master (
       'TicketSalt' => $salt,
       'ZoneName'   => 'master',
     },
+    features    => ['checker','mainlog','notification','statusdata','compatlog','command','syslog'],
   }
   class { '::icinga2::feature::idomysql':
     user          => $mysql_user,

@@ -129,10 +129,10 @@ class profile::it::icinga_master (
     ido_db_username   => $mysql_user,
     ido_db_password   => $mysql_pwd,
     commandtransports => {
-      icinga2 => {
+      $mysql_db => {
         transport => 'api',
-        username  => 'root',
-        password  => 'icinga',
+        username  => $mysql_user,
+        password  => $mysql_pwd,
       }
     }
   }

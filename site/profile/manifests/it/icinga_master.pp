@@ -120,7 +120,7 @@ class profile::it::icinga_master (
     ensure      => present,
     password    => $api_pwd,
     permissions => [ 'status/query', 'actions/*', 'objects/modify/*', 'objects/query/*' ],
-    target      => '/etc/icinga2/conf.d/api-users.conf',
+    target      => '/etc/icinga2/features-enabled/api-users.conf',
   }
   icinga2::object::zone { 'global-templates':
     global => true,

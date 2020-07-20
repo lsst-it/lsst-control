@@ -29,6 +29,6 @@ profile::it::icinga_master::icinga_satellite_fqdn: "icinga-satellite.ls.lsst.org
 profile::it::icinga_master::icinga_satellite_ip: "139.229.135.28"
 profile::it::icinga_master::sat_zone: "BDC"
 profile::it::icinga_master::salt: "5a3d695b8aef8f18452fc494593056a4"
-profile::it::icinga_master::api_name: "rubin_api"
+profile::it::icinga_master::api_name: "icinga2"
 profile::it::icinga_master::api_user: "rubin"
 profile::it::icinga_master::api_pwd: "rubin-pwd"

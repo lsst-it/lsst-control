@@ -77,7 +77,7 @@ class profile::it::icinga_master (
       'TicketSalt' => $salt,
       'ZoneName'   => 'master',
     },
-    features    => ['checker','mainlog','notification','statusdata','compatlog','command'],
+    features    => ['checker','mainlog','statusdata','compatlog','command'],
   }
   class { '::icinga2::feature::idomysql':
     user          => $mysql_user,
@@ -109,7 +109,10 @@ class profile::it::icinga_master (
     },
   }
   include ::icinga2::pki::ca
-
+  class { '::icinga2::feature::notification':
+    ensure    => present,
+    enable_ha => true,
+  }
   icinga2::object::zone { 'global-templates':
     global => true,
   }

@@ -3,9 +3,9 @@ class profile::it::graylog {
   package => 'java-1.8.0-openjdk',
     }
 class {'mongodb::globals':
-  manage_package_repo => true,
+  manage_package_repo => false,
   manage_package      => true,
-  version             => '3.6',
+#  version             => '3.6',
   }
 class { 'mongodb::server':
   bind_ip => ['127.0.0.1'],

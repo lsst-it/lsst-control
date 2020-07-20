@@ -148,7 +148,7 @@ class { '::graylog::server':
   },
 }
 
-# $graylog_java_opts = lookup("graylog_java_opts")
+$graylog_java_opts = lookup("graylog_java_opts")
 # Update graylog JAVA_OPTS to use the customized version including the self-signed cert.
   file_line{ "Update Graylog's JAVA_OPTS":
     ensure => present,

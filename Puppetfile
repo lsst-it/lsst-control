@@ -60,18 +60,12 @@ mod 'aboe/chrony',
   git: 'https://github.com/lsst-it/puppet-chrony',
   ref: 'ffa20883a41d7177da0d09f259b52ca463b778d8'
 mod 'puppet/firewalld', '4.2.2'
-mod 'elastic/elasticsearch', '6.4.0'
-mod 'elastic/elastic_stack', '6.3.1'
-mod 'golja/influxdb', '4.0.0'
-mod 'graylog/graylog', '0.9.0'
 mod 'puppet/archive', '4.1.0'
-mod 'puppet/grafana', '6.1.0'
 mod 'puppetlabs/concat', '6.0.0'
 mod 'puppetlabs/inifile', '3.0.0'
 mod 'puppetlabs/java', '6.2.0'
 mod 'puppetlabs/stdlib', '6.0.0'
 mod 'puppetlabs/vcsrepo', '3.0.0'
-mod 'puppet/mongodb', '3.1.0'
 mod 'puppet/rsyslog', '4.0.0'
 mod 'puppet/ssh_keygen', '4.0.0'
 

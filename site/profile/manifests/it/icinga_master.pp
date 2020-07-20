@@ -67,7 +67,7 @@ class profile::it::icinga_master (
   mysql::db { $mysql_db:
     user     => $mysql_user,
     password => $mysql_pwd,
-    host     => 'localhost',
+    host     => $icinga_master_ip,
     grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
   }
 

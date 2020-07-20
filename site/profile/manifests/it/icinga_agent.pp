@@ -30,21 +30,21 @@ class profile::it::icinga_agent(
       $icinga_master_fqdn => {
         'host'  =>  $icinga_master_ip
       },
-      # $icinga_satellite_fqdn => {
-      #   'host'  =>  $icinga_satellite_ip,
-      #},
+      $icinga_satellite_fqdn => {
+        'host'  =>  $icinga_satellite_ip,
+      },
     },
     zones           => {
       'master'           => {
         'endpoints'  => [$icinga_master_fqdn],
       },
-      # $sat_zone          => {
-      #   'endpoints' => [$icinga_satellite_fqdn],
-      #   'parent'    => 'master',
-      # },
+      $sat_zone          => {
+        'endpoints' => [$icinga_satellite_fqdn],
+        'parent'    => 'master',
+      },
       $icinga_agent_fqdn => {
         'endpoints' => [$icinga_agent_fqdn],
-        'parent'    => 'master',
+        'parent'    => $sat_zone,
       },
     }
   }

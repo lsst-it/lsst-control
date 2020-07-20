@@ -47,6 +47,11 @@ class profile::it::icinga_master (
     'php73-php-pgsql',
     'php73-php-pdo',
   ]
+  $override_options = {
+  'mysqld' => {
+    'bind_address' => '0.0.0.0',
+  }
+}
 ##Ensure php73 packages and services
   package { $php_packages:
     ensure => 'present',
@@ -68,6 +73,7 @@ class profile::it::icinga_master (
     root_password           => $mysql_root,
     remove_default_accounts => true,
     restart                 => true,
+    override_options        => $override_options,
   }
   mysql::db { $mysql_db:
     user     => $mysql_user,
@@ -91,7 +97,7 @@ class profile::it::icinga_master (
     commandtransports => {
       $api_name => {
         transport => 'api',
-        host      => 'localhost',
+        host      => $icinga_master_ip,
         port      => 5565,
         username  => $api_user,
         password  => $api_pwd,
@@ -143,6 +149,7 @@ class profile::it::icinga_master (
     user          => $mysql_user,
     password      => $mysql_pwd,
     database      => $mysql_db,
+    host          => $icinga_master_ip,
     import_schema => true,
     require       => Mysql::Db[$mysql_db],
   }

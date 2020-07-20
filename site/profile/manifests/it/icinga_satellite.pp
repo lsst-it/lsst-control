@@ -40,6 +40,10 @@ class profile::it::icinga_satellite (
       },
     },
   }
+  class { '::icinga2::feature::notification':
+    ensure    => present,
+    enable_ha => true,
+  }
   icinga2::object::zone { 'global-templates':
     global => true,
   }

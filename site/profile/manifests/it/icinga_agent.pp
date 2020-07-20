@@ -24,10 +24,10 @@ class profile::it::icinga_agent(
     ca_host         => $icinga_master_ip,
     ticket_salt     => $salt,
     endpoints       => {
-      $icinga_agent_fqdn  => {
+      $icinga_agent_fqdn     => {
         'host'  =>  $icinga_agent_ip
       },
-      $icinga_master_fqdn => {
+      $icinga_master_fqdn    => {
         'host'  =>  $icinga_master_ip
       },
       $icinga_satellite_fqdn => {
@@ -48,7 +48,10 @@ class profile::it::icinga_agent(
       },
     }
   }
-
+  class { '::icinga2::feature::notification':
+    ensure    => present,
+    enable_ha => true,
+  }
   icinga2::object::zone { 'global-templates':
     global => true,
   }

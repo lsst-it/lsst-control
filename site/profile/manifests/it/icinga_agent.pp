@@ -2,7 +2,6 @@
 #   Icinga agent creation for metric collections
 
 class profile::it::icinga_agent(
-  String $sat_zone = 'BDC',
   String $icinga_satellite_ip = '139.229.135.28',
   String $icinga_satellite_fqdn = 'icinga-satellite.ls.lsst.org',
   String $salt = '5a3d695b8aef8f18452fc494593056a4',
@@ -10,8 +9,8 @@ class profile::it::icinga_agent(
   String $icinga_master_fqdn = 'icinga-master.ls.lsst.org',
 )
 {
-  $icinga_agent_fqdn = $facts[fqdn]
-  $icinga_agent_ip = $facts[ipaddress]
+  $icinga_agent_fqdn = $facts['fqdn']
+  $icinga_agent_ip = $facts['ipaddress']
 
   class { '::icinga2':
     manage_repo => true,
@@ -38,13 +37,13 @@ class profile::it::icinga_agent(
       'master'           => {
         'endpoints'  => [$icinga_master_fqdn],
       },
-      $sat_zone          => {
+      'satellite'        => {
         'endpoints' => [$icinga_satellite_fqdn],
         'parent'    => 'master',
       },
       $icinga_agent_fqdn => {
         'endpoints' => [$icinga_agent_fqdn],
-        'parent'    => $sat_zone,
+        'parent'    => 'satellite',
       },
     }
   }

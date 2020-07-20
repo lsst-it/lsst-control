@@ -20,7 +20,6 @@ class profile::it::icinga_master (
   $mysql_root,
   $icinga_satellite_fqdn,
   $icinga_satellite_ip,
-  $sat_zone,
   $salt,
   $api_name,
   $api_user,
@@ -166,10 +165,10 @@ class profile::it::icinga_master (
       },
     },
     zones           => {
-      'master'  => {
+      'master'    => {
         'endpoints'  => [$icinga_master_fqdn],
       },
-      $sat_zone => {
+      'satellite' => {
         'endpoints' => [$icinga_satellite_fqdn],
         'parent'    => 'master',
       },

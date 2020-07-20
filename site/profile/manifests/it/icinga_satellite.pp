@@ -4,19 +4,20 @@
 class profile::it::icinga_satellite (
   $icinga_master_fqdn,
   $icinga_master_ip,
-  $sat_zone,
   $salt,
 ){
   include profile::core::uncommon
   include profile::core::remi
+
+  $icinga_satellite_ip = $facts['ipaddress']
+  $icinga_satellite_fqdn = $facts['fqdn']
 
   class { '::icinga2':
     manage_repo => true,
     confd       => false,
     features    => ['checker','mainlog'],
     constants   => {
-      'NodeName' => $facts[fqdn],
-      'ZoneName' => $sat_zone,
+      'ZoneName' => 'satellite',
     },
   }
   class { '::icinga2::feature::api':
@@ -25,17 +26,19 @@ class profile::it::icinga_satellite (
     ca_host         => $icinga_master_ip,
     ticket_salt     => $salt,
     endpoints       => {
-      'NodeName'          => {},
-      $icinga_master_fqdn => {
+      $icinga_satellite_fqdn => {
+        'host' => $icinga_satellite_ip,
+      },
+      $icinga_master_fqdn    => {
         'host'  =>  $icinga_master_ip,
       },
     },
     zones           => {
-      'master'   => {
+      'master'    => {
         'endpoints'  => [$icinga_master_fqdn],
       },
-      'ZoneName' => {
-        'endpoints' => ['NodeName'],
+      'satellite' => {
+        'endpoints' => [$icinga_satellite_fqdn],
         'parent'    => 'master',
       },
     },

@@ -33,3 +33,4 @@ elasticsearch::instance { 'graylog':
 class { 'graylog::repository':
   version => '3.0'
 }
+}

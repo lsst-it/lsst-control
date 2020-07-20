@@ -1,5 +1,5 @@
 ---
 classes:
 #  - "profile::default"
-  - "profile::it::po"
+  - "profile::it::po"  # temporary for testing
   - "profile::it::graylog"

@@ -1,4 +1,5 @@
 ---
 classes:
 #  - "profile::default"
-  - "profile::it::graylog"  
+  - "profile::it::po"
+  - "profile::it::graylog"

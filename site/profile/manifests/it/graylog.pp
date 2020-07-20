@@ -2,6 +2,9 @@ class profile::it::graylog {
   class { 'java' :
   package => 'java-1.8.0-openjdk',
     }
+# I don't why but this exact config retured error initially.
+# I had to specify version first with manage_package_repo to true
+# Then change things back to original and it installed.    
 class {'mongodb::globals':
   manage_package_repo => false,
   manage_package      => true,

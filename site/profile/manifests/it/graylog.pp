@@ -19,7 +19,7 @@ class { 'elastic_stack::repo':
 class { 'elasticsearch':
   version      => '6.3.1',
   manage_repo  => true,
-    vm_options => [
+    jvm_options => [
       "-Xms${xms}",
       "-Xmx${xmx}"
     ]

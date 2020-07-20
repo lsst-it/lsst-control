@@ -153,7 +153,7 @@ class { '::graylog::server':
   file_line{ "Update Graylog's JAVA_OPTS":
     ensure => present,
     path => "/etc/sysconfig/graylog-server",
-    ine => "GRAYLOG_SERVER_JAVA_OPTS=\"${graylog_java_opts} -Djavax.net.ssl.trustStore=${ssl_config_dir}/${graylog_cacert_filename}\"",
+    line => "GRAYLOG_SERVER_JAVA_OPTS=\"${graylog_java_opts} -Djavax.net.ssl.trustStore=${ssl_config_dir}/${graylog_cacert_filename}\"",
     match => "GRAYLOG_SERVER_JAVA_OPTS*",
     require => Class["graylog::server"]
   }

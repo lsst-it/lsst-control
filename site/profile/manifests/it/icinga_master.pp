@@ -128,7 +128,8 @@ class profile::it::icinga_master (
 
 ##IcingaWeb Config
   class {'icingaweb2':
-    manage_repo    => true,
+    manage_repo   => true,
+    logging_level => 'DEBUG',
   }
   class {'icingaweb2::module::monitoring':
     ensure            => present,

@@ -1,0 +1,4 @@
+---
+classes:
+  - "profile::it::default"
+  - "profile::it::graylog"  

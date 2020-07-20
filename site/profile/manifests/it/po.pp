@@ -1,11 +1,11 @@
 
 class profile::it::po {
 # Remove these packages for now
-Package { ensure => 'purged' }
+# Package { ensure => 'purged' }
 
-  $enhancers = [ 'sssd', 'realmd', ]
+#   $enhancers = [ 'sssd', 'realmd', ]
 
-package { $enhancers: }
+# package { $enhancers: }
 # Install for now
 Package { ensure => 'installed' }
 

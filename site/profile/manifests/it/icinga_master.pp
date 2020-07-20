@@ -21,6 +21,9 @@ class profile::it::icinga_master (
   $icinga_satellite_ip,
   $sat_zone,
   $salt,
+  $api_name,
+  $api_user,
+  $api_pwd,
 )
 {
   include profile::core::uncommon
@@ -113,6 +116,12 @@ class profile::it::icinga_master (
     ensure    => present,
     enable_ha => true,
   }
+  icinga2::object::apiuser { $api_user:
+    ensure      => present,
+    password    => $api_pwd,
+    permissions => [ 'status/query', 'actions/*', 'objects/modify/*', 'objects/query/*' ],
+    target      => '/etc/icinga2/conf.d/api-users.conf',
+  }
   icinga2::object::zone { 'global-templates':
     global => true,
   }
@@ -129,10 +138,10 @@ class profile::it::icinga_master (
     ido_db_username   => $mysql_user,
     ido_db_password   => $mysql_pwd,
     commandtransports => {
-      $mysql_db => {
+      $api_name => {
         transport => 'api',
-        username  => $mysql_user,
-        password  => $mysql_pwd,
+        username  => $api_user,
+        password  => $api_pwd,
       }
     }
   }

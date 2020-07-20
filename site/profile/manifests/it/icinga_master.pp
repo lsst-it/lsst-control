@@ -17,6 +17,7 @@ class profile::it::icinga_master (
   $mysql_db,
   $mysql_user,
   $mysql_pwd,
+  $mysql_root,
   $icinga_satellite_fqdn,
   $icinga_satellite_ip,
   $sat_zone,
@@ -30,7 +31,6 @@ class profile::it::icinga_master (
   include profile::core::remi
   include ::openssl
   include ::nginx
-  include ::mysql::server
 
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
@@ -64,6 +64,11 @@ class profile::it::icinga_master (
   }
 
 ##MySQL definition
+  class { '::mysql::server':
+    root_password           => $mysql_root,
+    remove_default_accounts => true,
+    restart                 => true,
+  }
   mysql::db { $mysql_db:
     user     => $mysql_user,
     password => $mysql_pwd,

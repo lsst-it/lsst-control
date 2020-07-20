@@ -133,7 +133,7 @@ class profile::it::icinga_master (
   }
   class {'icingaweb2::module::monitoring':
     ensure            => present,
-    ido_host          => 'localhost',
+    ido_host          => $icinga_master_ip,
     ido_type          => 'mysql',
     ido_db_name       => $mysql_db,
     ido_db_username   => $mysql_user,

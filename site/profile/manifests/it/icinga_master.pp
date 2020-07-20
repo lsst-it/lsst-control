@@ -76,6 +76,58 @@ class profile::it::icinga_master (
     grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
   }
 
+##IcingaWeb Config
+  class {'icingaweb2':
+    manage_repo   => true,
+    logging_level => 'DEBUG',
+  }
+  class {'icingaweb2::module::monitoring':
+    ensure            => present,
+    ido_host          => $icinga_master_ip,
+    ido_type          => 'mysql',
+    ido_db_name       => $mysql_db,
+    ido_db_username   => $mysql_user,
+    ido_db_password   => $mysql_pwd,
+    commandtransports => {
+      $api_name => {
+        transport => 'api',
+        host      => 'localhost',
+        port      => 5565,
+        username  => $api_user,
+        password  => $api_pwd,
+      }
+    }
+  }
+##IcingaWeb LDAP Config
+  icingaweb2::config::resource{ $ldap_resource:
+    type         => 'ldap',
+    host         => $ldap_server,
+    port         => 389,
+    ldap_root_dn => $ldap_root,
+    ldap_bind_dn => $ldap_user,
+    ldap_bind_pw => $ldap_pwd,
+  }
+  icingaweb2::config::authmethod { 'ldap-auth':
+    backend                  => 'ldap',
+    resource                 => $ldap_resource,
+    ldap_user_class          => 'inetOrgPerson',
+    ldap_filter              => $ldap_user_filter,
+    ldap_user_name_attribute => 'uid',
+    order                    => '05',
+  }
+  icingaweb2::config::groupbackend { 'ldap-groups':
+    backend                   => 'ldap',
+    resource                  => $ldap_resource,
+    ldap_group_class          => 'groupOfNames',
+    ldap_group_name_attribute => 'cn',
+    ldap_group_filter         => $ldap_group_filter,
+    ldap_base_dn              => $ldap_group_base,
+  }
+  icingaweb2::config::role { 'Admin User':
+    groups      => 'icinga-admins',
+    permissions => '*',
+  }
+
 ##Icinga2 Config
   class { '::icinga2':
     manage_repo => false,
@@ -129,58 +181,6 @@ class profile::it::icinga_master (
   }
   icinga2::object::zone { 'global-templates':
     global => true,
-  }
-
-##IcingaWeb Config
-  class {'icingaweb2':
-    manage_repo   => true,
-    logging_level => 'DEBUG',
-  }
-  class {'icingaweb2::module::monitoring':
-    ensure            => present,
-    ido_host          => $icinga_master_ip,
-    ido_type          => 'mysql',
-    ido_db_name       => $mysql_db,
-    ido_db_username   => $mysql_user,
-    ido_db_password   => $mysql_pwd,
-    commandtransports => {
-      $api_name => {
-        transport => 'api',
-        host      => 'localhost',
-        port      => 5565,
-        username  => $api_user,
-        password  => $api_pwd,
-      }
-    }
-  }
-##IcingaWeb LDAP Config
-  icingaweb2::config::resource{ $ldap_resource:
-    type         => 'ldap',
-    host         => $ldap_server,
-    port         => 389,
-    ldap_root_dn => $ldap_root,
-    ldap_bind_dn => $ldap_user,
-    ldap_bind_pw => $ldap_pwd,
-  }
-  icingaweb2::config::authmethod { 'ldap-auth':
-    backend                  => 'ldap',
-    resource                 => $ldap_resource,
-    ldap_user_class          => 'inetOrgPerson',
-    ldap_filter              => $ldap_user_filter,
-    ldap_user_name_attribute => 'uid',
-    order                    => '05',
-  }
-  icingaweb2::config::groupbackend { 'ldap-groups':
-    backend                   => 'ldap',
-    resource                  => $ldap_resource,
-    ldap_group_class          => 'groupOfNames',
-    ldap_group_name_attribute => 'cn',
-    ldap_group_filter         => $ldap_group_filter,
-    ldap_base_dn              => $ldap_group_base,
-  }
-  icingaweb2::config::role { 'Admin User':
-    groups      => 'icinga-admins',
-    permissions => '*',
   }
 
 ##Nginx Resource Definition

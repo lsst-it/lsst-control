@@ -52,22 +52,22 @@ $ssl_config_dir = "/etc/graylog/server"
 
 $ssl_config_filename = 'openssl-graylog.cnf'
 $graylog_canonical_name = lookup("canonical_name")
- file { "${ssl_config_dir}/${ssl_config_filename}":
+file { "${ssl_config_dir}/${ssl_config_filename}":
     ensure => present,
     mode    => '0644',
     owner   => 'root',
     group   => 'root',
     content => epp('profile/it/graylog_ssl_cfg.epp',
-
-'country' => lookup("country"), 
-'state' => lookup("state"),
-        'locality' => lookup("locality"),
-        'organization' => lookup("organization"),
-        'division' => lookup("division"),
-        'canonical_name' => lookup("canonical_name"),
-        'server_ip' => lookup("server_ip_address"),
-        'alternative_dns_1' => lookup("alternative_dns_1"),
-    }
+      {
+      'country'   => lookup("country"), 
+      'state'     => lookup("state"),
+      'locality' => lookup("locality"),
+      'organization' => lookup("organization"),
+      'division' => lookup("division"),
+      'canonical_name' => lookup("canonical_name"),
+      'server_ip' => lookup("server_ip_address"),
+      'alternative_dns_1' => lookup("alternative_dns_1"),
+      }
     ),
     require => [File[$ssl_config_dir], File_line["Update Graylog's JAVA_OPTS"]],
   }

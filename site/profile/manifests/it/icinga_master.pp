@@ -140,6 +140,8 @@ class profile::it::icinga_master (
     commandtransports => {
       $api_name => {
         transport => 'api',
+        host      => 'localhost',
+        port      => 5565,
         username  => $api_user,
         password  => $api_pwd,
       }

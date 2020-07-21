@@ -2,6 +2,7 @@
 classes:
   - "profile::core::debugutils"  # XXX mv to permanent role (when known)
   - "profile::core::disable_ipv6"
+  - "profile::core::nm_dispatch"
   - "profile::ccs::daq_interface"
   - "network"
   - "sysctl::values"
@@ -10,6 +11,9 @@ profile::ccs::daq_interface::hwaddr: "f8:f2:1e:4f:33:61"
 profile::ccs::daq_interface::uuid: "9a7d57a1-d992-4f04-b403-60a6da1829fd"
 profile::ccs::daq_interface::was: "p2p2"
 profile::ccs::daq_interface::mode: "dhcp-client"
+profile::core::nm_dispatch::interfaces:
+  p2p1:
+    - "/usr/sbin/tc qdisc add dev ${DEV} root tbf rate 2500mbit burst 40mbit latency 200ms"
 network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"

@@ -155,6 +155,9 @@ class profile::it::icinga_master (
     api_password  => $api_pwd,
     require       => Mysql::Db[$mysql_director_db],
   }
+  ->file {'/etc/icingaweb2/authentication.ini':
+    notify => Service['php73-php-fpm'],
+  }
 
 ##Icinga2 Config
   class { '::icinga2':
@@ -209,6 +212,17 @@ class profile::it::icinga_master (
   }
   icinga2::object::zone { 'global-templates':
     global => true,
+  }
+  exec { 'Icinga Director DB migration':
+    path    => '/usr/local/bin:/usr/bin:/bin',
+    command => 'icingacli director migration run',
+    onlyif  => 'icingacli director migration pending',
+  }
+  exec { 'Icinga Director Kickstart':
+    path    => '/usr/local/bin:/usr/bin:/bin',
+    command => 'icingacli director kickstart run',
+    onlyif  => 'icingacli director kickstart required',
+    require => Exec['Icinga Director DB migration'],
   }
 
 ##Nginx Resource Definition

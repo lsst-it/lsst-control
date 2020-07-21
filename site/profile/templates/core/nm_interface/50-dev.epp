@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# This file is managed by Puppet; changes may be overwritten
+
+# https://access.redhat.com/solutions/2841131
+
+myname=${0##*/}
+log() { logger -p user.info -t "${myname}" "$*"; }
+cmd() { log "$*"; "$@"; }
+IFACE=$1
+ACTION=$2
+# shellcheck disable=SC2016
+DEV='<%= $dev %>'
+
+log "IFACE = $1, ACTION = $2"
+
+if [ "$IFACE" == "$DEV" ] && [ "$ACTION" == "up" ]; then
+<% $cmds.each |$c| { -%>
+  cmd <%= $c %>
+<% }-%>
+fi
+
+exit 0

@@ -26,9 +26,7 @@ class profile::it::icinga_satellite (
     ca_host         => $icinga_master_ip,
     ticket_salt     => $salt,
     endpoints       => {
-      $icinga_satellite_fqdn => {
-        'host' => $icinga_satellite_ip,
-      },
+      $icinga_satellite_fqdn => {},
       $icinga_master_fqdn    => {
         'host'  =>  $icinga_master_ip,
       },

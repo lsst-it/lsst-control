@@ -19,10 +19,9 @@ class profile::it::icinga_agent(
   class { '::icinga2::feature::api':
     accept_config   => true,
     accept_commands => true,
-    ca_host         => $icinga_master_ip,
     ticket_salt     => $salt,
     endpoints       => {
-      $icinga_agent_fqdn     => {
+      'NodeName'             => {
         'host'  =>  $icinga_agent_ip
       },
       $icinga_satellite_fqdn => {
@@ -30,12 +29,12 @@ class profile::it::icinga_agent(
       },
     },
     zones           => {
-      'satellite'        => {
-        'endpoints' => [$icinga_satellite_fqdn],
-      },
-      $icinga_agent_fqdn => {
-        'endpoints' => [$icinga_agent_fqdn],
+      'ZoneName'  => {
+        'endpoints' => ['NodeName'],
         'parent'    => 'satellite',
+      },
+      'satellite' => {
+        'endpoints' => [$icinga_satellite_fqdn],
       },
     }
   }

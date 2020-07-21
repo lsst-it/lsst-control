@@ -138,9 +138,8 @@ class profile::it::icinga_master (
     manage_repo => false,
     confd       => false,
     constants   => {
-      'NodeName'   => $icinga_master_fqdn,
-      'TicketSalt' => $salt,
       'ZoneName'   => 'master',
+      'TicketSalt' => $salt,
     },
     features    => ['checker','mainlog','statusdata','compatlog','command'],
   }

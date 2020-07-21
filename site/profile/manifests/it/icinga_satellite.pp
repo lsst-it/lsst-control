@@ -5,6 +5,8 @@ class profile::it::icinga_satellite (
   $icinga_master_fqdn,
   $icinga_master_ip,
   $salt,
+  $api_user,
+  $api_pwd,
 ){
   include profile::core::uncommon
   include profile::core::remi
@@ -47,5 +49,11 @@ class profile::it::icinga_satellite (
   }
   icinga2::object::zone { 'global-templates':
     global => true,
+  }
+  icinga2::object::apiuser { $api_user:
+    ensure      => present,
+    password    => $api_pwd,
+    permissions => [ 'status/query', 'actions/*', 'objects/modify/*', 'objects/query/*' ],
+    target      => '/etc/icinga2/features-enabled/api-users.conf',
   }
 }

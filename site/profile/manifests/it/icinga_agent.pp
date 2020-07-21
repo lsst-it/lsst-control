@@ -5,7 +5,9 @@ class profile::it::icinga_agent(
   String $icinga_satellite_ip = '139.229.135.28',
   String $icinga_satellite_fqdn = 'icinga-satellite.ls.lsst.org',
   String $salt = '5a3d695b8aef8f18452fc494593056a4',
-  String $icinga_master_ip = '139.229.135.31'
+  String $icinga_master_ip = '139.229.135.31',
+  String $api_user = 'rubin',
+  String $api_pwd = 'rubin-pwd',
 )
 {
   $icinga_agent_fqdn = $facts['fqdn']
@@ -45,5 +47,11 @@ class profile::it::icinga_agent(
   }
   icinga2::object::zone { 'global-templates':
     global => true,
+  }
+  icinga2::object::apiuser { $api_user:
+    ensure      => present,
+    password    => $api_pwd,
+    permissions => [ 'status/query', 'actions/*', 'objects/modify/*', 'objects/query/*' ],
+    target      => '/etc/icinga2/features-enabled/api-users.conf',
   }
 }

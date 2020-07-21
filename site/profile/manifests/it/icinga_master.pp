@@ -14,10 +14,13 @@ class profile::it::icinga_master (
   $ssl_country,
   $ssl_org,
   $ssl_fqdn,
-  $mysql_db,
-  $mysql_user,
-  $mysql_pwd,
   $mysql_root,
+  $mysql_icingaweb_db,
+  $mysql_icingaweb_user,
+  $mysql_icingaweb_pwd,
+  $mysql_director_db,
+  $mysql_director_user,
+  $mysql_director_pwd,
   $icinga_satellite_fqdn,
   $icinga_satellite_ip,
   $salt,
@@ -74,25 +77,31 @@ class profile::it::icinga_master (
     restart                 => true,
     override_options        => $override_options,
   }
-  mysql::db { $mysql_db:
-    user     => $mysql_user,
-    password => $mysql_pwd,
+  mysql::db { $mysql_icingaweb_db:
+    user     => $mysql_icingaweb_user,
+    password => $mysql_icingaweb_pwd,
     host     => $icinga_master_ip,
     grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
   }
-
+  mysql::db { $mysql_director_db:
+    user     => $mysql_director_user,
+    password => $mysql_director_pwd,
+    host     => $icinga_master_ip,
+    charset  => 'utf8',
+    grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
+  }
 ##IcingaWeb Config
   class {'icingaweb2':
     manage_repo   => true,
     logging_level => 'DEBUG',
   }
-  class {'icingaweb2::module::monitoring':
+  ->class {'icingaweb2::module::monitoring':
     ensure            => present,
     ido_host          => $icinga_master_ip,
     ido_type          => 'mysql',
-    ido_db_name       => $mysql_db,
-    ido_db_username   => $mysql_user,
-    ido_db_password   => $mysql_pwd,
+    ido_db_name       => $mysql_icingaweb_db,
+    ido_db_username   => $mysql_icingaweb_user,
+    ido_db_password   => $mysql_icingaweb_pwd,
     commandtransports => {
       $api_name => {
         transport => 'api',
@@ -104,7 +113,7 @@ class profile::it::icinga_master (
     }
   }
 ##IcingaWeb LDAP Config
-  icingaweb2::config::resource{ $ldap_resource:
+  ->icingaweb2::config::resource{ $ldap_resource:
     type         => 'ldap',
     host         => $ldap_server,
     port         => 389,
@@ -112,7 +121,7 @@ class profile::it::icinga_master (
     ldap_bind_dn => $ldap_user,
     ldap_bind_pw => $ldap_pwd,
   }
-  icingaweb2::config::authmethod { 'ldap-auth':
+  ->icingaweb2::config::authmethod { 'ldap-auth':
     backend                  => 'ldap',
     resource                 => $ldap_resource,
     ldap_user_class          => 'inetOrgPerson',
@@ -120,7 +129,7 @@ class profile::it::icinga_master (
     ldap_user_name_attribute => 'uid',
     order                    => '05',
   }
-  icingaweb2::config::groupbackend { 'ldap-groups':
+  ->icingaweb2::config::groupbackend { 'ldap-groups':
     backend                   => 'ldap',
     resource                  => $ldap_resource,
     ldap_group_class          => 'groupOfNames',
@@ -128,9 +137,23 @@ class profile::it::icinga_master (
     ldap_group_filter         => $ldap_group_filter,
     ldap_base_dn              => $ldap_group_base,
   }
-  icingaweb2::config::role { 'Admin User':
+  ->icingaweb2::config::role { 'Admin User':
     groups      => 'icinga-admins',
     permissions => '*',
+  }
+##IcingaWeb Director
+  ->class {'icingaweb2::module::director':
+    git_revision  => 'v1.3.2',
+    db_host       => $icinga_master_ip,
+    db_name       => $mysql_icingaweb_db,
+    db_username   => $mysql_icingaweb_user,
+    db_password   => $mysql_icingaweb_pwd,
+    import_schema => true,
+    kickstart     => true,
+    endpoint      => $icinga_master_fqdn,
+    api_username  => $api_user,
+    api_password  => $api_pwd,
+    require       => Mysql::Db[$mysql_director_db],
   }
 
 ##Icinga2 Config
@@ -144,12 +167,12 @@ class profile::it::icinga_master (
     features    => ['checker','mainlog','statusdata','compatlog','command'],
   }
   class { '::icinga2::feature::idomysql':
-    user          => $mysql_user,
-    password      => $mysql_pwd,
-    database      => $mysql_db,
+    user          => $mysql_icingaweb_user,
+    password      => $mysql_icingaweb_pwd,
+    database      => $mysql_icingaweb_db,
     host          => $icinga_master_ip,
     import_schema => true,
-    require       => Mysql::Db[$mysql_db],
+    require       => Mysql::Db[$mysql_icingaweb_db],
   }
   class { '::icinga2::feature::api':
     pki             => 'none',

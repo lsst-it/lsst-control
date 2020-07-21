@@ -19,6 +19,7 @@ class profile::it::icinga_agent(
   class { '::icinga2::feature::api':
     accept_config   => true,
     accept_commands => true,
+    ca_host         => $icinga_satellite_ip,
     ticket_salt     => $salt,
     endpoints       => {
       'NodeName'             => {

@@ -50,10 +50,17 @@ class profile::it::icinga_master (
     'php73-php-pdo',
   ]
   $override_options = {
-  'mysqld' => {
-    'bind_address' => '0.0.0.0',
+    'mysqld' => {
+      'bind_address' => '0.0.0.0',
+    }
   }
-}
+  $target  = '/usr/share/icingaweb2/modules/director'
+  $url     = 'https://github.com/icinga/icingaweb2-module-director/archive/v1.7.2.tar.gz'
+  $command = "install -d -m 0755 ${target}; wget -q -O - ${url} | tar xfz - -C ${target} --strip-components 1"
+  $unless1 = '(grep "1.7.2" /usr/share/icingaweb2/modules/director/module.info)'
+  $runif1  = 'test -f /sbin/icinga2'
+
+
 ##Ensure php73 packages and services
   package { $php_packages:
     ensure => 'present',
@@ -143,7 +150,7 @@ class profile::it::icinga_master (
   }
 ##IcingaWeb Director
   ->class {'icingaweb2::module::director':
-    git_revision  => 'v1.3.2',
+    git_revision  => 'v1.7.2',
     db_host       => $icinga_master_ip,
     db_name       => $mysql_director_db,
     db_username   => $mysql_director_user,
@@ -157,7 +164,7 @@ class profile::it::icinga_master (
     api_password  => $api_pwd,
     require       => Mysql::Db[$mysql_director_db],
   }
-  ->file {'/etc/icingaweb2/authentication.ini':
+  file {'/etc/icingaweb2/':
     notify => Service['php73-php-fpm'],
   }
 

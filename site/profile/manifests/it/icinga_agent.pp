@@ -5,8 +5,7 @@ class profile::it::icinga_agent(
   String $icinga_satellite_ip = '139.229.135.28',
   String $icinga_satellite_fqdn = 'icinga-satellite.ls.lsst.org',
   String $salt = '5a3d695b8aef8f18452fc494593056a4',
-  String $icinga_master_ip = '139.229.135.31',
-  String $icinga_master_fqdn = 'icinga-master.ls.lsst.org',
+  String $icinga_master_ip = '139.229.135.31'
 )
 {
   $icinga_agent_fqdn = $facts['fqdn']
@@ -26,20 +25,13 @@ class profile::it::icinga_agent(
       $icinga_agent_fqdn     => {
         'host'  =>  $icinga_agent_ip
       },
-      $icinga_master_fqdn    => {
-        'host'  =>  $icinga_master_ip
-      },
       $icinga_satellite_fqdn => {
         'host'  =>  $icinga_satellite_ip,
       },
     },
     zones           => {
-      'master'           => {
-        'endpoints'  => [$icinga_master_fqdn],
-      },
       'satellite'        => {
         'endpoints' => [$icinga_satellite_fqdn],
-        'parent'    => 'master',
       },
       $icinga_agent_fqdn => {
         'endpoints' => [$icinga_agent_fqdn],

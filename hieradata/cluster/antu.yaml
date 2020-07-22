@@ -9,6 +9,13 @@ packages:
 profile::core::nm_dispatch::interfaces:
   em1:
     - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
+    - "tc filter del dev ${DEV} chain 0 || true"
+    - "tc qdisc del dev ${DEV} root || true"
+    - "tc qdisc add dev ${DEV} root handle 1: htb default 1"
+    - "tc class add dev ${DEV} parent 1: classid 1:1 htb rate 10gbit burst 40mbit"
+    - "tc class add dev ${DEV} parent 1:1 classid 1:10 htb rate 2.5gbit burst 40mbit"
+    - "tc filter add dev ${DEV} parent 1: protocol ip matchall flowid 1:1"
+    - "tc filter add dev ${DEV} parent 1:1 protocol ip prio 1 u32 match ip dst 141.142.0.0/16 flowid 1:10"
   em2:
     - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
 network::interfaces_hash:

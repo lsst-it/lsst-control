@@ -21,8 +21,6 @@ class profile::it::icinga_master (
   $mysql_director_db,
   $mysql_director_user,
   $mysql_director_pwd,
-  $icinga_satellite_fqdn,
-  $icinga_satellite_ip,
   $salt,
   $api_name,
   $api_user,
@@ -100,7 +98,7 @@ class profile::it::icinga_master (
     manage_repo   => true,
     logging_level => 'DEBUG',
   }
-  ->class {'icingaweb2::module::monitoring':
+  class {'icingaweb2::module::monitoring':
     ensure            => present,
     ido_host          => $icinga_master_ip,
     ido_type          => 'mysql',
@@ -118,7 +116,7 @@ class profile::it::icinga_master (
     }
   }
 ##IcingaWeb LDAP Config
-  ->icingaweb2::config::resource{ $ldap_resource:
+  icingaweb2::config::resource{ $ldap_resource:
     type         => 'ldap',
     host         => $ldap_server,
     port         => 389,
@@ -126,7 +124,7 @@ class profile::it::icinga_master (
     ldap_bind_dn => $ldap_user,
     ldap_bind_pw => $ldap_pwd,
   }
-  ->icingaweb2::config::authmethod { 'ldap-auth':
+  icingaweb2::config::authmethod { 'ldap-auth':
     backend                  => 'ldap',
     resource                 => $ldap_resource,
     ldap_user_class          => 'inetOrgPerson',
@@ -134,7 +132,7 @@ class profile::it::icinga_master (
     ldap_user_name_attribute => 'uid',
     order                    => '05',
   }
-  ->icingaweb2::config::groupbackend { 'ldap-groups':
+  icingaweb2::config::groupbackend { 'ldap-groups':
     backend                   => 'ldap',
     resource                  => $ldap_resource,
     ldap_group_class          => 'groupOfNames',
@@ -142,12 +140,12 @@ class profile::it::icinga_master (
     ldap_group_filter         => $ldap_group_filter,
     ldap_base_dn              => $ldap_group_base,
   }
-  ->icingaweb2::config::role { 'Admin User':
+  icingaweb2::config::role { 'Admin User':
     groups      => 'icinga-admins',
     permissions => '*',
   }
 ##IcingaWeb Director
-  ->class {'icingaweb2::module::director':
+  class {'icingaweb2::module::director':
     git_revision  => 'v1.7.2',
     db_host       => $icinga_master_ip,
     db_name       => $mysql_director_db,
@@ -243,17 +241,10 @@ class profile::it::icinga_master (
       $icinga_master_fqdn    => {
         'host'  =>  $icinga_master_ip
       },
-      $icinga_satellite_fqdn => {
-        'host'  =>  $icinga_satellite_ip,
-      },
     },
     zones           => {
       'master'    => {
-        'endpoints'  => [$icinga_master_fqdn],
-      },
-      'satellite' => {
-        'endpoints' => [$icinga_satellite_fqdn],
-        'parent'    => 'master',
+        'endpoints' => [$icinga_master_fqdn],
       },
     },
   }
@@ -274,6 +265,15 @@ class profile::it::icinga_master (
   icinga2::object::zone { 'director-global':
     global => true,
   }
+  icinga2::object::host { $icinga_master_fqdn:
+    display_name  => $icinga_master_fqdn,
+    address       => $icinga_master_ip,
+    address6      => '::1',
+    check_command => 'hostalive',
+    target        => "/etc/icinga2/features-enabled/${icinga_master_fqdn}.conf",
+  }
+
+##Icinga Director DB migration
   exec { 'Icinga Director DB migration':
     path    => '/usr/local/bin:/usr/bin:/bin',
     command => 'icingacli director migration run',

@@ -2,10 +2,9 @@
 #   Icinga agent creation for metric collections
 
 class profile::it::icinga_agent(
-  String $icinga_satellite_ip = '139.229.135.28',
-  String $icinga_satellite_fqdn = 'icinga-satellite.ls.lsst.org',
   String $salt = '5a3d695b8aef8f18452fc494593056a4',
   String $icinga_master_ip = '139.229.135.31',
+  String $icinga_master_fqdn = 'icinga-master.ls.lsst.org',
   String $api_user = 'rubin',
   String $api_pwd = 'rubin-pwd',
 )
@@ -21,23 +20,23 @@ class profile::it::icinga_agent(
   class { '::icinga2::feature::api':
     accept_config   => true,
     accept_commands => true,
-    ca_host         => $icinga_satellite_ip,
+    ca_host         => $icinga_master_ip,
     ticket_salt     => $salt,
     endpoints       => {
-      'NodeName'             => {
+      $icinga_agent_fqdn  => {
         'host'  =>  $icinga_agent_ip
       },
-      $icinga_satellite_fqdn => {
-        'host'  =>  $icinga_satellite_ip,
+      $icinga_master_fqdn => {
+        'host'  =>  $icinga_master_ip,
       },
     },
     zones           => {
-      'ZoneName'  => {
-        'endpoints' => ['NodeName'],
-        'parent'    => 'satellite',
+      $icinga_agent_fqdn => {
+        'endpoints' => [$icinga_agent_fqdn],
+        'parent'    => 'master',
       },
-      'satellite' => {
-        'endpoints' => [$icinga_satellite_fqdn],
+      'master'           => {
+        'endpoints' => [$icinga_master_fqdn],
       },
     }
   }
@@ -54,7 +53,14 @@ class profile::it::icinga_agent(
   icinga2::object::apiuser { $api_user:
     ensure      => present,
     password    => $api_pwd,
-    permissions => [ 'status/query', 'actions/*', 'objects/modify/*', 'objects/query/*' ],
+    permissions => [ '*' ],
     target      => '/etc/icinga2/features-enabled/api-users.conf',
+  }
+  icinga2::object::host { $icinga_agent_fqdn:
+    display_name  => $icinga_agent_fqdn,
+    address       => $icinga_agent_ip,
+    address6      => '::1',
+    check_command => 'hostalive',
+    target        => "/etc/icinga2/features-enabled/${icinga_agent_fqdn}.conf",
   }
 }

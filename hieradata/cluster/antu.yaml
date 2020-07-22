@@ -1,6 +1,7 @@
 ---
 classes:
   - "profile::core::nm_dispatch"
+  - "profile::core::disable_ipv6"
   - "network"
   - "sysctl::values"
 packages:

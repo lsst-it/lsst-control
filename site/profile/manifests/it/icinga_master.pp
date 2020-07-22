@@ -93,9 +93,65 @@ class profile::it::icinga_master (
     charset  => 'utf8',
     grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
   }
+
+##Icinga2 Config
+  class { '::icinga2':
+    manage_repo => true,
+    confd       => false,
+    constants   => {
+      'ZoneName'   => 'master',
+      'TicketSalt' => $salt,
+    },
+    features    => ['checker','mainlog','statusdata','compatlog','command'],
+  }
+  class { '::icinga2::feature::idomysql':
+    user          => $mysql_icingaweb_user,
+    password      => $mysql_icingaweb_pwd,
+    database      => $mysql_icingaweb_db,
+    host          => $icinga_master_ip,
+    import_schema => true,
+    require       => Mysql::Db[$mysql_icingaweb_db],
+  }
+  class { '::icinga2::feature::api':
+    pki             => 'none',
+    accept_config   => true,
+    accept_commands => true,
+    ensure          => 'present',
+    endpoints       => {
+      $icinga_master_fqdn    => {
+        'host'  =>  $icinga_master_ip
+      },
+    },
+    zones           => {
+      'master'    => {
+        'endpoints' => [$icinga_master_fqdn],
+      },
+    },
+  }
+  include ::icinga2::pki::ca
+  class { '::icinga2::feature::notification':
+    ensure    => present,
+    enable_ha => true,
+  }
+  icinga2::object::apiuser { $api_user:
+    ensure      => present,
+    password    => $api_pwd,
+    permissions => [ '*' ],
+    target      => '/etc/icinga2/features-enabled/api-users.conf',
+  }
+  icinga2::object::zone { 'global-templates':
+    global => true,
+  }
+  icinga2::object::zone { 'director-global':
+    global => true,
+  }
+  icinga2::object::zone { 'basic-checks':
+    global => true,
+  }
+
 ##IcingaWeb Config
-  class {'icingaweb2':
-    manage_repo   => true,
+  class {'::icingaweb2':
+    manage_repo   => false,
     logging_level => 'DEBUG',
   }
   class {'icingaweb2::module::monitoring':
@@ -215,59 +271,7 @@ class profile::it::icinga_master (
     git_repository => 'https://github.com/Icinga/icingaweb2-module-incubator',
     git_revision   => 'v0.5.0'
   }
-##Icinga2 Config
-  class { '::icinga2':
-    manage_repo => false,
-    confd       => false,
-    constants   => {
-      'ZoneName'   => 'master',
-      'TicketSalt' => $salt,
-    },
-    features    => ['checker','mainlog','statusdata','compatlog','command'],
-  }
-  class { '::icinga2::feature::idomysql':
-    user          => $mysql_icingaweb_user,
-    password      => $mysql_icingaweb_pwd,
-    database      => $mysql_icingaweb_db,
-    host          => $icinga_master_ip,
-    import_schema => true,
-    require       => Mysql::Db[$mysql_icingaweb_db],
-  }
-  class { '::icinga2::feature::api':
-    pki             => 'none',
-    accept_config   => true,
-    accept_commands => true,
-    endpoints       => {
-      $icinga_master_fqdn    => {
-        'host'  =>  $icinga_master_ip
-      },
-    },
-    zones           => {
-      'master'    => {
-        'endpoints' => [$icinga_master_fqdn],
-      },
-    },
-  }
-  include ::icinga2::pki::ca
-  class { '::icinga2::feature::notification':
-    ensure    => present,
-    enable_ha => true,
-  }
-  icinga2::object::apiuser { $api_user:
-    ensure      => present,
-    password    => $api_pwd,
-    permissions => [ '*' ],
-    target      => '/etc/icinga2/features-enabled/api-users.conf',
-  }
-  icinga2::object::zone { 'global-templates':
-    global => true,
-  }
-  icinga2::object::zone { 'director-global':
-    global => true,
-  }
-  icinga2::object::zone { 'basic-checks':
-    global => true,
-  }
+
 
 ##Icinga Director DB migration
   exec { 'Icinga Director DB migration':

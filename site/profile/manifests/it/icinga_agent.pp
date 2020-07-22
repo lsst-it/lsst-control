@@ -22,6 +22,7 @@ class profile::it::icinga_agent(
     accept_commands => true,
     ca_host         => $icinga_master_ip,
     ticket_salt     => $salt,
+    ensure          => 'present',
     endpoints       => {
       $icinga_agent_fqdn  => {
         'host'  =>  $icinga_agent_ip

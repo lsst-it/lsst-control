@@ -1,11 +1,6 @@
-
+# This is a temp file for testing
 class profile::it::po {
-#Remove these packages for now
-Package { ensure => 'purged' }
 
-  $enhancers = [ 'sssd', 'realmd' ]
-
-package { $enhancers: }
 # Install for now
 Package { ensure => 'installed' }
 

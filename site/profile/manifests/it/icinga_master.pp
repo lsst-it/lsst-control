@@ -265,7 +265,7 @@ class profile::it::icinga_master (
   icinga2::object::apiuser { $api_user:
     ensure      => present,
     password    => $api_pwd,
-    permissions => [ 'status/query', 'actions/*', 'objects/modify/*', 'objects/query/*' ],
+    permissions => [ '*' ],
     target      => '/etc/icinga2/features-enabled/api-users.conf',
   }
   icinga2::object::zone { 'global-templates':

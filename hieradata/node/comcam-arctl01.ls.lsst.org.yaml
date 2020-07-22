@@ -1,9 +1,13 @@
 ---
 classes:
   - "profile::core::disable_ipv6"
+  - "profile::core::nm_dispatch"
   - "network"
   - "sysctl::values"
 
+profile::core::nm_dispatch::interfaces:
+  p2p1:
+    - "/usr/sbin/tc qdisc add dev ${DEV} root tbf rate 2500mbit burst 40mbit latency 200ms"
 network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"

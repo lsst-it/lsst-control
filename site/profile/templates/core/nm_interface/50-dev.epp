@@ -1,5 +1,4 @@
-<%- | String $interface | -%>
-#!/bin/sh
+#!/bin/bash
 
 # This file is managed by Puppet; changes may be overwritten
 
@@ -10,14 +9,15 @@ log() { logger -p user.info -t "${myname}" "$*"; }
 cmd() { log "$*"; "$@"; }
 IFACE=$1
 ACTION=$2
+# shellcheck disable=SC2016
+DEV='<%= $dev %>'
 
 log "IFACE = $1, ACTION = $2"
 
-DAQ=<%= $interface %>
-
-if [ "$IFACE" == "$DAQ" ] && [ "$ACTION" == "up" ]; then
-    cmd /sbin/ethtool --set-ring ${IFACE} rx 4096 tx 4096
-    cmd /sbin/ethtool --pause ${IFACE} autoneg off rx on tx on
+if [ "$IFACE" == "$DEV" ] && [ "$ACTION" == "up" ]; then
+<% $cmds.each |$c| { -%>
+  cmd <%= $c %>
+<% }-%>
 fi
 
 exit 0

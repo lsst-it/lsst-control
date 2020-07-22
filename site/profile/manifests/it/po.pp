@@ -1,11 +1,11 @@
 
 class profile::it::po {
-# Remove these packages for now
-# Package { ensure => 'purged' }
+#Remove these packages for now
+Package { ensure => 'purged' }
 
-#   $enhancers = [ 'sssd', 'realmd', ]
+  $enhancers = [ 'sssd', 'realmd' ]
 
-# package { $enhancers: }
+package { $enhancers: }
 # Install for now
 Package { ensure => 'installed' }
 
@@ -46,7 +46,7 @@ exec{'enable_icmp':
   require  => Class['firewalld'],
   onlyif   => "[[ \"\$(firewall-cmd --list-protocols)\" != *\"icmp\"* ]]"
   }
-#####################################################
+################################################################################
 file_line { 'SELINUX=permissive':
   path  => '/etc/selinux/config',
   line  => 'SELINUX=enforce',

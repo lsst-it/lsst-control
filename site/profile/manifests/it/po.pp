@@ -2,13 +2,13 @@
 class profile::it::po {
 
 # Install for now
-Package { ensure => 'installed' }
+# Package { ensure => 'installed' }
 
-  $enhancers = [ 'tree', 'oddjob', 'oddjob-mkhomedir', 'adcli', 'wget', 'nmap',
-  'openldap-clients', 'policycoreutils-python', 'tcpdump', 'openssl', 'nc',
-  'git', 'openssl-devel', 'telnet', 'acpid', 'lvm2', 'bash-completion', 'sudo' ]
+#   $enhancers = [ 'tree', 'oddjob', 'oddjob-mkhomedir', 'adcli', 'wget', 'nmap',
+#   'openldap-clients', 'policycoreutils-python', 'tcpdump', 'openssl', 'nc',
+#   'git', 'openssl-devel', 'telnet', 'acpid', 'lvm2', 'bash-completion', 'sudo' ]
 
-package { $enhancers: }
+# package { $enhancers: }
 # Firewall rules
 ################################################################################
 

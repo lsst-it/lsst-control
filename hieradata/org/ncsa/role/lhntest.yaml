@@ -11,8 +11,3 @@ classes:
 
 profile::ncsa::allow_sudo::groups:
   - "lsst_admin_tucson"
-
-sal2::ospl_version: "6.9.0-7"
-sal2::ts_dds_version: "6.9.190925_7"
-sal2::ts_idl_version: "1.2.2_4.1.1_6.0.0"
-sal2::ts_salobj_version: "5.15.0"

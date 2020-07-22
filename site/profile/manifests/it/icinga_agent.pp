@@ -63,11 +63,4 @@ class profile::it::icinga_agent(
     permissions => [ '*' ],
     target      => '/etc/icinga2/features-enabled/api-users.conf',
   }
-  icinga2::object::host { $icinga_agent_fqdn:
-    display_name  => $icinga_agent_fqdn,
-    address       => $icinga_agent_ip,
-    address6      => '::1',
-    check_command => 'hostalive',
-    target        => "/etc/icinga2/features-enabled/${icinga_agent_fqdn}.conf",
-  }
 }

@@ -6,7 +6,10 @@ classes:
   - "sysctl::values"
 
 profile::core::nm_dispatch::interfaces:
+  em1:
+    - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
   p2p1:
+    - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
     - "/usr/sbin/tc qdisc add dev ${DEV} root tbf rate 2500mbit burst 40mbit latency 200ms"
 network::interfaces_hash:
   em1:  # fqdn

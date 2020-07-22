@@ -53,6 +53,9 @@ class profile::it::icinga_agent(
   icinga2::object::zone { 'director-global':
     global => true,
   }
+  icinga2::object::zone { 'basic-checks':
+    global => true,
+  }
   icinga2::object::apiuser { $api_user:
     ensure      => present,
     password    => $api_pwd,

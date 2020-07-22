@@ -265,12 +265,8 @@ class profile::it::icinga_master (
   icinga2::object::zone { 'director-global':
     global => true,
   }
-  icinga2::object::host { $icinga_master_fqdn:
-    display_name  => $icinga_master_fqdn,
-    address       => $icinga_master_ip,
-    address6      => '::1',
-    check_command => 'hostalive',
-    target        => "/etc/icinga2/features-enabled/${icinga_master_fqdn}.conf",
+  icinga2::object::zone { 'basic-checks':
+    global => true,
   }
 
 ##Icinga Director DB migration

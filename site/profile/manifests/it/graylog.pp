@@ -8,7 +8,7 @@ class profile::it::graylog {
 class {'mongodb::globals':
   manage_package_repo => false,
   manage_package      => true,
-#  version             => '3.6',
+  version             => '3.6',
   }
 class { 'mongodb::server':
   bind_ip => ['127.0.0.1'],

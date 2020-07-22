@@ -271,6 +271,9 @@ class profile::it::icinga_master (
   icinga2::object::zone { 'global-templates':
     global => true,
   }
+  icinga2::object::zone { 'director-global':
+    global => true,
+  }
   exec { 'Icinga Director DB migration':
     path    => '/usr/local/bin:/usr/bin:/bin',
     command => 'icingacli director migration run',

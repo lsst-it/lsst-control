@@ -14,6 +14,7 @@ network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"
     defroute: "yes"
+    mtu: "9000"
     onboot: "yes"
     type: "Ethernet"
   em2:

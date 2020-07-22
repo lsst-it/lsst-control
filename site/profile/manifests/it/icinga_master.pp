@@ -54,12 +54,6 @@ class profile::it::icinga_master (
       'bind_address' => '0.0.0.0',
     }
   }
-  $target  = '/usr/share/icingaweb2/modules/director'
-  $url     = 'https://github.com/icinga/icingaweb2-module-director/archive/v1.7.2.tar.gz'
-  $command = "install -d -m 0755 ${target}; wget -q -O - ${url} | tar xfz - -C ${target} --strip-components 1"
-  $unless1 = '(grep "1.7.2" /usr/share/icingaweb2/modules/director/module.info)'
-  $runif1  = 'test -f /sbin/icinga2'
-
 
 ##Ensure php73 packages and services
   package { $php_packages:
@@ -167,6 +161,42 @@ class profile::it::icinga_master (
   file {'/etc/icingaweb2/':
     notify => Service['php73-php-fpm'],
   }
+##IcingaWeb Daemon
+# User Creation
+  $command1 = 'useradd -r -g icingaweb2 -d /var/lib/icingadirector -s /bin/false icingadirector'
+  $command2 = 'install -d -o icingadirector -g icingaweb2 -m 0750 /var/lib/icingadirector'
+  $command3 = 'cp /usr/share/icingaweb2/modules/director/contrib/systemd/icinga-director.service /etc/systemd/system/; systemctl daemon-reload'
+  $command4 = 'systemctl enable --now icinga-director.service'
+  $unless1  = 'id icingaweb2'
+  $onlyif2  = 'test ! -d /var/lib/icingadirector'
+  $onlyif3  = 'test ! -f /etc/systemd/system/icinga-director.service'
+  exec { $command1:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    unless   => $unless,
+  }
+# User Directory
+  ->exec { $command2:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $onlyif2,
+  }
+# Service Creation
+  ->exec { $command3:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $onlyif3,
+  }
+# Run and Enable Service
+  ->exec { $command4:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+  }
+
 ##IcingaWeb Reactbundle
   class {'icingaweb2::module::reactbundle':
     ensure         => present,

@@ -1,0 +1,23 @@
+[req]
+distinguished_name = req_distinguished_name
+x509_extensions = v3_req
+prompt = no
+
+# Self-signed certificate
+[req_distinguished_name]
+C = <%= $country %>
+ST = <%= $state %>
+L = <%= $locality %>
+O = <%= $organization %>
+OU = <%= $division %>
+CN = <%= $canonical_name %>
+
+[v3_req]
+keyUsage = keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+# These values will be inserted
+[alt_names]
+IP.1 = <%= $server_ip %>
+DNS.1 = <%= $alternative_dns_1 %>

@@ -167,7 +167,24 @@ class profile::it::icinga_master (
   file {'/etc/icingaweb2/':
     notify => Service['php73-php-fpm'],
   }
-
+##IcingaWeb Reactbundle
+  class {'icingaweb2::module::reactbundle':
+    ensure         => present,
+    git_repository => 'https://github.com/Icinga/icingaweb2-module-reactbundle',
+    git_revision   => 'v0.7.0',
+  }
+##IcingaWeb IPL
+  class {'icingaweb2::module::ipl':
+    ensure         => present,
+    git_repository => 'https://github.com/Icinga/icingaweb2-module-ipl',
+    git_revision   => 'v0.3.0'
+  }
+##IcingaWeb Incubator
+  class {'icingaweb2::module::incubator':
+    ensure         => present,
+    git_repository => 'https://github.com/Icinga/icingaweb2-module-incubator',
+    git_revision   => 'v0.5.0'
+  }
 ##Icinga2 Config
   class { '::icinga2':
     manage_repo => false,

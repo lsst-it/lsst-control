@@ -48,6 +48,10 @@ class profile::it::icinga_master (
     'php73-php-mysqlnd',
     'php73-php-pgsql',
     'php73-php-pdo',
+    'php73-php-process',
+    'php73-php-cli',
+    'php73-php-soap',
+    'rh-php73-php-posix',
   ]
   $override_options = {
     'mysqld' => {
@@ -167,14 +171,14 @@ class profile::it::icinga_master (
   $command2 = 'install -d -o icingadirector -g icingaweb2 -m 0750 /var/lib/icingadirector'
   $command3 = 'cp /usr/share/icingaweb2/modules/director/contrib/systemd/icinga-director.service /etc/systemd/system/; systemctl daemon-reload'
   $command4 = 'systemctl enable --now icinga-director.service'
-  $unless1  = 'id icingaweb2'
+  $unless1  = 'grep icingadirector /etc/passwd'
   $onlyif2  = 'test ! -d /var/lib/icingadirector'
   $onlyif3  = 'test ! -f /etc/systemd/system/icinga-director.service'
   exec { $command1:
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    unless   => $unless,
+    unless   => $unless1,
   }
 # User Directory
   ->exec { $command2:
@@ -191,10 +195,8 @@ class profile::it::icinga_master (
     onlyif   => $onlyif3,
   }
 # Run and Enable Service
-  ->exec { $command4:
-    cwd      => '/var/tmp',
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
+  service { 'icinga-director':
+    ensure => running,
   }
 
 ##IcingaWeb Reactbundle

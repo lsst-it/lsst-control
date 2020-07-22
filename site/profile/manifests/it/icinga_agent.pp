@@ -44,6 +44,9 @@ class profile::it::icinga_agent(
     ensure    => present,
     enable_ha => true,
   }
+  class { '::icinga2::feature::checker':
+    ensure    => present,
+  }
   icinga2::object::zone { 'global-templates':
     global => true,
   }

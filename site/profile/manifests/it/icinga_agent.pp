@@ -4,17 +4,17 @@
 class profile::it::icinga_agent(
   String $icinga_master_fqdn = 'icinga-master.ls.lsst.org',
   String $icinga_master_ip = '139.229.135.31',
-  String $credentials = 'c3ZjX2ljaW5nYTp1bTBsN0JtUDskV1U=',
+  String $hash = 'c3ZjX2ljaW5nYTp1bTBsN0JtUDskV1U=',
   String $host_template = 'GeneralHostTemplate',
 )
 {
-  $icinga_agent_fqdn = $facts['fqdn']
-  $icinga_agent_ip = $facts['ipaddress']
-
   $packages = [
     'nagios-plugins-all',
     'curl',
   ]
+  $icinga_agent_fqdn = $facts['fqdn']
+  $icinga_agent_ip = $facts['ipaddress']
+  $credentials = "Authorization:Basic ${hash}"
   $json_file = "{
 \"address\": \"${icinga_agent_ip}\",
 \"display_name\": \"${icinga_agent_fqdn}\",
@@ -27,12 +27,14 @@ class profile::it::icinga_agent(
     \"safed_profile\": \"3\"
 }
 }"
+  $path = "/var/tmp/${icinga_agent_fqdn}.json"
   $url = "https://${icinga_master_fqdn}/director/host"
-  $cmd = "curl -s -k -H'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @/var/tmp/${icinga_agent_fqdn}.json"
-  $cond = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_master_fqdn}' | grep Failed"
+  $cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @${path}"
+  $cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_master_fqdn}' | grep Failed"
+
 
 ## Create host file
-  file { "/var/tmp/${icinga_agent_fqdn}.json":
+  file { $path:
     ensure  => 'present',
     content => $json_file,
   }

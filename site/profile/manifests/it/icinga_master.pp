@@ -24,7 +24,7 @@ class profile::it::icinga_master (
   $api_name,
   $api_user,
   $api_pwd,
-  $credentials,
+  $hash,
   $host_template,
 )
 {
@@ -57,14 +57,6 @@ class profile::it::icinga_master (
       'bind_address' => '0.0.0.0',
     }
   }
-  $url = "https://${master_fqdn}/director"
-
-  $tpl_cond = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${host_template}' | grep Failed"
-  $tpl_cmd = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @/var/tmp/${host_template}.json"
-
-  $addhost_cond = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${master_fqdn}' | grep Failed"
-  $addhost_cmd = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @/var/tmp/${master_fqdn}.json"
-
   $general_template = "{
 \"accept_config\": true,
 \"check_command\": \"hostalive\",
@@ -86,8 +78,27 @@ class profile::it::icinga_master (
     \"safed_profile\": \"3\"
 }
 }"
+$url = "https://${master_fqdn}/director"
+$credentials = "Authorization:Basic ${hash}"
+$tpl_path = "/var/tmp/${host_template}.json"
+$tpl_cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${host_template}' | grep Failed"
+$tpl_cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @${tpl_path}"
+
+$addhost_path = "/var/tmp/${master_fqdn}.json"
+$addhost_cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${master_fqdn}' | grep Failed"
+$addhost_cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @${addhost_path}"
+
+$deploy_cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}/config/deploy'"
+
+
+##Force Deploy every puppet run
+exec { $deploy_cmd:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+}
 ##Create host template file
-  file { "/var/tmp/${host_template}.json":
+  file { $tpl_path:
     ensure  => 'present',
     content => $general_template,
     before  => Exec[$tpl_cmd],
@@ -100,7 +111,7 @@ class profile::it::icinga_master (
     onlyif   => $tpl_cond,
 }
 ##Create master host file
-  file { "/var/tmp/${master_fqdn}.json":
+  file { $addhost_path:
     ensure  => 'present',
     content => $add_master_host,
     before  => Exec[$addhost_cmd],

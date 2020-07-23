@@ -5,13 +5,32 @@ class profile::it::icinga_agent(
   String $salt = '5a3d695b8aef8f18452fc494593056a4',
   String $icinga_master_ip = '139.229.135.31',
   String $icinga_master_fqdn = 'icinga-master.ls.lsst.org',
-  String $api_user = 'rubin',
-  String $api_pwd = 'rubin-pwd',
+  String $user = 'svc_icinga',
+  String $pwd = 'um0l7BmP;$WU',
 )
 {
   $icinga_agent_fqdn = $facts['fqdn']
   $icinga_agent_ip = $facts['ipaddress']
 
+  $packages = [
+    'nagios-plugins-all',
+    'curl',
+  ]
+  $json_file = "{
+              \"address\": ${icinga_agent_ip},
+              \"display_name\": ${icinga_agent_fqdn},
+              \"imports\": [
+                  \"Host Template\"
+              ],
+              \"object_name\":${icinga_agent_fqdn},
+              \"object_type\": \"object\",
+              \"vars\": {
+                  \"safed_profile\": \"3\"
+              }
+            }"
+  package { $packages:
+    ensure => 'present',
+  }
   class { '::icinga2':
     manage_repo => true,
     confd       => false,
@@ -41,26 +60,8 @@ class profile::it::icinga_agent(
       },
     }
   }
-  class { '::icinga2::feature::notification':
-    ensure    => present,
-    enable_ha => true,
-  }
-  class { '::icinga2::feature::checker':
-    ensure    => present,
-  }
-  icinga2::object::zone { 'global-templates':
-    global => true,
-  }
-  icinga2::object::zone { 'director-global':
-    global => true,
-  }
-  icinga2::object::zone { 'basic-checks':
-    global => true,
-  }
-  icinga2::object::apiuser { $api_user:
-    ensure      => present,
-    password    => $api_pwd,
-    permissions => [ '*' ],
-    target      => '/etc/icinga2/features-enabled/api-users.conf',
+  file { "/var/tmp/${icinga_agent_fqdn}.json":
+    ensure  => 'present',
+    content => $json_file,
   }
 }

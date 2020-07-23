@@ -32,3 +32,6 @@ profile::it::icinga_master::mysql_director_pwd: "director-rubinobs"
 profile::it::icinga_master::api_name: "icinga2"
 profile::it::icinga_master::api_user: "rubin"
 profile::it::icinga_master::api_pwd: "rubin-pwd"
+profile::it::icinga_master::user: "svc_icinga"
+profile::it::icinga_master::pwd: "um0l7BmP;$WU"
+

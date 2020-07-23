@@ -24,6 +24,8 @@ class profile::it::icinga_master (
   $api_name,
   $api_user,
   $api_pwd,
+  $user,
+  $pwd,
 )
 {
   include profile::core::uncommon
@@ -31,6 +33,10 @@ class profile::it::icinga_master (
   include ::openssl
   include ::nginx
 
+  $url = "https://${icinga_master_fqdn}/director/host?name=${icinga_master_fqdn}&amp;resolved"
+  $credentials = "${user}:${pwd}"
+  $command = 'touch passed_unless'
+  $unless = "curl -s -k -u ${credentials} -H 'Accept: application/json' -X GET ${url} | grep Failed > result"
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
   $icinga_master_fqdn  = $facts[fqdn]
@@ -55,18 +61,31 @@ class profile::it::icinga_master (
       'bind_address' => '0.0.0.0',
     }
   }
-  # $general_host_template = "{
-  #             \"address\": ${icinga_agent_ip},
-  #             \"display_name\": ${icinga_agent_fqdn},
-  #             \"imports\": [
-  #                 \"Host Template\"
-  #             ],
-  #             \"object_name\":${icinga_agent_fqdn},
-  #             \"object_type\": \"object\",
-  #             \"vars\": {
-  #                 \"safed_profile\": \"3\"
-  #             }
-  #           }"
+  $add_master_host = "{
+                    \"address\": ${icinga_master_ip},
+                    \"display_name\": ${icinga_master_fqdn},
+                    \"imports\": [
+                        \"Host Template\"
+                    ],
+                    \"object_name\":${icinga_master_fqdn},
+                    \"object_type\": \"object\",
+                    \"vars\": {
+                        \"safed_profile\": \"3\"
+                    }
+                  }"
+##Create master host file
+  file { "/var/tmp/${icinga_master_fqdn}.json":
+    ensure  => 'present',
+    content => $add_master_host,
+    before  => Exec[$command],
+  }
+##Add master host
+  exec { $command:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    unless   => $unless,
+  }
 ##Ensure php73 packages and services
   package { $php_packages:
     ensure => 'present',

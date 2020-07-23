@@ -2,7 +2,9 @@
 # @summary
 #   Common functionality needed by ccs nodes.
 #
-class profile::ccs::common {
+class profile::ccs::common(
+  Boolean $sysctls = true,
+) {
   include profile::ccs::clustershell
   include profile::ccs::facts
   include profile::ccs::home
@@ -10,7 +12,10 @@ class profile::ccs::common {
   include profile::ccs::postfix
   include profile::ccs::profile_d
   include profile::ccs::sudo
-  include profile::ccs::sysctl
+
+  if ($sysctls) {
+    include profile::ccs::sysctl
+  }
 
   include ccs_software
   include java_artisanal

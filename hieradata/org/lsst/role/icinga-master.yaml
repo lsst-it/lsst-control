@@ -34,4 +34,4 @@ profile::it::icinga_master::api_user: "rubin"
 profile::it::icinga_master::api_pwd: "rubin-pwd"
 profile::it::icinga_master::user: "svc_icinga"
 profile::it::icinga_master::pwd: "um0l7BmP;$WU"
-
+profile::it::icinga_master::host_template: "GeneralHostTemplate"

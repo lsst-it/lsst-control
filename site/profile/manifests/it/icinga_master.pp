@@ -26,6 +26,7 @@ class profile::it::icinga_master (
   $api_pwd,
   $user,
   $pwd,
+  $host_template,
 )
 {
   include profile::core::uncommon
@@ -33,14 +34,11 @@ class profile::it::icinga_master (
   include ::openssl
   include ::nginx
 
-  $url = "https://${icinga_master_fqdn}/director/host?name=${icinga_master_fqdn}&amp;resolved"
-  $credentials = "${user}:${pwd}"
-  $command = 'touch passed_unless'
-  $unless = "curl -s -k -u ${credentials} -H 'Accept: application/json' -X GET ${url} | grep Failed > result"
+
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
-  $icinga_master_fqdn  = $facts[fqdn]
-  $icinga_master_ip  = $facts[ipaddress]
+  $master_fqdn  = $facts[fqdn]
+  $master_ip  = $facts[ipaddress]
   $php_packages = [
     'php73-php-fpm',
     'php73-php-ldap',
@@ -61,31 +59,72 @@ class profile::it::icinga_master (
       'bind_address' => '0.0.0.0',
     }
   }
+  $url = "https://${master_fqdn}/director"
+  $credentials = "${user}:${pwd}"
+
+  $tpl_unless = "curl -s -k -u '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${host_template}' | grep Failed"
+  $tpl_cmd = "curl -s -k -u '${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @${host_template}.json"
+
+  $add_host_unless = "curl -s -k -u '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${master_fqdn}' | grep Failed"
+  $add_host_cmd = "curl -s -k -u '${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @${master_fqdn}.json"
+
+  $deploy_cmd = "curl -k -s -u '${credentials}' -H 'Accept: application/json' -X POST ${url}/config/deploy"
+
+  $general_template = "{
+                      \"accept_config\": true,
+                      \"check_command\": \"hostalive\",
+                      \"has_agent\": true,
+                      \"master_should_connect\": true,
+                      \"max_check_attempts\": \"5\",
+                      \"object_name\": \"${host_template}\",
+                      \"object_type\": \"template\"
+                      }"
   $add_master_host = "{
-                    \"address\": ${icinga_master_ip},
-                    \"display_name\": ${icinga_master_fqdn},
+                    \"address\": \"${master_ip}\",
+                    \"display_name\": \"${master_fqdn}\",
                     \"imports\": [
-                        \"Host Template\"
+                        \"${host_template}\"
                     ],
-                    \"object_name\":${icinga_master_fqdn},
+                    \"object_name\":\"${master_fqdn}\",
                     \"object_type\": \"object\",
                     \"vars\": {
                         \"safed_profile\": \"3\"
                     }
                   }"
-##Create master host file
-  file { "/var/tmp/${icinga_master_fqdn}.json":
-    ensure  => 'present',
-    content => $add_master_host,
-    before  => Exec[$command],
-  }
-##Add master host
-  exec { $command:
+##Force deploy
+  exec { $deploy_cmd:
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    unless   => $unless,
+    before   => Exec[$tpl_cmd],
   }
+##Create host template file
+  file { "/var/tmp/${host_template}.json":
+    ensure  => 'present',
+    content => $general_template,
+    before  => Exec[$tpl_cmd],
+  }
+##Add general host template
+  exec { $tpl_cmd:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    unless   => $tpl_unless,
+}
+##Create master host file
+  file { "/var/tmp/${master_fqdn}.json":
+    ensure  => 'present',
+    content => $add_master_host,
+    before  => Exec[$add_host_cmd],
+  }
+##Add master host
+  exec { $add_host_cmd:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    unless   => $add_host_unless,
+  }
+
 ##Ensure php73 packages and services
   package { $php_packages:
     ensure => 'present',
@@ -112,13 +151,13 @@ class profile::it::icinga_master (
   mysql::db { $mysql_icingaweb_db:
     user     => $mysql_icingaweb_user,
     password => $mysql_icingaweb_pwd,
-    host     => $icinga_master_ip,
+    host     => $master_ip,
     grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
   }
   mysql::db { $mysql_director_db:
     user     => $mysql_director_user,
     password => $mysql_director_pwd,
-    host     => $icinga_master_ip,
+    host     => $master_ip,
     charset  => 'utf8',
     grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
   }
@@ -136,7 +175,7 @@ class profile::it::icinga_master (
     user          => $mysql_icingaweb_user,
     password      => $mysql_icingaweb_pwd,
     database      => $mysql_icingaweb_db,
-    host          => $icinga_master_ip,
+    host          => $master_ip,
     import_schema => true,
     require       => Mysql::Db[$mysql_icingaweb_db],
   }
@@ -146,13 +185,13 @@ class profile::it::icinga_master (
     accept_commands => true,
     ensure          => 'present',
     endpoints       => {
-      $icinga_master_fqdn    => {
-        'host'  =>  $icinga_master_ip
+      $master_fqdn    => {
+        'host'  =>  $master_ip
       },
     },
     zones           => {
       'master'    => {
-        'endpoints' => [$icinga_master_fqdn],
+        'endpoints' => [$master_fqdn],
       },
     },
   }
@@ -177,7 +216,7 @@ class profile::it::icinga_master (
   }
   class {'icingaweb2::module::monitoring':
     ensure            => present,
-    ido_host          => $icinga_master_ip,
+    ido_host          => $master_ip,
     ido_type          => 'mysql',
     ido_db_name       => $mysql_icingaweb_db,
     ido_db_username   => $mysql_icingaweb_user,
@@ -185,7 +224,7 @@ class profile::it::icinga_master (
     commandtransports => {
       $api_name => {
         transport => 'api',
-        host      => $icinga_master_ip,
+        host      => $master_ip,
         port      => 5565,
         username  => $api_user,
         password  => $api_pwd,
@@ -224,14 +263,14 @@ class profile::it::icinga_master (
 ##IcingaWeb Director
   class {'icingaweb2::module::director':
     git_revision  => 'v1.7.2',
-    db_host       => $icinga_master_ip,
+    db_host       => $master_ip,
     db_name       => $mysql_director_db,
     db_username   => $mysql_director_user,
     db_password   => $mysql_director_pwd,
     import_schema => true,
     kickstart     => true,
-    endpoint      => $icinga_master_fqdn,
-    api_host      => $icinga_master_ip,
+    endpoint      => $master_fqdn,
+    api_host      => $master_ip,
     api_port      => 5665,
     api_username  => $api_user,
     api_password  => $api_pwd,

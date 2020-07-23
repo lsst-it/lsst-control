@@ -2,8 +2,6 @@
 #   Icinga agent creation for metric collections
 
 class profile::it::icinga_agent(
-  String $salt = '5a3d695b8aef8f18452fc494593056a4',
-  String $icinga_master_ip = '139.229.135.31',
   String $icinga_master_fqdn = 'icinga-master.ls.lsst.org',
   String $user = 'svc_icinga',
   String $pwd = 'um0l7BmP;$WU',
@@ -28,6 +26,10 @@ class profile::it::icinga_agent(
                   \"safed_profile\": \"3\"
               }
             }"
+  $url = "https://${icinga_master_fqdn}/director/host?name=${icinga_agent_fqdn}&amp;resolved"
+  $credentials = "${user}:${pwd}"
+  $command = 'touch passed_unless'
+  $unless = "curl -s -k -u ${credentials} -H 'Accept: application/json' -X GET ${url} | grep Failed > result"
   package { $packages:
     ensure => 'present',
   }
@@ -37,10 +39,9 @@ class profile::it::icinga_agent(
     features    => ['mainlog'],
   }
   class { '::icinga2::feature::api':
+    pki             => 'puppet',
     accept_config   => true,
     accept_commands => true,
-    ca_host         => $icinga_master_ip,
-    ticket_salt     => $salt,
     ensure          => 'present',
     endpoints       => {
       $icinga_agent_fqdn  => {
@@ -64,4 +65,11 @@ class profile::it::icinga_agent(
     ensure  => 'present',
     content => $json_file,
   }
+  exec { $command:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    unless   => $unless,
+  }
 }
+

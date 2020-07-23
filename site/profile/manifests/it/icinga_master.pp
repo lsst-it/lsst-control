@@ -21,7 +21,6 @@ class profile::it::icinga_master (
   $mysql_director_db,
   $mysql_director_user,
   $mysql_director_pwd,
-  $salt,
   $api_name,
   $api_user,
   $api_pwd,
@@ -56,7 +55,18 @@ class profile::it::icinga_master (
       'bind_address' => '0.0.0.0',
     }
   }
-
+  # $general_host_template = "{
+  #             \"address\": ${icinga_agent_ip},
+  #             \"display_name\": ${icinga_agent_fqdn},
+  #             \"imports\": [
+  #                 \"Host Template\"
+  #             ],
+  #             \"object_name\":${icinga_agent_fqdn},
+  #             \"object_type\": \"object\",
+  #             \"vars\": {
+  #                 \"safed_profile\": \"3\"
+  #             }
+  #           }"
 ##Ensure php73 packages and services
   package { $php_packages:
     ensure => 'present',
@@ -100,7 +110,6 @@ class profile::it::icinga_master (
     confd       => false,
     constants   => {
       'ZoneName'   => 'master',
-      'TicketSalt' => $salt,
     },
     features    => ['checker','mainlog','statusdata','compatlog','command'],
   }
@@ -113,7 +122,7 @@ class profile::it::icinga_master (
     require       => Mysql::Db[$mysql_icingaweb_db],
   }
   class { '::icinga2::feature::api':
-    pki             => 'none',
+    pki             => 'puppet',
     accept_config   => true,
     accept_commands => true,
     ensure          => 'present',
@@ -128,7 +137,6 @@ class profile::it::icinga_master (
       },
     },
   }
-  include ::icinga2::pki::ca
   class { '::icinga2::feature::notification':
     ensure    => present,
     enable_ha => true,
@@ -139,13 +147,7 @@ class profile::it::icinga_master (
     permissions => [ '*' ],
     target      => '/etc/icinga2/features-enabled/api-users.conf',
   }
-  icinga2::object::zone { 'global-templates':
-    global => true,
-  }
   icinga2::object::zone { 'director-global':
-    global => true,
-  }
-  icinga2::object::zone { 'basic-checks':
     global => true,
   }
 

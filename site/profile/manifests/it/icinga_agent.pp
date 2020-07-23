@@ -4,8 +4,7 @@
 class profile::it::icinga_agent(
   String $icinga_master_fqdn = 'icinga-master.ls.lsst.org',
   String $icinga_master_ip = '139.229.135.31',
-  String $user = 'svc_icinga',
-  String $pwd = 'um0l7BmP;$WU',
+  String $credentials = 'c3ZjX2ljaW5nYTp1bTBsN0JtUDskV1U=',
   String $host_template = 'GeneralHostTemplate',
 )
 {
@@ -29,9 +28,8 @@ class profile::it::icinga_agent(
 }
 }"
   $url = "https://${icinga_master_fqdn}/director/host"
-  $credentials = "${user}:${pwd}"
-  $command = "curl -s -k -u '${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @/var/tmp/${icinga_agent_fqdn}.json"
-  $unless = "curl -s -k -u '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_master_fqdn}' | grep Failed"
+  $cmd = "curl -s -k -H'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @/var/tmp/${icinga_agent_fqdn}.json"
+  $cond = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_master_fqdn}' | grep Failed"
 
 ## Create host file
   file { "/var/tmp/${icinga_agent_fqdn}.json":
@@ -39,11 +37,11 @@ class profile::it::icinga_agent(
     content => $json_file,
   }
 ##Add host to master
-  exec { $command:
+  exec { $cmd:
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    unless   => $unless,
+    unless   => $cond,
   }
 ##Add require packages
   package { $packages:

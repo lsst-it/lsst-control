@@ -24,8 +24,7 @@ class profile::it::icinga_master (
   $api_name,
   $api_user,
   $api_pwd,
-  $user,
-  $pwd,
+  $credentials,
   $host_template,
 )
 {
@@ -33,7 +32,6 @@ class profile::it::icinga_master (
   include profile::core::remi
   include ::openssl
   include ::nginx
-
 
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
@@ -60,13 +58,12 @@ class profile::it::icinga_master (
     }
   }
   $url = "https://${master_fqdn}/director"
-  $credentials = "${user}:${pwd}"
 
-  $tpl_unless = "curl -s -k -u '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${host_template}' | grep Failed"
-  $tpl_cmd = "curl -s -k -u '${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @${host_template}.json"
+  $tpl_unless = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${host_template}' | grep Failed"
+  $tpl_cmd = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @/var/tmp/${host_template}.json"
 
-  $add_host_unless = "curl -s -k -u '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${master_fqdn}' | grep Failed"
-  $add_host_cmd = "curl -s -k -u '${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @${master_fqdn}.json"
+  $add_host_unless = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${master_fqdn}' | grep Failed"
+  $add_host_cmd = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @/var/tmp/${master_fqdn}.json"
 
   $general_template = "{
 \"accept_config\": true,

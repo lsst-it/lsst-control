@@ -59,11 +59,11 @@ class profile::it::icinga_master (
   }
   $url = "https://${master_fqdn}/director"
 
-  $tpl_unless = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${host_template}' | grep Failed"
+  $tpl_cond = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${host_template}' | grep Failed"
   $tpl_cmd = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @/var/tmp/${host_template}.json"
 
-  $add_host_unless = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${master_fqdn}' | grep Failed"
-  $add_host_cmd = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @/var/tmp/${master_fqdn}.json"
+  $addhost_cond = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${master_fqdn}' | grep Failed"
+  $addhost_cmd = "curl -s -k -H 'Authorization:Basic ${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @/var/tmp/${master_fqdn}.json"
 
   $general_template = "{
 \"accept_config\": true,
@@ -97,20 +97,20 @@ class profile::it::icinga_master (
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    unless   => $tpl_unless,
+    onlyif   => $tpl_cond,
 }
 ##Create master host file
   file { "/var/tmp/${master_fqdn}.json":
     ensure  => 'present',
     content => $add_master_host,
-    before  => Exec[$add_host_cmd],
+    before  => Exec[$addhost_cmd],
   }
 ##Add master host
-  exec { $add_host_cmd:
+  exec { $addhost_cmd:
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    unless   => $add_host_unless,
+    onlyif   => $addhost_cond,
   }
 
 ##Ensure php73 packages and services

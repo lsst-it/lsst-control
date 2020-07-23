@@ -41,7 +41,7 @@ class profile::it::icinga_agent(
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    unless   => $cond,
+    onlyif   => $cond,
   }
 ##Add require packages
   package { $packages:

@@ -1,12 +1,21 @@
 ---
 classes:
+  - "profile::core::nm_dispatch"
+  - "profile::core::disable_ipv6"
   - "network"
+  - "sysctl::values"
 packages:
   - "perccli"  # from dell repo
+profile::core::nm_dispatch::interfaces:
+  em1:
+    - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
+  em2:
+    - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
 network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"
     defroute: "yes"
+    mtu: "9000"
     onboot: "yes"
     type: "Ethernet"
   em2:
@@ -30,3 +39,27 @@ yum::repos:
     baseurl: "https://repo-nexus.lsst.org/nexus/repository/dell/"
     gpgcheck: false
     target: "/etc/yum.repos.d/dell.repo"
+sysctl::values::args:
+  # lhn tuning
+  # See https://fasterdata.es.net/host-tuning/linux/
+  net.core.rmem_max:
+    value: 536870912
+    target: &tcpip "/etc/sysctl.d/93-tcp_ip.conf"
+  net.core.wmem_max:
+    value: 536870912
+    target: *tcpip
+  net.ipv4.tcp_rmem:
+    value: "4096 87380 536870912"
+    target: *tcpip
+  net.ipv4.tcp_wmem:
+    value: "4096 65536 536870912"
+    target: *tcpip
+  net.ipv4.tcp_congestion_control:
+    value: "htcp"
+    target: *tcpip
+  net.ipv4.tcp_mtu_probing:
+    value: 1
+    target: *tcpip
+  net.core.default_qdisc:
+    value: "fq"
+    target: *tcpip

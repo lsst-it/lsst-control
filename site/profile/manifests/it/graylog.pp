@@ -79,7 +79,9 @@ $ssl_keyout_filename = 'pkcs5-plain.pem'
 $ssl_graylog_cert_filename = 'graylog-certificate.pem'
 exec{ 'Create SSL certificate':
     path    => [ '/usr/bin', '/bin', '/usr/sbin' ],
-    command => "openssl req -x509 -days ${certificate_duration} -nodes -newkey ${ssl_key_algorithm} -config ${ssl_config_dir}/${ssl_config_filename} -keyout ${ssl_config_dir}/${ssl_keyout_filename} -out ${ssl_config_dir}/${ssl_graylog_cert_filename}",
+    command => "openssl req -x509 -days ${certificate_duration} -nodes -newkey ${ssl_key_algorithm} 
+    -config ${ssl_config_dir}/${ssl_config_filename} -keyout ${ssl_config_dir}/${ssl_keyout_filename} 
+    -out ${ssl_config_dir}/${ssl_graylog_cert_filename}",
     onlyif  => 'test ! -f /etc/graylog/server/graylog-certificate.pem',
     require => [File["${ssl_config_dir}/${ssl_config_filename}"]]
 }
@@ -92,7 +94,8 @@ $ssl_pkcs8_passout_phrase = lookup('ssl_passout_phrase')
 
 exec{ 'Convert pkcs5 to pkcs8 encrypted' :
     path    => [ '/usr/bin', '/bin', '/usr/sbin' ],
-    command => "openssl pkcs8 -in ${ssl_config_dir}/${ssl_keyout_filename} -topk8 -out ${ssl_config_dir}/${ssl_pkcs8_encrypted_filename} -passout ${ssl_pkcs8_passout_phrase }",
+    command => "openssl pkcs8 -in ${ssl_config_dir}/${ssl_keyout_filename} 
+    -topk8 -out ${ssl_config_dir}/${ssl_pkcs8_encrypted_filename} -passout ${ssl_pkcs8_passout_phrase }",
     onlyif  => "test ! -f ${ssl_config_dir}/${ssl_pkcs8_encrypted_filename}",
     require => Exec['Create SSL certificate'],
   }
@@ -103,7 +106,9 @@ $ssl_key_passout_phrase = lookup('ssl_key_passout_phrase')
 $ssl_graylog_key_filename = 'graylog-key.pem'
 exec{ 'Create graylog SSL key' :
     path    => [ '/usr/bin', '/bin', '/usr/sbin' ],
-    command => "openssl pkcs8 -in ${ssl_config_dir}/${ssl_pkcs8_encrypted_filename} -topk8 -passin ${ssl_pkcs8_passout_phrase } -out ${ssl_config_dir}/${ssl_graylog_key_filename} -passout ${ssl_key_passout_phrase}",
+    command => "openssl pkcs8 -in ${ssl_config_dir}/${ssl_pkcs8_encrypted_filename} 
+    -topk8 -passin ${ssl_pkcs8_passout_phrase } -out ${ssl_config_dir}/${ssl_graylog_key_filename} 
+    -passout ${ssl_key_passout_phrase}",
     onlyif  => "test ! -f ${ssl_config_dir}/${ssl_graylog_key_filename}",
     require => Exec['Convert pkcs5 to pkcs8 encrypted'],
   }
@@ -122,8 +127,10 @@ exec{ "Copy JAVA cacerts into graylog's directory":
 $ssl_graylog_cert_pass = lookup('ssl_graylog_cert_pass')
 exec{ 'Update keytool' :
     path    => [ '/usr/bin', '/bin', '/usr/sbin' ],
-    command => "keytool -noprompt -importcert -keystore ${ssl_config_dir}/${graylog_cacert_filename} -storepass ${ssl_graylog_cert_pass} -alias graylog-self-signed -file ${ssl_config_dir}/${ssl_graylog_cert_filename}",
-    onlyif  => "test -z $(keytool -keystore ${ssl_config_dir}/${graylog_cacert_filename} -storepass ${ssl_graylog_cert_pass} -list | grep graylog-self-signed)",
+    command => "keytool -noprompt -importcert -keystore ${ssl_config_dir}/${graylog_cacert_filename} 
+    -storepass ${ssl_graylog_cert_pass} -alias graylog-self-signed -file ${ssl_config_dir}/${ssl_graylog_cert_filename}",
+    onlyif  => "test -z $(keytool -keystore ${ssl_config_dir}/${graylog_cacert_filename} 
+    -storepass ${ssl_graylog_cert_pass} -list | grep graylog-self-signed)",
     require => [Exec['Create graylog SSL key'], Exec["Copy JAVA cacerts into graylog's directory"]]
   }
 $tls_password_array = split($ssl_key_passout_phrase, /:/)

@@ -6,7 +6,7 @@ class profile::it::icinga_agent(
   String $icinga_master_ip = '139.229.135.31',
   String $user = 'svc_icinga',
   String $pwd = 'um0l7BmP;$WU',
-  String $host_template = 'General Host Template',
+  String $host_template = 'GeneralHostTemplate',
 )
 {
   $icinga_agent_fqdn = $facts['fqdn']
@@ -43,7 +43,7 @@ class profile::it::icinga_agent(
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $unless,
+    unless   => $unless,
   }
 ##Add require packages
   package { $packages:

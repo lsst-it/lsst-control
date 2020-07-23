@@ -68,36 +68,27 @@ class profile::it::icinga_master (
   $add_host_unless = "curl -s -k -u '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${master_fqdn}' | grep Failed"
   $add_host_cmd = "curl -s -k -u '${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @${master_fqdn}.json"
 
-  $deploy_cmd = "curl -k -s -u '${credentials}' -H 'Accept: application/json' -X POST ${url}/config/deploy"
-
   $general_template = "{
-                      \"accept_config\": true,
-                      \"check_command\": \"hostalive\",
-                      \"has_agent\": true,
-                      \"master_should_connect\": true,
-                      \"max_check_attempts\": \"5\",
-                      \"object_name\": \"${host_template}\",
-                      \"object_type\": \"template\"
-                      }"
+\"accept_config\": true,
+\"check_command\": \"hostalive\",
+\"has_agent\": true,
+\"master_should_connect\": true,
+\"max_check_attempts\": \"5\",
+\"object_name\": \"${host_template}\",
+\"object_type\": \"template\"
+}"
   $add_master_host = "{
-                    \"address\": \"${master_ip}\",
-                    \"display_name\": \"${master_fqdn}\",
-                    \"imports\": [
-                        \"${host_template}\"
-                    ],
-                    \"object_name\":\"${master_fqdn}\",
-                    \"object_type\": \"object\",
-                    \"vars\": {
-                        \"safed_profile\": \"3\"
-                    }
-                  }"
-##Force deploy
-  exec { $deploy_cmd:
-    cwd      => '/var/tmp',
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    before   => Exec[$tpl_cmd],
-  }
+\"address\": \"${master_ip}\",
+\"display_name\": \"${master_fqdn}\",
+\"imports\": [
+  \"${host_template}\"
+],
+\"object_name\":\"${master_fqdn}\",
+\"object_type\": \"object\",
+\"vars\": {
+    \"safed_profile\": \"3\"
+}
+}"
 ##Create host template file
   file { "/var/tmp/${host_template}.json":
     ensure  => 'present',

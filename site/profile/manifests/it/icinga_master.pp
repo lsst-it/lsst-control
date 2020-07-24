@@ -25,7 +25,11 @@ class profile::it::icinga_master (
   $api_user,
   $api_pwd,
   $hash,
-  $host_template,
+  $host_tpl,
+  $http_tpl,
+  $dns_tpl,
+  $dhcp_tpl,
+  $tfm_tpl,
 )
 {
   include profile::core::common
@@ -57,20 +61,168 @@ class profile::it::icinga_master (
       'bind_address' => '0.0.0.0',
     }
   }
-  $general_template = "{
+  $svc_http_tpl_name = 'HttpServiceTemplate'
+  $svc_ping_tpl_name = 'PingServiceTemplate'
+  $svc_dns_tpl_name  = 'DnsServiceTemplate'
+  $svc_dhcp_tpl_name = 'DhcpServiceTemplate'
+
+##Hosts Templates JSON
+$general_template = "{
 \"accept_config\": true,
 \"check_command\": \"hostalive\",
 \"has_agent\": true,
 \"master_should_connect\": true,
 \"max_check_attempts\": \"5\",
-\"object_name\": \"${host_template}\",
+\"object_name\": \"${host_tpl}\",
 \"object_type\": \"template\"
 }"
+$http_template = "{
+\"accept_config\": true,
+\"check_command\": \"hostalive\",
+\"has_agent\": true,
+\"master_should_connect\": true,
+\"max_check_attempts\": \"5\",
+\"object_name\": \"${http_tpl}\",
+\"object_type\": \"template\"
+}"
+$dns_template = "{
+\"accept_config\": true,
+\"check_command\": \"hostalive\",
+\"has_agent\": true,
+\"master_should_connect\": true,
+\"max_check_attempts\": \"5\",
+\"object_name\": \"${dns_tpl}\",
+\"object_type\": \"template\"
+}"
+$dhcp_template = "{
+\"accept_config\": true,
+\"check_command\": \"hostalive\",
+\"has_agent\": true,
+\"master_should_connect\": true,
+\"max_check_attempts\": \"5\",
+\"object_name\": \"${dhcp_tpl}\",
+\"object_type\": \"template\"
+}"
+$tfm_template = "{
+\"accept_config\": true,
+\"check_command\": \"hostalive\",
+\"has_agent\": true,
+\"master_should_connect\": true,
+\"max_check_attempts\": \"5\",
+\"object_name\": \"${tfm_tpl}\",
+\"object_type\": \"template\"
+}"
+
+
+##Service Template JSON
+$svc_http_tpl = "{
+\"check_command\": \"http\",
+\"object_name\": \"${svc_http_tpl_name}\",
+\"object_type\": \"template\",
+\"use_agent\": true,
+\"zone\": \"master\"
+}"
+$svc_ping_tpl = "{
+\"check_command\": \"hostalive\",
+\"object_name\": \"${svc_ping_tpl_name}\",
+\"object_type\": \"template\",
+\"use_agent\": true,
+\"zone\": \"master\"
+}"
+$svc_dns_tpl = "{
+\"check_command\": \"dns\",
+\"object_name\": \"${svc_dns_tpl_name}\",
+\"object_type\": \"template\",
+\"use_agent\": true,
+\"zone\": \"master\"
+}"
+$svc_dhcp_tpl = "{
+\"check_command\": \"dhcp\",
+\"object_name\": \"${svc_dhcp_tpl_name}\",
+\"object_type\": \"template\",
+\"use_agent\": true,
+\"zone\": \"master\"
+}"
+
+##Services Definition
+#HTTP and Ping monitoring
+$svc_http = "{
+\"host\": \"${http_tpl}\",
+\"imports\": [
+  \"${$svc_http_tpl_name}\"
+],
+\"object_name\": \"HttpService\",
+\"object_type\": \"object\"
+},{
+\"host\": \"${http_tpl}\",
+\"imports\": [
+    \"${$svc_ping_tpl_name}\"
+],
+\"object_name\": \"HttpPingService\",
+\"object_type\": \"object\"
+}"
+#DHCP and Ping monitoring
+$svc_dhcp = "{
+\"host\": \"${dhcp_tpl}\",
+\"imports\": [
+  \"${$svc_dhcp_tpl_name}\"
+],
+\"object_name\": \"DhcpService\",
+\"object_type\": \"object\"
+},{
+\"host\": \"${dhcp_tpl}\",
+\"imports\": [
+    \"${$svc_ping_tpl_name}\"
+],
+\"object_name\": \"DhcpPingService\",
+\"object_type\": \"object\"
+}"
+#DNS and Ping monitoring
+$svc_dns = "{
+\"host\": \"${dns_tpl}\",
+\"imports\": [
+  \"${$svc_dns_tpl_name}\"
+],
+\"object_name\": \"DnsService\",
+\"object_type\": \"object\"
+},{
+\"host\": \"${dns_tpl}\",
+\"imports\": [
+    \"${$svc_ping_tpl_name}\"
+],
+\"object_name\": \"DnsPingService\",
+\"object_type\": \"object\"
+}"
+#HTTP, DHCP and Ping monitoring
+$svc_tfm = "{
+\"host\": \"${tfm_tpl}\",
+\"imports\": [
+    \"${$svc_http_tpl_name}\"
+],
+\"object_name\": \"TfmHttpService\",
+\"object_type\": \"object\"
+}, {
+\"host\": \"${tfm_tpl}\",
+\"imports\": [
+    \"${$svc_dhcp_tpl_name}\"
+],
+\"object_name\": \"TfmPingService\",
+\"object_type\": \"object\"
+},{
+\"host\": \"${tfm_tpl}\",
+\"imports\": [
+    \"${$svc_ping_tpl_name}\"
+],
+\"object_name\": \"TfmPingService\",
+\"object_type\": \"object\"
+}"
+
+##Master Node JSON
   $add_master_host = "{
 \"address\": \"${master_ip}\",
 \"display_name\": \"${master_fqdn}\",
 \"imports\": [
-  \"${host_template}\"
+  \"${http_tpl}\"
 ],
 \"object_name\":\"${master_fqdn}\",
 \"object_type\": \"object\",
@@ -78,38 +230,105 @@ class profile::it::icinga_master (
     \"safed_profile\": \"3\"
 }
 }"
+
+##General Variables Definition
 $url = "https://${master_fqdn}/director"
 $credentials = "Authorization:Basic ${hash}"
-$tpl_path = "/var/tmp/${host_template}.json"
-$tpl_cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${host_template}' | grep Failed"
-$tpl_cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @${tpl_path}"
+$format = 'Accept: application/json'
+$host_tpl_path = "/var/tmp/${host_tpl}.json"
+$host_tpl_cond = "curl -s -k -H '${credentials}' -H '${format}' -X GET '${url}/host?name=${host_tpl}' | grep Failed"
+$host_tpl_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/host' -d @${host_tpl_path}"
+
+$http_tpl_path = "/var/tmp/${http_tpl}.json"
+$http_tpl_cond = "curl -s -k -H '${credentials}' -H '${format}' -X GET '${url}/host?name=${http_tpl}' | grep Failed"
+$http_tpl_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/host' -d @${http_tpl_path}"
+
+$dns_tpl_path = "/var/tmp/${dns_tpl}.json"
+$dns_tpl_cond = "curl -s -k -H '${credentials}' -H '${format}' -X GET '${url}/host?name=${dns_tpl}' | grep Failed"
+$dns_tpl_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/host' -d @${dns_tpl_path}"
+
+$dhcp_tpl_path = "/var/tmp/${dhcp_tpl}.json"
+$dhcp_tpl_cond = "curl -s -k -H '${credentials}' -H '${format}' -X GET '${url}/host?name=${dhcp_tpl}' | grep Failed"
+$dhcp_tpl_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/host' -d @${dhcp_tpl_path}"
+
+$tfm_tpl_path = "/var/tmp/${tfm_tpl}.json"
+$tfm_tpl_cond = "curl -s -k -H '${credentials}' -H '${format}' -X GET '${url}/host?name=${tfm_tpl}' | grep Failed"
+$tfm_tpl_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/host' -d @${tfm_tpl_path}"
+
 
 $addhost_path = "/var/tmp/${master_fqdn}.json"
-$addhost_cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${master_fqdn}' | grep Failed"
-$addhost_cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}/host' -d @${addhost_path}"
+$addhost_cond = "curl -s -k -H '${credentials}' -H '${format}' -X GET '${url}/host?name=${master_fqdn}' | grep Failed"
+$addhost_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/host' -d @${addhost_path}"
 
-$deploy_cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}/config/deploy'"
+$deploy_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/config/deploy'"
 
 
-##Force Deploy every puppet run
-exec { $deploy_cmd:
-    cwd      => '/var/tmp',
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-}
 ##Create host template file
-  file { $tpl_path:
+  file { $host_tpl_path:
     ensure  => 'present',
     content => $general_template,
-    before  => Exec[$tpl_cmd],
+    before  => Exec[$host_tpl_cmd],
   }
 ##Add general host template
-  exec { $tpl_cmd:
+  exec { $host_tpl_cmd:
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $tpl_cond,
+    onlyif   => $host_tpl_cond,
 }
+##Create http template file
+  file { $http_tpl_path:
+    ensure  => 'present',
+    content => $http_template,
+    before  => Exec[$http_tpl_cmd],
+  }
+##Add http template
+  exec { $http_tpl_cmd:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $http_tpl_cond,
+}
+##Create dns template file
+  file { $dns_tpl_path:
+    ensure  => 'present',
+    content => $dns_template,
+    before  => Exec[$dns_tpl_cmd],
+  }
+##Add dns template
+  exec { $dns_tpl_cmd:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $dns_tpl_cond,
+}
+##Create dhcp file
+  file { $dhcp_tpl_path:
+    ensure  => 'present',
+    content => $general_template,
+    before  => Exec[$dhcp_tpl_cmd],
+  }
+##Add dhcp template
+  exec { $dhcp_tpl_cmd:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $dhcp_tpl_cond,
+}
+##Create foreman file
+  file { $tfm_tpl_path:
+    ensure  => 'present',
+    content => $tfm_template,
+    before  => Exec[$tfm_tpl_cmd],
+  }
+##Add foreman template
+  exec { $tfm_tpl_cmd:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $tfm_tpl_cond,
+}
+
 ##Create master host file
   file { $addhost_path:
     ensure  => 'present',
@@ -387,5 +606,12 @@ exec { $deploy_cmd:
       'REMOTE_USER'         => '$remote_user',
       'SCRIPT_FILENAME'     => '/usr/share/icingaweb2/public/index.php',
     },
+  }
+
+  ##Force Deploy every puppet run
+  exec { $deploy_cmd:
+    cwd      => '/var/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
   }
 }

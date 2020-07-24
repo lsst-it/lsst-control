@@ -97,6 +97,8 @@ mod 'puppetlabs/postgresql', '6.6.0'
 mod 'theforeman/puppet', '14.1.0'
 mod 'puppet/extlib', '5.0.0'
 mod 'theforeman/foreman', '15.0.2'
+mod 'treydock/perfsonar', '0.5.0'
+mod 'jamtur01/httpauth', '0.0.6'
 mod 'lsst/ccs_database',
   git: 'https://github.com/lsst-it/puppet-ccs_database.git',
   ref: 'v0.1.0'

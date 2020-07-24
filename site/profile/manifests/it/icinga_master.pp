@@ -155,14 +155,15 @@ $svc_dhcp_tpl = "{
 
 ##Services Definition
 #HTTP and Ping monitoring
-$svc_http = "{
+$svc_http1 = "{
 \"host\": \"${http_tpl}\",
 \"imports\": [
   \"${$svc_http_tpl_name}\"
 ],
 \"object_name\": \"${svc_http_name}\",
 \"object_type\": \"object\"
-},{
+}"
+$svc_http2 = "{
 \"host\": \"${http_tpl}\",
 \"imports\": [
     \"${$svc_ping_tpl_name}\"
@@ -171,56 +172,60 @@ $svc_http = "{
 \"object_type\": \"object\"
 }"
 #DHCP and Ping monitoring
-$svc_dhcp = "{
+$svc_dhcp1 = "{
 \"host\": \"${dhcp_tpl}\",
 \"imports\": [
   \"${$svc_dhcp_tpl_name}\"
 ],
 \"object_name\": \"${svc_dhcp_name}\",
 \"object_type\": \"object\"
-},{
+}"
+$svc_dhcp2 = "{
 \"host\": \"${dhcp_tpl}\",
 \"imports\": [
-    \"${$svc_ping_tpl_name}\"
+  \"${$svc_ping_tpl_name}\"
 ],
 \"object_name\": \"${svc_dhcp_ping_name}\",
 \"object_type\": \"object\"
 }"
 #DNS and Ping monitoring
-$svc_dns = "{
+$svc_dns1 = "{
 \"host\": \"${dns_tpl}\",
 \"imports\": [
   \"${$svc_dns_tpl_name}\"
 ],
 \"object_name\": \"${svc_dns_name}\",
 \"object_type\": \"object\"
-},{
+}"
+$svc_dns2 = "{
 \"host\": \"${dns_tpl}\",
 \"imports\": [
-    \"${$svc_ping_tpl_name}\"
+  \"${$svc_ping_tpl_name}\"
 ],
 \"object_name\": \"${svc_dns_ping_name}\",
 \"object_type\": \"object\"
 }"
 #HTTP, DHCP and Ping monitoring
-$svc_tfm = "{
+$svc_tfm1 = "{
 \"host\": \"${tfm_tpl}\",
 \"imports\": [
-    \"${$svc_http_tpl_name}\"
+  \"${$svc_http_tpl_name}\"
 ],
 \"object_name\": \"${$svc_tfm_http_name}\",
 \"object_type\": \"object\"
-}, {
+}"
+$svc_tfm2 = "{
 \"host\": \"${tfm_tpl}\",
 \"imports\": [
-    \"${$svc_dhcp_tpl_name}\"
+  \"${$svc_dhcp_tpl_name}\"
 ],
 \"object_name\": \"${$svc_tfm_dhcp_name}\",
 \"object_type\": \"object\"
-},{
+}"
+$svc_tfm3 = "{
 \"host\": \"${tfm_tpl}\",
 \"imports\": [
-    \"${$svc_ping_tpl_name}\"
+  \"${$svc_ping_tpl_name}\"
 ],
 \"object_name\": \"${$svc_tfm_ping_name}\",
 \"object_type\": \"object\"
@@ -272,10 +277,15 @@ $dns_svc_tpl_path = "/var/tmp/${svc_dns_tpl_name}.json"
 $dhcp_svc_tpl_path = "/var/tmp/${svc_dhcp_tpl_name}.json"
 
 #Services Creation
-$http_svc_path = "/var/tmp/${svc_http_name}.json"
-$dns_svc_path = "/var/tmp/${svc_dns_name}.json"
-$dhcp_svc_path = "/var/tmp/${svc_dhcp_name}.json"
-$tfm_svc_path = "/var/tmp/${svc_tfm_name}.json"
+$http_svc_path1 = "/var/tmp/${svc_http_name}.json"
+$http_svc_path2 = "/var/tmp/${svc_http_ping_name}.json"
+$dns_svc_path1 = "/var/tmp/${svc_dns_name}.json"
+$dns_svc_path2 = "/var/tmp/${svc_dns_ping_name}.json"
+$dhcp_svc_path1 = "/var/tmp/${svc_dhcp_name}.json"
+$dhcp_svc_path2 = "/var/tmp/${svc_dhcp_ping_name}.json"
+$tfm_svc_path1 = "/var/tmp/${svc_tfm_http_name}.json"
+$tfm_svc_path2 = "/var/tmp/${svc_tfm_dhcp_name}.json"
+$tfm_svc_path3 = "/var/tmp/${svc_tfm_ping_name}.json"
 
 #Master Host Creation
 $addhost_path = "/var/tmp/${master_fqdn}.json"
@@ -375,24 +385,49 @@ $deploy_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/con
   }
 
 ##Services Definition
-  file { $http_svc_path:
+  file { $http_svc_path1:
     ensure  => 'present',
-    content => $svc_http,
+    content => $svc_http1,
 #    before  => Exec[$http_tpl_cmd],
   }
-  file { $dhcp_svc_path:
+  file { $http_svc_path2:
     ensure  => 'present',
-    content => $svc_dhcp,
+    content => $svc_http2,
 #    before  => Exec[$http_tpl_cmd],
   }
-  file { $dns_svc_path:
+  file { $dhcp_svc_path1:
     ensure  => 'present',
-    content => $svc_dns,
+    content => $svc_dhcp1,
 #    before  => Exec[$http_tpl_cmd],
   }
-  file { $tfm_svc_path:
+  file { $dhcp_svc_path2:
     ensure  => 'present',
-    content => $svc_tfm,
+    content => $svc_dhcp2,
+#    before  => Exec[$http_tpl_cmd],
+  }
+  file { $dns_svc_path1:
+    ensure  => 'present',
+    content => $svc_dns1,
+#    before  => Exec[$http_tpl_cmd],
+  }
+  file { $dns_svc_path2:
+    ensure  => 'present',
+    content => $svc_dns2,
+#    before  => Exec[$http_tpl_cmd],
+  }
+  file { $tfm_svc_path1:
+    ensure  => 'present',
+    content => $svc_tfm1,
+#    before  => Exec[$http_tpl_cmd],
+  }
+  file { $tfm_svc_path2:
+    ensure  => 'present',
+    content => $svc_tfm2,
+#    before  => Exec[$http_tpl_cmd],
+  }
+  file { $tfm_svc_path3:
+    ensure  => 'present',
+    content => $svc_tfm3,
 #    before  => Exec[$http_tpl_cmd],
   }
 

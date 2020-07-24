@@ -21,7 +21,7 @@ network::interfaces_hash:
     netmask: "255.255.255.0"
     nozeroconf: "yes"
     mtu: "9000"
-  # VLAN tags Summit p2p1  
+  # VLAN tags Summit p2p1
   p2p1.728:
     bootproto: "none"
     onboot: "yes"
@@ -41,7 +41,7 @@ network::interfaces_hash:
     netmask: "255.255.255.0"
     nozeroconf: "yes"
     mtu: "9000"
-  # VLAN tags Summit p2p2  
+  # VLAN tags Summit p2p2
   p2p2.729:
     bootproto: "none"
     onboot: "yes"
@@ -50,22 +50,21 @@ network::interfaces_hash:
     ipaddress: "10.7.29.1"
     netmask: "255.255.255.0"
     nozeroconf: "yes"
-    mtu: "9000"  
+    mtu: "9000"
   ##Clean Slate
-  # p2p1.726: 
+  # p2p1.726:
   #   ensure: absent
-  # p2p1.727: 
+  # p2p1.727:
   #   ensure: absent
-  # p2p1.728: 
+  # p2p1.728:
   #   ensure: absent
-  # p2p1.729: 
+  # p2p1.729:
   #   ensure: absent
-  # p2p2.726: 
+  # p2p2.726:
   #   ensure: absent
-  # p2p2.727: 
+  # p2p2.727:
   #   ensure: absent
-  # p2p2.728: 
+  # p2p2.728:
   #   ensure: absent
-  # p2p2.729: 
+  # p2p2.729:
   #   ensure: absent
-  

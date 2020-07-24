@@ -8,7 +8,7 @@ class profile::it::icinga_satellite (
   $api_user,
   $api_pwd,
 ){
-  include profile::core::uncommon
+  include profile::core::common
   include profile::core::remi
 
   $icinga_satellite_ip = $facts['ipaddress']

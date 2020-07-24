@@ -26,5 +26,4 @@ class profile::core::common
   include rsyslog::config
   include profile::core::hardware
   include profile::core::dielibwrapdie
-  include profile::it::icinga_agent
 }

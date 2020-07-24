@@ -28,7 +28,7 @@ class profile::it::icinga_master (
   $host_template,
 )
 {
-  include profile::core::uncommon
+  include profile::core::common
   include profile::core::remi
   include ::openssl
   include ::nginx

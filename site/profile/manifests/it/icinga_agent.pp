@@ -2,10 +2,10 @@
 #   Icinga agent creation for metric collections
 
 class profile::it::icinga_agent(
-  String $icinga_master_fqdn = 'icinga-master.ls.lsst.org',
-  String $icinga_master_ip = '139.229.135.31',
-  String $hash = 'c3ZjX2ljaW5nYTp1bTBsN0JtUDskV1U=',
-  String $host_template = 'GeneralHostTemplate',
+  $icinga_master_fqdn,
+  $icinga_master_ip,
+  $hash,
+  $host_template,
 )
 {
   $packages = [

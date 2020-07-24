@@ -3,3 +3,9 @@
 # can be used to bootstrap nodes while a more specific role is being developed.
 classes:
   - "profile::core::common"
+  - "profile::it::icinga_agent"
+
+profile::it::icinga_master_fqdn: "icinga-master.ls.lsst.org"
+profile::it::icinga_master_ip: "139.229.135.31"
+profile::it::hash: "c3ZjX2ljaW5nYTp1bTBsN0JtUDskV1U="
+profile::it::host_template: "GeneralHostTemplate"

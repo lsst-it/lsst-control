@@ -32,39 +32,49 @@ class profile::it::icinga_master (
   $tfm_tpl,
 )
 {
-  include profile::core::common
-  include profile::core::remi
-  include ::openssl
-  include ::nginx
+include profile::core::common
+include profile::core::remi
+include ::openssl
+include ::nginx
 
-  $ssl_cert       = '/etc/ssl/certs/icinga.crt'
-  $ssl_key        = '/etc/ssl/certs/icinga.key'
-  $master_fqdn  = $facts[fqdn]
-  $master_ip  = $facts[ipaddress]
-  $php_packages = [
-    'php73-php-fpm',
-    'php73-php-ldap',
-    'php73-php-intl',
-    'php73-php-dom',
-    'php73-php-gd',
-    'php73-php-imagick',
-    'php73-php-mysqlnd',
-    'php73-php-pgsql',
-    'php73-php-pdo',
-    'php73-php-process',
-    'php73-php-cli',
-    'php73-php-soap',
-    'rh-php73-php-posix',
-  ]
-  $override_options = {
-    'mysqld' => {
-      'bind_address' => '0.0.0.0',
-    }
+$ssl_cert       = '/etc/ssl/certs/icinga.crt'
+$ssl_key        = '/etc/ssl/certs/icinga.key'
+$master_fqdn  = $facts[fqdn]
+$master_ip  = $facts[ipaddress]
+$php_packages = [
+  'php73-php-fpm',
+  'php73-php-ldap',
+  'php73-php-intl',
+  'php73-php-dom',
+  'php73-php-gd',
+  'php73-php-imagick',
+  'php73-php-mysqlnd',
+  'php73-php-pgsql',
+  'php73-php-pdo',
+  'php73-php-process',
+  'php73-php-cli',
+  'php73-php-soap',
+  'rh-php73-php-posix',
+]
+$override_options = {
+  'mysqld' => {
+    'bind_address' => '0.0.0.0',
   }
-  $svc_http_tpl_name = 'HttpServiceTemplate'
-  $svc_ping_tpl_name = 'PingServiceTemplate'
-  $svc_dns_tpl_name  = 'DnsServiceTemplate'
-  $svc_dhcp_tpl_name = 'DhcpServiceTemplate'
+}
+$svc_http_tpl_name  = 'HttpServiceTemplate'
+$svc_ping_tpl_name  = 'PingServiceTemplate'
+$svc_dns_tpl_name   = 'DnsServiceTemplate'
+$svc_dhcp_tpl_name  = 'DhcpServiceTemplate'
+$svc_tfm_name       = 'TfmService'
+$svc_tfm_http_name  = 'TfmHttpService'
+$svc_tfm_dhcp_name  = 'TfmDhcpService'
+$svc_tfm_ping_name  = 'TfmPingService'
+$svc_dns_name       = 'DnsService'
+$svc_dns_ping_name  = 'DnsPingService'
+$svc_dhcp_name      = 'DhcpService'
+$svc_dhcp_ping_name = 'DhcpPingService'
+$svc_http_name      = 'HttpService'
+$svc_http_ping_name = 'HttpPingService'
 
 ##Hosts Templates JSON
 $general_template = "{
@@ -113,7 +123,6 @@ $tfm_template = "{
 \"object_type\": \"template\"
 }"
 
-
 ##Service Template JSON
 $svc_http_tpl = "{
 \"check_command\": \"http\",
@@ -151,14 +160,14 @@ $svc_http = "{
 \"imports\": [
   \"${$svc_http_tpl_name}\"
 ],
-\"object_name\": \"HttpService\",
+\"object_name\": \"${svc_http_name}\",
 \"object_type\": \"object\"
 },{
 \"host\": \"${http_tpl}\",
 \"imports\": [
     \"${$svc_ping_tpl_name}\"
 ],
-\"object_name\": \"HttpPingService\",
+\"object_name\": \"${svc_http_ping_name}\",
 \"object_type\": \"object\"
 }"
 #DHCP and Ping monitoring
@@ -167,14 +176,14 @@ $svc_dhcp = "{
 \"imports\": [
   \"${$svc_dhcp_tpl_name}\"
 ],
-\"object_name\": \"DhcpService\",
+\"object_name\": \"${svc_dhcp_name}\",
 \"object_type\": \"object\"
 },{
 \"host\": \"${dhcp_tpl}\",
 \"imports\": [
     \"${$svc_ping_tpl_name}\"
 ],
-\"object_name\": \"DhcpPingService\",
+\"object_name\": \"${svc_dhcp_ping_name}\",
 \"object_type\": \"object\"
 }"
 #DNS and Ping monitoring
@@ -183,14 +192,14 @@ $svc_dns = "{
 \"imports\": [
   \"${$svc_dns_tpl_name}\"
 ],
-\"object_name\": \"DnsService\",
+\"object_name\": \"${svc_dns_name}\",
 \"object_type\": \"object\"
 },{
 \"host\": \"${dns_tpl}\",
 \"imports\": [
     \"${$svc_ping_tpl_name}\"
 ],
-\"object_name\": \"DnsPingService\",
+\"object_name\": \"${svc_dns_ping_name}\",
 \"object_type\": \"object\"
 }"
 #HTTP, DHCP and Ping monitoring
@@ -199,21 +208,21 @@ $svc_tfm = "{
 \"imports\": [
     \"${$svc_http_tpl_name}\"
 ],
-\"object_name\": \"TfmHttpService\",
+\"object_name\": \"${$svc_tfm_http_name}\",
 \"object_type\": \"object\"
 }, {
 \"host\": \"${tfm_tpl}\",
 \"imports\": [
     \"${$svc_dhcp_tpl_name}\"
 ],
-\"object_name\": \"TfmDhcpService\",
+\"object_name\": \"${$svc_tfm_dhcp_name}\",
 \"object_type\": \"object\"
 },{
 \"host\": \"${tfm_tpl}\",
 \"imports\": [
     \"${$svc_ping_tpl_name}\"
 ],
-\"object_name\": \"TfmPingService\",
+\"object_name\": \"${$svc_tfm_ping_name}\",
 \"object_type\": \"object\"
 }"
 
@@ -258,12 +267,15 @@ $tfm_tpl_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/ho
 
 #Services Template Creation
 $http_svc_tpl_path = "/var/tmp/${svc_http_tpl_name}.json"
-
 $ping_svc_tpl_path = "/var/tmp/${svc_ping_tpl_name}.json"
-
 $dns_svc_tpl_path = "/var/tmp/${svc_dns_tpl_name}.json"
-
 $dhcp_svc_tpl_path = "/var/tmp/${svc_dhcp_tpl_name}.json"
+
+#Services Creation
+$http_svc_path = "/var/tmp/${svc_http_name}.json"
+$dns_svc_path = "/var/tmp/${svc_dns_name}.json"
+$dhcp_svc_path = "/var/tmp/${svc_dhcp_name}.json"
+$tfm_svc_path = "/var/tmp/${svc_tfm_name}.json"
 
 #Master Host Creation
 $addhost_path = "/var/tmp/${master_fqdn}.json"
@@ -363,6 +375,26 @@ $deploy_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/con
   }
 
 ##Services Definition
+  file { $http_svc_path:
+    ensure  => 'present',
+    content => $svc_http,
+#    before  => Exec[$http_tpl_cmd],
+  }
+  file { $dhcp_svc_path:
+    ensure  => 'present',
+    content => $svc_dhcp,
+#    before  => Exec[$http_tpl_cmd],
+  }
+  file { $dns_svc_path:
+    ensure  => 'present',
+    content => $svc_dns,
+#    before  => Exec[$http_tpl_cmd],
+  }
+  file { $tfm_svc_path:
+    ensure  => 'present',
+    content => $svc_tfm,
+#    before  => Exec[$http_tpl_cmd],
+  }
 
 
 ##Add Master Host

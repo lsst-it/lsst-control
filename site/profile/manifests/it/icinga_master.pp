@@ -206,7 +206,7 @@ $svc_tfm = "{
 \"imports\": [
     \"${$svc_dhcp_tpl_name}\"
 ],
-\"object_name\": \"TfmPingService\",
+\"object_name\": \"TfmDhcpService\",
 \"object_type\": \"object\"
 },{
 \"host\": \"${tfm_tpl}\",
@@ -235,6 +235,7 @@ $svc_tfm = "{
 $url = "https://${master_fqdn}/director"
 $credentials = "Authorization:Basic ${hash}"
 $format = 'Accept: application/json'
+#Host Templates Creation
 $host_tpl_path = "/var/tmp/${host_tpl}.json"
 $host_tpl_cond = "curl -s -k -H '${credentials}' -H '${format}' -X GET '${url}/host?name=${host_tpl}' | grep Failed"
 $host_tpl_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/host' -d @${host_tpl_path}"
@@ -255,7 +256,16 @@ $tfm_tpl_path = "/var/tmp/${tfm_tpl}.json"
 $tfm_tpl_cond = "curl -s -k -H '${credentials}' -H '${format}' -X GET '${url}/host?name=${tfm_tpl}' | grep Failed"
 $tfm_tpl_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/host' -d @${tfm_tpl_path}"
 
+#Services Template Creation
+$http_svc_tpl_path = "/var/tmp/${svc_http_tpl_name}.json"
 
+$ping_svc_tpl_path = "/var/tmp/${svc_ping_tpl_name}.json"
+
+$dns_svc_tpl_path = "/var/tmp/${svc_dns_tpl_name}.json"
+
+$dhcp_svc_tpl_path = "/var/tmp/${svc_dhcp_tpl_name}.json"
+
+#Master Host Creation
 $addhost_path = "/var/tmp/${master_fqdn}.json"
 $addhost_cond = "curl -s -k -H '${credentials}' -H '${format}' -X GET '${url}/host?name=${master_fqdn}' | grep Failed"
 $addhost_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/host' -d @${addhost_path}"
@@ -263,65 +273,66 @@ $addhost_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/ho
 $deploy_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/config/deploy'"
 
 
-##Create host template file
+##Host Templates
+#Create host template file
   file { $host_tpl_path:
     ensure  => 'present',
     content => $general_template,
     before  => Exec[$host_tpl_cmd],
   }
-##Add general host template
+#Add general host template
   exec { $host_tpl_cmd:
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $host_tpl_cond,
 }
-##Create http template file
+#Create http template file
   file { $http_tpl_path:
     ensure  => 'present',
     content => $http_template,
     before  => Exec[$http_tpl_cmd],
   }
-##Add http template
+#Add http template
   exec { $http_tpl_cmd:
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $http_tpl_cond,
 }
-##Create dns template file
+#Create dns template file
   file { $dns_tpl_path:
     ensure  => 'present',
     content => $dns_template,
     before  => Exec[$dns_tpl_cmd],
   }
-##Add dns template
+#Add dns template
   exec { $dns_tpl_cmd:
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $dns_tpl_cond,
 }
-##Create dhcp file
+#Create dhcp file
   file { $dhcp_tpl_path:
     ensure  => 'present',
     content => $general_template,
     before  => Exec[$dhcp_tpl_cmd],
   }
-##Add dhcp template
+#Add dhcp template
   exec { $dhcp_tpl_cmd:
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $dhcp_tpl_cond,
 }
-##Create foreman file
+#Create foreman file
   file { $tfm_tpl_path:
     ensure  => 'present',
     content => $tfm_template,
     before  => Exec[$tfm_tpl_cmd],
   }
-##Add foreman template
+#Add foreman template
   exec { $tfm_tpl_cmd:
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
@@ -329,13 +340,39 @@ $deploy_cmd = "curl -s -k -H '${credentials}' -H '${format}' -X POST '${url}/con
     onlyif   => $tfm_tpl_cond,
 }
 
-##Create master host file
+##Service Templates
+  file { $http_svc_tpl_path:
+    ensure  => 'present',
+    content => $svc_http_tpl,
+#    before  => Exec[$http_tpl_cmd],
+  }
+  file { $ping_svc_tpl_path:
+    ensure  => 'present',
+    content => $svc_ping_tpl,
+#    before  => Exec[$http_tpl_cmd],
+  }
+  file { $dhcp_svc_tpl_path:
+    ensure  => 'present',
+    content => $svc_dhcp_tpl,
+#    before  => Exec[$http_tpl_cmd],
+  }
+  file { $dns_svc_tpl_path:
+    ensure  => 'present',
+    content => $svc_dns_tpl,
+#    before  => Exec[$http_tpl_cmd],
+  }
+
+##Services Definition
+
+
+##Add Master Host
+#Create master host file
   file { $addhost_path:
     ensure  => 'present',
     content => $add_master_host,
     before  => Exec[$addhost_cmd],
   }
-##Add master host
+#Add master host
   exec { $addhost_cmd:
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],

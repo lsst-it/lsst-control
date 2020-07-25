@@ -7,7 +7,7 @@ class profile::it::graylog {
 # I had to specify version first with manage_package_repo to true
 # Then change things back to original and it installed.    
 class {'mongodb::globals':
-  manage_package_repo => false,
+  manage_package_repo => true,
   manage_package      => true,
   version             => '3.6.18-1.el7',
   }

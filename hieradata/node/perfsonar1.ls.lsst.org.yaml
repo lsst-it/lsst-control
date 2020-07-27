@@ -1,4 +1,9 @@
 ---
+classes:
+  - "profile::core::rp_filter"
+
+profile::core::rp_filter::enable: false
+
 profile::core::nm_dispatch::interfaces:
   em1:
     - "/sbin/ethtool --set-ring ${DEV} rx 2047 tx 511"

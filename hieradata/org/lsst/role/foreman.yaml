@@ -2,7 +2,6 @@
 classes:
   - "profile::core::common"
   - "profile::core::puppet_master"
-  - "profile::it::icinga_agent"
 cron::job:
   r10k:
     command: "systemd-cat -t 'r10k-cron' /opt/puppetlabs/puppet/bin/r10k deploy environment -t -p"

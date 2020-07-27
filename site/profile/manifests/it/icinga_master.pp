@@ -320,7 +320,7 @@ $dhcp_svc_cond2  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?n
 $dhcp_svc_cmd2   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dhcp_svc_path2}"
 
 $tfm_svc_path1  = "${icinga_path}/${tfm_svc_http_name}.json"
-$tfm_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${tfm_svc_name}&host=${tfm_tpl}' | grep Failed"
+$tfm_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${tfm_svc_http_name}&host=${tfm_tpl}' | grep Failed"
 $tfm_svc_cmd1   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${tfm_svc_path1}"
 $tfm_svc_path2  = "${icinga_path}/${tfm_svc_dhcp_name}.json"
 $tfm_svc_cond2  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${tfm_svc_dhcp_name}&host=${tfm_tpl}' | grep Failed"

@@ -8,14 +8,14 @@ class profile::it::icinga_agent(
   $host_template,
 )
 {
-  $packages = [
-    'nagios-plugins-all',
-    'curl',
-  ]
-  $icinga_agent_fqdn = $facts['fqdn']
-  $icinga_agent_ip = $facts['ipaddress']
-  $credentials = "Authorization:Basic ${hash}"
-  $json_file = "{
+$packages = [
+  'nagios-plugins-all',
+  'curl',
+]
+$icinga_agent_fqdn = $facts['fqdn']
+$icinga_agent_ip = $facts['ipaddress']
+$credentials = "Authorization:Basic ${hash}"
+$json_file = "{
 \"address\": \"${icinga_agent_ip}\",
 \"display_name\": \"${icinga_agent_fqdn}\",
 \"imports\": [
@@ -27,11 +27,16 @@ class profile::it::icinga_agent(
     \"safed_profile\": \"3\"
 }
 }"
-  $path = "/var/tmp/${icinga_agent_fqdn}.json"
-  $url = "https://${icinga_master_fqdn}/director/host"
-  $cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @${path}"
-  $cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_master_fqdn}' | grep Failed"
+$icinga_path = '/var/tmp'
+$path = "${icinga_path}/${icinga_agent_fqdn}.json"
+$url = "https://${icinga_master_fqdn}/director/host"
+$cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @${path}"
+$cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_agent_fqdn}' | grep Failed"
 
+##Create a directory to allocate json files
+file { $icinga_path:
+  ensure => 'directory',
+}
 
 ## Create host file
   file { $path:
@@ -40,7 +45,7 @@ class profile::it::icinga_agent(
   }
 ##Add host to master
   exec { $cmd:
-    cwd      => '/var/tmp',
+    cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $cond,

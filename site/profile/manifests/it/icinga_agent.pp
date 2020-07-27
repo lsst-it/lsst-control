@@ -27,7 +27,7 @@ $json_file = "{
     \"safed_profile\": \"3\"
 }
 }"
-$icinga_path = '/var/tmp'
+$icinga_path = '/opt/icinga'
 $path = "${icinga_path}/${icinga_agent_fqdn}.json"
 $url = "https://${icinga_master_fqdn}/director/host"
 $cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @${path}"

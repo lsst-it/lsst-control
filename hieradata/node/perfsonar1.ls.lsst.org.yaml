@@ -11,6 +11,16 @@ network::interfaces_hash:
     onboot: "yes"
     type: "Ethernet"
     mtu: "9000"
+  # lhn owamp
+  p2p1.360:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    type: "vlan"
+    ipaddress: "139.229.140.135"
+    netmask: "255.255.255.254"
+    nozeroconf: "yes"
+    mtu: "9000"
   # VLAN tags interface p2p1
   p2p1.726:
     bootproto: "none"
@@ -29,6 +39,16 @@ network::interfaces_hash:
     type: "vlan"
     ipaddress: "10.7.28.1"
     netmask: "255.255.255.0"
+    nozeroconf: "yes"
+    mtu: "9000"
+  # lhn perf
+  p2p2.370:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    type: "vlan"
+    ipaddress: "139.229.140.137"
+    netmask: "255.255.255.254"
     nozeroconf: "yes"
     mtu: "9000"
   ## VLAN tags interface p2p2

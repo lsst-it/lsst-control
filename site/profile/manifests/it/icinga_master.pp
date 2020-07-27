@@ -28,8 +28,7 @@ class profile::it::icinga_master (
   $host_tpl,
   $http_tpl,
   $dns_tpl,
-  $dhcp_tpl,
-  $tfm_tpl,
+  $master_tpl,
 )
 {
 include profile::core::common
@@ -61,20 +60,16 @@ $override_options = {
     'bind_address' => '0.0.0.0',
   }
 }
-$http_svc_tpl_name  = 'HttpServiceTemplate'
-$ping_svc_tpl_name  = 'PingServiceTemplate'
-$dns_svc_tpl_name   = 'DnsServiceTemplate'
-$dhcp_svc_tpl_name  = 'DhcpServiceTemplate'
-$tfm_svc_name       = 'TfmService'
-$tfm_svc_http_name  = 'TfmHttpService'
-$tfm_svc_dhcp_name  = 'TfmDhcpService'
-$tfm_svc_ping_name  = 'TfmPingService'
-$dns_svc_name       = 'DnsService'
-$dns_svc_ping_name  = 'DnsPingService'
-$dhcp_svc_name      = 'DhcpService'
-$dhcp_svc_ping_name = 'DhcpPingService'
-$http_svc_name      = 'HttpService'
-$http_svc_ping_name = 'HttpPingService'
+$http_svc_tpl_name    = 'HttpServiceTemplate'
+$ping_svc_tpl_name    = 'PingServiceTemplate'
+$dns_svc_tpl_name     = 'DnsServiceTemplate'
+$master_svc_tpl_name  = 'MasterServiceTemplate'
+$dns_svc_name         = 'DnsService'
+$dns_svc_ping_name    = 'DnsPingService'
+$master_svc_dhcp_name = 'MasterDhcpService'
+$master_svc_ping_name   = 'MasterPingService'
+$http_svc_name        = 'HttpService'
+$http_svc_ping_name   = 'HttpPingService'
 
 ##Hosts Templates JSON
 $general_template = "{
@@ -104,22 +99,13 @@ $dns_template = "{
 \"object_name\": \"${dns_tpl}\",
 \"object_type\": \"template\"
 }"
-$dhcp_template = "{
+$master_template = "{
 \"accept_config\": true,
 \"check_command\": \"hostalive\",
 \"has_agent\": true,
 \"master_should_connect\": true,
 \"max_check_attempts\": \"5\",
-\"object_name\": \"${dhcp_tpl}\",
-\"object_type\": \"template\"
-}"
-$tfm_template = "{
-\"accept_config\": true,
-\"check_command\": \"hostalive\",
-\"has_agent\": true,
-\"master_should_connect\": true,
-\"max_check_attempts\": \"5\",
-\"object_name\": \"${tfm_tpl}\",
+\"object_name\": \"${master_tpl}\",
 \"object_type\": \"template\"
 }"
 
@@ -145,9 +131,9 @@ $dns_svc_tpl = "{
 \"use_agent\": true,
 \"zone\": \"master\"
 }"
-$dhcp_svc_tpl = "{
+$master_svc_tpl = "{
 \"check_command\": \"dhcp\",
-\"object_name\": \"${dhcp_svc_tpl_name}\",
+\"object_name\": \"${master_svc_tpl_name}\",
 \"object_type\": \"template\",
 \"use_agent\": true,
 \"zone\": \"master\"
@@ -172,20 +158,22 @@ $http_svc2 = "{
 \"object_type\": \"object\"
 }"
 #DHCP and Ping monitoring
-$dhcp_svc1 = "{
-\"host\": \"${dhcp_tpl}\",
+$master_svc1 = "{
+\"host\": \"${master_tpl}\",
 \"imports\": [
-  \"${$dhcp_svc_tpl_name}\"
+  \"${$master_svc_tpl_name}\"
 ],
-\"object_name\": \"${dhcp_svc_name}\",
-\"object_type\": \"object\"
+\"object_name\": \"${master_svc_dhcp_name}\",
+\"object_type\": \"object\",
+\"vars\": {
+  \"dhcp_serverip\": \"139.229.135.5\"
 }"
-$dhcp_svc2 = "{
-\"host\": \"${dhcp_tpl}\",
+$master_svc2 = "{
+\"host\": \"${master_tpl}\",
 \"imports\": [
   \"${$ping_svc_tpl_name}\"
 ],
-\"object_name\": \"${dhcp_svc_ping_name}\",
+\"object_name\": \"${master_svc_ping_name}\",
 \"object_type\": \"object\"
 }"
 #DNS and Ping monitoring
@@ -205,38 +193,13 @@ $dns_svc2 = "{
 \"object_name\": \"${dns_svc_ping_name}\",
 \"object_type\": \"object\"
 }"
-#HTTP, DHCP and Ping monitoring
-$tfm_svc1 = "{
-\"host\": \"${tfm_tpl}\",
-\"imports\": [
-  \"${$http_svc_tpl_name}\"
-],
-\"object_name\": \"${$tfm_svc_http_name}\",
-\"object_type\": \"object\"
-}"
-$tfm_svc2 = "{
-\"host\": \"${tfm_tpl}\",
-\"imports\": [
-  \"${$dhcp_svc_tpl_name}\"
-],
-\"object_name\": \"${$tfm_svc_dhcp_name}\",
-\"object_type\": \"object\"
-}"
-$tfm_svc3 = "{
-\"host\": \"${tfm_tpl}\",
-\"imports\": [
-  \"${$ping_svc_tpl_name}\"
-],
-\"object_name\": \"${$tfm_svc_ping_name}\",
-\"object_type\": \"object\"
-}"
 
 ##Master Node JSON
   $add_master_host = "{
 \"address\": \"${master_ip}\",
 \"display_name\": \"${master_fqdn}\",
 \"imports\": [
-  \"${http_tpl}\"
+  \"${master_tpl}\"
 ],
 \"object_name\":\"${master_fqdn}\",
 \"object_type\": \"object\",
@@ -272,13 +235,9 @@ $dns_tpl_path = "${icinga_path}/${dns_tpl}.json"
 $dns_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${dns_tpl}' | grep Failed"
 $dns_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${dns_tpl_path}"
 
-$dhcp_tpl_path = "${icinga_path}/${dhcp_tpl}.json"
-$dhcp_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${dhcp_tpl}' | grep Failed"
-$dhcp_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${dhcp_tpl_path}"
-
-$tfm_tpl_path = "${icinga_path}/${tfm_tpl}.json"
-$tfm_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${tfm_tpl}' | grep Failed"
-$tfm_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${tfm_tpl_path}"
+$master_tpl_path = "${icinga_path}/${master_tpl}.json"
+$master_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${master_tpl}' | grep Failed"
+$master_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${master_tpl_path}"
 
 #Services Template Creation
 $http_svc_tpl_path = "${icinga_path}/${http_svc_tpl_name}.json"
@@ -293,9 +252,9 @@ $dns_svc_tpl_path  = "${icinga_path}/${dns_svc_tpl_name}.json"
 $dns_svc_tpl_cond  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_tpl_name}' | grep Failed"
 $dns_svc_tpl_cmd   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$dns_svc_tpl_path}"
 
-$dhcp_svc_tpl_path = "${icinga_path}/${dhcp_svc_tpl_name}.json"
-$dhcp_svc_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dhcp_svc_tpl_name}' | grep Failed"
-$dhcp_svc_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$dhcp_svc_tpl_path}"
+$master_svc_tpl_path = "${icinga_path}/${master_svc_tpl_name}.json"
+$master_svc_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_tpl_name}' | grep Failed"
+$master_svc_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$master_svc_tpl_path}"
 
 #Services Creation
 $http_svc_path1 = "${icinga_path}/${http_svc_name}.json"
@@ -312,22 +271,12 @@ $dns_svc_path2  = "${icinga_path}/${dns_svc_ping_name}.json"
 $dns_svc_cond2  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_ping_name}&host=${dns_tpl}' | grep Failed"
 $dns_svc_cmd2   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dns_svc_path2}"
 
-$dhcp_svc_path1  = "${icinga_path}/${dhcp_svc_name}.json"
-$dhcp_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dhcp_svc_name}&host=${dhcp_tpl}' | grep Failed"
-$dhcp_svc_cmd1   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dhcp_svc_path1}"
-$dhcp_svc_path2  = "${icinga_path}/${dhcp_svc_ping_name}.json"
-$dhcp_svc_cond2  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dhcp_svc_ping_name}&host=${dhcp_tpl}' | grep Failed"
-$dhcp_svc_cmd2   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dhcp_svc_path2}"
-
-$tfm_svc_path1  = "${icinga_path}/${tfm_svc_http_name}.json"
-$tfm_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${tfm_svc_http_name}&host=${tfm_tpl}' | grep Failed"
-$tfm_svc_cmd1   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${tfm_svc_path1}"
-$tfm_svc_path2  = "${icinga_path}/${tfm_svc_dhcp_name}.json"
-$tfm_svc_cond2  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${tfm_svc_dhcp_name}&host=${tfm_tpl}' | grep Failed"
-$tfm_svc_cmd2   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${tfm_svc_path2}"
-$tfm_svc_path3  = "${icinga_path}/${tfm_svc_ping_name}.json"
-$tfm_svc_cond3  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${tfm_svc_ping_name}&host=${tfm_tpl}' | grep Failed"
-$tfm_svc_cmd3   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${tfm_svc_path3}"
+$master_svc_path1  = "${icinga_path}/${master_svc_dhcp_name}.json"
+$master_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_dhcp_name}&host=${master_tpl}' | grep Failed"
+$master_svc_cmd1   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path1}"
+$master_svc_path2  = "${icinga_path}/${master_svc_ping_name}.json"
+$master_svc_cond2  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_ping_name}&host=${master_tpl}' | grep Failed"
+$master_svc_cmd2   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path2}"
 
 #Master Host Creation
 $addhost_path = "${icinga_path}/${master_fqdn}.json"
@@ -379,30 +328,17 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
     onlyif   => $dns_tpl_cond,
   }
 #Create dhcp file
-  file { $dhcp_tpl_path:
+  file { $master_tpl_path:
     ensure  => 'present',
-    content => $dhcp_template,
-    before  => Exec[$dhcp_tpl_cmd],
+    content => $master_template,
+    before  => Exec[$master_tpl_cmd],
   }
 #Add dhcp template
-  exec { $dhcp_tpl_cmd:
+  exec { $master_tpl_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $dhcp_tpl_cond,
-  }
-#Create foreman file
-  file { $tfm_tpl_path:
-    ensure  => 'present',
-    content => $tfm_template,
-    before  => Exec[$tfm_tpl_cmd],
-  }
-#Add foreman template
-  exec { $tfm_tpl_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $tfm_tpl_cond,
+    onlyif   => $master_tpl_cond,
   }
 
 ##Service Templates
@@ -433,17 +369,17 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
     onlyif   => $ping_svc_tpl_cond,
   }
 #Create dhcp template file
-  file { $dhcp_svc_tpl_path:
+  file { $master_svc_tpl_path:
     ensure  => 'present',
-    content => $dhcp_svc_tpl,
-    before  => Exec[$dhcp_svc_tpl_cmd],
+    content => $master_svc_tpl,
+    before  => Exec[$master_svc_tpl_cmd],
   }
 #Add http template
-  exec { $dhcp_svc_tpl_cmd:
+  exec { $master_svc_tpl_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $dhcp_svc_tpl_cond,
+    onlyif   => $master_svc_tpl_cond,
   }
 #Create dns template file 
   file { $dns_svc_tpl_path:
@@ -487,30 +423,30 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
     onlyif   => $http_svc_cond2,
   }
 #Creates dhcp resource file for DhcpTemplate and DhcpServiceTemplate
-  file { $dhcp_svc_path1:
+  file { $master_svc_path1:
     ensure  => 'present',
-    content => $dhcp_svc1,
-    before  => Exec[$dhcp_svc_cmd1],
+    content => $master_svc1,
+    before  => Exec[$master_svc_cmd1],
   }
 #Adds dhcp resource file for DhcpTemplate and DhcpServiceTemplate
-  exec { $dhcp_svc_cmd1:
+  exec { $master_svc_cmd1:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $dhcp_svc_cond1,
+    onlyif   => $master_svc_cond1,
   }
 #Creates ping resource file for DhcpTemplate and DhcpServiceTemplate
-  file { $dhcp_svc_path2:
+  file { $master_svc_path2:
     ensure  => 'present',
-    content => $dhcp_svc2,
-    before  => Exec[$dhcp_svc_cmd2],
+    content => $master_svc2,
+    before  => Exec[$master_svc_cmd2],
   }
 #Adds ping resource file for DhcpTemplate and DhcpServiceTemplate
-  exec { $dhcp_svc_cmd2:
+  exec { $master_svc_cmd2:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $dhcp_svc_cond2,
+    onlyif   => $master_svc_cond2,
   }
 #Creates dns resource file for DnsTemplate and DnsServiceTemplate
   file { $dns_svc_path1:
@@ -538,46 +474,6 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
     provider => shell,
     onlyif   => $dns_svc_cond2,
   }
-#Adds http resource file for TfmTemplate and TfmServiceTemplate
-  file { $tfm_svc_path1:
-    ensure  => 'present',
-    content => $tfm_svc1,
-    before  => Exec[$tfm_svc_cmd1],
-  }
-#Creates http resource file for TfmTemplate and TfmServiceTemplate
-  exec { $tfm_svc_cmd1:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $tfm_svc_cond1,
-  }
-#Adds dhcp resource file for TfmTemplate and TfmServiceTemplate
-  file { $tfm_svc_path2:
-    ensure  => 'present',
-    content => $tfm_svc2,
-    before  => Exec[$tfm_svc_cmd2],
-  }
-#Creates dhcp resource file for TfmTemplate and TfmServiceTemplate
-  exec { $tfm_svc_cmd2:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $tfm_svc_cond2,
-  }
-#Adds ping resource file for TfmTemplate and TfmServiceTemplate
-  file { $tfm_svc_path3:
-    ensure  => 'present',
-    content => $tfm_svc3,
-    before  => Exec[$tfm_svc_cmd3],
-  }
-#Creates ping resource file for TfmTemplate and TfmServiceTemplate
-  exec { $tfm_svc_cmd3:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $tfm_svc_cond3,
-  }
-
 
 ##Add Master Host
 #Create master host file

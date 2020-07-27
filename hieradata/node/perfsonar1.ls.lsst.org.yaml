@@ -1,4 +1,12 @@
 ---
+profile::core::nm_dispatch::interfaces:
+  em1:
+    - "/sbin/ethtool --set-ring ${DEV} rx 2047 tx 511"
+  p2p1:
+    - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
+  p2p2:
+    - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
+
 network::interfaces_hash:
   ## Fiber Interfaces
   p2p1:

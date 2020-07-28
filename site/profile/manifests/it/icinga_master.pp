@@ -29,6 +29,7 @@ class profile::it::icinga_master (
   $http_tpl,
   $dns_tpl,
   $master_tpl,
+  $ipa_tpl,
 )
 {
 include profile::core::common
@@ -36,10 +37,15 @@ include profile::core::remi
 include ::openssl
 include ::nginx
 
+#Icinga tls keys
 $ssl_cert       = '/etc/ssl/certs/icinga.crt'
 $ssl_key        = '/etc/ssl/certs/icinga.key'
+
+#Implicit usage of facts
 $master_fqdn  = $facts[fqdn]
 $master_ip  = $facts[ipaddress]
+
+#Force installation and usage of php73
 $php_packages = [
   'php73-php-fpm',
   'php73-php-ldap',
@@ -60,16 +66,22 @@ $override_options = {
     'bind_address' => '0.0.0.0',
   }
 }
+#Service Templates Names
 $http_svc_tpl_name    = 'HttpServiceTemplate'
 $ping_svc_tpl_name    = 'PingServiceTemplate'
 $dns_svc_tpl_name     = 'DnsServiceTemplate'
 $master_svc_tpl_name  = 'MasterServiceTemplate'
+$ipa_svc_tpl_name     = 'IpaServiceTemplate'
+
+#Service Names
 $dns_svc_name         = 'DnsService'
 $dns_svc_ping_name    = 'DnsPingService'
 $master_svc_dhcp_name = 'MasterDhcpService'
-$master_svc_ping_name   = 'MasterPingService'
+$master_svc_ping_name = 'MasterPingService'
 $http_svc_name        = 'HttpService'
 $http_svc_ping_name   = 'HttpPingService'
+$ipa_svc_name         = 'IpaService'
+$ipa_svc_ping_name    = 'IpaPingService'
 
 ##Hosts Templates JSON
 $general_template = "{
@@ -108,6 +120,15 @@ $master_template = "{
 \"object_name\": \"${master_tpl}\",
 \"object_type\": \"template\"
 }"
+$ipa_template = "{
+\"accept_config\": true,
+\"check_command\": \"hostalive\",
+\"has_agent\": true,
+\"master_should_connect\": true,
+\"max_check_attempts\": \"5\",
+\"object_name\": \"${ipa_tpl}\",
+\"object_type\": \"template\"
+}"
 
 ##Service Template JSON
 $http_svc_tpl = "{
@@ -134,6 +155,13 @@ $dns_svc_tpl = "{
 $master_svc_tpl = "{
 \"check_command\": \"dhcp\",
 \"object_name\": \"${master_svc_tpl_name}\",
+\"object_type\": \"template\",
+\"use_agent\": true,
+\"zone\": \"master\"
+}"
+$ipa_svc_tpl = "{
+\"check_command\": \"ldap\",
+\"object_name\": \"${ipa_svc_tpl_name}\",
 \"object_type\": \"template\",
 \"use_agent\": true,
 \"zone\": \"master\"
@@ -193,6 +221,23 @@ $dns_svc2 = "{
 \"object_name\": \"${dns_svc_ping_name}\",
 \"object_type\": \"object\"
 }"
+#IPA and Ping monitoring
+$ipa_svc1 = "{
+\"host\": \"${ipa_tpl}\",
+\"imports\": [
+  \"${$ipa_svc_tpl_name}\"
+],
+\"object_name\": \"${ipa_svc_name}\",
+\"object_type\": \"object\"
+}"
+$ipa_svc2 = "{
+\"host\": \"${ipa_tpl}\",
+\"imports\": [
+  \"${$ping_svc_tpl_name}\"
+],
+\"object_name\": \"${ipa_svc_ping_name}\",
+\"object_type\": \"object\"
+}"
 
 ##Master Node JSON
   $add_master_host = "{
@@ -239,6 +284,10 @@ $master_tpl_path = "${icinga_path}/${master_tpl}.json"
 $master_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${master_tpl}' | grep Failed"
 $master_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${master_tpl_path}"
 
+$ipa_tpl_path = "${icinga_path}/${ipa_tpl}.json"
+$ipa_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${ipa_tpl}' | grep Failed"
+$ipa_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${ipa_tpl_path}"
+
 #Services Template Creation
 $http_svc_tpl_path = "${icinga_path}/${http_svc_tpl_name}.json"
 $http_svc_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_tpl_name}' | grep Failed"
@@ -255,6 +304,10 @@ $dns_svc_tpl_cmd   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc
 $master_svc_tpl_path = "${icinga_path}/${master_svc_tpl_name}.json"
 $master_svc_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_tpl_name}' | grep Failed"
 $master_svc_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$master_svc_tpl_path}"
+
+$ipa_svc_tpl_path = "${icinga_path}/${ipa_svc_tpl_name}.json"
+$ipa_svc_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_tpl_name}' | grep Failed"
+$ipa_svc_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ipa_svc_tpl_path}"
 
 #Services Creation
 $http_svc_path1 = "${icinga_path}/${http_svc_name}.json"
@@ -277,6 +330,13 @@ $master_svc_cmd1   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc
 $master_svc_path2  = "${icinga_path}/${master_svc_ping_name}.json"
 $master_svc_cond2  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_ping_name}&host=${master_tpl}' | grep Failed"
 $master_svc_cmd2   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path2}"
+
+$ipa_svc_path1  = "${icinga_path}/${ipa_svc_name}.json"
+$ipa_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_name}&host=${ipa_tpl}' | grep Failed"
+$ipa_svc_cmd1   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path1}"
+$ipa_svc_path2  = "${icinga_path}/${ipa_svc_ping_name}.json"
+$ipa_svc_cond2  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_ping_name}&host=${ipa_tpl}' | grep Failed"
+$ipa_svc_cmd2   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path2}"
 
 #Master Host Creation
 $addhost_path = "${icinga_path}/${master_fqdn}.json"
@@ -340,6 +400,19 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
     provider => shell,
     onlyif   => $master_tpl_cond,
   }
+#Create ipa file
+  file { $ipa_tpl_path:
+    ensure  => 'present',
+    content => $ipa_template,
+    before  => Exec[$ipa_tpl_cmd],
+  }
+#Add ipa template
+  exec { $ipa_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ipa_tpl_cond,
+  }
 
 ##Service Templates
 #Create http template file
@@ -393,6 +466,19 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $dns_svc_tpl_cond,
+  }
+#Create ipa template file 
+  file { $ipa_svc_tpl_path:
+    ensure  => 'present',
+    content => $ipa_svc_tpl,
+    before  => Exec[$ipa_svc_tpl_cmd],
+  }
+#Add ipa template
+  exec { $ipa_svc_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ipa_svc_tpl_cond,
   }
 
 ##Services Definition
@@ -473,6 +559,32 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $dns_svc_cond2,
+  }
+#Creates ipa resource file for IpaTemplate and IpaServiceTemplate
+  file { $ipa_svc_path1:
+    ensure  => 'present',
+    content => $ipa_svc1,
+    before  => Exec[$ipa_svc_cmd1],
+  }
+#Adds ipa resource file for IpaTemplate and IpaServiceTemplate
+  exec { $ipa_svc_cmd1:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ipa_svc_cond1,
+  }
+#Creates ping resource file for IpaTemplate and IpaServiceTemplate
+  file { $ipa_svc_path2:
+    ensure  => 'present',
+    content => $ipa_svc2,
+    before  => Exec[$dns_svc_cmd2],
+  }
+#Adds ping resource file for IpaTemplate and IpaServiceTemplate
+  exec { $ipa_svc_cmd2:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ipa_svc_cond2,
   }
 
 ##Add Master Host

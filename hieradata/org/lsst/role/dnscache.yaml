@@ -2,5 +2,6 @@
 classes:
   - "profile::core::common"
   - "dns"
+  - "profile::it::icinga_agent"
 dns::forward: "only"
 dns::listen_on_v6: false

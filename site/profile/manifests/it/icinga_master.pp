@@ -164,6 +164,10 @@ $ipa_svc_tpl = "{
 \"object_name\": \"${ipa_svc_tpl_name}\",
 \"object_type\": \"template\",
 \"use_agent\": true,
+\"vars\": {
+    \"ldap_address\": \"localhost\",
+    \"ldap_base\": \"dc=lsst,dc=cloud\"
+},
 \"zone\": \"master\"
 }"
 

@@ -34,8 +34,8 @@ network::interfaces_hash:
     netmask: "255.255.255.254"
     nozeroconf: "yes"
     mtu: "9000"
-    iprule:
-      - "priority 200 from 139.229.140.135 lookup 110"
+    #iprule:
+    #  - "priority 200 from 139.229.140.135 lookup 110"
   # VLAN tags interface p2p1
   p2p1.726:
     bootproto: "none"
@@ -91,12 +91,13 @@ network::interfaces_hash:
 
 network::hostname: "%{facts.fqdn}"
 network::tables_hash:
-  lhn1:
-    table_id: 110
-  lhn2:
-    table_id: 120
+  #lhn1:
+  #  table_id: 110
+  #lhn2:
+  #  table_id: 120
 network::mroutes_hash:
   p2p1.360:
+    #table: 110
     routes:
       "139.229.140.134/31": "p2p1.360"
       "139.229.140.0/22": &via "139.229.140.134"
@@ -105,18 +106,24 @@ network::mroutes_hash:
       "141.142.176.0/24": *via
       "141.142.180.0/24": *via
       "141.142.181.0/24": *via
-      "141.142.191.1/32": *via
-      "141.142.191.2/32": *via
+      "141.142.191.1/32": *via # throughtput?
       "141.142.237.0/24": *via
       "141.142.238.0/23": *via
       # non-routable
       "10.128.0.0/20": *via
       "10.125.0.0/20": *via
       "198.17.196.0/24": *via  # approximated
-      "198.32.252.0/24": *via  # approximated
+      "198.32.252.39/32": *via
+      "198.32.252.192/31": *via # throughput
+      "198.32.252.208/31": *via
+      "198.32.252.210/31": *via
+      "198.32.252.216/31": *via
+      "198.32.252.218/31": *via
+      "198.32.252.232/31": *via
+      "198.32.252.234/31": *via
       "199.36.153.8/30": *via
-    table: 110
   p2p2.370:
+    #table: 120
     routes:
       "139.229.140.136/31": "p2p2.370"
       "139.229.140.0/22": &via "139.229.140.136"
@@ -125,14 +132,12 @@ network::mroutes_hash:
       "141.142.176.0/24": *via
       "141.142.180.0/24": *via
       "141.142.181.0/24": *via
-      "141.142.191.1/32": *via
-      "141.142.191.2/32": *via
+      "141.142.191.2/32": *via # latency?
       "141.142.237.0/24": *via
       "141.142.238.0/23": *via
       # non-routable
       "10.128.0.0/20": *via
       "10.125.0.0/20": *via
       "198.17.196.0/24": *via  # approximated
-      "198.32.252.0/24": *via  # approximated
+      "198.32.252.194/31": *via # latency
       "199.36.153.8/30": *via
-    table: 120

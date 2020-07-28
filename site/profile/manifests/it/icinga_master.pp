@@ -37,6 +37,8 @@ include profile::core::remi
 include ::openssl
 include ::nginx
 
+#<-------------Variables Definition---------------->
+
 #Icinga tls keys
 $ssl_cert       = '/etc/ssl/certs/icinga.crt'
 $ssl_key        = '/etc/ssl/certs/icinga.key'
@@ -73,28 +75,22 @@ $dns_svc_tpl_name     = 'DnsServiceTemplate'
 $master_svc_tpl_name  = 'MasterServiceTemplate'
 $ipa_svc_tpl_name     = 'IpaServiceTemplate'
 $disk_svc_tpl_name    = 'DiskServiceTemplace'
-$ram_svc_tpl_name     = 'RamServiceTemplate'
 
 #Service Names
 $host_svc_ping_name   = 'HostPingService'
 $host_svc_disk_name   = 'HostDiskService'
-$host_svc_ram_name    = 'HostRamService'
 $dns_svc_name         = 'DnsService'
 $dns_svc_ping_name    = 'DnsPingService'
 $dns_svc_disk_name    = 'DnsDiskService'
-$dns_svc_ram_name     = 'DnsRamService'
 $master_svc_dhcp_name = 'MasterDhcpService'
 $master_svc_ping_name = 'MasterPingService'
 $master_svc_disk_name = 'MasterDiskService'
-$master_svc_ram_name  = 'MasterRamService'
 $http_svc_name        = 'HttpService'
 $http_svc_ping_name   = 'HttpPingService'
 $http_svc_disk_name   = 'HttpDiskService'
-$http_svc_ram_name    = 'HttpRamService'
 $ipa_svc_name         = 'IpaService'
 $ipa_svc_ping_name    = 'IpaPingService'
 $ipa_svc_disk_name    = 'IpaDiskService'
-$ipa_svc_ram_name     = 'IpaRamService'
 
 ##Hosts Templates JSON
 $general_template = "{
@@ -194,18 +190,6 @@ $disk_svc_tpl = "{
 },
 \"zone\": \"master\"
 }"
-$ram_svc_tpl = "{
-\"check_command\": \"mem\",
-\"object_name\": \"${ram_svc_tpl_name}\",
-\"object_type\": \"template\",
-\"use_agent\": true,
-\"vars\": {
-    \"mem_critical\": \"5%\",
-    \"mem_warning\": \"10%\"
-},
-\"zone\": \"master\"
-}"
-
 
 ##Services Definition
 #Ping, disk and RAM monitoring
@@ -223,14 +207,6 @@ $host_svc2 = "{
     \"${$disk_svc_tpl_name}\"
 ],
 \"object_name\": \"${host_svc_disk_name}\",
-\"object_type\": \"object\"
-}"
-$host_svc3 = "{
-\"host\": \"${http_tpl}\",
-\"imports\": [
-    \"${$ram_svc_tpl_name}\"
-],
-\"object_name\": \"${host_svc_ram_name}\",
 \"object_type\": \"object\"
 }"
 #HTTP, Ping, disk and RAM monitoring
@@ -256,14 +232,6 @@ $http_svc3 = "{
     \"${$disk_svc_tpl_name}\"
 ],
 \"object_name\": \"${http_svc_disk_name}\",
-\"object_type\": \"object\"
-}"
-$http_svc4 = "{
-\"host\": \"${http_tpl}\",
-\"imports\": [
-    \"${$ram_svc_tpl_name}\"
-],
-\"object_name\": \"${http_svc_ram_name}\",
 \"object_type\": \"object\"
 }"
 #DHCP, Ping, disk and RAM monitoring
@@ -293,14 +261,6 @@ $master_svc3 = "{
 \"object_name\": \"${master_svc_disk_name}\",
 \"object_type\": \"object\"
 }"
-$master_svc4 = "{
-\"host\": \"${master_tpl}\",
-\"imports\": [
-    \"${$ram_svc_tpl_name}\"
-],
-\"object_name\": \"${master_svc_ram_name}\",
-\"object_type\": \"object\"
-}"
 #DNS, Ping, disk and RAM monitoring
 $dns_svc1 = "{
 \"host\": \"${dns_tpl}\",
@@ -326,14 +286,6 @@ $dns_svc3 = "{
 \"object_name\": \"${dns_svc_disk_name}\",
 \"object_type\": \"object\"
 }"
-$dns_svc4 = "{
-\"host\": \"${dns_tpl}\",
-\"imports\": [
-    \"${$ram_svc_tpl_name}\"
-],
-\"object_name\": \"${dns_svc_ram_name}\",
-\"object_type\": \"object\"
-}"
 #IPA, Ping, disk and RAM monitoring
 $ipa_svc1 = "{
 \"host\": \"${ipa_tpl}\",
@@ -357,14 +309,6 @@ $ipa_svc3 = "{
     \"${$disk_svc_tpl_name}\"
 ],
 \"object_name\": \"${ipa_svc_disk_name}\",
-\"object_type\": \"object\"
-}"
-$ipa_svc4 = "{
-\"host\": \"${ipa_tpl}\",
-\"imports\": [
-    \"${$ram_svc_tpl_name}\"
-],
-\"object_name\": \"${ipa_svc_ram_name}\",
 \"object_type\": \"object\"
 }"
 
@@ -444,11 +388,6 @@ $disk_svc_tpl_path = "${icinga_path}/${disk_svc_tpl_name}.json"
 $disk_svc_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${disk_svc_tpl_name}' ${lt}"
 $disk_svc_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$disk_svc_tpl_path}"
 
-$ram_svc_tpl_path = "${icinga_path}/${ram_svc_tpl_name}.json"
-$ram_svc_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ram_svc_tpl_name}' ${lt}"
-$ram_svc_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ram_svc_tpl_path}"
-
-
 #Services Creation
 $host_svc_path1 = "${icinga_path}/${host_svc_ping_name}.json"
 $host_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_ping_name}&host=${host_tpl}' ${lt}"
@@ -456,9 +395,6 @@ $host_svc_cmd1  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' 
 $host_svc_path2 = "${icinga_path}/${host_svc_disk_name}.json"
 $host_svc_cond2 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_disk_name}&host=${host_tpl}' ${lt}"
 $host_svc_cmd2  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${host_svc_path2}"
-$host_svc_path3 = "${icinga_path}/${host_svc_ram_name}.json"
-$host_svc_cond3 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_ram_name}&host=${host_tpl}' ${lt}"
-$host_svc_cmd3  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${host_svc_path3}"
 
 $http_svc_path1 = "${icinga_path}/${http_svc_name}.json"
 $http_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_name}&host=${http_tpl}' ${lt}"
@@ -469,9 +405,6 @@ $http_svc_cmd2  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' 
 $http_svc_path3 = "${icinga_path}/${http_svc_disk_name}.json"
 $http_svc_cond3 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_disk_name}&host=${http_tpl}' ${lt}"
 $http_svc_cmd3  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${http_svc_path3}"
-$http_svc_path4 = "${icinga_path}/${http_svc_ram_name}.json"
-$http_svc_cond4 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_ram_name}&host=${http_tpl}' ${lt}"
-$http_svc_cmd4  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${http_svc_path4}"
 
 $dns_svc_path1  = "${icinga_path}/${dns_svc_name}.json"
 $dns_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_name}&host=${dns_tpl}' ${lt}"
@@ -482,9 +415,6 @@ $dns_svc_cmd2   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' 
 $dns_svc_path3  = "${icinga_path}/${dns_svc_disk_name}.json"
 $dns_svc_cond3  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_disk_name}&host=${dns_tpl}' ${lt}"
 $dns_svc_cmd3   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dns_svc_path3}"
-$dns_svc_path4  = "${icinga_path}/${dns_svc_ram_name}.json"
-$dns_svc_cond4  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_ram_name}&host=${dns_tpl}' ${lt}"
-$dns_svc_cmd4   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dns_svc_path4}"
 
 $master_svc_path1 = "${icinga_path}/${master_svc_dhcp_name}.json"
 $master_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_dhcp_name}&host=${master_tpl}' ${lt}"
@@ -495,9 +425,6 @@ $master_svc_cmd2  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}
 $master_svc_path3 = "${icinga_path}/${master_svc_disk_name}.json"
 $master_svc_cond3 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_disk_name}&host=${master_tpl}' ${lt}"
 $master_svc_cmd3  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path3}"
-$master_svc_path4 = "${icinga_path}/${master_svc_ram_name}.json"
-$master_svc_cond4 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_ram_name}&host=${master_tpl}' ${lt}"
-$master_svc_cmd4  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path4}"
 
 $ipa_svc_path1  = "${icinga_path}/${ipa_svc_name}.json"
 $ipa_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_name}&host=${ipa_tpl}' ${lt}"
@@ -508,9 +435,6 @@ $ipa_svc_cmd2   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' 
 $ipa_svc_path3  = "${icinga_path}/${ipa_svc_disk_name}.json"
 $ipa_svc_cond3  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_disk_name}&host=${ipa_tpl}' ${lt}"
 $ipa_svc_cmd3   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path3}"
-$ipa_svc_path4  = "${icinga_path}/${ipa_svc_ram_name}.json"
-$ipa_svc_cond4  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_ram_name}&host=${ipa_tpl}' ${lt}"
-$ipa_svc_cmd4   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path4}"
 
 #Master Host Creation
 $addhost_path = "${icinga_path}/${master_fqdn}.json"
@@ -520,435 +444,12 @@ $addhost_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -
 #Force Deploy pending requests
 $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/deploy'"
 
-
-##Host Templates
-#Create host template file
-  file { $host_tpl_path:
-    ensure  => 'present',
-    content => $general_template,
-    before  => Exec[$host_tpl_cmd],
-  }
-#Add general host template
-  exec { $host_tpl_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $host_tpl_cond,
-  }
-#Create http template file
-  file { $http_tpl_path:
-    ensure  => 'present',
-    content => $http_template,
-    before  => Exec[$http_tpl_cmd],
-  }
-#Add http template
-  exec { $http_tpl_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $http_tpl_cond,
-  }
-#Create dns template file
-  file { $dns_tpl_path:
-    ensure  => 'present',
-    content => $dns_template,
-    before  => Exec[$dns_tpl_cmd],
-  }
-#Add dns template
-  exec { $dns_tpl_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $dns_tpl_cond,
-  }
-#Create dhcp file
-  file { $master_tpl_path:
-    ensure  => 'present',
-    content => $master_template,
-    before  => Exec[$master_tpl_cmd],
-  }
-#Add dhcp template
-  exec { $master_tpl_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $master_tpl_cond,
-  }
-#Create ipa file
-  file { $ipa_tpl_path:
-    ensure  => 'present',
-    content => $ipa_template,
-    before  => Exec[$ipa_tpl_cmd],
-  }
-#Add ipa template
-  exec { $ipa_tpl_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ipa_tpl_cond,
-  }
-
-##Service Templates
-#Create http template file
-  file { $http_svc_tpl_path:
-    ensure  => 'present',
-    content => $http_svc_tpl,
-    before  => Exec[$http_svc_tpl_cmd],
-  }
-#Add http template
-  exec { $http_svc_tpl_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $http_svc_tpl_cond,
-  }
-#Create ping template file
-  file { $ping_svc_tpl_path:
-    ensure  => 'present',
-    content => $ping_svc_tpl,
-    before  => Exec[$ping_svc_tpl_cmd],
-  }
-#Add http template
-  exec { $ping_svc_tpl_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ping_svc_tpl_cond,
-  }
-#Create dhcp template file
-  file { $master_svc_tpl_path:
-    ensure  => 'present',
-    content => $master_svc_tpl,
-    before  => Exec[$master_svc_tpl_cmd],
-  }
-#Add http template
-  exec { $master_svc_tpl_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $master_svc_tpl_cond,
-  }
-#Create dns template file 
-  file { $dns_svc_tpl_path:
-    ensure  => 'present',
-    content => $dns_svc_tpl,
-    before  => Exec[$dns_svc_tpl_cmd],
-  }
-#Add http template
-  exec { $dns_svc_tpl_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $dns_svc_tpl_cond,
-  }
-#Create ipa template file 
-  file { $ipa_svc_tpl_path:
-    ensure  => 'present',
-    content => $ipa_svc_tpl,
-    before  => Exec[$ipa_svc_tpl_cmd],
-  }
-#Add ipa template
-  exec { $ipa_svc_tpl_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ipa_svc_tpl_cond,
-  }
-#Create ipa template file 
-  file { $disk_svc_tpl_path:
-    ensure  => 'present',
-    content => $disk_svc_tpl,
-    before  => Exec[$disk_svc_tpl_cmd],
-  }
-#Add ipa template
-  exec { $disk_svc_tpl_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $disk_svc_tpl_cond,
-  }
-#Create ipa template file 
-  file { $ram_svc_tpl_path:
-    ensure  => 'present',
-    content => $ram_svc_tpl,
-    before  => Exec[$ram_svc_tpl_cmd],
-  }
-#Add ipa template
-  exec { $ram_svc_tpl_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ram_svc_tpl_cond,
-  }
-
-##Services Definition
-#Creates ping resource file for HostTemplate and PingServiceTemplate
-  file { $host_svc_path1:
-    ensure  => 'present',
-    content => $host_svc1,
-    before  => Exec[$host_svc_cmd1],
-  }
-#Adds ping resource file for HostTemplate and PingServiceTemplate
-  exec { $host_svc_cmd1:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $host_svc_cond1,
-  }
-#Creates disk resource file for HostTemplate and DiskServiceTemplate
-  file { $host_svc_path2:
-    ensure  => 'present',
-    content => $host_svc2,
-    before  => Exec[$host_svc_cmd2],
-  }
-#Adds disk resource file for HostTemplate and DiskServiceTemplate
-  exec { $host_svc_cmd2:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $host_svc_cond2,
-  }
-#Creates ram resource file for HostTemplate and RamServiceTemplate
-  file { $host_svc_path3:
-    ensure  => 'present',
-    content => $host_svc3,
-    before  => Exec[$host_svc_cmd3],
-  }
-#Adds ram resource file for HostTemplate and RamServiceTemplate
-  exec { $host_svc_cmd3:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $http_svc_cond3,
-  }
-
-#Creates http resource file for HttpTemplate and HttpServiceTemplate
-  file { $http_svc_path1:
-    ensure  => 'present',
-    content => $http_svc1,
-    before  => Exec[$http_svc_cmd1],
-  }
-#Adds http resource file for HttpTemplate and HttpServiceTemplate
-  exec { $http_svc_cmd1:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $http_svc_cond1,
-  }
-#Creates ping resource file for HttpTemplate and PingServiceTemplate
-  file { $http_svc_path2:
-    ensure  => 'present',
-    content => $http_svc2,
-    before  => Exec[$http_svc_cmd2],
-  }
-#Adds ping resource file for HttpTemplate and PingServiceTemplate
-  exec { $http_svc_cmd2:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $http_svc_cond2,
-  }
-#Creates disk resource file for HttpTemplate and DiskServiceTemplate
-  file { $http_svc_path3:
-    ensure  => 'present',
-    content => $http_svc3,
-    before  => Exec[$http_svc_cmd3],
-  }
-#Adds disk resource file for HttpTemplate and DiskServiceTemplate
-  exec { $http_svc_cmd3:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $http_svc_cond3,
-  }
-#Creates RAM resource file for HttpTemplate and RamServiceTemplate
-  file { $http_svc_path4:
-    ensure  => 'present',
-    content => $http_svc4,
-    before  => Exec[$http_svc_cmd4],
-  }
-#Adds RAM resource file for HttpTemplate and RamServiceTemplate
-  exec { $http_svc_cmd4:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $http_svc_cond4,
-  }
-
-#Creates dhcp resource file for MasterTemplate and DhcpServiceTemplate
-  file { $master_svc_path1:
-    ensure  => 'present',
-    content => $master_svc1,
-    before  => Exec[$master_svc_cmd1],
-  }
-#Adds dhcp resource file for MasterTemplate and DhcpServiceTemplate
-  exec { $master_svc_cmd1:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $master_svc_cond1,
-  }
-#Creates ping resource file for MasterTemplate and PingServiceTemplate
-  file { $master_svc_path2:
-    ensure  => 'present',
-    content => $master_svc2,
-    before  => Exec[$master_svc_cmd2],
-  }
-#Adds ping resource file for MasterTemplate and PingServiceTemplate
-  exec { $master_svc_cmd2:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $master_svc_cond2,
-  }
-#Creates disk resource file for MasterTemplate and DiskServiceTemplate
-  file { $master_svc_path3:
-    ensure  => 'present',
-    content => $master_svc3,
-    before  => Exec[$master_svc_cmd3],
-  }
-#Adds disk resource file for MasterTemplate and DiskServiceTemplate
-  exec { $master_svc_cmd3:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $master_svc_cond3,
-  }
-#Creates RAM resource file for MasterTemplate and RamServiceTemplate
-  file { $master_svc_path4:
-    ensure  => 'present',
-    content => $master_svc4,
-    before  => Exec[$master_svc_cmd4],
-  }
-#Adds RAM resource file for MasterTemplate and RamServiceTemplate
-  exec { $master_svc_cmd4:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $master_svc_cond4,
-  }
-
-#Creates dns resource file for DnsTemplate and DnsServiceTemplate
-  file { $dns_svc_path1:
-    ensure  => 'present',
-    content => $dns_svc1,
-    before  => Exec[$dns_svc_cmd1],
-  }
-#Adds dns resource file for DnsTemplate and DnsServiceTemplate
-  exec { $dns_svc_cmd1:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $dns_svc_cond1,
-  }
-#Creates ping resource file for DnsTemplate and PingServiceTemplate
-  file { $dns_svc_path2:
-    ensure  => 'present',
-    content => $dns_svc2,
-    before  => Exec[$dns_svc_cmd2],
-  }
-#Adds ping resource file for DnsTemplate and PingServiceTemplate
-  exec { $dns_svc_cmd2:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $dns_svc_cond2,
-  }
-#Creates disk resource file for DnsTemplate and DiskServiceTemplate
-  file { $dns_svc_path3:
-    ensure  => 'present',
-    content => $dns_svc3,
-    before  => Exec[$dns_svc_cmd3],
-  }
-#Adds disk resource file for DnsTemplate and DiskServiceTemplate
-  exec { $dns_svc_cmd3:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $dns_svc_cond3,
-  }
-#Creates RAM resource file for DnsTemplate and RamServiceTemplate
-  file { $dns_svc_path4:
-    ensure  => 'present',
-    content => $dns_svc4,
-    before  => Exec[$dns_svc_cmd4],
-  }
-#Adds RAM resource file for DnsTemplate and RamServiceTemplate
-  exec { $dns_svc_cmd4:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $dns_svc_cond4,
-  }
-
-#Creates ipa resource file for IpaTemplate and IpaServiceTemplate
-  file { $ipa_svc_path1:
-    ensure  => 'present',
-    content => $ipa_svc1,
-    before  => Exec[$ipa_svc_cmd1],
-  }
-#Adds ipa resource file for IpaTemplate and IpaServiceTemplate
-  exec { $ipa_svc_cmd1:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ipa_svc_cond1,
-  }
-#Creates ping resource file for IpaTemplate and PingServiceTemplate
-  file { $ipa_svc_path2:
-    ensure  => 'present',
-    content => $ipa_svc2,
-    before  => Exec[$dns_svc_cmd2],
-  }
-#Adds ping resource file for IpaTemplate and PingServiceTemplate
-  exec { $ipa_svc_cmd2:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ipa_svc_cond2,
-  }
-#Creates disk resource file for IpaTemplate and DiskServiceTemplate
-  file { $ipa_svc_path3:
-    ensure  => 'present',
-    content => $ipa_svc3,
-    before  => Exec[$ipa_svc_cmd3],
-  }
-#Adds disk resource file for IpaTemplate and DiskServiceTemplate
-  exec { $ipa_svc_cmd3:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ipa_svc_cond3,
-  }
-#Creates RAM resource file for IpaTemplate and RamServiceTemplate
-  file { $ipa_svc_path4:
-    ensure  => 'present',
-    content => $ipa_svc4,
-    before  => Exec[$ipa_svc_cmd4],
-  }
-#Adds RAM resource file for IpaTemplate and RamServiceTemplate
-  exec { $ipa_svc_cmd4:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ipa_svc_cond4,
-  }
-
-##Add Master Host
-#Create master host file
-  file { $addhost_path:
-    ensure  => 'present',
-    content => $add_master_host,
-    before  => Exec[$addhost_cmd],
-  }
-#Add master host
-  exec { $addhost_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $addhost_cond,
-  }
-
+#<---------END Variables Definition---------------->
+#
+#
+#
+#
+#<---------------Clases definition----------------->
 ##Ensure php73 packages and services
   package { $php_packages:
     ensure => 'present',
@@ -1105,9 +606,10 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
   }
 ##IcingaWeb Daemon
 # User Creation
+  $relaod   = '; systemctl dameon-reload'
   $command1 = 'useradd -r -g icingaweb2 -d /var/lib/icingadirector -s /bin/false icingadirector'
   $command2 = 'install -d -o icingadirector -g icingaweb2 -m 0750 /var/lib/icingadirector'
-  $command3 = 'cp /usr/share/icingaweb2/modules/director/contrib/systemd/icinga-director.service /etc/systemd/system/; systemctl daemon-reload'
+  $command3 = "cp /usr/share/icingaweb2/modules/director/contrib/systemd/icinga-director.service /etc/systemd/system/${reload}"
   $command4 = 'systemctl enable --now icinga-director.service'
   $unless1  = 'grep icingadirector /etc/passwd'
   $onlyif2  = 'test ! -d /var/lib/icingadirector'
@@ -1155,8 +657,6 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
     git_repository => 'https://github.com/Icinga/icingaweb2-module-incubator',
     git_revision   => 'v0.5.0'
   }
-
-
 ##Icinga Director DB migration
   exec { 'Icinga Director DB migration':
     path    => '/usr/local/bin:/usr/bin:/bin',
@@ -1213,11 +713,365 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
       'SCRIPT_FILENAME'     => '/usr/share/icingaweb2/public/index.php',
     },
   }
-
   ##Force Deploy every puppet run
   exec { $deploy_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
   }
+#<-----------END Clases definition----------------->
+#
+#
+#<---------Files Creation and deployement---------->
+
+##Host Templates
+#Create host template file
+  file { $host_tpl_path:
+    ensure  => 'present',
+    content => $general_template,
+    before  => Exec[$host_tpl_cmd],
+  }
+#Add general host template
+  exec { $host_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $host_tpl_cond,
+  }
+#Create http template file
+  file { $http_tpl_path:
+    ensure  => 'present',
+    content => $http_template,
+    before  => Exec[$http_tpl_cmd],
+  }
+#Add http template
+  exec { $http_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $http_tpl_cond,
+  }
+#Create dns template file
+  file { $dns_tpl_path:
+    ensure  => 'present',
+    content => $dns_template,
+    before  => Exec[$dns_tpl_cmd],
+  }
+#Add dns template
+  exec { $dns_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $dns_tpl_cond,
+  }
+#Create dhcp file
+  file { $master_tpl_path:
+    ensure  => 'present',
+    content => $master_template,
+    before  => Exec[$master_tpl_cmd],
+  }
+#Add dhcp template
+  exec { $master_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $master_tpl_cond,
+  }
+#Create ipa file
+  file { $ipa_tpl_path:
+    ensure  => 'present',
+    content => $ipa_template,
+    before  => Exec[$ipa_tpl_cmd],
+  }
+#Add ipa template
+  exec { $ipa_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ipa_tpl_cond,
+  }
+
+##Service Templates
+#Create http template file
+  file { $http_svc_tpl_path:
+    ensure  => 'present',
+    content => $http_svc_tpl,
+    before  => Exec[$http_svc_tpl_cmd],
+  }
+#Add http template
+  exec { $http_svc_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $http_svc_tpl_cond,
+  }
+#Create ping template file
+  file { $ping_svc_tpl_path:
+    ensure  => 'present',
+    content => $ping_svc_tpl,
+    before  => Exec[$ping_svc_tpl_cmd],
+  }
+#Add http template
+  exec { $ping_svc_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ping_svc_tpl_cond,
+  }
+#Create dhcp template file
+  file { $master_svc_tpl_path:
+    ensure  => 'present',
+    content => $master_svc_tpl,
+    before  => Exec[$master_svc_tpl_cmd],
+  }
+#Add http template
+  exec { $master_svc_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $master_svc_tpl_cond,
+  }
+#Create dns template file 
+  file { $dns_svc_tpl_path:
+    ensure  => 'present',
+    content => $dns_svc_tpl,
+    before  => Exec[$dns_svc_tpl_cmd],
+  }
+#Add dns template
+  exec { $dns_svc_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $dns_svc_tpl_cond,
+  }
+#Create ipa template file 
+  file { $ipa_svc_tpl_path:
+    ensure  => 'present',
+    content => $ipa_svc_tpl,
+    before  => Exec[$ipa_svc_tpl_cmd],
+  }
+#Add ipa template
+  exec { $ipa_svc_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ipa_svc_tpl_cond,
+  }
+#Create disk template file 
+  file { $disk_svc_tpl_path:
+    ensure  => 'present',
+    content => $disk_svc_tpl,
+    before  => Exec[$disk_svc_tpl_cmd],
+  }
+#Add disk template
+  exec { $disk_svc_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $disk_svc_tpl_cond,
+  }
+
+##Services Definition
+#Creates ping resource file for HostTemplate and PingServiceTemplate
+  file { $host_svc_path1:
+    ensure  => 'present',
+    content => $host_svc1,
+    before  => Exec[$host_svc_cmd1],
+  }
+#Adds ping resource file for HostTemplate and PingServiceTemplate
+  exec { $host_svc_cmd1:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $host_svc_cond1,
+  }
+#Creates disk resource file for HostTemplate and DiskServiceTemplate
+  file { $host_svc_path2:
+    ensure  => 'present',
+    content => $host_svc2,
+    before  => Exec[$host_svc_cmd2],
+  }
+#Adds disk resource file for HostTemplate and DiskServiceTemplate
+  exec { $host_svc_cmd2:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $host_svc_cond2,
+  }
+
+#Creates http resource file for HttpTemplate and HttpServiceTemplate
+  file { $http_svc_path1:
+    ensure  => 'present',
+    content => $http_svc1,
+    before  => Exec[$http_svc_cmd1],
+  }
+#Adds http resource file for HttpTemplate and HttpServiceTemplate
+  exec { $http_svc_cmd1:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $http_svc_cond1,
+  }
+#Creates ping resource file for HttpTemplate and PingServiceTemplate
+  file { $http_svc_path2:
+    ensure  => 'present',
+    content => $http_svc2,
+    before  => Exec[$http_svc_cmd2],
+  }
+#Adds ping resource file for HttpTemplate and PingServiceTemplate
+  exec { $http_svc_cmd2:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $http_svc_cond2,
+  }
+#Creates disk resource file for HttpTemplate and DiskServiceTemplate
+  file { $http_svc_path3:
+    ensure  => 'present',
+    content => $http_svc3,
+    before  => Exec[$http_svc_cmd3],
+  }
+#Adds disk resource file for HttpTemplate and DiskServiceTemplate
+  exec { $http_svc_cmd3:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $http_svc_cond3,
+  }
+
+#Creates dhcp resource file for MasterTemplate and DhcpServiceTemplate
+  file { $master_svc_path1:
+    ensure  => 'present',
+    content => $master_svc1,
+    before  => Exec[$master_svc_cmd1],
+  }
+#Adds dhcp resource file for MasterTemplate and DhcpServiceTemplate
+  exec { $master_svc_cmd1:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $master_svc_cond1,
+  }
+#Creates ping resource file for MasterTemplate and PingServiceTemplate
+  file { $master_svc_path2:
+    ensure  => 'present',
+    content => $master_svc2,
+    before  => Exec[$master_svc_cmd2],
+  }
+#Adds ping resource file for MasterTemplate and PingServiceTemplate
+  exec { $master_svc_cmd2:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $master_svc_cond2,
+  }
+#Creates disk resource file for MasterTemplate and DiskServiceTemplate
+  file { $master_svc_path3:
+    ensure  => 'present',
+    content => $master_svc3,
+    before  => Exec[$master_svc_cmd3],
+  }
+#Adds disk resource file for MasterTemplate and DiskServiceTemplate
+  exec { $master_svc_cmd3:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $master_svc_cond3,
+  }
+
+#Creates dns resource file for DnsTemplate and DnsServiceTemplate
+  file { $dns_svc_path1:
+    ensure  => 'present',
+    content => $dns_svc1,
+    before  => Exec[$dns_svc_cmd1],
+  }
+#Adds dns resource file for DnsTemplate and DnsServiceTemplate
+  exec { $dns_svc_cmd1:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $dns_svc_cond1,
+  }
+#Creates ping resource file for DnsTemplate and PingServiceTemplate
+  file { $dns_svc_path2:
+    ensure  => 'present',
+    content => $dns_svc2,
+    before  => Exec[$dns_svc_cmd2],
+  }
+#Adds ping resource file for DnsTemplate and PingServiceTemplate
+  exec { $dns_svc_cmd2:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $dns_svc_cond2,
+  }
+#Creates disk resource file for DnsTemplate and DiskServiceTemplate
+  file { $dns_svc_path3:
+    ensure  => 'present',
+    content => $dns_svc3,
+    before  => Exec[$dns_svc_cmd3],
+  }
+#Adds disk resource file for DnsTemplate and DiskServiceTemplate
+  exec { $dns_svc_cmd3:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $dns_svc_cond3,
+  }
+
+#Creates ipa resource file for IpaTemplate and IpaServiceTemplate
+  file { $ipa_svc_path1:
+    ensure  => 'present',
+    content => $ipa_svc1,
+    before  => Exec[$ipa_svc_cmd1],
+  }
+#Adds ipa resource file for IpaTemplate and IpaServiceTemplate
+  exec { $ipa_svc_cmd1:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ipa_svc_cond1,
+  }
+#Creates ping resource file for IpaTemplate and PingServiceTemplate
+  file { $ipa_svc_path2:
+    ensure  => 'present',
+    content => $ipa_svc2,
+    before  => Exec[$dns_svc_cmd2],
+  }
+#Adds ping resource file for IpaTemplate and PingServiceTemplate
+  exec { $ipa_svc_cmd2:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ipa_svc_cond2,
+  }
+#Creates disk resource file for IpaTemplate and DiskServiceTemplate
+  file { $ipa_svc_path3:
+    ensure  => 'present',
+    content => $ipa_svc3,
+    before  => Exec[$ipa_svc_cmd3],
+  }
+#Adds disk resource file for IpaTemplate and DiskServiceTemplate
+  exec { $ipa_svc_cmd3:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ipa_svc_cond3,
+  }
+
+##Add Master Host
+#Create master host file
+  file { $addhost_path:
+    ensure  => 'present',
+    content => $add_master_host,
+    before  => Exec[$addhost_cmd],
+  }
+#Add master host
+  exec { $addhost_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $addhost_cond,
+  }
+#<------END Files Creation and deployement--------->
 }

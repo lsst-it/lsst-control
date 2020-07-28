@@ -6,13 +6,19 @@
 #
 # @param manage_puppet_agent
 #   Whether or not to include the puppet_agent class
+#
+# @param chrony
+#   Enable or disable inclusion of the chrony class.  There are a few special
+#   situations in which ntpd needs to be used instead of chrony (such as
+#   perfsonar nodes).
+#
 class profile::core::common (
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
+  Boolean $manage_chrony = true,
 ){
   include timezone
   include tuned
-  include chrony
   include selinux
   include firewall
   include irqbalance
@@ -35,5 +41,9 @@ class profile::core::common (
 
   if $manage_puppet_agent {
     include puppet_agent
+  }
+
+  if $manage_chrony {
+    include chrony
   }
 }

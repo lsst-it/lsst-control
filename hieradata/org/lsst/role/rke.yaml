@@ -12,6 +12,7 @@ classes:
   - "docker"
   - "sysctl::values"
   - "yum"
+  - "profile::it::icinga_agent"
 packages:
   - "kubectl"
   - "git"

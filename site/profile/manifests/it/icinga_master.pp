@@ -440,6 +440,15 @@ $ipa_svc_tpl_path = "${icinga_path}/${ipa_svc_tpl_name}.json"
 $ipa_svc_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_tpl_name}' ${lt}"
 $ipa_svc_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ipa_svc_tpl_path}"
 
+$disk_svc_tpl_path = "${icinga_path}/${disk_svc_tpl_name}.json"
+$disk_svc_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${disk_svc_tpl_name}' ${lt}"
+$disk_svc_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$disk_svc_tpl_path}"
+
+$ram_svc_tpl_path = "${icinga_path}/${ram_svc_tpl_name}.json"
+$ram_svc_tpl_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ram_svc_tpl_name}' ${lt}"
+$ram_svc_tpl_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ram_svc_tpl_path}"
+
+
 #Services Creation
 $host_svc_path1 = "${icinga_path}/${host_svc_ping_name}.json"
 $host_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_ping_name}&host=${host_tpl}' ${lt}"
@@ -644,6 +653,32 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $ipa_svc_tpl_cond,
+  }
+#Create ipa template file 
+  file { $disk_svc_tpl_path:
+    ensure  => 'present',
+    content => $disk_svc_tpl,
+    before  => Exec[$disk_svc_tpl_cmd],
+  }
+#Add ipa template
+  exec { $disk_svc_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $disk_svc_tpl_cond,
+  }
+#Create ipa template file 
+  file { $ram_svc_tpl_path:
+    ensure  => 'present',
+    content => $ram_svc_tpl,
+    before  => Exec[$ram_svc_tpl_cmd],
+  }
+#Add ipa template
+  exec { $ram_svc_tpl_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ram_svc_tpl_cond,
   }
 
 ##Services Definition

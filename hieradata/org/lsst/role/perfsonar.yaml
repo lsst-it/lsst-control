@@ -8,3 +8,8 @@ classes:
   - "profile::core::perfsonar::sysctl"
   - "network"
   - "sysctl::values"
+
+# ensure chrony is not running
+profile::core::common::manage_chrony: true
+chrony::service_enable: false
+chrony::service_ensure: "stopped"

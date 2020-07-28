@@ -706,7 +706,7 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
       $api_name => {
         transport => 'api',
         host      => $master_ip,
-        port      => 5565,
+        port      => 5665,
         username  => $api_user,
         password  => $api_pwd,
       }

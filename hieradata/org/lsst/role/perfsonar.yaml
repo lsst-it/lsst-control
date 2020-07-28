@@ -7,6 +7,7 @@ classes:
   - "profile::core::perfsonar"
   - "profile::core::perfsonar::sysctl"
   - "network"
+  - "ntp"
   - "sysctl::values"
 
 # ensure chrony is not running

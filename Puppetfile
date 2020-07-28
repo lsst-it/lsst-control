@@ -85,6 +85,11 @@ mod 'simp/gnome', '8.1.1'
 mod 'simp/polkit', '6.2.0'
 mod 'simp/simplib', '3.15.3'
 
+# latest puppet/letsencrypt release does not include dns_route53 plugin support
+mod 'puppet/letsencrypt',
+  git: 'https://github.com/voxpupuli/puppet-letsencrypt',
+  ref: 'c16fe95a432564a3ac62eb7f56dfafb06d207218'
+
 mod 'lsst/ccs_database',
   git: 'https://github.com/lsst-it/puppet-ccs_database.git',
   ref: 'v0.1.0'

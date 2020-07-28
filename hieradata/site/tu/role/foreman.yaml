@@ -1,7 +1,10 @@
 ---
 classes:
+  - "profile::core::rp_filter"
   - "dhcp"
   - "sysctl::values"
+
+profile::core::rp_filter::enable: false
 dhcp::interfaces:
   - "eth1"
   - "eth4"
@@ -61,12 +64,6 @@ sysctl::values::args:
   net.ipv4.conf.default.arp_filter:
     value: 1
     target: "/etc/sysctl.d/91-arp_filter.conf"
-  net.ipv4.conf.all.rp_filter:
-    value: 0
-    target: "/etc/sysctl.d/92-rp_filter.conf"
-  net.ipv4.conf.default.rp_filter:
-    value: 0
-    target: "/etc/sysctl.d/92-rp_filter.conf"
 profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"
 profile::core::puppet_master::enable_puppetdb: true
 puppet::server::puppetdb::server: "puppetdb.tu.lsst.org"

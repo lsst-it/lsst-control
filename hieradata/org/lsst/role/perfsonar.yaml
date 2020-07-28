@@ -15,6 +15,8 @@ profile::core::common::manage_chrony: true
 chrony::service_enable: false
 chrony::service_ensure: "stopped"
 
+firewall::ensure: "running"
+
 files:
   # perfsonar packaging installs this one file with the wrong mode
   "/etc/sudoers.d/perfsonar_sudo":

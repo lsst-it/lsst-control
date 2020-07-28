@@ -14,3 +14,9 @@ classes:
 profile::core::common::manage_chrony: true
 chrony::service_enable: false
 chrony::service_ensure: "stopped"
+
+files:
+  # perfsonar packaging installs this one file with the wrong mode
+  "/etc/sudoers.d/perfsonar_sudo":
+    mode: "0440"
+    require: "Class[Perfsonar]"

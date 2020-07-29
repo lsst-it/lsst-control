@@ -8,6 +8,9 @@ class profile::core::letsencrypt(
 ) {
   include letsencrypt
 
+  # XXX https://github.com/voxpupuli/puppet-letsencrypt/issues/230
+  ensure_packages(['python2-futures.noarch'])
+
   if ($certonly) {
     ensure_resources('letsencrypt::certonly', $certonly)
   }

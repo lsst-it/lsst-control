@@ -8,8 +8,7 @@ class profile::core::perfsonar {
   letsencrypt::certonly { $fqdn:
     plugin      => 'dns-route53',
     manage_cron => true,
-  }
-
+  } ->
   class { '::perfsonar':
     manage_apache      => true,
     remove_root_prompt => true,

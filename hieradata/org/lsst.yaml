@@ -191,3 +191,5 @@ rsyslog::config::actions:
 yum::plugin::versionlock:
   # trigger `yum clean all`
   clean: true
+
+letsencrypt::email: "rubinobs-it-las@lsst.org"

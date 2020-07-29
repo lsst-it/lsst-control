@@ -1,5 +1,6 @@
 class profile::core::perfsonar {
   include profile::core::letsencrypt
+  include augeas  # needed by perfsonar
 
   $fqdn    = $facts['fqdn']
   $le_root = "/etc/letsencrypt/live/${fqdn}"

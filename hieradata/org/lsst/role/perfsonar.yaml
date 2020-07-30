@@ -22,3 +22,9 @@ files:
   "/etc/sudoers.d/perfsonar_sudo":
     mode: "0440"
     require: "Class[Perfsonar]"
+
+perfsonar::manage_pscheduler_agent: true
+perfsonar::pscheduler_agent_config:
+  remotes:
+    - url: "http://pwa.ampath.net/pub/config/new-lsst-scl-lsc"
+      configure-archives: true

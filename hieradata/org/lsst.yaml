@@ -24,6 +24,9 @@ lookup_options:
   ccs_software::installations:
     merge:
       strategy: "deep"
+  profile::core::ipset::set:
+    merge:
+      strategy: "deep"
 
 timezone::timezone: "UTC"
 chrony::leapsectz: "right/UTC"
@@ -195,3 +198,14 @@ yum::plugin::versionlock:
 letsencrypt::email: "rubinobs-it-las@lsst.org"
 profile::core::icinga_agent::host_template: "GeneralHostTemplate"
 profile::core::common::deploy_icinga_agent: false
+
+profile::core::ipset::set:
+  # lsst/aura "internal" prefixes
+  lsst:
+    ensure: "present"
+    type: "hash:net"
+    set:
+      - "140.252.0.0/16"
+      - "139.229.0.0/16"
+      - "198.19.0.0/16"
+      - "10.0.0.0/8"

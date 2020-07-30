@@ -102,6 +102,7 @@ mod 'treydock/perfsonar',
   ref: 'production'
 mod 'jamtur01/httpauth', '0.0.6'
 mod 'puppetlabs/ntp', '8.3.0'
+mod 'puppet/ipset', '1.2.3'
 mod 'lsst/ccs_database',
   git: 'https://github.com/lsst-it/puppet-ccs_database.git',
   ref: 'v0.1.0'

@@ -638,6 +638,19 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
   service { 'icinga-director':
     ensure => running,
   }
+##IcingaWeb PNP
+  exec { 'git clone https://github.com/Icinga/icingaweb2-module-pnp.git pnp':
+    cwd      => '/usr/share/icingaweb2/modules/',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    before   => Exec['icingacli module enable pnp'],
+    onlyif   => ['test -d /usr/share/icingaweb2/modeules/pnp'],
+  }
+  exec { 'icingacli module enable pnp':
+    cwd    => '/var/tmp/',
+    path   => ['/sbin', '/usr/sbin', '/bin'],
+    onlyif => ['test ! -f /etc/icingaweb2/enabledModules/pnp'],
+  }
 
 ##IcingaWeb Reactbundle
   class {'icingaweb2::module::reactbundle':

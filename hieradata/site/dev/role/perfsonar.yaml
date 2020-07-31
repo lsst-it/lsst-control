@@ -1,0 +1,5 @@
+---
+perfsonar::pscheduler_agent_config:
+  remotes:
+    - url: "https://jhoblitt-ps1.dev.lsst.org/psconfig/foo.json"
+      configure-archives: true

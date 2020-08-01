@@ -555,7 +555,10 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
   icinga2::object::zone { 'director-global':
     global => true,
   }
-
+##Icinga2 Perfdata
+  class {'::icinga2::feature::perfdata':
+    ensure => present,
+  }
 ##IcingaWeb Config
   class {'::icingaweb2':
     manage_repo   => false,

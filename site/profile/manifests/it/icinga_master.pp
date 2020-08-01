@@ -765,6 +765,22 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
       'SCRIPT_FILENAME'     => '/usr/share/icingaweb2/public/index.php',
     },
   }
+# PNP4Nagios Configuration
+  nginx::resource::location { 'pnp4nagios':
+    location       => '/pnp4nagios',
+    location_alias => '/usr/local/pnp4nagios/share',
+    server         => 'icingaweb2',
+    ssl            => true,
+    ssl_only       => true,
+    index_files    => ['index.php'],
+    try_files      => ['$uri', '$uri/', '/pnp4nagios/index.php/$1'],
+    fastcgi_index  => 'index.php',
+    fastcgi_param  => {
+      'PATH_INFO'       => '$fastcgi_path_info',
+      'SCRIPT_FILENAME' => '/usr/local/pnp4nagios/share/index.php',
+    },
+  }
+
   ##Force Deploy every puppet run
   exec { $deploy_cmd:
     cwd      => $icinga_path,

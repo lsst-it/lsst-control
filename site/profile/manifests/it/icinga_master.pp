@@ -644,12 +644,15 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     before   => Exec['icingacli module enable pnp'],
-    onlyif   => ['test -d /usr/share/icingaweb2/modeules/pnp'],
+    unless   => ['test -d /usr/share/icingaweb2/modules/pnp'],
   }
   exec { 'icingacli module enable pnp':
     cwd    => '/var/tmp/',
     path   => ['/sbin', '/usr/sbin', '/bin'],
-    onlyif => ['test ! -f /etc/icingaweb2/enabledModules/pnp'],
+    onlyif => ['test -f /etc/icingaweb2/enabledModules/pnp'],
+  }
+  package {'pnp4nagios':
+    ensure => present,
   }
 
 ##IcingaWeb Reactbundle

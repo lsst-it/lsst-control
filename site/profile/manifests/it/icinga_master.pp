@@ -326,6 +326,28 @@ $ipa_svc3 = "{
 }
 }"
 
+#Npcd file content
+$npcd_cont = '
+#Needs to end in newline
+user = icinga
+group = icinga
+log_type = syslog
+log_file = /var/log/pnp4nagios/npcd.log
+max_logfile_size = 10485760
+log_level = 1 
+perfdata_spool_dir = /var/spool/icinga2/perfdata
+perfdata_file_run_cmd = /usr/libexec/pnp4nagios/process_perfdata.pl
+perfdata_file_run_cmd_args = --bulk
+identify_npcd = 1
+npcd_max_threads = 5
+sleep_time = 15
+load_threshold = 0.0
+pid_file=/var/run/npcd.pid
+perfdata_file = /var/log/pnp4nagios/perfdata.dump
+perfdata_spool_filename = perfdata
+perfdata_file_processing_interval = 15
+
+'
 
 ##General Variables Definition
 $url         = "https://${master_fqdn}/director"
@@ -654,6 +676,17 @@ $deploy_cmd = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/de
   package {'pnp4nagios':
     ensure => present,
   }
+  -> file { '/etc/pnp4nagios/npcd.cfg':
+    ensure  => 'present',
+    mode    => '0644',
+    content => $npcd_cont,
+    notify  => Service['npcd'],
+  }
+  service { 'npcd':
+    ensure  => 'running',
+    require => Package['pnp4nagios'],
+  }
+
 
 ##IcingaWeb Reactbundle
   class {'icingaweb2::module::reactbundle':

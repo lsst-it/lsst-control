@@ -43,7 +43,6 @@ $reload   = '; systemctl daemon-reload'
 $command1 = 'useradd -r -g icingaweb2 -d /var/lib/icingadirector -s /bin/false icingadirector'
 $command2 = 'install -d -o icingadirector -g icingaweb2 -m 0750 /var/lib/icingadirector'
 $command3 = "cp /usr/share/icingaweb2/modules/director/contrib/systemd/icinga-director.service /etc/systemd/system/${reload}"
-$command4 = 'systemctl enable --now icinga-director.service'
 $unless1  = 'grep icingadirector /etc/passwd'
 $onlyif2  = 'test ! -d /var/lib/icingadirector'
 $onlyif3  = 'test ! -f /etc/systemd/system/icinga-director.service'
@@ -442,10 +441,6 @@ perfdata_file_processing_interval = 15
   }
 ##Reload service in case any modification has occured
 # Run and Enable Service
-  service { 'icinga-director':
-    ensure  => running,
-    require => File['/etc/pnp4nagios/npcd.cfg'],
-  }
   service { 'php73-php-fpm':
     ensure  => running,
     require => Package[$packages],
@@ -453,6 +448,10 @@ perfdata_file_processing_interval = 15
   service { 'npcd':
     ensure  => running,
     require => Package[$packages],
+  }
+  service { 'icinga-director':
+    ensure  => 'running',
+    require => Exec[$command3],
   }
 #Force Deploy every puppet run
 

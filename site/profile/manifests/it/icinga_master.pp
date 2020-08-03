@@ -220,6 +220,14 @@ perfdata_file_processing_interval = 15
   class {'::icinga2::feature::perfdata':
     ensure => present,
   }
+  file { '/var/lib/pnp4nagios':
+    ensure  => 'directory',
+    owner   => 'icinga',
+    group   => 'icinga',
+    mode    => '0755',
+    require => Package[$packages],
+    notify  => Service['npcd'],
+  }
 ##IcingaWeb Config
   class {'::icingaweb2':
     manage_repo   => false,

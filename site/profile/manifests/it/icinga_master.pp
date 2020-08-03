@@ -274,6 +274,7 @@ perfdata_file_processing_interval = 15
     ldap_group_name_attribute => 'cn',
     ldap_group_filter         => $ldap_group_filter,
     ldap_base_dn              => $ldap_group_base,
+    notify                    => Service['php73-php-fpm'],
   }
   icingaweb2::config::role { 'Admin User':
     groups      => 'icinga-admins',
@@ -454,7 +455,6 @@ perfdata_file_processing_interval = 15
     require => Exec[$command3],
   }
 #Force Deploy every puppet run
-
   exec { $deploy_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],

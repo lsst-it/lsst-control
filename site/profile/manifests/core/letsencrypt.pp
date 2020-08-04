@@ -15,4 +15,7 @@ class profile::core::letsencrypt(
   if ($certonly) {
     ensure_resources('letsencrypt::certonly', $certonly)
   }
+
+  # aws credentials required by dns_route53 plugin.
+  File['/root/.aws/credentials'] -> Letsencrypt::Certonly<| |>
 }

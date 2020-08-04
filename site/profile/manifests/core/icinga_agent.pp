@@ -10,7 +10,6 @@ class profile::core::icinga_agent(
 {
 $packages = [
   'nagios-plugins-all',
-  'curl',
 ]
 $icinga_agent_fqdn = $facts['fqdn']
 $icinga_agent_ip = $facts['ipaddress']

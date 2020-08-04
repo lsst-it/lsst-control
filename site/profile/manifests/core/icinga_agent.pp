@@ -1,7 +1,7 @@
 # @summary
 #   Icinga agent creation for metric collections
 
-class profile::it::icinga_agent(
+class profile::core::icinga_agent(
   $icinga_master_fqdn,
   $icinga_master_ip,
   $hash,

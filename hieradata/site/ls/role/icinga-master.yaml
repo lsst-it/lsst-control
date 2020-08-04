@@ -1,7 +1,7 @@
 ---
 classes:
-  - "profile::it::icinga_master"
-  - "profile::it::icinga_resources"
+  - "profile::core::icinga_master"
+  - "profile::core::icinga_resources"
 packages:
   - "bash-completion"
   - "bash-completion-extras"

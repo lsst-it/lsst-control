@@ -1,7 +1,7 @@
 # @summary
 #   Definition of icinga and icingaweb master module
 
-class profile::it::icinga_master (
+class profile::core::icinga_master (
   $ldap_server,
   $ldap_root,
   $ldap_user,

@@ -1,5 +1,5 @@
 ---
 classes:
-  - "profile::it::icinga_agent"
+  - "profile::core::icinga_agent"
 
 easy_ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"

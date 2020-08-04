@@ -1,7 +1,7 @@
 # @summary
 #   Define and create all file resources of icinga master
 
-class profile::it::icinga_resources (
+class profile::core::icinga_resources (
   $hash,
   $host_template,
   $http_template,

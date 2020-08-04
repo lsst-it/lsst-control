@@ -8,8 +8,7 @@ class profile::core::icinga_resources (
   String $dns_template,
   String $master_template,
   String $ipa_template,
-)
-{
+){
 
 #<----------Variables Definition------------>
 #Implicit usage of facts

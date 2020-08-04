@@ -6,8 +6,7 @@ class profile::core::icinga_agent(
   String $icinga_master_ip,
   String $credentials_hash,
   String $host_template,
-)
-{
+){
 $packages = [
   'nagios-plugins-all',
 ]

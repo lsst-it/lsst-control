@@ -25,8 +25,7 @@ class profile::core::icinga_master (
   String $api_user,
   String $api_pwd,
   String $credentials_hash,
-)
-{
+){
 include profile::core::common
 include profile::core::selinux
 include remi

@@ -6,7 +6,8 @@
 class profile::core::letsencrypt(
   Optional[Hash[String, Hash]] $certonly = undef
 ) {
-  include letsencrypt
+  include ::letsencrypt
+  include ::letsencrypt::plugin::dns_route53
 
   # XXX https://github.com/voxpupuli/puppet-letsencrypt/issues/230
   ensure_packages(['python2-futures.noarch'])

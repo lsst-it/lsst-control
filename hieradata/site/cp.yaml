@@ -87,6 +87,7 @@ dhcp::ntpservers: &ntpservers
   - "1.south-america.pool.ntp.org"
 
 chrony::servers: *ntpservers
+ntp::servers: *ntpservers
 resolv_conf::nameservers: *nameservers
 resolv_conf::searchpath: *dnsdomains
 # Use NFSv4 on NFS enabled hosts.

@@ -40,7 +40,7 @@ $master_ip  = $facts[ipaddress]
 
 #IcingaDirector force Deploy
 $url         = "https://${master_fqdn}/director"
-$credentials = "Authorization:Basic ${credentials_hash}"
+$credentials = Sensitive("Authorization:Basic ${credentials_hash}")
 $format      = 'Accept: application/json'
 $curl        = 'curl -s -k -H'
 $icinga_path = '/opt/icinga'

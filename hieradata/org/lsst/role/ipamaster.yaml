@@ -2,7 +2,6 @@
 classes:
   - "profile::core::common"
   - "easy_ipa"
-  - "profile::it::icinga_agent"
 
 easy_ipa::ipa_role: "master"
 easy_ipa::install_ipa_server: true

@@ -3,7 +3,6 @@ classes:
   - "profile::core::common"
   - "profile::core::libvirt"
   - "libvirt"
-  - "profile::it::icinga_agent"
 packages:
   - "qemu-guest-agent"
   - "qemu-kvm-tools"

@@ -1,3 +1,5 @@
 ---
+classes:
+  - "profile::it::icinga_agent"
 easy_ipa::configure_replica_ca: true
 easy_ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"

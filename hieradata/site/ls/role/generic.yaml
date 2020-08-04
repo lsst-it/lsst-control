@@ -1,0 +1,3 @@
+---
+classes:
+  - "profile::it::icinga_agent"

@@ -1,4 +1,6 @@
 ---
+classes:
+  - "profile::it::icinga_agent"
 dns::forwarders:
   - "208.67.222.222"
   - "208.67.220.220"

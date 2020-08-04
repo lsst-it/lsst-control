@@ -2,12 +2,12 @@
 #   Define and create all file resources of icinga master
 
 class profile::core::icinga_resources (
-  $hash,
-  $host_template,
-  $http_template,
-  $dns_template,
-  $master_template,
-  $ipa_template,
+  String $hash,
+  String $host_template,
+  String $http_template,
+  String $dns_template,
+  String $master_template,
+  String $ipa_template,
 )
 {
 

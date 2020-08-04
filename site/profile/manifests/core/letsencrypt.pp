@@ -24,8 +24,12 @@
 # @param certonly
 #   Hash of `letsencrypt::certonly` defined types to create.
 #   See: https://github.com/voxpupuli/puppet-letsencrypt/blob/master/manifests/certonly.pp
+#
+# @param aws_credentials
+#   `.aws/credentials` format string for aws route53 credentials
 class profile::core::letsencrypt(
-  Optional[Hash[String, Hash]] $certonly = undef
+  Optional[Hash[String, Hash]] $certonly = undef,
+  Optional[String] $aws_credentials      = undef,
 ) {
   include ::letsencrypt
   include ::letsencrypt::plugin::dns_route53
@@ -37,6 +41,22 @@ class profile::core::letsencrypt(
     ensure_resources('letsencrypt::certonly', $certonly)
   }
 
-  # aws credentials required by dns_route53 plugin.
-  File['/root/.aws/credentials'] -> Letsencrypt::Certonly<| |>
+  if ($aws_credentials) {
+    file {
+      '/root/.aws':
+        ensure => directory,
+        mode   => '0700',
+        backup => false,
+      ;
+      '/root/.aws/credentials':
+        ensure  => file,
+        mode    => '0600',
+        backup  => false,
+        content => $aws_credentials,
+      ;
+    }
+
+    # aws credentials required by dns_route53 plugin.
+    File['/root/.aws/credentials'] -> Letsencrypt::Certonly<| |>
+  }
 }

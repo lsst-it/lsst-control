@@ -103,3 +103,5 @@ accounts::user_list:
 # Stop iptables by default - the default rules are highly restrictive to the
 # point of harm and we don't have a meaningful permission set to make this useful.
 firewall::ensure: "stopped"
+
+letsencrypt::server: "https://acme-staging.api.letsencrypt.org/directory"  # testing url

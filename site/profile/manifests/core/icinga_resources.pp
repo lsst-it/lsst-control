@@ -52,7 +52,7 @@ $ipa_svc_disk_name    = 'IpaDiskService'
 #
 #<---------------JSON Files ---------------->
 ##Hosts Templates JSON
-$general_template = "{
+$general_template_content = "{
 \"accept_config\": true,
 \"check_command\": \"hostalive\",
 \"has_agent\": true,
@@ -61,7 +61,7 @@ $general_template = "{
 \"object_name\": \"${host_template}\",
 \"object_type\": \"template\"
 }"
-$http_template = "{
+$http_template_content = "{
 \"accept_config\": true,
 \"check_command\": \"hostalive\",
 \"has_agent\": true,
@@ -70,7 +70,7 @@ $http_template = "{
 \"object_name\": \"${http_template}\",
 \"object_type\": \"template\"
 }"
-$dns_template = "{
+$dns_template_content = "{
 \"accept_config\": true,
 \"check_command\": \"hostalive\",
 \"has_agent\": true,
@@ -79,7 +79,7 @@ $dns_template = "{
 \"object_name\": \"${dns_template}\",
 \"object_type\": \"template\"
 }"
-$master_template = "{
+$master_template_content = "{
 \"accept_config\": true,
 \"check_command\": \"hostalive\",
 \"has_agent\": true,
@@ -88,7 +88,7 @@ $master_template = "{
 \"object_name\": \"${master_template}\",
 \"object_type\": \"template\"
 }"
-$ipa_template = "{
+$ipa_template_content = "{
 \"accept_config\": true,
 \"check_command\": \"hostalive\",
 \"has_agent\": true,
@@ -203,6 +203,7 @@ $master_svc1 = "{
 \"object_type\": \"object\",
 \"vars\": {
   \"dhcp_serverip\": \"139.229.135.5\"
+}
 }"
 $master_svc2 = "{
 \"host\": \"${master_template}\",
@@ -401,7 +402,7 @@ file { $icinga_path:
 #Create host template file
   file { $host_template_path:
     ensure  => 'present',
-    content => $general_template,
+    content => $general_template_content,
     before  => Exec[$host_template_cmd],
   }
 #Add general host template
@@ -414,7 +415,7 @@ file { $icinga_path:
 #Create http template file
   file { $http_template_path:
     ensure  => 'present',
-    content => $http_template,
+    content => $http_template_content,
     before  => Exec[$http_template_cmd],
   }
 #Add http template
@@ -427,7 +428,7 @@ file { $icinga_path:
 #Create dns template file
   file { $dns_template_path:
     ensure  => 'present',
-    content => $dns_template,
+    content => $dns_template_content,
     before  => Exec[$dns_template_cmd],
   }
 #Add dns template
@@ -440,7 +441,7 @@ file { $icinga_path:
 #Create dhcp file
   file { $master_template_path:
     ensure  => 'present',
-    content => $master_template,
+    content => $master_template_content,
     before  => Exec[$master_template_cmd],
   }
 #Add dhcp template
@@ -453,7 +454,7 @@ file { $icinga_path:
 #Create ipa file
   file { $ipa_template_path:
     ensure  => 'present',
-    content => $ipa_template,
+    content => $ipa_template_content,
     before  => Exec[$ipa_template_cmd],
   }
 #Add ipa template

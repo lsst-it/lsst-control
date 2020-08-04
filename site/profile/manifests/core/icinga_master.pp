@@ -26,26 +26,17 @@ class profile::core::icinga_master (
   String $api_pwd,
   String $credentials_hash,
 ){
-include profile::core::common
-include profile::core::selinux
-include remi
-include ::openssl
-include ::nginx
+  include profile::core::common
+  include profile::core::selinux
+  include remi
+  include ::openssl
+  include ::nginx
 
 #<-------------Variables Definition---------------->
 
 #Implicit usage of facts
 $master_fqdn  = $facts[fqdn]
 $master_ip  = $facts[ipaddress]
-
-# Icingadirector User Creation
-$reload   = '; systemctl daemon-reload'
-$command1 = 'useradd -r -g icingaweb2 -d /var/lib/icingadirector -s /bin/false icingadirector'
-$command2 = 'install -d -o icingadirector -g icingaweb2 -m 0750 /var/lib/icingadirector'
-$command3 = "cp /usr/share/icingaweb2/modules/director/contrib/systemd/icinga-director.service /etc/systemd/system/${reload}"
-$unless1  = 'grep icingadirector /etc/passwd'
-$onlyif2  = 'test ! -d /var/lib/icingadirector'
-$onlyif3  = 'test ! -f /etc/systemd/system/icinga-director.service'
 
 #IcingaDirector force Deploy
 $url         = "https://${master_fqdn}/director"
@@ -296,30 +287,6 @@ perfdata_file_processing_interval = 15
     api_password  => $api_pwd,
     require       => Mysql::Db[$mysql_director_db],
   }
-##IcingaWeb Director Daemon
-  ->exec { $command1:
-    cwd      => '/var/tmp',
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    unless   => $unless1,
-    require  => Class['::icingaweb2'],
-  }
-# User Directory
-  ->exec { $command2:
-    cwd      => '/var/tmp',
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $onlyif2,
-    require  => Class['::icingaweb2'],
-  }
-# Service Creation
-  ->exec { $command3:
-    cwd      => '/var/tmp',
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $onlyif3,
-    require  => Class['::icingaweb2'],
-  }
 ##IcingaWeb PNP
   exec { 'git clone https://github.com/Icinga/icingaweb2-module-pnp.git pnp':
     cwd      => '/usr/share/icingaweb2/modules/',
@@ -332,7 +299,7 @@ perfdata_file_processing_interval = 15
   exec { 'icingacli module enable pnp':
     cwd     => '/var/tmp/',
     path    => ['/sbin', '/usr/sbin', '/bin'],
-    onlyif  => ['test ! -f /etc/icingaweb2/enabledModules/pnp'],
+    onlyif  => ['test ! -d /etc/icingaweb2/enabledModules/pnp'],
     require => Class['icingaweb2::module::director'],
   }
   -> file { '/etc/icingaweb2/modules/pnp':
@@ -382,20 +349,6 @@ perfdata_file_processing_interval = 15
     git_revision   => 'v0.5.0',
     require        => Class['::icingaweb2'],
   }
-##Icinga Director DB migration
-  exec { 'Icinga Director DB migration':
-    path    => '/usr/local/bin:/usr/bin:/bin',
-    command => 'icingacli director migration run',
-    onlyif  => 'icingacli director migration pending',
-    require => Class['icingaweb2::module::director'],
-  }
-  exec { 'Icinga Director Kickstart':
-    path    => '/usr/local/bin:/usr/bin:/bin',
-    command => 'icingacli director kickstart run',
-    onlyif  => 'icingacli director kickstart required',
-    require => Exec['Icinga Director DB migration'],
-  }
-
 ##Nginx Resource Definition
   nginx::resource::server { 'icingaweb2':
     server_name          => [$ssl_fqdn],
@@ -449,10 +402,6 @@ perfdata_file_processing_interval = 15
   service { 'npcd':
     ensure  => running,
     require => Package[$packages],
-  }
-  service { 'icinga-director':
-    ensure  => 'running',
-    require => Exec[$command3],
   }
 #Force Deploy every puppet run
   exec { $deploy_cmd:

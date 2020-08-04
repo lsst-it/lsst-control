@@ -28,8 +28,8 @@ class profile::it::icinga_master (
 )
 {
 include profile::core::common
-include profile::core::remi
 include profile::core::selinux
+include remi
 include ::openssl
 include ::nginx
 

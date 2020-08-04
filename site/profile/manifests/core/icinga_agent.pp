@@ -4,7 +4,7 @@
 class profile::core::icinga_agent(
   String $icinga_master_fqdn,
   String $icinga_master_ip,
-  String $hash,
+  String $credentials_hash,
   String $host_template,
 )
 {
@@ -13,7 +13,7 @@ $packages = [
 ]
 $icinga_agent_fqdn = $facts['fqdn']
 $icinga_agent_ip = $facts['ipaddress']
-$credentials = "Authorization:Basic ${hash}"
+$credentials = "Authorization:Basic ${credentials_hash}"
 $json_file = "{
 \"address\": \"${icinga_agent_ip}\",
 \"display_name\": \"${icinga_agent_fqdn}\",

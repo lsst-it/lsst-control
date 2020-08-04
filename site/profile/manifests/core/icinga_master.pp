@@ -24,7 +24,7 @@ class profile::core::icinga_master (
   String $api_name,
   String $api_user,
   String $api_pwd,
-  String $hash,
+  String $credentials_hash,
 )
 {
 include profile::core::common
@@ -50,7 +50,7 @@ $onlyif3  = 'test ! -f /etc/systemd/system/icinga-director.service'
 
 #IcingaDirector force Deploy
 $url         = "https://${master_fqdn}/director"
-$credentials = "Authorization:Basic ${hash}"
+$credentials = "Authorization:Basic ${credentials_hash}"
 $format      = 'Accept: application/json'
 $curl        = 'curl -s -k -H'
 $icinga_path = '/opt/icinga'

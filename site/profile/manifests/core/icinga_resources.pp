@@ -2,7 +2,7 @@
 #   Define and create all file resources of icinga master
 
 class profile::core::icinga_resources (
-  String $hash,
+  String $credentials_hash,
   String $host_template,
   String $http_template,
   String $dns_template,
@@ -19,7 +19,7 @@ $master_ip  = $facts[ipaddress]
 #Commands abreviation
 $url_host    = "https://${master_fqdn}/director/host"
 $url_svc     = "https://${master_fqdn}/director/service"
-$credentials = "Authorization:Basic ${hash}"
+$credentials = "Authorization:Basic ${credentials_hash}"
 $format      = 'Accept: application/json'
 $curl        = 'curl -s -k -H'
 $icinga_path = '/opt/icinga'

@@ -26,8 +26,6 @@ class profile::core::icinga_master (
   String $api_pwd,
   String $credentials_hash,
 ){
-  include profile::core::common
-  include profile::core::selinux
   include remi
   include ::openssl
   include ::nginx
@@ -35,19 +33,19 @@ class profile::core::icinga_master (
 #<-------------Variables Definition---------------->
 
 #Implicit usage of facts
-$master_fqdn  = $facts[fqdn]
+  $master_fqdn  = $facts[fqdn]
 $master_ip  = $facts[ipaddress]
 
 #IcingaDirector force Deploy
-$url         = "https://${master_fqdn}/director"
-$credentials = Sensitive("Authorization:Basic ${credentials_hash}")
-$format      = 'Accept: application/json'
-$curl        = 'curl -s -k -H'
-$icinga_path = '/opt/icinga'
-$deploy_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/deploy'"
+  $url         = "https://${master_fqdn}/director"
+  $credentials = Sensitive("Authorization:Basic ${credentials_hash}")
+  $format      = 'Accept: application/json'
+  $curl        = 'curl -s -k -H'
+  $icinga_path = '/opt/icinga'
+  $deploy_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/deploy'"
 
 #pnp4nagios webpage integration
-$pnp4nagios_conf = '
+  $pnp4nagios_conf = '
 location /pnp4nagios {
         alias  /usr/share/nagios/html/pnp4nagios;
         index     index.php;
@@ -68,18 +66,18 @@ location @pnp4nagios {
 '
 
 #PNP plugin configuration
-$pnp_conf = '[pnp4nagios]
+  $pnp_conf = '[pnp4nagios]
 config_dir = "/etc/pnp4nagios"
 base_url = "/pnp4nagios"
 menu_disabled = "0"
 default_query = "host=icinga-master.ls.lsst.org&srv=MasterPingService"
 '
 #Icinga tls keys
-$ssl_cert       = '/etc/ssl/certs/icinga.crt'
-$ssl_key        = '/etc/ssl/certs/icinga.key'
+  $ssl_cert       = '/etc/ssl/certs/icinga.crt'
+  $ssl_key        = '/etc/ssl/certs/icinga.key'
 
 #Force installation and usage of php73
-$packages = [
+  $packages = [
   'git',
   'pnp4nagios',
   'centos-release-scl',
@@ -99,14 +97,14 @@ $packages = [
   'nagios-plugins-all',
 ]
 #MySql options
-$override_options = {
-  'mysqld' => {
-    'bind_address' => '0.0.0.0',
+  $override_options = {
+    'mysqld' => {
+      'bind_address' => '0.0.0.0',
+    }
   }
-}
 
 #Npcd file content
-$npcd_cont = '#Needs to end in newline
+  $npcd_cont = '#Needs to end in newline
 user = icinga
 group = icinga
 log_type = syslog

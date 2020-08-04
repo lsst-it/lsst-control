@@ -12,47 +12,47 @@ class profile::core::icinga_resources (
 
 #<----------Variables Definition------------>
 #Implicit usage of facts
-$master_fqdn  = $facts[fqdn]
-$master_ip  = $facts[ipaddress]
+  $master_fqdn  = $facts[fqdn]
+  $master_ip  = $facts[ipaddress]
 
 #Commands abreviation
-$url_host    = "https://${master_fqdn}/director/host"
-$url_svc     = "https://${master_fqdn}/director/service"
-$credentials = "Authorization:Basic ${credentials_hash}"
-$format      = 'Accept: application/json'
-$curl        = 'curl -s -k -H'
-$icinga_path = '/opt/icinga'
-$lt          = '| grep Failed'
+  $url_host    = "https://${master_fqdn}/director/host"
+  $url_svc     = "https://${master_fqdn}/director/service"
+  $credentials = "Authorization:Basic ${credentials_hash}"
+  $format      = 'Accept: application/json'
+  $curl        = 'curl -s -k -H'
+  $icinga_path = '/opt/icinga'
+  $lt          = '| grep Failed'
 
 #Service Templates Names
-$http_svc_template_name    = 'HttpServiceTemplate'
-$ping_svc_template_name    = 'PingServiceTemplate'
-$dns_svc_template_name     = 'DnsServiceTemplate'
-$master_svc_template_name  = 'MasterServiceTemplate'
-$ipa_svc_template_name     = 'IpaServiceTemplate'
-$disk_svc_template_name    = 'DiskServiceTemplace'
+  $http_svc_template_name    = 'HttpServiceTemplate'
+  $ping_svc_template_name    = 'PingServiceTemplate'
+  $dns_svc_template_name     = 'DnsServiceTemplate'
+  $master_svc_template_name  = 'MasterServiceTemplate'
+  $ipa_svc_template_name     = 'IpaServiceTemplate'
+  $disk_svc_template_name    = 'DiskServiceTemplace'
 
 #Service Names
-$host_svc_ping_name   = 'HostPingService'
-$host_svc_disk_name   = 'HostDiskService'
-$dns_svc_name         = 'DnsService'
-$dns_svc_ping_name    = 'DnsPingService'
-$dns_svc_disk_name    = 'DnsDiskService'
-$master_svc_dhcp_name = 'MasterDhcpService'
-$master_svc_ping_name = 'MasterPingService'
-$master_svc_disk_name = 'MasterDiskService'
-$http_svc_name        = 'HttpService'
-$http_svc_ping_name   = 'HttpPingService'
-$http_svc_disk_name   = 'HttpDiskService'
-$ipa_svc_name         = 'IpaService'
-$ipa_svc_ping_name    = 'IpaPingService'
-$ipa_svc_disk_name    = 'IpaDiskService'
+  $host_svc_ping_name   = 'HostPingService'
+  $host_svc_disk_name   = 'HostDiskService'
+  $dns_svc_name         = 'DnsService'
+  $dns_svc_ping_name    = 'DnsPingService'
+  $dns_svc_disk_name    = 'DnsDiskService'
+  $master_svc_dhcp_name = 'MasterDhcpService'
+  $master_svc_ping_name = 'MasterPingService'
+  $master_svc_disk_name = 'MasterDiskService'
+  $http_svc_name        = 'HttpService'
+  $http_svc_ping_name   = 'HttpPingService'
+  $http_svc_disk_name   = 'HttpDiskService'
+  $ipa_svc_name         = 'IpaService'
+  $ipa_svc_ping_name    = 'IpaPingService'
+  $ipa_svc_disk_name    = 'IpaDiskService'
 #<--------End Variables Definition---------->
 #
 #
 #<---------------JSON Files ---------------->
 ##Hosts Templates JSON
-$general_template_content = "{
+  $general_template_content = "{
 \"accept_config\": true,
 \"check_command\": \"hostalive\",
 \"has_agent\": true,
@@ -61,7 +61,7 @@ $general_template_content = "{
 \"object_name\": \"${host_template}\",
 \"object_type\": \"template\"
 }"
-$http_template_content = "{
+  $http_template_content = "{
 \"accept_config\": true,
 \"check_command\": \"hostalive\",
 \"has_agent\": true,
@@ -70,7 +70,7 @@ $http_template_content = "{
 \"object_name\": \"${http_template}\",
 \"object_type\": \"template\"
 }"
-$dns_template_content = "{
+  $dns_template_content = "{
 \"accept_config\": true,
 \"check_command\": \"hostalive\",
 \"has_agent\": true,
@@ -79,7 +79,7 @@ $dns_template_content = "{
 \"object_name\": \"${dns_template}\",
 \"object_type\": \"template\"
 }"
-$master_template_content = "{
+  $master_template_content = "{
 \"accept_config\": true,
 \"check_command\": \"hostalive\",
 \"has_agent\": true,
@@ -88,7 +88,7 @@ $master_template_content = "{
 \"object_name\": \"${master_template}\",
 \"object_type\": \"template\"
 }"
-$ipa_template_content = "{
+  $ipa_template_content = "{
 \"accept_config\": true,
 \"check_command\": \"hostalive\",
 \"has_agent\": true,
@@ -99,35 +99,35 @@ $ipa_template_content = "{
 }"
 
 ##Service Template JSON
-$http_svc_template = "{
+  $http_svc_template = "{
 \"check_command\": \"http\",
 \"object_name\": \"${http_svc_template_name}\",
 \"object_type\": \"template\",
 \"use_agent\": true,
 \"zone\": \"master\"
 }"
-$ping_svc_template = "{
+  $ping_svc_template = "{
 \"check_command\": \"hostalive\",
 \"object_name\": \"${ping_svc_template_name}\",
 \"object_type\": \"template\",
 \"use_agent\": true,
 \"zone\": \"master\"
 }"
-$dns_svc_template = "{
+  $dns_svc_template = "{
 \"check_command\": \"dns\",
 \"object_name\": \"${dns_svc_template_name}\",
 \"object_type\": \"template\",
 \"use_agent\": true,
 \"zone\": \"master\"
 }"
-$master_svc_template = "{
+  $master_svc_template = "{
 \"check_command\": \"dhcp\",
 \"object_name\": \"${master_svc_template_name}\",
 \"object_type\": \"template\",
 \"use_agent\": true,
 \"zone\": \"master\"
 }"
-$ipa_svc_template = "{
+  $ipa_svc_template = "{
 \"check_command\": \"ldap\",
 \"object_name\": \"${ipa_svc_template_name}\",
 \"object_type\": \"template\",
@@ -138,7 +138,7 @@ $ipa_svc_template = "{
 },
 \"zone\": \"master\"
 }"
-$disk_svc_template = "{
+  $disk_svc_template = "{
 \"check_command\": \"disk\",
 \"object_name\": \"${disk_svc_template_name}\",
 \"object_type\": \"template\",
@@ -152,7 +152,7 @@ $disk_svc_template = "{
 
 ##Services Definition
 #Ping, disk and RAM monitoring
-$host_svc1 = "{
+  $host_svc1 = "{
 \"host\": \"${host_template}\",
 \"imports\": [
     \"${$ping_svc_template_name}\"
@@ -160,7 +160,7 @@ $host_svc1 = "{
 \"object_name\": \"${host_svc_ping_name}\",
 \"object_type\": \"object\"
 }"
-$host_svc2 = "{
+  $host_svc2 = "{
 \"host\": \"${host_template}\",
 \"imports\": [
     \"${$disk_svc_template_name}\"
@@ -169,7 +169,7 @@ $host_svc2 = "{
 \"object_type\": \"object\"
 }"
 #HTTP, Ping, disk and RAM monitoring
-$http_svc1 = "{
+  $http_svc1 = "{
 \"host\": \"${http_template}\",
 \"imports\": [
   \"${$http_svc_template_name}\"
@@ -177,7 +177,7 @@ $http_svc1 = "{
 \"object_name\": \"${http_svc_name}\",
 \"object_type\": \"object\"
 }"
-$http_svc2 = "{
+  $http_svc2 = "{
 \"host\": \"${http_template}\",
 \"imports\": [
     \"${$ping_svc_template_name}\"
@@ -185,7 +185,7 @@ $http_svc2 = "{
 \"object_name\": \"${http_svc_ping_name}\",
 \"object_type\": \"object\"
 }"
-$http_svc3 = "{
+  $http_svc3 = "{
 \"host\": \"${http_template}\",
 \"imports\": [
     \"${$disk_svc_template_name}\"
@@ -194,7 +194,7 @@ $http_svc3 = "{
 \"object_type\": \"object\"
 }"
 #DHCP, Ping, disk and RAM monitoring
-$master_svc1 = "{
+  $master_svc1 = "{
 \"host\": \"${master_template}\",
 \"imports\": [
   \"${$master_svc_template_name}\"
@@ -205,7 +205,7 @@ $master_svc1 = "{
   \"dhcp_serverip\": \"139.229.135.5\"
 }
 }"
-$master_svc2 = "{
+  $master_svc2 = "{
 \"host\": \"${master_template}\",
 \"imports\": [
   \"${$ping_svc_template_name}\"
@@ -213,7 +213,7 @@ $master_svc2 = "{
 \"object_name\": \"${master_svc_ping_name}\",
 \"object_type\": \"object\"
 }"
-$master_svc3 = "{
+  $master_svc3 = "{
 \"host\": \"${master_template}\",
 \"imports\": [
     \"${$disk_svc_template_name}\"
@@ -222,7 +222,7 @@ $master_svc3 = "{
 \"object_type\": \"object\"
 }"
 #DNS, Ping, disk and RAM monitoring
-$dns_svc1 = "{
+  $dns_svc1 = "{
 \"host\": \"${dns_template}\",
 \"imports\": [
   \"${$dns_svc_template_name}\"
@@ -230,7 +230,7 @@ $dns_svc1 = "{
 \"object_name\": \"${dns_svc_name}\",
 \"object_type\": \"object\"
 }"
-$dns_svc2 = "{
+  $dns_svc2 = "{
 \"host\": \"${dns_template}\",
 \"imports\": [
   \"${$ping_svc_template_name}\"
@@ -238,7 +238,7 @@ $dns_svc2 = "{
 \"object_name\": \"${dns_svc_ping_name}\",
 \"object_type\": \"object\"
 }"
-$dns_svc3 = "{
+  $dns_svc3 = "{
 \"host\": \"${dns_template}\",
 \"imports\": [
     \"${$disk_svc_template_name}\"
@@ -247,7 +247,7 @@ $dns_svc3 = "{
 \"object_type\": \"object\"
 }"
 #IPA, Ping, disk and RAM monitoring
-$ipa_svc1 = "{
+  $ipa_svc1 = "{
 \"host\": \"${ipa_template}\",
 \"imports\": [
   \"${$ipa_svc_template_name}\"
@@ -255,7 +255,7 @@ $ipa_svc1 = "{
 \"object_name\": \"${ipa_svc_name}\",
 \"object_type\": \"object\"
 }"
-$ipa_svc2 = "{
+  $ipa_svc2 = "{
 \"host\": \"${ipa_template}\",
 \"imports\": [
   \"${$ping_svc_template_name}\"
@@ -263,7 +263,7 @@ $ipa_svc2 = "{
 \"object_name\": \"${ipa_svc_ping_name}\",
 \"object_type\": \"object\"
 }"
-$ipa_svc3 = "{
+  $ipa_svc3 = "{
 \"host\": \"${ipa_template}\",
 \"imports\": [
     \"${$disk_svc_template_name}\"
@@ -290,103 +290,103 @@ $ipa_svc3 = "{
 #
 #<----------Templates Creation-------------->
 #Host Templates Creation
-$host_template_path = "${$icinga_path}/${host_template}.json"
-$host_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${host_template}' ${lt}"
-$host_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${host_template_path}"
+  $host_template_path = "${$icinga_path}/${host_template}.json"
+  $host_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${host_template}' ${lt}"
+  $host_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${host_template_path}"
 
-$http_template_path = "${icinga_path}/${http_template}.json"
-$http_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${http_template}' ${lt}"
-$http_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${http_template_path}"
+  $http_template_path = "${icinga_path}/${http_template}.json"
+  $http_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${http_template}' ${lt}"
+  $http_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${http_template_path}"
 
-$dns_template_path = "${icinga_path}/${dns_template}.json"
-$dns_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${dns_template}' ${lt}"
-$dns_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${dns_template_path}"
+  $dns_template_path = "${icinga_path}/${dns_template}.json"
+  $dns_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${dns_template}' ${lt}"
+  $dns_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${dns_template_path}"
 
-$master_template_path = "${icinga_path}/${master_template}.json"
-$master_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${master_template}' ${lt}"
-$master_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${master_template_path}"
+  $master_template_path = "${icinga_path}/${master_template}.json"
+  $master_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${master_template}' ${lt}"
+  $master_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${master_template_path}"
 
-$ipa_template_path = "${icinga_path}/${ipa_template}.json"
-$ipa_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${ipa_template}' ${lt}"
-$ipa_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${ipa_template_path}"
+  $ipa_template_path = "${icinga_path}/${ipa_template}.json"
+  $ipa_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${ipa_template}' ${lt}"
+  $ipa_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${ipa_template_path}"
 
 #Services Template Creation
-$http_svc_template_path = "${icinga_path}/${http_svc_template_name}.json"
-$http_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_template_name}' ${lt}"
-$http_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$http_svc_template_path}"
+  $http_svc_template_path = "${icinga_path}/${http_svc_template_name}.json"
+  $http_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_template_name}' ${lt}"
+  $http_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$http_svc_template_path}"
 
-$ping_svc_template_path = "${icinga_path}/${ping_svc_template_name}.json"
-$ping_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ping_svc_template_name}' ${lt}"
-$ping_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ping_svc_template_path}"
+  $ping_svc_template_path = "${icinga_path}/${ping_svc_template_name}.json"
+  $ping_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ping_svc_template_name}' ${lt}"
+  $ping_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ping_svc_template_path}"
 
-$dns_svc_template_path  = "${icinga_path}/${dns_svc_template_name}.json"
-$dns_svc_template_cond  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_template_name}' ${lt}"
-$dns_svc_template_cmd   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$dns_svc_template_path}"
+  $dns_svc_template_path  = "${icinga_path}/${dns_svc_template_name}.json"
+  $dns_svc_template_cond  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_template_name}' ${lt}"
+  $dns_svc_template_cmd   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$dns_svc_template_path}"
 
-$master_svc_template_path = "${icinga_path}/${master_svc_template_name}.json"
-$master_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_template_name}' ${lt}"
-$master_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$master_svc_template_path}"
+  $master_svc_template_path = "${icinga_path}/${master_svc_template_name}.json"
+  $master_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_template_name}' ${lt}"
+  $master_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$master_svc_template_path}"
 
-$ipa_svc_template_path = "${icinga_path}/${ipa_svc_template_name}.json"
-$ipa_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_template_name}' ${lt}"
-$ipa_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ipa_svc_template_path}"
+  $ipa_svc_template_path = "${icinga_path}/${ipa_svc_template_name}.json"
+  $ipa_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_template_name}' ${lt}"
+  $ipa_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ipa_svc_template_path}"
 
-$disk_svc_template_path = "${icinga_path}/${disk_svc_template_name}.json"
-$disk_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${disk_svc_template_name}' ${lt}"
-$disk_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$disk_svc_template_path}"
+  $disk_svc_template_path = "${icinga_path}/${disk_svc_template_name}.json"
+  $disk_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${disk_svc_template_name}' ${lt}"
+  $disk_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$disk_svc_template_path}"
 
 #Services Creation
-$host_svc_path1 = "${icinga_path}/${host_svc_ping_name}.json"
-$host_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_ping_name}&host=${host_template}' ${lt}"
-$host_svc_cmd1  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${host_svc_path1}"
-$host_svc_path2 = "${icinga_path}/${host_svc_disk_name}.json"
-$host_svc_cond2 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_disk_name}&host=${host_template}' ${lt}"
-$host_svc_cmd2  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${host_svc_path2}"
+  $host_svc_path1 = "${icinga_path}/${host_svc_ping_name}.json"
+  $host_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_ping_name}&host=${host_template}' ${lt}"
+  $host_svc_cmd1  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${host_svc_path1}"
+  $host_svc_path2 = "${icinga_path}/${host_svc_disk_name}.json"
+  $host_svc_cond2 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_disk_name}&host=${host_template}' ${lt}"
+  $host_svc_cmd2  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${host_svc_path2}"
 
-$http_svc_path1 = "${icinga_path}/${http_svc_name}.json"
-$http_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_name}&host=${http_template}' ${lt}"
-$http_svc_cmd1  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${http_svc_path1}"
-$http_svc_path2 = "${icinga_path}/${http_svc_ping_name}.json"
-$http_svc_cond2 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_ping_name}&host=${http_template}' ${lt}"
-$http_svc_cmd2  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${http_svc_path2}"
-$http_svc_path3 = "${icinga_path}/${http_svc_disk_name}.json"
-$http_svc_cond3 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_disk_name}&host=${http_template}' ${lt}"
-$http_svc_cmd3  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${http_svc_path3}"
+  $http_svc_path1 = "${icinga_path}/${http_svc_name}.json"
+  $http_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_name}&host=${http_template}' ${lt}"
+  $http_svc_cmd1  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${http_svc_path1}"
+  $http_svc_path2 = "${icinga_path}/${http_svc_ping_name}.json"
+  $http_svc_cond2 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_ping_name}&host=${http_template}' ${lt}"
+  $http_svc_cmd2  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${http_svc_path2}"
+  $http_svc_path3 = "${icinga_path}/${http_svc_disk_name}.json"
+  $http_svc_cond3 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_disk_name}&host=${http_template}' ${lt}"
+  $http_svc_cmd3  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${http_svc_path3}"
 
-$dns_svc_path1  = "${icinga_path}/${dns_svc_name}.json"
-$dns_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_name}&host=${dns_template}' ${lt}"
-$dns_svc_cmd1   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dns_svc_path1}"
-$dns_svc_path2  = "${icinga_path}/${dns_svc_ping_name}.json"
-$dns_svc_cond2  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_ping_name}&host=${dns_template}' ${lt}"
-$dns_svc_cmd2   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dns_svc_path2}"
-$dns_svc_path3  = "${icinga_path}/${dns_svc_disk_name}.json"
-$dns_svc_cond3  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_disk_name}&host=${dns_template}' ${lt}"
-$dns_svc_cmd3   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dns_svc_path3}"
+  $dns_svc_path1  = "${icinga_path}/${dns_svc_name}.json"
+  $dns_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_name}&host=${dns_template}' ${lt}"
+  $dns_svc_cmd1   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dns_svc_path1}"
+  $dns_svc_path2  = "${icinga_path}/${dns_svc_ping_name}.json"
+  $dns_svc_cond2  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_ping_name}&host=${dns_template}' ${lt}"
+  $dns_svc_cmd2   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dns_svc_path2}"
+  $dns_svc_path3  = "${icinga_path}/${dns_svc_disk_name}.json"
+  $dns_svc_cond3  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_disk_name}&host=${dns_template}' ${lt}"
+  $dns_svc_cmd3   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dns_svc_path3}"
 
-$master_svc_path1 = "${icinga_path}/${master_svc_dhcp_name}.json"
-$master_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_dhcp_name}&host=${master_template}' ${lt}"
-$master_svc_cmd1  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path1}"
-$master_svc_path2 = "${icinga_path}/${master_svc_ping_name}.json"
-$master_svc_cond2 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_ping_name}&host=${master_template}' ${lt}"
-$master_svc_cmd2  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path2}"
-$master_svc_path3 = "${icinga_path}/${master_svc_disk_name}.json"
-$master_svc_cond3 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_disk_name}&host=${master_template}' ${lt}"
-$master_svc_cmd3  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path3}"
+  $master_svc_path1 = "${icinga_path}/${master_svc_dhcp_name}.json"
+  $master_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_dhcp_name}&host=${master_template}' ${lt}"
+  $master_svc_cmd1  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path1}"
+  $master_svc_path2 = "${icinga_path}/${master_svc_ping_name}.json"
+  $master_svc_cond2 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_ping_name}&host=${master_template}' ${lt}"
+  $master_svc_cmd2  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path2}"
+  $master_svc_path3 = "${icinga_path}/${master_svc_disk_name}.json"
+  $master_svc_cond3 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_disk_name}&host=${master_template}' ${lt}"
+  $master_svc_cmd3  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path3}"
 
-$ipa_svc_path1  = "${icinga_path}/${ipa_svc_name}.json"
-$ipa_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_name}&host=${ipa_template}' ${lt}"
-$ipa_svc_cmd1   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path1}"
-$ipa_svc_path2  = "${icinga_path}/${ipa_svc_ping_name}.json"
-$ipa_svc_cond2  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_ping_name}&host=${ipa_template}' ${lt}"
-$ipa_svc_cmd2   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path2}"
-$ipa_svc_path3  = "${icinga_path}/${ipa_svc_disk_name}.json"
-$ipa_svc_cond3  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_disk_name}&host=${ipa_template}' ${lt}"
-$ipa_svc_cmd3   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path3}"
+  $ipa_svc_path1  = "${icinga_path}/${ipa_svc_name}.json"
+  $ipa_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_name}&host=${ipa_template}' ${lt}"
+  $ipa_svc_cmd1   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path1}"
+  $ipa_svc_path2  = "${icinga_path}/${ipa_svc_ping_name}.json"
+  $ipa_svc_cond2  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_ping_name}&host=${ipa_template}' ${lt}"
+  $ipa_svc_cmd2   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path2}"
+  $ipa_svc_path3  = "${icinga_path}/${ipa_svc_disk_name}.json"
+  $ipa_svc_cond3  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_disk_name}&host=${ipa_template}' ${lt}"
+  $ipa_svc_cmd3   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path3}"
 
 #Master Host Creation
-$addhost_path = "${icinga_path}/${master_fqdn}.json"
-$addhost_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${master_fqdn}' ${lt}"
-$addhost_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${addhost_path}"
+  $addhost_path = "${icinga_path}/${master_fqdn}.json"
+  $addhost_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${master_fqdn}' ${lt}"
+  $addhost_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${addhost_path}"
 
 #<---------End Templates Creation----------->
 #
@@ -394,9 +394,9 @@ $addhost_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -
 #<-----Files Creation and deployement------->
 
 #Create a directory to allocate json files
-file { $icinga_path:
-  ensure => 'directory',
-}
+  file { $icinga_path:
+    ensure => 'directory',
+  }
 
 ##Host Templates
 #Create host template file

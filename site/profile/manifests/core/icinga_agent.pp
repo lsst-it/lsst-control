@@ -7,13 +7,13 @@ class profile::core::icinga_agent(
   String $credentials_hash,
   String $host_template,
 ){
-$packages = [
-  'nagios-plugins-all',
-]
-$icinga_agent_fqdn = $facts['fqdn']
-$icinga_agent_ip = $facts['ipaddress']
-$credentials = "Authorization:Basic ${credentials_hash}"
-$json_file = "{
+  $packages = [
+    'nagios-plugins-all',
+  ]
+  $icinga_agent_fqdn = $facts['fqdn']
+  $icinga_agent_ip = $facts['ipaddress']
+  $credentials = Sensitive("Authorization:Basic ${credentials_hash}")
+  $json_file = "{
 \"address\": \"${icinga_agent_ip}\",
 \"display_name\": \"${icinga_agent_fqdn}\",
 \"imports\": [
@@ -25,16 +25,16 @@ $json_file = "{
     \"safed_profile\": \"3\"
 }
 }"
-$icinga_path = '/opt/icinga'
-$path = "${icinga_path}/${icinga_agent_fqdn}.json"
-$url = "https://${icinga_master_fqdn}/director/host"
-$cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @${path}"
-$cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_agent_fqdn}' | grep Failed"
+  $icinga_path = '/opt/icinga'
+  $path = "${icinga_path}/${icinga_agent_fqdn}.json"
+  $url = "https://${icinga_master_fqdn}/director/host"
+  $cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @${path}"
+  $cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_agent_fqdn}' | grep Failed"
 
 ##Create a directory to allocate json files
-file { $icinga_path:
-  ensure => 'directory',
-}
+  file { $icinga_path:
+    ensure => 'directory',
+  }
 
 ## Create host file
   file { $path:

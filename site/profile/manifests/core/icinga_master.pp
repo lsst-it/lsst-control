@@ -26,16 +26,16 @@ class profile::core::icinga_master (
   include remi
   include nginx
 
-#<-------------Variables Definition---------------->
+  #<-------------Variables Definition---------------->
 
-#Implicit usage of facts
+    #Implicit usage of facts
   $master_fqdn  = $facts[fqdn]
   $master_ip  = $facts[ipaddress]
 
-#Letsencrypt cert path
+  #Letsencrypt cert path
   $le_root = "/etc/letsencrypt/live/${master_fqdn}"
 
-#IcingaDirector force Deploy
+  #IcingaDirector force Deploy
   $url         = "https://${master_fqdn}/director"
   $credentials = "Authorization:Basic ${credentials_hash}"
   $format      = 'Accept: application/json'
@@ -43,39 +43,39 @@ class profile::core::icinga_master (
   $icinga_path = '/opt/icinga'
   $deploy_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/deploy'"
 
-#pnp4nagios webpage integration
-  $pnp4nagios_conf = '
-location /pnp4nagios {
-        alias  /usr/share/nagios/html/pnp4nagios;
-        index     index.php;
-        try_files $uri $uri/ @pnp4nagios;
-  }
-location @pnp4nagios {
-        if ( $uri !~ /pnp4nagios/index.php(.*)) {
-                rewrite ^/pnp4nagios/(.*)$ /pnp4nagios/index.php/$1;
-                break;
-        }
-        root /usr/share/nagios/html/pnp4nagios;
-        include /etc/nginx/fastcgi.conf;
-        fastcgi_split_path_info ^(.+\.php)(.*)$;
-        fastcgi_param PATH_INFO $fastcgi_path_info;
-        fastcgi_param SCRIPT_FILENAME $document_root/index.php;
-        fastcgi_pass 127.0.0.1:9000;
-}
-'
-
-#PNP plugin configuration
-  $pnp_conf = '[pnp4nagios]
-config_dir = "/etc/pnp4nagios"
-base_url = "/pnp4nagios"
-menu_disabled = "0"
-default_query = "host=icinga-master.ls.lsst.org&srv=MasterPingService"
-'
-#Icinga tls keys
+  #pnp4nagios webpage integration
+  $pnp4nagios_conf = @(PNPNAGIOS/L)
+    location /pnp4nagios {
+            alias  /usr/share/nagios/html/pnp4nagios;
+            index     index.php;
+            try_files $uri $uri/ @pnp4nagios;
+      }
+    location @pnp4nagios {
+            if ( $uri !~ /pnp4nagios/index.php(.*)) {
+                    rewrite ^/pnp4nagios/(.*)$ /pnp4nagios/index.php/$1;
+                    break;
+            }
+            root /usr/share/nagios/html/pnp4nagios;
+            include /etc/nginx/fastcgi.conf;
+            fastcgi_split_path_info ^(.+\.php)(.*)$;
+            fastcgi_param PATH_INFO $fastcgi_path_info;
+            fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+            fastcgi_pass 127.0.0.1:9000;
+    }
+    | PNPNAGIOS
+  #PNP plugin configuration
+  $pnp_conf = @(PNP/)
+    [pnp4nagios]
+    config_dir = "/etc/pnp4nagios"
+    base_url = "/pnp4nagios"
+    menu_disabled = "0"
+    default_query = "host=icinga-master.ls.lsst.org&srv=MasterPingService"
+    | PNP
+  #Icinga tls keys
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
 
-#Force installation and usage of php73
+  #Force installation and usage of php73
   $packages = [
     'git',
     'pnp4nagios',
@@ -95,49 +95,49 @@ default_query = "host=icinga-master.ls.lsst.org&srv=MasterPingService"
     'rh-php73-php-posix',
     'nagios-plugins-all',
   ]
-#MySql options
+  #MySql options
   $override_options = {
     'mysqld' => {
       'bind_address' => '0.0.0.0',
     }
   }
+  #Npcd file content
+  $npcd_cont = @("NPCD"/L)
+    #Needs to end in newline
+    user = icinga
+    group = icinga
+    log_type = syslog
+    log_file = /var/log/pnp4nagios/npcd.log
+    max_logfile_size = 10485760
+    log_level = 1 
+    perfdata_spool_dir = /var/spool/icinga2/perfdata
+    perfdata_file_run_cmd = /usr/libexec/pnp4nagios/process_perfdata.pl
+    perfdata_file_run_cmd_args = --bulk
+    identify_npcd = 1
+    npcd_max_threads = 5
+    sleep_time = 15
+    load_threshold = 0.0
+    pid_file=/var/run/npcd.pid
+    perfdata_file = /var/log/pnp4nagios/perfdata.dump
+    perfdata_spool_filename = perfdata
+    perfdata_file_processing_interval = 15
 
-#Npcd file content
-  $npcd_cont = '#Needs to end in newline
-user = icinga
-group = icinga
-log_type = syslog
-log_file = /var/log/pnp4nagios/npcd.log
-max_logfile_size = 10485760
-log_level = 1 
-perfdata_spool_dir = /var/spool/icinga2/perfdata
-perfdata_file_run_cmd = /usr/libexec/pnp4nagios/process_perfdata.pl
-perfdata_file_run_cmd_args = --bulk
-identify_npcd = 1
-npcd_max_threads = 5
-sleep_time = 15
-load_threshold = 0.0
-pid_file=/var/run/npcd.pid
-perfdata_file = /var/log/pnp4nagios/perfdata.dump
-perfdata_spool_filename = perfdata
-perfdata_file_processing_interval = 15
-
-#MUST LEAVE newline
-'
-#<----------End Variables Definition--------------->
-#
-#
-#<-------Clasess Definition & Configuration-------->
-##Letsencrypt cert signoff
+    #MUST LEAVE newline
+    | NPCD
+  #<----------End Variables Definition--------------->
+  #
+  #
+  #<-------Clasess Definition & Configuration-------->
+  ##Letsencrypt cert signoff
   letsencrypt::certonly { $master_fqdn:
     plugin      => 'dns-route53',
     manage_cron => true,
   }
-##Ensure php73 packages and services
+  ##Ensure php73 packages and services
   package { $packages:
     ensure => 'present',
   }
-##MySQL definition
+  ##MySQL definition
   class { '::mysql::server':
     root_password           => $mysql_root,
     remove_default_accounts => true,
@@ -159,7 +159,7 @@ perfdata_file_processing_interval = 15
     grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
     require  => Class['::mysql::server']
   }
-##Icinga2 Config
+  ##Icinga2 Config
   class { '::icinga2':
     manage_repo => true,
     confd       => false,
@@ -202,7 +202,7 @@ perfdata_file_processing_interval = 15
     permissions => [ '*' ],
     target      => '/etc/icinga2/features-enabled/api-users.conf',
   }
-##Icinga2 Perfdata
+  ##Icinga2 Perfdata
   class {'::icinga2::feature::perfdata':
     ensure => present,
   }
@@ -214,7 +214,7 @@ perfdata_file_processing_interval = 15
     require => Package[$packages],
     notify  => Service['npcd'],
   }
-##IcingaWeb Config
+  ##IcingaWeb Config
   class {'::icingaweb2':
     manage_repo   => false,
     logging_level => 'INFO',
@@ -237,7 +237,7 @@ perfdata_file_processing_interval = 15
       }
     }
   }
-##IcingaWeb LDAP Config
+  ##IcingaWeb LDAP Config
   icingaweb2::config::resource{ $ldap_resource:
     type         => 'ldap',
     host         => $ldap_server,
@@ -267,7 +267,7 @@ perfdata_file_processing_interval = 15
     groups      => 'icinga-admins',
     permissions => '*',
   }
-##IcingaWeb Director
+  ##IcingaWeb Director
   class {'icingaweb2::module::director':
     git_revision  => 'v1.7.2',
     db_host       => $master_ip,
@@ -283,7 +283,7 @@ perfdata_file_processing_interval = 15
     api_password  => $api_pwd,
     require       => Mysql::Db[$mysql_director_db],
   }
-##IcingaWeb PNP
+  ##IcingaWeb PNP
   exec { 'git clone https://github.com/Icinga/icingaweb2-module-pnp.git pnp':
     cwd      => '/usr/share/icingaweb2/modules/',
     path     => ['/sbin', '/usr/sbin', '/bin'],
@@ -318,34 +318,34 @@ perfdata_file_processing_interval = 15
     content => $npcd_cont,
     require => Package[$packages],
   }
-## PNP4Nagios Configuration
+  ##PNP4Nagios Configuration
   file { '/etc/nginx/sites-available/pnp4nagios.conf':
     ensure  => 'present',
     content => $pnp4nagios_conf,
     mode    => '0644',
   }
-##IcingaWeb Reactbundle
+  ##IcingaWeb Reactbundle
   class {'icingaweb2::module::reactbundle':
     ensure         => present,
     git_repository => 'https://github.com/Icinga/icingaweb2-module-reactbundle',
     git_revision   => 'v0.7.0',
     require        => Class['::icingaweb2'],
   }
-##IcingaWeb IPL
+  ##IcingaWeb IPL
   class {'icingaweb2::module::ipl':
     ensure         => present,
     git_repository => 'https://github.com/Icinga/icingaweb2-module-ipl',
     git_revision   => 'v0.3.0',
     require        => Class['::icingaweb2'],
   }
-##IcingaWeb Incubator
+  ##IcingaWeb Incubator
   class {'icingaweb2::module::incubator':
     ensure         => present,
     git_repository => 'https://github.com/Icinga/icingaweb2-module-incubator',
     git_revision   => 'v0.5.0',
     require        => Class['::icingaweb2'],
   }
-##Nginx Resource Definition
+  ##Nginx Resource Definition
   nginx::resource::server { 'icingaweb2':
     server_name          => [$master_fqdn],
     ssl                  => true,
@@ -389,8 +389,8 @@ perfdata_file_processing_interval = 15
       'SCRIPT_FILENAME'     => '/usr/share/icingaweb2/public/index.php',
     },
   }
-##Reload service in case any modification has occured
-# Run and Enable Service
+  ##Reload service in case any modification has occured
+  #Run and Enable Service
   service { 'php73-php-fpm':
     ensure  => running,
     require => Package[$packages],
@@ -399,7 +399,7 @@ perfdata_file_processing_interval = 15
     ensure  => running,
     require => Package[$packages],
   }
-#Force Deploy every puppet run
+  #Force Deploy every puppet run
   exec { $deploy_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
@@ -407,5 +407,5 @@ perfdata_file_processing_interval = 15
     require  => Nginx::Resource::Location['icingaweb2_index'],
     loglevel => debug,
   }
-#<-----------END Clases definition----------------->
+  #<-----------END Clases definition----------------->
 }

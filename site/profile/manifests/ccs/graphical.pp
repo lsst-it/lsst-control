@@ -68,7 +68,7 @@ class profile::ccs::graphical (
 
     ## TODO use a local yum repository?
     package { 'zoom':
-      ensure   => 'latest',
+      ensure   => 'installed',
       provider => 'rpm',
       source   => $zoomfile,
     }

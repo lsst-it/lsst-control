@@ -21,7 +21,7 @@ class profile::it::monitoring {
         options     =>[
           {
             'systemd_unit' => "${service}.service",
-          }],
+        }],
       }
     }
     include rsyslog
@@ -32,7 +32,7 @@ class profile::it::monitoring {
     }
   }
 
-  if ! $::is_virtual {
+  if ! $facts['is_virtual'] {
     package { 'smartmontools':
       ensure => installed,
     }

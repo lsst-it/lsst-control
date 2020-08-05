@@ -20,7 +20,9 @@ class profile::core::telegraf(
 ) {
   class { '::telegraf':
     hostname               => $::facts['fqdn'],
-    global_tags            => {'site' => $::site},
+    # lint:ignore:top_scope_facts
+    global_tags            => {'site' => $::site},  # enc parameter
+    # lint:endignore
     purge_config_fragments => true,
     flush_interval         => '20s',
     flush_jitter           => '5s',

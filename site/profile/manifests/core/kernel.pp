@@ -7,11 +7,11 @@ class profile::core::kernel (
   $kt     = "kernel-tools-${version}"
   $ktlibs = "kernel-tools-libs-${version}"
   yum::versionlock { [
-    "0:${k}",
-    "0:${kt}",
-    "0:${ktlibs}",
-  ]:
-    ensure => present,
+      "0:${k}",
+      "0:${kt}",
+      "0:${ktlibs}",
+    ]:
+      ensure => present,
   }
 
   # reboot if changing the kernel version
@@ -27,7 +27,7 @@ class profile::core::kernel (
   #  ensure => $version,
   #}
 
-  if $::augeasprovider_grub_version != 2 {
+  if $facts['augeasprovider_grub_version'] != 2 {
     # the augeas grub2 provider does not work on EFI systems!
     # https://github.com/hercules-team/augeasproviders_grub/blob/3.1.0/lib/puppet/provider/grub_config/grub2.rb#L76
     grub_config { 'GRUB_DEFAULT':
@@ -39,8 +39,8 @@ class profile::core::kernel (
   }
 
   # sanity check booted kernel
-  unless ($::kernelrelease == $version) {
-    notify { "system is running ${::kernelrelease}, desrired version is ${version}":
+  unless ($facts['kernelrelease'] == $version) {
+    notify { "system is running ${facts['kernelrelease']}, desrired version is ${version}":
       notify => Reboot['kernel version'],
     }
   }

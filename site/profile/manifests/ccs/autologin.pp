@@ -12,11 +12,13 @@ class profile::ccs::autologin (Boolean $enable = true) {
     exec { 'Enable autologin for graphical ccs user':
       path    => ['/usr/bin'],
       unless  => 'grep -q ^AutomaticLogin /etc/gdm/custom.conf',
+      # lint:ignore:strict_indent
       command => @("CMD"/L),
         sed -i '/^\[daemon.*/a\\
         AutomaticLogin=ccs\n\
         AutomaticLoginEnable=true' /etc/gdm/custom.conf
         | CMD
+      # lint:endignore
     }
 
   } else {

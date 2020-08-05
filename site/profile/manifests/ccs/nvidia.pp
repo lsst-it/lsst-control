@@ -25,7 +25,7 @@ class profile::ccs::nvidia (String $ensure = 'present') {
     $grub = '/etc/default/grub'
 
     case $ensure {
-      present: {
+      'present': {
         exec { 'Blacklist nouveau':
           path    => [ '/usr/bin' ],
           unless  => "grep -q rdblacklist=nouveau ${grub}",
@@ -33,7 +33,7 @@ class profile::ccs::nvidia (String $ensure = 'present') {
           notify  => Exec['grub and dracut nvidia'],
         }
       }
-      absent: {
+      'absent': {
         exec { 'Unblacklist nouveau':
           path    => [ '/usr/bin' ],
           onlyif  => "grep -q rdblacklist=nouveau ${grub}",

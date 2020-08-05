@@ -10,13 +10,13 @@ class profile::ccs::clustershell (String $config = '') {
 
   $dest = '/etc/clustershell/groups.d/local.cfg'
   $src = empty($config) ? {
-    true    => "${::site}-local.cfg",
+    true    => "${facts['site']}-local.cfg",
     default => $config,
   }
 
   file { $dest:
-      ensure => present,
-      source => "puppet:///modules/${module_name}/ccs/clustershell/${src}",
-    }
+    ensure => present,
+    source => "puppet:///modules/${module_name}/ccs/clustershell/${src}",
+  }
 
 }

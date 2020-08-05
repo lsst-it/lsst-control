@@ -10,7 +10,7 @@ class profile::ccs::clustershell (String $config = '') {
 
   $dest = '/etc/clustershell/groups.d/local.cfg'
   $src = empty($config) ? {
-    true    => "${::site}-local.cfg",
+    true    => "${facts['site']}-local.cfg",
     default => $config,
   }
 

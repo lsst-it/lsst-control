@@ -15,10 +15,12 @@ class profile::ccs::daq4 ($instrument = 'comcam') {
 
   file { "${dir}/${daq4file}":
     ensure  => file,
+    # lint:ignore:strict_indent
     content => @(EOF),
       export DAQ_HOME=/srv/nfs/lsst-daq/daq-sdk/current/
       export LD_LIBRARY_PATH=$DAQ_HOME/x86/lib:$LD_LIBRARY_PATH
       | EOF
+    # lint:endignore
     *       => $attributes,
   }
 

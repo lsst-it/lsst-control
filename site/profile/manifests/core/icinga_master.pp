@@ -10,10 +10,6 @@ class profile::core::icinga_master (
   String $ldap_user_filter,
   String $ldap_group_filter,
   String $ldap_group_base,
-  String $ssl_name,
-  String $ssl_country,
-  String $ssl_org,
-  String $ssl_fqdn,
   String $mysql_root,
   String $mysql_icingaweb_db,
   String $mysql_icingaweb_user,
@@ -26,15 +22,18 @@ class profile::core::icinga_master (
   String $api_pwd,
   String $credentials_hash,
 ){
-  include remi
-  include ::openssl
-  include ::nginx
   include profile::core::letsencrypt
+  include remi
+  include nginx
+
 #<-------------Variables Definition---------------->
 
 #Implicit usage of facts
   $master_fqdn  = $facts[fqdn]
   $master_ip  = $facts[ipaddress]
+
+#Letsencrypt cert path
+  $le_root = "/etc/letsencrypt/live/${master_fqdn}"
 
 #IcingaDirector force Deploy
   $url         = "https://${master_fqdn}/director"
@@ -78,24 +77,24 @@ default_query = "host=icinga-master.ls.lsst.org&srv=MasterPingService"
 
 #Force installation and usage of php73
   $packages = [
-  'git',
-  'pnp4nagios',
-  'centos-release-scl',
-  'php73-php-fpm',
-  'php73-php-ldap',
-  'php73-php-intl',
-  'php73-php-dom',
-  'php73-php-gd',
-  'php73-php-imagick',
-  'php73-php-mysqlnd',
-  'php73-php-pgsql',
-  'php73-php-pdo',
-  'php73-php-process',
-  'php73-php-cli',
-  'php73-php-soap',
-  'rh-php73-php-posix',
-  'nagios-plugins-all',
-]
+    'git',
+    'pnp4nagios',
+    'centos-release-scl',
+    'php73-php-fpm',
+    'php73-php-ldap',
+    'php73-php-intl',
+    'php73-php-dom',
+    'php73-php-gd',
+    'php73-php-imagick',
+    'php73-php-mysqlnd',
+    'php73-php-pgsql',
+    'php73-php-pdo',
+    'php73-php-process',
+    'php73-php-cli',
+    'php73-php-soap',
+    'rh-php73-php-posix',
+    'nagios-plugins-all',
+  ]
 #MySql options
   $override_options = {
     'mysqld' => {
@@ -137,12 +136,6 @@ perfdata_file_processing_interval = 15
 ##Ensure php73 packages and services
   package { $packages:
     ensure => 'present',
-  }
-## SSL Certificate Creation
-  openssl::certificate::x509 { $ssl_name:
-    country      => $ssl_country,
-    organization => $ssl_org,
-    commonname   => $ssl_fqdn,
   }
 ##MySQL definition
   class { '::mysql::server':
@@ -354,10 +347,10 @@ perfdata_file_processing_interval = 15
   }
 ##Nginx Resource Definition
   nginx::resource::server { 'icingaweb2':
-    server_name          => [$ssl_fqdn],
+    server_name          => [$master_fqdn],
     ssl                  => true,
-    ssl_cert             => $ssl_cert,
-    ssl_key              => $ssl_key,
+    ssl_cert             => "${le_root}/cert.pem",
+    ssl_key              => "${le_root}/privkey.pem",
     ssl_redirect         => true,
     index_files          => ['index.php'],
     use_default_location => false,

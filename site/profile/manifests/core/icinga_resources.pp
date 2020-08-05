@@ -754,7 +754,17 @@ class profile::core::icinga_resources (
     onlyif   => $ipa_svc_cond3,
     loglevel => debug,
   }
-
+#Change permissions to plugin
+  file { '/usr/lib64/nagios/plugins/check_dhcp':
+    owner => 'root',
+    group => 'nagios',
+    mode  => '4755',
+  }
+  file { '/usr/lib64/nagios/plugins/check_disk':
+    owner => 'root',
+    group => 'nagios',
+    mode  => '4755',
+  }
 ##Add Master Host
 #Create master host file
   file { $addhost_path:

@@ -10,8 +10,8 @@ class profile::core::icinga_agent(
   $packages = [
     'nagios-plugins-all',
   ]
-  $icinga_agent_fqdn = $facts['fqdn']
-  $icinga_agent_ip = $facts['ipaddress']
+  $icinga_agent_fqdn = $facts['networking']['fqdn']
+  $icinga_agent_ip = $facts['networking']['ip']
   $credentials = "Authorization:Basic ${credentials_hash}"
   $json_file = "{
 \"address\": \"${icinga_agent_ip}\",
@@ -82,6 +82,13 @@ class profile::core::icinga_agent(
         'endpoints' => [$icinga_master_fqdn],
       },
     }
+  }
+#Change permissions to plugin
+  file { '/usr/lib64/nagios/plugins/check_disk':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '4755',
+    require => Package[$packages],
   }
 }
 

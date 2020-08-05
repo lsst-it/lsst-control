@@ -2,7 +2,6 @@
 classes:
   - "profile::core::nfsserver"
   - "profile::core::nfsclient"
-  - "profile::core::icinga_agent"
 
 nfs::server_enabled: true
 nfs::nfs_v4_export_root_clients: >-

@@ -1,5 +1,2 @@
 ---
-classes:
-  - "profile::core::icinga_agent"
-
 profile::core::icinga_agent::host_template: "DnsTemplate"

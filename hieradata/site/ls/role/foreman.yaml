@@ -1,6 +1,5 @@
 ---
 classes:
-  - "profile::core::icinga_agent"
   - "dhcp"
 
 dhcp::interfaces:

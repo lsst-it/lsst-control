@@ -1,4 +1,7 @@
 ---
+classes:
+  - "profile::core::icinga_agent"
+
 easy_ipa::ipa_master_fqdn: "ipa1.ls.lsst.org"
 #
 rsyslog::config::actions:

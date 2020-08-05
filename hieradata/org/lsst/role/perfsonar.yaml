@@ -58,7 +58,7 @@ files:
   # perfsonar packaging installs this one file with the wrong mode
   "/etc/sudoers.d/perfsonar_sudo":
     mode: "0440"
-    require: "Class[Perfsonar]"
+    require: "Class[perfsonar]"
 
 perfsonar::manage_pscheduler_agent: true
 perfsonar::pscheduler_agent_config:

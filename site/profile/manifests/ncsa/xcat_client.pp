@@ -4,6 +4,6 @@
 #   include profile::ncsa::xcat_client
 #
 class profile::ncsa::xcat_client {
-    include ::xcat::client
+  include ::xcat::client
 }
 

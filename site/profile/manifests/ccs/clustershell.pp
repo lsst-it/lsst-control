@@ -15,8 +15,8 @@ class profile::ccs::clustershell (String $config = '') {
   }
 
   file { $dest:
-      ensure => present,
-      source => "puppet:///modules/${module_name}/ccs/clustershell/${src}",
-    }
+    ensure => present,
+    source => "puppet:///modules/${module_name}/ccs/clustershell/${src}",
+  }
 
 }

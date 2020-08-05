@@ -20,10 +20,10 @@ class profile::app::macvlan(
   }
 
   ensure_resources('file', {
-    '/opt'         => $stat + { ensure => directory },
-    '/opt/cni'     => $stat + { ensure => directory },
-    '/opt/cni/bin' => $stat + { ensure => directory },
-    $cmd_path      => $stat + { ensure => file, require => Archive[$archive_file] },
+      '/opt'         => $stat + { ensure => directory },
+      '/opt/cni'     => $stat + { ensure => directory },
+      '/opt/cni/bin' => $stat + { ensure => directory },
+      $cmd_path      => $stat + { ensure => file, require => Archive[$archive_file] },
   })
 
   archive { $archive_file:

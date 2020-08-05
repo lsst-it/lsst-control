@@ -7,11 +7,11 @@ class profile::core::kernel (
   $kt     = "kernel-tools-${version}"
   $ktlibs = "kernel-tools-libs-${version}"
   yum::versionlock { [
-    "0:${k}",
-    "0:${kt}",
-    "0:${ktlibs}",
-  ]:
-    ensure => present,
+      "0:${k}",
+      "0:${kt}",
+      "0:${ktlibs}",
+    ]:
+      ensure => present,
   }
 
   # reboot if changing the kernel version

@@ -17,43 +17,43 @@
 #   include profile::ncsa::allow_sudo
 #
 class profile::ncsa::allow_sudo (
-    Array[ String ] $users  = [],
-    Array[ String ] $groups = [],
+  Array[ String ] $users  = [],
+  Array[ String ] $groups = [],
 ) {
 
-    # Validate Input
-    if empty( $users ) and empty( $groups ) {
-        fail( "'users' and 'groups' cannot both be empty" )
+  # Validate Input
+  if empty( $users ) and empty( $groups ) {
+    fail( "'users' and 'groups' cannot both be empty" )
+  }
+
+  # GROUPS
+  $groups.each |String $group| {
+
+    sudo::conf { "sudo for group ${group}":
+      content  => "%${group} ALL=(ALL) NOPASSWD: ALL",
     }
 
-    # GROUPS
-    $groups.each |String $group| {
+    pam_access::entry { "Allow sudo for group ${group}":
+      group      => $group,
+      origin     => 'LOCAL',
+      permission => '+',
+      position   => '-1',
+    }
+  }
 
-        sudo::conf { "sudo for group ${group}":
-            content  => "%${group} ALL=(ALL) NOPASSWD: ALL",
-        }
+  # USERS
+  $users.each |String $user| {
 
-        pam_access::entry { "Allow sudo for group ${group}":
-            group      => $group,
-            origin     => 'LOCAL',
-            permission => '+',
-            position   => '-1',
-        }
+    sudo::conf { "sudo for user ${user}":
+      content => "%${user} ALL=(ALL) NOPASSWD: ALL",
     }
 
-    # USERS
-    $users.each |String $user| {
-
-        sudo::conf { "sudo for user ${user}":
-            content => "%${user} ALL=(ALL) NOPASSWD: ALL",
-        }
-
-        pam_access::entry { "Allow sudo for user ${user}":
-            user       => $user,
-            origin     => 'LOCAL',
-            permission => '+',
-            position   => '-1',
-        }
+    pam_access::entry { "Allow sudo for user ${user}":
+      user       => $user,
+      origin     => 'LOCAL',
+      permission => '+',
+      position   => '-1',
     }
+  }
 
 }

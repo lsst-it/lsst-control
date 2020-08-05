@@ -21,7 +21,7 @@ class profile::it::monitoring {
         options     =>[
           {
             'systemd_unit' => "${service}.service",
-          }],
+        }],
       }
     }
     include rsyslog

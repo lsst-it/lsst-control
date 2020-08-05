@@ -66,5 +66,5 @@ perfsonar::pscheduler_agent_config:
     - url: "http://pwa.ampath.net/pub/config/new-lsst-scl-lsc"
       configure-archives: true
 perfsonar::manage_lsregistrationdaemon: true
-perfsonar::lsregistrationdaemon_ensure: 'stopped'
+perfsonar::lsregistrationdaemon_ensure: "stopped"
 perfsonar::lsregistrationdaemon_enable: false

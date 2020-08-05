@@ -12,7 +12,7 @@ class profile::core::icinga_agent(
   ]
   $icinga_agent_fqdn = $facts['fqdn']
   $icinga_agent_ip = $facts['ipaddress']
-  $credentials = Sensitive("Authorization:Basic ${credentials_hash}")
+  $credentials = "Authorization:Basic ${credentials_hash}"
   $json_file = "{
 \"address\": \"${icinga_agent_ip}\",
 \"display_name\": \"${icinga_agent_fqdn}\",
@@ -47,6 +47,7 @@ class profile::core::icinga_agent(
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $cond,
+    loglevel => debug,
   }
 ##Add require packages
   package { $packages:

@@ -29,7 +29,7 @@ class profile::core::icinga_master (
   include remi
   include ::openssl
   include ::nginx
-
+  include profile::core::letsencrypt
 #<-------------Variables Definition---------------->
 
 #Implicit usage of facts
@@ -129,6 +129,11 @@ perfdata_file_processing_interval = 15
 #
 #
 #<-------Clasess Definition & Configuration-------->
+##Letsencrypt cert signoff
+  letsencrypt::certonly { $master_fqdn:
+    plugin      => 'dns-route53',
+    manage_cron => true,
+  }
 ##Ensure php73 packages and services
   package { $packages:
     ensure => 'present',

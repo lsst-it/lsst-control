@@ -28,7 +28,7 @@ class profile::core::icinga_master (
 
   #<-------------Variables Definition---------------->
 
-    #Implicit usage of facts
+  #Implicit usage of facts
   $master_fqdn  = $facts[fqdn]
   $master_ip  = $facts[ipaddress]
 
@@ -80,21 +80,28 @@ class profile::core::icinga_master (
     'git',
     'pnp4nagios',
     'centos-release-scl',
-    'php73-php-fpm',
-    'php73-php-ldap',
-    'php73-php-intl',
-    'php73-php-dom',
-    'php73-php-gd',
-    'php73-php-imagick',
-    'php73-php-mysqlnd',
-    'php73-php-pgsql',
-    'php73-php-pdo',
-    'php73-php-process',
-    'php73-php-cli',
-    'php73-php-soap',
-    'rh-php73-php-posix',
     'nagios-plugins-all',
   ]
+
+  #PHP installation version 7.3
+  class { '::php::globals':
+    php_version => '7.3',
+  }
+  -> class { '::php':
+    fpm_service_enable => true,
+    fpm_service_ensure => 'running',
+    extensions         => {
+      'soap'    => {},
+      'intl'    => {},
+      'gd'      => {},
+      'pdo'     => {},
+      'process' => {},
+      'mysqlnd' => {},
+      'ldap'    => {},
+      'dom'     => {},
+    }
+  }
+
   #MySql options
   $override_options = {
     'mysqld' => {
@@ -102,7 +109,7 @@ class profile::core::icinga_master (
     }
   }
   #Npcd file content
-  $npcd_cont = @("NPCD"/L)
+  $npcd_cont = @(NPCD/L)
     #Needs to end in newline
     user = icinga
     group = icinga

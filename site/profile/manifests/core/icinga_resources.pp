@@ -290,7 +290,7 @@ class profile::core::icinga_resources (
     | DNS_SVC_3
   #IPA, Ping, disk and RAM monitoring
   $ipa_svc1 = @("IPA_SVC_1"/L)
-        {
+            {
     "host": "${ipa_template}",
     "imports": [
       "${$ipa_svc_template_name}"

@@ -196,6 +196,7 @@ yum::plugin::versionlock:
   clean: true
 
 letsencrypt::email: "rubinobs-it-las@lsst.org"
+profile::core::icinga_agent::install: true
 profile::core::icinga_agent::host_template: "GeneralHostTemplate"
 profile::core::icinga_agent::icinga_master_fqdn: "icinga-master.ls.lsst.org"
 profile::core::icinga_agent::icinga_master_ip: "139.229.135.31"

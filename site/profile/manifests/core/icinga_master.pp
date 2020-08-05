@@ -83,25 +83,6 @@ class profile::core::icinga_master (
     'nagios-plugins-all',
   ]
 
-  #PHP installation version 7.3
-  class { '::php::globals':
-    php_version => '7.3',
-  }
-  -> class { '::php':
-    fpm_service_enable => true,
-    fpm_service_ensure => 'running',
-    extensions         => {
-      'soap'    => {},
-      'intl'    => {},
-      'gd'      => {},
-      'pdo'     => {},
-      'process' => {},
-      'mysqlnd' => {},
-      'ldap'    => {},
-      'dom'     => {},
-    }
-  }
-
   #MySql options
   $override_options = {
     'mysqld' => {
@@ -140,7 +121,7 @@ class profile::core::icinga_master (
     plugin      => 'dns-route53',
     manage_cron => true,
   }
-  ##Ensure php73 packages and services
+  ##Ensure packages
   package { $packages:
     ensure => 'present',
   }
@@ -268,7 +249,6 @@ class profile::core::icinga_master (
     ldap_group_name_attribute => 'cn',
     ldap_group_filter         => $ldap_group_filter,
     ldap_base_dn              => $ldap_group_base,
-    notify                    => Service['php73-php-fpm'],
   }
   icingaweb2::config::role { 'Admin User':
     groups      => 'icinga-admins',
@@ -398,9 +378,9 @@ class profile::core::icinga_master (
   }
   ##Reload service in case any modification has occured
   #Run and Enable Service
-  service { 'php73-php-fpm':
+  service { 'rh-php73-php-fpm':
     ensure  => running,
-    require => Package[$packages],
+    require => Class['::icingaweb2'],
   }
   service { 'npcd':
     ensure  => running,

@@ -34,11 +34,11 @@ class profile::core::icinga_master (
 
 #Implicit usage of facts
   $master_fqdn  = $facts[fqdn]
-$master_ip  = $facts[ipaddress]
+  $master_ip  = $facts[ipaddress]
 
 #IcingaDirector force Deploy
   $url         = "https://${master_fqdn}/director"
-  $credentials = Sensitive("Authorization:Basic ${credentials_hash}")
+  $credentials = "Authorization:Basic ${credentials_hash}"
   $format      = 'Accept: application/json'
   $curl        = 'curl -s -k -H'
   $icinga_path = '/opt/icinga'
@@ -407,6 +407,7 @@ perfdata_file_processing_interval = 15
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     require  => Nginx::Resource::Location['icingaweb2_index'],
+    loglevel => debug,
   }
 #<-----------END Clases definition----------------->
 }

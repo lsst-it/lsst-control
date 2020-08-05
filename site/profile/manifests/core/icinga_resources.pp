@@ -411,6 +411,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $host_template_cond,
+    loglevel => debug,
   }
 #Create http template file
   file { $http_template_path:
@@ -424,6 +425,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $http_template_cond,
+    loglevel => debug,
   }
 #Create dns template file
   file { $dns_template_path:
@@ -437,6 +439,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $dns_template_cond,
+    loglevel => debug,
   }
 #Create dhcp file
   file { $master_template_path:
@@ -450,6 +453,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $master_template_cond,
+    loglevel => debug,
   }
 #Create ipa file
   file { $ipa_template_path:
@@ -463,6 +467,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $ipa_template_cond,
+    loglevel => debug,
   }
 
 ##Service Templates
@@ -478,6 +483,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $http_svc_template_cond,
+    loglevel => debug,
   }
 #Create ping template file
   file { $ping_svc_template_path:
@@ -491,6 +497,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $ping_svc_template_cond,
+    loglevel => debug,
   }
 #Create dhcp template file
   file { $master_svc_template_path:
@@ -504,6 +511,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $master_svc_template_cond,
+    loglevel => debug,
   }
 #Create dns template file 
   file { $dns_svc_template_path:
@@ -517,6 +525,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $dns_svc_template_cond,
+    loglevel => debug,
   }
 #Create ipa template file 
   file { $ipa_svc_template_path:
@@ -530,6 +539,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $ipa_svc_template_cond,
+    loglevel => debug,
   }
 #Create disk template file 
   file { $disk_svc_template_path:
@@ -543,6 +553,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $disk_svc_template_cond,
+    loglevel => debug,
   }
 
 ##Services Definition
@@ -558,6 +569,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $host_svc_cond1,
+    loglevel => debug,
   }
 #Creates disk resource file for HostTemplate and DiskServiceTemplate
   file { $host_svc_path2:
@@ -571,8 +583,8 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $host_svc_cond2,
+    loglevel => debug,
   }
-
 #Creates http resource file for HttpTemplate and HttpServiceTemplate
   file { $http_svc_path1:
     ensure  => 'present',
@@ -585,6 +597,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $http_svc_cond1,
+    loglevel => debug,
   }
 #Creates ping resource file for HttpTemplate and PingServiceTemplate
   file { $http_svc_path2:
@@ -598,6 +611,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $http_svc_cond2,
+    loglevel => debug,
   }
 #Creates disk resource file for HttpTemplate and DiskServiceTemplate
   file { $http_svc_path3:
@@ -611,8 +625,8 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $http_svc_cond3,
+    loglevel => debug,
   }
-
 #Creates dhcp resource file for MasterTemplate and DhcpServiceTemplate
   file { $master_svc_path1:
     ensure  => 'present',
@@ -625,6 +639,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $master_svc_cond1,
+    loglevel => debug,
   }
 #Creates ping resource file for MasterTemplate and PingServiceTemplate
   file { $master_svc_path2:
@@ -638,6 +653,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $master_svc_cond2,
+    loglevel => debug,
   }
 #Creates disk resource file for MasterTemplate and DiskServiceTemplate
   file { $master_svc_path3:
@@ -651,6 +667,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $master_svc_cond3,
+    loglevel => debug,
   }
 
 #Creates dns resource file for DnsTemplate and DnsServiceTemplate
@@ -665,6 +682,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $dns_svc_cond1,
+    loglevel => debug,
   }
 #Creates ping resource file for DnsTemplate and PingServiceTemplate
   file { $dns_svc_path2:
@@ -678,6 +696,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $dns_svc_cond2,
+    loglevel => debug,
   }
 #Creates disk resource file for DnsTemplate and DiskServiceTemplate
   file { $dns_svc_path3:
@@ -691,8 +710,8 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $dns_svc_cond3,
+    loglevel => debug,
   }
-
 #Creates ipa resource file for IpaTemplate and IpaServiceTemplate
   file { $ipa_svc_path1:
     ensure  => 'present',
@@ -705,6 +724,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $ipa_svc_cond1,
+    loglevel => debug,
   }
 #Creates ping resource file for IpaTemplate and PingServiceTemplate
   file { $ipa_svc_path2:
@@ -718,6 +738,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $ipa_svc_cond2,
+    loglevel => debug,
   }
 #Creates disk resource file for IpaTemplate and DiskServiceTemplate
   file { $ipa_svc_path3:
@@ -731,6 +752,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $ipa_svc_cond3,
+    loglevel => debug,
   }
 
 ##Add Master Host
@@ -746,6 +768,7 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $addhost_cond,
+    loglevel => debug,
   }
 #<------END Files Creation and deployement--------->
 }

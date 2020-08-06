@@ -36,3 +36,36 @@ r10k::webhook::user: "root"
 r10k::webhook::group: "root"
 r10k::deploy_settings:
   generate_types: true
+profile::core::common::manage_puppet_agent: false
+# copied from /etc/foreman-installer/scenarios.d/foreman-answers.yaml
+foreman::foreman_url: "https://%{facts.fqdn}"
+foreman::unattended: true
+foreman::apache: true
+foreman::passenger: true
+#foreman::db_username:  # secret
+#foreman::db_password:  # secret
+foreman::manage_user: true
+foreman::user: "foreman"
+foreman::group: "foreman"
+foreman::user_groups:
+  - "puppet"
+foreman::oauth_active: true
+#foreman::oauth_consumer_key:  # secret
+#foreman::oauth_consumer_secret:  # secret
+#foreman::initial_admin_username:  # secret
+#foreman::initial_admin_password:  # secret
+# XXX investigate setting up ipa via puppet
+foreman::ipa_authentication: false
+foreman::compute::libvirt: true
+puppet::agent: true
+puppet::version: "6.7.0"  # agent version
+puppet::server: true
+puppet::environment: "production"  # always overridden via enc
+puppet::remove_lock: true
+puppet::report: true
+puppet::server_reports: "foreman,puppetdb"
+puppet::server_storeconfigs: true
+puppet::server_foreman: true
+puppet::server_foreman_facts: true
+puppet::server_jvm_min_heap_size: "2G"
+puppet::server_jvm_max_heap_size: "2G"

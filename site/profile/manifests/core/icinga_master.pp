@@ -294,7 +294,7 @@ class profile::core::icinga_master (
     ensure   => present,
     provider => git,
     source   => 'git://github.com/Icinga/icingaweb2-module-pnp.git',
-    revision => '1.1.0',
+    revision => 'v1.1.0',
     require  => Class['::icingaweb2'],
   }
   exec { 'icingacli module enable pnp':

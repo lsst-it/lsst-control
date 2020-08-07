@@ -8,6 +8,7 @@ class profile::core::icinga_resources (
   String $dns_template,
   String $master_template,
   String $ipa_template,
+  String $dhcp_server,
 ){
 
   #<----------Variables Definition------------>
@@ -233,7 +234,7 @@ class profile::core::icinga_resources (
     "object_name": "${master_svc_dhcp_name}",
     "object_type": "object",
     "vars": {
-      "dhcp_serverip": "139.229.135.5"
+      "dhcp_serverip": "${dhcp_server}"
     }
     }
     | MASTER_SVC_1

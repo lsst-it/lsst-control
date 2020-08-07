@@ -271,12 +271,11 @@ class profile::core::icinga_master (
     require       => Mysql::Db[$mysql_director_db],
   }
   ##IcingaWeb PNP
-  exec { 'git clone https://github.com/Icinga/icingaweb2-module-pnp.git pnp':
-    cwd      => '/usr/share/icingaweb2/modules/',
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    before   => Exec['icingacli module enable pnp'],
-    onlyif   => ['test ! -d /usr/share/icingaweb2/modules/pnp'],
+  vcsrepo { '/usr/share/icingaweb2/modules/pnp':
+    ensure   => present,
+    provider => git,
+    source   => 'git://github.com/Icinga/icingaweb2-module-pnp.git',
+    revision => '1.1.0',
     require  => Class['::icingaweb2'],
   }
   exec { 'icingacli module enable pnp':

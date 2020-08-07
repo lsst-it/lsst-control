@@ -19,5 +19,3 @@ nfs::client_mounts:
     share: "lsstdata"
     server: "%{facts.fqdn}"
     atboot: true
-
-profile::core::icinga_agent::host_template: "GeneralHostTemplate"

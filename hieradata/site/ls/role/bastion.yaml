@@ -8,5 +8,3 @@ nfs::client_mounts:
     share: "lsstdata/admin"
     server: "ddn-nfs.ls.lsst.org"
     atboot: true
-
-profile::core::icinga_agent::host_template: "GeneralHostTemplate"

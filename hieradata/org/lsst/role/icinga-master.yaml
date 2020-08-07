@@ -1,6 +1,5 @@
 ---
 classes:
-  - "profile::core::common"
   - "profile::core::icinga_master"
   - "profile::core::icinga_resources"
 packages:
@@ -9,4 +8,3 @@ packages:
   - "vim"
 
 profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"
-profile::core::icinga_agent::install: false

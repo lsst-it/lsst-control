@@ -396,10 +396,6 @@ class profile::core::icinga_master (
   }
   ##Reload service in case any modification has occured
   #Run and Enable Service
-  service { 'rh-php73-php-fpm':
-    ensure  => running,
-    require => Class['::icingaweb2'],
-  }
   service { 'npcd':
     ensure  => running,
     require => Package[$packages],

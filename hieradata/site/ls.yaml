@@ -103,3 +103,4 @@ accounts::user_list:
 
 profile::core::icinga_agent::icinga_master_fqdn: "icinga-master.ls.lsst.org"
 profile::core::icinga_agent::icinga_master_ip: "139.229.135.31"
+profile::core::icinga_resources::dhcp_server: "139.229.135.5"

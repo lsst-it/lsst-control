@@ -38,7 +38,7 @@ r10k::deploy_settings:
   generate_types: true
 profile::core::common::manage_puppet_agent: false
 # copied from /etc/foreman-installer/scenarios.d/foreman-answers.yaml
-foreman::foreman_url: "https://%{facts.fqdn}"
+foreman::version: "1.24.3"
 foreman::unattended: true
 foreman::apache: true
 foreman::passenger: true

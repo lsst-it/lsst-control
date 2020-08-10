@@ -1,11 +1,12 @@
 # @summary
 #   Common functionality needed by standard nodes.
 #
-# @param collect_metrics
-#   Enable or disable metrics collection. Metrics collection may be disabled on development
-#   nodes, nodes that don't have uptime requirements, or nodes that should only have minimal
-#   software load.
-class profile::core::common {
+# @param deploy_icinga_agent
+#   Enables or disable the installation of icinga agent on the node
+#
+class profile::core::common (
+  Boolean $deploy_icinga_agent = false,
+){
   include timezone
   include tuned
   include chrony
@@ -25,5 +26,8 @@ class profile::core::common {
   include rsyslog::config
   include profile::core::hardware
   include profile::core::dielibwrapdie
-  include profile::core::icinga_agent
+
+  if $deploy_icinga_agent {
+    include profile::core::icinga_agent
+  }
 }

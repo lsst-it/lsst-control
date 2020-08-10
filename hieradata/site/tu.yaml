@@ -20,3 +20,5 @@ accounts::user_list:
     sshkeys:
       # foreman-proxy
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDUB0OC/01VRh98rWDLta493+SlN8UNbMKGC8QdHGOy844Ae2eHijlZqmasrJaUA0UH56hmdTVKD7HDjKFN107t1P9TN1SvMV+exL54mUKgETya9V9juRy2/gYhdT55A4i+wGPNcRK1hgS4mCNJHKXhaSl8xufFU95Q0xNnhz0xoBc73EpkrGaUvzmYJAshQokknO66G2u9nEy4yvy0Q1IsSjq5BDt3rtPSD6RKLg+1mWeHNdd8ky3Pe9TXZLo4wav//WnSmfTSE1P8JsNVpcWKvsT5y5rnmnPn5siLYlqvUC4xfUXxR95NX1alPfsIzEHNERzCLcDK9KyqGaKLBVjtyu0LQHu2WadhPY1h9n1ey0haps8QCfNSmNGSVedSTfm5Nf90EtZ7d/eDXuzlBd2nIVn+o0BUa2zBUEI9KzX8t/H+HJabBo9cl2nQ9/EurN1OsgH6bwiTt5sQkHKcJl24bfgyo8sXC5mi2T8cQLQrkY4kuBKV7X3fImdERc4c+fk= comcam-cluster"
+
+profile::core::common::deploy_icinga_agent: false

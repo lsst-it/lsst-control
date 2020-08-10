@@ -4,8 +4,11 @@
 # @param deploy_icinga_agent
 #   Enables or disable the installation of icinga agent on the node
 #
+# @param manage_puppet_agent
+#   Whether or not to include the puppet_agent class
 class profile::core::common (
   Boolean $deploy_icinga_agent = false,
+  Boolean $manage_puppet_agent = true,
 ){
   include timezone
   include tuned
@@ -17,7 +20,6 @@ class profile::core::common (
   include epel
   include sudo
   include accounts
-  include puppet_agent
   include resolv_conf
   include ssh
   include easy_ipa
@@ -29,5 +31,9 @@ class profile::core::common (
 
   if $deploy_icinga_agent {
     include profile::core::icinga_agent
+  }
+
+  if $manage_puppet_agent {
+    include puppet_agent
   }
 }

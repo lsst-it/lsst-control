@@ -68,3 +68,5 @@ sysctl::values::args:
     value: 0
     target: "/etc/sysctl.d/92-rp_filter.conf"
 profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"
+profile::core::puppet_master::enable_puppetdb: true
+puppet::server::puppetdb::server: "puppetdb.tu.lsst.org"

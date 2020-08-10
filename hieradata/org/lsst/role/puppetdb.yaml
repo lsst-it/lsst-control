@@ -1,0 +1,10 @@
+---
+classes:
+  - "profile::core::common"
+  - "puppetdb"
+  - "puppetdb::globals"
+
+puppetdb::java_args:
+  "-Xmx": "1g"
+  "-Xms": "512m"
+puppetdb::globals::version: "6.11.3-1.el7"

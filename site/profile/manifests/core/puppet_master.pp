@@ -1,11 +1,26 @@
+# @summary
+#   Install foreman/puppetserver
+#
+# @param enable_puppetdb
+#   Whether or not to enable puppetserver's puppetdb support
 class profile::core::puppet_master(
-  Stdlib::HTTPSUrl $smee_url
+  Stdlib::HTTPSUrl $smee_url,
+  Boolean $enable_puppetdb = false,
 ) {
   include cron
+  include foreman
+  include foreman::cli
+  include foreman::compute::libvirt
+  include foreman::plugin::remote_execution
+  include puppet
   include r10k
   include r10k::webhook
   include r10k::webhook::config
   include scl
+
+  if $enable_puppetdb {
+    include puppet::server::puppetdb
+  }
 
   Class['r10k::webhook::config'] -> Class['r10k::webhook']
 

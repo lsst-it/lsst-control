@@ -1,0 +1,3 @@
+---
+#Disable icinga-agent on master
+profile::core::common::deploy_icinga_agent: false

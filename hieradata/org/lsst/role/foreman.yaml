@@ -60,7 +60,8 @@ foreman::compute::libvirt: true
 puppet::agent: true
 puppet::version: "6.7.0"  # agent version
 puppet::server: true
-puppet::server_puppetserver_version: "6.12.1"
+puppet::server_puppetserver_version: &server_version "6.12.1"  # XXX does this do anything?
+puppet::server_version: *server_version  # XXX does this do anything?
 puppet::environment: "production"  # always overridden via enc
 puppet::remove_lock: true
 puppet::report: true

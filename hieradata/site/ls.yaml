@@ -83,6 +83,7 @@ dhcp::ntpservers: &ntpservers
   - "ntp.cp.lsst.org"
 
 chrony::servers: *ntpservers
+ntp::servers: *ntpservers
 resolv_conf::nameservers: *nameservers
 resolv_conf::searchpath: *dnsdomains
 

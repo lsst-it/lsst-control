@@ -1,0 +1,70 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::debugutils"
+  - "profile::core::disable_ipv6"
+  - "profile::core::firewall"
+  - "profile::core::ipset"
+  - "profile::core::nm_dispatch"
+  - "profile::core::perfsonar"
+  - "profile::core::perfsonar::sysctl"
+  - "profile::core::selinux"
+  - "network"
+  - "ntp"
+  - "sysctl::values"
+
+# ensure chrony is not running
+profile::core::common::manage_chrony: true
+chrony::service_enable: false
+chrony::service_ensure: "stopped"
+
+firewall::ensure: "running"
+profile::core::firewall::purge_firewall: true
+profile::core::firewall::firewall:
+  # centos 7 defaults
+  "000 accept established":
+    proto: "all"
+    state: ["RELATED", "ESTABLISHED"]
+    action: "accept"
+  "001 accept all icmp":
+    proto: "icmp"
+    action: "accept"
+  "002 accept all loopback":
+    proto: "all"
+    iniface: "lo"
+    action: "accept"
+  "010 accept ssh":
+    proto: "tcp"
+    state: "NEW"
+    ipset: "lsst src"
+    dport: "22"
+    action: "accept"
+    require: "Ipset::Set[lsst]"
+  "990 reject all":
+    proto: "all"
+    action: "reject"
+  "991 reject forward all":
+    chain: "FORWARD"
+    proto: "all"
+    action: "reject"
+  # dhcp client
+  "020 accept dhcp":
+    proto: "udp"
+    sport: ["67", "68"]
+    dport: ["67", "68"]
+    action: "accept"
+
+files:
+  # perfsonar packaging installs this one file with the wrong mode
+  "/etc/sudoers.d/perfsonar_sudo":
+    mode: "0440"
+    require: "Class[perfsonar]"
+
+perfsonar::manage_pscheduler_agent: true
+perfsonar::pscheduler_agent_config:
+  remotes:
+    - url: "http://pwa.ampath.net/pub/config/new-lsst-scl-lsc"
+      configure-archives: true
+perfsonar::manage_lsregistrationdaemon: true
+perfsonar::lsregistrationdaemon_ensure: "stopped"
+perfsonar::lsregistrationdaemon_enable: false

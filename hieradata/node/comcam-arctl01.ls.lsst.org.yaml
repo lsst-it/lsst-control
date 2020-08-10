@@ -1,10 +1,12 @@
 ---
 classes:
+  - "profile::core::rp_filter"
   - "profile::core::disable_ipv6"
   - "profile::core::nm_dispatch"
   - "network"
   - "sysctl::values"
 
+profile::core::rp_filter::enable: false
 profile::core::nm_dispatch::interfaces:
   em1:
     - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
@@ -67,16 +69,6 @@ network::mroutes_hash:
       "199.36.153.8/30": *via
     table: 100
 sysctl::values::args:
-  # allow icmp messages from lhn device loopback addresses that are not reachable via the lhn
-  net.ipv4.conf.all.rp_filter:
-    value: 0
-    target: "/etc/sysctl.d/92-rp_filter.conf"
-  net.ipv4.conf.default.rp_filter:
-    value: 0
-    target: "/etc/sysctl.d/92-rp_filter.conf"
-  net.ipv4.conf.p2p1.rp_filter:
-    value: 0
-    target: "/etc/sysctl.d/92-rp_filter.conf"
   # lhn tuning
   # See https://fasterdata.es.net/host-tuning/linux/
   net.core.rmem_max:

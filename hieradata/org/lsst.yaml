@@ -193,3 +193,4 @@ yum::plugin::versionlock:
   clean: true
 
 letsencrypt::email: "rubinobs-it-las@lsst.org"
+profile::core::icinga_agent::host_template: "GeneralHostTemplate"

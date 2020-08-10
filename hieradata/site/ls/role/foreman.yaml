@@ -78,3 +78,4 @@ dhcp::pools:
     search_domains: "%{alias('dhcp::dnsdomain')}"
 
 profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"
+profile::core::icinga_agent::host_template: "HttpTemplate"

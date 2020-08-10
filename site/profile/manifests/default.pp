@@ -2,8 +2,6 @@
 # https://confluence.lsstcorp.org/display/IT/Linux+CentOS+Setup
 class profile::default {
   include ssh
-  include profile::it::monitoring
-  # All telegraf configuration came from Hiera
 
   # Firewall and security measurements
   class { 'firewalld':

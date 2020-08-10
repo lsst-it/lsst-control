@@ -101,6 +101,7 @@ accounts::user_list:
       # foreman-proxy
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDsF9VQ7wjm0Rm/1HA6Zc94IAkhqol5cwT44MwwR6uzDyo+/tqa8awUnmVF+RyiJaR6NEKO6YhjkIPga7rDQJerCMLg/xfFzpRcKSi+Xw5YCQ3Z+4P8XZrICM2vzDV6rBELl4n8Bzk6ncXOcKwbUitw3aj6bJNduv6hGrhkJKlWob+cXGH+KZwDiLX82hxsWmktRWcwDEaXTFWq6dahg3/0niAojkfo2ZlJtRblSEgUBf7JITeXBGYAunAeUYE93xUC9tB1OIzisQLQKCFM2OgSjnO4NSx2r4nIPYhEOEhBnNBqF9mPqalRjoyimvF+lu/vsZ43r7nZyV4RwYbyfmVL foreman-proxy@foreman.ls.lsst.org"
 
+profile::core::common::deploy_icinga_agent: true
 profile::core::icinga_agent::icinga_master_fqdn: "icinga-master.ls.lsst.org"
 profile::core::icinga_agent::icinga_master_ip: "139.229.135.31"
 profile::core::icinga_resources::dhcp_server: "139.229.135.5"

@@ -20,8 +20,8 @@ dhcp::dnsdomain: &dnsdomain
   - "tu.lsst.org"
 dhcp::nameservers:
   - "140.252.34.140"
+  - "140.252.34.141"
   - "1.0.0.1"
-  - "8.8.8.8"
 dhcp::ntpservers:
   - "140.252.1.140"
   - "140.252.1.141"

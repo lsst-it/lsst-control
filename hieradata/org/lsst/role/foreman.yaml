@@ -58,7 +58,7 @@ foreman::oauth_active: true
 foreman::ipa_authentication: false
 foreman::compute::libvirt: true
 puppet::agent: true
-puppet::version: "6.7.0"  # agent version
+puppet::version: "6.17.0"  # agent version
 puppet::server: true
 puppet::server_puppetserver_version: &server_version "6.12.1"  # XXX does this do anything?
 puppet::server_version: *server_version  # XXX does this do anything?

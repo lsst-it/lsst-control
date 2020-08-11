@@ -1,8 +1,8 @@
 ---
 classes:
-  - "profile::core::sysctl::rp_filter"
-  - "profile::core::disable_ipv6"
   - "profile::core::nm_dispatch"
+  - "profile::core::sysctl::disable_ipv6"
+  - "profile::core::sysctl::rp_filter"
   - "network"
   - "sysctl::values"
 

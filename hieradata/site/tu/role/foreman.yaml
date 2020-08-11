@@ -2,7 +2,6 @@
 classes:
   - "profile::core::sysctl::rp_filter"
   - "dhcp"
-  - "sysctl::values"
 
 profile::core::sysctl::rp_filter::enable: false
 dhcp::interfaces:

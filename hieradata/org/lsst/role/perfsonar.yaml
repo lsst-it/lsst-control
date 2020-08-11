@@ -10,7 +10,6 @@ classes:
   - "profile::core::sysctl::disable_ipv6"
   - "network"
   - "ntp"
-  - "sysctl::values"
 
 # ensure chrony is not running
 profile::core::common::manage_chrony: true

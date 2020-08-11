@@ -9,7 +9,6 @@ classes:
   - "profile::core::kubecompletion"
   - "profile::core::debugutils"
   - "docker"
-  - "sysctl::values"
   - "yum"
 packages:
   - "kubectl"

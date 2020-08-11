@@ -3,7 +3,6 @@ classes:
   - "profile::ccs::daq_interface"
   - "profile::core::nm_dispatch"
   - "hosts"
-  - "network"
 
 # allow net.core.[rw]mem_max to be set higher
 profile::ccs::common::sysctls: false

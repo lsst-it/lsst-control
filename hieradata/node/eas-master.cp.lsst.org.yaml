@@ -1,7 +1,4 @@
 ---
-classes:
-  - "network"
-
 network::interfaces_hash:
   p2p1:
     bootproto: "none"

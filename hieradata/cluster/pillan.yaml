@@ -1,6 +1,4 @@
 ---
-classes:
-  - "network"
 packages:
   - "perccli"  # from dell repo
 network::interfaces_hash:

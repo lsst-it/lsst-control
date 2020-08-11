@@ -1,7 +1,4 @@
 ---
-classes:
-  - "network"
-
 network::interfaces_hash:
   em2:  # em2 is not connected
     bootproto: "none"

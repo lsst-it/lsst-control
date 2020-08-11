@@ -1,6 +1,5 @@
 ---
 classes:
-  - "network"
   - "profile::core::ifdown"
 packages:
   - "perccli"  # from dell repo

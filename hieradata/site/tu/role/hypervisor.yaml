@@ -1,6 +1,4 @@
 ---
-classes:
-  - "network"
 accounts::user_list:
   # foreman role user to access libvirt over ssh
   foreman:

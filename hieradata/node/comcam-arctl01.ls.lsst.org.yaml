@@ -3,7 +3,6 @@ classes:
   - "profile::core::nm_dispatch"
   - "profile::core::sysctl::disable_ipv6"
   - "profile::core::sysctl::rp_filter"
-  - "network"
 
 profile::core::sysctl::rp_filter::enable: false
 profile::core::nm_dispatch::interfaces:

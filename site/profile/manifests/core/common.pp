@@ -25,6 +25,7 @@ class profile::core::common (
   include irqbalance
   include profile::core::dielibwrapdie
   include profile::core::hardware
+  include profile::core::selinux
   include resolv_conf
   include rsyslog
   include rsyslog::config

@@ -32,6 +32,7 @@ class profile::core::common (
   include selinux
   include ssh
   include sudo
+  include sysctl::values
   include sysstat
   include timezone
   include tuned

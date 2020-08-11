@@ -127,7 +127,7 @@ accounts::user_list:
 tuned::profile: "latency-performance"
 selinux::mode: "disabled"
 firewall::ensure: "stopped"
-puppet_agent::package_version: "6.7.0"
+puppet_agent::package_version: "6.17.0"
 puppet_agent::collection: "puppet6"
 
 # Rsyslog configuration is based on the default rsyslog.conf shipping with CentOS 7.7

@@ -17,23 +17,23 @@ class profile::core::common (
   Boolean $manage_puppet_agent = true,
   Boolean $manage_chrony = true,
 ){
-  include timezone
-  include tuned
-  include selinux
+  include accounts
+  include augeas
+  include easy_ipa
+  include epel
   include firewall
   include irqbalance
-  include sysstat
-  include epel
-  include sudo
-  include accounts
+  include profile::core::dielibwrapdie
+  include profile::core::hardware
   include resolv_conf
-  include ssh
-  include easy_ipa
-  include augeas
   include rsyslog
   include rsyslog::config
-  include profile::core::hardware
-  include profile::core::dielibwrapdie
+  include selinux
+  include ssh
+  include sudo
+  include sysstat
+  include timezone
+  include tuned
 
   if $deploy_icinga_agent {
     include profile::core::icinga_agent

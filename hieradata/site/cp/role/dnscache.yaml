@@ -13,13 +13,13 @@ dns::zones:
     zonetype: "forward"
     forward: "only"
     forwarders:
-      - "139.229.136.35"
+      - "139.229.136.23"
   # cl.lsst.org should be retired once all hosts are migrated to {cp,ls}.lsst.org
   cl.lsst.org:
     zonetype: "forward"
     forward: "only"
     forwarders:
-      - "139.229.136.35"
+      - "139.229.136.23"
 dns::additional_directives:
   - "logging {"
   - "    channel queries_syslog {"

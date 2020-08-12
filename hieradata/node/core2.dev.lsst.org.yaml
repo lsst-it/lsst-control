@@ -3,7 +3,27 @@ classes:
   - "profile::core::sysctl::disable_ipv6"
 
 network::interfaces_hash:
-  p1p2:
+  em1:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em2:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p1p1:  # fqdn
+    bootproto: "none"
+    defroute: "yes"
+    dns1: "%{lookup('dhcp::nameservers.0')}"
+    dns2: "%{lookup('dhcp::nameservers.1')}"
+    domain: "%{lookup('dhcp::dnsdomain.0')}"
+    gateway: "139.229.134.254"
+    ipaddress: "139.229.134.3"
+    netmask: "255.255.255.0"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  p1p2:  # hypervisor
     bootproto: "none"
     onboot: "yes"
     type: "Ethernet"

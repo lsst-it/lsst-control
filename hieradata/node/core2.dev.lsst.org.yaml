@@ -1,4 +1,7 @@
 ---
+classes:
+  - "profile::core::sysctl::disable_ipv6"
+
 network::interfaces_hash:
   p1p2:
     bootproto: "none"

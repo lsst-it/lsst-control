@@ -11,9 +11,6 @@ resolv_conf::nameservers:
 resolv_conf::searchpath:
   - "tuc.lsst.cloud"
   - "tu.lsst.org"
-  - "ls.lsst.org"
-  - "lsst.org"
-  - "noao.edu"
 
 accounts::user_list:
   root:

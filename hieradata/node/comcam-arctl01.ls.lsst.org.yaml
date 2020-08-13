@@ -1,12 +1,12 @@
 ---
 classes:
-  - "profile::core::rp_filter"
-  - "profile::core::disable_ipv6"
   - "profile::core::nm_dispatch"
+  - "profile::core::sysctl::disable_ipv6"
+  - "profile::core::sysctl::rp_filter"
   - "network"
   - "sysctl::values"
 
-profile::core::rp_filter::enable: false
+profile::core::sysctl::rp_filter::enable: false
 profile::core::nm_dispatch::interfaces:
   em1:
     - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"

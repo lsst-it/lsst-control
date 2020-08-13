@@ -21,6 +21,7 @@ class profile::core::icinga_master (
   String $api_user,
   String $api_pwd,
   String $credentials_hash,
+  String $ca_salt,
 ){
   include profile::core::letsencrypt
   include remi
@@ -153,6 +154,7 @@ class profile::core::icinga_master (
     confd       => false,
     constants   => {
       'ZoneName'   => 'master',
+      'TicketSalt' => $ca_salt,
     },
     features    => ['checker','mainlog','statusdata','compatlog','command'],
   }
@@ -165,9 +167,10 @@ class profile::core::icinga_master (
     require       => Mysql::Db[$mysql_icingaweb_db],
   }
   class { '::icinga2::feature::api':
-    pki             => 'puppet',
+    pki             => 'none',
     accept_config   => true,
     accept_commands => true,
+    ca_host         => $master_ip,
     ensure          => 'present',
     endpoints       => {
       $master_fqdn    => {
@@ -180,6 +183,8 @@ class profile::core::icinga_master (
       },
     },
   }
+  include ::icinga2::pki::ca
+
   class { '::icinga2::feature::notification':
     ensure    => present,
     enable_ha => true,

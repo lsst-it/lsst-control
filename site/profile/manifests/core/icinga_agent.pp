@@ -6,6 +6,7 @@ class profile::core::icinga_agent(
   String $icinga_master_ip,
   String $credentials_hash,
   String $host_template,
+  String $ca_salt,
 ){
   $packages = [
     'nagios-plugins-all',
@@ -63,10 +64,11 @@ class profile::core::icinga_agent(
   }
   ##Icinga2 feature API config
   class { '::icinga2::feature::api':
-    pki             => 'puppet',
+    ensure          => 'present',
+    ca_host         => $icinga_master_ip,
+    ticket_salt     => $ca_salt,
     accept_config   => true,
     accept_commands => true,
-    ensure          => 'present',
     endpoints       => {
       $icinga_agent_fqdn  => {
         'host'  =>  $icinga_agent_ip

@@ -1,7 +1,4 @@
 ---
-classes:
-  - "network"
-
 network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"

@@ -1,6 +1,4 @@
 ---
-classes:
-  - "network"
 network::interfaces_hash:
   # Note: em1 is not managed since this will apply to multiple hypervisors
   em2:  # em2 is not connected

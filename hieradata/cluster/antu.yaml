@@ -2,7 +2,6 @@
 classes:
   - "profile::core::nm_dispatch"
   - "profile::core::sysctl::disable_ipv6"
-  - "network"
 packages:
   - "perccli"  # from dell repo
 profile::core::nm_dispatch::interfaces:

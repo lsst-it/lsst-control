@@ -1,7 +1,4 @@
 ---
-classes:
-  "network"
-
 network::mroutes_hash:
   p2p2:
     # auxtel-control-01 is multihomed and has a default gateway of

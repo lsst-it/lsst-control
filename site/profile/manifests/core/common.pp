@@ -23,6 +23,7 @@ class profile::core::common (
   include epel
   include firewall
   include irqbalance
+  include network
   include profile::core::dielibwrapdie
   include profile::core::hardware
   include profile::core::selinux

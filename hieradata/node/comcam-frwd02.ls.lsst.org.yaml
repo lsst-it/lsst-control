@@ -6,7 +6,6 @@ classes:
   - "profile::core::sysctl::disable_ipv6"
   - "profile::core::sysctl::rp_filter"
   - "network"
-  - "sysctl::values"
 
 profile::core::sysctl::rp_filter::enable: false
 profile::ccs::common::sysctls: false

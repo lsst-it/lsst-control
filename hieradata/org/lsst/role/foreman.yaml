@@ -66,6 +66,9 @@ puppet::server_version: *server_version  # XXX does this do anything?
 puppet::environment: "production"  # always overridden via enc
 puppet::remove_lock: true
 puppet::report: true
+# default is: `basemodulepath = /etc/puppetlabs/code/environments/common:/etc/puppetlabs/code/modules:/opt/puppetlabs/puppet/modules:/usr/share/puppet/modules`
+# and we don't want to install code into any of those paths.
+puppet::server_common_modules_path: ""
 puppet::server_reports: "foreman,puppetdb"
 puppet::server_storeconfigs: false
 puppet::server_foreman: true

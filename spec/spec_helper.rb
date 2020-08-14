@@ -28,6 +28,15 @@ default_facts = {
   facterversion: Facter.version,
 }
 
+def lsst_sites
+  %w[
+    dev
+    ls
+    cp
+    tu
+  ]
+end
+
 default_fact_files = [
   File.expand_path(File.join(File.dirname(__FILE__), 'default_facts.yml')),
   File.expand_path(File.join(File.dirname(__FILE__), 'default_module_facts.yml')),

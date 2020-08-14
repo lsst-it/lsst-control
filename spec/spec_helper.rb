@@ -7,6 +7,14 @@ require 'spec_helper_local' if File.file?(File.join(File.dirname(__FILE__), 'spe
 
 include RspecPuppetFacts
 
+def root_path
+  File.expand_path(File.join(__FILE__, '..', '..'))
+end
+
+def fixtures_path
+  File.join(root_path, 'spec', 'fixtures')
+end
+
 default_facts = {
   puppetversion: Puppet.version,
   facterversion: Facter.version,
@@ -29,6 +37,7 @@ end
 
 RSpec.configure do |c|
   c.default_facts = default_facts
+  c.module_path = "#{File.join(root_path, 'site')}:#{File.join(fixtures_path, 'modules')}"
   c.before :each do
     # set to strictest setting for testing
     # by default Puppet runs at warning level

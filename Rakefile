@@ -15,6 +15,11 @@ namespace :r10k do
   task :install do
     sh("r10k puppetfile install --verbose --moduledir=#{Dir.pwd}/spec/fixtures/modules")
   end
+
+  desc 'Check Puppetfile using r10k'
+  task :check do
+    sh('r10k puppetfile check --verbose')
+  end
 end
 
 task default: %w[

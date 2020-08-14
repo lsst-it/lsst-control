@@ -1,4 +1,31 @@
 ---
-easy_ipa::domain_join_password: "foo"
+easy_ipa::domain_join_password: "foofoofoofoo"  # 8 char min
+easy_ipa::admin_password: "foofoofoofoo"  # ipa master only
+easy_ipa::directory_services_password: "foofoofoofoo"  # ipa master only
+
 profile::core::icinga_agent::credentials_hash: "foo"
 profile::core::icinga_agent::ca_salt: "foo"
+
+profile::core::icinga_master::ldap_user: "foo"
+profile::core::icinga_master::ldap_pwd: "foo"
+profile::core::icinga_master::mysql_root: "foo"
+profile::core::icinga_master::mysql_icingaweb_user: "foo"
+profile::core::icinga_master::mysql_icingaweb_pwd: "foo"
+profile::core::icinga_master::mysql_director_user: "foo"
+profile::core::icinga_master::mysql_director_pwd: "foo"
+profile::core::icinga_master::api_name: "foo"
+profile::core::icinga_master::api_user: "foo"
+profile::core::icinga_master::api_pwd: "foo"
+profile::core::icinga_master::credentials_hash: "foo"
+profile::core::icinga_master::ca_salt: "foo"
+
+profile::core::icinga_resources::credentials_hash: "foo"
+
+
+# ccs cluster
+ccs_pkgarchive: "http://example.org"
+
+profile::ccs::postfix::auth: "foo"
+
+ccs_database::database: "comcamdbprod"
+ccs_database::password: "foo"

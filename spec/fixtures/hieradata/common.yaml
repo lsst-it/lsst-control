@@ -1,0 +1,4 @@
+---
+easy_ipa::domain_join_password: "foo"
+profile::core::icinga_agent::credentials_hash: "foo"
+profile::core::icinga_agent::ca_salt: "foo"

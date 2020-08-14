@@ -37,6 +37,11 @@ def lsst_sites
   ]
 end
 
+def lsst_roles
+  role_dir = File.join(control_hiera_path, 'org', 'lsst', 'role')
+  Dir.entries(role_dir).grep_v(%r{^\.}).map { |x| x.sub('.yaml', '') }
+end
+
 default_fact_files = [
   File.expand_path(File.join(File.dirname(__FILE__), 'default_facts.yml')),
   File.expand_path(File.join(File.dirname(__FILE__), 'default_module_facts.yml')),

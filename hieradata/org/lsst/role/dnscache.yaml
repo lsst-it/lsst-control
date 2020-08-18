@@ -25,5 +25,33 @@ files:
     mode: "0750"
     backup: false
     purge: false
+# forwarders/zones for ls,cp,dev but not tu
+dns::forwarders:
+  - "208.67.222.222"
+  - "208.67.220.220"
+dns::allow_recursion:
+  - "139.229.0.0/16"
+  - "198.19.0.0/16"
+  - "10.0.0.0/8"
+  - "localnets"
+  - "localhost"
+dns::zones:
+  lsst.local:
+    zonetype: "forward"
+    forward: "only"
+    forwarders:
+      - &crux "139.229.136.23"
+  "136.229.139.in-addr.arpa":
+    reverse: true
+    zonetype: "forward"
+    forward: "only"
+    forwarders:
+      - *crux
+  # cl.lsst.org should be retired once all hosts are migrated to {cp,ls}.lsst.org
+  cl.lsst.org:
+    zonetype: "forward"
+    forward: "only"
+    forwarders:
+      - *crux
 
 profile::core::icinga_agent::host_template: "DnsTemplate"

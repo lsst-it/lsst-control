@@ -4,6 +4,7 @@ classes:
   - "easy_ipa"
 
 easy_ipa::ipa_role: "replica"
+easy_ipa::configure_replica_ca: true
 easy_ipa::install_ipa_server: true
 easy_ipa::enable_ip_address: true
 easy_ipa::webui_disable_kerberos: true

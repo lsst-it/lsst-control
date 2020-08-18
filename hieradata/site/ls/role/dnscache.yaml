@@ -20,5 +20,3 @@ dns::zones:
     forward: "only"
     forwarders:
       - *crux
-
-profile::core::icinga_agent::host_template: "DnsTemplate"

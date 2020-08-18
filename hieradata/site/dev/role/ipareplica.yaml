@@ -1,3 +1,2 @@
 ---
-easy_ipa::configure_replica_ca: true
 easy_ipa::ipa_master_fqdn: "ipa1.tuc.lsst.cloud"

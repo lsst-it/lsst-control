@@ -3,6 +3,7 @@ classes:
   - "profile::core::common"
   - "easy_ipa"
 
+profile::core::icinga_agent::host_template: "IpaTemplate"
 easy_ipa::ipa_role: "replica"
 easy_ipa::configure_replica_ca: true
 easy_ipa::install_ipa_server: true

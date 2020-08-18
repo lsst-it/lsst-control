@@ -1,0 +1,15 @@
+---
+dns::forwarders:
+  - "208.67.222.222"
+  - "208.67.220.220"
+dns::allow_recursion:
+  - "139.229.0.0/16"
+  - "198.19.0.0/16"
+  - "localnets"
+  - "localhost"
+dns::zones:
+  lsst.local:
+    zonetype: "forward"
+    forward: "only"
+    forwarders:
+      - "139.229.136.23"

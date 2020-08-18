@@ -1,0 +1,24 @@
+---
+dns::forwarders:
+  - "208.67.222.222"
+  - "208.67.220.220"
+dns::allow_recursion:
+  - "139.229.0.0/16"
+  - "198.19.0.0/16"
+  - "10.0.0.0/8"
+  - "localnets"
+  - "localhost"
+dns::zones:
+  lsst.local:
+    zonetype: "forward"
+    forward: "only"
+    forwarders:
+      - &crux "139.229.136.23"
+  "136.229.139.in-addr.arpa":
+    reverse: true
+    zonetype: "forward"
+    forward: "only"
+    forwarders:
+      - *crux
+
+profile::core::icinga_agent::host_template: "DnsTemplate"

@@ -36,14 +36,6 @@ class profile::core::icinga_master (
   #Letsencrypt cert path
   $le_root = "/etc/letsencrypt/live/${master_fqdn}"
 
-  #IcingaDirector force Deploy
-  $url         = "https://${master_fqdn}/director"
-  $credentials = "Authorization:Basic ${credentials_hash}"
-  $format      = 'Accept: application/json'
-  $curl        = 'curl -s -k -H'
-  $icinga_path = '/opt/icinga'
-  $deploy_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/deploy'"
-
   #pnp4nagios webpage integration
   $pnp4nagios_conf = @(PNPNAGIOS/L)
     location /pnp4nagios {
@@ -275,6 +267,14 @@ class profile::core::icinga_master (
     api_password  => $api_pwd,
     require       => Mysql::Db[$mysql_director_db],
   }
+  ##Icinga Director daemon
+  class {'icingaweb2::module::director::service':
+    ensure      => 'running',
+    enable      => true,
+    user        => 'icingadirector',
+    group       => 'icingaweb2',
+    manage_user => true,
+  }
   ##IcingaWeb PNP
   vcsrepo { '/usr/share/icingaweb2/modules/pnp':
     ensure   => present,
@@ -389,14 +389,6 @@ class profile::core::icinga_master (
   service { 'npcd':
     ensure  => running,
     require => Package[$packages],
-  }
-  #Force Deploy every puppet run
-  exec { $deploy_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    require  => Nginx::Resource::Location['icingaweb2_index'],
-    loglevel => debug,
   }
   #<-----------END Clases definition----------------->
 }

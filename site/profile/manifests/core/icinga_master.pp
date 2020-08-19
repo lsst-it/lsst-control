@@ -36,14 +36,6 @@ class profile::core::icinga_master (
   #Letsencrypt cert path
   $le_root = "/etc/letsencrypt/live/${master_fqdn}"
 
-  #IcingaDirector force Deploy
-  $url         = "https://${master_fqdn}/director"
-  $credentials = "Authorization:Basic ${credentials_hash}"
-  $format      = 'Accept: application/json'
-  $curl        = 'curl -s -k -H'
-  $icinga_path = '/opt/icinga'
-  $deploy_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url}/config/deploy'"
-
   #pnp4nagios webpage integration
   $pnp4nagios_conf = @(PNPNAGIOS/L)
     location /pnp4nagios {
@@ -275,6 +267,38 @@ class profile::core::icinga_master (
     api_password  => $api_pwd,
     require       => Mysql::Db[$mysql_director_db],
   }
+  ##Director Daemon
+  user { 'icingadirector':
+    ensure => 'present',
+    system => true,
+    shell  => '/bin/false',
+    groups => 'icingaweb2',
+    home   => '/var/lib/icingadirector',
+  }
+  ->file { '/var/lib/icingadirector':
+    ensure => 'directory',
+    mode   => '0750',
+    owner  => 'icingadirector',
+    group  => 'icingaweb2',
+  }
+  class { '::php::globals':
+    php_version => 'rh-php73',
+    rhscl_mode  => 'rhscl',
+  }
+  ->class { '::php':
+    manage_repos => false,
+    extensions   => {
+    'soap'    => {},
+    'process' => {},
+    },
+  }
+  systemd::unit_file { 'icinga-director.service':
+    source  => '/usr/share/icingaweb2/modules/director/contrib/systemd/icinga-director.service',
+    require => User['icingadirector'],
+  }
+  ~> service { 'icinga-director':
+    ensure => 'running'
+  }
   ##IcingaWeb PNP
   vcsrepo { '/usr/share/icingaweb2/modules/pnp':
     ensure   => present,
@@ -381,22 +405,9 @@ class profile::core::icinga_master (
     },
   }
   ##Reload service in case any modification has occured
-  #Run and Enable Service
-  service { 'rh-php73-php-fpm':
-    ensure  => running,
-    require => Class['::icingaweb2'],
-  }
   service { 'npcd':
     ensure  => running,
     require => Package[$packages],
-  }
-  #Force Deploy every puppet run
-  exec { $deploy_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    require  => Nginx::Resource::Location['icingaweb2_index'],
-    loglevel => debug,
   }
   #<-----------END Clases definition----------------->
 }

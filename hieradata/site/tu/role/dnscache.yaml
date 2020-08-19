@@ -6,3 +6,4 @@ dns::allow_recursion:
   - "140.252.32.0/22"
   - "localnets"
   - "localhost"
+dns::zones: ~

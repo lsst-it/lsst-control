@@ -1,3 +1,0 @@
----
-easy_ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
-profile::core::icinga_agent::host_template: "IpaTemplate"

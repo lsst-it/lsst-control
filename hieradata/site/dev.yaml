@@ -80,7 +80,7 @@ dhcp::dnsdomain: &dnsdomains
 dhcp::nameservers: &nameservers
   - "139.229.134.7"  # dns1.dev.lsst.org
   - "139.229.135.54"  # dns2.ls.lsst.org
-  - "208.67.222.222"  # resolver1.opendns.com
+  - "139.229.135.55"  # dns3.ls.lsst.org
 dhcp::ntpservers: &ntpservers
   - "ntp.shoa.cl"
   - "1.cl.pool.ntp.org"

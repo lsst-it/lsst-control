@@ -8,6 +8,7 @@ classes:
   - "profile::app::macvlan"
   - "profile::core::kubecompletion"
   - "profile::core::debugutils"
+  - "profile::core::velero"
   - "docker"
   - "yum"
 packages:

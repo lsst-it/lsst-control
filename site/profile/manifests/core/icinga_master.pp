@@ -271,6 +271,10 @@ class profile::core::icinga_master (
     api_password  => $api_pwd,
     require       => Mysql::Db[$mysql_director_db],
   }
+  ###<------------------------IMPORTANT-NOTE---------------------------->
+  ### The Director Daemon must be replace with what is commented in lines
+  ### 311-318 for what is on lines 279-209 after the new module release.
+  ###
   ##Director Daemon
   user { 'icingadirector':
     ensure => 'present',
@@ -303,6 +307,24 @@ class profile::core::icinga_master (
   ~> service { 'icinga-director':
     ensure => 'running'
   }
+  ### Uncomment once new icingaweb director module is released
+  ##Director Dameon (with patch release)
+  # class { 'icingaweb2::module::director::service':
+  #   ensure      => 'running',
+  #   enable      => true,
+  #   user        => 'icingadirector',
+  #   group       => 'icingaweb2',
+  #   manage_user => true,
+  # }
+  ### Be sure that in the new release, the director service module
+  ### changes from source to content:
+  ###   systemd::unit_file { 'icinga-director.service':
+  ###     content => template('icingaweb2/icinga-director.service.erb'),
+  ###     notify  => Service['icinga-director'],
+  ###   }
+  ### Follow https://github.com/Icinga/puppet-icingaweb2/pull/273
+  ###<-------------------END-OF-IMPORTANT-NOTE-------------------------->
+
   ##IcingaWeb PNP
   vcsrepo { '/usr/share/icingaweb2/modules/pnp':
     ensure   => present,

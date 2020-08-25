@@ -267,6 +267,38 @@ class profile::core::icinga_master (
     api_password  => $api_pwd,
     require       => Mysql::Db[$mysql_director_db],
   }
+  ##Director Daemon
+  user { 'icingadirector':
+    ensure => 'present',
+    system => true,
+    shell  => '/bin/false',
+    groups => 'icingaweb2',
+    home   => '/var/lib/icingadirector',
+  }
+  ->file { '/var/lib/icingadirector':
+    ensure => 'directory',
+    mode   => '0750',
+    owner  => 'icingadirector',
+    group  => 'icingaweb2',
+  }
+  class { '::php::globals':
+    php_version => 'rh-php73',
+    rhscl_mode  => 'rhscl',
+  }
+  ->class { '::php':
+    manage_repos => false,
+    extensions   => {
+    'soap'    => {},
+    'process' => {},
+    },
+  }
+  systemd::unit_file { 'icinga-director.service':
+    source  => '/usr/share/icingaweb2/modules/director/contrib/systemd/icinga-director.service',
+    require => User['icingadirector'],
+  }
+  ~> service { 'icinga-director':
+    ensure => 'running'
+  }
   ##IcingaWeb PNP
   vcsrepo { '/usr/share/icingaweb2/modules/pnp':
     ensure   => present,

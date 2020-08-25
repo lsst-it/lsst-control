@@ -14,7 +14,7 @@ profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"
 profile::core::icinga_master::ldap_server: "139.229.135.6"
 profile::core::icinga_master::ldap_root: "cn=accounts,dc=lsst,dc=cloud"
 profile::core::icinga_master::ldap_resource: "rubinobs"
-profile::core::icinga_master::ldap_user_filter: "(memberof=cn=icinga-admins,cn=groups,cn=accounts,dc=lsst,dc=cloud)"
+profile::core::icinga_master::ldap_user_filter: "(memberof=cn=icinga-*,cn=groups,cn=accounts,dc=lsst,dc=cloud)"
 profile::core::icinga_master::ldap_group_filter: "cn=icinga-*"
 profile::core::icinga_master::ldap_group_base: "cn=groups,cn=accounts,dc=lsst,dc=cloud"
 #MySQL values

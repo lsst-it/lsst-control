@@ -251,6 +251,10 @@ class profile::core::icinga_master (
     groups      => 'icinga-admins',
     permissions => '*',
   }
+  icingaweb2::config::role { 'Visitors':
+    groups      => 'icinga-sqre,icinga-tssw',
+    permissions => 'application/share/navigation,application/stacktraces,application/log,module/director,module/doc,module/incubator,module/ipl,module/monitoring,monitoring/*,module/pnp,module/reactbundle,module/setup,module/translation',
+  }
   ##IcingaWeb Director
   class {'icingaweb2::module::director':
     git_revision  => 'v1.7.2',

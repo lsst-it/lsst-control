@@ -376,6 +376,10 @@ class profile::core::icinga_resources (
   $ipa_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${ipa_template}' ${lt}"
   $ipa_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${ipa_template_path}"
 
+  $tls_template_path = "${icinga_path}/${tls_template}.json"
+  $tls_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${tls_template}' ${lt}"
+  $tls_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${tls_template_path}"
+
   #Services Template Creation
   $http_svc_template_path = "${icinga_path}/${http_svc_template_name}.json"
   $http_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_template_name}' ${lt}"
@@ -533,6 +537,20 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $ipa_template_cond,
+    loglevel => debug,
+  }
+  #Create tls cert expiration file
+  file { $tls_template_path:
+    ensure  => 'present',
+    content => $tls_template_content,
+    before  => Exec[$tls_template_cmd],
+  }
+  #Add tls cert expiration template
+  exec { $tls_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $tls_template_cond,
     loglevel => debug,
   }
 

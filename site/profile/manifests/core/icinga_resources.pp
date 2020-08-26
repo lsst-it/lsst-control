@@ -8,6 +8,7 @@ class profile::core::icinga_resources (
   String $dns_template,
   String $master_template,
   String $ipa_template,
+  String $tls_template,
   String $dhcp_server,
 ){
 
@@ -108,6 +109,21 @@ class profile::core::icinga_resources (
     "object_type": "template"
     }
     | IPA
+  $tls_template_content = @("TLS"/L)
+    {
+    "accept_config": false,
+    "check_command": "http",
+    "has_agent": false,
+    "master_should_connect": false,
+    "max_check_attempts": "5",
+    "object_name": "${tls_template}",
+    "object_type": "template",
+        "vars": {
+        "http_certificate": "30"
+        },
+    }
+    | TLS
+  
   ##Service Template JSON
   $http_svc_template = @("HTTP_TEMPLATE"/L)
     {

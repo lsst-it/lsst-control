@@ -33,6 +33,7 @@ class profile::core::icinga_resources (
   $master_svc_template_name = 'MasterServiceTemplate'
   $ipa_svc_template_name    = 'IpaServiceTemplate'
   $disk_svc_template_name   = 'DiskServiceTemplace'
+  $tls_svc_template_name    = 'TlsServiceTemplate'
   $ssh_svc_template_name    = 'SshServiceTemplace'
   $ntp_svc_template_name    = 'NtpServiceTemplate'
 
@@ -49,6 +50,7 @@ class profile::core::icinga_resources (
   $master_svc_dhcp_name = 'MasterDhcpService'
   $master_svc_ping_name = 'MasterPingService'
   $master_svc_disk_name = 'MasterDiskService'
+  $master_svc_tls_name  = 'MasterTlsService'
   $master_svc_ssh_name  = 'MasterSshService'
   $master_svc_ntp_name  = 'MasterNtpService'
   $http_svc_name        = 'HttpService'
@@ -130,7 +132,7 @@ class profile::core::icinga_resources (
     "max_check_attempts": "5",
     "object_name": "${tls_template}",
     "object_type": "template",
-        "vars": {
+    "vars": {
         "http_certificate": "30"
         },
     }
@@ -208,6 +210,19 @@ class profile::core::icinga_resources (
     "zone": "master"
     }
     | SSH_TEMPLATE
+  $tls_svc_template = @("TLS"/L)
+    {
+    "check_command": "http",
+    "object_name": "${tls_svc_template_name}",
+    "object_type": "template",
+    "use_agent": false,
+    "vars": {
+        "http_certificate": "30"
+        },
+    "zone": "master"
+    }
+    | TLS
+
   ## IMPORTANT
   ## The ntp_address must be change to an NTP Server,
   ## of our own once we have one operational on site
@@ -223,6 +238,7 @@ class profile::core::icinga_resources (
     "zone": "master"
     }
     | NTP_TEMPLATE
+  ## END OF NOTE
 
   ##Services Definition
   #Ping, disk, ssh and ntp skew monitoring
@@ -371,6 +387,17 @@ class profile::core::icinga_resources (
     "object_type": "object"
     }
     | MASTER_SVC_5
+  $master_svc6 = @("MASTER_SVC_6"/L)
+    {
+    "host": "${master_template}",
+    "imports": [
+        "${$tls_svc_template_name}"
+    ],
+    "object_name": "${master_svc_tls_name}",
+    "object_type": "object"
+    }
+    | MASTER_SVC_6
+
   #DNS, Ping, disk, ssh and ntp skew monitoring
   $dns_svc1 = @("DNS_SVC_1"/L)
     {
@@ -473,7 +500,7 @@ class profile::core::icinga_resources (
     "object_type": "object"
     }
     | IPA_SVC_5
-  
+
   ##Master Node JSON
   $add_master_host = @("MASTER_HOST"/L)
     {
@@ -542,6 +569,10 @@ class profile::core::icinga_resources (
   $disk_svc_template_path = "${icinga_path}/${disk_svc_template_name}.json"
   $disk_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${disk_svc_template_name}' ${lt}"
   $disk_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$disk_svc_template_path}"
+
+  $tls_svc_template_path = "${icinga_path}/${tls_svc_template_name}.json"
+  $tls_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${tls_svc_template_name}' ${lt}"
+  $tls_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$tls_svc_template_path}"
 
   $ssh_svc_template_path = "${icinga_path}/${ssh_svc_template_name}.json"
   $ssh_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ssh_svc_template_name}' ${lt}"
@@ -612,6 +643,9 @@ class profile::core::icinga_resources (
   $master_svc_path5 = "${icinga_path}/${master_svc_ntp_name}.json"
   $master_svc_cond5 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_ntp_name}&host=${master_template}' ${lt}"
   $master_svc_cmd5  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path5}"
+  $master_svc_path6 = "${icinga_path}/${master_svc_tls_name}.json"
+  $master_svc_cond6 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_tls_name}&host=${master_template}' ${lt}"
+  $master_svc_cmd6  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path6}"
 
   $ipa_svc_path1  = "${icinga_path}/${ipa_svc_name}.json"
   $ipa_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_name}&host=${ipa_template}' ${lt}"
@@ -814,6 +848,20 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $disk_svc_template_cond,
+    loglevel => debug,
+  }
+  #Create tls cert expiration service template file 
+  file { $tls_svc_template_path:
+    ensure  => 'present',
+    content => $tls_svc_template,
+    before  => Exec[$tls_svc_template_cmd],
+  }
+  #Add tls cert expiration service template
+  exec { $tls_svc_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $tls_svc_template_cond,
     loglevel => debug,
   }
   #Create ssh service template file 
@@ -1047,6 +1095,20 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $master_svc_cond5,
+    loglevel => debug,
+  }
+  #Creates tls cert expiration resource file for MasterTemplate and NtpServiceTemplate
+  file { $master_svc_path6:
+    ensure  => 'present',
+    content => $master_svc6,
+    before  => Exec[$master_svc_cmd6],
+  }
+  #Adds tls cert expiration file for MasterTemplate and NtpServiceTemplate
+  exec { $master_svc_cmd6:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $master_svc_cond6,
     loglevel => debug,
   }
 

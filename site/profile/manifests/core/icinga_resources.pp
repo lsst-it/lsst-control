@@ -27,28 +27,34 @@ class profile::core::icinga_resources (
   $lt          = '| grep Failed'
 
   #Service Templates Names
-  $http_svc_template_name    = 'HttpServiceTemplate'
-  $ping_svc_template_name    = 'PingServiceTemplate'
-  $dns_svc_template_name     = 'DnsServiceTemplate'
-  $master_svc_template_name  = 'MasterServiceTemplate'
-  $ipa_svc_template_name     = 'IpaServiceTemplate'
-  $disk_svc_template_name    = 'DiskServiceTemplace'
+  $http_svc_template_name   = 'HttpServiceTemplate'
+  $ping_svc_template_name   = 'PingServiceTemplate'
+  $dns_svc_template_name    = 'DnsServiceTemplate'
+  $master_svc_template_name = 'MasterServiceTemplate'
+  $ipa_svc_template_name    = 'IpaServiceTemplate'
+  $disk_svc_template_name   = 'DiskServiceTemplace'
+  $ssh_svc_template_name    = 'SshServiceTemplace'
 
   #Service Names
   $host_svc_ping_name   = 'HostPingService'
   $host_svc_disk_name   = 'HostDiskService'
+  $host_svc_ssh_name    = 'HostSshService'
   $dns_svc_name         = 'DnsService'
   $dns_svc_ping_name    = 'DnsPingService'
   $dns_svc_disk_name    = 'DnsDiskService'
+  $dns_svc_ssh_name     = 'DnsSshService'
   $master_svc_dhcp_name = 'MasterDhcpService'
   $master_svc_ping_name = 'MasterPingService'
   $master_svc_disk_name = 'MasterDiskService'
+  $master_svc_ssh_name  = 'MasterSshService'
   $http_svc_name        = 'HttpService'
   $http_svc_ping_name   = 'HttpPingService'
   $http_svc_disk_name   = 'HttpDiskService'
+  $http_svc_ssh_name    = 'HttpSshService'
   $ipa_svc_name         = 'IpaService'
   $ipa_svc_ping_name    = 'IpaPingService'
   $ipa_svc_disk_name    = 'IpaDiskService'
+  $ipa_svc_ssh_name     = 'IpaSshService'
   #<--------End Variables Definition---------->
   #
   #
@@ -123,7 +129,7 @@ class profile::core::icinga_resources (
         },
     }
     | TLS
-  
+
   ##Service Template JSON
   $http_svc_template = @("HTTP_TEMPLATE"/L)
     {
@@ -187,8 +193,18 @@ class profile::core::icinga_resources (
     "zone": "master"
     }
     | DISK_TEMPLATE
+  $ssh_svc_template = @("SSH_TEMPLATE"/L)
+    {
+    "check_command": "ssh",
+    "object_name": "${ssh_svc_template_name}",
+    "object_type": "template",
+    "use_agent": true,
+    "zone": "master"
+    }
+    | SSH_TEMPLATE
+
   ##Services Definition
-  #Ping, disk and RAM monitoring
+  #Ping, disk and ssh monitoring
   $host_svc1 = @("HOST_SVC_1"/L)
     {
     "host": "${host_template}",
@@ -209,7 +225,17 @@ class profile::core::icinga_resources (
     "object_type": "object"
     }
     | HOST_SVC_2
-  #HTTP, Ping, disk and RAM monitoring
+  $host_svc3 = @("HOST_SVC_3"/L)
+    {
+    "host": "${host_template}",
+    "imports": [
+        "${$ssh_svc_template_name}"
+    ],
+    "object_name": "${host_svc_ssh_name}",
+    "object_type": "object"
+    }
+    | HOST_SVC_3
+  #HTTP, Ping, disk and ssh monitoring
   $http_svc1 = @("HTTP_SVC_1"/L)
     {
     "host": "${http_template}",
@@ -240,7 +266,17 @@ class profile::core::icinga_resources (
     "object_type": "object"
     }
     | HTTP_SVC_3
-  #DHCP, Ping, disk and RAM monitoring
+  $http_svc4 = @("HTTP_SVC_4"/L)
+    {
+    "host": "${http_template}",
+    "imports": [
+        "${$ssh_svc_template_name}"
+    ],
+    "object_name": "${http_svc_ssh_name}",
+    "object_type": "object"
+    }
+    | HTTP_SVC_4
+  #DHCP, Ping, disk and ssh monitoring
   $master_svc1 = @("MASTER_SVC_1"/L)
     {
     "host": "${master_template}",
@@ -274,7 +310,17 @@ class profile::core::icinga_resources (
     "object_type": "object"
     }
     | MASTER_SVC_3
-  #DNS, Ping, disk and RAM monitoring
+  $master_svc4 = @("MASTER_SVC_4"/L)
+    {
+    "host": "${master_template}",
+    "imports": [
+        "${$ssh_svc_template_name}"
+    ],
+    "object_name": "${master_svc_ssh_name}",
+    "object_type": "object"
+    }
+    | MASTER_SVC_4
+  #DNS, Ping, disk and ssh monitoring
   $dns_svc1 = @("DNS_SVC_1"/L)
     {
     "host": "${dns_template}",
@@ -305,7 +351,17 @@ class profile::core::icinga_resources (
     "object_type": "object"
     }
     | DNS_SVC_3
-  #IPA, Ping, disk and RAM monitoring
+  $dns_svc4 = @("DNS_SVC_4"/L)
+    {
+    "host": "${dns_template}",
+    "imports": [
+        "${$ssh_svc_template_name}"
+    ],
+    "object_name": "${dns_svc_ssh_name}",
+    "object_type": "object"
+    }
+    | DNS_SVC_4
+  #LDAP, Ping, disk and ssh monitoring
   $ipa_svc1 = @("IPA_SVC_1"/L)
     {
     "host": "${ipa_template}",
@@ -336,6 +392,17 @@ class profile::core::icinga_resources (
     "object_type": "object"
     }
     | IPA_SVC_3
+  $ipa_svc4 = @("IPA_SVC_4"/L)
+    {
+    "host": "${ipa_template}",
+    "imports": [
+        "${$ssh_svc_template_name}"
+    ],
+    "object_name": "${ipa_svc_ssh_name}",
+    "object_type": "object"
+    }
+    | IPA_SVC_4
+
   ##Master Node JSON
   $add_master_host = @("MASTER_HOST"/L)
     {
@@ -351,10 +418,10 @@ class profile::core::icinga_resources (
     }
     }
     | MASTER_HOST
-  #<------------End JSON Files --------------->
+  #<---------------------------End JSON Files --------------------------->
   #
   #
-  #<----------Templates Creation-------------->
+  #<-------------------Templates-Variables-Creation----------------------->
   #Host Templates Creation
   $host_template_path = "${$icinga_path}/${host_template}.json"
   $host_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${host_template}' ${lt}"
@@ -405,6 +472,10 @@ class profile::core::icinga_resources (
   $disk_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${disk_svc_template_name}' ${lt}"
   $disk_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$disk_svc_template_path}"
 
+  $ssh_svc_template_path = "${icinga_path}/${ssh_svc_template_name}.json"
+  $ssh_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ssh_svc_template_name}' ${lt}"
+  $ssh_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ssh_svc_template_path}"
+
   #Services Creation
   $host_svc_path1 = "${icinga_path}/${host_svc_ping_name}.json"
   $host_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_ping_name}&host=${host_template}' ${lt}"
@@ -412,6 +483,9 @@ class profile::core::icinga_resources (
   $host_svc_path2 = "${icinga_path}/${host_svc_disk_name}.json"
   $host_svc_cond2 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_disk_name}&host=${host_template}' ${lt}"
   $host_svc_cmd2  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${host_svc_path2}"
+  $host_svc_path3 = "${icinga_path}/${host_svc_ssh_name}.json"
+  $host_svc_cond3 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_ssh_name}&host=${host_template}' ${lt}"
+  $host_svc_cmd3  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${host_svc_path3}"
 
   $http_svc_path1 = "${icinga_path}/${http_svc_name}.json"
   $http_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_name}&host=${http_template}' ${lt}"
@@ -422,6 +496,9 @@ class profile::core::icinga_resources (
   $http_svc_path3 = "${icinga_path}/${http_svc_disk_name}.json"
   $http_svc_cond3 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_disk_name}&host=${http_template}' ${lt}"
   $http_svc_cmd3  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${http_svc_path3}"
+  $http_svc_path4 = "${icinga_path}/${http_svc_ssh_name}.json"
+  $http_svc_cond4 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_ssh_name}&host=${http_template}' ${lt}"
+  $http_svc_cmd4  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${http_svc_path4}"
 
   $dns_svc_path1  = "${icinga_path}/${dns_svc_name}.json"
   $dns_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_name}&host=${dns_template}' ${lt}"
@@ -432,6 +509,9 @@ class profile::core::icinga_resources (
   $dns_svc_path3  = "${icinga_path}/${dns_svc_disk_name}.json"
   $dns_svc_cond3  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_disk_name}&host=${dns_template}' ${lt}"
   $dns_svc_cmd3   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dns_svc_path3}"
+  $dns_svc_path4  = "${icinga_path}/${dns_svc_ssh_name}.json"
+  $dns_svc_cond4  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_ssh_name}&host=${dns_template}' ${lt}"
+  $dns_svc_cmd4   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dns_svc_path4}"
 
   $master_svc_path1 = "${icinga_path}/${master_svc_dhcp_name}.json"
   $master_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_dhcp_name}&host=${master_template}' ${lt}"
@@ -442,6 +522,9 @@ class profile::core::icinga_resources (
   $master_svc_path3 = "${icinga_path}/${master_svc_disk_name}.json"
   $master_svc_cond3 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_disk_name}&host=${master_template}' ${lt}"
   $master_svc_cmd3  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path3}"
+  $master_svc_path4 = "${icinga_path}/${master_svc_ssh_name}.json"
+  $master_svc_cond4 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_ssh_name}&host=${master_template}' ${lt}"
+  $master_svc_cmd4  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path4}"
 
   $ipa_svc_path1  = "${icinga_path}/${ipa_svc_name}.json"
   $ipa_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_name}&host=${ipa_template}' ${lt}"
@@ -452,23 +535,25 @@ class profile::core::icinga_resources (
   $ipa_svc_path3  = "${icinga_path}/${ipa_svc_disk_name}.json"
   $ipa_svc_cond3  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_disk_name}&host=${ipa_template}' ${lt}"
   $ipa_svc_cmd3   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path3}"
+  $ipa_svc_path4  = "${icinga_path}/${ipa_svc_ssh_name}.json"
+  $ipa_svc_cond4  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_ssh_name}&host=${ipa_template}' ${lt}"
+  $ipa_svc_cmd4   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path4}"
 
   #Master Host Creation
   $addhost_path = "${icinga_path}/${master_fqdn}.json"
   $addhost_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${master_fqdn}' ${lt}"
   $addhost_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${addhost_path}"
-
-  #<---------End Templates Creation----------->
+  #<---------------END-Templates-Variables-Creation----------------------->
   #
   #
-  #<-----Files Creation and deployement------->
+  #<-------------------Files Creation and deployement--------------------->
 
   #Create a directory to allocate json files
   file { $icinga_path:
     ensure => 'directory',
   }
 
-  ##Host Templates
+  #<---------------------------Host-Templates----------------------------->
   #Create host template file
   file { $host_template_path:
     ensure  => 'present',
@@ -553,15 +638,17 @@ class profile::core::icinga_resources (
     onlyif   => $tls_template_cond,
     loglevel => debug,
   }
-
-  ##Service Templates
-  #Create http template file
+  #<-----------------------END-Host-Templates----------------------------->
+  #
+  #
+  #<------------------------Service-Templates----------------------------->
+  #Create http service template file
   file { $http_svc_template_path:
     ensure  => 'present',
     content => $http_svc_template,
     before  => Exec[$http_svc_template_cmd],
   }
-  #Add http template
+  #Add http service template
   exec { $http_svc_template_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
@@ -569,13 +656,13 @@ class profile::core::icinga_resources (
     onlyif   => $http_svc_template_cond,
     loglevel => debug,
   }
-  #Create ping template file
+  #Create ping service template file
   file { $ping_svc_template_path:
     ensure  => 'present',
     content => $ping_svc_template,
     before  => Exec[$ping_svc_template_cmd],
   }
-  #Add http template
+  #Add http service template
   exec { $ping_svc_template_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
@@ -583,13 +670,13 @@ class profile::core::icinga_resources (
     onlyif   => $ping_svc_template_cond,
     loglevel => debug,
   }
-  #Create dhcp template file
+  #Create dhcp service template file
   file { $master_svc_template_path:
     ensure  => 'present',
     content => $master_svc_template,
     before  => Exec[$master_svc_template_cmd],
   }
-  #Add http template
+  #Add http service template
   exec { $master_svc_template_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
@@ -597,13 +684,13 @@ class profile::core::icinga_resources (
     onlyif   => $master_svc_template_cond,
     loglevel => debug,
   }
-  #Create dns template file 
+  #Create dns service template file 
   file { $dns_svc_template_path:
     ensure  => 'present',
     content => $dns_svc_template,
     before  => Exec[$dns_svc_template_cmd],
   }
-  #Add dns template
+  #Add dns service template
   exec { $dns_svc_template_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
@@ -611,13 +698,13 @@ class profile::core::icinga_resources (
     onlyif   => $dns_svc_template_cond,
     loglevel => debug,
   }
-  #Create ipa template file 
+  #Create ipa service template file 
   file { $ipa_svc_template_path:
     ensure  => 'present',
     content => $ipa_svc_template,
     before  => Exec[$ipa_svc_template_cmd],
   }
-  #Add ipa template
+  #Add ipa service template
   exec { $ipa_svc_template_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
@@ -625,13 +712,13 @@ class profile::core::icinga_resources (
     onlyif   => $ipa_svc_template_cond,
     loglevel => debug,
   }
-  #Create disk template file 
+  #Create disk service template file 
   file { $disk_svc_template_path:
     ensure  => 'present',
     content => $disk_svc_template,
     before  => Exec[$disk_svc_template_cmd],
   }
-  #Add disk template
+  #Add disk service template
   exec { $disk_svc_template_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
@@ -639,8 +726,25 @@ class profile::core::icinga_resources (
     onlyif   => $disk_svc_template_cond,
     loglevel => debug,
   }
-
-  ##Services Definition
+  #Create ssh service template file 
+  file { $ssh_svc_template_path:
+    ensure  => 'present',
+    content => $ssh_svc_template,
+    before  => Exec[$ssh_svc_template_cmd],
+  }
+  #Add ssh service template
+  exec { $ssh_svc_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ssh_svc_template_cond,
+    loglevel => debug,
+  }
+  #<--------------------EMD-Service-Templates----------------------------->
+  #
+  #
+  #<-----------------------Services-Definiton----------------------------->
+  ##HostTemplate Services
   #Creates ping resource file for HostTemplate and PingServiceTemplate
   file { $host_svc_path1:
     ensure  => 'present',
@@ -669,6 +773,22 @@ class profile::core::icinga_resources (
     onlyif   => $host_svc_cond2,
     loglevel => debug,
   }
+  #Creates ssh resource file for HostTemplate and SshServiceTemplate
+  file { $host_svc_path3:
+    ensure  => 'present',
+    content => $host_svc3,
+    before  => Exec[$host_svc_cmd3],
+  }
+  #Adds ssh resource file for HostTemplate and SshServiceTemplate
+  exec { $host_svc_cmd3:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $host_svc_cond3,
+    loglevel => debug,
+  }
+
+  ##HttpTemplate Services
   #Creates http resource file for HttpTemplate and HttpServiceTemplate
   file { $http_svc_path1:
     ensure  => 'present',
@@ -711,6 +831,22 @@ class profile::core::icinga_resources (
     onlyif   => $http_svc_cond3,
     loglevel => debug,
   }
+  #Creates ssh resource file for HttpTemplate and SshServiceTemplate
+  file { $http_svc_path4:
+    ensure  => 'present',
+    content => $http_svc4,
+    before  => Exec[$http_svc_cmd4],
+  }
+  #Adds ssh resource file for HttpTemplate and SshServiceTemplate
+  exec { $http_svc_cmd4:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $http_svc_cond4,
+    loglevel => debug,
+  }
+
+  ##DhcpTemplate Services
   #Creates dhcp resource file for MasterTemplate and DhcpServiceTemplate
   file { $master_svc_path1:
     ensure  => 'present',
@@ -753,6 +889,22 @@ class profile::core::icinga_resources (
     onlyif   => $master_svc_cond3,
     loglevel => debug,
   }
+  #Creates ssh resource file for MasterTemplate and SshServiceTemplate
+  file { $master_svc_path4:
+    ensure  => 'present',
+    content => $master_svc4,
+    before  => Exec[$master_svc_cmd4],
+  }
+  #Adds ssh resource file for MasterTemplate and SshServiceTemplate
+  exec { $master_svc_cmd4:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $master_svc_cond4,
+    loglevel => debug,
+  }
+
+  ##DnsTemplate Services
   #Creates dns resource file for DnsTemplate and DnsServiceTemplate
   file { $dns_svc_path1:
     ensure  => 'present',
@@ -795,13 +947,29 @@ class profile::core::icinga_resources (
     onlyif   => $dns_svc_cond3,
     loglevel => debug,
   }
-  #Creates ipa resource file for IpaTemplate and IpaServiceTemplate
+  #Creates ssh resource file for DnsTemplate and SshServiceTemplate
+  file { $dns_svc_path4:
+    ensure  => 'present',
+    content => $dns_svc4,
+    before  => Exec[$dns_svc_cmd4],
+  }
+  #Adds ssh resource file for DnsTemplate and SshServiceTemplate
+  exec { $dns_svc_cmd4:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $dns_svc_cond4,
+    loglevel => debug,
+  }
+
+  ##IpaTemplate Services
+  #Creates ldap resource file for IpaTemplate and IpaServiceTemplate
   file { $ipa_svc_path1:
     ensure  => 'present',
     content => $ipa_svc1,
     before  => Exec[$ipa_svc_cmd1],
   }
-  #Adds ipa resource file for IpaTemplate and IpaServiceTemplate
+  #Adds ldap resource file for IpaTemplate and IpaServiceTemplate
   exec { $ipa_svc_cmd1:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
@@ -837,6 +1005,21 @@ class profile::core::icinga_resources (
     onlyif   => $ipa_svc_cond3,
     loglevel => debug,
   }
+  #Creates ssh resource file for IpaTemplate and SshServiceTemplate
+  file { $ipa_svc_path4:
+    ensure  => 'present',
+    content => $ipa_svc4,
+    before  => Exec[$ipa_svc_cmd4],
+  }
+  #Adds ssh resource file for IpaTemplate and SshServiceTemplate
+  exec { $ipa_svc_cmd4:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ipa_svc_cond4,
+    loglevel => debug,
+  }
+  #<-------------------END-Services-Definiton----------------------------->
   #Change permissions to plugin
   file { '/usr/lib64/nagios/plugins/check_dhcp':
     owner => 'root',
@@ -863,5 +1046,5 @@ class profile::core::icinga_resources (
     onlyif   => $addhost_cond,
     loglevel => debug,
   }
-  #<------END Files Creation and deployement--------->
+  #<------------------END Files Creation and Deployement------------------>
 }

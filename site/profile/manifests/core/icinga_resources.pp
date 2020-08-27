@@ -34,27 +34,33 @@ class profile::core::icinga_resources (
   $ipa_svc_template_name    = 'IpaServiceTemplate'
   $disk_svc_template_name   = 'DiskServiceTemplace'
   $ssh_svc_template_name    = 'SshServiceTemplace'
+  $ntp_svc_template_name    = 'NtpServiceTemplate'
 
   #Service Names
   $host_svc_ping_name   = 'HostPingService'
   $host_svc_disk_name   = 'HostDiskService'
   $host_svc_ssh_name    = 'HostSshService'
+  $host_svc_ntp_name    = 'HostNtpService'
   $dns_svc_name         = 'DnsService'
   $dns_svc_ping_name    = 'DnsPingService'
   $dns_svc_disk_name    = 'DnsDiskService'
   $dns_svc_ssh_name     = 'DnsSshService'
+  $dns_svc_ntp_name     = 'DnsNtpService'
   $master_svc_dhcp_name = 'MasterDhcpService'
   $master_svc_ping_name = 'MasterPingService'
   $master_svc_disk_name = 'MasterDiskService'
   $master_svc_ssh_name  = 'MasterSshService'
+  $master_svc_ntp_name  = 'MasterNtpService'
   $http_svc_name        = 'HttpService'
   $http_svc_ping_name   = 'HttpPingService'
   $http_svc_disk_name   = 'HttpDiskService'
   $http_svc_ssh_name    = 'HttpSshService'
+  $http_svc_ntp_name    = 'HttpNtpService'
   $ipa_svc_name         = 'IpaService'
   $ipa_svc_ping_name    = 'IpaPingService'
   $ipa_svc_disk_name    = 'IpaDiskService'
   $ipa_svc_ssh_name     = 'IpaSshService'
+  $ipa_svc_ntp_name     = 'IpaNtpService'
   #<--------End Variables Definition---------->
   #
   #
@@ -202,9 +208,24 @@ class profile::core::icinga_resources (
     "zone": "master"
     }
     | SSH_TEMPLATE
+  ## IMPORTANT
+  ## The ntp_address must be change to an NTP Server,
+  ## of our own once we have one operational on site
+  $ntp_svc_template = @("NTP_TEMPLATE"/L)
+    {
+    "check_command": "ntp_time",
+    "object_name": "${ntp_svc_template_name}",
+    "object_type": "template",
+    "use_agent": true,
+    "vars": {
+        "ntp_address": "ntp.shoa.cl"
+    },
+    "zone": "master"
+    }
+    | NTP_TEMPLATE
 
   ##Services Definition
-  #Ping, disk and ssh monitoring
+  #Ping, disk, ssh and ntp skew monitoring
   $host_svc1 = @("HOST_SVC_1"/L)
     {
     "host": "${host_template}",
@@ -235,7 +256,17 @@ class profile::core::icinga_resources (
     "object_type": "object"
     }
     | HOST_SVC_3
-  #HTTP, Ping, disk and ssh monitoring
+  $host_svc4 = @("HOST_SVC_4"/L)
+    {
+    "host": "${host_template}",
+    "imports": [
+        "${$ntp_svc_template_name}"
+    ],
+    "object_name": "${host_svc_ntp_name}",
+    "object_type": "object"
+    }
+    | HOST_SVC_4
+  #HTTP, Ping, disk, ssh and ntp skew monitoring
   $http_svc1 = @("HTTP_SVC_1"/L)
     {
     "host": "${http_template}",
@@ -276,7 +307,17 @@ class profile::core::icinga_resources (
     "object_type": "object"
     }
     | HTTP_SVC_4
-  #DHCP, Ping, disk and ssh monitoring
+  $http_svc5 = @("HTTP_SVC_5"/L)
+    {
+    "host": "${http_template}",
+    "imports": [
+        "${$ntp_svc_template_name}"
+    ],
+    "object_name": "${http_svc_ntp_name}",
+    "object_type": "object"
+    }
+    | HTTP_SVC_5
+  #DHCP, Ping, disk, ssh and ntp skew monitoring
   $master_svc1 = @("MASTER_SVC_1"/L)
     {
     "host": "${master_template}",
@@ -320,7 +361,17 @@ class profile::core::icinga_resources (
     "object_type": "object"
     }
     | MASTER_SVC_4
-  #DNS, Ping, disk and ssh monitoring
+  $master_svc5 = @("MASTER_SVC_5"/L)
+    {
+    "host": "${master_template}",
+    "imports": [
+        "${$ntp_svc_template_name}"
+    ],
+    "object_name": "${master_svc_ntp_name}",
+    "object_type": "object"
+    }
+    | MASTER_SVC_5
+  #DNS, Ping, disk, ssh and ntp skew monitoring
   $dns_svc1 = @("DNS_SVC_1"/L)
     {
     "host": "${dns_template}",
@@ -361,7 +412,17 @@ class profile::core::icinga_resources (
     "object_type": "object"
     }
     | DNS_SVC_4
-  #LDAP, Ping, disk and ssh monitoring
+  $dns_svc5 = @("DNS_SVC_5"/L)
+    {
+    "host": "${dns_template}",
+    "imports": [
+        "${$ntp_svc_template_name}"
+    ],
+    "object_name": "${dns_svc_ntp_name}",
+    "object_type": "object"
+    }
+    | DNS_SVC_5
+  #LDAP, Ping, disk, ssh and ntp skew monitoring
   $ipa_svc1 = @("IPA_SVC_1"/L)
     {
     "host": "${ipa_template}",
@@ -402,7 +463,17 @@ class profile::core::icinga_resources (
     "object_type": "object"
     }
     | IPA_SVC_4
-
+  $ipa_svc5 = @("IPA_SVC_5"/L)
+    {
+    "host": "${ipa_template}",
+    "imports": [
+        "${$ntp_svc_template_name}"
+    ],
+    "object_name": "${ipa_svc_ntp_name}",
+    "object_type": "object"
+    }
+    | IPA_SVC_5
+  
   ##Master Node JSON
   $add_master_host = @("MASTER_HOST"/L)
     {
@@ -476,6 +547,10 @@ class profile::core::icinga_resources (
   $ssh_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ssh_svc_template_name}' ${lt}"
   $ssh_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ssh_svc_template_path}"
 
+  $ntp_svc_template_path = "${icinga_path}/${ntp_svc_template_name}.json"
+  $ntp_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ntp_svc_template_name}' ${lt}"
+  $ntp_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ntp_svc_template_path}"
+
   #Services Creation
   $host_svc_path1 = "${icinga_path}/${host_svc_ping_name}.json"
   $host_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_ping_name}&host=${host_template}' ${lt}"
@@ -486,6 +561,9 @@ class profile::core::icinga_resources (
   $host_svc_path3 = "${icinga_path}/${host_svc_ssh_name}.json"
   $host_svc_cond3 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_ssh_name}&host=${host_template}' ${lt}"
   $host_svc_cmd3  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${host_svc_path3}"
+  $host_svc_path4 = "${icinga_path}/${host_svc_ntp_name}.json"
+  $host_svc_cond4 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_ntp_name}&host=${host_template}' ${lt}"
+  $host_svc_cmd4  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${host_svc_path4}"
 
   $http_svc_path1 = "${icinga_path}/${http_svc_name}.json"
   $http_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_name}&host=${http_template}' ${lt}"
@@ -499,6 +577,9 @@ class profile::core::icinga_resources (
   $http_svc_path4 = "${icinga_path}/${http_svc_ssh_name}.json"
   $http_svc_cond4 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_ssh_name}&host=${http_template}' ${lt}"
   $http_svc_cmd4  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${http_svc_path4}"
+  $http_svc_path5 = "${icinga_path}/${http_svc_ntp_name}.json"
+  $http_svc_cond5 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_ntp_name}&host=${http_template}' ${lt}"
+  $http_svc_cmd5  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${http_svc_path5}"
 
   $dns_svc_path1  = "${icinga_path}/${dns_svc_name}.json"
   $dns_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_name}&host=${dns_template}' ${lt}"
@@ -512,6 +593,9 @@ class profile::core::icinga_resources (
   $dns_svc_path4  = "${icinga_path}/${dns_svc_ssh_name}.json"
   $dns_svc_cond4  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_ssh_name}&host=${dns_template}' ${lt}"
   $dns_svc_cmd4   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dns_svc_path4}"
+  $dns_svc_path5  = "${icinga_path}/${dns_svc_ntp_name}.json"
+  $dns_svc_cond5  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_ntp_name}&host=${dns_template}' ${lt}"
+  $dns_svc_cmd5   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dns_svc_path5}"
 
   $master_svc_path1 = "${icinga_path}/${master_svc_dhcp_name}.json"
   $master_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_dhcp_name}&host=${master_template}' ${lt}"
@@ -525,6 +609,9 @@ class profile::core::icinga_resources (
   $master_svc_path4 = "${icinga_path}/${master_svc_ssh_name}.json"
   $master_svc_cond4 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_ssh_name}&host=${master_template}' ${lt}"
   $master_svc_cmd4  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path4}"
+  $master_svc_path5 = "${icinga_path}/${master_svc_ntp_name}.json"
+  $master_svc_cond5 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_ntp_name}&host=${master_template}' ${lt}"
+  $master_svc_cmd5  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path5}"
 
   $ipa_svc_path1  = "${icinga_path}/${ipa_svc_name}.json"
   $ipa_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_name}&host=${ipa_template}' ${lt}"
@@ -538,6 +625,9 @@ class profile::core::icinga_resources (
   $ipa_svc_path4  = "${icinga_path}/${ipa_svc_ssh_name}.json"
   $ipa_svc_cond4  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_ssh_name}&host=${ipa_template}' ${lt}"
   $ipa_svc_cmd4   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path4}"
+  $ipa_svc_path5  = "${icinga_path}/${ipa_svc_ntp_name}.json"
+  $ipa_svc_cond5  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_ntp_name}&host=${ipa_template}' ${lt}"
+  $ipa_svc_cmd5   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path5}"
 
   #Master Host Creation
   $addhost_path = "${icinga_path}/${master_fqdn}.json"
@@ -740,6 +830,20 @@ class profile::core::icinga_resources (
     onlyif   => $ssh_svc_template_cond,
     loglevel => debug,
   }
+  #Create ntp skew service template file 
+  file { $ntp_svc_template_path:
+    ensure  => 'present',
+    content => $ntp_svc_template,
+    before  => Exec[$ntp_svc_template_cmd],
+  }
+  #Add ntp skew service template
+  exec { $ntp_svc_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ntp_svc_template_cond,
+    loglevel => debug,
+  }
   #<--------------------EMD-Service-Templates----------------------------->
   #
   #
@@ -785,6 +889,20 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $host_svc_cond3,
+    loglevel => debug,
+  }
+  #Creates ntp skew resource file for HostTemplate and NtpServiceTemplate
+  file { $host_svc_path4:
+    ensure  => 'present',
+    content => $host_svc4,
+    before  => Exec[$host_svc_cmd4],
+  }
+  #Adds ntp skew resource file for HostTemplate and NtpServiceTemplate
+  exec { $host_svc_cmd4:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $host_svc_cond4,
     loglevel => debug,
   }
 
@@ -845,6 +963,20 @@ class profile::core::icinga_resources (
     onlyif   => $http_svc_cond4,
     loglevel => debug,
   }
+  #Creates ntp skew resource file for HttpTemplate and NtpServiceTemplate
+  file { $http_svc_path5:
+    ensure  => 'present',
+    content => $http_svc5,
+    before  => Exec[$http_svc_cmd5],
+  }
+  #Adds ntp skew resource file for HttpTemplate and NtpServiceTemplate
+  exec { $http_svc_cmd5:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $http_svc_cond5,
+    loglevel => debug,
+  }
 
   ##DhcpTemplate Services
   #Creates dhcp resource file for MasterTemplate and DhcpServiceTemplate
@@ -901,6 +1033,20 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $master_svc_cond4,
+    loglevel => debug,
+  }
+  #Creates ntp skew resource file for MasterTemplate and NtpServiceTemplate
+  file { $master_svc_path5:
+    ensure  => 'present',
+    content => $master_svc5,
+    before  => Exec[$master_svc_cmd5],
+  }
+  #Adds ntp skew resource file for MasterTemplate and NtpServiceTemplate
+  exec { $master_svc_cmd5:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $master_svc_cond5,
     loglevel => debug,
   }
 
@@ -961,6 +1107,20 @@ class profile::core::icinga_resources (
     onlyif   => $dns_svc_cond4,
     loglevel => debug,
   }
+  #Creates ntp skew resource file for DnsTemplate and NtpServiceTemplate
+  file { $dns_svc_path5:
+    ensure  => 'present',
+    content => $dns_svc5,
+    before  => Exec[$dns_svc_cmd5],
+  }
+  #Adds ntp skew resource file for DnsTemplate and NtpServiceTemplate
+  exec { $dns_svc_cmd5:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $dns_svc_cond5,
+    loglevel => debug,
+  }
 
   ##IpaTemplate Services
   #Creates ldap resource file for IpaTemplate and IpaServiceTemplate
@@ -1017,6 +1177,20 @@ class profile::core::icinga_resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $ipa_svc_cond4,
+    loglevel => debug,
+  }
+  #Creates ntp skew resource file for IpaTemplate and NtpServiceTemplate
+  file { $ipa_svc_path5:
+    ensure  => 'present',
+    content => $ipa_svc5,
+    before  => Exec[$ipa_svc_cmd5],
+  }
+  #Adds ntp skew resource file for IpaTemplate and NtpServiceTemplate
+  exec { $ipa_svc_cmd5:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ipa_svc_cond5,
     loglevel => debug,
   }
   #<-------------------END-Services-Definiton----------------------------->

@@ -291,11 +291,13 @@ class profile::core::icinga_master (
   }
   class { '::php::globals':
     php_version => 'rh-php73',
+    config_root => '/etc/opt/rh/rh-php73',
     rhscl_mode  => 'rhscl',
   }
   ->class { '::php':
     manage_repos => false,
     extensions   => {
+      'common'  => {},
       'soap'    => {},
       'process' => {},
     },

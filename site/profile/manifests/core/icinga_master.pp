@@ -296,11 +296,6 @@ class profile::core::icinga_master (
   }
   ->class { '::php':
     manage_repos => false,
-    extensions   => {
-      'common'  => {},
-      'soap'    => {},
-      'process' => {},
-    },
   }
   systemd::unit_file { 'icinga-director.service':
     source  => '/usr/share/icingaweb2/modules/director/contrib/systemd/icinga-director.service',

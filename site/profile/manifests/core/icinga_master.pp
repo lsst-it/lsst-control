@@ -187,6 +187,9 @@ class profile::core::icinga_master (
     permissions => [ '*' ],
     target      => '/etc/icinga2/features-enabled/api-users.conf',
   }
+  icinga2::object::zone { 'director-global':
+    global => true,
+  }
   ##Icinga2 Perfdata
   class {'::icinga2::feature::perfdata':
     ensure => present,

@@ -18,13 +18,14 @@ class profile::core::icinga_resources (
   $master_ip  = $facts[ipaddress]
 
   #Commands abreviation
-  $url_host    = "https://${master_fqdn}/director/host"
-  $url_svc     = "https://${master_fqdn}/director/service"
-  $credentials = "Authorization:Basic ${credentials_hash}"
-  $format      = 'Accept: application/json'
-  $curl        = 'curl -s -k -H'
-  $icinga_path = '/opt/icinga'
-  $lt          = '| grep Failed'
+  $url_host      = "https://${master_fqdn}/director/host"
+  $url_svc       = "https://${master_fqdn}/director/service"
+  $url_hostgroup = "https://${master_fqdn}/director/hostgroup"
+  $credentials   = "Authorization:Basic ${credentials_hash}"
+  $format        = 'Accept: application/json'
+  $curl          = 'curl -s -k -H'
+  $icinga_path   = '/opt/icinga'
+  $lt            = '| grep Failed'
 
   #Service Templates Names
   $http_svc_template_name   = 'HttpServiceTemplate'
@@ -63,6 +64,16 @@ class profile::core::icinga_resources (
   $ipa_svc_disk_name    = 'IpaDiskService'
   $ipa_svc_ssh_name     = 'IpaSshService'
   $ipa_svc_ntp_name     = 'IpaNtpService'
+
+  #Host Groups Names
+  $antu     = 'antu_cluster'
+  $ruka     = 'ruka_cluster'
+  $kueyen   = 'kueyen_cluster'
+  $core     = 'core_cluster'
+  $comcam   = 'comcam_cluster'
+  $ls_nodes = 'ls_nodes'
+  $it_svc   = 'it_services'
+
   #<--------End Variables Definition---------->
   #
   #
@@ -516,6 +527,64 @@ class profile::core::icinga_resources (
     }
     }
     | MASTER_HOST
+
+  ##Host Groups Definition
+  $antu_template = @("ANTU"/L)
+    {
+    "assign_filter": "host.display_name=%22antu%2A%22",
+    "display_name": "Antu Cluster",
+    "object_name": "antu_cluster",
+    "object_type": "object"
+    }
+    | ANTU
+  $ruka_template = @("RUKA"/L)
+    {
+    "assign_filter": "host.display_name=%22ruka%2A%22",
+    "display_name": "Ruka Cluster",
+    "object_name": "ruka_cluster",
+    "object_type": "object"
+    }
+    | RUKA
+  $kueyen_template = @("KUEYEN"/L)
+    {
+    "assign_filter": "host.display_name=%22kueyen%2A%22",
+    "display_name": "Kueyen Cluster",
+    "object_name": "kueyen_cluster",
+    "object_type": "object"
+    }
+    | KUEYEN
+  $core_template = @("CORE"/L)
+    {
+    "assign_filter": "host.display_name=%22core%2A%22",
+    "display_name": "Core Cluster",
+    "object_name": "core_cluster",
+    "object_type": "object"
+    }
+    | CORE
+  $comcam_template = @("COMCAM"/L)
+    {
+    "assign_filter": "host.display_name=%22comcam%2A%22",
+    "display_name": "ComCam Cluster",
+    "object_name": "comcam_cluster",
+    "object_type": "object"
+    }
+    | COMCAM
+  $ls_nodes_template = @("NODES"/L)
+    {
+    "assign_filter": "host.display_name=%22ls-%2A%22",
+    "display_name": "LS Nodes",
+    "object_name": "ls_nodes",
+    "object_type": "object"
+    }
+    | NODES
+  $it_svc_template = @("IT"/L)
+    {
+    "assign_filter": "host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
+    "display_name": "LS Nodes",
+    "object_name": "ls_nodes",
+    "object_type": "object"
+    }
+    | IT
   #<---------------------------End JSON Files --------------------------->
   #
   #
@@ -663,6 +732,35 @@ class profile::core::icinga_resources (
   $ipa_svc_cond5  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_ntp_name}&host=${ipa_template}' ${lt}"
   $ipa_svc_cmd5   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path5}"
 
+  #Host Groups Creation
+  $antu_path = "${icinga_path}/${antu}.json"
+  $antu_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${antu}' ${lt}"
+  $antu_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${antu_path}"
+
+  $ruka_path = "${icinga_path}/${ruka}.json"
+  $ruka_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${ruka}' ${lt}"
+  $ruka_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${ruka_path}"
+
+  $kueyen_path = "${icinga_path}/${kueyen}.json"
+  $kueyen_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${kueyen}' ${lt}"
+  $kueyen_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${kueyen_path}"
+
+  $core_path = "${icinga_path}/${core}.json"
+  $core_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${core}' ${lt}"
+  $core_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${core_path}"
+
+  $comcam_path = "${icinga_path}/${comcam}.json"
+  $comcam_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${comcam}' ${lt}"
+  $comcam_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${comcam_path}"
+
+  $ls_path = "${icinga_path}/${ls_nodes}.json"
+  $ls_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${ls_nodes}' ${lt}"
+  $ls_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${ls_path}"
+
+  $it_path = "${icinga_path}/${it_svc}.json"
+  $it_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${it_svc}' ${lt}"
+  $it_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${it_path}"
+
   #Master Host Creation
   $addhost_path = "${icinga_path}/${master_fqdn}.json"
   $addhost_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${master_fqdn}' ${lt}"
@@ -676,7 +774,6 @@ class profile::core::icinga_resources (
   file { $icinga_path:
     ensure => 'directory',
   }
-
   #<---------------------------Host-Templates----------------------------->
   #Create host template file
   file { $host_template_path:
@@ -1256,6 +1353,108 @@ class profile::core::icinga_resources (
     loglevel => debug,
   }
   #<-------------------END-Services-Definiton----------------------------->
+  #
+  #
+  #<----------------------Host-Group-Definiton---------------------------->
+  #Creates antu HostGroup File
+  file { $antu_path:
+    ensure  => 'present',
+    content => $antu_template,
+    before  => Exec[$antu_cmd],
+  }
+  #Adds antu Hostgroup
+  exec { $antu_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $antu_cond,
+    loglevel => debug,
+  }
+  #Creates ruka HostGroup File
+  file { $ruka_path:
+    ensure  => 'present',
+    content => $ruka_template,
+    before  => Exec[$ruka_cmd],
+  }
+  #Adds ruka Hostgroup
+  exec { $ruka_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ruka_cond,
+    loglevel => debug,
+  }
+  #Creates kueyen HostGroup File
+  file { $kueyen_path:
+    ensure  => 'present',
+    content => $kueyen_template,
+    before  => Exec[$kueyen_cmd],
+  }
+  #Adds kueyen Hostgroup
+  exec { $kueyen_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $kueyen_cond,
+    loglevel => debug,
+  }
+  #Creates comcam HostGroup File
+  file { $comcam_path:
+    ensure  => 'present',
+    content => $comcam_template,
+    before  => Exec[$comcam_cmd],
+  }
+  #Adds comcam Hostgroup
+  exec { $comcam_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $comcam_cond,
+    loglevel => debug,
+  }
+  #Creates core HostGroup File
+  file { $core_path:
+    ensure  => 'present',
+    content => $core_template,
+    before  => Exec[$core_cmd],
+  }
+  #Adds core Hostgroup
+  exec { $core_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $core_cond,
+    loglevel => debug,
+  }
+  #Creates LS Nodes HostGroup File
+  file { $ls_path:
+    ensure  => 'present',
+    content => $ls_nodes_template,
+    before  => Exec[$ls_cmd],
+  }
+  #Adds LS Nodes Hostgroup
+  exec { $ls_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ls_cond,
+    loglevel => debug,
+  }
+  #Creates IT Services HostGroup File
+  file { $it_path:
+    ensure  => 'present',
+    content => $it_svc_template,
+    before  => Exec[$it_cmd],
+  }
+  #Adds IT Services Hostgroup
+  exec { $it_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $it_cond,
+    loglevel => debug,
+  }
+  #<--------------------END-Host-Group-Definiton-------------------------->
   #Change permissions to plugin
   file { '/usr/lib64/nagios/plugins/check_dhcp':
     owner => 'root',

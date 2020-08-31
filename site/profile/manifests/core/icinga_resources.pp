@@ -86,6 +86,9 @@ class profile::core::icinga_resources (
     "has_agent": true,
     "master_should_connect": true,
     "max_check_attempts": "5",
+    "vars": {
+        "enable_pagerduty": "true",
+    },
     "object_name": "${host_template}",
     "object_type": "template"
     }
@@ -97,6 +100,9 @@ class profile::core::icinga_resources (
     "has_agent": true,
     "master_should_connect": true,
     "max_check_attempts": "5",
+    "vars": {
+        "enable_pagerduty": "true",
+    },
     "object_name": "${http_template}",
     "object_type": "template"
     }
@@ -108,6 +114,9 @@ class profile::core::icinga_resources (
     "has_agent": true,
     "master_should_connect": true,
     "max_check_attempts": "5",
+    "vars": {
+        "enable_pagerduty": "true",
+    },
     "object_name": "${dns_template}",
     "object_type": "template"
     }
@@ -119,6 +128,9 @@ class profile::core::icinga_resources (
     "has_agent": true,
     "master_should_connect": true,
     "max_check_attempts": "5",
+    "vars": {
+        "enable_pagerduty": "true",
+    },
     "object_name": "${master_template}",
     "object_type": "template"
     }
@@ -130,6 +142,9 @@ class profile::core::icinga_resources (
     "has_agent": true,
     "master_should_connect": true,
     "max_check_attempts": "5",
+    "vars": {
+        "enable_pagerduty": "true",
+    },
     "object_name": "${ipa_template}",
     "object_type": "template"
     }
@@ -141,6 +156,9 @@ class profile::core::icinga_resources (
     "has_agent": false,
     "master_should_connect": false,
     "max_check_attempts": "5",
+    "vars": {
+        "enable_pagerduty": "true",
+    },
     "object_name": "${tls_template}",
     "object_type": "template",
     "vars": {
@@ -155,6 +173,9 @@ class profile::core::icinga_resources (
     "check_command": "http",
     "object_name": "${http_svc_template_name}",
     "object_type": "template",
+    "vars": {
+        "enable_pagerduty": "true",
+    },
     "use_agent": true,
     "zone": "master"
     }
@@ -164,6 +185,9 @@ class profile::core::icinga_resources (
     "check_command": "hostalive",
     "object_name": "${ping_svc_template_name}",
     "object_type": "template",
+    "vars": {
+        "enable_pagerduty": "true",
+    },
     "use_agent": true,
     "zone": "master"
     }
@@ -173,6 +197,9 @@ class profile::core::icinga_resources (
     "check_command": "dns",
     "object_name": "${dns_svc_template_name}",
     "object_type": "template",
+    "vars": {
+        "enable_pagerduty": "true",
+    },
     "use_agent": true,
     "zone": "master"
     }
@@ -182,6 +209,9 @@ class profile::core::icinga_resources (
     "check_command": "dhcp",
     "object_name": "${master_svc_template_name}",
     "object_type": "template",
+    "vars": {
+        "enable_pagerduty": "true",
+    },
     "use_agent": true,
     "zone": "master"
     }
@@ -195,6 +225,7 @@ class profile::core::icinga_resources (
     "vars": {
         "ldap_address": "localhost",
         "ldap_base": "dc=lsst,dc=cloud"
+        "enable_pagerduty": "true",
     },
     "zone": "master"
     }
@@ -208,6 +239,7 @@ class profile::core::icinga_resources (
     "vars": {
         "disk_cfree": "10%",
         "disk_wfree": "20%"
+        "enable_pagerduty": "true",
     },
     "zone": "master"
     }
@@ -217,6 +249,9 @@ class profile::core::icinga_resources (
     "check_command": "ssh",
     "object_name": "${ssh_svc_template_name}",
     "object_type": "template",
+    "vars": {
+        "enable_pagerduty": "true",
+        },
     "use_agent": true,
     "zone": "master"
     }
@@ -229,6 +264,7 @@ class profile::core::icinga_resources (
     "use_agent": false,
     "vars": {
         "http_certificate": "30"
+        "enable_pagerduty": "true",
         },
     "zone": "master"
     }
@@ -244,7 +280,7 @@ class profile::core::icinga_resources (
     "object_type": "template",
     "use_agent": true,
     "vars": {
-        "ntp_address": "ntp.shoa.cl"
+        "enable_pagerduty": "true",
     },
     "zone": "master"
     }

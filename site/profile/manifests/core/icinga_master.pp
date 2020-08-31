@@ -67,14 +67,10 @@ class profile::core::icinga_master (
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
 
-  #Force installation and usage of php73
+  #Package installation
   $packages = [
     'git',
     'pnp4nagios',
-    'perl-libwww-perl',
-    'perl-Crypt-SSLeay',
-    'perl-Sys-Syslog',
-    'perl-LWP-Protocol-https',
     'centos-release-scl',
     'nagios-plugins-all',
   ]

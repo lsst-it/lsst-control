@@ -1,5 +1,6 @@
 # @summary
 #   Define and create icinga objects for pagerduty integration
+#   Instructions taken from https://www.pagerduty.com/docs/guides/icinga2-perl-integration-guide/
 
 class profile::core::icinga_pagerduty (
   String $pagerduty_api,
@@ -56,7 +57,7 @@ class profile::core::icinga_pagerduty (
 
       env = {
         "ICINGA_CONTACTPAGER" = "\$user.pager$"
-        "ICINGA_NOTIFICATIONTYPE" = "$\notification.type$"
+        "ICINGA_NOTIFICATIONTYPE" = "\$notification.type$"
         "ICINGA_HOSTNAME" = "\$host.name$"
         "ICINGA_HOSTALIAS" = "\$host.display_name$"
         "ICINGA_HOSTSTATE" = "\$host.state$"
@@ -83,7 +84,6 @@ class profile::core::icinga_pagerduty (
 
       assign where host.vars.enable_pagerduty == true
     }
-    }
   | PAGERDUTY
 
   file { '/etc/icinga2/features-enabled/pagerduty-icinga2.conf':
@@ -92,5 +92,20 @@ class profile::core::icinga_pagerduty (
     mode    => '0640',
     owner   => 'icinga',
     group   => 'icinga',
+  }
+  file { '/usr/local/bin/pagerduty_icinga.pl':
+    ensure => 'present',
+    source => 'https://raw.github.com/PagerDuty/pagerduty-icinga-pl/master/pagerduty_icinga.pl',
+    mode   => '0755',
+    owner  => 'root',
+    group  => 'icinga',
+    notify => Service['icinga2'],
+  }
+  ~> cron { 'pagerduty':
+    ensure  => 'present',
+    command => '/usr/local/bin/pagerduty_icinga.pl flush',
+    user    => 'icinga',
+    hour    => '*',
+    minute  => '*',
   }
 }

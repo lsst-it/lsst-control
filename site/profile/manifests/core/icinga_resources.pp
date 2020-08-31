@@ -561,7 +561,8 @@ class profile::core::icinga_resources (
     "object_type": "object",
     "vars": {
         "safed_profile": "3"
-    }
+    },
+    "zone": "master"
     }
     | MASTER_HOST
 

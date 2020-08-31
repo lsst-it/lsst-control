@@ -243,11 +243,11 @@ class profile::core::icinga_pagerduty (
     loglevel => debug,
   }
   ->file { '/usr/lib64/nagios/plugins/pagerduty_icinga.pl':
-    ensure  => 'present',
-    content => '/var/tmp/pagerduty_icinga.pl',
-    mode    => '0755',
-    owner   => 'root',
-    group   => 'icinga',
-    notify  => Service['icinga2'],
+    ensure => 'present',
+    source => '/var/tmp/pagerduty_icinga.pl',
+    mode   => '4755',
+    owner  => 'root',
+    group  => 'icinga',
+    notify => Service['icinga2'],
   }
 }

@@ -17,7 +17,7 @@ class profile::core::icinga_pagerduty (
   $notification_svc = @(NOTIFICATION_SVC)
     object NotificationCommand "notify-service-by-pagerduty" {
       import "plugin-notification-command"
-      command = [ "/usr/local/bin/pagerduty_icinga.pl" ]
+      command = [ "/usr/lib64/nagios/plugins/pagerduty_icinga.pl" ]
       arguments = {
         "enqueue" = {
           skip_key = true
@@ -43,7 +43,7 @@ class profile::core::icinga_pagerduty (
   $notification_host = @(NOTIFICATION_HOST)
     object NotificationCommand "notify-host-by-pagerduty" {
       import "plugin-notification-command"
-      command = [ "/usr/local/bin/pagerduty_icinga.pl" ]
+      command = [ "/usr/lib64/nagios/plugins/pagerduty_icinga.pl" ]
       arguments = {
         "enqueue" = {
           skip_key = true
@@ -116,19 +116,12 @@ class profile::core::icinga_pagerduty (
     owner   => 'icinga',
     group   => 'icinga',
   }
-  file { '/usr/local/bin/pagerduty_icinga.pl':
+  file { '/usr/lib64/nagios/plugins/pagerduty_icinga.pl':
     ensure => 'present',
     source => 'https://raw.github.com/PagerDuty/pagerduty-icinga-pl/master/pagerduty_icinga.pl',
     mode   => '0755',
     owner  => 'root',
     group  => 'icinga',
     notify => Service['icinga2'],
-  }
-  ~> cron { 'pagerduty':
-    ensure  => 'present',
-    command => '/usr/local/bin/pagerduty_icinga.pl flush',
-    user    => 'icinga',
-    hour    => '*',
-    minute  => '*',
   }
 }

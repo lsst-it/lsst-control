@@ -5,7 +5,7 @@
 class profile::core::icinga_pagerduty (
   String $pagerduty_api,
 ){
-  $pagerduty_conf = @("PAGERDUTY"/)
+  $pagerduty = @("PAGERDUTY"/)
     object User "pagerduty" {
       pager = "${pagerduty_api}"
       groups = [ "icingaadmins" ]
@@ -13,7 +13,8 @@ class profile::core::icinga_pagerduty (
       states = [ OK, Warning, Critical, Unknown, Up, Down ]
       types = [ Problem, Acknowledgement, Recovery ]
     }
-
+  | PAGERDUTY
+  $notification_svc = @(NOTIFICATION_SVC)
     object NotificationCommand "notify-service-by-pagerduty" {
       import "plugin-notification-command"
       command = [ "/usr/local/bin/pagerduty_icinga.pl" ]
@@ -28,18 +29,18 @@ class profile::core::icinga_pagerduty (
           value = "pd_nagios_object=service"
         }
       }
-
       env = {
-        "ICINGA_CONTACTPAGER" = "\$user.pager$"
-        "ICINGA_NOTIFICATIONTYPE" = "\$notification.type$"
-        "ICINGA_SERVICEDESC" = "\$service.name$"
-        "ICINGA_HOSTNAME" = "\$host.name$"
-        "ICINGA_HOSTALIAS" = "\$host.display_name$"
-        "ICINGA_SERVICESTATE" = "\$service.state$"
-        "ICINGA_SERVICEOUTPUT" = "\$service.output$"
+        "ICINGA_CONTACTPAGER" = "$user.pager$"
+        "ICINGA_NOTIFICATIONTYPE" = "$notification.type$"
+        "ICINGA_SERVICEDESC" = "$service.name$"
+        "ICINGA_HOSTNAME" = "$host.name$"
+        "ICINGA_HOSTALIAS" = "$host.display_name$"
+        "ICINGA_SERVICESTATE" = "$service.state$"
+        "ICINGA_SERVICEOUTPUT" = "$service.output$"
       }
     }
-
+  | NOTIFICATION_SVC
+  $notification_host = @(NOTIFICATION_HOST)
     object NotificationCommand "notify-host-by-pagerduty" {
       import "plugin-notification-command"
       command = [ "/usr/local/bin/pagerduty_icinga.pl" ]
@@ -54,17 +55,17 @@ class profile::core::icinga_pagerduty (
           value = "pd_nagios_object=host"
         }
       }
-
       env = {
-        "ICINGA_CONTACTPAGER" = "\$user.pager$"
-        "ICINGA_NOTIFICATIONTYPE" = "\$notification.type$"
-        "ICINGA_HOSTNAME" = "\$host.name$"
-        "ICINGA_HOSTALIAS" = "\$host.display_name$"
-        "ICINGA_HOSTSTATE" = "\$host.state$"
-        "ICINGA_HOSTOUTPUT" = "\$host.output$"
+        "ICINGA_CONTACTPAGER" = "$user.pager$"
+        "ICINGA_NOTIFICATIONTYPE" = "$notification.type$"
+        "ICINGA_HOSTNAME" = "$host.name$"
+        "ICINGA_HOSTALIAS" = "$host.display_name$"
+        "ICINGA_HOSTSTATE" = "$host.state$"
+        "ICINGA_HOSTOUTPUT" = "$host.output$"
       }
     }
-
+  | NOTIFICATION_HOST
+  $pagerduty_svc = @(PAGERDUTY_SVC)
     apply Notification "pagerduty-service" to Service {
       command = "notify-service-by-pagerduty"
       states = [ OK, Warning, Critical, Unknown ]
@@ -74,7 +75,8 @@ class profile::core::icinga_pagerduty (
 
       assign where service.vars.enable_pagerduty == true
     }
-
+  | PAGERDUTY_SVC
+  $pagerduty_host = @(PAGERDUTY_HOST)
     apply Notification "pagerduty-host" to Host {
       command = "notify-host-by-pagerduty"
       states = [ Up, Down ]
@@ -84,11 +86,32 @@ class profile::core::icinga_pagerduty (
 
       assign where host.vars.enable_pagerduty == true
     }
-  | PAGERDUTY
+  | PAGERDUTY_HOST
 
-  file { '/etc/icinga2/features-enabled/pagerduty-icinga2.conf':
+  file { '/etc/icinga2/features-enabled/pagerduty-notification_svc.conf':
     ensure  => 'present',
-    content => $pagerduty_conf,
+    content => $notification_svc,
+    mode    => '0640',
+    owner   => 'icinga',
+    group   => 'icinga',
+  }
+  file { '/etc/icinga2/features-enabled/pagerduty-notification_host.conf':
+    ensure  => 'present',
+    content => $notification_host,
+    mode    => '0640',
+    owner   => 'icinga',
+    group   => 'icinga',
+  }
+  file { '/etc/icinga2/features-enabled/pagerduty-svc.conf':
+    ensure  => 'present',
+    content => $pagerduty_svc,
+    mode    => '0640',
+    owner   => 'icinga',
+    group   => 'icinga',
+  }
+  file { '/etc/icinga2/features-enabled/pagerduty-host.conf':
+    ensure  => 'present',
+    content => $pagerduty_host,
     mode    => '0640',
     owner   => 'icinga',
     group   => 'icinga',

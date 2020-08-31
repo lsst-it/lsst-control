@@ -20,7 +20,6 @@ class profile::core::icinga_master (
   String $api_name,
   String $api_user,
   String $api_pwd,
-  String $credentials_hash,
   String $ca_salt,
 ){
   include profile::core::letsencrypt

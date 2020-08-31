@@ -72,6 +72,10 @@ class profile::core::icinga_master (
   $packages = [
     'git',
     'pnp4nagios',
+    'perl-libwww-perl',
+    'perl-Crypt-SSLeay',
+    'perl-Sys-Syslog',
+    'perl-LWP-Protocol-https',
     'centos-release-scl',
     'nagios-plugins-all',
   ]

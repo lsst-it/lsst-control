@@ -90,7 +90,7 @@ class profile::core::icinga_pagerduty (
         "-f": {
             "command_id": "232",
             "repeat_key": true,
-            "value": "HOSTNAME=$host.name$, HOSTTATE=$host.state$, HOSTPROBLEMID=$host.state_id$, HOSTOUTPUT=$host.output$",
+            "value": "$f_args$",
             "order": "3"
         }
     },
@@ -98,6 +98,14 @@ class profile::core::icinga_pagerduty (
     "methods_execute": "PluginNotification",
     "object_name": "notify-cmd-host",
     "object_type": "object",
+    "vars": {
+      "f_args" : [
+        "HOSTNAME=$host.name$",
+        "HOSTSTATE=$host.state$",
+        "HOSTPROBLEMID=$host.state_id$",
+        "HOSTOUTPUT=$host.output$"
+      ]
+    },
     "zone": "master"
     }
     | COMMAND_HOST
@@ -122,7 +130,7 @@ class profile::core::icinga_pagerduty (
         "-f": {
             "command_id": "234",
             "repeat_key": true,
-            "value": "SERVICEDESC=$service.name$,SERVICEDISPLAYNAME=$service.display_name$,HOSTNAME=$host.name$,HOSTSTATE=$host.state$,HOSTDISPLAYNAME=$host.display_name$,SERVICESTATE=$service.state$,SERVICEPROBLEMID=$service.state_id$,SERVICEOUTPUT=$service.output$",
+            "value": "$f_args$",
             "order": "3"
         }        
     },
@@ -130,6 +138,18 @@ class profile::core::icinga_pagerduty (
     "methods_execute": "PluginNotification",
     "object_name": "notify-cmd-svc",
     "object_type": "object",
+    "vars": {
+      "f_args" : [
+        "SERVICEDESC=$service.name$",
+        "SERVICEDISPLAYNAME=$service.display_name$",
+        "HOSTNAME=$host.name$",
+        "HOSTSTATE=$host.state$",
+        "HOSTDISPLAYNAME=$host.display_name$",
+        "SERVICESTATE=$service.state$",
+        "SERVICEPROBLEMID=$service.state_id$",
+        "SERVICEOUTPUT=$service.output$" 
+      ]
+    },    
     "zone": "master"
     }
     | COMMAND_SVC

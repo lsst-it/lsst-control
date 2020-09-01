@@ -51,6 +51,19 @@ class profile::core::icinga_pagerduty (
     ],
     "object_name": "${user_name}",
     "object_type": "object",
+    "states": [
+      "OK",
+      "Warning",
+      "Critical",
+      "Unknown",
+      "Up",
+      "Down"
+    ],
+    "types": [
+      "Acknowledgement",
+      "Problem",
+      "Recovery"
+    ],
     "pager": "${pagerduty_api}",
     }
     | USER
@@ -79,37 +92,85 @@ class profile::core::icinga_pagerduty (
         "Recovery"
     ],
     "users": [
-        "pagerduty"
+        "${user_name}"
     ],
     "zone": "master"
     }
     | NOTIFY_TEMPLATE
-  $notification_svc = @("NOTIFY_SVC")
+  $notification_svc = @("NOTIFY_SVC"/)
     {
-    "apply_to": "service",
-    "assign_filter": "service.vars.enable_pagerduty=%22true%22",
     "imports": [
-        "${notification_template_name}"
+      "${notification_template_name}"
     ],
     "object_name": "${notification_svc_name}",
     "object_type": "apply",
-    "users": [
-        "${user_name}"
-    ]
+    "arguments" = {
+      "-n" = {
+        order = "0",
+        value = "host"
+      },
+      "-k" = {
+        order = "1",
+        value = "\\$user.pager$"
+      },
+      "-t" = {
+        order = "2",
+        value = "\\$notification.type$"
+      },
+      "-f" = {
+        order = "3",
+        repeat_key = "true",
+        value = "\\$f_args$"
+      }
+    },
+    "vars": {
+        f_args = [
+          "SERVICEDESC=\\$service.name$",
+          "SERVICEDISPLAYNAME=\\$service.display_name$",
+          "HOSTNAME=\\$host.name$",
+          "HOSTSTATE=\\$host.state$",
+          "HOSTDISPLAYNAME=\\$host.display_name$",
+          "SERVICESTATE=\\$service.state$",
+          "SERVICEPROBLEMID=\\$service.state_id$",
+          "SERVICEOUTPUT=\\$service.output$"
+        ]
+    }
     }
     | NOTIFY_SVC
   $notification_host = @("NOTIFY_HOST")
     {
-    "apply_to": "host",
-    "assign_filter": "host.vars.enable_pagerduty=%22true%22",
     "imports": [
-        "${notification_template_name}"
+      "${notification_template_name}"
     ],
     "object_name": "${notification_host_name}",
     "object_type": "apply",
-    "users": [
-        "${user_name}"
-    ]
+    "arguments" = {
+      "-n" = {
+        order = "0",
+        value = "host"
+      },
+      "-k" = {
+        order = "1",
+        value = "\\$user.pager$"
+      },
+      "-t" = {
+        order = "2",
+        value = "\\$notification.type$"
+      },
+      "-f" = {
+        order = "3",
+        repeat_key = "true",
+        value = "\\$f_args$"
+      }
+    },
+    "vars": {
+        f_args = [
+          "HOSTNAME=\\$host.name$",
+          "HOSTSTATE=\\$host.state$",
+          "HOSTPROBLEMID=\\$host.state_id$",
+          "HOSTOUTPUT=\\$host.output$"
+        ]
+    }
     }
     | NOTIFY_HOST
   #<----------------------------End JSON Files----------------------------->

@@ -56,7 +56,7 @@ class profile::core::icinga_pagerduty (
     | USER
   $command_content = @("COMMAND")
     {
-    "command": "/usr/lib64/nagios/plugins/pagerduty_icinga.pl",
+    "command": "/usr/share/pdagent-integrations/bin/pd-nagios",
     "methods_execute": "PluginNotification",
     "object_name": "${command_name}",
     "object_type": "object",
@@ -244,21 +244,6 @@ class profile::core::icinga_pagerduty (
     provider => shell,
     onlyif   => $notification_host_cond,
     loglevel => debug,
-  }
-  exec { 'wget https://raw.github.com/PagerDuty/pagerduty-icinga-pl/master/pagerduty_icinga.pl':
-    cwd      => '/var/tmp',
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => 'test ! -f /var/tmp/pagerduty_icinga.pl',
-    loglevel => debug,
-  }
-  ->file { '/usr/lib64/nagios/plugins/pagerduty_icinga.pl':
-    ensure => 'present',
-    source => '/var/tmp/pagerduty_icinga.pl',
-    mode   => '4755',
-    owner  => 'root',
-    group  => 'icinga',
-    notify => Service['icinga2'],
   }
   #<-----------------------END-Files-Creation----------------------------->
   service { 'pdagent':

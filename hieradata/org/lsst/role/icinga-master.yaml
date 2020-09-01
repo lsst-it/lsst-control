@@ -9,7 +9,17 @@ packages:
   - "bash-completion-extras"
   - "vim"
 
-profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"
+yum::managed_repos:
+  - 'pdagent.repo'
+yum::repos:
+  pdagent.repo:
+    ensure: 'present'
+    enabled: true
+    descr: 'PagerDuty Repo'
+    baseurl: 'https://packages.pagerduty.com/pdagent/rpm'
+    gpgcheck: true
+    gpgkey: 'https://packages.pagerduty.com/GPG-KEY-RPM-pagerduty'
+    target: '/etc/yum.repos.d/pdagent.repo'
 
 #LDAP Values
 profile::core::icinga_master::ldap_server: "139.229.135.6"
@@ -28,3 +38,6 @@ profile::core::icinga_resources::dns_template: "DnsTemplate"
 profile::core::icinga_resources::master_template: "MasterTemplate"
 profile::core::icinga_resources::ipa_template: "IpaTemplate"
 profile::core::icinga_resources::tls_template: "TlsTemplate"
+
+#Kernel lock
+profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"

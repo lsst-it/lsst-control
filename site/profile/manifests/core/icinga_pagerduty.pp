@@ -11,12 +11,14 @@ class profile::core::icinga_pagerduty (
   #Implicit usage of facts
   $master_fqdn  = $facts[fqdn]
   #Names Definition
-  $user_template_name         = 'pagerduty-template'
-  $user_name                  = 'pagerduty'
-  $command_name               = 'pagerduty_cmd'
-  $notification_template_name = 'pagerduty-cmd-template'
-  $notification_host_name     = 'notify-host'
-  $notification_svc_name      = 'notify-service'
+  $user_template_name              = 'pagerduty-template'
+  $user_name                       = 'pagerduty'
+  $command_host_name               = 'notify-cmd-host'
+  $command_svc_name                = 'notify-cmd-svc'
+  $host_notification_template_name = 'host-notification-template'
+  $svc_notification_template_name  = 'svc-notification-template'
+  $host_notification_name          = 'notify-host'
+  $svc_notification_name           = 'notify-service'
   #Commands abreviation
   $url_cmd     = "https://${master_fqdn}/director/command"
   $url_notify  = "https://${master_fqdn}/director/notification"
@@ -62,25 +64,82 @@ class profile::core::icinga_pagerduty (
     "types": [
       "Acknowledgement",
       "Problem",
-      "Recovery"
+      "Recovery",
+      "Custom"
     ],
     "pager": "${pagerduty_api}",
     }
     | USER
-  $command_content = @("COMMAND")
+  $command_host_content = @(COMMAND_HOST)
     {
-    "command": "/usr/share/pdagent-integrations/bin/pd-nagios",
+    "arguments": {
+        "-n": {
+            "command_id": "232",
+            "value": "host",
+            "order": "0"
+        },
+        "-k": {
+            "command_id": "232",
+            "value": "$user.pager$",
+            "order": "1"
+        },
+        "-t": {
+            "command_id": "232",
+            "value": "$notification.type$",
+            "order": "2"
+        },
+        "-f": {
+            "command_id": "232",
+            "repeat_key": true,
+            "value": "HOSTNAME=$host.name$, HOSTTATE=$host.state$, HOSTPROBLEMID=$host.state_id$, HOSTOUTPUT=$host.output$",
+            "order": "3"
+        }
+        
+    },
+    "command": "\/usr\/share\/pdagent-integrations\/bin\/pd-nagios",
     "methods_execute": "PluginNotification",
-    "object_name": "${command_name}",
+    "object_name": "notify-cmd-host",
     "object_type": "object",
     "zone": "master"
-     }
-    | COMMAND
-  $notification_template = @("NOTIFY_TEMPLATE")
+    }
+    | COMMAND_HOST
+  $command_svc_content = @(COMMAND_SVC)
     {
-    "command": "${command_name}",
+    "arguments": {
+        "-n": {
+            "command_id": "234",
+            "value": "service",
+            "order": "0"
+        },
+        "-k": {
+            "command_id": "234",
+            "value": "$user.pager$",
+            "order": "1"
+        },
+        "-t": {
+            "command_id": "234",
+            "value": "$notification.type$",
+            "order": "2"
+        },
+        "-f": {
+            "command_id": "234",
+            "repeat_key": true,
+            "value": "SERVICEDESC=$service.name$,SERVICEDISPLAYNAME=$service.display_name$,HOSTNAME=$host.name$,HOSTSTATE=$host.state$,HOSTDISPLAYNAME=$host.display_name$,SERVICESTATE=$service.state$,SERVICEPROBLEMID=$service.state_id$,SERVICEOUTPUT=$service.output$",
+            "order": "3"
+        }        
+    },
+    "command": "\/usr\/share\/pdagent-integrations\/bin\/pd-nagios",
+    "methods_execute": "PluginNotification",
+    "object_name": "notify-cmd-svc",
+    "object_type": "object",
+    "zone": "master"
+    }
+    | COMMAND_SVC
+  $host_notification_template = @("HOST_NOTIFICATION_TEMPLATE")
+    {
+    "command": "${command_host_name}",
     "notification_interval": "300",
-    "object_name": "${notification_template_name}",
+    "object_name": "${host_notification_template_name}",
     "object_type": "template",
     "states": [
         "Down",
@@ -89,90 +148,87 @@ class profile::core::icinga_pagerduty (
     "types": [
         "Acknowledgement",
         "Problem",
-        "Recovery"
+        "Recovery",
+        "Custom",
     ],
     "users": [
         "${user_name}"
     ],
     "zone": "master"
     }
-    | NOTIFY_TEMPLATE
-  $notification_svc = @("NOTIFY_SVC"/)
+    | HOST_NOTIFICATION_TEMPLATE
+  $svc_notification_template = @("SVC_NOTIFICATION_TEMPLATE")
     {
-    "imports": [
-      "${notification_template_name}"
+    "command": "${command_svc_name}",
+    "notification_interval": "300",
+    "object_name": "${svc_notification_template_name}",
+    "object_type": "template",
+    "states": [
+      "OK",
+      "Warning",
+      "Critical",
+      "Unknown"
     ],
-    "object_name": "${notification_svc_name}",
-    "object_type": "apply",
-    "arguments" = {
-      "-n" = {
-        order = "0",
-        value = "host"
-      },
-      "-k" = {
-        order = "1",
-        value = "\\$user.pager$"
-      },
-      "-t" = {
-        order = "2",
-        value = "\\$notification.type$"
-      },
-      "-f" = {
-        order = "3",
-        repeat_key = "true",
-        value = "\\$f_args$"
-      }
-    },
-    "vars": {
-        f_args = [
-          "SERVICEDESC=\\$service.name$",
-          "SERVICEDISPLAYNAME=\\$service.display_name$",
-          "HOSTNAME=\\$host.name$",
-          "HOSTSTATE=\\$host.state$",
-          "HOSTDISPLAYNAME=\\$host.display_name$",
-          "SERVICESTATE=\\$service.state$",
-          "SERVICEPROBLEMID=\\$service.state_id$",
-          "SERVICEOUTPUT=\\$service.output$"
-        ]
+    "types": [
+      "Acknowledgement",
+      "Problem",
+      "Recovery",
+      "Custom"
+    ],
+    "users": [
+        "${user_name}"
+    ],
+    "zone": "master"
     }
-    }
-    | NOTIFY_SVC
-  $notification_host = @("NOTIFY_HOST")
+    | SVC_NOTIFICATION_TEMPLATE
+  $host_notification = @("HOST_NOTIFICATION")
     {
+    "apply_to": "host",
+    "assign_filter": "host.vars.enable_pagerduty=%22true%22",
     "imports": [
-      "${notification_template_name}"
+        "${host_notification_template_name}"
     ],
-    "object_name": "${notification_host_name}",
+    "object_name": "${host_notification_name}",
     "object_type": "apply",
-    "arguments" = {
-      "-n" = {
-        order = "0",
-        value = "host"
-      },
-      "-k" = {
-        order = "1",
-        value = "\\$user.pager$"
-      },
-      "-t" = {
-        order = "2",
-        value = "\\$notification.type$"
-      },
-      "-f" = {
-        order = "3",
-        repeat_key = "true",
-        value = "\\$f_args$"
-      }
-    },
-    "vars": {
-        f_args = [
-          "HOSTNAME=\\$host.name$",
-          "HOSTSTATE=\\$host.state$",
-          "HOSTPROBLEMID=\\$host.state_id$",
-          "HOSTOUTPUT=\\$host.output$"
-        ]
+    "states": [
+        "Down",
+        "Up"
+    ],
+    "types": [
+        "Acknowledgement",
+        "Problem",
+        "Recovery",
+        "Custom"
+    ],
+    "users": [
+        "${user_name}"
+    ]
     }
+    | HOST_NOTIFICATION
+  $svc_notification = @("SERVICE_NOTIFICATION")
+    {
+    "apply_to": "service",
+    "assign_filter": "service.vars.enable_pagerduty=%22true%22",
+    "imports": [
+        "${svc_notification_template_name}"
+    ],
+    "object_name": "${svc_notification_name}",
+    "object_type": "apply",
+    "states": [
+        "Down",
+        "Up"
+    ],
+    "types": [
+        "Acknowledgement",
+        "Problem",
+        "Recovery",
+        "Custom"
+    ],
+    "users": [
+        "${user_name}"
+    ]
     }
-    | NOTIFY_HOST
+    | SERVICE_NOTIFICATION
   #<----------------------------End JSON Files----------------------------->
   #
   #
@@ -186,21 +242,30 @@ class profile::core::icinga_pagerduty (
   $user_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_usr}?name=${user_name}' ${lt}"
   $user_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_usr}' -d @${user_path}"
 
-  $command_path = "${$icinga_path}/${command_name}.json"
-  $command_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_cmd}?name=${command_name}' ${lt}"
-  $command_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_cmd}' -d @${command_path}"
+  $command_host_path = "${$icinga_path}/${command_host_name}.json"
+  $command_host_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_cmd}?name=${command_host_name}' ${lt}"
+  $command_host_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_cmd}' -d @${command_host_path}"
 
-  $notification_template_path = "${$icinga_path}/${notification_template_name}.json"
-  $notification_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${notification_template_name}' ${lt}"
-  $notification_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${notification_template_path}"
+  $command_svc_path = "${$icinga_path}/${command_svc_name}.json"
+  $command_svc_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_cmd}?name=${command_svc_name}' ${lt}"
+  $command_svc_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_cmd}' -d @${command_svc_path}"
 
-  $notification_svc_path = "${$icinga_path}/${notification_svc_name}.json"
-  $notification_svc_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${notification_svc_name}' ${lt}"
-  $notification_svc_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${notification_svc_path}"
+  $host_notification_template_path = "${$icinga_path}/${host_notification_template_name}.json"
+  $host_notification_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${host_notification_template_name}' ${lt}"
+  $host_notification_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${host_notification_template_path}"
 
-  $notification_host_path = "${$icinga_path}/${notification_host_name}.json"
-  $notification_host_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${notification_host_name}' ${lt}"
-  $notification_host_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${notification_host_path}"
+  $svc_notification_template_path = "${$icinga_path}/${svc_notification_template_name}.json"
+  $svc_notification_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${svc_notification_template_name}' ${lt}"
+  $svc_notification_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${svc_notification_template_path}"
+
+  $host_notification_path = "${$icinga_path}/${host_notification_name}.json"
+  $host_notification_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${host_notification_name}' ${lt}"
+  $host_notification_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${host_notification_path}"
+
+  $svc_notification_path = "${$icinga_path}/${svc_notification_name}.json"
+  $svc_notification_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${svc_notification_name}' ${lt}"
+  $svc_notification_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${svc_notification_path}"
+
   #<------------------END-Templates-Variables-Creation-------------------->
   #
   #
@@ -222,6 +287,7 @@ class profile::core::icinga_pagerduty (
   #
   #
   #<-------------------Files Creation and deployement--------------------->
+  ##User Creation
   #Create User template file
   file { $user_template_path:
     ensure  => 'present',
@@ -250,60 +316,94 @@ class profile::core::icinga_pagerduty (
     onlyif   => $user_cond,
     loglevel => debug,
   }
-  #Create Command file
-  file { $command_path:
+
+  ##Host and Service Command
+  #Create Host Command file
+  file { $command_host_path:
     ensure  => 'present',
-    content => $command_content,
-    before  => Exec[$command_cmd],
+    content => $command_host_content,
+    before  => Exec[$command_host_cmd],
   }
-  #Add Command
-  exec { $command_cmd:
+  #Add Host Command
+  exec { $command_host_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $command_cond,
+    onlyif   => $command_host_cond,
     loglevel => debug,
   }
-  #Create Notification Template file
-  file { $notification_template_path:
+  #Create Service Command file
+  file { $command_svc_path:
     ensure  => 'present',
-    content => $notification_template,
-    before  => Exec[$notification_template_cmd],
+    content => $command_svc_content,
+    before  => Exec[$command_svc_cmd],
   }
-  #Add Notification Template
-  exec { $notification_template_cmd:
+  #Add Service Command
+  exec { $command_svc_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $notification_template_cond,
+    onlyif   => $command_svc_cond,
+    loglevel => debug,
+  }
+
+  ##Notification Templates
+  #Create Host Notification Template file
+  file { $host_notification_template_path:
+    ensure  => 'present',
+    content => $host_notification_template,
+    before  => Exec[$host_notification_template_cmd],
+  }
+  #Add Host Notification Template
+  exec { $host_notification_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $host_notification_template_cond,
+    loglevel => debug,
+  }
+  #Create Service Notification Template file
+  file { $svc_notification_template_path:
+    ensure  => 'present',
+    content => $svc_notification_template,
+    before  => Exec[$svc_notification_template_cmd],
+  }
+  #Add Service Notification Template
+  exec { $svc_notification_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $svc_notification_template_cond,
+    loglevel => debug,
+  }
+
+  ##Host and Services Notification
+  #Create Host Notification file
+  file { $host_notification_path:
+    ensure  => 'present',
+    content => $host_notification,
+    before  => Exec[$host_notification_cmd],
+  }
+  #Add Host Notification
+  exec { $host_notification_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $host_notification_cond,
     loglevel => debug,
   }
   #Create Service Notification file
-  file { $notification_svc_path:
+  file { $svc_notification_path:
     ensure  => 'present',
-    content => $notification_svc,
-    before  => Exec[$notification_svc_cmd],
+    content => $svc_notification,
+    before  => Exec[$svc_notification_cmd],
   }
   #Add Service Notification
-  exec { $notification_svc_cmd:
+  exec { $svc_notification_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $notification_svc_cond,
-    loglevel => debug,
-  }
-  #Create Host Notification file
-  file { $notification_host_path:
-    ensure  => 'present',
-    content => $notification_host,
-    before  => Exec[$notification_host_cmd],
-  }
-  #Add Host Notification
-  exec { $notification_host_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $notification_host_cond,
+    onlyif   => $svc_notification_cond,
     loglevel => debug,
   }
   #<-----------------------END-Files-Creation----------------------------->

@@ -65,8 +65,7 @@ class profile::core::icinga_pagerduty (
     "types": [
         "Acknowledgement",
         "Problem",
-        "Recovery",
-        "Custom"
+        "Recovery"
     ]
     }
     | USER
@@ -147,8 +146,7 @@ class profile::core::icinga_pagerduty (
     "types": [
         "Acknowledgement",
         "Problem",
-        "Recovery",
-        "Custom"
+        "Recovery"
     ],
     "users": [
         "${user_name}"
@@ -171,8 +169,7 @@ class profile::core::icinga_pagerduty (
     "types": [
       "Acknowledgement",
       "Problem",
-      "Recovery",
-      "Custom"
+      "Recovery"
     ],
     "users": [
         "${user_name}"
@@ -196,8 +193,7 @@ class profile::core::icinga_pagerduty (
     "types": [
         "Acknowledgement",
         "Problem",
-        "Recovery",
-        "Custom"
+        "Recovery"
     ],
     "users": [
         "${user_name}"
@@ -222,8 +218,7 @@ class profile::core::icinga_pagerduty (
     "types": [
         "Acknowledgement",
         "Problem",
-        "Recovery",
-        "Custom"
+        "Recovery"
     ],
     "users": [
         "${user_name}"

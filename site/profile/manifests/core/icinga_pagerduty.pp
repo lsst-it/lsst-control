@@ -28,10 +28,8 @@ class profile::core::icinga_pagerduty (
   $lt          = '| grep Failed'
   #Package INstallation
   $packages = [
-    'perl-libwww-perl',
-    'perl-Crypt-SSLeay',
-    'perl-Sys-Syslog',
-    'perl-LWP-Protocol-https',
+    'pdagent',
+    'pdagent-integrations',
   ]
   #<-----------------------End Variables Definition----------------------->
   #
@@ -44,7 +42,7 @@ class profile::core::icinga_pagerduty (
     "object_type": "template",
     "zone": "master"
     }
-  | USER_TEMPLATE
+    | USER_TEMPLATE
   $user_content = @("USER"/)
     {
     "display_name": "PagerDuty Notification User",
@@ -55,18 +53,18 @@ class profile::core::icinga_pagerduty (
     "object_type": "object",
     "pager": "${pagerduty_api}",
     }
-  | USER
+    | USER
   $command_content = @("COMMAND")
-  {
+    {
     "command": "/usr/lib64/nagios/plugins/pagerduty_icinga.pl",
     "methods_execute": "PluginNotification",
     "object_name": "${command_name}",
     "object_type": "object",
     "zone": "master"
-  }
-  | COMMAND
+     }
+    | COMMAND
   $notification_template = @("NOTIFY_TEMPLATE")
-  {
+    {
     "command": "${command_name}",
     "notification_interval": "300",
     "object_name": "${notification_template_name}",
@@ -84,10 +82,10 @@ class profile::core::icinga_pagerduty (
         "pagerduty"
     ],
     "zone": "master"
-  }
-  | NOTIFY_TEMPLATE
+    }
+    | NOTIFY_TEMPLATE
   $notification_svc = @("NOTIFY_SVC")
-  {
+    {
     "apply_to": "service",
     "assign_filter": "service.vars.enable_pagerduty=%22true%22",
     "imports": [
@@ -98,10 +96,10 @@ class profile::core::icinga_pagerduty (
     "users": [
         "${user_name}"
     ]
-  }
-  | NOTIFY_SVC
+    }
+    | NOTIFY_SVC
   $notification_host = @("NOTIFY_HOST")
-  {
+    {
     "apply_to": "host",
     "assign_filter": "host.vars.enable_pagerduty=%22true%22",
     "imports": [
@@ -112,8 +110,8 @@ class profile::core::icinga_pagerduty (
     "users": [
         "${user_name}"
     ]
-  }
-  | NOTIFY_HOST
+    }
+    | NOTIFY_HOST
   #<----------------------------End JSON Files----------------------------->
   #
   #
@@ -145,11 +143,24 @@ class profile::core::icinga_pagerduty (
   #<------------------END-Templates-Variables-Creation-------------------->
   #
   #
-  #<-------------------Files Creation and deployement--------------------->
+  #<--------------------------Resources-Creation-------------------------->
+  yumrepo { 'pdagent':
+    ensure   => 'present',
+    enabled  => true,
+    descr    => 'PagerDuty Repo',
+    baseurl  => 'https://packages.pagerduty.com/pdagent/rpm',
+    gpgcheck => false,
+    target   => '/etc/yum.repos.d/pdagent.repo',
+  }
   #Packages Installation
   package { $packages:
-    ensure => 'present',
+    ensure  => 'present',
+    require => Yumrepo['pdagent'],
   }
+  #<------------------------END-Resources-Creation------------------------>
+  #
+  #
+  #<-------------------Files Creation and deployement--------------------->
   #Create User template file
   file { $user_template_path:
     ensure  => 'present',
@@ -234,7 +245,6 @@ class profile::core::icinga_pagerduty (
     onlyif   => $notification_host_cond,
     loglevel => debug,
   }
-  #<-----------------------END-Files-Creation----------------------------->
   exec { 'wget https://raw.github.com/PagerDuty/pagerduty-icinga-pl/master/pagerduty_icinga.pl':
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
@@ -249,5 +259,10 @@ class profile::core::icinga_pagerduty (
     owner  => 'root',
     group  => 'icinga',
     notify => Service['icinga2'],
+  }
+  #<-----------------------END-Files-Creation----------------------------->
+  service { 'pdagent':
+    ensure  => 'running',
+    require => Package[$packages],
   }
 }

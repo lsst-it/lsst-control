@@ -53,21 +53,21 @@ class profile::core::icinga_pagerduty (
     ],
     "object_name": "${user_name}",
     "object_type": "object",
+    "pager": "${pagerduty_api}",
     "states": [
-      "OK",
-      "Warning",
-      "Critical",
-      "Unknown",
-      "Up",
-      "Down"
+        "Down",
+        "Up",
+        "OK",
+        "Warning",
+        "Critical",
+        "Unknown"
     ],
     "types": [
-      "Acknowledgement",
-      "Problem",
-      "Recovery",
-      "Custom"
-    ],
-    "pager": "${pagerduty_api}",
+        "Acknowledgement",
+        "Problem",
+        "Recovery",
+        "Custom"
+    ]
     }
     | USER
   $command_host_content = @(COMMAND_HOST)
@@ -94,7 +94,6 @@ class profile::core::icinga_pagerduty (
             "value": "HOSTNAME=$host.name$, HOSTTATE=$host.state$, HOSTPROBLEMID=$host.state_id$, HOSTOUTPUT=$host.output$",
             "order": "3"
         }
-        
     },
     "command": "\/usr\/share\/pdagent-integrations\/bin\/pd-nagios",
     "methods_execute": "PluginNotification",
@@ -149,7 +148,7 @@ class profile::core::icinga_pagerduty (
         "Acknowledgement",
         "Problem",
         "Recovery",
-        "Custom",
+        "Custom"
     ],
     "users": [
         "${user_name}"
@@ -215,8 +214,10 @@ class profile::core::icinga_pagerduty (
     "object_name": "${svc_notification_name}",
     "object_type": "apply",
     "states": [
-        "Down",
-        "Up"
+      "OK",
+      "Warning",
+      "Critical",
+      "Unknown"
     ],
     "types": [
         "Acknowledgement",

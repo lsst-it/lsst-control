@@ -157,13 +157,11 @@ class profile::core::icinga_resources (
     "master_should_connect": false,
     "max_check_attempts": "5",
     "vars": {
+        "http_certificate": "30",
         "enable_pagerduty": "true"
     },
     "object_name": "${tls_template}",
     "object_type": "template",
-    "vars": {
-        "http_certificate": "30"
-        },
     }
     | TLS
 
@@ -251,7 +249,7 @@ class profile::core::icinga_resources (
     "object_type": "template",
     "vars": {
         "enable_pagerduty": "true"
-        },
+    },
     "use_agent": true,
     "zone": "master"
     }
@@ -265,7 +263,7 @@ class profile::core::icinga_resources (
     "vars": {
         "http_certificate": "30",
         "enable_pagerduty": "true"
-        },
+    },
     "zone": "master"
     }
     | TLS
@@ -297,6 +295,9 @@ class profile::core::icinga_resources (
         "${$ping_svc_template_name}"
     ],
     "object_name": "${host_svc_ping_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | HOST_SVC_1
@@ -307,6 +308,9 @@ class profile::core::icinga_resources (
         "${$disk_svc_template_name}"
     ],
     "object_name": "${host_svc_disk_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | HOST_SVC_2
@@ -317,6 +321,9 @@ class profile::core::icinga_resources (
         "${$ssh_svc_template_name}"
     ],
     "object_name": "${host_svc_ssh_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | HOST_SVC_3
@@ -327,6 +334,9 @@ class profile::core::icinga_resources (
         "${$ntp_svc_template_name}"
     ],
     "object_name": "${host_svc_ntp_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | HOST_SVC_4
@@ -338,6 +348,9 @@ class profile::core::icinga_resources (
       "${$http_svc_template_name}"
     ],
     "object_name": "${http_svc_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | HTTP_SVC_1
@@ -348,6 +361,9 @@ class profile::core::icinga_resources (
         "${$ping_svc_template_name}"
     ],
     "object_name": "${http_svc_ping_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | HTTP_SVC_2
@@ -358,6 +374,9 @@ class profile::core::icinga_resources (
         "${$disk_svc_template_name}"
     ],
     "object_name": "${http_svc_disk_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | HTTP_SVC_3
@@ -368,6 +387,9 @@ class profile::core::icinga_resources (
         "${$ssh_svc_template_name}"
     ],
     "object_name": "${http_svc_ssh_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | HTTP_SVC_4
@@ -378,6 +400,9 @@ class profile::core::icinga_resources (
         "${$ntp_svc_template_name}"
     ],
     "object_name": "${http_svc_ntp_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | HTTP_SVC_5
@@ -391,7 +416,8 @@ class profile::core::icinga_resources (
     "object_name": "${master_svc_dhcp_name}",
     "object_type": "object",
     "vars": {
-      "dhcp_serverip": "${dhcp_server}"
+      "dhcp_serverip": "${dhcp_server}",
+      "enable_pagerduty": "true"
     }
     }
     | MASTER_SVC_1
@@ -402,6 +428,9 @@ class profile::core::icinga_resources (
       "${$ping_svc_template_name}"
     ],
     "object_name": "${master_svc_ping_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | MASTER_SVC_2
@@ -412,6 +441,9 @@ class profile::core::icinga_resources (
         "${$disk_svc_template_name}"
     ],
     "object_name": "${master_svc_disk_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | MASTER_SVC_3
@@ -422,6 +454,9 @@ class profile::core::icinga_resources (
         "${$ssh_svc_template_name}"
     ],
     "object_name": "${master_svc_ssh_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | MASTER_SVC_4
@@ -432,6 +467,9 @@ class profile::core::icinga_resources (
         "${$ntp_svc_template_name}"
     ],
     "object_name": "${master_svc_ntp_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | MASTER_SVC_5
@@ -442,6 +480,9 @@ class profile::core::icinga_resources (
         "${$tls_svc_template_name}"
     ],
     "object_name": "${master_svc_tls_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | MASTER_SVC_6
@@ -454,6 +495,9 @@ class profile::core::icinga_resources (
       "${$dns_svc_template_name}"
     ],
     "object_name": "${dns_svc_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | DNS_SVC_1
@@ -464,6 +508,9 @@ class profile::core::icinga_resources (
       "${$ping_svc_template_name}"
     ],
     "object_name": "${dns_svc_ping_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | DNS_SVC_2
@@ -474,6 +521,9 @@ class profile::core::icinga_resources (
         "${$disk_svc_template_name}"
     ],
     "object_name": "${dns_svc_disk_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | DNS_SVC_3
@@ -484,6 +534,9 @@ class profile::core::icinga_resources (
         "${$ssh_svc_template_name}"
     ],
     "object_name": "${dns_svc_ssh_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | DNS_SVC_4
@@ -494,6 +547,9 @@ class profile::core::icinga_resources (
         "${$ntp_svc_template_name}"
     ],
     "object_name": "${dns_svc_ntp_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | DNS_SVC_5
@@ -505,6 +561,9 @@ class profile::core::icinga_resources (
       "${$ipa_svc_template_name}"
     ],
     "object_name": "${ipa_svc_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | IPA_SVC_1
@@ -515,6 +574,9 @@ class profile::core::icinga_resources (
       "${$ping_svc_template_name}"
     ],
     "object_name": "${ipa_svc_ping_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | IPA_SVC_2
@@ -525,6 +587,9 @@ class profile::core::icinga_resources (
         "${$disk_svc_template_name}"
     ],
     "object_name": "${ipa_svc_disk_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | IPA_SVC_3
@@ -535,6 +600,9 @@ class profile::core::icinga_resources (
         "${$ssh_svc_template_name}"
     ],
     "object_name": "${ipa_svc_ssh_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | IPA_SVC_4
@@ -545,6 +613,9 @@ class profile::core::icinga_resources (
         "${$ntp_svc_template_name}"
     ],
     "object_name": "${ipa_svc_ntp_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
     "object_type": "object"
     }
     | IPA_SVC_5

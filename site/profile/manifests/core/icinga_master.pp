@@ -86,9 +86,6 @@ class profile::core::icinga_master (
     #Needs to end in newline
     user = icinga
     group = icinga
-    log_type = syslog
-    log_file = /var/log/pnp4nagios/npcd.log
-    max_logfile_size = 10485760
     log_level = 1 
     perfdata_spool_dir = /var/spool/icinga2/perfdata
     perfdata_file_run_cmd = /usr/libexec/pnp4nagios/process_perfdata.pl

@@ -16,4 +16,5 @@ ccs_software::services:
   prod:
     - "comcam-mcm"
     - "mcm-comcam"  # XXX should both comcam-mcm and mcm-comcam be running???
+  20200807:
     - "ocs-bridge-comcam"

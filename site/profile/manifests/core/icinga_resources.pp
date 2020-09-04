@@ -1590,14 +1590,14 @@ class profile::core::icinga_resources (
     cwd      => $nwc_dir,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     onlyif   => "test ! -f ${$nwc_dir}/plugins-scripts/check_nwc_health",
-    loglevel => debug,
+#    loglevel => debug,
   }
-  ->exec {"autoreconf;./configure ${conditions};make;make install;":
+  exec {"autoreconf;./configure ${conditions};make;make install;":
     cwd      => $nwc_dir,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => "test ! -f ${base_dir}/check_nwc_health",
-    loglevel => debug,
+#    loglevel => debug,
   }
   ##Add Master Host
   #Create master host file

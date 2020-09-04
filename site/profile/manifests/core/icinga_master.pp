@@ -71,6 +71,7 @@ class profile::core::icinga_master (
   $packages = [
     'git',
     'pnp4nagios',
+    'net-snmp-perl',
     'centos-release-scl',
     'nagios-plugins-all',
   ]

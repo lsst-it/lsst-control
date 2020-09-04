@@ -4,6 +4,7 @@ classes:
   - "profile::core::icinga_master"
   - "profile::core::icinga_resources"
   - "profile::core::icinga_pagerduty"
+  - "profile::core::icinga_netmon"
 packages:
   - "bash-completion"
   - "bash-completion-extras"

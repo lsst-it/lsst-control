@@ -1575,6 +1575,30 @@ class profile::core::icinga_resources (
     group => 'nagios',
     mode  => '4755',
   }
+  #check_nwc_health plugin
+  $base_dir   = '/usr/lib64/nagios/plugins'
+  $nwc_dir    = "${icinga_path}/check_nwc_health"
+  $conditions = "--prefix=${base_dir} --with-nagios-user=root --with-nagios-group=icinga --with-perl=/bin/perl"
+  vcsrepo { $nwc_dir:
+    ensure   => present,
+    provider => git,
+    source   => 'https://github.com/lausser/check_nwc_health',
+    revision => '1.4.9',
+    require  => Class['::icingaweb2'],
+  }
+  ->exec {'git submodule update --init':
+    cwd      => $nwc_dir,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    onlyif   => "test ! -f ${$nwc_dir}/plugins-scripts/check_nwc_health",
+    loglevel => debug,
+  }
+  ->exec {"autoreconf;./configure ${conditions};make;make install;":
+    cwd      => $nwc_dir,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => "test ! -f ${base_dir}/check_nwc_health",
+    loglevel => debug,
+  }
   ##Add Master Host
   #Create master host file
   file { $addhost_path:

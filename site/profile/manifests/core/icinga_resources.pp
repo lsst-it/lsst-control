@@ -883,6 +883,24 @@ class profile::core::icinga_resources (
   file { $icinga_path:
     ensure => 'directory',
   }
+  #<---------------END-Files Creation and deployement--------------------->
+  #
+  #
+  #<-----------------Repo-and-Packages-for-nwc_health--------------------->
+  yumrepo { 'perl':
+    ensure   => 'present',
+    enabled  => true,
+    descr    => 'Perl Modules (CentOS_7)',
+    baseurl  => 'http://download.opensuse.org/repositories/home:/csbuild:/Perl/CentOS_7/',
+    gpgcheck => true,
+    gpgkey   => 'http://download.opensuse.org/repositories/home:/csbuild:/Perl/CentOS_7/repodata/repomd.xml.key',
+    target   => '/etc/yum.repos.d/perl.repo',
+  }
+  #Packages Installation
+  package { 'perl-Net-SNMP':
+    ensure  => 'present',
+    require => Yumrepo['perl'],
+  }
   #<---------------------------Host-Templates----------------------------->
   #Create host template file
   file { $host_template_path:

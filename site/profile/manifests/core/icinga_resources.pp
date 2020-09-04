@@ -1620,7 +1620,7 @@ class profile::core::icinga_resources (
   ->file {"${base_dir}/check_nwc_health":
     ensure => 'present',
     source => "${$nwc_dir}/plugins-scripts/check_nwc_health",
-    owner  => 'root', 
+    owner  => 'root',
     group  => 'icinga',
     mode   => '4755',
   }

@@ -1578,7 +1578,7 @@ class profile::core::icinga_resources (
   #check_nwc_health plugin
   $base_dir   = '/usr/lib64/nagios/plugins'
   $nwc_dir    = "${icinga_path}/check_nwc_health"
-  $conditions = "--prefix=${base_dir} --with-nagios-user=root --with-nagios-group=icinga --with-perl=/bin/perl"
+  $conditions = "--prefix=${nwc_dir} --with-nagios-user=root --with-nagios-group=icinga --with-perl=/bin/perl"
   vcsrepo { $nwc_dir:
     ensure   => present,
     provider => git,
@@ -1590,14 +1590,21 @@ class profile::core::icinga_resources (
     cwd      => $nwc_dir,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     onlyif   => "test ! -f ${$nwc_dir}/plugins-scripts/check_nwc_health",
-#    loglevel => debug,
+    loglevel => debug,
   }
-  exec {"autoreconf;./configure ${conditions};make;make install;":
+  ->exec {"autoreconf;./configure ${conditions};make;make install;":
     cwd      => $nwc_dir,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => "test ! -f ${base_dir}/check_nwc_health",
-#    loglevel => debug,
+    loglevel => debug,
+  }
+  ->file {"${base_dir}/check_nwc_health":
+    ensure => 'present',
+    source => "${$nwc_dir}/plugins-scripts/check_nwc_health",
+    owner  => 'root', 
+    group  => 'icinga',
+    mode   => '4755',
   }
   ##Add Master Host
   #Create master host file

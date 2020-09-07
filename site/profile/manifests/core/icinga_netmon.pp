@@ -59,7 +59,8 @@ class profile::core::icinga_netmon (
     "vars": {
       "enable_pagerduty": "true",
       "nwc_health_community": "public",
-      "nwc_health_mode": "interface-status"
+      "nwc_health_mode": "interface-usage",
+      "nwc_health_statefilesdir": "/tmp/"
     },
     "use_agent": false,
     "zone": "master"

@@ -39,7 +39,7 @@ class profile::core::common (
   include tuned
 
   if $deploy_icinga_agent {
-    include profile::core::icinga_agent
+    include profile::icinga::agent
   }
 
   if $manage_puppet_agent {

@@ -1,14 +1,8 @@
 # @summary
 #   Define and create all file resources of icinga master
 
-class profile::core::icinga_resources (
+class profile::icinga::resources (
   String $credentials_hash,
-  String $host_template,
-  String $http_template,
-  String $dns_template,
-  String $master_template,
-  String $ipa_template,
-  String $tls_template,
   String $dhcp_server,
 ){
 
@@ -26,6 +20,15 @@ class profile::core::icinga_resources (
   $curl          = 'curl -s -k -H'
   $icinga_path   = '/opt/icinga'
   $lt            = '| grep Failed'
+
+
+  #Host Templates Names
+  $host_template   = 'GeneralHostTemplate'
+  $http_template   = 'HttpTemplate'
+  $dns_template    = 'DnsTemplate'
+  $master_template = 'MasterTemplate'
+  $ipa_template    = 'IpaTemplate'
+  $tls_template    = 'TlsTemplate'
 
   #Service Templates Names
   $http_svc_template_name   = 'HttpServiceTemplate'

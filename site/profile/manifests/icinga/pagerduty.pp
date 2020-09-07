@@ -2,7 +2,7 @@
 #   Define and create icinga objects for pagerduty integration
 #   Instructions taken from https://www.pagerduty.com/docs/guides/icinga2-perl-integration-guide/
 
-class profile::core::icinga_pagerduty (
+class profile::icinga::pagerduty (
   String $pagerduty_api,
   String $credentials_hash,
 ){

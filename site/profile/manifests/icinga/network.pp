@@ -23,6 +23,7 @@ class profile::icinga::network (
   $network_svc_env_name       = 'NetworkEnvironmentalService'
 
   #Hosts Name
+  $community  = 'rubinobs'
   $host8_name = 'nob2-as04.ls.lsst.org'
   $host8_ip   = '10.49.0.24'
 
@@ -65,7 +66,7 @@ class profile::icinga::network (
     "object_type": "template",
     "vars": {
       "enable_pagerduty": "true",
-      "nwc_health_community": "public",
+      "nwc_health_community": "${community}",
       "nwc_health_mode": "interface-usage",
       "nwc_health_statefilesdir": "/tmp/"
     },
@@ -80,7 +81,7 @@ class profile::icinga::network (
     "object_type": "template",
     "vars": {
       "enable_pagerduty": "true",
-      "nwc_health_community": "public",
+      "nwc_health_community": "${community}",
       "nwc_health_mode": "interface-errors",
       "nwc_health_statefilesdir": "/tmp/"
     },
@@ -95,7 +96,7 @@ class profile::icinga::network (
     "object_type": "template",
     "vars": {
       "enable_pagerduty": "true",
-      "nwc_health_community": "public",
+      "nwc_health_community": "${community}",
       "nwc_health_mode": "hardware-health",
       "nwc_health_statefilesdir": "/tmp/"
     },

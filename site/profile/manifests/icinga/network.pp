@@ -23,10 +23,28 @@ class profile::icinga::network (
   $network_svc_env_name       = 'NetworkEnvironmentalService'
 
   #Hosts Name
-  $community  = 'rubinobs'
-  $host8_name = 'nob2-as04.ls.lsst.org'
-  $host8_ip   = '10.49.0.24'
-
+  $community   = 'rubinobs'
+  $host_list  = [
+    'nob1-as01.ls.lsst.org,10.49.0.11',
+    'nob1-as02.ls.lsst.org,10.49.0.12',
+    'nob1-as03.ls.lsst.org,10.49.0.13',
+    'nob1-as04.ls.lsst.org,10.49.0.14',
+    'nob2-as01.ls.lsst.org,10.49.0.21',
+    'nob2-as02.ls.lsst.org,10.49.0.22',
+    'nob2-as03.ls.lsst.org,10.49.0.23',
+    'nob2-as04.ls.lsst.org,10.49.0.24',
+    'bdc-is03.ls.lsst.org,10.49.0.27',
+    'bdc-is06.ls.lsst.org,10.49.0.30',
+    'bdc-is10.ls.lsst.org,10.49.0.34',
+    'bdc-is13.ls.lsst.org,10.49.0.37',
+    'bdc-is14.ls.lsst.org,10.49.0.38',
+    'bdc-as01.ls.lsst.org,10.49.0.91',
+    'bdc-as02.ls.lsst.org,10.49.0.92',
+    'bdc-ds01.ls.lsst.org,10.49.0.254',
+    'bdc-cr01.ls.lsst.org,10.48.1.1',
+    'bdc-cr02.ls.lsst.org,10.48.1.2',
+    'rubinobs-br01.ls.lsst.org,10.49.1.4'
+  ]
   #Commands abreviation
   $url_cmd     = "https://${master_fqdn}/director/command"
   $url_notify  = "https://${master_fqdn}/director/notification"
@@ -172,22 +190,38 @@ class profile::icinga::network (
     | NWC_NOTIFICATION_CONTENT
 
   ##Network Hosts
-  # nob02-as-04
-  $host8_content = @("HOST8_CONTENT"/L)
-    {
-    "address": "${host8_ip}",
-    "display_name": "${host8_name}",
-    "imports": [
-      "${network_host_template_name}"
-    ],
-    "object_name":"${host8_name}",
-    "object_type": "object",
-    "vars": {
-        "safed_profile": "3"
-    },
-    "zone": "master"
+  $host_list.each |$host|{
+    $value = split($host,',')
+    $path = "${icinga_path}/${value[0]}.json"
+    $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
+    $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${path}"
+
+    file { $path:
+      ensure  => 'present',
+      content => @("HOST_CONTENT"/L)
+      {
+      "address": "${value[1]}",
+      "display_name": "${value[0]}",
+      "imports": [
+        "${network_host_template_name}"
+      ],
+      "object_name":"${value[0]}",
+      "object_type": "object",
+      "vars": {
+          "safed_profile": "3"
+      },
+      "zone": "master"
+      }
+      | HOST_CONTENT
     }
-    | HOST8_CONTENT
+    ->exec { $cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $cond,
+      loglevel => debug,
+    }
+  }
 
   #<----------------------------End JSON Files----------------------------->
   #

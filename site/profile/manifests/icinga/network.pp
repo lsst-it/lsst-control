@@ -13,6 +13,7 @@ class profile::icinga::network (
   $nwc_name                   = 'nwc_health'
   $nwc_notification_name      = 'nwc-template'
   $network_host_template_name = 'NetworkHostTemplate'
+  $network_hostgroup_name     = 'NetworkDevices'
 
   $intstat_svc_template_name  = 'InterfaceStatusServiceTemplate'
   $interror_svc_template_name = 'InterfaceErrorsServiceTemplate'
@@ -43,18 +44,20 @@ class profile::icinga::network (
     'bdc-ds01.ls.lsst.org,10.49.0.254',
     'bdc-cr01.ls.lsst.org,10.48.1.1',
     'bdc-cr02.ls.lsst.org,10.48.1.2',
-    'rubinobs-br01.ls.lsst.org,10.49.1.4'
+    'rubinobs-br01.ls.lsst.org,10.48.1.4'
   ]
+
   #Commands abreviation
-  $url_cmd     = "https://${master_fqdn}/director/command"
-  $url_notify  = "https://${master_fqdn}/director/notification"
-  $url_host    = "https://${master_fqdn}/director/host"
-  $url_svc     = "https://${master_fqdn}/director/service"
-  $credentials = "Authorization:Basic ${credentials_hash}"
-  $format      = 'Accept: application/json'
-  $curl        = 'curl -s -k -H'
-  $icinga_path = '/opt/icinga'
-  $lt          = '| grep Failed'
+  $url_cmd       = "https://${master_fqdn}/director/command"
+  $url_notify    = "https://${master_fqdn}/director/notification"
+  $url_host      = "https://${master_fqdn}/director/host"
+  $url_svc       = "https://${master_fqdn}/director/service"
+  $url_hostgroup = "https://${master_fqdn}/director/hostgroup"
+  $credentials   = "Authorization:Basic ${credentials_hash}"
+  $format        = 'Accept: application/json'
+  $curl          = 'curl -s -k -H'
+  $icinga_path   = '/opt/icinga'
+  $lt            = '| grep Failed'
 
   #<-----------------------End Variables Definition----------------------->
   #
@@ -189,6 +192,16 @@ class profile::icinga::network (
     }
     | NWC_NOTIFICATION_CONTENT
 
+  ##Network HostGroup Definition
+  $network_hostgroup = @("NETWORK_HOSTGROUP"/L)
+    {
+    "assign_filter": "host.display_name=%22bdc%2A%22|host.display_name=%22nob%2A%22|host.display_name=%22rubinobs%2A%22",
+    "display_name": "Network Devices",
+    "object_name": "${network_hostgroup_name}",
+    "object_type": "object"
+    }
+    | NETWORK_HOSTGROUP
+
   ##Network Hosts
   $host_list.each |$host|{
     $value = split($host,',')
@@ -263,10 +276,10 @@ class profile::icinga::network (
   $nwc_notification_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${nwc_notification_name}' ${lt}"
   $nwc_notification_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${nwc_notification_path}"
 
-  #Hosts Creation
-  $host8_path = "${icinga_path}/${host8_name}.json"
-  $host8_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${host8_name}' ${lt}"
-  $host8_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${host8_path}"
+  #HostGroup Creation
+  $network_hostgroup_path = "${icinga_path}/${network_hostgroup_name}.json"
+  $network_hostgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${network_hostgroup_name}' ${lt}"
+  $network_hostgroup_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${network_hostgroup_path}"
 
   #<------------------END-Templates-Variables-Creation-------------------->
   #
@@ -393,19 +406,19 @@ class profile::icinga::network (
     loglevel => debug,
   }
 
-  ##Network Hosts
-  #Create Host 8 file
-  file { $host8_path:
+  ##Network Hostgroup
+  #Create Network Hostgroup file
+  file { $network_hostgroup_path:
     ensure  => 'present',
-    content => $host8_content,
-    before  => Exec[$host8_cmd],
+    content => $network_hostgroup,
+    before  => Exec[$network_hostgroup_cmd],
   }
   #Add Host 8
-  exec { $host8_cmd:
+  exec { $network_hostgroup_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $host8_cond,
+    onlyif   => $network_hostgroup_cond,
     loglevel => debug,
   }
 }

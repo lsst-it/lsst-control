@@ -3,13 +3,12 @@
 
 class profile::icinga::network (
   String $credentials_hash,
+  String $network_username,
 ){
-
   #<-------------------------Variables Definition------------------------->
   #Implicit usage of facts
   $master_fqdn  = $facts[fqdn]
   #Names Definition
-  $user_name                  = 'pagerduty'
   $nwc_name                   = 'nwc_health'
   $nwc_notification_name      = 'nwc-template'
   $network_host_template_name = 'NetworkHostTemplate'
@@ -22,6 +21,13 @@ class profile::icinga::network (
   $network_svc_intstat_name   = 'NetworkInterfaceStatusService'
   $network_svc_interror_name  = 'NetworkInterfaceErrorsService'
   $network_svc_env_name       = 'NetworkEnvironmentalService'
+
+  $command_host_name               = 'notify-cmd-host'
+  $command_svc_name                = 'notify-cmd-svc'
+  $host_notification_template_name = 'host-network-notification-template'
+  $svc_notification_template_name  = 'svc-network-notification-template'
+  $host_notification_name          = 'notify-network-host'
+  $svc_notification_name           = 'notify-server-svc'
 
   #Hosts Name
   $community   = 'rubinobs'
@@ -72,7 +78,7 @@ class profile::icinga::network (
     "master_should_connect": false,
     "max_check_attempts": "5",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_network_pagerduty": "true"
     },
     "object_name": "${network_host_template_name}",
     "object_type": "template"
@@ -86,7 +92,7 @@ class profile::icinga::network (
     "object_name": "${intstat_svc_template_name}",
     "object_type": "template",
     "vars": {
-      "enable_pagerduty": "true",
+      "enable_network_pagerduty": "true",
       "nwc_health_community": "${community}",
       "nwc_health_mode": "interface-usage",
       "nwc_health_statefilesdir": "/tmp/"
@@ -101,7 +107,7 @@ class profile::icinga::network (
     "object_name": "${interror_svc_template_name}",
     "object_type": "template",
     "vars": {
-      "enable_pagerduty": "true",
+      "enable_network_pagerduty": "true",
       "nwc_health_community": "${community}",
       "nwc_health_mode": "interface-errors",
       "nwc_health_statefilesdir": "/tmp/"
@@ -116,7 +122,7 @@ class profile::icinga::network (
     "object_name": "${env_svc_template_name}",
     "object_type": "template",
     "vars": {
-      "enable_pagerduty": "true",
+      "enable_network_pagerduty": "true",
       "nwc_health_community": "${community}",
       "nwc_health_mode": "hardware-health",
       "nwc_health_statefilesdir": "/tmp/"
@@ -135,7 +141,7 @@ class profile::icinga::network (
     ],
     "object_name": "${network_svc_intstat_name}",
     "vars": {
-      "enable_pagerduty": "true"
+      "enable_network_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -148,7 +154,7 @@ class profile::icinga::network (
     ],
     "object_name": "${network_svc_interror_name}",
     "vars": {
-      "enable_pagerduty": "true"
+      "enable_network_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -161,18 +167,39 @@ class profile::icinga::network (
     ],
     "object_name": "${network_svc_env_name}",
     "vars": {
-      "enable_pagerduty": "true"
+      "enable_network_pagerduty": "true"
     },
     "object_type": "object"
     }
     | NETWORK_SVC3
 
-  #nwc-health notification 
-  $nwc_notification_content = @("NWC_NOTIFICATION_CONTENT")
+  #Notifications Template
+  $host_notification_template = @("HOST_NOTIFICATION_TEMPLATE")
     {
-    "command": "${nwc_name}",
+    "command": "${command_host_name}",
     "notification_interval": "300",
-    "object_name": "${nwc_notification_name}",
+    "object_name": "${host_notification_template_name}",
+    "object_type": "template",
+    "states": [
+        "Down",
+        "Up"
+    ],
+    "types": [
+        "Acknowledgement",
+        "Problem",
+        "Recovery"
+    ],
+    "users": [
+        "${network_username}"
+    ],
+    "zone": "master"
+    }
+    | HOST_NOTIFICATION_TEMPLATE
+  $svc_notification_template = @("SVC_NOTIFICATION_TEMPLATE")
+    {
+    "command": "${command_svc_name}",
+    "notification_interval": "300",
+    "object_name": "${svc_notification_template_name}",
     "object_type": "template",
     "states": [
       "OK",
@@ -186,11 +213,61 @@ class profile::icinga::network (
       "Recovery"
     ],
     "users": [
-        "${user_name}"
+        "${network_username}"
     ],
     "zone": "master"
     }
-    | NWC_NOTIFICATION_CONTENT
+    | SVC_NOTIFICATION_TEMPLATE
+
+  #Notifications
+  $host_notification = @("HOST_NOTIFICATION")
+    {
+    "apply_to": "host",
+    "assign_filter": "host.vars.enable_network_pagerduty=%22true%22",
+    "imports": [
+        "${host_notification_template_name}"
+    ],
+    "object_name": "${host_notification_name}",
+    "object_type": "apply",
+    "states": [
+        "Down",
+        "Up"
+    ],
+    "types": [
+        "Acknowledgement",
+        "Problem",
+        "Recovery"
+    ],
+    "users": [
+        "${network_username}"
+    ]
+    }
+    | HOST_NOTIFICATION
+  $svc_notification = @("SERVICE_NOTIFICATION")
+    {
+    "apply_to": "service",
+    "assign_filter": "service.vars.enable_network_pagerduty=%22true%22",
+    "imports": [
+        "${svc_notification_template_name}"
+    ],
+    "object_name": "${svc_notification_name}",
+    "object_type": "apply",
+    "states": [
+      "OK",
+      "Warning",
+      "Critical",
+      "Unknown"
+    ],
+    "types": [
+        "Acknowledgement",
+        "Problem",
+        "Recovery"
+    ],
+    "users": [
+        "${network_username}"
+    ]
+    }
+    | SERVICE_NOTIFICATION
 
   ##Network HostGroup Definition
   $network_hostgroup = @("NETWORK_HOSTGROUP"/L)
@@ -201,40 +278,6 @@ class profile::icinga::network (
     "object_type": "object"
     }
     | NETWORK_HOSTGROUP
-
-  ##Network Hosts
-  $host_list.each |$host|{
-    $value = split($host,',')
-    $path = "${icinga_path}/${value[0]}.json"
-    $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
-    $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${path}"
-
-    file { $path:
-      ensure  => 'present',
-      content => @("HOST_CONTENT"/L)
-        {
-        "address": "${value[1]}",
-        "display_name": "${value[0]}",
-        "imports": [
-          "${network_host_template_name}"
-        ],
-        "object_name":"${value[0]}",
-        "object_type": "object",
-        "vars": {
-            "safed_profile": "3"
-        },
-        "zone": "master"
-        }
-        | HOST_CONTENT
-    }
-    ->exec { $cmd:
-      cwd      => $icinga_path,
-      path     => ['/sbin', '/usr/sbin', '/bin'],
-      provider => shell,
-      onlyif   => $cond,
-      loglevel => debug,
-    }
-  }
 
   #<----------------------------End JSON Files----------------------------->
   #
@@ -271,10 +314,23 @@ class profile::icinga::network (
   $network_svc3_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${network_svc_env_name}&host=${network_host_template_name}' ${lt}"
   $network_svc3_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${network_svc3_path}"
 
+  #Notification Template
+  $host_notification_template_path = "${$icinga_path}/${host_notification_template_name}.json"
+  $host_notification_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${host_notification_template_name}' ${lt}"
+  $host_notification_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${host_notification_template_path}"
+
+  $svc_notification_template_path = "${$icinga_path}/${svc_notification_template_name}.json"
+  $svc_notification_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${svc_notification_template_name}' ${lt}"
+  $svc_notification_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${svc_notification_template_path}"
+
   #Notification Creation
-  $nwc_notification_path = "${$icinga_path}/${nwc_notification_name}.json"
-  $nwc_notification_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${nwc_notification_name}' ${lt}"
-  $nwc_notification_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${nwc_notification_path}"
+  $host_notification_path = "${$icinga_path}/${host_notification_name}.json"
+  $host_notification_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${host_notification_name}' ${lt}"
+  $host_notification_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${host_notification_path}"
+
+  $svc_notification_path = "${$icinga_path}/${svc_notification_name}.json"
+  $svc_notification_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${svc_notification_name}' ${lt}"
+  $svc_notification_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${svc_notification_path}"
 
   #HostGroup Creation
   $network_hostgroup_path = "${icinga_path}/${network_hostgroup_name}.json"
@@ -299,6 +355,40 @@ class profile::icinga::network (
     provider => shell,
     onlyif   => $network_host_template_cond,
     loglevel => debug,
+  }
+
+  ##Network Hosts
+  $host_list.each |$host|{
+    $value = split($host,',')
+    $path = "${icinga_path}/${value[0]}.json"
+    $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
+    $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${path}"
+
+    file { $path:
+      ensure  => 'present',
+      content => @("HOST_CONTENT"/L)
+        {
+        "address": "${value[1]}",
+        "display_name": "${value[0]}",
+        "imports": [
+          "${network_host_template_name}"
+        ],
+        "object_name":"${value[0]}",
+        "object_type": "object",
+        "vars": {
+            "safed_profile": "3"
+        },
+        "zone": "master"
+        }
+        | HOST_CONTENT
+    }
+    ->exec { $cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $cond,
+      loglevel => debug,
+    }
   }
 
   ##Service Template
@@ -390,18 +480,62 @@ class profile::icinga::network (
   }
 
   ##Notification Templates
-  #Create NWC Notification Template file
-  file { $nwc_notification_path:
+  #Create Host Notification Template file
+  file { $host_notification_template_path:
     ensure  => 'present',
-    content => $nwc_notification_content,
-    before  => Exec[$nwc_notification_cmd],
+    content => $host_notification_template,
+    before  => Exec[$host_notification_template_cmd],
   }
-  #Add NWC Notification Template
-  exec { $nwc_notification_cmd:
+  #Add Host Notification Template
+  exec { $host_notification_template_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $nwc_notification_cond,
+    onlyif   => $host_notification_template_cond,
+    loglevel => debug,
+  }
+  #Create Service Notification Template file
+  file { $svc_notification_template_path:
+    ensure  => 'present',
+    content => $svc_notification_template,
+    before  => Exec[$svc_notification_template_cmd],
+  }
+  #Add Service Notification Template
+  exec { $svc_notification_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $svc_notification_template_cond,
+    loglevel => debug,
+  }
+
+  ##Host and Services Notification
+  #Create Host Notification file
+  file { $host_notification_path:
+    ensure  => 'present',
+    content => $host_notification,
+    before  => Exec[$host_notification_cmd],
+  }
+  #Add Host Notification
+  exec { $host_notification_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $host_notification_cond,
+    loglevel => debug,
+  }
+  #Create Service Notification file
+  file { $svc_notification_path:
+    ensure  => 'present',
+    content => $svc_notification,
+    before  => Exec[$svc_notification_cmd],
+  }
+  #Add Service Notification
+  exec { $svc_notification_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $svc_notification_cond,
     loglevel => debug,
   }
 

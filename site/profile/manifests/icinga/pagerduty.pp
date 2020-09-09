@@ -3,22 +3,27 @@
 #   Instructions taken from https://www.pagerduty.com/docs/guides/icinga2-perl-integration-guide/
 
 class profile::icinga::pagerduty (
-  String $pagerduty_api,
+  String $pagerduty_server_api,
+  String $pagerduty_network_api,
   String $credentials_hash,
+  String $server_username,
+  String $network_username,
 ){
 
   #<-------------------------Variables Definition------------------------->
   #Implicit usage of facts
   $master_fqdn  = $facts[fqdn]
+
   #Names Definition
-  $user_template_name              = 'pagerduty-template'
-  $user_name                       = 'pagerduty'
+  $server_user_template            = "${server_username}-template"
+  $network_user_template            = "${network_username}-template"
   $command_host_name               = 'notify-cmd-host'
   $command_svc_name                = 'notify-cmd-svc'
-  $host_notification_template_name = 'host-notification-template'
-  $svc_notification_template_name  = 'svc-notification-template'
-  $host_notification_name          = 'notify-host'
-  $svc_notification_name           = 'notify-service'
+  $host_notification_template_name = 'host-server-notification-template'
+  $svc_notification_template_name  = 'svc-server-notification-template'
+  $host_notification_name          = 'notify-server-host'
+  $svc_notification_name           = 'notify-server-service'
+
   #Commands abreviation
   $url_cmd     = "https://${master_fqdn}/director/command"
   $url_notify  = "https://${master_fqdn}/director/notification"
@@ -28,7 +33,7 @@ class profile::icinga::pagerduty (
   $curl        = 'curl -s -k -H'
   $icinga_path = '/opt/icinga'
   $lt          = '| grep Failed'
-  #Package INstallation
+  #Package Installation
   $packages = [
     'pdagent',
     'pdagent-integrations',
@@ -37,23 +42,32 @@ class profile::icinga::pagerduty (
   #
   #
   #<-----------------------------JSON Files ------------------------------>
-  $user_template = @("USER_TEMPLATE")
+  $server_user_template_content = @("SERVER_USER_TEMPLATE_CONTENT")
     {
     "enable_notifications": true,
-    "object_name": "${user_template_name}",
+    "object_name": "${server_user_template}",
     "object_type": "template",
     "zone": "master"
     }
-    | USER_TEMPLATE
-  $user_content = @("USER"/)
+    | SERVER_USER_TEMPLATE_CONTENT
+  $network_user_template_content = @("NETWORK_USER_TEMPLATE_CONTENT")
     {
-    "display_name": "PagerDuty Notification User",
+    "enable_notifications": true,
+    "object_name": "${network_user_template}",
+    "object_type": "template",
+    "zone": "master"
+    }
+    | NETWORK_USER_TEMPLATE_CONTENT
+
+  $server_username_content = @("SERVER_USER_CONTENT"/)
+    {
+    "display_name": "Servers PagerDuty Notification",
     "imports": [
-        "${user_template_name}"
+        "${server_user_template}"
     ],
-    "object_name": "${user_name}",
+    "object_name": "${server_username}",
     "object_type": "object",
-    "pager": "${pagerduty_api}",
+    "pager": "${pagerduty_server_api}",
     "states": [
         "Down",
         "Up",
@@ -68,7 +82,32 @@ class profile::icinga::pagerduty (
         "Recovery"
     ]
     }
-    | USER
+    | SERVER_USER_CONTENT
+  $network_username_content = @("NETWORK_USER_CONTENT"/)
+    {
+    "display_name": "Network PagerDuty Notification",
+    "imports": [
+        "${network_user_template}"
+    ],
+    "object_name": "${network_username}",
+    "object_type": "object",
+    "pager": "${pagerduty_network_api}",
+    "states": [
+        "Down",
+        "Up",
+        "OK",
+        "Warning",
+        "Critical",
+        "Unknown"
+    ],
+    "types": [
+        "Acknowledgement",
+        "Problem",
+        "Recovery"
+    ]
+    }
+    | NETWORK_USER_CONTENT
+
   $command_host_content = @(COMMAND_HOST)
     {
     "arguments": {
@@ -169,7 +208,7 @@ class profile::icinga::pagerduty (
         "Recovery"
     ],
     "users": [
-        "${user_name}"
+        "${server_username}"
     ],
     "zone": "master"
     }
@@ -192,7 +231,7 @@ class profile::icinga::pagerduty (
       "Recovery"
     ],
     "users": [
-        "${user_name}"
+        "${server_username}"
     ],
     "zone": "master"
     }
@@ -200,7 +239,7 @@ class profile::icinga::pagerduty (
   $host_notification = @("HOST_NOTIFICATION")
     {
     "apply_to": "host",
-    "assign_filter": "host.vars.enable_pagerduty=%22true%22",
+    "assign_filter": "host.vars.enable_server_pagerduty=%22true%22",
     "imports": [
         "${host_notification_template_name}"
     ],
@@ -216,14 +255,14 @@ class profile::icinga::pagerduty (
         "Recovery"
     ],
     "users": [
-        "${user_name}"
+        "${server_username}"
     ]
     }
     | HOST_NOTIFICATION
   $svc_notification = @("SERVICE_NOTIFICATION")
     {
     "apply_to": "service",
-    "assign_filter": "service.vars.enable_pagerduty=%22true%22",
+    "assign_filter": "service.vars.enable_server_pagerduty=%22true%22",
     "imports": [
         "${svc_notification_template_name}"
     ],
@@ -241,7 +280,7 @@ class profile::icinga::pagerduty (
         "Recovery"
     ],
     "users": [
-        "${user_name}"
+        "${server_username}"
     ]
     }
     | SERVICE_NOTIFICATION
@@ -250,13 +289,21 @@ class profile::icinga::pagerduty (
   #
   #<--------------------Templates-Variables-Creation----------------------->
 
-  $user_template_path = "${$icinga_path}/${user_template_name}.json"
-  $user_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_usr}?name=${user_template_name}' ${lt}"
-  $user_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_usr}' -d @${user_template_path}"
+  $server_user_template_path = "${$icinga_path}/${server_user_template}.json"
+  $server_user_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_usr}?name=${server_user_template}' ${lt}"
+  $server_user_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_usr}' -d @${server_user_template_path}"
 
-  $user_path = "${$icinga_path}/${user_name}.json"
-  $user_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_usr}?name=${user_name}' ${lt}"
-  $user_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_usr}' -d @${user_path}"
+  $network_user_template_path = "${$icinga_path}/${network_user_template}.json"
+  $network_user_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_usr}?name=${network_user_template}' ${lt}"
+  $network_user_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_usr}' -d @${network_user_template_path}"
+
+  $server_username_path = "${$icinga_path}/${server_username}.json"
+  $server_username_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_usr}?name=${server_username}' ${lt}"
+  $server_username_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_usr}' -d @${server_username_path}"
+
+  $network_username_path = "${$icinga_path}/${network_username}.json"
+  $network_username_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_usr}?name=${network_username}' ${lt}"
+  $network_username_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_usr}' -d @${network_username_path}"
 
   $command_host_path = "${$icinga_path}/${command_host_name}.json"
   $command_host_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_cmd}?name=${command_host_name}' ${lt}"
@@ -303,33 +350,61 @@ class profile::icinga::pagerduty (
   #
   #
   #<-------------------Files Creation and deployement--------------------->
-  ##User Creation
-  #Create User template file
-  file { $user_template_path:
+  ##Users Creation
+  #Create Server User template file
+  file { $server_user_template_path:
     ensure  => 'present',
-    content => $user_template,
-    before  => Exec[$user_template_cmd],
+    content => $server_user_template_content,
+    before  => Exec[$server_user_template_cmd],
   }
-  #Add User template
-  exec { $user_template_cmd:
+  #Add Server User template
+  exec { $server_user_template_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $user_template_cond,
+    onlyif   => $server_user_template_cond,
     loglevel => debug,
   }
-  #Create User file
-  file { $user_path:
+  #Create Server User file
+  file { $server_username_path:
     ensure  => 'present',
-    content => $user_content,
-    before  => Exec[$user_cmd],
+    content => $server_username_content,
+    before  => Exec[$server_username_cmd],
   }
-  #Add User 
-  exec { $user_cmd:
+  #Add Server User 
+  exec { $server_username_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $user_cond,
+    onlyif   => $server_username_cond,
+    loglevel => debug,
+  }
+  #Create Network User template file
+  file { $network_user_template_path:
+    ensure  => 'present',
+    content => $network_user_template_content,
+    before  => Exec[$network_user_template_cmd],
+  }
+  #Add Network User template
+  exec { $network_user_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $network_user_template_cond,
+    loglevel => debug,
+  }
+  #Create Network User file
+  file { $network_username_path:
+    ensure  => 'present',
+    content => $network_username_content,
+    before  => Exec[$network_username_cmd],
+  }
+  #Add Network User 
+  exec { $network_username_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $network_username_cond,
     loglevel => debug,
   }
 

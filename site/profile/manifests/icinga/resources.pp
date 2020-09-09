@@ -94,7 +94,7 @@ class profile::icinga::resources (
     "master_should_connect": true,
     "max_check_attempts": "5",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_name": "${host_template}",
     "object_type": "template"
@@ -108,7 +108,7 @@ class profile::icinga::resources (
     "master_should_connect": true,
     "max_check_attempts": "5",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_name": "${http_template}",
     "object_type": "template"
@@ -122,7 +122,7 @@ class profile::icinga::resources (
     "master_should_connect": true,
     "max_check_attempts": "5",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_name": "${dns_template}",
     "object_type": "template"
@@ -136,7 +136,7 @@ class profile::icinga::resources (
     "master_should_connect": true,
     "max_check_attempts": "5",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_name": "${master_template}",
     "object_type": "template"
@@ -150,7 +150,7 @@ class profile::icinga::resources (
     "master_should_connect": true,
     "max_check_attempts": "5",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_name": "${ipa_template}",
     "object_type": "template"
@@ -165,7 +165,7 @@ class profile::icinga::resources (
     "max_check_attempts": "5",
     "vars": {
         "http_certificate": "30",
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_name": "${tls_template}",
     "object_type": "template",
@@ -179,7 +179,7 @@ class profile::icinga::resources (
     "master_should_connect": true,
     "max_check_attempts": "5",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_network_pagerduty": "true"
     },
     "object_name": "${dtn_template}",
     "object_type": "template"
@@ -193,7 +193,7 @@ class profile::icinga::resources (
     "object_name": "${http_svc_template_name}",
     "object_type": "template",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "use_agent": true,
     "zone": "master"
@@ -205,7 +205,7 @@ class profile::icinga::resources (
     "object_name": "${ping_svc_template_name}",
     "object_type": "template",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "use_agent": true,
     "zone": "master"
@@ -217,7 +217,7 @@ class profile::icinga::resources (
     "object_name": "${dns_svc_template_name}",
     "object_type": "template",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "use_agent": true,
     "zone": "master"
@@ -229,7 +229,7 @@ class profile::icinga::resources (
     "object_name": "${master_svc_template_name}",
     "object_type": "template",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "use_agent": true,
     "zone": "master"
@@ -244,7 +244,7 @@ class profile::icinga::resources (
     "vars": {
         "ldap_address": "localhost",
         "ldap_base": "dc=lsst,dc=cloud",
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "zone": "master"
     }
@@ -258,7 +258,7 @@ class profile::icinga::resources (
     "vars": {
         "disk_cfree": "10%",
         "disk_wfree": "20%",
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "zone": "master"
     }
@@ -269,7 +269,7 @@ class profile::icinga::resources (
     "object_name": "${ssh_svc_template_name}",
     "object_type": "template",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "use_agent": true,
     "zone": "master"
@@ -283,7 +283,7 @@ class profile::icinga::resources (
     "use_agent": false,
     "vars": {
         "http_certificate": "30",
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "zone": "master"
     }
@@ -298,7 +298,7 @@ class profile::icinga::resources (
         "ping_address": "starlight-dtn.ncsa.illinois.edu",
         "ping_crta": "250",
         "ping_wrta": "225",
-        "enable_pagerduty": "true"
+        "enable_network_pagerduty": "true"
     },
     "zone": "master"
     }
@@ -314,7 +314,7 @@ class profile::icinga::resources (
     "use_agent": true,
     "vars": {
         "ntp_address": "ntp.shoa.cl",
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "zone": "master"
     }
@@ -331,7 +331,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${host_svc_ping_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -344,7 +344,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${host_svc_disk_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -357,7 +357,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${host_svc_ssh_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -370,7 +370,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${host_svc_ntp_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -384,7 +384,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${http_svc_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -397,7 +397,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${http_svc_ping_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -410,7 +410,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${http_svc_disk_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -423,7 +423,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${http_svc_ssh_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -436,7 +436,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${http_svc_ntp_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -452,7 +452,7 @@ class profile::icinga::resources (
     "object_type": "object",
     "vars": {
       "dhcp_serverip": "${dhcp_server}",
-      "enable_pagerduty": "true"
+      "enable_server_pagerduty": "true"
     }
     }
     | MASTER_SVC_1
@@ -464,7 +464,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${master_svc_ping_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -477,7 +477,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${master_svc_disk_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -490,7 +490,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${master_svc_ssh_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -503,7 +503,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${master_svc_ntp_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -516,7 +516,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${master_svc_tls_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -530,7 +530,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${dns_svc_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -543,7 +543,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${dns_svc_ping_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -556,7 +556,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${dns_svc_disk_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -569,7 +569,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${dns_svc_ssh_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -582,7 +582,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${dns_svc_ntp_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -596,7 +596,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${ipa_svc_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -609,7 +609,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${ipa_svc_ping_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -622,7 +622,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${ipa_svc_disk_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -635,7 +635,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${ipa_svc_ssh_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -648,7 +648,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${ipa_svc_ntp_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_server_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -663,7 +663,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${dtn_svc_ping_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_network_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -676,7 +676,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${dtn_svc_ssh_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_network_pagerduty": "true"
     },
     "object_type": "object"
     }
@@ -689,7 +689,7 @@ class profile::icinga::resources (
     ],
     "object_name": "${dtn_svc_lhn_name}",
     "vars": {
-        "enable_pagerduty": "true"
+        "enable_network_pagerduty": "true"
     },
     "object_type": "object"
     }

@@ -40,6 +40,7 @@ class profile::icinga::resources (
   $tls_svc_template_name    = 'TlsServiceTemplate'
   $ssh_svc_template_name    = 'SshServiceTemplace'
   $ntp_svc_template_name    = 'NtpServiceTemplate'
+  $rp_svc_template_name    = 'RemotePingServiceTemplate'
 
   #Service Names
   $host_svc_ping_name   = 'HostPingService'
@@ -57,6 +58,7 @@ class profile::icinga::resources (
   $master_svc_tls_name  = 'MasterTlsService'
   $master_svc_ssh_name  = 'MasterSshService'
   $master_svc_ntp_name  = 'MasterNtpService'
+  $master_svc_rp_name   = 'LHN_Link'
   $http_svc_name        = 'HttpService'
   $http_svc_ping_name   = 'HttpPingService'
   $http_svc_disk_name   = 'HttpDiskService'
@@ -270,7 +272,19 @@ class profile::icinga::resources (
     "zone": "master"
     }
     | TLS
-
+  $rp_svc_template = @("RP"/L)
+    {
+    "check_command": "ping",
+    "object_name": "${rp_svc_template_name}",
+    "object_type": "template",
+    "use_agent": false,
+    "vars": {
+        "ping_address": "198.32.252.232",
+        "enable_pagerduty": "true"
+    },
+    "zone": "master"
+    }
+    | RP
   ## IMPORTANT
   ## The ntp_address must be change to an NTP Server,
   ## of our own once we have one operational on site
@@ -489,6 +503,19 @@ class profile::icinga::resources (
     "object_type": "object"
     }
     | MASTER_SVC_6
+  $master_svc7 = @("MASTER_SVC_7"/L)
+    {
+    "host": "${master_template}",
+    "imports": [
+        "${$rp_svc_template_name}"
+    ],
+    "object_name": "${master_svc_rp_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
+    "object_type": "object"
+    }
+    | MASTER_SVC_7
 
   #DNS, Ping, disk, ssh and ntp skew monitoring
   $dns_svc1 = @("DNS_SVC_1"/L)
@@ -763,6 +790,10 @@ class profile::icinga::resources (
   $ntp_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ntp_svc_template_name}' ${lt}"
   $ntp_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ntp_svc_template_path}"
 
+  $rp_svc_template_path = "${icinga_path}/${rp_svc_template_name}.json"
+  $rp_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${rp_svc_template_name}' ${lt}"
+  $rp_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$rp_svc_template_path}"
+
   #Services Creation
   $host_svc_path1 = "${icinga_path}/${host_svc_ping_name}.json"
   $host_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${host_svc_ping_name}&host=${host_template}' ${lt}"
@@ -827,6 +858,9 @@ class profile::icinga::resources (
   $master_svc_path6 = "${icinga_path}/${master_svc_tls_name}.json"
   $master_svc_cond6 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_tls_name}&host=${master_template}' ${lt}"
   $master_svc_cmd6  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path6}"
+  $master_svc_path7 = "${icinga_path}/${master_svc_rp_name}.json"
+  $master_svc_cond7 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_rp_name}&host=${master_template}' ${lt}"
+  $master_svc_cmd7  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path7}"
 
   $ipa_svc_path1  = "${icinga_path}/${ipa_svc_name}.json"
   $ipa_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_name}&host=${ipa_template}' ${lt}"
@@ -1105,7 +1139,7 @@ class profile::icinga::resources (
     onlyif   => $ssh_svc_template_cond,
     loglevel => debug,
   }
-  #Create ntp skew service template file 
+  #Create ntp skew service template file
   file { $ntp_svc_template_path:
     ensure  => 'present',
     content => $ntp_svc_template,
@@ -1117,6 +1151,20 @@ class profile::icinga::resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $ntp_svc_template_cond,
+    loglevel => debug,
+  }
+  #Create Remote Ping service template file 
+  file { $rp_svc_template_path:
+    ensure  => 'present',
+    content => $rp_svc_template,
+    before  => Exec[$rp_svc_template_cmd],
+  }
+  #Add Remote Ping service template
+  exec { $rp_svc_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $rp_svc_template_cond,
     loglevel => debug,
   }
   #<--------------------EMD-Service-Templates----------------------------->
@@ -1324,18 +1372,32 @@ class profile::icinga::resources (
     onlyif   => $master_svc_cond5,
     loglevel => debug,
   }
-  #Creates tls cert expiration resource file for MasterTemplate and NtpServiceTemplate
+  #Creates tls cert expiration resource file for MasterTemplate and TlsServiceTemplate
   file { $master_svc_path6:
     ensure  => 'present',
     content => $master_svc6,
     before  => Exec[$master_svc_cmd6],
   }
-  #Adds tls cert expiration file for MasterTemplate and NtpServiceTemplate
+  #Adds tls cert expiration file for MasterTemplate and TlsServiceTemplate
   exec { $master_svc_cmd6:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $master_svc_cond6,
+    loglevel => debug,
+  }
+  #Creates Remote Ping resource file for MasterTemplate and RemotePingServiceTemplate
+  file { $master_svc_path7:
+    ensure  => 'present',
+    content => $master_svc7,
+    before  => Exec[$master_svc_cmd7],
+  }
+  #Adds RemotePing file for MasterTemplate and RemotePingServiceTemplate
+  exec { $master_svc_cmd7:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $master_svc_cond7,
     loglevel => debug,
   }
 

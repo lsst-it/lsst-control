@@ -18,12 +18,10 @@ class profile::icinga::network (
   $intstat_svc_template_name  = 'InterfaceStatusServiceTemplate'
   $interror_svc_template_name = 'InterfaceErrorsServiceTemplate'
   $env_svc_template_name      = 'EnvironmentServiceTemplate'
-  $rp_svc_template_name       = 'RemotePingServiceTemplate'
 
   $network_svc_intstat_name   = 'NetworkInterfaceStatusService'
   $network_svc_interror_name  = 'NetworkInterfaceErrorsService'
   $network_svc_env_name       = 'NetworkEnvironmentalService'
-  $network_svc_rp_name        = 'NetworkRemotePingService'
 
   #Hosts Name
   $community   = 'rubinobs'
@@ -286,10 +284,6 @@ class profile::icinga::network (
   $env_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${env_svc_template_name}' ${lt}"
   $env_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$env_svc_template_path}"
 
-  $rp_svc_template_path = "${icinga_path}/${rp_svc_template_name}.json"
-  $rp_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${rp_svc_template_name}' ${lt}"
-  $rp_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$rp_svc_template_path}"
-
   #Services Creation
   $network_svc1_path = "${icinga_path}/${network_svc_intstat_name}.json"
   $network_svc1_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${network_svc_intstat_name}&host=${network_host_template_name}' ${lt}"
@@ -302,10 +296,6 @@ class profile::icinga::network (
   $network_svc3_path = "${icinga_path}/${network_svc_env_name}.json"
   $network_svc3_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${network_svc_env_name}&host=${network_host_template_name}' ${lt}"
   $network_svc3_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${network_svc3_path}"
-
-  $network_svc4_path = "${icinga_path}/${network_svc_rp_name}.json"
-  $network_svc4_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${network_svc_rp_name}&host=${network_host_template_name}' ${lt}"
-  $network_svc4_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${network_svc4_path}"
 
   #Notification Creation
   $nwc_notification_path = "${$icinga_path}/${nwc_notification_name}.json"
@@ -380,20 +370,6 @@ class profile::icinga::network (
     onlyif   => $env_svc_template_cond,
     loglevel => debug,
   }
-  #Create Remote Ping Service Template file
-  file { $rp_svc_template_path:
-    ensure  => 'present',
-    content => $rp_svc_template_content,
-    before  => Exec[$rp_svc_template_cmd],
-  }
-  #Add Remote Ping Service Template
-  exec { $rp_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $rp_svc_template_cond,
-    loglevel => debug,
-  }
 
   ##Network Services
   #Create Interface Status Service file
@@ -438,20 +414,6 @@ class profile::icinga::network (
     onlyif   => $network_svc3_cond,
     loglevel => debug,
   }
-  #Create Remote Ping Service file
-  file { $network_svc4_path:
-    ensure  => 'present',
-    content => $network_svc4,
-    before  => Exec[$network_svc4_cmd],
-  }
-  #Add Remote Ping Service 
-  exec { $network_svc4_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $network_svc4_cond,
-    loglevel => debug,
-  }
 
   ##Notification Templates
   #Create NWC Notification Template file
@@ -476,7 +438,7 @@ class profile::icinga::network (
     content => $network_hostgroup,
     before  => Exec[$network_hostgroup_cmd],
   }
-  #Add Host 8
+  #Add Network Hostgroup 
   exec { $network_hostgroup_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],

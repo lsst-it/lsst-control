@@ -296,6 +296,8 @@ class profile::icinga::resources (
     "use_agent": true,
     "vars": {
         "ping_address": "starlight-dtn.ncsa.illinois.edu",
+        "ping_crta": "250",
+        "ping_wrta": "225",
         "enable_pagerduty": "true"
     },
     "zone": "master"

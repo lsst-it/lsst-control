@@ -7,6 +7,7 @@ class profile::icinga::agent(
   String $credentials_hash,
   String $host_template,
   String $ca_salt,
+  String $ssh_port = '22',
 ){
   $packages = [
     'nagios-plugins-all',
@@ -24,7 +25,8 @@ class profile::icinga::agent(
     "object_name":"${icinga_agent_fqdn}",
     "object_type": "object",
     "vars": {
-        "safed_profile": "3"
+        "safed_profile": "3",
+        "ssh_port": "${ssh_port}"
     }
     }
     | CONTENT

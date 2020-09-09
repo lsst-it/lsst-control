@@ -125,19 +125,6 @@ class profile::icinga::network (
     "zone": "master"
     }
     | ENV_SVC_TEMPLATE_CONTENT
-  $rp_svc_template_content = @("RP_SVC_TEMPLATE_CONTENT"/L)
-    {
-    "check_command": "ping",
-    "object_name": "${rp_svc_template_name}",
-    "object_type": "template",
-    "vars": {
-      "enable_pagerduty": "true",
-      "ping_address": "10.49.0.254"
-    },
-    "use_agent": false,
-    "zone": "master"
-    }
-    | RP_SVC_TEMPLATE_CONTENT
 
   #Interface Status Service
   $network_svc1 = @("NETWORK_SVC1"/L)
@@ -179,20 +166,7 @@ class profile::icinga::network (
     "object_type": "object"
     }
     | NETWORK_SVC3
-  $network_svc4 = @("NETWORK_SVC4"/L)
-    {
-    "host": "${network_host_template_name}",
-    "imports": [
-      "${$rp_svc_template_name}"
-    ],
-    "object_name": "${network_svc_rp_name}",
-    "vars": {
-      "enable_pagerduty": "true"
-    },
-    "object_type": "object"
-    }
-    | NETWORK_SVC4
-  
+
   #nwc-health notification 
   $nwc_notification_content = @("NWC_NOTIFICATION_CONTENT")
     {
@@ -238,20 +212,20 @@ class profile::icinga::network (
     file { $path:
       ensure  => 'present',
       content => @("HOST_CONTENT"/L)
-      {
-      "address": "${value[1]}",
-      "display_name": "${value[0]}",
-      "imports": [
-        "${network_host_template_name}"
-      ],
-      "object_name":"${value[0]}",
-      "object_type": "object",
-      "vars": {
-          "safed_profile": "3"
-      },
-      "zone": "master"
-      }
-      | HOST_CONTENT
+        {
+        "address": "${value[1]}",
+        "display_name": "${value[0]}",
+        "imports": [
+          "${network_host_template_name}"
+        ],
+        "object_name":"${value[0]}",
+        "object_type": "object",
+        "vars": {
+            "safed_profile": "3"
+        },
+        "zone": "master"
+        }
+        | HOST_CONTENT
     }
     ->exec { $cmd:
       cwd      => $icinga_path,

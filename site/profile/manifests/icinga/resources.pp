@@ -21,7 +21,6 @@ class profile::icinga::resources (
   $icinga_path   = '/opt/icinga'
   $lt            = '| grep Failed'
 
-
   #Host Templates Names
   $host_template   = 'GeneralHostTemplate'
   $http_template   = 'HttpTemplate'
@@ -29,6 +28,7 @@ class profile::icinga::resources (
   $master_template = 'MasterTemplate'
   $ipa_template    = 'IpaTemplate'
   $tls_template    = 'TlsTemplate'
+  $dtn_template    = 'DtnTemplate'
 
   #Service Templates Names
   $http_svc_template_name   = 'HttpServiceTemplate'
@@ -36,11 +36,11 @@ class profile::icinga::resources (
   $dns_svc_template_name    = 'DnsServiceTemplate'
   $master_svc_template_name = 'MasterServiceTemplate'
   $ipa_svc_template_name    = 'IpaServiceTemplate'
-  $disk_svc_template_name   = 'DiskServiceTemplace'
+  $disk_svc_template_name   = 'DiskServiceTemplate'
   $tls_svc_template_name    = 'TlsServiceTemplate'
-  $ssh_svc_template_name    = 'SshServiceTemplace'
+  $ssh_svc_template_name    = 'SshServiceTemplate'
   $ntp_svc_template_name    = 'NtpServiceTemplate'
-  $rp_svc_template_name    = 'RemotePingServiceTemplate'
+  $lhn_svc_template_name    = 'LhnServiceTemplate'
 
   #Service Names
   $host_svc_ping_name   = 'HostPingService'
@@ -58,7 +58,6 @@ class profile::icinga::resources (
   $master_svc_tls_name  = 'MasterTlsService'
   $master_svc_ssh_name  = 'MasterSshService'
   $master_svc_ntp_name  = 'MasterNtpService'
-  $master_svc_rp_name   = 'LHN_Link'
   $http_svc_name        = 'HttpService'
   $http_svc_ping_name   = 'HttpPingService'
   $http_svc_disk_name   = 'HttpDiskService'
@@ -69,6 +68,9 @@ class profile::icinga::resources (
   $ipa_svc_disk_name    = 'IpaDiskService'
   $ipa_svc_ssh_name     = 'IpaSshService'
   $ipa_svc_ntp_name     = 'IpaNtpService'
+  $dtn_svc_ping_name    = 'DtnPingService'
+  $dtn_svc_ssh_name     = 'DtnSshService'
+  $dtn_svc_lhn_name     = 'LHN_Link'
 
   #Host Groups Names
   $antu     = 'antu_cluster'
@@ -169,6 +171,20 @@ class profile::icinga::resources (
     "object_type": "template",
     }
     | TLS
+  $dtn_template_content = @("DTN"/L)
+    {
+    "accept_config": true,
+    "check_command": "hostalive",
+    "has_agent": true,
+    "master_should_connect": true,
+    "max_check_attempts": "5",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
+    "object_name": "${dtn_template}",
+    "object_type": "template"
+    }
+    | DTN
 
   ##Service Template JSON
   $http_svc_template = @("HTTP_TEMPLATE"/L)
@@ -272,19 +288,19 @@ class profile::icinga::resources (
     "zone": "master"
     }
     | TLS
-  $rp_svc_template = @("RP"/L)
+  $lhn_svc_template = @("LHN"/L)
     {
     "check_command": "ping",
-    "object_name": "${rp_svc_template_name}",
+    "object_name": "${lhn_svc_template_name}",
     "object_type": "template",
-    "use_agent": false,
+    "use_agent": true,
     "vars": {
-        "ping_address": "198.32.252.232",
+        "ping_address": "starlight-dtn.ncsa.illinois.edu",
         "enable_pagerduty": "true"
     },
     "zone": "master"
     }
-    | RP
+    | LHN
   ## IMPORTANT
   ## The ntp_address must be change to an NTP Server,
   ## of our own once we have one operational on site
@@ -503,20 +519,6 @@ class profile::icinga::resources (
     "object_type": "object"
     }
     | MASTER_SVC_6
-  $master_svc7 = @("MASTER_SVC_7"/L)
-    {
-    "host": "${master_template}",
-    "imports": [
-        "${$rp_svc_template_name}"
-    ],
-    "object_name": "${master_svc_rp_name}",
-    "vars": {
-        "enable_pagerduty": "true"
-    },
-    "object_type": "object"
-    }
-    | MASTER_SVC_7
-
   #DNS, Ping, disk, ssh and ntp skew monitoring
   $dns_svc1 = @("DNS_SVC_1"/L)
     {
@@ -650,6 +652,47 @@ class profile::icinga::resources (
     }
     | IPA_SVC_5
 
+  #Ping, ssh and LHN monitoring
+  $dtn_svc1 = @("DTN_SVC_1"/L)
+    {
+    "host": "${dtn_template}",
+    "imports": [
+        "${$ping_svc_template_name}"
+    ],
+    "object_name": "${dtn_svc_ping_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
+    "object_type": "object"
+    }
+    | DTN_SVC_1
+  $dtn_svc2 = @("DTN_SVC_2"/L)
+    {
+    "host": "${dtn_template}",
+    "imports": [
+        "${$ssh_svc_template_name}"
+    ],
+    "object_name": "${dtn_svc_ssh_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
+    "object_type": "object"
+    }
+    | DTN_SVC_2
+  $dtn_svc3 = @("DTN_SVC_3"/L)
+    {
+    "host": "${dtn_template}",
+    "imports": [
+        "${$lhn_svc_template_name}"
+    ],
+    "object_name": "${dtn_svc_lhn_name}",
+    "vars": {
+        "enable_pagerduty": "true"
+    },
+    "object_type": "object"
+    }
+    | DTN_SVC_3
+
   ##Master Node JSON
   $add_master_host = @("MASTER_HOST"/L)
     {
@@ -753,6 +796,10 @@ class profile::icinga::resources (
   $tls_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${tls_template}' ${lt}"
   $tls_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${tls_template_path}"
 
+  $dtn_template_path = "${icinga_path}/${dtn_template}.json"
+  $dtn_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${dtn_template}' ${lt}"
+  $dtn_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${dtn_template_path}"
+
   #Services Template Creation
   $http_svc_template_path = "${icinga_path}/${http_svc_template_name}.json"
   $http_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_template_name}' ${lt}"
@@ -790,9 +837,9 @@ class profile::icinga::resources (
   $ntp_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ntp_svc_template_name}' ${lt}"
   $ntp_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ntp_svc_template_path}"
 
-  $rp_svc_template_path = "${icinga_path}/${rp_svc_template_name}.json"
-  $rp_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${rp_svc_template_name}' ${lt}"
-  $rp_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$rp_svc_template_path}"
+  $lhn_svc_template_path = "${icinga_path}/${lhn_svc_template_name}.json"
+  $lhn_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${lhn_svc_template_name}' ${lt}"
+  $lhn_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$lhn_svc_template_path}"
 
   #Services Creation
   $host_svc_path1 = "${icinga_path}/${host_svc_ping_name}.json"
@@ -858,9 +905,6 @@ class profile::icinga::resources (
   $master_svc_path6 = "${icinga_path}/${master_svc_tls_name}.json"
   $master_svc_cond6 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_tls_name}&host=${master_template}' ${lt}"
   $master_svc_cmd6  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path6}"
-  $master_svc_path7 = "${icinga_path}/${master_svc_rp_name}.json"
-  $master_svc_cond7 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_rp_name}&host=${master_template}' ${lt}"
-  $master_svc_cmd7  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path7}"
 
   $ipa_svc_path1  = "${icinga_path}/${ipa_svc_name}.json"
   $ipa_svc_cond1  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_name}&host=${ipa_template}' ${lt}"
@@ -877,6 +921,16 @@ class profile::icinga::resources (
   $ipa_svc_path5  = "${icinga_path}/${ipa_svc_ntp_name}.json"
   $ipa_svc_cond5  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_ntp_name}&host=${ipa_template}' ${lt}"
   $ipa_svc_cmd5   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${ipa_svc_path5}"
+
+  $dtn_svc_path1 = "${icinga_path}/${dtn_svc_ping_name}.json"
+  $dtn_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dtn_svc_ping_name}&host=${dtn_template}' ${lt}"
+  $dtn_svc_cmd1  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dtn_svc_path1}"
+  $dtn_svc_path2 = "${icinga_path}/${dtn_svc_ssh_name}.json"
+  $dtn_svc_cond2 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dtn_svc_ssh_name}&host=${dtn_template}' ${lt}"
+  $dtn_svc_cmd2  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dtn_svc_path2}"
+  $dtn_svc_path3 = "${icinga_path}/${dtn_svc_lhn_name}.json"
+  $dtn_svc_cond3 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dtn_svc_lhn_name}&host=${dtn_template}' ${lt}"
+  $dtn_svc_cmd3  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${dtn_svc_path3}"
 
   #Host Groups Creation
   $antu_path = "${icinga_path}/${antu}.json"
@@ -1023,6 +1077,20 @@ class profile::icinga::resources (
     onlyif   => $tls_template_cond,
     loglevel => debug,
   }
+  #Create dtn file
+  file { $dtn_template_path:
+    ensure  => 'present',
+    content => $dtn_template_content,
+    before  => Exec[$dtn_template_cmd],
+  }
+  #Add dtn template
+  exec { $dtn_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $dtn_template_cond,
+    loglevel => debug,
+  }
   #<-----------------------END-Host-Templates----------------------------->
   #
   #
@@ -1154,17 +1222,17 @@ class profile::icinga::resources (
     loglevel => debug,
   }
   #Create Remote Ping service template file 
-  file { $rp_svc_template_path:
+  file { $lhn_svc_template_path:
     ensure  => 'present',
-    content => $rp_svc_template,
-    before  => Exec[$rp_svc_template_cmd],
+    content => $lhn_svc_template,
+    before  => Exec[$lhn_svc_template_cmd],
   }
   #Add Remote Ping service template
-  exec { $rp_svc_template_cmd:
+  exec { $lhn_svc_template_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    onlyif   => $rp_svc_template_cond,
+    onlyif   => $lhn_svc_template_cond,
     loglevel => debug,
   }
   #<--------------------EMD-Service-Templates----------------------------->
@@ -1386,20 +1454,6 @@ class profile::icinga::resources (
     onlyif   => $master_svc_cond6,
     loglevel => debug,
   }
-  #Creates Remote Ping resource file for MasterTemplate and RemotePingServiceTemplate
-  file { $master_svc_path7:
-    ensure  => 'present',
-    content => $master_svc7,
-    before  => Exec[$master_svc_cmd7],
-  }
-  #Adds RemotePing file for MasterTemplate and RemotePingServiceTemplate
-  exec { $master_svc_cmd7:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $master_svc_cond7,
-    loglevel => debug,
-  }
 
   ##DnsTemplate Services
   #Creates dns resource file for DnsTemplate and DnsServiceTemplate
@@ -1542,6 +1596,50 @@ class profile::icinga::resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $ipa_svc_cond5,
+    loglevel => debug,
+  }
+
+  ##DtnTemplate Services
+  #Creates ping resource file for DtnTemplate and PingServiceTemplate
+  file { $dtn_svc_path1:
+    ensure  => 'present',
+    content => $dtn_svc1,
+    before  => Exec[$dtn_svc_cmd1],
+  }
+  #Adds ping resource file for DtnTemplate and PingServiceTemplate
+  exec { $dtn_svc_cmd1:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $dtn_svc_cond1,
+    loglevel => debug,
+  }
+  #Creates ssh resource file for DtnTemplate and SshServiceTemplate
+  file { $dtn_svc_path2:
+    ensure  => 'present',
+    content => $dtn_svc2,
+    before  => Exec[$dtn_svc_cmd2],
+  }
+  #Adds ssh resource file for DtnTemplate and SshServiceTemplate
+  exec { $dtn_svc_cmd2:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $dtn_svc_cond2,
+    loglevel => debug,
+  }
+  #Creates lhn resource file for DtnTemplate and LHN_Link
+  file { $dtn_svc_path3:
+    ensure  => 'present',
+    content => $dtn_svc3,
+    before  => Exec[$dtn_svc_cmd3],
+  }
+  #Adds lhn resource file for DtnTemplate and LHN_Link
+  exec { $dtn_svc_cmd3:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $dtn_svc_cond3,
     loglevel => debug,
   }
   #<-------------------END-Services-Definiton----------------------------->

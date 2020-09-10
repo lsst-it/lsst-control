@@ -86,7 +86,7 @@ class profile::icinga::master (
     #Needs to end in newline
     user = icinga
     group = icinga
-    log_level = 1 
+    log_level = 0
     perfdata_spool_dir = /var/spool/icinga2/perfdata
     perfdata_file_run_cmd = /usr/libexec/pnp4nagios/process_perfdata.pl
     perfdata_file_run_cmd_args = --bulk
@@ -354,6 +354,7 @@ class profile::icinga::master (
     mode    => '0644',
     content => $npcd_cont,
     require => Package[$packages],
+    notify  => Service['npcd'],
   }
   ##PNP4Nagios Configuration
   file { '/etc/nginx/sites-available/pnp4nagios.conf':

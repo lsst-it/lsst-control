@@ -509,19 +509,145 @@ class profile::icinga::resources (
   #
   #
   #<------------------------Service-Templates----------------------------->
-  $service_names.each |$template|{
-    $value = split($template,';')
-    file { $value[0]:
-      ensure  => 'present',
-      content => $value[1],
-    }
-    ->exec { $value[2]:
-      cwd      => $icinga_path,
-      path     => ['/sbin', '/usr/sbin', '/bin'],
-      provider => shell,
-      onlyif   => $value[3],
-      loglevel => debug,
-    }
+  #Create http service template file
+  file { $http_svc_template_path:
+    ensure  => 'present',
+    content => $http_svc_template,
+    before  => Exec[$http_svc_template_cmd],
+  }
+  #Add http service template
+  exec { $http_svc_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $http_svc_template_cond,
+    loglevel => debug,
+  }
+  #Create ping service template file
+  file { $ping_svc_template_path:
+    ensure  => 'present',
+    content => $ping_svc_template,
+    before  => Exec[$ping_svc_template_cmd],
+  }
+  #Add http service template
+  exec { $ping_svc_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ping_svc_template_cond,
+    loglevel => debug,
+  }
+  #Create dhcp service template file
+  file { $master_svc_template_path:
+    ensure  => 'present',
+    content => $master_svc_template,
+    before  => Exec[$master_svc_template_cmd],
+  }
+  #Add http service template
+  exec { $master_svc_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $master_svc_template_cond,
+    loglevel => debug,
+  }
+  #Create dns service template file 
+  file { $dns_svc_template_path:
+    ensure  => 'present',
+    content => $dns_svc_template,
+    before  => Exec[$dns_svc_template_cmd],
+  }
+  #Add dns service template
+  exec { $dns_svc_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $dns_svc_template_cond,
+    loglevel => debug,
+  }
+  #Create ipa service template file 
+  file { $ipa_svc_template_path:
+    ensure  => 'present',
+    content => $ipa_svc_template,
+    before  => Exec[$ipa_svc_template_cmd],
+  }
+  #Add ipa service template
+  exec { $ipa_svc_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ipa_svc_template_cond,
+    loglevel => debug,
+  }
+  #Create disk service template file 
+  file { $disk_svc_template_path:
+    ensure  => 'present',
+    content => $disk_svc_template,
+    before  => Exec[$disk_svc_template_cmd],
+  }
+  #Add disk service template
+  exec { $disk_svc_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $disk_svc_template_cond,
+    loglevel => debug,
+  }
+  #Create tls cert expiration service template file 
+  file { $tls_svc_template_path:
+    ensure  => 'present',
+    content => $tls_svc_template,
+    before  => Exec[$tls_svc_template_cmd],
+  }
+  #Add tls cert expiration service template
+  exec { $tls_svc_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $tls_svc_template_cond,
+    loglevel => debug,
+  }
+  #Create ssh service template file 
+  file { $ssh_svc_template_path:
+    ensure  => 'present',
+    content => $ssh_svc_template,
+    before  => Exec[$ssh_svc_template_cmd],
+  }
+  #Add ssh service template
+  exec { $ssh_svc_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ssh_svc_template_cond,
+    loglevel => debug,
+  }
+  #Create ntp skew service template file
+  file { $ntp_svc_template_path:
+    ensure  => 'present',
+    content => $ntp_svc_template,
+    before  => Exec[$ntp_svc_template_cmd],
+  }
+  #Add ntp skew service template
+  exec { $ntp_svc_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $ntp_svc_template_cond,
+    loglevel => debug,
+  }
+  #Create Remote Ping service template file 
+  file { $lhn_svc_template_path:
+    ensure  => 'present',
+    content => $lhn_svc_template,
+    before  => Exec[$lhn_svc_template_cmd],
+  }
+  #Add Remote Ping service template
+  exec { $lhn_svc_template_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $lhn_svc_template_cond,
+    loglevel => debug,
   }
   #<--------------------EMD-Service-Templates----------------------------->
   #

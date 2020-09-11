@@ -78,6 +78,15 @@ class profile::icinga::resources (
   $dtn_svc_ssh_name     = 'DtnSshService'
   $dtn_svc_lhn_name     = 'LHN_Link'
 
+  #Hostgroups Names
+  $antu     = 'antu_cluster'
+  $ruka     = 'ruka_cluster'
+  $kueyen   = 'kueyen_cluster'
+  $core     = 'core_cluster'
+  $comcam   = 'comcam_cluster'
+  $ls_nodes = 'ls_nodes'
+  $it_svc   = 'it_services'
+
   #Host Services Array
   $host_services = [
     "${host_template},${$ping_svc_template_name},${host_svc_ping_name}",
@@ -113,7 +122,6 @@ class profile::icinga::resources (
     "${dtn_template},${$ssh_svc_template_name},${dtn_svc_ssh_name}",
     "${dtn_template},${$lhn_svc_template_name},${dtn_svc_lhn_name}",
   ]
-
   #Host Template Names Array
   $host_names = [
     $host_template,
@@ -124,15 +132,28 @@ class profile::icinga::resources (
     $ipa_template,
     $dtn_template,
   ]
-  #Host Groups Names
-  $antu     = 'antu_cluster'
-  $ruka     = 'ruka_cluster'
-  $kueyen   = 'kueyen_cluster'
-  $core     = 'core_cluster'
-  $comcam   = 'comcam_cluster'
-  $ls_nodes = 'ls_nodes'
-  $it_svc   = 'it_services'
-
+  #Service Templates Array
+  $service_names = [
+    "${http_svc_template_path};${http_svc_template};${http_svc_template_cmd};${http_svc_template_cond}",
+    "${ping_svc_template_path};${ping_svc_template};${ping_svc_template_cmd};${ping_svc_template_cond}",
+    "${master_svc_template_path};${master_svc_template};${master_svc_template_cmd};${master_svc_template_cond}",
+    "${dns_svc_template_path};${dns_svc_template};${dns_svc_template_cmd};${dns_svc_template_cond}",
+    "${ipa_svc_template_path};${ipa_svc_template};${ipa_svc_template_cmd};${ipa_svc_template_cond}",
+    "${disk_svc_template_path};${disk_svc_template};${disk_svc_template_cmd};${disk_svc_template_cond}",
+    "${tls_svc_template_path};${tls_svc_template};${tls_svc_template_cmd};${tls_svc_template_cond}",
+    "${ssh_svc_template_path};${ssh_svc_template};${ssh_svc_template_cmd};${ssh_svc_template_cond}",
+    "${ntp_svc_template_path};${ntp_svc_template};${ntp_svc_template_cmd};${ntp_svc_template_cond}",
+    "${lhn_svc_template_path};${lhn_svc_template};${lhn_svc_template_cmd};${lhn_svc_template_cond}",
+  ]
+  #Host Groups Array
+  $hostgroups_name = [
+    "${antu},AntuCluster,antu_cluster,antu",
+    "${ruka},RukaCluster,ruka_cluster,ruka",
+    "${kueyen},KueyenCluster,kueyen_cluster,kueyen",
+    "${core},CoreCluster,core_cluster,core",
+    "${comcam},ComcamCluster,comcam_cluster,comcam",
+    "${ls_nodes},LS_Nodes,ls_nodes,ls",
+  ]
   #<--------End Variables Definition---------->
   #
   #
@@ -305,55 +326,7 @@ class profile::icinga::resources (
     }
     | MASTER_HOST
 
-  ##Host Groups Definition
-  $antu_template = @("ANTU"/L)
-    {
-    "assign_filter": "host.display_name=%22antu%2A%22",
-    "display_name": "Antu Cluster",
-    "object_name": "antu_cluster",
-    "object_type": "object"
-    }
-    | ANTU
-  $ruka_template = @("RUKA"/L)
-    {
-    "assign_filter": "host.display_name=%22ruka%2A%22",
-    "display_name": "Ruka Cluster",
-    "object_name": "ruka_cluster",
-    "object_type": "object"
-    }
-    | RUKA
-  $kueyen_template = @("KUEYEN"/L)
-    {
-    "assign_filter": "host.display_name=%22kueyen%2A%22",
-    "display_name": "Kueyen Cluster",
-    "object_name": "kueyen_cluster",
-    "object_type": "object"
-    }
-    | KUEYEN
-  $core_template = @("CORE"/L)
-    {
-    "assign_filter": "host.display_name=%22core%2A%22",
-    "display_name": "Core Cluster",
-    "object_name": "core_cluster",
-    "object_type": "object"
-    }
-    | CORE
-  $comcam = @("COMCAM"/L)
-    {
-    "assign_filter": "host.display_name=%22comcam%2A%22",
-    "display_name": "ComCam Cluster",
-    "object_name": "comcam_cluster",
-    "object_type": "object"
-    }
-    | COMCAM
-  $ls_nodes_template = @("NODES"/L)
-    {
-    "assign_filter": "host.display_name=%22ls-%2A%22",
-    "display_name": "LS Nodes",
-    "object_name": "ls_nodes",
-    "object_type": "object"
-    }
-    | NODES
+  #Hostgroups JSON
   $it_svc_template = @("IT"/L)
     {
     "assign_filter": "host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
@@ -418,9 +391,6 @@ class profile::icinga::resources (
   $master_svc_cmd1  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path1}"
 
   #Host Groups Creation
-  $antu_path = "${icinga_path}/${antu}.json"
-  $antu_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${antu}' ${lt}"
-  $antu_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${antu_path}"
 
   $ruka_path = "${icinga_path}/${ruka}.json"
   $ruka_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${ruka}' ${lt}"
@@ -539,145 +509,19 @@ class profile::icinga::resources (
   #
   #
   #<------------------------Service-Templates----------------------------->
-  #Create http service template file
-  file { $http_svc_template_path:
-    ensure  => 'present',
-    content => $http_svc_template,
-    before  => Exec[$http_svc_template_cmd],
-  }
-  #Add http service template
-  exec { $http_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $http_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create ping service template file
-  file { $ping_svc_template_path:
-    ensure  => 'present',
-    content => $ping_svc_template,
-    before  => Exec[$ping_svc_template_cmd],
-  }
-  #Add http service template
-  exec { $ping_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ping_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create dhcp service template file
-  file { $master_svc_template_path:
-    ensure  => 'present',
-    content => $master_svc_template,
-    before  => Exec[$master_svc_template_cmd],
-  }
-  #Add http service template
-  exec { $master_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $master_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create dns service template file 
-  file { $dns_svc_template_path:
-    ensure  => 'present',
-    content => $dns_svc_template,
-    before  => Exec[$dns_svc_template_cmd],
-  }
-  #Add dns service template
-  exec { $dns_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $dns_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create ipa service template file 
-  file { $ipa_svc_template_path:
-    ensure  => 'present',
-    content => $ipa_svc_template,
-    before  => Exec[$ipa_svc_template_cmd],
-  }
-  #Add ipa service template
-  exec { $ipa_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ipa_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create disk service template file 
-  file { $disk_svc_template_path:
-    ensure  => 'present',
-    content => $disk_svc_template,
-    before  => Exec[$disk_svc_template_cmd],
-  }
-  #Add disk service template
-  exec { $disk_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $disk_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create tls cert expiration service template file 
-  file { $tls_svc_template_path:
-    ensure  => 'present',
-    content => $tls_svc_template,
-    before  => Exec[$tls_svc_template_cmd],
-  }
-  #Add tls cert expiration service template
-  exec { $tls_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $tls_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create ssh service template file 
-  file { $ssh_svc_template_path:
-    ensure  => 'present',
-    content => $ssh_svc_template,
-    before  => Exec[$ssh_svc_template_cmd],
-  }
-  #Add ssh service template
-  exec { $ssh_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ssh_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create ntp skew service template file
-  file { $ntp_svc_template_path:
-    ensure  => 'present',
-    content => $ntp_svc_template,
-    before  => Exec[$ntp_svc_template_cmd],
-  }
-  #Add ntp skew service template
-  exec { $ntp_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ntp_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create Remote Ping service template file 
-  file { $lhn_svc_template_path:
-    ensure  => 'present',
-    content => $lhn_svc_template,
-    before  => Exec[$lhn_svc_template_cmd],
-  }
-  #Add Remote Ping service template
-  exec { $lhn_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $lhn_svc_template_cond,
-    loglevel => debug,
+  $service_names.each |$template|{
+    $value = split($template,';')
+    file { $value[0]:
+      ensure  => 'present',
+      content => $value[1],
+    }
+    ->exec { $value[2]:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $value[3],
+      loglevel => debug,
+    }
   }
   #<--------------------EMD-Service-Templates----------------------------->
   #
@@ -733,89 +577,30 @@ class profile::icinga::resources (
   #
   #
   #<----------------------Host-Group-Definiton---------------------------->
-  #Creates antu HostGroup File
-  file { $antu_path:
-    ensure  => 'present',
-    content => $antu_template,
-    before  => Exec[$antu_cmd],
-  }
-  #Adds antu Hostgroup
-  exec { $antu_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $antu_cond,
-    loglevel => debug,
-  }
-  #Creates ruka HostGroup File
-  file { $ruka_path:
-    ensure  => 'present',
-    content => $ruka_template,
-    before  => Exec[$ruka_cmd],
-  }
-  #Adds ruka Hostgroup
-  exec { $ruka_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ruka_cond,
-    loglevel => debug,
-  }
-  #Creates kueyen HostGroup File
-  file { $kueyen_path:
-    ensure  => 'present',
-    content => $kueyen_template,
-    before  => Exec[$kueyen_cmd],
-  }
-  #Adds kueyen Hostgroup
-  exec { $kueyen_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $kueyen_cond,
-    loglevel => debug,
-  }
-  #Creates comcam HostGroup File
-  file { $comcam_path:
-    ensure  => 'present',
-    content => $comcam,
-    before  => Exec[$comcam_cmd],
-  }
-  #Adds comcam Hostgroup
-  exec { $comcam_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $comcam_cond,
-    loglevel => debug,
-  }
-  #Creates core HostGroup File
-  file { $core_path:
-    ensure  => 'present',
-    content => $core_template,
-    before  => Exec[$core_cmd],
-  }
-  #Adds core Hostgroup
-  exec { $core_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $core_cond,
-    loglevel => debug,
-  }
-  #Creates LS Nodes HostGroup File
-  file { $ls_path:
-    ensure  => 'present',
-    content => $ls_nodes_template,
-    before  => Exec[$ls_cmd],
-  }
-  #Adds LS Nodes Hostgroup
-  exec { $ls_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ls_cond,
-    loglevel => debug,
+  $hostgroups_name.each |$hostgroup|{
+    $value = split($hostgroup,',')
+    $hostgroup_path = "${icinga_path}/${$value[0]}.json"
+    $hostgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${value[0]}' ${lt}"
+    $hostgroup_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${hostgroup_path}"
+
+    file { $hostgroup_path:
+      ensure  => 'present',
+      content => @("ANTU"/L)
+        {
+        "assign_filter": "host.display_name=%22${value[3]}%2A%22",
+        "display_name": "${value[1]}",
+        "object_name": "${value[2]}",
+        "object_type": "object"
+        }
+        | ANTU
+    }
+    ->exec { $hostgroup_cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $hostgroup_cond,
+      loglevel => debug,
+    }
   }
   #Creates IT Services HostGroup File
   file { $it_path:

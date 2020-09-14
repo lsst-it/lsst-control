@@ -12,7 +12,9 @@ class profile::icinga::network (
   $nwc_name                   = 'nwc_health'
   $nwc_notification_name      = 'nwc-template'
   $network_host_template_name = 'NetworkHostTemplate'
+  $gateway_host_template_name = 'GatewayInterfacesTemplate'
   $network_hostgroup_name     = 'NetworkDevices'
+  $gateway_hostgroup_name     = 'GatewayInterfaces'
 
   $intstat_svc_template_name  = 'InterfaceStatusServiceTemplate'
   $interror_svc_template_name = 'InterfaceErrorsServiceTemplate'
@@ -52,6 +54,13 @@ class profile::icinga::network (
     'bdc-cr02.ls.lsst.org,10.48.1.2',
     'rubinobs-br01.ls.lsst.org,10.48.1.4'
   ]
+  $gw_list  = [
+    'VLAN2100,10.49.0.254',
+  ]
+  $host_templates = [
+    $network_host_template_name,
+    $gateway_host_template_name,
+  ]
   #Services Array
   $services = [
     "${$intstat_svc_template_name},${network_svc_intstat_name}",
@@ -75,22 +84,6 @@ class profile::icinga::network (
   #
   #
   #<-----------------------------JSON Files ------------------------------>
-  #Network Host Template
-  $network_host_template_content = @("NETWORK"/L)
-    {
-    "accept_config": false,
-    "check_command": "hostalive",
-    "has_agent": false,
-    "master_should_connect": false,
-    "max_check_attempts": "5",
-    "vars": {
-        "enable_network_pagerduty": "true"
-    },
-    "object_name": "${network_host_template_name}",
-    "object_type": "template"
-    }
-    | NETWORK
-
   #Service Template JSON
   $intstat_svc_template_content = @("INTSTAT_SVC_TEMPLATE_CONTENT"/L)
     {
@@ -247,11 +240,6 @@ class profile::icinga::network (
   #
   #
   #<--------------------Templates-Variables-Creation----------------------->
-  #Network Host Template
-  $network_host_template_path = "${$icinga_path}/${network_host_template_name}.json"
-  $network_host_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${network_host_template_name}' ${lt}"
-  $network_host_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${network_host_template_path}"
-
   #Service Template
   $intstat_svc_template_path = "${icinga_path}/${intstat_svc_template_name}.json"
   $intstat_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${intstat_svc_template_name}' ${lt}"
@@ -294,18 +282,35 @@ class profile::icinga::network (
   #<-------------------Files Creation and deployement--------------------->
   ##Network Host Template
   #Create network template file
-  file { $network_host_template_path:
-    ensure  => 'present',
-    content => $network_host_template_content,
-    before  => Exec[$network_host_template_cmd],
-  }
-  #Add general host template
-  exec { $network_host_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $network_host_template_cond,
-    loglevel => debug,
+  $host_templates.each |$host|{
+    $host_path = "${$icinga_path}/${host}.json"
+    $host_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${host}' ${lt}"
+    $host_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${host_path}"
+
+    file { $host_path:
+      ensure  => 'present',
+      content => @("TEMPLATE"/L)
+        {
+        "accept_config": false,
+        "check_command": "hostalive",
+        "has_agent": false,
+        "master_should_connect": false,
+        "max_check_attempts": "5",
+        "vars": {
+            "enable_network_pagerduty": "true"
+        },
+        "object_name": "${host}",
+        "object_type": "template"
+        }
+        | TEMPLATE
+    }
+    ->exec { $host_cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $host_cond,
+      loglevel => debug,
+    }
   }
 
   ##Network Hosts
@@ -341,7 +346,39 @@ class profile::icinga::network (
       loglevel => debug,
     }
   }
+  #Gateways
+  $gw_list.each |$gw|{
+    $value = split($gw,',')
+    $path = "${icinga_path}/${value[0]}.json"
+    $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
+    $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${path}"
 
+    file { $path:
+      ensure  => 'present',
+      content => @("HOST_CONTENT"/L)
+        {
+        "address": "${value[1]}",
+        "display_name": "${value[0]}",
+        "imports": [
+          "${gateway_host_template_name}"
+        ],
+        "object_name":"${value[0]}",
+        "object_type": "object",
+        "vars": {
+            "safed_profile": "3"
+        },
+        "zone": "master"
+        }
+        | HOST_CONTENT
+    }
+    ->exec { $cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $cond,
+      loglevel => debug,
+    }
+  }
   ##Service Template
   #Create Interface Status Service Template file
   file { $intstat_svc_template_path:

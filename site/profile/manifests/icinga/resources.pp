@@ -391,27 +391,6 @@ class profile::icinga::resources (
   $master_svc_cmd1  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path1}"
 
   #Host Groups Creation
-
-  $ruka_path = "${icinga_path}/${ruka}.json"
-  $ruka_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${ruka}' ${lt}"
-  $ruka_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${ruka_path}"
-
-  $kueyen_path = "${icinga_path}/${kueyen}.json"
-  $kueyen_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${kueyen}' ${lt}"
-  $kueyen_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${kueyen_path}"
-
-  $core_path = "${icinga_path}/${core}.json"
-  $core_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${core}' ${lt}"
-  $core_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${core_path}"
-
-  $comcam_path = "${icinga_path}/${comcam}.json"
-  $comcam_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${comcam}' ${lt}"
-  $comcam_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${comcam_path}"
-
-  $ls_path = "${icinga_path}/${ls_nodes}.json"
-  $ls_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${ls_nodes}' ${lt}"
-  $ls_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${ls_path}"
-
   $it_path = "${icinga_path}/${it_svc}.json"
   $it_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${it_svc}' ${lt}"
   $it_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${it_path}"
@@ -711,14 +690,14 @@ class profile::icinga::resources (
 
     file { $hostgroup_path:
       ensure  => 'present',
-      content => @("ANTU"/L)
+      content => @("CLUSTER"/L)
         {
         "assign_filter": "host.display_name=%22${value[3]}%2A%22",
         "display_name": "${value[1]}",
         "object_name": "${value[2]}",
         "object_type": "object"
         }
-        | ANTU
+        | CLUSTER
     }
     ->exec { $hostgroup_cmd:
       cwd      => $icinga_path,

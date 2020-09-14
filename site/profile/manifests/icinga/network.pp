@@ -52,10 +52,36 @@ class profile::icinga::network (
     'bdc-ds01.ls.lsst.org,10.49.0.254',
     'bdc-cr01.ls.lsst.org,10.48.1.1',
     'bdc-cr02.ls.lsst.org,10.48.1.2',
-    'rubinobs-br01.ls.lsst.org,10.48.1.4'
+    'rubinobs-br01.ls.lsst.org,10.48.1.4',
+    'cube.ls.lsst.org,139.229.134.1',
   ]
   $gw_list  = [
     'VLAN2100,10.49.0.254',
+    'Vlan900,192.168.255.4',
+    'Vlan2100,10.49.0.254',
+    'Vlan2101,139.229.134.254',
+    'Vlan2102,139.229.135.254',
+    'Vlan2113,139.229.158.190',
+    'Vlan2114,139.229.158.254',
+    'Vlan2115,139.229.159.126',
+    'Vlan2116,139.229.159.254',
+    'Vlan2121,10.49.1.254 ',
+    'Vlan2123,10.49.3.254',
+    'Vlan2125,10.49.5.254',
+    'Vlan2200,139.229.149.254',
+    'Vlan2300,139.229.144.126',
+    'Vlan2400,139.229.147.254',
+    'Vlan2401,139.229.146.254',
+    'Vlan2402,139.229.148.254',
+    'Vlan2500,139.229.150.126',
+    'Vlan2903,10.50.3.254',
+    'Vlan300,198.32.252.233',
+    'Vlan301,198.32.252.235',
+    'Vlan330,139.229.140.130',
+    'Vlan340,139.229.140.132',
+    'Vlan350,139.229.140.1',
+    'Vlan360,139.229.140.134',
+    'Vlan370,139.229.140.136',
   ]
   $host_templates = [
     $network_host_template_name,
@@ -235,7 +261,14 @@ class profile::icinga::network (
     "object_type": "object"
     }
     | NETWORK_HOSTGROUP
-
+  $gateway_hostgroup = @("GATEWAY_HOSTGROUP"/L)
+    {
+    "assign_filter": "host.display_name=%22VLAN%2A%22",
+    "display_name": "Base Gateways",
+    "object_name": "${gateway_hostgroup_name}",
+    "object_type": "object"
+    }
+    | GATEWAY_HOSTGROUP
   #<----------------------------End JSON Files----------------------------->
   #
   #
@@ -275,6 +308,10 @@ class profile::icinga::network (
   $network_hostgroup_path = "${icinga_path}/${network_hostgroup_name}.json"
   $network_hostgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${network_hostgroup_name}' ${lt}"
   $network_hostgroup_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${network_hostgroup_path}"
+
+  $gateway_hostgroup_path = "${icinga_path}/${gateway_hostgroup_name}.json"
+  $gateway_hostgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${gateway_hostgroup_name}' ${lt}"
+  $gateway_hostgroup_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${gateway_hostgroup_path}"
 
   #<------------------END-Templates-Variables-Creation-------------------->
   #
@@ -515,7 +552,7 @@ class profile::icinga::network (
     loglevel => debug,
   }
 
-  ##Network Hostgroup
+  ##Hostgroups
   #Create Network Hostgroup file
   file { $network_hostgroup_path:
     ensure  => 'present',
@@ -528,6 +565,20 @@ class profile::icinga::network (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $network_hostgroup_cond,
+    loglevel => debug,
+  }
+  #Create Gateways Hostgroup file
+  file { $gateway_hostgroup_path:
+    ensure  => 'present',
+    content => $gateway_hostgroup,
+    before  => Exec[$gateway_hostgroup_cmd],
+  }
+  #Add Gateways Hostgroup 
+  exec { $gateway_hostgroup_cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $gateway_hostgroup_cond,
     loglevel => debug,
   }
 }

@@ -29,7 +29,7 @@ class profile::icinga::network (
   $host_notification_name          = 'notify-network-host'
   $svc_notification_name           = 'notify-server-svc'
 
-  #Hosts Name
+  #Hosts Name Array
   $community   = 'rubinobs'
   $host_list  = [
     'nob1-as01.ls.lsst.org,10.49.0.11',
@@ -51,6 +51,12 @@ class profile::icinga::network (
     'bdc-cr01.ls.lsst.org,10.48.1.1',
     'bdc-cr02.ls.lsst.org,10.48.1.2',
     'rubinobs-br01.ls.lsst.org,10.48.1.4'
+  ]
+  #Services Array
+  $services = [
+    "${$intstat_svc_template_name},${network_svc_intstat_name}",
+    "${$interror_svc_template_name},${network_svc_interror_name}",
+    "${$env_svc_template_name},${network_svc_env_name}",
   ]
 
   #Commands abreviation
@@ -131,47 +137,6 @@ class profile::icinga::network (
     "zone": "master"
     }
     | ENV_SVC_TEMPLATE_CONTENT
-
-  #Interface Status Service
-  $network_svc1 = @("NETWORK_SVC1"/L)
-    {
-    "host": "${network_host_template_name}",
-    "imports": [
-      "${$intstat_svc_template_name}"
-    ],
-    "object_name": "${network_svc_intstat_name}",
-    "vars": {
-      "enable_network_pagerduty": "true"
-    },
-    "object_type": "object"
-    }
-    | NETWORK_SVC1
-  $network_svc2 = @("NETWORK_SVC2"/L)
-    {
-    "host": "${network_host_template_name}",
-    "imports": [
-      "${$interror_svc_template_name}"
-    ],
-    "object_name": "${network_svc_interror_name}",
-    "vars": {
-      "enable_network_pagerduty": "true"
-    },
-    "object_type": "object"
-    }
-    | NETWORK_SVC2
-  $network_svc3 = @("NETWORK_SVC3"/L)
-    {
-    "host": "${network_host_template_name}",
-    "imports": [
-      "${$env_svc_template_name}"
-    ],
-    "object_name": "${network_svc_env_name}",
-    "vars": {
-      "enable_network_pagerduty": "true"
-    },
-    "object_type": "object"
-    }
-    | NETWORK_SVC3
 
   #Notifications Template
   $host_notification_template = @("HOST_NOTIFICATION_TEMPLATE")
@@ -268,7 +233,6 @@ class profile::icinga::network (
     ]
     }
     | SERVICE_NOTIFICATION
-
   ##Network HostGroup Definition
   $network_hostgroup = @("NETWORK_HOSTGROUP"/L)
     {
@@ -300,19 +264,6 @@ class profile::icinga::network (
   $env_svc_template_path = "${icinga_path}/${env_svc_template_name}.json"
   $env_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${env_svc_template_name}' ${lt}"
   $env_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$env_svc_template_path}"
-
-  #Services Creation
-  $network_svc1_path = "${icinga_path}/${network_svc_intstat_name}.json"
-  $network_svc1_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${network_svc_intstat_name}&host=${network_host_template_name}' ${lt}"
-  $network_svc1_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${network_svc1_path}"
-
-  $network_svc2_path = "${icinga_path}/${network_svc_interror_name}.json"
-  $network_svc2_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${network_svc_interror_name}&host=${network_host_template_name}' ${lt}"
-  $network_svc2_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${network_svc2_path}"
-
-  $network_svc3_path = "${icinga_path}/${network_svc_env_name}.json"
-  $network_svc3_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${network_svc_env_name}&host=${network_host_template_name}' ${lt}"
-  $network_svc3_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${network_svc3_path}"
 
   #Notification Template
   $host_notification_template_path = "${$icinga_path}/${host_notification_template_name}.json"
@@ -436,47 +387,35 @@ class profile::icinga::network (
   }
 
   ##Network Services
-  #Create Interface Status Service file
-  file { $network_svc1_path:
-    ensure  => 'present',
-    content => $network_svc1,
-    before  => Exec[$network_svc1_cmd],
-  }
-  #Add Interface Status Service 
-  exec { $network_svc1_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $network_svc1_cond,
-    loglevel => debug,
-  }
-  #Create Interface Error Service file
-  file { $network_svc2_path:
-    ensure  => 'present',
-    content => $network_svc2,
-    before  => Exec[$network_svc2_cmd],
-  }
-  #Add Interface Error Service 
-  exec { $network_svc2_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $network_svc2_cond,
-    loglevel => debug,
-  }
-  #Create Environmental Service file
-  file { $network_svc3_path:
-    ensure  => 'present',
-    content => $network_svc3,
-    before  => Exec[$network_svc3_cmd],
-  }
-  #Add Environmental Service 
-  exec { $network_svc3_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $network_svc3_cond,
-    loglevel => debug,
+  $services.each |$nservice|{
+    $value = split($nservice, ',')
+    $svc_path = "${icinga_path}/${value[1]}.json"
+    $svc_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${value[1]}&host=${network_host_template_name}' ${lt}"
+    $svc_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${svc_path}"
+
+    file { $svc_path:
+      ensure  => 'present',
+      content => @("SVC"/L)
+        {
+        "host": "${network_host_template_name}",
+        "imports": [
+          "${$value[0]}"
+        ],
+        "object_name": "${value[1]}",
+        "vars": {
+          "enable_network_pagerduty": "true"
+        },
+        "object_type": "object"
+        }
+        | SVC
+    }
+    -> exec { $svc_cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $svc_cond,
+      loglevel => debug,
+    }
   }
 
   ##Notification Templates

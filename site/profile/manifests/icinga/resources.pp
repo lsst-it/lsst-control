@@ -426,6 +426,19 @@ class profile::icinga::resources (
     ensure  => 'present',
     require => Yumrepo['perl'],
   }
+  #<-------------END-Repo-and-Packages-for-nwc_health--------------------->
+  #
+  #
+  #<----------------------Packages-for-check-link------------------------->
+  archive {'/usr/lib64/nagios/plugins/check_nic':
+    ensure => present,
+    source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=4158&cf_id=24',
+    user   => 'root',
+    group  => 'icinga',
+  }
+  #<------------------END-Packages-for-check-link------------------------->
+  #
+  #
   #<---------------------------Host-Templates----------------------------->
   $host_names.each |$host|{
     $host_path = "${$icinga_path}/${host}.json"

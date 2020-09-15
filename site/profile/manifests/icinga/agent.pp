@@ -9,56 +9,22 @@ class profile::icinga::agent(
   String $ca_salt,
   String $ssh_port = '22',
 ){
+  #<-----------------------Variables-Definition--------------------------->
   $packages = [
     'nagios-plugins-all',
   ]
   $icinga_agent_fqdn = $facts['networking']['fqdn']
   $icinga_agent_ip = $facts['networking']['ip']
   $credentials = "Authorization:Basic ${credentials_hash}"
-  $json_file = @("CONTENT"/L)
-    {
-    "address": "${icinga_agent_ip}",
-    "display_name": "${icinga_agent_fqdn}",
-    "imports": [
-      "${host_template}"
-    ],
-    "object_name":"${icinga_agent_fqdn}",
-    "object_type": "object",
-    "vars": {
-        "safed_profile": "3",
-        "ssh_port": "${ssh_port}"
-    }
-    }
-    | CONTENT
   $icinga_path = '/opt/icinga'
   $path = "${icinga_path}/${icinga_agent_fqdn}.json"
   $url = "https://${icinga_master_fqdn}/director/host"
   $cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @${path}"
   $cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_agent_fqdn}' | grep Failed"
-
-  ##Create a directory to allocate json files
-  file { $icinga_path:
-    ensure => 'directory',
-  }
-
-  ## Create host file
-  file { $path:
-    ensure  => 'present',
-    content => $json_file,
-  }
-  ##Add host to master
-  exec { $cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $cond,
-    loglevel => debug,
-  }
-  ##Add require packages
-  package { $packages:
-    ensure => 'present',
-  }
-  ##Icinga2 config
+  #<-------------------End-Variables-Definition--------------------------->
+  #
+  #
+  #<-------------------------Icinga-Configuration------------------------->
   class { '::icinga2':
     manage_repo => true,
     confd       => false,
@@ -89,13 +55,68 @@ class profile::icinga::agent(
       },
     }
   }
-  #Change permissions to plugin
+  #<--------------------End-Icinga-Configuration-------------------------->
+  #
+  #
+  #<----------------------Plugins-modifications--------------------------->
   file { '/usr/lib64/nagios/plugins/check_disk':
     owner   => 'root',
     group   => 'root',
     mode    => '4755',
     require => Package[$packages],
   }
+  #<------------------END-Plugins-modifications--------------------------->
+  #
+  #
+  #<----------------------Packages-for-check-link------------------------->
+  archive {'/usr/lib64/nagios/plugins/check_netio':
+    ensure => present,
+    source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
+  }
+  ->file { '/usr/lib64/nagios/plugins/check_netio':
+    owner => 'root',
+    group => 'icinga',
+    mode  => '4755',
+  }
+  #<------------------END-Packages-for-check-link------------------------->
+  #
+  #
+  #<----------------------Add-Host-to-Icinga-Master----------------------->
+  ##Create a directory to allocate json files
+  file { $icinga_path:
+    ensure => 'directory',
+  }
+  ## Create host file
+  file { $path:
+    ensure  => 'present',
+    content => @("CONTENT"/L)
+      {
+      "address": "${icinga_agent_ip}",
+      "display_name": "${icinga_agent_fqdn}",
+      "imports": [
+        "${host_template}"
+      ],
+      "object_name":"${icinga_agent_fqdn}",
+      "object_type": "object",
+      "vars": {
+          "safed_profile": "3",
+          "ssh_port": "${ssh_port}"
+      }
+      }
+      | CONTENT
+  }
+  -> exec { $cmd:
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => $cond,
+    loglevel => debug,
+  }
+  ##Add require packages
+  package { $packages:
+    ensure => 'present',
+  }
+  #<------------------End-Add-Host-to-Icinga-Master----------------------->
 }
 
 

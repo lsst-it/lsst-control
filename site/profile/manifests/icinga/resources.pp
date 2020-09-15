@@ -409,11 +409,14 @@ class profile::icinga::resources (
   #
   #
   #<----------------------Packages-for-check-link------------------------->
-  archive {'/usr/lib64/nagios/plugins/check_nic':
+  archive {'/usr/lib64/nagios/plugins/check_netio':
     ensure => present,
-    source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=4158&cf_id=24',
-    user   => 'root',
-    group  => 'icinga',
+    source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
+  }
+  ->file { '/usr/lib64/nagios/plugins/check_netio':
+    owner => 'root',
+    group => 'icinga',
+    mode  => '4755',
   }
   #<------------------END-Packages-for-check-link------------------------->
   #

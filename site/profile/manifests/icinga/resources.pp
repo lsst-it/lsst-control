@@ -5,11 +5,10 @@ class profile::icinga::resources (
   String $credentials_hash,
   String $dhcp_server,
 ){
-
   #<----------Variables Definition------------>
   #Implicit usage of facts
-  $master_fqdn  = $facts[fqdn]
-  $master_ip  = $facts[ipaddress]
+  $master_fqdn  = $facts['networking']['fqdn']
+  $master_ip  = $facts['networking']['ip']
 
   #Commands abreviation
   $url_host      = "https://${master_fqdn}/director/host"
@@ -36,12 +35,12 @@ class profile::icinga::resources (
   $ping_svc_template_name   = 'PingServiceTemplate'
   $dns_svc_template_name    = 'DnsServiceTemplate'
   $master_svc_template_name = 'MasterServiceTemplate'
-  $ipa_svc_template_name    = 'IpaServiceTemplate'
-  $disk_svc_template_name   = 'DiskServiceTemplate'
-  $tls_svc_template_name    = 'TlsServiceTemplate'
   $ssh_svc_template_name    = 'SshServiceTemplate'
+  $tls_svc_template_name    = 'TlsServiceTemplate'
   $ntp_svc_template_name    = 'NtpServiceTemplate'
   $lhn_svc_template_name    = 'LhnServiceTemplate'
+  $ipa_svc_template_name    = 'IpaServiceTemplate'
+  $disk_svc_template_name   = 'DiskServiceTemplate'
 
   #Service Names
   $host_svc_ping_name   = 'HostPingService'
@@ -139,7 +138,6 @@ class profile::icinga::resources (
     "dns,${dns_svc_template_name}",
     "dhcp,${master_svc_template_name}",
     "ssh,${ssh_svc_template_name}",
-    "http,${http_svc_template_name}",
   ]
   $service_template_double = [
     "http,${tls_svc_template_name},http_certificate,30",
@@ -154,94 +152,7 @@ class profile::icinga::resources (
     "${comcam},ComcamCluster,comcam_cluster,comcam",
     "${ls_nodes},LS_Nodes,ls_nodes,ls",
   ]
-  #<--------End Variables Definition---------->
-  #
-  #
-  #<---------------JSON Files ---------------->
-  ##Service Template JSON
-  $ipa_svc_template = @("IPA_TEMPLATE"/L)
-    {
-    "check_command": "ldap",
-    "object_name": "${ipa_svc_template_name}",
-    "object_type": "template",
-    "use_agent": true,
-    "vars": {
-        "ldap_address": "localhost",
-        "ldap_base": "dc=lsst,dc=cloud"
-    },
-    "zone": "master"
-    }
-    | IPA_TEMPLATE
-  $disk_svc_template = @("DISK_TEMPLATE"/L)
-    {
-    "check_command": "disk",
-    "object_name": "${disk_svc_template_name}",
-    "object_type": "template",
-    "use_agent": true,
-    "vars": {
-        "disk_cfree": "10%",
-        "disk_wfree": "20%"
-    },
-    "zone": "master"
-    }
-    | DISK_TEMPLATE
-  $lhn_svc_template = @("LHN"/L)
-    {
-    "check_command": "ping",
-    "object_name": "${lhn_svc_template_name}",
-    "object_type": "template",
-    "use_agent": true,
-    "vars": {
-        "ping_address": "starlight-dtn.ncsa.illinois.edu",
-        "ping_crta": "250",
-        "ping_wrta": "225"
-    },
-    "zone": "master"
-    }
-    | LHN
-
-  ##Services Definition
-  $master_svc1 = @("MASTER_SVC_1"/L)
-    {
-    "host": "${master_template}",
-    "imports": [
-      "${$master_svc_template_name}"
-    ],
-    "object_name": "${master_svc_dhcp_name}",
-    "object_type": "object",
-    "vars": {
-      "dhcp_serverip": "${dhcp_server}"
-    }
-    }
-    | MASTER_SVC_1
-
-  ##Master Node JSON
-  $add_master_host = @("MASTER_HOST"/L)
-    {
-    "address": "${master_ip}",
-    "display_name": "${master_fqdn}",
-    "imports": [
-      "${master_template}"
-    ],
-    "object_name":"${master_fqdn}",
-    "object_type": "object",
-    "vars": {
-        "safed_profile": "3"
-    },
-    "zone": "master"
-    }
-    | MASTER_HOST
-
-  #Hostgroups JSON
-  $it_svc_template = @("IT"/L)
-    {
-    "assign_filter": "host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
-    "display_name": "LS Nodes",
-    "object_name": "ls_nodes",
-    "object_type": "object"
-    }
-    | IT
-  #<---------------------------End JSON Files --------------------------->
+  #<-------------------End Variables Definition--------------------------->
   #
   #
   #<-------------------Templates-Variables-Creation----------------------->
@@ -422,11 +333,21 @@ class profile::icinga::resources (
   #Create ipa service template file 
   file { $ipa_svc_template_path:
     ensure  => 'present',
-    content => $ipa_svc_template,
-    before  => Exec[$ipa_svc_template_cmd],
+    content => @("IPA_TEMPLATE"/L)
+      {
+      "check_command": "ldap",
+      "object_name": "${ipa_svc_template_name}",
+      "object_type": "template",
+      "use_agent": true,
+      "vars": {
+          "ldap_address": "localhost",
+          "ldap_base": "dc=lsst,dc=cloud"
+      },
+      "zone": "master"
+      }
+      | IPA_TEMPLATE
   }
-  #Add ipa service template
-  exec { $ipa_svc_template_cmd:
+  ->exec { $ipa_svc_template_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
@@ -436,11 +357,21 @@ class profile::icinga::resources (
   #Create disk service template file 
   file { $disk_svc_template_path:
     ensure  => 'present',
-    content => $disk_svc_template,
-    before  => Exec[$disk_svc_template_cmd],
+    content => @("DISK_TEMPLATE"/L)
+      {
+      "check_command": "disk",
+      "object_name": "${disk_svc_template_name}",
+      "object_type": "template",
+      "use_agent": true,
+      "vars": {
+          "disk_cfree": "10%",
+          "disk_wfree": "20%"
+      },
+      "zone": "master"
+      }
+      | DISK_TEMPLATE
   }
-  #Add disk service template
-  exec { $disk_svc_template_cmd:
+  ->exec { $disk_svc_template_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
@@ -450,11 +381,22 @@ class profile::icinga::resources (
   #Create Remote Ping service template file 
   file { $lhn_svc_template_path:
     ensure  => 'present',
-    content => $lhn_svc_template,
-    before  => Exec[$lhn_svc_template_cmd],
+    content => @("LHN"/L)
+      {
+      "check_command": "ping",
+      "object_name": "${lhn_svc_template_name}",
+      "object_type": "template",
+      "use_agent": true,
+      "vars": {
+          "ping_address": "starlight-dtn.ncsa.illinois.edu",
+          "ping_crta": "250",
+          "ping_wrta": "225"
+      },
+      "zone": "master"
+      }
+      | LHN
   }
-  #Add Remote Ping service template
-  exec { $lhn_svc_template_cmd:
+  ->exec { $lhn_svc_template_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
@@ -496,11 +438,21 @@ class profile::icinga::resources (
   #Creates dhcp resource file for MasterTemplate and DhcpServiceTemplate
   file { $master_svc_path1:
     ensure  => 'present',
-    content => $master_svc1,
-    before  => Exec[$master_svc_cmd1],
+    content => @("MASTER_SVC_1"/L)
+      {
+      "host": "${master_template}",
+      "imports": [
+        "${$master_svc_template_name}"
+      ],
+      "object_name": "${master_svc_dhcp_name}",
+      "object_type": "object",
+      "vars": {
+        "dhcp_serverip": "${dhcp_server}"
+      }
+      }
+      | MASTER_SVC_1
   }
-  #Adds dhcp resource file for MasterTemplate and DhcpServiceTemplate
-  exec { $master_svc_cmd1:
+  ->exec { $master_svc_cmd1:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
@@ -540,11 +492,16 @@ class profile::icinga::resources (
   #Creates IT Services HostGroup File
   file { $it_path:
     ensure  => 'present',
-    content => $it_svc_template,
-    before  => Exec[$it_cmd],
+    content => @(IT)
+      {
+      "assign_filter": "host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
+      "display_name": "it-services",
+      "object_name": "it_services",
+      "object_type": "object"
+      }
+      | IT
   }
-  #Adds IT Services Hostgroup
-  exec { $it_cmd:
+  ->exec { $it_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
@@ -615,11 +572,23 @@ class profile::icinga::resources (
   #Create master host file
   file { $addhost_path:
     ensure  => 'present',
-    content => $add_master_host,
-    before  => Exec[$addhost_cmd],
+    content => @("MASTER_HOST"/L)
+      {
+      "address": "${master_ip}",
+      "display_name": "${master_fqdn}",
+      "imports": [
+        "${master_template}"
+      ],
+      "object_name":"${master_fqdn}",
+      "object_type": "object",
+      "vars": {
+          "safed_profile": "3"
+      },
+      "zone": "master"
+      }
+      | MASTER_HOST
   }
-  #Add master host
-  exec { $addhost_cmd:
+  ->exec { $addhost_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,

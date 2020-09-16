@@ -48,42 +48,48 @@ class profile::icinga::network (
     'cube.ls.lsst.org,139.229.134.1',
   ]
   $gw_list  = [
-    'VLAN2100,10.49.0.254',
-    'Vlan900,192.168.255.4',
-    'Vlan2100,10.49.0.254',
-    'Vlan2101,139.229.134.254',
-    'Vlan2102,139.229.135.254',
-    'Vlan2113,139.229.158.190',
-    'Vlan2114,139.229.158.254',
-    'Vlan2115,139.229.159.126',
-    'Vlan2116,139.229.159.254',
-    'Vlan2121,10.49.1.254',
-    'Vlan2123,10.49.3.254',
-    'Vlan2125,10.49.5.254',
-    'Vlan2200,139.229.149.254',
-    'Vlan2300,139.229.144.126',
-    'Vlan2400,139.229.147.254',
-    'Vlan2401,139.229.146.254',
-    'Vlan2402,139.229.148.254',
-    'Vlan2500,139.229.150.126',
-    'Vlan2903,10.50.3.254',
-    'Vlan300,198.32.252.233',
-    'Vlan301,198.32.252.235',
-    'Vlan330,139.229.140.130',
-    'Vlan340,139.229.140.132',
-    'Vlan350,139.229.140.1',
-    'Vlan360,139.229.140.134',
-    'Vlan370,139.229.140.136',
+    'Vlan2100_IT-General-Services,10.49.0.254',
+    'Vlan900_LSST-Transit-LAN,192.168.255.4',
+    'Vlan2100_IT-Management_,10.49.0.254',
+    'Vlan2101_IT-General-Services,139.229.134.254',
+    'Vlan2102_IT-GS-Servers_,139.229.135.254',
+    'Vlan2113_LSST-Trusted-Contractors,139.229.158.190',
+    'Vlan2114_LSST-AURA,139.229.158.254',
+    'Vlan2115_LSST-Untrusted-Contractors,139.229.159.126',
+    'Vlan2116_LSST-Guests,139.229.159.254',
+    'Vlan2121_LSST-VoIP,10.49.1.254',
+    'Vlan2123_LSST-AP,10.49.3.254',
+    'Vlan2125_LSST-Printers,10.49.5.254',
+    'Vlan2200_CDS-CC,139.229.149.254',
+    'Vlan2300_OCS-CC,139.229.144.126',
+    'Vlan2400_CDS-ARCH,139.229.147.254',
+    'Vlan2401_CDS-CC-PXE,139.229.146.254',
+    'Vlan2402_CDS-NAS,139.229.148.254',
+    'Vlan2500_CCS,139.229.150.126',
+    'Vlan2903_IT-IPMI-SRV,10.50.3.254',
+    'Vlan300_LHN-Pacific,198.32.252.233',
+    'Vlan301_LHN-Atlantic,198.32.252.235',
+    'Vlan330_LHN-DTN01,139.229.140.130',
+    'Vlan340_LHN-DTN02,139.229.140.132',
+    'Vlan350_Forwarder-into-LHN,139.229.140.1',
+    'Vlan360_Perfsonar1-1,139.229.140.134',
+    'Vlan370_Perfsonar1-2,139.229.140.136',
   ]
   $host_templates = [
     $network_host_template_name,
     $gateway_host_template_name,
   ]
-  #Services Array
-  $services = [
+  #Network Services Array
+  $network_services = [
     "${$intstat_svc_template_name},${network_svc_intstat_name}",
     "${$interror_svc_template_name},${network_svc_interror_name}",
     "${$env_svc_template_name},${network_svc_env_name}",
+  ]
+  #Network Templates Array
+  $service_template = [
+    "${intstat_svc_template_name},interface-usage",
+    "${interror_svc_template_name},interface-errors",
+    "${env_svc_template_name},hardware-health",
   ]
 
   #Commands abreviation
@@ -102,50 +108,6 @@ class profile::icinga::network (
   #
   #
   #<-----------------------------JSON Files ------------------------------>
-  #Service Template JSON
-  $intstat_svc_template_content = @("INTSTAT_SVC_TEMPLATE_CONTENT"/L)
-    {
-    "check_command": "${nwc_name}",
-    "object_name": "${intstat_svc_template_name}",
-    "object_type": "template",
-    "vars": {
-      "nwc_health_community": "${community}",
-      "nwc_health_mode": "interface-usage",
-      "nwc_health_statefilesdir": "/tmp/"
-    },
-    "use_agent": false,
-    "zone": "master"
-    }
-    | INTSTAT_SVC_TEMPLATE_CONTENT
-  $interror_svc_template_content = @("INTERROR_SVC_TEMPLATE_CONTENT"/L)
-    {
-    "check_command": "${nwc_name}",
-    "object_name": "${interror_svc_template_name}",
-    "object_type": "template",
-    "vars": {
-      "nwc_health_community": "${community}",
-      "nwc_health_mode": "interface-errors",
-      "nwc_health_statefilesdir": "/tmp/"
-    },
-    "use_agent": false,
-    "zone": "master"
-    }
-    | INTERROR_SVC_TEMPLATE_CONTENT
-  $env_svc_template_content = @("ENV_SVC_TEMPLATE_CONTENT"/L)
-    {
-    "check_command": "${nwc_name}",
-    "object_name": "${env_svc_template_name}",
-    "object_type": "template",
-    "vars": {
-      "nwc_health_community": "${community}",
-      "nwc_health_mode": "hardware-health",
-      "nwc_health_statefilesdir": "/tmp/"
-    },
-    "use_agent": false,
-    "zone": "master"
-    }
-    | ENV_SVC_TEMPLATE_CONTENT
-
   ##Network HostGroup Definition
   $network_hostgroup = @("NETWORK_HOSTGROUP"/L)
     {
@@ -157,7 +119,7 @@ class profile::icinga::network (
     | NETWORK_HOSTGROUP
   $gateway_hostgroup = @("GATEWAY_HOSTGROUP"/L)
     {
-    "assign_filter": "host.display_name=%22VLAN%2A%22",
+    "assign_filter": "host.display_name=%22Vlan%2A%22",
     "display_name": "Base Gateways",
     "object_name": "${gateway_hostgroup_name}",
     "object_type": "object"
@@ -167,19 +129,6 @@ class profile::icinga::network (
   #
   #
   #<--------------------Templates-Variables-Creation----------------------->
-  #Service Template
-  $intstat_svc_template_path = "${icinga_path}/${intstat_svc_template_name}.json"
-  $intstat_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${intstat_svc_template_name}' ${lt}"
-  $intstat_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$intstat_svc_template_path}"
-
-  $interror_svc_template_path = "${icinga_path}/${interror_svc_template_name}.json"
-  $interror_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${interror_svc_template_name}' ${lt}"
-  $interror_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$interror_svc_template_path}"
-
-  $env_svc_template_path = "${icinga_path}/${env_svc_template_name}.json"
-  $env_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${env_svc_template_name}' ${lt}"
-  $env_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$env_svc_template_path}"
-
   #HostGroup Creation
   $network_hostgroup_path = "${icinga_path}/${network_hostgroup_name}.json"
   $network_hostgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${network_hostgroup_name}' ${lt}"
@@ -289,52 +238,40 @@ class profile::icinga::network (
       loglevel => debug,
     }
   }
-  ##Service Template
-  #Create Interface Status Service Template file
-  file { $intstat_svc_template_path:
-    ensure  => 'present',
-    content => $intstat_svc_template_content,
-    before  => Exec[$intstat_svc_template_cmd],
-  }
-  #Add Interface Status Service Template
-  exec { $intstat_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $intstat_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create Interface Error Service Template file
-  file { $interror_svc_template_path:
-    ensure  => 'present',
-    content => $interror_svc_template_content,
-    before  => Exec[$interror_svc_template_cmd],
-  }
-  #Add Interface Error Service Template
-  exec { $interror_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $interror_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create Environmental Service Template file
-  file { $env_svc_template_path:
-    ensure  => 'present',
-    content => $env_svc_template_content,
-    before  => Exec[$env_svc_template_cmd],
-  }
-  #Add Environmental Service Template
-  exec { $env_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $env_svc_template_cond,
-    loglevel => debug,
-  }
+  ##Network Service Templates
+  $service_template.each |$names|{
+    $value = split($names,',')
+    $svc_template_path = "${icinga_path}/${value[0]}.json"
+    $svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${value[0]}' ${lt}"
+    $svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$svc_template_path}"
 
+    file { $svc_template_path:
+      ensure  => 'present',
+      content => @("SVC_TEMPLATE_CONTENT"/L)
+        {
+        "check_command": "${nwc_name}",
+        "object_name": "${value[0]}",
+        "object_type": "template",
+        "vars": {
+          "nwc_health_community": "${community}",
+          "nwc_health_mode": "${value[1]}",
+          "nwc_health_statefilesdir": "/tmp/"
+        },
+        "use_agent": false,
+        "zone": "master"
+        }
+        | SVC_TEMPLATE_CONTENT
+    }
+    -> exec { $svc_template_cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $svc_template_cond,
+      loglevel => debug,
+    }
+  }
   ##Network Services
-  $services.each |$nservice|{
+  $network_services.each |$nservice|{
     $value = split($nservice, ',')
     $svc_path = "${icinga_path}/${value[1]}.json"
     $svc_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${value[1]}&host=${network_host_template_name}' ${lt}"

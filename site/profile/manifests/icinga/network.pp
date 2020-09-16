@@ -3,7 +3,6 @@
 
 class profile::icinga::network (
   String $credentials_hash,
-  String $network_username,
 ){
   #<-------------------------Variables Definition------------------------->
   #Implicit usage of facts

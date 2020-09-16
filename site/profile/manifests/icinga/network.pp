@@ -6,7 +6,8 @@ class profile::icinga::network (
 ){
   #<-------------------------Variables Definition------------------------->
   #Implicit usage of facts
-  $master_fqdn  = $facts[fqdn]
+  $master_fqdn  = $facts['networking']['fqdn']
+
   #Names Definition
   $nwc_name                   = 'nwc_health'
   $nwc_notification_name      = 'nwc-template'
@@ -47,6 +48,7 @@ class profile::icinga::network (
     'rubinobs-br01.ls.lsst.org,10.48.1.4',
     'cube.ls.lsst.org,139.229.134.1',
   ]
+  #Gateways Array
   $gw_list  = [
     'Vlan2100_IT-General-Services,10.49.0.254',
     'Vlan900_LSST-Transit-LAN,192.168.255.4',
@@ -75,6 +77,7 @@ class profile::icinga::network (
     'Vlan360_Perfsonar1-1,139.229.140.134',
     'Vlan370_Perfsonar1-2,139.229.140.136',
   ]
+  #Hosts Template Array
   $host_templates = [
     $network_host_template_name,
     $gateway_host_template_name,
@@ -91,6 +94,11 @@ class profile::icinga::network (
     "${interror_svc_template_name},interface-errors",
     "${env_svc_template_name},hardware-health",
   ]
+  #Hostgroups Array
+  $hostgroups = [
+    "host.display_name=%22bdc%2A%22|host.display_name=%22nob%2A%22|host.display_name=%22rubinobs%2A%22,NetworkDevices,${network_hostgroup_name}",
+    "host.display_name=%22Vlan%2A%22,Base Gateways,${gateway_hostgroup_name}",
+  ]
 
   #Commands abreviation
   $url_cmd       = "https://${master_fqdn}/director/command"
@@ -105,40 +113,6 @@ class profile::icinga::network (
   $lt            = '| grep Failed'
 
   #<-----------------------End Variables Definition----------------------->
-  #
-  #
-  #<-----------------------------JSON Files ------------------------------>
-  ##Network HostGroup Definition
-  $network_hostgroup = @("NETWORK_HOSTGROUP"/L)
-    {
-    "assign_filter": "host.display_name=%22bdc%2A%22|host.display_name=%22nob%2A%22|host.display_name=%22rubinobs%2A%22",
-    "display_name": "Network Devices",
-    "object_name": "${network_hostgroup_name}",
-    "object_type": "object"
-    }
-    | NETWORK_HOSTGROUP
-  $gateway_hostgroup = @("GATEWAY_HOSTGROUP"/L)
-    {
-    "assign_filter": "host.display_name=%22Vlan%2A%22",
-    "display_name": "Base Gateways",
-    "object_name": "${gateway_hostgroup_name}",
-    "object_type": "object"
-    }
-    | GATEWAY_HOSTGROUP
-  #<----------------------------End JSON Files----------------------------->
-  #
-  #
-  #<--------------------Templates-Variables-Creation----------------------->
-  #HostGroup Creation
-  $network_hostgroup_path = "${icinga_path}/${network_hostgroup_name}.json"
-  $network_hostgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${network_hostgroup_name}' ${lt}"
-  $network_hostgroup_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${network_hostgroup_path}"
-
-  $gateway_hostgroup_path = "${icinga_path}/${gateway_hostgroup_name}.json"
-  $gateway_hostgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${gateway_hostgroup_name}' ${lt}"
-  $gateway_hostgroup_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${gateway_hostgroup_path}"
-
-  #<------------------END-Templates-Variables-Creation-------------------->
   #
   #
   #<-------------------Files Creation and deployement--------------------->
@@ -300,32 +274,29 @@ class profile::icinga::network (
   }
 
   ##Hostgroups
-  #Create Network Hostgroup file
-  file { $network_hostgroup_path:
-    ensure  => 'present',
-    content => $network_hostgroup,
-    before  => Exec[$network_hostgroup_cmd],
-  }
-  #Add Network Hostgroup 
-  exec { $network_hostgroup_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $network_hostgroup_cond,
-    loglevel => debug,
-  }
-  #Create Gateways Hostgroup file
-  file { $gateway_hostgroup_path:
-    ensure  => 'present',
-    content => $gateway_hostgroup,
-    before  => Exec[$gateway_hostgroup_cmd],
-  }
-  #Add Gateways Hostgroup 
-  exec { $gateway_hostgroup_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $gateway_hostgroup_cond,
-    loglevel => debug,
+  $hostgroups.each |$hnames|{
+    $value = split($hnames,',')
+    $hostgroup_path = "${icinga_path}/${value[2]}.json"
+    $hostgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${value[2]}' ${lt}"
+    $hostgroup_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${hostgroup_path}"
+
+    file { $hostgroup_path:
+      ensure  => 'present',
+      content => @("HOSTGROUP"/L)
+        {
+        "assign_filter": "${value[0]}",
+        "display_name": "${value[1]}",
+        "object_name": "${value[2]}",
+        "object_type": "object"
+        }
+        | HOSTGROUP
+    }
+    ->exec { $hostgroup_cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $hostgroup_cond,
+      loglevel => debug,
+    }
   }
 }

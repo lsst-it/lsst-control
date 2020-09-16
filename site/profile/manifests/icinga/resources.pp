@@ -123,66 +123,46 @@ class profile::icinga::resources (
   ]
   #Host Template Names Array
   $host_names = [
-    $host_template,
-    $comcam_template,
-    $http_template,
-    $master_template,
-    $dns_template,
-    $ipa_template,
-    $dtn_template,
+    "${host_template},0",
+    "${comcam_template},0",
+    "${http_template},0",
+    "${master_template},0",
+    "${dns_template},0",
+    "${ipa_template},0",
+    "${dtn_template},0",
+    "${tls_template},1",
   ]
   #Service Templates Array
-  $service_template_single = [
-    "http,${http_svc_template_name}",
-    "hostalive,${ping_svc_template_name}",
-    "dns,${dns_svc_template_name}",
-    "dhcp,${master_svc_template_name}",
-    "ssh,${ssh_svc_template_name}",
-  ]
-  $service_template_double = [
-    "http,${tls_svc_template_name},http_certificate,30",
-    "ntp_time,${ntp_svc_template_name},ntp_address,ntp.shoa.cl",
+  $service_template = [
+    "http,${http_svc_template_name},0",
+    "hostalive,${ping_svc_template_name},0",
+    "dns,${dns_svc_template_name},0",
+    "dhcp,${master_svc_template_name},0",
+    "ssh,${ssh_svc_template_name},0",
+    "http,${tls_svc_template_name},1,http_certificate,30",
+    "ntp_time,${ntp_svc_template_name},1,ntp_address,ntp.shoa.cl",
+    "ldap,${ipa_svc_template_name},2",
+    "disk,${disk_svc_template_name},3",
+    "ping,${lhn_svc_template_name},4",
   ]
   #Host Groups Array
   $hostgroups_name = [
-    "${antu},AntuCluster,antu_cluster,antu",
-    "${ruka},RukaCluster,ruka_cluster,ruka",
-    "${kueyen},KueyenCluster,kueyen_cluster,kueyen",
-    "${core},CoreCluster,core_cluster,core",
-    "${comcam},ComcamCluster,comcam_cluster,comcam",
+    "${antu},AntuCluster,antu_cluster,host.display_name=%22antu%2A%22",
+    "${ruka},RukaCluster,ruka_cluster,host.display_name=%22ruka%2A%22",
+    "${kueyen},KueyenCluster,kueyen_cluster,host.display_name=%22kueyen%2A%22",
+    "${core},CoreCluster,core_cluster,host.display_name=%22core%2A%22",
+    "${comcam},ComcamCluster,comcam_cluster,host.display_name=%22comcam%2A%22",
     "${ls_nodes},LS_Nodes,ls_nodes,ls",
+    "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
   ]
   #<-------------------End Variables Definition--------------------------->
   #
   #
   #<-------------------Templates-Variables-Creation----------------------->
-  #Host Templates Creation
-  $tls_template_path = "${icinga_path}/${tls_template}.json"
-  $tls_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${tls_template}' ${lt}"
-  $tls_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${tls_template_path}"
-
-  #Services Template Creation
-  $ipa_svc_template_path = "${icinga_path}/${ipa_svc_template_name}.json"
-  $ipa_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_template_name}' ${lt}"
-  $ipa_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ipa_svc_template_path}"
-
-  $disk_svc_template_path = "${icinga_path}/${disk_svc_template_name}.json"
-  $disk_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${disk_svc_template_name}' ${lt}"
-  $disk_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$disk_svc_template_path}"
-
-  $lhn_svc_template_path = "${icinga_path}/${lhn_svc_template_name}.json"
-  $lhn_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${lhn_svc_template_name}' ${lt}"
-  $lhn_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$lhn_svc_template_path}"
-
   #Services Creation
   $master_svc_path1 = "${icinga_path}/${master_svc_dhcp_name}.json"
   $master_svc_cond1 = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_dhcp_name}&host=${master_template}' ${lt}"
   $master_svc_cmd1  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${master_svc_path1}"
-
-  #Host Groups Creation
-  $it_path = "${icinga_path}/${it_svc}.json"
-  $it_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${it_svc}' ${lt}"
-  $it_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${it_path}"
 
   #Master Host Creation
   $addhost_path = "${icinga_path}/${master_fqdn}.json"
@@ -219,24 +199,43 @@ class profile::icinga::resources (
   #
   #<---------------------------Host-Templates----------------------------->
   $host_names.each |$host|{
-    $host_path = "${$icinga_path}/${host}.json"
-    $host_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${host}' ${lt}"
+    $value = split($host,',')
+    $host_path = "${$icinga_path}/${value[0]}.json"
+    $host_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
     $host_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${host_path}"
-
-    #Create host template file
-    file { $host_path:
-      ensure  => 'present',
-      content => @("GENERAL"/L)
+    if ($value[1]=='1') {
+      $content = @("TLS"/L)
+        {
+        "accept_config": false,
+        "check_command": "http",
+        "has_agent": false,
+        "master_should_connect": false,
+        "max_check_attempts": "5",
+        "vars": {
+            "http_certificate": "30"
+        },
+        "object_name": "${value[0]}",
+        "object_type": "template"
+        }
+        | TLS
+    }
+    else {
+      $content = @("HOST_TEMPLATE"/L)
         {
         "accept_config": true,
         "check_command": "hostalive",
         "has_agent": true,
         "master_should_connect": true,
         "max_check_attempts": "5",
-        "object_name": "${host}",
+        "object_name": "${value[0]}",
         "object_type": "template"
         }
-        | GENERAL
+        | HOST_TEMPLATE
+    }
+    #Create host template file
+    file { $host_path:
+      ensure  => 'present',
+      content => $content
     }
     ->exec { $host_cmd:
       cwd      => $icinga_path,
@@ -246,44 +245,17 @@ class profile::icinga::resources (
       loglevel => debug,
     }
   }
-  #Create tls cert expiration file
-  file { $tls_template_path:
-    ensure  => 'present',
-    content => @("TLS"/L)
-      {
-      "accept_config": false,
-      "check_command": "http",
-      "has_agent": false,
-      "master_should_connect": false,
-      "max_check_attempts": "5",
-      "vars": {
-          "http_certificate": "30"
-      },
-      "object_name": "${tls_template}",
-      "object_type": "template",
-      }
-      | TLS
-  }
-  ->exec { $tls_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $tls_template_cond,
-    loglevel => debug,
-  }
   #<-----------------------END-Host-Templates----------------------------->
   #
   #
   #<------------------------Service-Templates----------------------------->
-  $service_template_single.each |$stemplate|{
+  $service_template.each |$stemplate|{
     $value = split($stemplate, ',')
     $svc_template_path = "${icinga_path}/${value[1]}.json"
     $svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${value[1]}' ${lt}"
     $svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${svc_template_path}"
-
-    file { $svc_template_path:
-      ensure  => 'present',
-      content => @("TEMPLATE"/L)
+    if ($value[2]=='0'){
+      $content = @("TEMPLATE"/L)
         {
         "check_command": "${value[0]}",
         "object_name": "${value[1]}",
@@ -293,34 +265,72 @@ class profile::icinga::resources (
         }
         | TEMPLATE
     }
-    ->exec { $svc_template_cmd:
-      cwd      => $icinga_path,
-      path     => ['/sbin', '/usr/sbin', '/bin'],
-      provider => shell,
-      onlyif   => $svc_template_cond,
-      loglevel => debug,
-    }
-  }
-  $service_template_double.each |$stemplate|{
-    $value = split($stemplate, ',')
-    $svc_template_path = "${icinga_path}/${value[1]}.json"
-    $svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${value[1]}' ${lt}"
-    $svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${svc_template_path}"
-
-    file { $svc_template_path:
-      ensure  => 'present',
-      content => @("TEMPLATE"/L)
+    elsif ($value[2]=='1'){
+      $content = @("TEMPLATE"/L)
         {
         "check_command": "${value[0]}",
         "object_name": "${value[1]}",
         "object_type": "template",
         "use_agent": true,
         "vars": {
-          "${value[2]}": "${value[3]}"
+          "${value[3]}": "${value[4]}"
         },
         "zone": "master"
         }
         | TEMPLATE
+    }
+    elsif ($value[2]=='2'){
+      $content = @("IPA_TEMPLATE"/L)
+        {
+        "check_command": "${value[0]}",
+        "object_name": "${value[1]}",
+        "object_type": "template",
+        "use_agent": true,
+        "vars": {
+            "ldap_address": "localhost",
+            "ldap_base": "dc=lsst,dc=cloud"
+        },
+        "zone": "master"
+        }
+        | IPA_TEMPLATE
+    }
+    elsif ($value[2]=='3'){
+      $content = @("DISK_TEMPLATE"/L)
+        {
+        "check_command": "${value[0]}",
+        "object_name": "${value[1]}",
+        "object_type": "template",
+        "use_agent": true,
+        "vars": {
+            "disk_cfree": "10%",
+            "disk_wfree": "20%"
+        },
+        "zone": "master"
+        }
+        | DISK_TEMPLATE
+    }
+    elsif ($value[2]=='4'){
+      $content = @("LHN"/L)
+        {
+        "check_command": "${value[0]}",
+        "object_name": "${value[1]}",
+        "object_type": "template",
+        "use_agent": true,
+        "vars": {
+            "ping_address": "starlight-dtn.ncsa.illinois.edu",
+            "ping_crta": "250",
+            "ping_wrta": "225"
+        },
+        "zone": "master"
+        }
+        | LHN
+    }
+    else {
+      notice("No content has beeing assigned to ${value[1]}")
+    }
+    file { $svc_template_path:
+      ensure  => 'present',
+      content => $content
     }
     ->exec { $svc_template_cmd:
       cwd      => $icinga_path,
@@ -329,79 +339,6 @@ class profile::icinga::resources (
       onlyif   => $svc_template_cond,
       loglevel => debug,
     }
-  }
-  #Create ipa service template file 
-  file { $ipa_svc_template_path:
-    ensure  => 'present',
-    content => @("IPA_TEMPLATE"/L)
-      {
-      "check_command": "ldap",
-      "object_name": "${ipa_svc_template_name}",
-      "object_type": "template",
-      "use_agent": true,
-      "vars": {
-          "ldap_address": "localhost",
-          "ldap_base": "dc=lsst,dc=cloud"
-      },
-      "zone": "master"
-      }
-      | IPA_TEMPLATE
-  }
-  ->exec { $ipa_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ipa_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create disk service template file 
-  file { $disk_svc_template_path:
-    ensure  => 'present',
-    content => @("DISK_TEMPLATE"/L)
-      {
-      "check_command": "disk",
-      "object_name": "${disk_svc_template_name}",
-      "object_type": "template",
-      "use_agent": true,
-      "vars": {
-          "disk_cfree": "10%",
-          "disk_wfree": "20%"
-      },
-      "zone": "master"
-      }
-      | DISK_TEMPLATE
-  }
-  ->exec { $disk_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $disk_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create Remote Ping service template file 
-  file { $lhn_svc_template_path:
-    ensure  => 'present',
-    content => @("LHN"/L)
-      {
-      "check_command": "ping",
-      "object_name": "${lhn_svc_template_name}",
-      "object_type": "template",
-      "use_agent": true,
-      "vars": {
-          "ping_address": "starlight-dtn.ncsa.illinois.edu",
-          "ping_crta": "250",
-          "ping_wrta": "225"
-      },
-      "zone": "master"
-      }
-      | LHN
-  }
-  ->exec { $lhn_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $lhn_svc_template_cond,
-    loglevel => debug,
   }
   #<--------------------EMD-Service-Templates----------------------------->
   #
@@ -474,7 +411,7 @@ class profile::icinga::resources (
       ensure  => 'present',
       content => @("CLUSTER"/L)
         {
-        "assign_filter": "host.display_name=%22${value[3]}%2A%22",
+        "assign_filter": "${value[3]}",
         "display_name": "${value[1]}",
         "object_name": "${value[2]}",
         "object_type": "object"
@@ -488,25 +425,6 @@ class profile::icinga::resources (
       onlyif   => $hostgroup_cond,
       loglevel => debug,
     }
-  }
-  #Creates IT Services HostGroup File
-  file { $it_path:
-    ensure  => 'present',
-    content => @(IT)
-      {
-      "assign_filter": "host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
-      "display_name": "it-services",
-      "object_name": "it_services",
-      "object_type": "object"
-      }
-      | IT
-  }
-  ->exec { $it_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $it_cond,
-    loglevel => debug,
   }
   #<--------------------END-Host-Group-Definiton-------------------------->
   #

@@ -133,17 +133,17 @@ class profile::icinga::resources (
     $dtn_template,
   ]
   #Service Templates Array
-  $service_names = [
-    "${http_svc_template_path};${http_svc_template};${http_svc_template_cmd};${http_svc_template_cond}",
-    "${ping_svc_template_path};${ping_svc_template};${ping_svc_template_cmd};${ping_svc_template_cond}",
-    "${master_svc_template_path};${master_svc_template};${master_svc_template_cmd};${master_svc_template_cond}",
-    "${dns_svc_template_path};${dns_svc_template};${dns_svc_template_cmd};${dns_svc_template_cond}",
-    "${ipa_svc_template_path};${ipa_svc_template};${ipa_svc_template_cmd};${ipa_svc_template_cond}",
-    "${disk_svc_template_path};${disk_svc_template};${disk_svc_template_cmd};${disk_svc_template_cond}",
-    "${tls_svc_template_path};${tls_svc_template};${tls_svc_template_cmd};${tls_svc_template_cond}",
-    "${ssh_svc_template_path};${ssh_svc_template};${ssh_svc_template_cmd};${ssh_svc_template_cond}",
-    "${ntp_svc_template_path};${ntp_svc_template};${ntp_svc_template_cmd};${ntp_svc_template_cond}",
-    "${lhn_svc_template_path};${lhn_svc_template};${lhn_svc_template_cmd};${lhn_svc_template_cond}",
+  $service_template_single = [
+    "http,${http_svc_template_name}",
+    "hostalive,${ping_svc_template_name}",
+    "dns,${dns_svc_template_name}",
+    "dhcp,${master_svc_template_name}",
+    "ssh,${ssh_svc_template_name}",
+    "http,${http_svc_template_name}",
+  ]
+  $service_template_double = [
+    "http,${tls_svc_template_name},http_certificate,30",
+    "ntp_time,${ntp_svc_template_name},ntp_address,ntp.shoa.cl",
   ]
   #Host Groups Array
   $hostgroups_name = [
@@ -159,42 +159,6 @@ class profile::icinga::resources (
   #
   #<---------------JSON Files ---------------->
   ##Service Template JSON
-  $http_svc_template = @("HTTP_TEMPLATE"/L)
-    {
-    "check_command": "http",
-    "object_name": "${http_svc_template_name}",
-    "object_type": "template",
-    "use_agent": true,
-    "zone": "master"
-    }
-    | HTTP_TEMPLATE
-  $ping_svc_template = @("PING_TEMPLATE"/L)
-    {
-    "check_command": "hostalive",
-    "object_name": "${ping_svc_template_name}",
-    "object_type": "template",
-    "use_agent": true,
-    "zone": "master"
-    }
-    | PING_TEMPLATE
-  $dns_svc_template = @("DNS_TEMPLATE"/L)
-    {
-    "check_command": "dns",
-    "object_name": "${dns_svc_template_name}",
-    "object_type": "template",
-    "use_agent": true,
-    "zone": "master"
-    }
-    | DNS_TEMPLATE
-  $master_svc_template = @("MASTER_TEMPLATE"/L)
-    {
-    "check_command": "dhcp",
-    "object_name": "${master_svc_template_name}",
-    "object_type": "template",
-    "use_agent": true,
-    "zone": "master"
-    }
-    | MASTER_TEMPLATE
   $ipa_svc_template = @("IPA_TEMPLATE"/L)
     {
     "check_command": "ldap",
@@ -221,27 +185,6 @@ class profile::icinga::resources (
     "zone": "master"
     }
     | DISK_TEMPLATE
-  $ssh_svc_template = @("SSH_TEMPLATE"/L)
-    {
-    "check_command": "ssh",
-    "object_name": "${ssh_svc_template_name}",
-    "object_type": "template",
-    "use_agent": true,
-    "zone": "master"
-    }
-    | SSH_TEMPLATE
-  $tls_svc_template = @("TLS"/L)
-    {
-    "check_command": "http",
-    "object_name": "${tls_svc_template_name}",
-    "object_type": "template",
-    "use_agent": false,
-    "vars": {
-        "http_certificate": "30"
-    },
-    "zone": "master"
-    }
-    | TLS
   $lhn_svc_template = @("LHN"/L)
     {
     "check_command": "ping",
@@ -256,22 +199,6 @@ class profile::icinga::resources (
     "zone": "master"
     }
     | LHN
-  ## IMPORTANT
-  ## The ntp_address must be change to an NTP Server,
-  ## of our own once we have one operational on site
-  $ntp_svc_template = @("NTP_TEMPLATE"/L)
-    {
-    "check_command": "ntp_time",
-    "object_name": "${ntp_svc_template_name}",
-    "object_type": "template",
-    "use_agent": true,
-    "vars": {
-        "ntp_address": "ntp.shoa.cl"
-    },
-    "zone": "master"
-    }
-    | NTP_TEMPLATE
-  ## END OF NOTE
 
   ##Services Definition
   $master_svc1 = @("MASTER_SVC_1"/L)
@@ -324,22 +251,6 @@ class profile::icinga::resources (
   $tls_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${tls_template_path}"
 
   #Services Template Creation
-  $http_svc_template_path = "${icinga_path}/${http_svc_template_name}.json"
-  $http_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${http_svc_template_name}' ${lt}"
-  $http_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$http_svc_template_path}"
-
-  $ping_svc_template_path = "${icinga_path}/${ping_svc_template_name}.json"
-  $ping_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ping_svc_template_name}' ${lt}"
-  $ping_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ping_svc_template_path}"
-
-  $dns_svc_template_path  = "${icinga_path}/${dns_svc_template_name}.json"
-  $dns_svc_template_cond  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${dns_svc_template_name}' ${lt}"
-  $dns_svc_template_cmd   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$dns_svc_template_path}"
-
-  $master_svc_template_path = "${icinga_path}/${master_svc_template_name}.json"
-  $master_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${master_svc_template_name}' ${lt}"
-  $master_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$master_svc_template_path}"
-
   $ipa_svc_template_path = "${icinga_path}/${ipa_svc_template_name}.json"
   $ipa_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ipa_svc_template_name}' ${lt}"
   $ipa_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ipa_svc_template_path}"
@@ -347,18 +258,6 @@ class profile::icinga::resources (
   $disk_svc_template_path = "${icinga_path}/${disk_svc_template_name}.json"
   $disk_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${disk_svc_template_name}' ${lt}"
   $disk_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$disk_svc_template_path}"
-
-  $tls_svc_template_path = "${icinga_path}/${tls_svc_template_name}.json"
-  $tls_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${tls_svc_template_name}' ${lt}"
-  $tls_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$tls_svc_template_path}"
-
-  $ssh_svc_template_path = "${icinga_path}/${ssh_svc_template_name}.json"
-  $ssh_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ssh_svc_template_name}' ${lt}"
-  $ssh_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ssh_svc_template_path}"
-
-  $ntp_svc_template_path = "${icinga_path}/${ntp_svc_template_name}.json"
-  $ntp_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${ntp_svc_template_name}' ${lt}"
-  $ntp_svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$ntp_svc_template_path}"
 
   $lhn_svc_template_path = "${icinga_path}/${lhn_svc_template_name}.json"
   $lhn_svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${lhn_svc_template_name}' ${lt}"
@@ -382,7 +281,6 @@ class profile::icinga::resources (
   #
   #
   #<-------------------Files Creation and deployement--------------------->
-
   #Create a directory to allocate json files
   file { $icinga_path:
     ensure => 'directory',
@@ -406,19 +304,6 @@ class profile::icinga::resources (
     require => Yumrepo['perl'],
   }
   #<-------------END-Repo-and-Packages-for-nwc_health--------------------->
-  #
-  #
-  #<----------------------Packages-for-check-link------------------------->
-  archive {'/usr/lib64/nagios/plugins/check_netio':
-    ensure => present,
-    source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
-  }
-  ->file { '/usr/lib64/nagios/plugins/check_netio':
-    owner => 'root',
-    group => 'icinga',
-    mode  => '4755',
-  }
-  #<------------------END-Packages-for-check-link------------------------->
   #
   #
   #<---------------------------Host-Templates----------------------------->
@@ -479,61 +364,60 @@ class profile::icinga::resources (
   #
   #
   #<------------------------Service-Templates----------------------------->
-  #Create http service template file
-  file { $http_svc_template_path:
-    ensure  => 'present',
-    content => $http_svc_template,
-    before  => Exec[$http_svc_template_cmd],
+  $service_template_single.each |$stemplate|{
+    $value = split($stemplate, ',')
+    $svc_template_path = "${icinga_path}/${value[1]}.json"
+    $svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${value[1]}' ${lt}"
+    $svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${svc_template_path}"
+
+    file { $svc_template_path:
+      ensure  => 'present',
+      content => @("TEMPLATE"/L)
+        {
+        "check_command": "${value[0]}",
+        "object_name": "${value[1]}",
+        "object_type": "template",
+        "use_agent": true,
+        "zone": "master"
+        }
+        | TEMPLATE
+    }
+    ->exec { $svc_template_cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $svc_template_cond,
+      loglevel => debug,
+    }
   }
-  #Add http service template
-  exec { $http_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $http_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create ping service template file
-  file { $ping_svc_template_path:
-    ensure  => 'present',
-    content => $ping_svc_template,
-    before  => Exec[$ping_svc_template_cmd],
-  }
-  #Add http service template
-  exec { $ping_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ping_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create dhcp service template file
-  file { $master_svc_template_path:
-    ensure  => 'present',
-    content => $master_svc_template,
-    before  => Exec[$master_svc_template_cmd],
-  }
-  #Add http service template
-  exec { $master_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $master_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create dns service template file 
-  file { $dns_svc_template_path:
-    ensure  => 'present',
-    content => $dns_svc_template,
-    before  => Exec[$dns_svc_template_cmd],
-  }
-  #Add dns service template
-  exec { $dns_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $dns_svc_template_cond,
-    loglevel => debug,
+  $service_template_double.each |$stemplate|{
+    $value = split($stemplate, ',')
+    $svc_template_path = "${icinga_path}/${value[1]}.json"
+    $svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${value[1]}' ${lt}"
+    $svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${svc_template_path}"
+
+    file { $svc_template_path:
+      ensure  => 'present',
+      content => @("TEMPLATE"/L)
+        {
+        "check_command": "${value[0]}",
+        "object_name": "${value[1]}",
+        "object_type": "template",
+        "use_agent": true,
+        "vars": {
+          "${value[2]}": "${value[3]}"
+        },
+        "zone": "master"
+        }
+        | TEMPLATE
+    }
+    ->exec { $svc_template_cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $svc_template_cond,
+      loglevel => debug,
+    }
   }
   #Create ipa service template file 
   file { $ipa_svc_template_path:
@@ -561,48 +445,6 @@ class profile::icinga::resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $disk_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create tls cert expiration service template file 
-  file { $tls_svc_template_path:
-    ensure  => 'present',
-    content => $tls_svc_template,
-    before  => Exec[$tls_svc_template_cmd],
-  }
-  #Add tls cert expiration service template
-  exec { $tls_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $tls_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create ssh service template file 
-  file { $ssh_svc_template_path:
-    ensure  => 'present',
-    content => $ssh_svc_template,
-    before  => Exec[$ssh_svc_template_cmd],
-  }
-  #Add ssh service template
-  exec { $ssh_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ssh_svc_template_cond,
-    loglevel => debug,
-  }
-  #Create ntp skew service template file
-  file { $ntp_svc_template_path:
-    ensure  => 'present',
-    content => $ntp_svc_template,
-    before  => Exec[$ntp_svc_template_cmd],
-  }
-  #Add ntp skew service template
-  exec { $ntp_svc_template_cmd:
-    cwd      => $icinga_path,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => $ntp_svc_template_cond,
     loglevel => debug,
   }
   #Create Remote Ping service template file 
@@ -710,7 +552,10 @@ class profile::icinga::resources (
     loglevel => debug,
   }
   #<--------------------END-Host-Group-Definiton-------------------------->
-  #Change permissions to plugin
+  #
+  #
+  #<----------------------Plugins-Configuration--------------------------->
+  #Change permissions to dhcp and disk plugins
   file { '/usr/lib64/nagios/plugins/check_dhcp':
     owner => 'root',
     group => 'nagios',
@@ -752,6 +597,20 @@ class profile::icinga::resources (
     group  => 'icinga',
     mode   => '4755',
   }
+  ##Check NIC Link 
+  archive {'/usr/lib64/nagios/plugins/check_netio':
+    ensure => present,
+    source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
+  }
+  ->file { '/usr/lib64/nagios/plugins/check_netio':
+    owner => 'root',
+    group => 'icinga',
+    mode  => '4755',
+  }
+  #<--------------------END-Plugins-Configuration------------------------->
+  #
+  #
+  #<----------------------Plugins-Configuration--------------------------->
   ##Add Master Host
   #Create master host file
   file { $addhost_path:

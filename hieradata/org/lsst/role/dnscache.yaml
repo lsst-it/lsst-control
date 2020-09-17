@@ -54,4 +54,4 @@ dns::zones:
     forwarders:
       - *crux
 
-profile::core::icinga_agent::host_template: "DnsTemplate"
+profile::icinga::agent::host_template: "DnsTemplate"

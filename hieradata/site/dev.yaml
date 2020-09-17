@@ -107,6 +107,6 @@ firewall::ensure: "stopped"
 
 letsencrypt::server: "https://acme-staging.api.letsencrypt.org/directory"  # testing url
 profile::core::common::deploy_icinga_agent: true
-profile::core::icinga_agent::icinga_master_fqdn: "icinga-master.ls.lsst.org"
-profile::core::icinga_agent::icinga_master_ip: "139.229.135.31"
-profile::core::icinga_resources::dhcp_server: "139.229.134.5"
+profile::icinga::agent::icinga_master_fqdn: "icinga-master.ls.lsst.org"
+profile::icinga::agent::icinga_master_ip: "139.229.135.31"
+profile::icinga::resources::dhcp_server: "139.229.134.5"

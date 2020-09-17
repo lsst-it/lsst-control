@@ -1,8 +1,9 @@
 ---
 classes:
   - "profile::core::common"
-  - "profile::core::icinga_master"
-  - "profile::core::icinga_resources"
+  - "profile::icinga::master"
+  - "profile::icinga::resources"
+  - "profile::icinga::network"
 packages:
   - "bash-completion"
   - "bash-completion-extras"
@@ -11,18 +12,12 @@ packages:
 profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"
 
 #LDAP Values
-profile::core::icinga_master::ldap_server: "139.229.135.6"
-profile::core::icinga_master::ldap_root: "cn=accounts,dc=lsst,dc=cloud"
-profile::core::icinga_master::ldap_resource: "rubinobs"
-profile::core::icinga_master::ldap_user_filter: "(memberof=cn=icinga-*,cn=groups,cn=accounts,dc=lsst,dc=cloud)"
-profile::core::icinga_master::ldap_group_filter: "cn=icinga-*"
-profile::core::icinga_master::ldap_group_base: "cn=groups,cn=accounts,dc=lsst,dc=cloud"
+profile::icinga::master::ldap_server: "139.229.135.6"
+profile::icinga::master::ldap_root: "cn=accounts,dc=lsst,dc=cloud"
+profile::icinga::master::ldap_resource: "rubinobs"
+profile::icinga::master::ldap_user_filter: "(memberof=cn=icinga-*,cn=groups,cn=accounts,dc=lsst,dc=cloud)"
+profile::icinga::master::ldap_group_filter: "cn=icinga-*"
+profile::icinga::master::ldap_group_base: "cn=groups,cn=accounts,dc=lsst,dc=cloud"
 #MySQL values
-profile::core::icinga_master::mysql_icingaweb_db: "icinga"
-profile::core::icinga_master::mysql_director_db: "director"
-#Template Values
-profile::core::icinga_resources::host_template: "GeneralHostTemplate"
-profile::core::icinga_resources::http_template: "HttpTemplate"
-profile::core::icinga_resources::dns_template: "DnsTemplate"
-profile::core::icinga_resources::master_template: "MasterTemplate"
-profile::core::icinga_resources::ipa_template: "IpaTemplate"
+profile::icinga::master::mysql_icingaweb_db: "icinga"
+profile::icinga::master::mysql_director_db: "director"

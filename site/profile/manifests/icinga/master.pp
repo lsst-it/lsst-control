@@ -1,7 +1,7 @@
 # @summary
 #   Definition of icinga and icingaweb master module
 
-class profile::core::icinga_master (
+class profile::icinga::master (
   String $ldap_server,
   String $ldap_root,
   String $ldap_user,
@@ -20,7 +20,6 @@ class profile::core::icinga_master (
   String $api_name,
   String $api_user,
   String $api_pwd,
-  String $credentials_hash,
   String $ca_salt,
 ){
   include profile::core::letsencrypt
@@ -68,7 +67,7 @@ class profile::core::icinga_master (
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
 
-  #Force installation and usage of php73
+  #Package installation
   $packages = [
     'git',
     'pnp4nagios',
@@ -87,10 +86,7 @@ class profile::core::icinga_master (
     #Needs to end in newline
     user = icinga
     group = icinga
-    log_type = syslog
-    log_file = /var/log/pnp4nagios/npcd.log
-    max_logfile_size = 10485760
-    log_level = 1 
+    log_level = 0
     perfdata_spool_dir = /var/spool/icinga2/perfdata
     perfdata_file_run_cmd = /usr/libexec/pnp4nagios/process_perfdata.pl
     perfdata_file_run_cmd_args = --bulk
@@ -187,6 +183,9 @@ class profile::core::icinga_master (
     permissions => [ '*' ],
     target      => '/etc/icinga2/features-enabled/api-users.conf',
   }
+  icinga2::object::zone { 'director-global':
+    global => true,
+  }
   ##Icinga2 Perfdata
   class {'::icinga2::feature::perfdata':
     ensure => present,
@@ -252,7 +251,7 @@ class profile::core::icinga_master (
     permissions => '*',
   }
   icingaweb2::config::role { 'Visitors':
-    groups      => 'icinga-sqre,icinga-tssw',
+    groups      => 'icinga-sqre,icinga-tssw,icinga-comcam',
     permissions => 'application/share/navigation,application/stacktraces,application/log,module/director,module/doc,module/incubator,module/ipl,module/monitoring,monitoring/*,module/pnp,module/reactbundle,module/setup,module/translation',
   }
   ##IcingaWeb Director
@@ -291,14 +290,11 @@ class profile::core::icinga_master (
   }
   class { '::php::globals':
     php_version => 'rh-php73',
+    config_root => '/etc/opt/rh/rh-php73',
     rhscl_mode  => 'rhscl',
   }
   ->class { '::php':
     manage_repos => false,
-    extensions   => {
-      'soap'    => {},
-      'process' => {},
-    },
   }
   systemd::unit_file { 'icinga-director.service':
     source  => '/usr/share/icingaweb2/modules/director/contrib/systemd/icinga-director.service',
@@ -358,6 +354,7 @@ class profile::core::icinga_master (
     mode    => '0644',
     content => $npcd_cont,
     require => Package[$packages],
+    notify  => Service['npcd'],
   }
   ##PNP4Nagios Configuration
   file { '/etc/nginx/sites-available/pnp4nagios.conf':

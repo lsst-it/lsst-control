@@ -21,3 +21,6 @@ profile::icinga::master::ldap_group_base: "cn=groups,cn=accounts,dc=lsst,dc=clou
 #MySQL values
 profile::icinga::master::mysql_icingaweb_db: "icinga"
 profile::icinga::master::mysql_director_db: "director"
+#OpsGenie Users
+profile::icinga::opsgenie::server_username: "server-notifier"
+profile::icinga::opsgenie::network_username: "network-notifier"

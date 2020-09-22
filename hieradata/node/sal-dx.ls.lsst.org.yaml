@@ -1,23 +1,7 @@
 ---
 classes:
+  - "profile::ccs::sal_dx"
   - "yum"
-packages:
-  - "vim"
-  - "ltrace"
-  - "strace"
-  - "tcpdump"
-  - "traceroute"
-  - "gdb"
-  - "htop"
-  - "iftop"
-  - "wireshark"
-  - "nethogs"
-  - "etherape"
-  - "iptraf-ng"
-
-yum::group:
-  "Development Tools":
-    ensure: "present"
 
 ##Only one that contains etherape
 yum::managed_repos:

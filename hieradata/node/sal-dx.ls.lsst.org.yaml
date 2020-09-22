@@ -1,0 +1,19 @@
+---
+packages:
+  - "ltrace"
+  - "strace"
+  - "tcpdump"
+  - "traceroute"
+  - "gdb"
+  - "htop"
+  - "iftop"
+  - "wireshark"
+  - "nethogs"
+  - "etherape"
+  - "iptraf-ng"
+
+yum::group:
+  "Development Tools":
+    ensure: "present"
+
+profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"

@@ -3,15 +3,5 @@ classes:
   - "profile::ccs::sal_dx"
   - "yum"
 
-##Only one that contains etherape
-yum::managed_repos:
-  - "cert-forensics"
-yum::repos:
-  "cert-forensics":
-    ensure: "present"
-    descr: "CERT Forensics Tools Repository"
-    enabled: true
-    baseurl: "http://www.cert.org/forensics/repository/centos/cert/$releasever/$basearch"
-    gpgcheck: false
-    target: "/etc/yum.repos.d/cert-forensics-tools.repo"
 profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"
+profile::ccs::sal_dx::username: "User"

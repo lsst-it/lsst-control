@@ -5,6 +5,7 @@ classes:
   - "profile::icinga::resources"
   - "profile::icinga::network"
   - "profile::icinga::plugins"
+  - "profile::icinga::opsgenie"
 packages:
   - "bash-completion"
   - "bash-completion-extras"

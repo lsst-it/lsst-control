@@ -101,12 +101,12 @@ class profile::icinga::resources (
     "ssh,${ssh_svc_template_name},0",
     "load,${cpu_svc_template_name},0",
     "swap,${swap_svc_template_name},0",
-    "mem,${ram_svc_template_name},0",
     "http,${tls_svc_template_name},1,http_certificate,30",
     "ntp_time,${ntp_svc_template_name},1,ntp_address,ntp.shoa.cl",
     "ldap,${ipa_svc_template_name},2",
     "disk,${disk_svc_template_name},3",
-    "ping,${lhn_svc_template_name},4",
+    "ping,${lhn_svc_template_name},4,ping_address,starlight-dtn.ncsa.illinois.edu,ping_crta,250,ping_wrta,225",
+    "mem,${ram_svc_template_name},4,mem_free,true,mem_warning,0.01,mem_critical,0.05",
   ]
   #Host Services Array
   $host_services = [
@@ -339,9 +339,9 @@ class profile::icinga::resources (
         "object_type": "template",
         "use_agent": true,
         "vars": {
-            "ping_address": "starlight-dtn.ncsa.illinois.edu",
-            "ping_crta": "250",
-            "ping_wrta": "225"
+            "${value[3]}": "${value[4]}",
+            "${value[5]}": "${value[6]}",
+            "${value[7]}": "${value[8]}"
         },
         "zone": "master"
         }

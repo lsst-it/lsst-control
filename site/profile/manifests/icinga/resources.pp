@@ -41,6 +41,7 @@ class profile::icinga::resources (
   $lhn_svc_template_name    = 'LhnServiceTemplate'
   $ipa_svc_template_name    = 'IpaServiceTemplate'
   $disk_svc_template_name   = 'DiskServiceTemplate'
+  $cpu_svc_template_name    = 'CpuServiceTemplate'
 
   #Service Names
   $host_svc_ping_name   = 'HostPingService'
@@ -51,6 +52,7 @@ class profile::icinga::resources (
   $comcam_svc_disk_name = 'ComcamDiskService'
   $comcam_svc_ssh_name  = 'ComcamSshService'
   $comcam_svc_ntp_name  = 'ComcamNtpService'
+  $comcam_svc_cpu_name  = 'ComcamCpuService'
   $dns_svc_name         = 'DnsService'
   $dns_svc_ping_name    = 'DnsPingService'
   $dns_svc_disk_name    = 'DnsDiskService'
@@ -86,6 +88,20 @@ class profile::icinga::resources (
   $ls_nodes = 'ls_nodes'
   $it_svc   = 'it_services'
 
+  #Service Templates Array
+  $service_template = [
+    "http,${http_svc_template_name},0",
+    "hostalive,${ping_svc_template_name},0",
+    "dns,${dns_svc_template_name},0",
+    "dhcp,${master_svc_template_name},0",
+    "ssh,${ssh_svc_template_name},0",
+    "load,${cpu_svc_template_name},0",
+    "http,${tls_svc_template_name},1,http_certificate,30",
+    "ntp_time,${ntp_svc_template_name},1,ntp_address,ntp.shoa.cl",
+    "ldap,${ipa_svc_template_name},2",
+    "disk,${disk_svc_template_name},3",
+    "ping,${lhn_svc_template_name},4",
+  ]
   #Host Services Array
   $host_services = [
     "${host_template},${$ping_svc_template_name},${host_svc_ping_name}",
@@ -96,6 +112,7 @@ class profile::icinga::resources (
     "${comcam_template},${$disk_svc_template_name},${comcam_svc_disk_name}",
     "${comcam_template},${$ssh_svc_template_name},${comcam_svc_ssh_name}",
     "${comcam_template},${$ntp_svc_template_name},${comcam_svc_ntp_name}",
+    "${comcam_template},${$cpu_svc_template_name},${comcam_svc_cpu_name}",
     "${http_template},${$http_svc_template_name},${http_svc_name}",
     "${http_template},${$ping_svc_template_name},${http_svc_ping_name}",
     "${http_template},${$disk_svc_template_name},${http_svc_disk_name}",
@@ -131,19 +148,6 @@ class profile::icinga::resources (
     "${ipa_template},0",
     "${dtn_template},0",
     "${tls_template},1",
-  ]
-  #Service Templates Array
-  $service_template = [
-    "http,${http_svc_template_name},0",
-    "hostalive,${ping_svc_template_name},0",
-    "dns,${dns_svc_template_name},0",
-    "dhcp,${master_svc_template_name},0",
-    "ssh,${ssh_svc_template_name},0",
-    "http,${tls_svc_template_name},1,http_certificate,30",
-    "ntp_time,${ntp_svc_template_name},1,ntp_address,ntp.shoa.cl",
-    "ldap,${ipa_svc_template_name},2",
-    "disk,${disk_svc_template_name},3",
-    "ping,${lhn_svc_template_name},4",
   ]
   #Host Groups Array
   $hostgroups_name = [

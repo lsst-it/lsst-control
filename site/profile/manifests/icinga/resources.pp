@@ -45,6 +45,7 @@ class profile::icinga::resources (
   $swap_svc_template_name   = 'SwapServiceTemplate'
   $ram_svc_template_name    = 'RamServiceTemplate'
   $proc_svc_template_name   = 'ProcessesServiceTemplate'
+  $user_svc_template_name   = 'UsersServiceTemplate'
 
   #Service Names
   $host_svc_ping_name   = 'HostPingService'
@@ -59,6 +60,7 @@ class profile::icinga::resources (
   $comcam_svc_swap_name = 'ComcamSwapService'
   $comcam_svc_ram_name  = 'ComcamRamService'
   $comcam_svc_proc_name = 'ComcamProcessesService'
+  $comcam_svc_user_name = 'ComcamUsersService'
   $dns_svc_name         = 'DnsService'
   $dns_svc_ping_name    = 'DnsPingService'
   $dns_svc_disk_name    = 'DnsDiskService'
@@ -109,7 +111,8 @@ class profile::icinga::resources (
     "ping,${lhn_svc_template_name},4,ping_address,starlight-dtn.ncsa.illinois.edu,ping_crta,250,ping_wrta,225",
     "mem,${ram_svc_template_name},4,mem_free,true,mem_warning,0.05,mem_critical,0.01",
     "procs,${proc_svc_template_name},5,procs_warning,650,procs_critical,700",
-    "swap,${swap_svc_template_name},5,swap_cfree,15,swap_wfree,25",
+    "swap,${swap_svc_template_name},5,users_cgreater,50,users_wgreater,40",
+    "users,${user_svc_template_name},5,users_cgreater,50,users_wgreater,40",
   ]
   #Host Services Array
   $host_services = [
@@ -125,6 +128,7 @@ class profile::icinga::resources (
     "${comcam_template},${$swap_svc_template_name},${comcam_svc_swap_name}",
     "${comcam_template},${$ram_svc_template_name},${comcam_svc_ram_name}",
     "${comcam_template},${$proc_svc_template_name},${comcam_svc_proc_name}",
+    "${comcam_template},${$user_svc_template_name},${comcam_svc_user_name}",
     "${http_template},${$http_svc_template_name},${http_svc_name}",
     "${http_template},${$ping_svc_template_name},${http_svc_ping_name}",
     "${http_template},${$disk_svc_template_name},${http_svc_disk_name}",

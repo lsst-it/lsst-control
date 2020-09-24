@@ -183,7 +183,7 @@ class profile::icinga::resources (
   #<---------------END-Files Creation and deployement--------------------->
   #
   #
-  #<-----------------Repo-and-Packages-for-nwc_health--------------------->
+  #<-----------------Packages and Plugins Installation-------------------->
   yumrepo { 'perl':
     ensure   => 'present',
     enabled  => true,
@@ -198,7 +198,17 @@ class profile::icinga::resources (
     ensure  => 'present',
     require => Yumrepo['perl'],
   }
-  #<-------------END-Repo-and-Packages-for-nwc_health--------------------->
+  #Check memory plugin
+  archive {'/usr/lib64/nagios/plugins/check_mem':
+    ensure => present,
+    source => 'https://raw.githubusercontent.com/justintime/nagios-plugins/master/check_mem/check_mem.pl',
+  }
+  ->file { '/usr/lib64/nagios/plugins/check_mem':
+    owner => 'root',
+    group => 'icinga',
+    mode  => '4755',
+  }
+  #<-------------END-Packages and Plugins Installation-------------------->
   #
   #
   #<---------------------------Host-Templates----------------------------->

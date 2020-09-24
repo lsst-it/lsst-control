@@ -41,7 +41,7 @@ class profile::icinga::resources (
   $lhn_svc_template_name    = 'LhnServiceTemplate'
   $ipa_svc_template_name    = 'IpaServiceTemplate'
   $disk_svc_template_name   = 'DiskServiceTemplate'
-  $cpu_svc_template_name    = 'CpuServiceTemplate'
+  $load_svc_template_name   = 'LoadServiceTemplate'
   $swap_svc_template_name   = 'SwapServiceTemplate'
   $ram_svc_template_name    = 'RamServiceTemplate'
   $proc_svc_template_name   = 'ProcessesServiceTemplate'
@@ -56,7 +56,7 @@ class profile::icinga::resources (
   $comcam_svc_disk_name = 'ComcamDiskService'
   $comcam_svc_ssh_name  = 'ComcamSshService'
   $comcam_svc_ntp_name  = 'ComcamNtpService'
-  $comcam_svc_cpu_name  = 'ComcamCpuService'
+  $comcam_svc_load_name = 'ComcamLoadService'
   $comcam_svc_swap_name = 'ComcamSwapService'
   $comcam_svc_ram_name  = 'ComcamRamService'
   $comcam_svc_proc_name = 'ComcamProcessesService'
@@ -103,16 +103,16 @@ class profile::icinga::resources (
     "dns,${dns_svc_template_name},0",
     "dhcp,${master_svc_template_name},0",
     "ssh,${ssh_svc_template_name},0",
-    "load,${cpu_svc_template_name},0",
+    "load,${load_svc_template_name},0",
     "http,${tls_svc_template_name},1,http_certificate,30",
     "ntp_time,${ntp_svc_template_name},1,ntp_address,ntp.shoa.cl",
     "ldap,${ipa_svc_template_name},2",
-    "disk,${disk_svc_template_name},3",
+    "disk,${disk_svc_template_name},3,disk_cfree,3%,disk_wfree,6%",
+    "procs,${proc_svc_template_name},3,procs_warning,650,procs_critical,700",
+    "swap,${swap_svc_template_name},3,users_cgreater,50,users_wgreater,40",
+    "users,${user_svc_template_name},3,users_cgreater,50,users_wgreater,40",
     "ping,${lhn_svc_template_name},4,ping_address,starlight-dtn.ncsa.illinois.edu,ping_crta,250,ping_wrta,225",
     "mem,${ram_svc_template_name},4,mem_free,true,mem_warning,0.05,mem_critical,0.01",
-    "procs,${proc_svc_template_name},5,procs_warning,650,procs_critical,700",
-    "swap,${swap_svc_template_name},5,users_cgreater,50,users_wgreater,40",
-    "users,${user_svc_template_name},5,users_cgreater,50,users_wgreater,40",
   ]
   #Host Services Array
   $host_services = [
@@ -124,7 +124,7 @@ class profile::icinga::resources (
     "${comcam_template},${$disk_svc_template_name},${comcam_svc_disk_name}",
     "${comcam_template},${$ssh_svc_template_name},${comcam_svc_ssh_name}",
     "${comcam_template},${$ntp_svc_template_name},${comcam_svc_ntp_name}",
-    "${comcam_template},${$cpu_svc_template_name},${comcam_svc_cpu_name}",
+    "${comcam_template},${$load_svc_template_name},${comcam_svc_load_name}",
     "${comcam_template},${$swap_svc_template_name},${comcam_svc_swap_name}",
     "${comcam_template},${$ram_svc_template_name},${comcam_svc_ram_name}",
     "${comcam_template},${$proc_svc_template_name},${comcam_svc_proc_name}",
@@ -230,6 +230,16 @@ class profile::icinga::resources (
     source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=1530&cf_id=24',
   }
   ->file { '/usr/lib64/nagios/plugins/check_users':
+    owner => 'root',
+    group => 'icinga',
+    mode  => '4755',
+  }
+  #CPU usage
+  archive {'/usr/lib64/nagios/plugins/check_cpu':
+    ensure => present,
+    source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=580&cf_id=29',
+  }
+  ->file { '/usr/lib64/nagios/plugins/check_cpu':
     owner => 'root',
     group => 'icinga',
     mode  => '4755',
@@ -342,8 +352,8 @@ class profile::icinga::resources (
         "object_type": "template",
         "use_agent": true,
         "vars": {
-            "disk_cfree": "10%",
-            "disk_wfree": "20%"
+            "${value[3]}": "${value[4]}",
+            "${value[5]}": "${value[6]}"
         },
         "zone": "master"
         }
@@ -364,21 +374,6 @@ class profile::icinga::resources (
         "zone": "master"
         }
         | TEMPLATE4
-    }
-    elsif ($value[2]=='5'){
-      $content = @("TEMPLATE5"/L)
-        {
-        "check_command": "${value[0]}",
-        "object_name": "${value[1]}",
-        "object_type": "template",
-        "use_agent": true,
-        "vars": {
-            "${value[3]}": "${value[4]}",
-            "${value[5]}": "${value[6]}"
-        },
-        "zone": "master"
-        }
-        | TEMPLATE5
     }
     else {
       notice("No content has beeing assigned to ${value[1]}")

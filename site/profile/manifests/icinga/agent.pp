@@ -69,6 +69,7 @@ class profile::icinga::agent(
   #
   #
   #<-------------------------Additional-Plugins--------------------------->
+  #Network Usage
   archive {'/usr/lib64/nagios/plugins/check_netio':
     ensure => present,
     source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
@@ -78,6 +79,7 @@ class profile::icinga::agent(
     group => 'icinga',
     mode  => '4755',
   }
+  #Memory Usage
   archive {'/usr/lib64/nagios/plugins/check_mem.pl':
     ensure => present,
     source => 'https://raw.githubusercontent.com/justintime/nagios-plugins/master/check_mem/check_mem.pl',
@@ -87,11 +89,22 @@ class profile::icinga::agent(
     group => 'icinga',
     mode  => '4755',
   }
+  #Logged Users
   archive {'/usr/lib64/nagios/plugins/check_users':
     ensure => present,
     source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=1530&cf_id=24',
   }
   ->file { '/usr/lib64/nagios/plugins/check_users':
+    owner => 'root',
+    group => 'icinga',
+    mode  => '4755',
+  }
+  #CPU usage
+  archive {'/usr/lib64/nagios/plugins/check_cpu':
+    ensure => present,
+    source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=580&cf_id=29',
+  }
+  ->file { '/usr/lib64/nagios/plugins/check_cpu':
     owner => 'root',
     group => 'icinga',
     mode  => '4755',

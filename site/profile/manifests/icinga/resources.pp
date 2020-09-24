@@ -100,13 +100,13 @@ class profile::icinga::resources (
     "dhcp,${master_svc_template_name},0",
     "ssh,${ssh_svc_template_name},0",
     "load,${cpu_svc_template_name},0",
-    "swap,${swap_svc_template_name},0",
     "http,${tls_svc_template_name},1,http_certificate,30",
     "ntp_time,${ntp_svc_template_name},1,ntp_address,ntp.shoa.cl",
     "ldap,${ipa_svc_template_name},2",
     "disk,${disk_svc_template_name},3",
     "ping,${lhn_svc_template_name},4,ping_address,starlight-dtn.ncsa.illinois.edu,ping_crta,250,ping_wrta,225",
-    "mem,${ram_svc_template_name},4,mem_free,true,mem_warning,0.01,mem_critical,0.05",
+    "mem,${ram_svc_template_name},4,mem_free,true,mem_warning,0.05,mem_critical,0.01",
+    "swap,${swap_svc_template_name},5,swap_cfree,15,swap_wfree,25",
   ]
   #Host Services Array
   $host_services = [
@@ -288,7 +288,7 @@ class profile::icinga::resources (
         | TEMPLATE
     }
     elsif ($value[2]=='1'){
-      $content = @("TEMPLATE"/L)
+      $content = @("TEMPLATE1"/L)
         {
         "check_command": "${value[0]}",
         "object_name": "${value[1]}",
@@ -299,10 +299,10 @@ class profile::icinga::resources (
         },
         "zone": "master"
         }
-        | TEMPLATE
+        | TEMPLATE1
     }
     elsif ($value[2]=='2'){
-      $content = @("IPA_TEMPLATE"/L)
+      $content = @("TEMPLATE2"/L)
         {
         "check_command": "${value[0]}",
         "object_name": "${value[1]}",
@@ -314,10 +314,10 @@ class profile::icinga::resources (
         },
         "zone": "master"
         }
-        | IPA_TEMPLATE
+        | TEMPLATE2
     }
     elsif ($value[2]=='3'){
-      $content = @("DISK_TEMPLATE"/L)
+      $content = @("TEMPLATE3"/L)
         {
         "check_command": "${value[0]}",
         "object_name": "${value[1]}",
@@ -329,10 +329,10 @@ class profile::icinga::resources (
         },
         "zone": "master"
         }
-        | DISK_TEMPLATE
+        | TEMPLATE3
     }
     elsif ($value[2]=='4'){
-      $content = @("LHN"/L)
+      $content = @("TEMPLATE4"/L)
         {
         "check_command": "${value[0]}",
         "object_name": "${value[1]}",
@@ -345,7 +345,22 @@ class profile::icinga::resources (
         },
         "zone": "master"
         }
-        | LHN
+        | TEMPLATE4
+    }
+    elsif ($value[2]=='5'){
+      $content = @("TEMPLATE5"/L)
+        {
+        "check_command": "${value[0]}",
+        "object_name": "${value[1]}",
+        "object_type": "template",
+        "use_agent": true,
+        "vars": {
+            "${value[3]}": "${value[4]}",
+            "${value[5]}": "${value[6]}"
+        },
+        "zone": "master"
+        }
+        | TEMPLATE5
     }
     else {
       notice("No content has beeing assigned to ${value[1]}")

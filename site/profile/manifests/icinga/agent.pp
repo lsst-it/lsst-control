@@ -67,6 +67,27 @@ class profile::icinga::agent(
     require => Package[$packages],
   }
   #Network Usage
+  #Condition to solve different NIC name issue
+  if ($icinga_agent_fqdn == 'comcam-hcu03.ls.lsst.org') {
+    $content = @(CONTENT)
+      object CheckCommand "netio" {
+        command = [ "/usr/lib64/nagios/plugins/check_netio" ]
+        arguments = {
+          "-i" = "eno1"
+        }
+      }
+      | CONTENT
+  }
+  else {
+    $content =@(CONTENT)
+      object CheckCommand "netio" {
+        command = [ "/usr/lib64/nagios/plugins/check_netio" ]
+        arguments = {
+          "-i" = "em1"
+        }
+      }
+      | CONTENT
+  }
   archive {'/usr/lib64/nagios/plugins/check_netio':
     ensure => present,
     source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
@@ -82,11 +103,7 @@ class profile::icinga::agent(
     group   => 'icinga',
     mode    => '0640',
     notify  => Service['icinga2'],
-    content => @(CONTENT)
-      object CheckCommand "netio" {
-        command = [ "/usr/lib64/nagios/plugins/check_netio" ]
-      }
-      | CONTENT
+    content => $content
   }
   #Memory Usage
   archive {'/usr/lib64/nagios/plugins/check_mem.pl':
@@ -118,6 +135,7 @@ class profile::icinga::agent(
     group => 'icinga',
     mode  => '4755',
   }
+
   ->file {'/etc/icinga2/features-enabled/cpu.conf':
     ensure  => 'present',
     owner   => 'icinga',

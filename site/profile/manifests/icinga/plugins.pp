@@ -1,12 +1,39 @@
 # @summary
 #   Icinga additional plugins
 
-class profile::icinga::plugins{
-  #check_nwc_health plugin
-  $icinga_path = '/opt/icinga'
+class profile::icinga::plugins(
+  String $credentials_hash,
+){
+  #<----------------------------------------------- Variables------------------------------------------------->
+  #Implicit usage of facts
+  $master_fqdn  = $facts['networking']['fqdn']
+
+  #Commands abreviation
+  $url_cmd     = "https://${master_fqdn}/director/command"
+  $credentials   = "Authorization:Basic ${credentials_hash}"
+  $format        = 'Accept: application/json'
+  $curl          = 'curl -s -k -H'
+  $icinga_path   = '/opt/icinga'
+  $lt            = '| grep Failed'
+
+  #Command Names
+  $cpu_command_name = 'cpu'
+  $netio_command_name = 'netio'
+
+  #Commands Array
+  $commands = [
+    "${cpu_command_name},cpu,266,set_if,false",
+    "${netio_command_name},netio,265,value,em1",
+  ]
+  #check_nwc_health variables
   $base_dir    = '/usr/lib64/nagios/plugins'
   $nwc_dir     = "${icinga_path}/check_nwc_health"
   $conditions  = "--prefix=${nwc_dir} --with-nagios-user=root --with-nagios-group=icinga --with-perl=/bin/perl"
+
+  #<--------------------------------------------END Variables------------------------------------------------->
+  #
+  #
+  #<---------------------------Plugins Creation and permissions adjustment------------------------------------>
 
   vcsrepo { $nwc_dir:
     ensure   => present,
@@ -55,7 +82,7 @@ class profile::icinga::plugins{
     group => 'icinga',
     mode  => '4755',
   }
-  #CPU usage
+  #Check CPU usage
   archive {'/usr/lib64/nagios/plugins/check_cpu':
     ensure => present,
     source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=580&cf_id=29',
@@ -65,19 +92,7 @@ class profile::icinga::plugins{
     group => 'icinga',
     mode  => '4755',
   }
-  # ->file {'/etc/icinga2/features-enabled/cpu.conf':
-  #   ensure  => 'present',
-  #   owner   => 'icinga',
-  #   group   => 'icinga',
-  #   mode    => '0640',
-  #   notify  => Service['icinga2'],
-  #   content => @(CONTENT)
-  #     object CheckCommand "cpu" {
-  #       command = [ "/usr/lib64/nagios/plugins/check_cpu" ]
-  #     }
-  #     | CONTENT
-  # }
-  #Network Usage
+  #Check network traffic
   archive {'/usr/lib64/nagios/plugins/check_netio':
     ensure => present,
     source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
@@ -87,19 +102,39 @@ class profile::icinga::plugins{
     group => 'icinga',
     mode  => '4755',
   }
-  ->file {'/etc/icinga2/features-enabled/netio.conf':
-    ensure  => 'present',
-    owner   => 'icinga',
-    group   => 'icinga',
-    mode    => '0640',
-    notify  => Service['icinga2'],
-    content => @(CONTENT)
-      object CheckCommand "netio" {
-        import "plugin-check-command"
-        command = [ "/usr/lib64/nagios/plugins/check_netio" ]
-        timeout = 1m
-      }
-      | CONTENT
+  #Add commands to Icinga Director
+  $commands.each |$name|{
+    $value    = split($name,',')
+    $path = "${$icinga_path}/${value[0]}.json"
+    $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_cmd}?name=${value[0]}' ${lt}"
+    $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_cmd}' -d @${path}"
+
+    file { $path:
+      ensure  => 'present',
+      content => @("COMMAND_HOST"/$)
+        {
+        "arguments": {
+          "-i": {
+            "command_id": "${value[2]}",
+            "${value[3]}": "${value[4]}"
+          }
+        },
+        "command": "\/usr\/lib64\/nagios\/plugins\/check_${value[1]}",
+        "methods_execute": "PluginCheck",
+        "object_name": "${value[1]}",
+        "object_type": "object",
+        "timeout": "1m",
+        "zone": "master"
+        }
+        | COMMAND_HOST
+    }
+    ->exec { $cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $cond,
+      loglevel => debug,
+    }
   }
   #Change permissions to dhcp plugin
   file { '/usr/lib64/nagios/plugins/check_dhcp':

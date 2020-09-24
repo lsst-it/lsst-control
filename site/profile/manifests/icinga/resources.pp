@@ -43,6 +43,7 @@ class profile::icinga::resources (
   $disk_svc_template_name   = 'DiskServiceTemplate'
   $cpu_svc_template_name    = 'CpuServiceTemplate'
   $swap_svc_template_name   = 'SwapServiceTemplate'
+  $ram_svc_template_name    = 'RamServiceTemplate'
 
   #Service Names
   $host_svc_ping_name   = 'HostPingService'
@@ -55,6 +56,7 @@ class profile::icinga::resources (
   $comcam_svc_ntp_name  = 'ComcamNtpService'
   $comcam_svc_cpu_name  = 'ComcamCpuService'
   $comcam_svc_swap_name = 'ComcamSwapService'
+  $comcam_svc_ram_name  = 'ComcamRamService'
   $dns_svc_name         = 'DnsService'
   $dns_svc_ping_name    = 'DnsPingService'
   $dns_svc_disk_name    = 'DnsDiskService'
@@ -99,6 +101,7 @@ class profile::icinga::resources (
     "ssh,${ssh_svc_template_name},0",
     "load,${cpu_svc_template_name},0",
     "swap,${swap_svc_template_name},0",
+    "mem,${ram_svc_template_name},0",
     "http,${tls_svc_template_name},1,http_certificate,30",
     "ntp_time,${ntp_svc_template_name},1,ntp_address,ntp.shoa.cl",
     "ldap,${ipa_svc_template_name},2",
@@ -116,6 +119,8 @@ class profile::icinga::resources (
     "${comcam_template},${$ssh_svc_template_name},${comcam_svc_ssh_name}",
     "${comcam_template},${$ntp_svc_template_name},${comcam_svc_ntp_name}",
     "${comcam_template},${$cpu_svc_template_name},${comcam_svc_cpu_name}",
+    "${comcam_template},${$swap_svc_template_name},${comcam_svc_swap_name}",
+    "${comcam_template},${$ram_svc_template_name},${comcam_svc_ram_name}",
     "${http_template},${$http_svc_template_name},${http_svc_name}",
     "${http_template},${$ping_svc_template_name},${http_svc_ping_name}",
     "${http_template},${$disk_svc_template_name},${http_svc_disk_name}",

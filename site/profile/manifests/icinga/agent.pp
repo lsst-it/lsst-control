@@ -78,11 +78,11 @@ class profile::icinga::agent(
     group => 'icinga',
     mode  => '4755',
   }
-  archive {'/usr/lib64/nagios/plugins/check_mem':
+  archive {'/usr/lib64/nagios/plugins/check_mem.pl':
     ensure => present,
     source => 'https://raw.githubusercontent.com/justintime/nagios-plugins/master/check_mem/check_mem.pl',
   }
-  ->file { '/usr/lib64/nagios/plugins/check_mem':
+  ->file { '/usr/lib64/nagios/plugins/check_mem.pl':
     owner => 'root',
     group => 'icinga',
     mode  => '4755',

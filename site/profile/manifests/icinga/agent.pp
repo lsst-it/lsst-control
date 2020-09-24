@@ -76,6 +76,18 @@ class profile::icinga::agent(
     group => 'icinga',
     mode  => '4755',
   }
+  ->file {'/etc/icinga2/features-enabled/netio.conf':
+    ensure  => 'present',
+    owner   => 'icinga',
+    group   => 'icinga',
+    mode    => '0640',
+    notify  => Service['icinga2'],
+    content => @(CONTENT)
+      object CheckCommand "netio" {
+        command = [ "/usr/lib64/nagios/plugins/check_netio" ]
+      }
+      | CONTENT
+  }
   #Memory Usage
   archive {'/usr/lib64/nagios/plugins/check_mem.pl':
     ensure => present,

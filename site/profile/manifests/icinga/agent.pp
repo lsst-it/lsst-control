@@ -87,6 +87,15 @@ class profile::icinga::agent(
     group => 'icinga',
     mode  => '4755',
   }
+  archive {'/usr/lib64/nagios/plugins/check_users':
+    ensure => present,
+    source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=1530&cf_id=24',
+  }
+  ->file { '/usr/lib64/nagios/plugins/check_users':
+    owner => 'root',
+    group => 'icinga',
+    mode  => '4755',
+  }
   #<---------------------END-Additional-Plugins--------------------------->
   #
   #

@@ -58,17 +58,14 @@ class profile::icinga::agent(
   #<--------------------End-Icinga-Configuration-------------------------->
   #
   #
-  #<----------------------Plugins-modifications--------------------------->
+  #<-------------------------Additional-Plugins--------------------------->
+  #Check disk
   file { '/usr/lib64/nagios/plugins/check_disk':
     owner   => 'root',
     group   => 'root',
     mode    => '4755',
     require => Package[$packages],
   }
-  #<------------------END-Plugins-modifications--------------------------->
-  #
-  #
-  #<-------------------------Additional-Plugins--------------------------->
   #Network Usage
   archive {'/usr/lib64/nagios/plugins/check_netio':
     ensure => present,
@@ -108,6 +105,18 @@ class profile::icinga::agent(
     owner => 'root',
     group => 'icinga',
     mode  => '4755',
+  }
+  ->file {'/etc/icinga2/features-enabled/cpu.conf':
+    ensure  => 'present',
+    owner   => 'icinga',
+    group   => 'icinga',
+    mode    => '0640',
+    notify  => Service['icinga2'],
+    content => @(CONTENT)
+      object CheckCommand "cpu" {
+        command = [ "/usr/lib64/nagios/plugins/check_cpu" ]
+      }
+      | CONTENT
   }
   #<---------------------END-Additional-Plugins--------------------------->
   #

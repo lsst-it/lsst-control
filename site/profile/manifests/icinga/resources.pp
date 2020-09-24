@@ -74,6 +74,7 @@ class profile::icinga::resources (
   $master_svc_tls_name  = 'MasterTlsService'
   $master_svc_ssh_name  = 'MasterSshService'
   $master_svc_ntp_name  = 'MasterNtpService'
+  $master_svc_cpu_name  = 'MasterCpuService'
   $http_svc_name        = 'HttpService'
   $http_svc_ping_name   = 'HttpPingService'
   $http_svc_disk_name   = 'HttpDiskService'
@@ -143,6 +144,7 @@ class profile::icinga::resources (
     "${master_template},${$disk_svc_template_name},${master_svc_disk_name}",
     "${master_template},${$ssh_svc_template_name},${master_svc_ssh_name}",
     "${master_template},${$ntp_svc_template_name},${master_svc_ntp_name}",
+    "${master_template},${$cpu_svc_template_name},${master_svc_cpu_name}",
     "${dns_template},${$dns_svc_template_name},${dns_svc_name}",
     "${dns_template},${$ping_svc_template_name},${dns_svc_ping_name}",
     "${dns_template},${$disk_svc_template_name},${dns_svc_disk_name}",

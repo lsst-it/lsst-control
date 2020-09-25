@@ -13,6 +13,7 @@ class profile::icinga::agent(
   $packages = [
     'nagios-plugins-all',
   ]
+  $nic = $facts['networking']['primary']
   $icinga_agent_fqdn = $facts['networking']['fqdn']
   $icinga_agent_ip = $facts['networking']['ip']
   $credentials = "Authorization:Basic ${credentials_hash}"
@@ -67,37 +68,6 @@ class profile::icinga::agent(
     require => Package[$packages],
   }
   #Network Usage
-  #Condition to solve different NIC name issue
-  if ($icinga_agent_fqdn == 'comcam-fp01.ls.lsst.org'){
-    $content =@(CONTENT)
-      object CheckCommand "netio" {
-        command = [ "/usr/lib64/nagios/plugins/check_netio" ]
-        arguments = {
-          "-i" = "em1"
-        }
-      }
-      | CONTENT
-  }
-  elsif ($icinga_agent_fqdn == 'comcam-hcu*'){
-    $content = @(CONTENT)
-      object CheckCommand "netio" {
-        command = [ "/usr/lib64/nagios/plugins/check_netio" ]
-        arguments = {
-          "-i" = "eno1"
-        }
-      }
-      | CONTENT
-  }
-  else {
-    $content =@(CONTENT)
-      object CheckCommand "netio" {
-        command = [ "/usr/lib64/nagios/plugins/check_netio" ]
-        arguments = {
-          "-i" = "eth0"
-        }
-      }
-      | CONTENT
-  }
   archive {'/usr/lib64/nagios/plugins/check_netio':
     ensure => present,
     source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
@@ -113,7 +83,14 @@ class profile::icinga::agent(
     group   => 'icinga',
     mode    => '0640',
     notify  => Service['icinga2'],
-    content => $content
+    content => @("CONTENT")
+      object CheckCommand "netio" {
+        command = [ "/usr/lib64/nagios/plugins/check_netio" ]
+        arguments = {
+          "-i" = "${nic}"
+        }
+      }
+      | CONTENT
   }
   #Memory Usage
   archive {'/usr/lib64/nagios/plugins/check_mem.pl':

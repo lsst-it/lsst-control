@@ -206,20 +206,20 @@ class profile::icinga::resources (
   ]
   #Service Groups Array
   $servicegroup_name = [
-    $http_svc,
-    $ping_svc,
-    $dhcp_svc,
-    $ssh_svc,
-    $load_svc,
-    $cpu_svc,
-    $nic_svc,
-    $ntp_svc,
-    $ldap_svc,
-    $disk_svc,
-    $proc_svc,
-    $swap_svc,
-    $user_svc,
-    $mem_svc,
+    "${http_svc},${http_svc}Group",
+    "${ping_svc},${ping_svc}Group",
+    "${dhcp_svc},${dhcp_svc}Group",
+    "${ssh_svc},${ssh_svc}Group",
+    "${load_svc},${load_svc}Group",
+    "${cpu_svc},${cpu_svc}Group",
+    "${nic_svc},${nic_svc}Group",
+    "${ntp_svc},${ntp_svc}Group",
+    "${ldap_svc},${ldap_svc}Group",
+    "${disk_svc},${disk_svc}Group",
+    "${proc_svc},${proc_svc}Group",
+    "${swap_svc},${swap_svc}Group",
+    "${user_svc},${user_svc}Group",
+    "${mem_svc},${mem_svc}Group",
   ]
   #<-------------------End Variables Definition--------------------------->
   #
@@ -498,8 +498,8 @@ class profile::icinga::resources (
   #<------------------------Service-Group-Definiton----------------------->
   $servicegroup_name.each |$svcgroup|{
     $value = split($svcgroup,',')
-    $svcgroup_path = "${icinga_path}/${$value[0]}.json"
-    $svcgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svcgroup}?name=${value[0]}' ${lt}"
+    $svcgroup_path = "${icinga_path}/${$value[1]}.json"
+    $svcgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svcgroup}?name=${value[1]}' ${lt}"
     $svcgroup_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svcgroup}' -d @${svcgroup_path}"
 
     file { $svcgroup_path:
@@ -507,8 +507,8 @@ class profile::icinga::resources (
       content => @("GROUP"/L)
         {
         "assign_filter": "service.name=%22%2A${value[0]}%22",
-        "display_name": "${value[0]}Group",
-        "object_name": "${value[0]}Group",
+        "display_name": "${value[1]}",
+        "object_name": "${value[1]}",
         "object_type": "object"
 
         }

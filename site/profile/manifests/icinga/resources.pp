@@ -14,6 +14,7 @@ class profile::icinga::resources (
   $url_host      = "https://${master_fqdn}/director/host"
   $url_svc       = "https://${master_fqdn}/director/service"
   $url_hostgroup = "https://${master_fqdn}/director/hostgroup"
+  $url_svcgroup  = "https://${master_fqdn}/director/servicegroup"
   $credentials   = "Authorization:Basic ${credentials_hash}"
   $format        = 'Accept: application/json'
   $curl          = 'curl -s -k -H'
@@ -30,66 +31,84 @@ class profile::icinga::resources (
   $tls_template    = 'TlsTemplate'
   $dtn_template    = 'DtnTemplate'
 
+  #Services Names
+  $http_svc  = 'HttpService'
+  $ping_svc  = 'PingService'
+  $dns_svc   = 'DnsService'
+  $dhcp_svc  = 'DhcpService'
+  $ssh_svc   = 'SshService'
+  $load_svc  = 'LoadService'
+  $cpu_svc   = 'CpuService'
+  $nic_svc   = 'NicService'
+  $ntp_svc   = 'NtpService'
+  $ldap_svc  = 'IpaService'
+  $disk_svc  = 'DiskService'
+  $proc_svc  = 'ProcessesService'
+  $swap_svc  = 'SwapService'
+  $user_svc  = 'UserService'
+  $mem_svc   = 'RamService'
+  $tls_svc   = 'TlsService'
+
   #Service Templates Names
-  $http_svc_template_name   = 'HttpServiceTemplate'
-  $ping_svc_template_name   = 'PingServiceTemplate'
-  $dns_svc_template_name    = 'DnsServiceTemplate'
+  $http_svc_template_name   = "${http_svc}Template"
+  $ping_svc_template_name   = "${ping_svc}Template"
+  $dns_svc_template_name    = "${dns_svc}Template"
   $master_svc_template_name = 'MasterServiceTemplate'
-  $ssh_svc_template_name    = 'SshServiceTemplate'
-  $tls_svc_template_name    = 'TlsServiceTemplate'
-  $ntp_svc_template_name    = 'NtpServiceTemplate'
+  $ssh_svc_template_name    = "${ssh_svc}Template"
+  $tls_svc_template_name    = "${tls_svc}Template"
+  $ntp_svc_template_name    = "${ntp_svc}Template"
   $lhn_svc_template_name    = 'LhnServiceTemplate'
-  $ipa_svc_template_name    = 'IpaServiceTemplate'
-  $disk_svc_template_name   = 'DiskServiceTemplate'
-  $load_svc_template_name   = 'LoadServiceTemplate'
-  $swap_svc_template_name   = 'SwapServiceTemplate'
-  $ram_svc_template_name    = 'RamServiceTemplate'
-  $proc_svc_template_name   = 'ProcessesServiceTemplate'
-  $user_svc_template_name   = 'UsersServiceTemplate'
-  $cpu_svc_template_name    = 'CpuServiceTemplate'
-  $nic_svc_template_name    = 'NicServiceTemplate'
+  $ipa_svc_template_name    = "${ldap_svc}Template"
+  $disk_svc_template_name   = "${disk_svc}Template"
+  $load_svc_template_name   = "${load_svc}Template"
+  $swap_svc_template_name   = "${swap_svc}Template"
+  $ram_svc_template_name    = "${mem_svc}Template"
+  $proc_svc_template_name   = "${proc_svc}Template"
+  $user_svc_template_name   = "${user_svc}Template"
+  $cpu_svc_template_name    = "${cpu_svc}Template"
+  $nic_svc_template_name    = "${nic_svc}Template"
 
   #Service Names
-  $host_svc_ping_name   = 'HostPingService'
-  $host_svc_disk_name   = 'HostDiskService'
-  $host_svc_ssh_name    = 'HostSshService'
-  $host_svc_ntp_name    = 'HostNtpService'
-  $comcam_svc_ping_name = 'ComcamPingService'
-  $comcam_svc_disk_name = 'ComcamDiskService'
-  $comcam_svc_ssh_name  = 'ComcamSshService'
-  $comcam_svc_ntp_name  = 'ComcamNtpService'
-  $comcam_svc_load_name = 'ComcamLoadService'
-  $comcam_svc_swap_name = 'ComcamSwapService'
-  $comcam_svc_ram_name  = 'ComcamRamService'
-  $comcam_svc_proc_name = 'ComcamProcessesService'
-  $comcam_svc_user_name = 'ComcamUsersService'
-  $comcam_svc_cpu_name  = 'ComcamCpuService'
-  $comcam_svc_nic_name  = 'ComcamNicService'
-  $dns_svc_name         = 'DnsService'
-  $dns_svc_ping_name    = 'DnsPingService'
-  $dns_svc_disk_name    = 'DnsDiskService'
-  $dns_svc_ssh_name     = 'DnsSshService'
-  $dns_svc_ntp_name     = 'DnsNtpService'
-  $master_svc_dhcp_name = 'MasterDhcpService'
-  $master_svc_ping_name = 'MasterPingService'
-  $master_svc_disk_name = 'MasterDiskService'
-  $master_svc_tls_name  = 'MasterTlsService'
-  $master_svc_ssh_name  = 'MasterSshService'
-  $master_svc_ntp_name  = 'MasterNtpService'
-  $master_svc_cpu_name  = 'MasterCpuService'
-  $http_svc_name        = 'HttpService'
-  $http_svc_ping_name   = 'HttpPingService'
-  $http_svc_disk_name   = 'HttpDiskService'
-  $http_svc_ssh_name    = 'HttpSshService'
-  $http_svc_ntp_name    = 'HttpNtpService'
-  $ipa_svc_name         = 'IpaService'
-  $ipa_svc_ping_name    = 'IpaPingService'
-  $ipa_svc_disk_name    = 'IpaDiskService'
-  $ipa_svc_ssh_name     = 'IpaSshService'
-  $ipa_svc_ntp_name     = 'IpaNtpService'
-  $dtn_svc_ping_name    = 'DtnPingService'
-  $dtn_svc_disk_name    = 'DtnDiskService'
-  $dtn_svc_ssh_name     = 'DtnSshService'
+  $host_svc_ping_name   = "Host${ping_svc}"
+  $host_svc_disk_name   = "Host${disk_svc}"
+  $host_svc_ssh_name    = "Host${ssh_svc}"
+  $host_svc_ntp_name    = "Host${ntp_svc}"
+  $comcam_svc_ping_name = "Comcam${ping_svc}"
+  $comcam_svc_disk_name = "Comcam${disk_svc}"
+  $comcam_svc_ssh_name  = "Comcam${ssh_svc}"
+  $comcam_svc_ntp_name  = "Comcam${ntp_svc}"
+  $comcam_svc_load_name = "Comcam${load_svc}"
+  $comcam_svc_swap_name = "Comcam${swap_svc}"
+  $comcam_svc_ram_name  = "Comcam${mem_svc}"
+  $comcam_svc_proc_name = "Comcam${proc_svc}"
+  $comcam_svc_user_name = "Comcam${user_svc}"
+  $comcam_svc_cpu_name  = "Comcam${cpu_svc}"
+  $comcam_svc_nic_name  = "Comcam${nic_svc}"
+  $dns_svc_name         = $dns_svc
+  $dns_svc_ping_name    = "Dns${ping_svc}"
+  $dns_svc_disk_name    = "Dns${disk_svc}"
+  $dns_svc_ssh_name     = "Dns${ssh_svc}"
+  $dns_svc_ntp_name     = "Dns${ntp_svc}"
+  $master_svc_dhcp_name = "Master${dhcp_svc}"
+  $master_svc_ping_name = "Master${ping_svc}"
+  $master_svc_disk_name = "Master${disk_svc}"
+  $master_svc_tls_name  = "Master${tls_svc}"
+  $master_svc_ssh_name  = "Master${ssh_svc}"
+  $master_svc_ntp_name  = "Master${ntp_svc}"
+  $master_svc_cpu_name  = "Master${cpu_svc}"
+  $http_svc_name        = $http_svc
+  $http_svc_ping_name   = "Http${ping_svc}"
+  $http_svc_disk_name   = "Http${disk_svc}"
+  $http_svc_ssh_name    = "Http${ssh_svc}"
+  $http_svc_ntp_name    = "Http${ntp_svc}"
+  $ipa_svc_name         = $ldap_svc
+  $ipa_svc_ping_name    = "Ipa${ping_svc}"
+  $ipa_svc_disk_name    = "Ipa${disk_svc}"
+  $ipa_svc_ssh_name     = "Ipa${ssh_svc}"
+  $ipa_svc_ntp_name     = "Ipa${ntp_svc}"
+  $dtn_svc_ping_name    = "Dtn${ping_svc}"
+  $dtn_svc_disk_name    = "Dtn${disk_svc}"
+  $dtn_svc_ssh_name     = "Dtn${ssh_svc}"
   $dtn_svc_lhn_name     = 'LHN_Link'
 
   #Hostgroups Names
@@ -184,6 +203,23 @@ class profile::icinga::resources (
     "${comcam},ComcamCluster,comcam_cluster,host.display_name=%22comcam%2A%22",
     "${ls_nodes},LS_Nodes,ls_nodes,ls",
     "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
+  ]
+  #Service Groups Array
+  $servicegroup_name = [
+    $http_svc,
+    $ping_svc,
+    $dhcp_svc,
+    $ssh_svc,
+    $load_svc,
+    $cpu_svc,
+    $nic_svc,
+    $ntp_svc,
+    $ldap_svc,
+    $disk_svc,
+    $proc_svc,
+    $swap_svc,
+    $user_svc,
+    $mem_svc,
   ]
   #<-------------------End Variables Definition--------------------------->
   #
@@ -456,12 +492,37 @@ class profile::icinga::resources (
       loglevel => debug,
     }
   }
-  #<--------------------END-Host-Group-Definiton-------------------------->
+  #<-----------------------END-Host-Group-Definiton----------------------->
   #
   #
-  #<----------------------Plugins-Configuration--------------------------->
+  #<------------------------Service-Group-Definiton----------------------->
+  $servicegroup_name.each |$svcgroup|{
+    $value = split($svcgroup,',')
+    $svcgroup_path = "${icinga_path}/${$value[0]}.json"
+    $svcgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svcgroup}?name=${value[0]}' ${lt}"
+    $svcgroup_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svcgroup}' -d @${svcgroup_path}"
 
-  #<--------------------END-Plugins-Configuration------------------------->
+    file { $svcgroup_path:
+      ensure  => 'present',
+      content => @("GROUP"/L)
+        {
+        "assign_filter": "service.name=%22%2A${value[0]}%22",
+        "display_name": "${value[0]}Group",
+        "object_name": "${value[0]}Group",
+        "object_type": "object"
+
+        }
+        | GROUP
+    }
+    ->exec { $svcgroup_cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $svcgroup_cond,
+      loglevel => debug,
+    }
+  }
+  #<--------------------END-Service-Group-Definiton----------------------->
   #
   #
   #<--------------------Files Creation and Deployement-------------------->

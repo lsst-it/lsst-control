@@ -68,7 +68,17 @@ class profile::icinga::agent(
   }
   #Network Usage
   #Condition to solve different NIC name issue
-  if ($icinga_agent_fqdn == 'comcam-hcu03.ls.lsst.org') {
+  if ($icinga_agent_fqdn == 'comcam-fp01.ls.lsst.org'){
+    $content =@(CONTENT)
+      object CheckCommand "netio" {
+        command = [ "/usr/lib64/nagios/plugins/check_netio" ]
+        arguments = {
+          "-i" = "em1"
+        }
+      }
+      | CONTENT
+  }
+  elsif ($icinga_agent_fqdn == 'comcam-hcu*'){
     $content = @(CONTENT)
       object CheckCommand "netio" {
         command = [ "/usr/lib64/nagios/plugins/check_netio" ]
@@ -83,7 +93,7 @@ class profile::icinga::agent(
       object CheckCommand "netio" {
         command = [ "/usr/lib64/nagios/plugins/check_netio" ]
         arguments = {
-          "-i" = "em1"
+          "-i" = "eth0"
         }
       }
       | CONTENT

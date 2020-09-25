@@ -22,8 +22,8 @@ class profile::icinga::plugins(
 
   #Commands Array
   $commands = [
-    "${cpu_command_name},cpu,266,set_if,false",
-    "${netio_command_name},netio,265,value,em1",
+    $cpu_command_name,
+    $netio_command_name,
   ]
   #check_nwc_health variables
   $base_dir    = '/usr/lib64/nagios/plugins'
@@ -104,24 +104,17 @@ class profile::icinga::plugins(
   }
   #Add commands to Icinga Director
   $commands.each |$name|{
-    $value    = split($name,',')
-    $path = "${$icinga_path}/${value[0]}.json"
-    $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_cmd}?name=${value[0]}' ${lt}"
+    $path = "${$icinga_path}/${$name}.json"
+    $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_cmd}?name=${name}' ${lt}"
     $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_cmd}' -d @${path}"
 
     file { $path:
       ensure  => 'present',
       content => @("COMMAND_HOST"/$)
         {
-        "arguments": {
-          "-i": {
-            "command_id": "${value[2]}",
-            "${value[3]}": "${value[4]}"
-          }
-        },
-        "command": "\/usr\/lib64\/nagios\/plugins\/check_${value[1]}",
+        "command": "\/usr\/lib64\/nagios\/plugins\/check_${name}",
         "methods_execute": "PluginCheck",
-        "object_name": "${value[1]}",
+        "object_name": "${name}",
         "object_type": "object",
         "timeout": "1m",
         "zone": "master"

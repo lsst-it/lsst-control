@@ -119,6 +119,7 @@ class profile::icinga::resources (
   $comcam   = 'comcam_cluster'
   $ls_nodes = 'ls_nodes'
   $it_svc   = 'it_services'
+  $bdc      = 'bdc_servers'
 
   #Service Templates Array
   $service_template = [
@@ -203,6 +204,7 @@ class profile::icinga::resources (
     "${comcam},ComcamCluster,comcam_cluster,host.display_name=%22comcam%2A%22",
     "${ls_nodes},LS_Nodes,ls_nodes,ls",
     "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
+    "${bdc},BDC-Servers,bdc_servers,!(host.display_name=%22bdc%2A%22|host.display_name=%22Vlan%2A%22|host.display_name=%22nob%2A%22|host.display_name=%22rubinobs%2A%22)",
   ]
   #Service Groups Array
   $servicegroup_name = [

@@ -19,11 +19,13 @@ class profile::icinga::plugins(
   #Command Names
   $cpu_command_name = 'cpu'
   $netio_command_name = 'netio'
+  $netio2_command_name = 'netio2'
 
   #Commands Array
   $commands = [
     $cpu_command_name,
     $netio_command_name,
+    $netio2_command_name,
   ]
   #check_nwc_health variables
   $base_dir    = '/usr/lib64/nagios/plugins'
@@ -98,6 +100,16 @@ class profile::icinga::plugins(
     source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
   }
   ->file { '/usr/lib64/nagios/plugins/check_netio':
+    owner => 'root',
+    group => 'icinga',
+    mode  => '4755',
+  }
+  #Check network traffic for devices with 2 NICS
+  archive {'/usr/lib64/nagios/plugins/check_netio2':
+    ensure => present,
+    source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
+  }
+  ->file { '/usr/lib64/nagios/plugins/check_netio2':
     owner => 'root',
     group => 'icinga',
     mode  => '4755',

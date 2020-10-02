@@ -40,6 +40,7 @@ class profile::icinga::resources (
   $load_svc  = 'LoadService'
   $cpu_svc   = 'CpuService'
   $nic_svc   = 'NicService'
+  $nic2_svc  = 'Nic2Service'
   $ntp_svc   = 'NtpService'
   $ldap_svc  = 'IpaService'
   $disk_svc  = 'DiskService'
@@ -67,6 +68,7 @@ class profile::icinga::resources (
   $user_svc_template_name   = "${user_svc}Template"
   $cpu_svc_template_name    = "${cpu_svc}Template"
   $nic_svc_template_name    = "${nic_svc}Template"
+  $nic2_svc_template_name   = "${nic2_svc}Template"
 
   #Service Names
   $host_svc_ping_name   = "Host${ping_svc}"
@@ -84,6 +86,7 @@ class profile::icinga::resources (
   $comcam_svc_user_name = "Comcam${user_svc}"
   $comcam_svc_cpu_name  = "Comcam${cpu_svc}"
   $comcam_svc_nic_name  = "Comcam${nic_svc}"
+  $comcam_svc_nic2_name = "Comcam${nic2_svc}"
   $dns_svc_name         = $dns_svc
   $dns_svc_ping_name    = "Dns${ping_svc}"
   $dns_svc_disk_name    = "Dns${disk_svc}"
@@ -131,6 +134,7 @@ class profile::icinga::resources (
     "load,${load_svc_template_name},0",
     "cpu,${cpu_svc_template_name},0",
     "netio,${nic_svc_template_name},0",
+    "netio2,${nic2_svc_template_name},0",
     "http,${tls_svc_template_name},1,http_certificate,30",
     "ntp_time,${ntp_svc_template_name},1,ntp_address,ntp.shoa.cl",
     "ldap,${ipa_svc_template_name},2",
@@ -158,6 +162,7 @@ class profile::icinga::resources (
     "${comcam_template},${$user_svc_template_name},${comcam_svc_user_name}",
     "${comcam_template},${$cpu_svc_template_name},${comcam_svc_cpu_name}",
     "${comcam_template},${$nic_svc_template_name},${comcam_svc_nic_name}",
+    "comcam-fp01.ls.lsst.org,${$nic2_svc_template_name},${comcam_svc_nic2_name}",
     "${http_template},${$http_svc_template_name},${http_svc_name}",
     "${http_template},${$ping_svc_template_name},${http_svc_ping_name}",
     "${http_template},${$disk_svc_template_name},${http_svc_disk_name}",

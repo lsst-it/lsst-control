@@ -25,4 +25,9 @@ class profile::core::perfsonar {
     ensure => 'stopped',
     enable => false,
   }
+
+  cron::daily { 'apache-tls-reload':
+    user    => 'root',
+    command => 'systemctl reload httpd',
+  }
 }

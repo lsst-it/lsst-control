@@ -125,7 +125,7 @@ dhcp::pools:
     mask: "255.255.255.0"
     gateway: "10.18.3.254"
     range:
-      - "10.18.3.1 10.18.3.31"
+      - "10.18.3.150 10.18.3.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
 dhcp::hosts:
   M207-gs-plotter-01.cp.cl.lsst.org:

@@ -1,5 +1,5 @@
 ---
-easy_ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
+easy_ipa::ipa_master_fqdn: "ipa01.cp.lsst.org"
 
 rsyslog::config::actions:
 #Send copy to logs to Base Graylog instance
@@ -7,7 +7,7 @@ rsyslog::config::actions:
     type: "omfwd"
     facility: "*.*;auth,authpriv.none"
     config:
-      Target: "graylog.ls.lsst.org"
+      Target: "it-graylog.ls.lsst.org"
       Port: 5514
       Protocol: "udp"
   #Send copy to logs to Summit's Graylog instance
@@ -15,7 +15,7 @@ rsyslog::config::actions:
     type: "omfwd"
     facility: "*.*;auth,authpriv.none"
     config:
-      Target: "graylog.cp.lsst.org"
+      Target: "graylog.lsst.cloud"
       Port: 5514
       Protocol: "udp"
   # Log anything (except mail) of level info or higher.
@@ -70,19 +70,17 @@ rsyslog::config::actions:
 # @see man 5 resolv.conf
 dhcp::dnsdomain: &dnsdomains
   - "cp.lsst.org"
-  - "cp.cl.lsst.org"
-  - "cl.lsst.org"
   - "lsst.org"
   - "lsst.local"
 # resolv.conf allows for a maximum of 3 nameservers
 # @see man 5 resolv.conf
 dhcp::nameservers: &nameservers
-  - "139.229.162.22"  # dns1.cp.lsst.org
-  - "139.229.162.87"  # dns2.cp.lsst.org
+  - "139.229.160.53"  # dns1.cp.lsst.org
+  - "139.229.160.54"  # dns2.cp.lsst.org
   - "208.67.222.222"  # resolver1.opendns.com
 dhcp::ntpservers: &ntpservers
-  - "ntp.cp.lsst.org"
   - "ntp.shoa.cl"
+  - "ntp.cp.lsst.org"
   - "1.cl.pool.ntp.org"
   - "1.south-america.pool.ntp.org"
 

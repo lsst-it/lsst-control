@@ -1,5 +1,5 @@
 ---
-easy_ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
+easy_ipa::ipa_master_fqdn: "ipa01.cp.lsst.org"
 
 rsyslog::config::actions:
 #Send copy to logs to Base Graylog instance
@@ -7,7 +7,7 @@ rsyslog::config::actions:
     type: "omfwd"
     facility: "*.*;auth,authpriv.none"
     config:
-      Target: "graylog.ls.lsst.org"
+      Target: "it-graylog.ls.lsst.org"
       Port: 5514
       Protocol: "udp"
   #Send copy to logs to Summit's Graylog instance
@@ -15,7 +15,7 @@ rsyslog::config::actions:
     type: "omfwd"
     facility: "*.*;auth,authpriv.none"
     config:
-      Target: "graylog.cp.lsst.org"
+      Target: "graylog.lsst.cloud"
       Port: 5514
       Protocol: "udp"
   # Log anything (except mail) of level info or higher.
@@ -70,19 +70,17 @@ rsyslog::config::actions:
 # @see man 5 resolv.conf
 dhcp::dnsdomain: &dnsdomains
   - "cp.lsst.org"
-  - "cp.cl.lsst.org"
-  - "cl.lsst.org"
   - "lsst.org"
   - "lsst.local"
 # resolv.conf allows for a maximum of 3 nameservers
 # @see man 5 resolv.conf
 dhcp::nameservers: &nameservers
-  - "139.229.162.22"  # dns1.cp.lsst.org
-  - "139.229.162.87"  # dns2.cp.lsst.org
+  - "139.229.160.53"  # dns1.cp.lsst.org
+  - "139.229.160.54"  # dns2.cp.lsst.org
   - "208.67.222.222"  # resolver1.opendns.com
 dhcp::ntpservers: &ntpservers
-  - "ntp.cp.lsst.org"
   - "ntp.shoa.cl"
+  - "ntp.cp.lsst.org"
   - "1.cl.pool.ntp.org"
   - "1.south-america.pool.ntp.org"
 
@@ -102,4 +100,7 @@ accounts::user_list:
       # foreman-proxy
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDN16b56V3j7wot509IlRvOFXaLxI9AH9/eOr1WuLEdpGoQ3lDuz26P6zFLbopjgsZxdzxE492QAmGpdUkn+Ducny1JK83L0N/d6INrM48fQeiUiSsN/YKua9qO8QQbvTsiiKanj38u9x1vOfqKn2/kK7BKAZblr+qT7U6nofMFlG3zJpNOCAIHyd4DJRrWB+xPR1YRwljV6BOtpI5+/FwdoX+/61cdsP0895iejDlnYRNFBYWRdGHDdDN6yfSNy00D/ADwaZP9sO+gyvHPqz/saPFYx8Petbhl/PlUjqWx7sktQxPgpMPBU/KQU5SEd5RkcT+CVjLHuHfOa3jXEdVx foreman-proxy@foreman.cp.lsst.org"
 
-profile::core::common::deploy_icinga_agent: false
+profile::core::common::deploy_icinga_agent: true
+profile::icinga::agent::icinga_master_fqdn: "icinga-master.ls.lsst.org"
+profile::icinga::agent::icinga_master_ip: "139.229.135.31"
+profile::icinga::resources::dhcp_server: "139.229.160.5"

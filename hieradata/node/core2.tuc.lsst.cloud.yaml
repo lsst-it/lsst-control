@@ -1,0 +1,55 @@
+---
+network::interfaces_hash:
+  em2:
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em2.32:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br32"
+    type: "none"
+    nozeroconf: "yes"
+  em2.700:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br700"
+    type: "none"
+    nozeroconf: "yes"
+  em2.701:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br701"
+    type: "none"
+    nozeroconf: "yes"
+  em2.702:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br702"
+    type: "none"
+    nozeroconf: "yes"
+  em2.703:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br703"
+    type: "none"
+    nozeroconf: "yes"
+  em2.800:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br800"
+    type: "none"
+    nozeroconf: "yes"
+  em2.801:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br801"
+    type: "none"
+    nozeroconf: "yes"

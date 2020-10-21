@@ -11,7 +11,7 @@
 #   allow_groups
 #   Type: Array
 #   Desc: one or more LDAP / UNIX groups that are allowed to login from
-#         any of the nodes in bastion_nodelist
+#         any of the nodes in login_nodelist
 #         Note: can be empty
 # @example
 #   include profile::allow_ssh_from_login

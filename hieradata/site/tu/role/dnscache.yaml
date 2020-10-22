@@ -1,4 +1,7 @@
 ---
+classes:
+  - "profile::core::sysctl::disable_ipv6"
+
 dns::forwarders:
   - "1.0.0.1"
   - "8.8.8.8"

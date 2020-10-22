@@ -10,14 +10,11 @@ dhcp::max_lease_time: 86400
 dhcp::authoritative: true
 dhcp::ddns_update_style: "none"
 dhcp::logfacility: "daemon"
-# dnsdomain requires an array but only uses the first element to set the domain
-
 # The following keys are defined in `site/cp.yaml` as they are shared between
 # the `dhcp`, `resolv_conf`, and `chrony` classes:
 # - dhcp::dnsdomain
 # - dhcp::nameservers
 # - dhcp::ntpservers
-
 dhcp::bootp: true
 dhcp::pxeserver: "139.229.160.5"  # foreman
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool

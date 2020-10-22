@@ -4,6 +4,7 @@ dns::forwarders:
   - "8.8.8.8"
 dns::allow_recursion:
   - "140.252.32.0/22"
+  - "140.252.146.0/23"
   - "localnets"
   - "localhost"
 dns::zones: ~

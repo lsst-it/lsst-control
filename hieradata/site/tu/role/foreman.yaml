@@ -13,18 +13,12 @@ dhcp::default_lease_time: 43200
 dhcp::max_lease_time: 86400
 dhcp::authoritative: false
 dhcp::ddns_update_style: "none"
-# dnsdomain requires an array but only uses the first element to set the domain
-dhcp::dnsdomain: &dnsdomain
-  - "tuc.lsst.cloud"
-  - "tu.lsst.org"
-dhcp::nameservers:
-  - "140.252.34.140"
-  - "140.252.34.141"
-  - "1.0.0.1"
-dhcp::ntpservers:
-  - "140.252.1.140"
-  - "140.252.1.141"
-  - "140.252.1.142"
+dhcp::logfacility: "daemon"
+# The following keys are defined in `site/cp.yaml` as they are shared between
+# the `dhcp`, `resolv_conf`, and `chrony` classes:
+# - dhcp::dnsdomain
+# - dhcp::nameservers
+# - dhcp::ntpservers
 dhcp::bootp: true
 dhcp::pxeserver: "140.252.34.132"
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
@@ -34,13 +28,13 @@ dhcp::pools:
     mask: "255.255.255.192"
     gateway: "140.252.34.1"
     range: "140.252.34.5 140.252.34.39"
-    search_domains: *dnsdomain
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan703:
     network: "140.252.34.64"
     mask: "255.255.255.192"
     gateway: "140.252.34.65"
     range: "140.252.34.69 140.252.34.99"
-    search_domains: *dnsdomain
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan800:
     network: "140.252.34.128"
     mask: "255.255.255.192"
@@ -49,13 +43,13 @@ dhcp::pools:
     range:
       - "140.252.34.133 140.252.34.149"
       - "140.252.34.151 140.252.34.190"
-    search_domains: *dnsdomain
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan801:
     network: "140.252.35.0"
     mask: "255.255.255.128"
     gateway: "140.252.35.1"
     range: "140.252.35.5 140.252.35.126"
-    search_domains: *dnsdomain
+    search_domains: "%{alias('dhcp::dnsdomain')}"
 sysctl::values::args:
   net.ipv4.conf.all.arp_filter:
     value: 1

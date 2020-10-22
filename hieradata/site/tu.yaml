@@ -1,16 +1,21 @@
 ---
-chrony::servers:
-  - "0.us.pool.ntp.org"
-  - "1.us.pool.ntp.org"
-  - "2.us.pool.ntp.org"
-
-resolv_conf::nameservers:
+# dhcp::dnsdomain requires an array but only uses the first element to set the domain
+dhcp::dnsdomain: &dnsdomains
+  - "tuc.lsst.cloud"
+  - "tu.lsst.org"
+dhcp::nameservers: &nameservers
   - "140.252.34.140"
   - "140.252.34.141"
   - "140.252.34.142"
-resolv_conf::searchpath:
-  - "tuc.lsst.cloud"
-  - "tu.lsst.org"
+dhcp::ntpservers: &ntpservers
+  - "140.252.1.140"
+  - "140.252.1.141"
+  - "140.252.1.142"
+
+chrony::servers: *ntpservers
+ntp::servers: *ntpservers
+resolv_conf::nameservers: *nameservers
+resolv_conf::searchpath: *dnsdomains
 
 accounts::user_list:
   root:

@@ -92,10 +92,6 @@ nfs::nfs_v4: true
 nfs::nfs_v4_client: true
 nfs::nfs_v4_idmap_domain: "%{::domain}"
 
-# Stop iptables by default - the default rules are highly restrictive to the
-# point of harm and we don't have a meaningful permission set to make this useful.
-firewall::ensure: "stopped"
-
 accounts::user_list:
   root:
     sshkeys:

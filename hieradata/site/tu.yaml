@@ -7,7 +7,7 @@ chrony::servers:
 resolv_conf::nameservers:
   - "140.252.34.140"
   - "140.252.34.141"
-  - "1.0.0.1"
+  - "140.252.34.142"
 resolv_conf::searchpath:
   - "tuc.lsst.cloud"
   - "tu.lsst.org"

@@ -68,6 +68,7 @@ rsyslog::config::actions:
 # resolv.conf allows for a maximum of 6 search domains with a max length of 256
 # characters.
 # @see man 5 resolv.conf
+# dhcp::dnsdomain requires an array but only uses the first element to set the domain
 dhcp::dnsdomain: &dnsdomains
   - "cp.lsst.org"
   - "lsst.org"

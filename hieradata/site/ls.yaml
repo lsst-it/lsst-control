@@ -67,6 +67,7 @@ rsyslog::config::actions:
 # resolv.conf allows for a maximum of 6 search domains with a max length of 256
 # characters.
 # @see man 5 resolv.conf
+# dhcp::dnsdomain requires an array but only uses the first element to set the domain
 dhcp::dnsdomain: &dnsdomains
   - "ls.lsst.org"
   - "lsst.org"
@@ -91,10 +92,6 @@ resolv_conf::searchpath: *dnsdomains
 nfs::nfs_v4: true
 nfs::nfs_v4_client: true
 nfs::nfs_v4_idmap_domain: "%{::domain}"
-
-# Stop iptables by default - the default rules are highly restrictive to the
-# point of harm and we don't have a meaningful permission set to make this useful.
-firewall::ensure: "stopped"
 
 accounts::user_list:
   root:

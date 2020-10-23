@@ -3,9 +3,9 @@
 set -e
 shopt -s globstar nullglob
 
-CHECK=( **/*.{yaml,yml,.eyaml} .*.{yml,yaml} )
+CHECK=( **/*.{yaml,yml,ZZeyaml} .*.{yml,yaml} )
 EYAML=( **/*.eyaml )
-IGNORE=()
+IGNORE=( spec/fixtures/**/*.{yaml,yml,eyaml} )
 CONF_FILE=".yamllint.yaml"
 
 # filter out plain text versions of .eyaml files

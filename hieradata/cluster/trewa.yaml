@@ -1,6 +1,9 @@
 ---
+classes:
+  - "profile::core::ifdown"
 packages:
   - "perccli"  # from dell repo
+profile::core::ifdown::interface: "em1"
 network::interfaces_hash:
   em1:  # only for PXE
     bootproto: "none"

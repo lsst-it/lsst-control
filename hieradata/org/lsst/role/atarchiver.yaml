@@ -1,3 +1,27 @@
 ---
 classes:
   - "profile::core::common"
+  - "python"
+  - "docker"
+# disabling the kernel version check is needed on el7
+docker::overlay2_override_kernel_check: true
+docker::storage_driver: "overlay2"
+docker::version: "19.03.4"
+# ipa docker group is 70014
+docker::socket_group: &docker_gid "70014"
+docker::socket_override: true
+python::version: "python36"
+python::pip: "present"
+python::dev: "present"
+python::virtualenv: "present"
+python::python_pips:
+  # docker-compose is python3 only
+  "docker-compose":
+    virtualenv: "system"
+    ensure: "1.25.0"
+accounts::group_list:
+  # this is duplicating the ipa gid as a local group
+  &docker_name docker-%{facts.hostname}:
+    ensure: "present"
+    gid: *docker_gid
+    forcelocal: true

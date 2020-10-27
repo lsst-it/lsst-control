@@ -87,11 +87,14 @@ class profile::icinga::master (
     user = icinga
     group = icinga
     log_level = 0
+    log_type = file
+    log_file = /var/log/npcd.log
+    max_logfile_size = 10485760
     perfdata_spool_dir = /var/spool/icinga2/perfdata
     perfdata_file_run_cmd = /usr/libexec/pnp4nagios/process_perfdata.pl
     perfdata_file_run_cmd_args = --bulk
     identify_npcd = 1
-    npcd_max_threads = 5
+    npcd_max_threads = 15
     sleep_time = 15
     load_threshold = 0.0
     pid_file=/var/run/npcd.pid

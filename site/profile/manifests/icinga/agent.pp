@@ -13,6 +13,7 @@ class profile::icinga::agent(
   $packages = [
     'nagios-plugins-all',
   ]
+  $nic = $facts['networking']['primary']
   $icinga_agent_fqdn = $facts['networking']['fqdn']
   $icinga_agent_ip = $facts['networking']['ip']
   $credentials = "Authorization:Basic ${credentials_hash}"
@@ -58,17 +59,15 @@ class profile::icinga::agent(
   #<--------------------End-Icinga-Configuration-------------------------->
   #
   #
-  #<----------------------Plugins-modifications--------------------------->
+  #<-------------------------Additional-Plugins--------------------------->
+  #Check disk
   file { '/usr/lib64/nagios/plugins/check_disk':
     owner   => 'root',
     group   => 'root',
     mode    => '4755',
     require => Package[$packages],
   }
-  #<------------------END-Plugins-modifications--------------------------->
-  #
-  #
-  #<----------------------Packages-for-check-link------------------------->
+  #Network Usage
   archive {'/usr/lib64/nagios/plugins/check_netio':
     ensure => present,
     source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
@@ -78,7 +77,91 @@ class profile::icinga::agent(
     group => 'icinga',
     mode  => '4755',
   }
-  #<------------------END-Packages-for-check-link------------------------->
+  ->file {'/etc/icinga2/features-enabled/netio.conf':
+    ensure  => 'present',
+    owner   => 'icinga',
+    group   => 'icinga',
+    mode    => '0640',
+    notify  => Service['icinga2'],
+    content => @("CONTENT")
+      object CheckCommand "netio" {
+        command = [ "/usr/lib64/nagios/plugins/check_netio" ]
+        arguments = {
+          "-i" = "${nic}"
+        }
+      }
+      | CONTENT
+  }
+  if ($icinga_agent_fqdn =='comcam-fp01.ls.lsst.org' or $icinga_agent_fqdn =='comcam-mcm.ls.lsst.org') {
+    archive {'/usr/lib64/nagios/plugins/check_netio2':
+      ensure => present,
+      source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
+    }
+    ->file { '/usr/lib64/nagios/plugins/check_netio2':
+      owner => 'root',
+      group => 'icinga',
+      mode  => '4755',
+    }
+    ->file {'/etc/icinga2/features-enabled/netio2.conf':
+      ensure  => 'present',
+      owner   => 'icinga',
+      group   => 'icinga',
+      mode    => '0640',
+      notify  => Service['icinga2'],
+      content => @("CONTENT")
+        object CheckCommand "netio2" {
+          command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
+          arguments = {
+            "-i" = "lsst-daq"
+          }
+        }
+        | CONTENT
+    }
+  }
+  #Memory Usage
+  archive {'/usr/lib64/nagios/plugins/check_mem.pl':
+    ensure => present,
+    source => 'https://raw.githubusercontent.com/justintime/nagios-plugins/master/check_mem/check_mem.pl',
+  }
+  ->file { '/usr/lib64/nagios/plugins/check_mem.pl':
+    owner => 'root',
+    group => 'icinga',
+    mode  => '4755',
+  }
+  #Logged Users
+  archive {'/usr/lib64/nagios/plugins/check_users':
+    ensure => present,
+    source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=1530&cf_id=24',
+  }
+  ->file { '/usr/lib64/nagios/plugins/check_users':
+    owner => 'root',
+    group => 'icinga',
+    mode  => '4755',
+  }
+  #CPU usage
+  archive {'/usr/lib64/nagios/plugins/check_cpu':
+    ensure => present,
+    source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=580&cf_id=29',
+  }
+  ->file { '/usr/lib64/nagios/plugins/check_cpu':
+    owner => 'root',
+    group => 'icinga',
+    mode  => '4755',
+  }
+
+  ->file {'/etc/icinga2/features-enabled/cpu.conf':
+    ensure  => 'present',
+    owner   => 'icinga',
+    group   => 'icinga',
+    mode    => '0640',
+    notify  => Service['icinga2'],
+    content => @(CONTENT)
+      object CheckCommand "cpu" {
+        command = [ "/usr/lib64/nagios/plugins/check_cpu" ]
+      }
+      | CONTENT
+  }
+  #<---------------------END-Additional-Plugins--------------------------->
   #
   #
   #<----------------------Add-Host-to-Icinga-Master----------------------->

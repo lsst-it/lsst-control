@@ -4,6 +4,7 @@ classes:
   - "profile::icinga::master"
   - "profile::icinga::resources"
   - "profile::icinga::network"
+  - "profile::icinga::plugins"
 packages:
   - "bash-completion"
   - "bash-completion-extras"

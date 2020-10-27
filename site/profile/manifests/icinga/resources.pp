@@ -14,6 +14,7 @@ class profile::icinga::resources (
   $url_host      = "https://${master_fqdn}/director/host"
   $url_svc       = "https://${master_fqdn}/director/service"
   $url_hostgroup = "https://${master_fqdn}/director/hostgroup"
+  $url_svcgroup  = "https://${master_fqdn}/director/servicegroup"
   $credentials   = "Authorization:Basic ${credentials_hash}"
   $format        = 'Accept: application/json'
   $curl          = 'curl -s -k -H'
@@ -30,51 +31,87 @@ class profile::icinga::resources (
   $tls_template    = 'TlsTemplate'
   $dtn_template    = 'DtnTemplate'
 
+  #Services Names
+  $http_svc  = 'HttpService'
+  $ping_svc  = 'PingService'
+  $dns_svc   = 'DnsService'
+  $dhcp_svc  = 'DhcpService'
+  $ssh_svc   = 'SshService'
+  $load_svc  = 'LoadService'
+  $cpu_svc   = 'CpuService'
+  $nic_svc   = 'NicService'
+  $nic2_svc  = 'Nic2Service'
+  $ntp_svc   = 'NtpService'
+  $ldap_svc  = 'IpaService'
+  $disk_svc  = 'DiskService'
+  $proc_svc  = 'ProcessesService'
+  $swap_svc  = 'SwapService'
+  $user_svc  = 'UserService'
+  $mem_svc   = 'RamService'
+  $tls_svc   = 'TlsService'
+
   #Service Templates Names
-  $http_svc_template_name   = 'HttpServiceTemplate'
-  $ping_svc_template_name   = 'PingServiceTemplate'
-  $dns_svc_template_name    = 'DnsServiceTemplate'
+  $http_svc_template_name   = "${http_svc}Template"
+  $ping_svc_template_name   = "${ping_svc}Template"
+  $dns_svc_template_name    = "${dns_svc}Template"
   $master_svc_template_name = 'MasterServiceTemplate'
-  $ssh_svc_template_name    = 'SshServiceTemplate'
-  $tls_svc_template_name    = 'TlsServiceTemplate'
-  $ntp_svc_template_name    = 'NtpServiceTemplate'
+  $ssh_svc_template_name    = "${ssh_svc}Template"
+  $tls_svc_template_name    = "${tls_svc}Template"
+  $ntp_svc_template_name    = "${ntp_svc}Template"
   $lhn_svc_template_name    = 'LhnServiceTemplate'
-  $ipa_svc_template_name    = 'IpaServiceTemplate'
-  $disk_svc_template_name   = 'DiskServiceTemplate'
+  $ipa_svc_template_name    = "${ldap_svc}Template"
+  $disk_svc_template_name   = "${disk_svc}Template"
+  $load_svc_template_name   = "${load_svc}Template"
+  $swap_svc_template_name   = "${swap_svc}Template"
+  $ram_svc_template_name    = "${mem_svc}Template"
+  $proc_svc_template_name   = "${proc_svc}Template"
+  $user_svc_template_name   = "${user_svc}Template"
+  $cpu_svc_template_name    = "${cpu_svc}Template"
+  $nic_svc_template_name    = "${nic_svc}Template"
+  $nic2_svc_template_name   = "${nic2_svc}Template"
 
   #Service Names
-  $host_svc_ping_name   = 'HostPingService'
-  $host_svc_disk_name   = 'HostDiskService'
-  $host_svc_ssh_name    = 'HostSshService'
-  $host_svc_ntp_name    = 'HostNtpService'
-  $comcam_svc_ping_name = 'ComcamPingService'
-  $comcam_svc_disk_name = 'ComcamDiskService'
-  $comcam_svc_ssh_name  = 'ComcamSshService'
-  $comcam_svc_ntp_name  = 'ComcamNtpService'
-  $dns_svc_name         = 'DnsService'
-  $dns_svc_ping_name    = 'DnsPingService'
-  $dns_svc_disk_name    = 'DnsDiskService'
-  $dns_svc_ssh_name     = 'DnsSshService'
-  $dns_svc_ntp_name     = 'DnsNtpService'
-  $master_svc_dhcp_name = 'MasterDhcpService'
-  $master_svc_ping_name = 'MasterPingService'
-  $master_svc_disk_name = 'MasterDiskService'
-  $master_svc_tls_name  = 'MasterTlsService'
-  $master_svc_ssh_name  = 'MasterSshService'
-  $master_svc_ntp_name  = 'MasterNtpService'
-  $http_svc_name        = 'HttpService'
-  $http_svc_ping_name   = 'HttpPingService'
-  $http_svc_disk_name   = 'HttpDiskService'
-  $http_svc_ssh_name    = 'HttpSshService'
-  $http_svc_ntp_name    = 'HttpNtpService'
-  $ipa_svc_name         = 'IpaService'
-  $ipa_svc_ping_name    = 'IpaPingService'
-  $ipa_svc_disk_name    = 'IpaDiskService'
-  $ipa_svc_ssh_name     = 'IpaSshService'
-  $ipa_svc_ntp_name     = 'IpaNtpService'
-  $dtn_svc_ping_name    = 'DtnPingService'
-  $dtn_svc_disk_name    = 'DtnDiskService'
-  $dtn_svc_ssh_name     = 'DtnSshService'
+  $host_svc_ping_name   = "Host${ping_svc}"
+  $host_svc_disk_name   = "Host${disk_svc}"
+  $host_svc_ssh_name    = "Host${ssh_svc}"
+  $host_svc_ntp_name    = "Host${ntp_svc}"
+  $comcam_svc_ping_name = "Comcam${ping_svc}"
+  $comcam_svc_disk_name = "Comcam${disk_svc}"
+  $comcam_svc_ssh_name  = "Comcam${ssh_svc}"
+  $comcam_svc_ntp_name  = "Comcam${ntp_svc}"
+  $comcam_svc_load_name = "Comcam${load_svc}"
+  $comcam_svc_swap_name = "Comcam${swap_svc}"
+  $comcam_svc_ram_name  = "Comcam${mem_svc}"
+  $comcam_svc_proc_name = "Comcam${proc_svc}"
+  $comcam_svc_user_name = "Comcam${user_svc}"
+  $comcam_svc_cpu_name  = "Comcam${cpu_svc}"
+  $comcam_svc_nic_name  = "Comcam${nic_svc}"
+  $comcam_svc_nic2_name = "Comcam${nic2_svc}"
+  $dns_svc_name         = $dns_svc
+  $dns_svc_ping_name    = "Dns${ping_svc}"
+  $dns_svc_disk_name    = "Dns${disk_svc}"
+  $dns_svc_ssh_name     = "Dns${ssh_svc}"
+  $dns_svc_ntp_name     = "Dns${ntp_svc}"
+  $master_svc_dhcp_name = "Master${dhcp_svc}"
+  $master_svc_ping_name = "Master${ping_svc}"
+  $master_svc_disk_name = "Master${disk_svc}"
+  $master_svc_tls_name  = "Master${tls_svc}"
+  $master_svc_ssh_name  = "Master${ssh_svc}"
+  $master_svc_ntp_name  = "Master${ntp_svc}"
+  $master_svc_cpu_name  = "Master${cpu_svc}"
+  $http_svc_name        = $http_svc
+  $http_svc_ping_name   = "Http${ping_svc}"
+  $http_svc_disk_name   = "Http${disk_svc}"
+  $http_svc_ssh_name    = "Http${ssh_svc}"
+  $http_svc_ntp_name    = "Http${ntp_svc}"
+  $ipa_svc_name         = $ldap_svc
+  $ipa_svc_ping_name    = "Ipa${ping_svc}"
+  $ipa_svc_disk_name    = "Ipa${disk_svc}"
+  $ipa_svc_ssh_name     = "Ipa${ssh_svc}"
+  $ipa_svc_ntp_name     = "Ipa${ntp_svc}"
+  $dtn_svc_ping_name    = "Dtn${ping_svc}"
+  $dtn_svc_disk_name    = "Dtn${disk_svc}"
+  $dtn_svc_ssh_name     = "Dtn${ssh_svc}"
   $dtn_svc_lhn_name     = 'LHN_Link'
 
   #Hostgroups Names
@@ -85,7 +122,29 @@ class profile::icinga::resources (
   $comcam   = 'comcam_cluster'
   $ls_nodes = 'ls_nodes'
   $it_svc   = 'it_services'
+  $bdc      = 'bdc_servers'
 
+  #Service Templates Array
+  $service_template = [
+    "http,${http_svc_template_name},0",
+    "hostalive,${ping_svc_template_name},0",
+    "dns,${dns_svc_template_name},0",
+    "dhcp,${master_svc_template_name},0",
+    "ssh,${ssh_svc_template_name},0",
+    "load,${load_svc_template_name},0",
+    "cpu,${cpu_svc_template_name},0",
+    "netio,${nic_svc_template_name},0",
+    "netio2,${nic2_svc_template_name},0",
+    "http,${tls_svc_template_name},1,http_certificate,30",
+    "ntp_time,${ntp_svc_template_name},1,ntp_address,ntp.shoa.cl",
+    "ldap,${ipa_svc_template_name},2",
+    "disk,${disk_svc_template_name},3,disk_cfree,3%,disk_wfree,6%",
+    "procs,${proc_svc_template_name},3,procs_warning,650,procs_critical,700",
+    "swap,${swap_svc_template_name},3,users_cgreater,50,users_wgreater,40",
+    "users,${user_svc_template_name},3,users_cgreater,50,users_wgreater,40",
+    "ping,${lhn_svc_template_name},4,ping_address,starlight-dtn.ncsa.illinois.edu,ping_crta,250,ping_wrta,225",
+    "mem,${ram_svc_template_name},4,mem_free,true,mem_warning,0.05,mem_critical,0.01",
+  ]
   #Host Services Array
   $host_services = [
     "${host_template},${$ping_svc_template_name},${host_svc_ping_name}",
@@ -96,6 +155,14 @@ class profile::icinga::resources (
     "${comcam_template},${$disk_svc_template_name},${comcam_svc_disk_name}",
     "${comcam_template},${$ssh_svc_template_name},${comcam_svc_ssh_name}",
     "${comcam_template},${$ntp_svc_template_name},${comcam_svc_ntp_name}",
+    "${comcam_template},${$load_svc_template_name},${comcam_svc_load_name}",
+    "${comcam_template},${$swap_svc_template_name},${comcam_svc_swap_name}",
+    "${comcam_template},${$ram_svc_template_name},${comcam_svc_ram_name}",
+    "${comcam_template},${$proc_svc_template_name},${comcam_svc_proc_name}",
+    "${comcam_template},${$user_svc_template_name},${comcam_svc_user_name}",
+    "${comcam_template},${$cpu_svc_template_name},${comcam_svc_cpu_name}",
+    "${comcam_template},${$nic_svc_template_name},${comcam_svc_nic_name}",
+    "comcam-fp01.ls.lsst.org,${$nic2_svc_template_name},${comcam_svc_nic2_name}",
     "${http_template},${$http_svc_template_name},${http_svc_name}",
     "${http_template},${$ping_svc_template_name},${http_svc_ping_name}",
     "${http_template},${$disk_svc_template_name},${http_svc_disk_name}",
@@ -106,6 +173,7 @@ class profile::icinga::resources (
     "${master_template},${$disk_svc_template_name},${master_svc_disk_name}",
     "${master_template},${$ssh_svc_template_name},${master_svc_ssh_name}",
     "${master_template},${$ntp_svc_template_name},${master_svc_ntp_name}",
+    "${master_template},${$cpu_svc_template_name},${master_svc_cpu_name}",
     "${dns_template},${$dns_svc_template_name},${dns_svc_name}",
     "${dns_template},${$ping_svc_template_name},${dns_svc_ping_name}",
     "${dns_template},${$disk_svc_template_name},${dns_svc_disk_name}",
@@ -132,19 +200,6 @@ class profile::icinga::resources (
     "${dtn_template},0",
     "${tls_template},1",
   ]
-  #Service Templates Array
-  $service_template = [
-    "http,${http_svc_template_name},0",
-    "hostalive,${ping_svc_template_name},0",
-    "dns,${dns_svc_template_name},0",
-    "dhcp,${master_svc_template_name},0",
-    "ssh,${ssh_svc_template_name},0",
-    "http,${tls_svc_template_name},1,http_certificate,30",
-    "ntp_time,${ntp_svc_template_name},1,ntp_address,ntp.shoa.cl",
-    "ldap,${ipa_svc_template_name},2",
-    "disk,${disk_svc_template_name},3",
-    "ping,${lhn_svc_template_name},4",
-  ]
   #Host Groups Array
   $hostgroups_name = [
     "${antu},AntuCluster,antu_cluster,host.display_name=%22antu%2A%22",
@@ -154,6 +209,24 @@ class profile::icinga::resources (
     "${comcam},ComcamCluster,comcam_cluster,host.display_name=%22comcam%2A%22",
     "${ls_nodes},LS_Nodes,ls_nodes,ls",
     "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
+    "${bdc},BDC-Servers,bdc_servers,!(host.display_name=%22bdc%2A%22|host.display_name=%22Vlan%2A%22|host.display_name=%22nob%2A%22|host.display_name=%22rubinobs%2A%22)",
+  ]
+  #Service Groups Array
+  $servicegroup_name = [
+    "${http_svc},${http_svc}Group",
+    "${ping_svc},${ping_svc}Group",
+    "${dhcp_svc},${dhcp_svc}Group",
+    "${ssh_svc},${ssh_svc}Group",
+    "${load_svc},${load_svc}Group",
+    "${cpu_svc},${cpu_svc}Group",
+    "${nic_svc},${nic_svc}Group",
+    "${ntp_svc},${ntp_svc}Group",
+    "${ldap_svc},${ldap_svc}Group",
+    "${disk_svc},${disk_svc}Group",
+    "${proc_svc},${proc_svc}Group",
+    "${swap_svc},${swap_svc}Group",
+    "${user_svc},${user_svc}Group",
+    "${mem_svc},${mem_svc}Group",
   ]
   #<-------------------End Variables Definition--------------------------->
   #
@@ -179,7 +252,7 @@ class profile::icinga::resources (
   #<---------------END-Files Creation and deployement--------------------->
   #
   #
-  #<-----------------Repo-and-Packages-for-nwc_health--------------------->
+  #<-------------------------Packages Installation------------------------>
   yumrepo { 'perl':
     ensure   => 'present',
     enabled  => true,
@@ -194,7 +267,7 @@ class profile::icinga::resources (
     ensure  => 'present',
     require => Yumrepo['perl'],
   }
-  #<-------------END-Repo-and-Packages-for-nwc_health--------------------->
+  #<----------------------END-Packages Installation----------------------->
   #
   #
   #<---------------------------Host-Templates----------------------------->
@@ -266,7 +339,7 @@ class profile::icinga::resources (
         | TEMPLATE
     }
     elsif ($value[2]=='1'){
-      $content = @("TEMPLATE"/L)
+      $content = @("TEMPLATE1"/L)
         {
         "check_command": "${value[0]}",
         "object_name": "${value[1]}",
@@ -277,10 +350,10 @@ class profile::icinga::resources (
         },
         "zone": "master"
         }
-        | TEMPLATE
+        | TEMPLATE1
     }
     elsif ($value[2]=='2'){
-      $content = @("IPA_TEMPLATE"/L)
+      $content = @("TEMPLATE2"/L)
         {
         "check_command": "${value[0]}",
         "object_name": "${value[1]}",
@@ -292,38 +365,38 @@ class profile::icinga::resources (
         },
         "zone": "master"
         }
-        | IPA_TEMPLATE
+        | TEMPLATE2
     }
     elsif ($value[2]=='3'){
-      $content = @("DISK_TEMPLATE"/L)
+      $content = @("TEMPLATE3"/L)
         {
         "check_command": "${value[0]}",
         "object_name": "${value[1]}",
         "object_type": "template",
         "use_agent": true,
         "vars": {
-            "disk_cfree": "10%",
-            "disk_wfree": "20%"
+            "${value[3]}": "${value[4]}",
+            "${value[5]}": "${value[6]}"
         },
         "zone": "master"
         }
-        | DISK_TEMPLATE
+        | TEMPLATE3
     }
     elsif ($value[2]=='4'){
-      $content = @("LHN"/L)
+      $content = @("TEMPLATE4"/L)
         {
         "check_command": "${value[0]}",
         "object_name": "${value[1]}",
         "object_type": "template",
         "use_agent": true,
         "vars": {
-            "ping_address": "starlight-dtn.ncsa.illinois.edu",
-            "ping_crta": "250",
-            "ping_wrta": "225"
+            "${value[3]}": "${value[4]}",
+            "${value[5]}": "${value[6]}",
+            "${value[7]}": "${value[8]}"
         },
         "zone": "master"
         }
-        | LHN
+        | TEMPLATE4
     }
     else {
       notice("No content has beeing assigned to ${value[1]}")
@@ -426,66 +499,40 @@ class profile::icinga::resources (
       loglevel => debug,
     }
   }
-  #<--------------------END-Host-Group-Definiton-------------------------->
+  #<-----------------------END-Host-Group-Definiton----------------------->
   #
   #
-  #<----------------------Plugins-Configuration--------------------------->
-  #Change permissions to dhcp and disk plugins
-  file { '/usr/lib64/nagios/plugins/check_dhcp':
-    owner => 'root',
-    group => 'nagios',
-    mode  => '4755',
+  #<------------------------Service-Group-Definiton----------------------->
+  $servicegroup_name.each |$svcgroup|{
+    $value = split($svcgroup,',')
+    $svcgroup_path = "${icinga_path}/${$value[1]}.json"
+    $svcgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svcgroup}?name=${value[1]}' ${lt}"
+    $svcgroup_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svcgroup}' -d @${svcgroup_path}"
+
+    file { $svcgroup_path:
+      ensure  => 'present',
+      content => @("GROUP"/L)
+        {
+        "assign_filter": "service.name=%22%2A${value[0]}%22",
+        "display_name": "${value[1]}",
+        "object_name": "${value[1]}",
+        "object_type": "object"
+
+        }
+        | GROUP
+    }
+    ->exec { $svcgroup_cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $svcgroup_cond,
+      loglevel => debug,
+    }
   }
-  file { '/usr/lib64/nagios/plugins/check_disk':
-    owner => 'root',
-    group => 'nagios',
-    mode  => '4755',
-  }
-  #check_nwc_health plugin
-  $base_dir   = '/usr/lib64/nagios/plugins'
-  $nwc_dir    = "${icinga_path}/check_nwc_health"
-  $conditions = "--prefix=${nwc_dir} --with-nagios-user=root --with-nagios-group=icinga --with-perl=/bin/perl"
-  vcsrepo { $nwc_dir:
-    ensure   => present,
-    provider => git,
-    source   => 'https://github.com/lausser/check_nwc_health',
-    revision => '1.4.9',
-    require  => Class['::icingaweb2'],
-  }
-  ->exec {'git submodule update --init':
-    cwd      => $nwc_dir,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    onlyif   => "test ! -f ${$nwc_dir}/plugins-scripts/check_nwc_health",
-    loglevel => debug,
-  }
-  ->exec {"autoreconf;./configure ${conditions};make;make install;":
-    cwd      => $nwc_dir,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    onlyif   => "test ! -f ${base_dir}/check_nwc_health",
-    loglevel => debug,
-  }
-  ->file {"${base_dir}/check_nwc_health":
-    ensure => 'present',
-    source => "${$nwc_dir}/plugins-scripts/check_nwc_health",
-    owner  => 'root',
-    group  => 'icinga',
-    mode   => '4755',
-  }
-  ##Check NIC Link 
-  archive {'/usr/lib64/nagios/plugins/check_netio':
-    ensure => present,
-    source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
-  }
-  ->file { '/usr/lib64/nagios/plugins/check_netio':
-    owner => 'root',
-    group => 'icinga',
-    mode  => '4755',
-  }
-  #<--------------------END-Plugins-Configuration------------------------->
+  #<--------------------END-Service-Group-Definiton----------------------->
   #
   #
-  #<----------------------Plugins-Configuration--------------------------->
+  #<--------------------Files Creation and Deployement-------------------->
   ##Add Master Host
   #Create master host file
   file { $addhost_path:

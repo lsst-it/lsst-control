@@ -2,6 +2,7 @@
 classes:
   - "profile::core::common"
   - "profile::core::debugutils"
+  - "profile::core::sysctl::disable_ipv6"
   - "python"
   - "docker"
 # disabling the kernel version check is needed on el7

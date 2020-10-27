@@ -1,6 +1,7 @@
 ---
 classes:
   - "profile::core::common"
+  - "profile::core::debugutils"
   - "python"
   - "docker"
 # disabling the kernel version check is needed on el7

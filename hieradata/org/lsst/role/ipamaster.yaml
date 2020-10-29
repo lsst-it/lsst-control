@@ -10,11 +10,6 @@ easy_ipa::enable_ip_address: true
 easy_ipa::webui_disable_kerberos: true
 easy_ipa::webui_enable_proxy: true
 easy_ipa::webui_force_https: true
-easy_ipa::configure_ntp: false
 easy_ipa::configure_dns_server: false
-easy_ipa::install_epel: false
-easy_ipa::install_autofs: false
-easy_ipa::install_sssdtools: false
-easy_ipa::install_kstart: false
 easy_ipa::ipa_server_fqdn: "%{facts.fqdn}"
 easy_ipa::ip_address: "%{facts.networking.ip}"

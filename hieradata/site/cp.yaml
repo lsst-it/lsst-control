@@ -1,5 +1,5 @@
 ---
-easy_ipa::ipa_master_fqdn: "ipa01.cp.lsst.org"
+easy_ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
 
 rsyslog::config::actions:
   #Send copy to logs to GKE Graylog instance

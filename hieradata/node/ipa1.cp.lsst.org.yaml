@@ -1,0 +1,3 @@
+---
+# need to use an off site ipa replica to bootstrap the first local ipa instance
+easy_ipa::ipa_master_fqdn: "ipa1.ls.lsst.org"

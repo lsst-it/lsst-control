@@ -87,6 +87,8 @@ mod 'simp/dconf', '0.0.3'
 mod 'simp/gnome', '8.1.1'
 mod 'simp/polkit', '6.2.0'
 mod 'simp/simplib', '3.15.3'
+mod 'ccin2p3/mit_krb5', '1.2.1'
+mod 'ccin2p3-etc_services', '1.1.1'
 
 # latest puppet/letsencrypt release does not include dns_route53 plugin support
 mod 'puppet/letsencrypt',

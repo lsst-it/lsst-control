@@ -16,6 +16,7 @@ class profile::core::common (
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
   Boolean $manage_chrony = true,
+  Boolean $manage_sssd = true,
 ){
   include accounts
   include augeas
@@ -48,5 +49,11 @@ class profile::core::common (
 
   if $manage_chrony {
     include chrony
+  }
+
+  if $manage_sssd {
+    include sssd
+    # run ipa-install-* script before trying to managing sssd.conf
+    Class[easy_ipa] -> Class[sssd]
   }
 }

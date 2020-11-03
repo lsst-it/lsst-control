@@ -91,6 +91,9 @@ ssh::client_options:
   GlobalKnownHostsFile: "/var/lib/sss/pubconf/known_hosts"
   PubkeyAuthentication: "yes"
   ProxyCommand: "/usr/bin/sss_ssh_knownhostsproxy -p %p %h"
+  # enable krb5 ssh client auth
+  GSSAPIAuthentication: "yes"
+  GSSAPIDelegateCredentials: "yes"
 
 sudo::config_file_replace: false
 sudo::purge: false

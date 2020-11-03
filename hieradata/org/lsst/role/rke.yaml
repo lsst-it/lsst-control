@@ -33,10 +33,6 @@ sysctl::values::args:
 # currently inherited from common layer
 #ssh::server_options:
 #  AllowTcpForwarding: "yes"
-# enable k5 ssh client auth
-ssh::client_options:
-  GSSAPIAuthentication: "yes"
-  GSSAPIDelegateCredentials: "yes"
 yum::managed_repos:
   - "kubernetes"
 yum::repos:

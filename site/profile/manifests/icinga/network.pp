@@ -26,7 +26,7 @@ class profile::icinga::network (
 
   #Hosts Name Array
   $community   = 'rubinobs'
-  $host_list  = [
+  $base_host_list  = [
     'nob1-as01.ls.lsst.org,10.49.0.11',
     'nob1-as02.ls.lsst.org,10.49.0.12',
     'nob1-as03.ls.lsst.org,10.49.0.13',
@@ -48,8 +48,38 @@ class profile::icinga::network (
     'rubinobs-br01.ls.lsst.org,10.48.1.4',
     'cube.ls.lsst.org,139.229.134.1',
   ]
+  $summit_host_list  = [
+    'comp-cr01.cp.lsst.org,10.16.1.1',
+    'comp-cr02.cp.lsst.org,10.16.1.2',
+    'main1-as01.cp.lsst.org,10.17.0.1',
+    'villa-as01.cp.lsst.org,10.17.0.100',
+    'casino-as01.cp.lsst.org,10.17.0.101',
+    'penon-as01.cp.lsst.org,10.17.0.102',
+    'eie-as01.cp.lsst.org,10.17.0.103',
+    'aux-as01.cp.lsst.org,10.17.0.13',
+    'wst-as01.cp.lsst.org,10.17.0.14',
+    'dimm-as01.cp.lsst.org,10.17.0.15',
+    'sky-as01.cp.lsst.org,10.17.0.16',
+    'gen-as01.cp.lsst.org,10.17.0.17',
+    'cam-as01.cp.lsst.org,10.17.0.2',
+    'comp-ds01.cp.lsst.org,10.17.0.254',
+    'comp-is01.cp.lsst.org,10.17.0.32',
+    'comp-is02.cp.lsst.org,10.17.0.33',
+    'comp-is03.cp.lsst.org,10.17.0.34',
+    'comp-is04.cp.lsst.org,10.17.0.35',
+    'comp-is05.cp.lsst.org,10.17.0.36',
+    'comp-is06.cp.lsst.org,10.17.0.37',
+    'comp-is07.cp.lsst.org,10.17.0.38',
+    'comp-is08.cp.lsst.org,10.17.0.39',
+    'rot-as01.cp.lsst.org,10.17.0.40',
+    'comp-as01.cp.lsst.org,10.17.0.51',
+    'comp-as02.cp.lsst.org,10.17.0.52',
+    'coat-as01.cp.lsst.org,10.17.0.53',
+    'main5-as01.cp.lsst.org,10.17.0.54',
+    'm1m3-as01.cp.lsst.org,10.17.0.6',
+  ]
   #Gateways Array
-  $gw_list  = [
+  $base_gw_list  = [
     'Vlan2100_IT-General-Services,10.49.0.254',
     'Vlan900_LSST-Transit-LAN,192.168.255.4',
     'Vlan2100_IT-Management_,10.49.0.254',
@@ -77,6 +107,9 @@ class profile::icinga::network (
     'Vlan360_Perfsonar1-1,139.229.140.134',
     'Vlan370_Perfsonar1-2,139.229.140.136',
   ]
+  # $summit_gw_list  = [
+  
+  # ]
   #Hosts Template Array
   $host_templates = [
     $network_host_template_name,
@@ -147,7 +180,8 @@ class profile::icinga::network (
   }
 
   ##Network Hosts
-  $host_list.each |$host|{
+  #Base Netowrk Hosts
+  $base_host_list.each |$host|{
     $value = split($host,',')
     $path = "${icinga_path}/${value[0]}.json"
     $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
@@ -179,8 +213,75 @@ class profile::icinga::network (
       loglevel => debug,
     }
   }
-  #Gateways
-  $gw_list.each |$gw|{
+  #Summit Netowrk Hosts
+  $summit_host_list.each |$host|{
+    $value = split($host,',')
+    $path = "${icinga_path}/${value[0]}.json"
+    $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
+    $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${path}"
+
+    file { $path:
+      ensure  => 'present',
+      content => @("HOST_CONTENT"/L)
+        {
+        "address": "${value[1]}",
+        "display_name": "${value[0]}",
+        "imports": [
+          "${network_host_template_name}"
+        ],
+        "object_name":"${value[0]}",
+        "object_type": "object",
+        "vars": {
+            "safed_profile": "3"
+        },
+        "zone": "master"
+        }
+        | HOST_CONTENT
+    }
+    ->exec { $cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $cond,
+      loglevel => debug,
+    }
+  }
+  ##Gateways
+  #Base Gateways
+  $base_gw_list.each |$gw|{
+    $value = split($gw,',')
+    $path = "${icinga_path}/${value[0]}.json"
+    $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
+    $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${path}"
+
+    file { $path:
+      ensure  => 'present',
+      content => @("HOST_CONTENT"/L)
+        {
+        "address": "${value[1]}",
+        "display_name": "${value[0]}",
+        "imports": [
+          "${gateway_host_template_name}"
+        ],
+        "object_name":"${value[0]}",
+        "object_type": "object",
+        "vars": {
+            "safed_profile": "3"
+        },
+        "zone": "master"
+        }
+        | HOST_CONTENT
+    }
+    ->exec { $cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $cond,
+      loglevel => debug,
+    }
+  }
+  #Summit Gateways
+  $summit_gw_list.each |$gw|{
     $value = split($gw,',')
     $path = "${icinga_path}/${value[0]}.json"
     $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"

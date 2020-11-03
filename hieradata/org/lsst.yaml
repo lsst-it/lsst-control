@@ -78,11 +78,12 @@ easy_ipa::ipa_master_fqdn: "ipa1.tuc.lsst.cloud"
 # easy_ipa client options
 easy_ipa::ipa_role: "client"
 easy_ipa::configure_ntp: false
-easy_ipa::install_epel: false
-easy_ipa::install_autofs: false
-easy_ipa::install_sssdtools: false
-easy_ipa::install_kstart: false
 easy_ipa::configure_sshd: false
+easy_ipa::install_autofs: false
+easy_ipa::install_epel: false
+easy_ipa::install_kstart: false
+easy_ipa::install_sssd: false
+easy_ipa::install_sssdtools: false
 ssh::client_options:
   GlobalKnownHostsFile: "/var/lib/sss/pubconf/known_hosts"
   PubkeyAuthentication: "yes"

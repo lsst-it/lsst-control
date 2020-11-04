@@ -27,6 +27,9 @@ lookup_options:
   profile::core::ipset::set:
     merge:
       strategy: "deep"
+  sssd::domains:
+    merge:
+      strategy: "deep"
 
 timezone::timezone: "UTC"
 chrony::leapsectz: "right/UTC"
@@ -212,3 +215,29 @@ profile::core::ipset::set:
       - "139.229.0.0/16"
       - "198.19.0.0/16"
       - "10.0.0.0/8"
+
+# sssd ipa client setup -- do not use on ipa servers
+sssd::domains:
+  "%{lookup('easy_ipa::domain')}":
+    cache_credentials: true
+    krb5_store_password_if_offline: true
+    ipa_domain: "%{lookup('easy_ipa::domain')}"
+    id_provider: "ipa"
+    auth_provider: "ipa"
+    access_provider: "ipa"
+    ldap_tls_cacert: "/etc/ipa/ca.crt"
+    ipa_hostname: "%{facts.fqdn}"
+    chpass_provider: "ipa"
+    ipa_server:
+      - "_srv_"
+      - "%{lookup('easy_ipa::ipa_master_fqdn')}"
+    dns_discovery_domain: "%{lookup('easy_ipa::domain')}"
+sssd::services:
+  nss:
+    homedir_substring: "/home"
+  sudo: {}
+  pam: {}
+  ssh: {}
+sssd::package_name:
+  - "sssd"
+  - "sssd-tools"  # not installed by default

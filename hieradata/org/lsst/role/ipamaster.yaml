@@ -3,6 +3,7 @@ classes:
   - "profile::core::common"
   - "easy_ipa"
 
+profile::core::common::manage_sssd: false
 profile::icinga::agent::host_template: "IpaTemplate"
 easy_ipa::ipa_role: "master"
 easy_ipa::install_ipa_server: true
@@ -13,3 +14,8 @@ easy_ipa::webui_force_https: true
 easy_ipa::configure_dns_server: false
 easy_ipa::ipa_server_fqdn: "%{facts.fqdn}"
 easy_ipa::ip_address: "%{facts.networking.ip}"
+
+# enable easy_ipa management of sssd packages on servers
+easy_ipa::install_sssd: true
+easy_ipa::install_sssdtools: true
+easy_ipa::sssdtools: true

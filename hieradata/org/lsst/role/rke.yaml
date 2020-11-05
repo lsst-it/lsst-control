@@ -30,13 +30,6 @@ sysctl::values::args:
   net.bridge.bridge-nf-call-iptables:
     value: 1
     target: "/etc/sysctl.d/80-rke.conf"
-# currently inherited from common layer
-#ssh::server_options:
-#  AllowTcpForwarding: "yes"
-# enable k5 ssh client auth
-ssh::client_options:
-  GSSAPIAuthentication: "yes"
-  GSSAPIDelegateCredentials: "yes"
 yum::managed_repos:
   - "kubernetes"
 yum::repos:

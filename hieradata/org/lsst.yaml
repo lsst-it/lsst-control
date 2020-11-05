@@ -91,6 +91,9 @@ ssh::client_options:
   GlobalKnownHostsFile: "/var/lib/sss/pubconf/known_hosts"
   PubkeyAuthentication: "yes"
   ProxyCommand: "/usr/bin/sss_ssh_knownhostsproxy -p %p %h"
+  # enable krb5 ssh client auth
+  GSSAPIAuthentication: "yes"
+  GSSAPIDelegateCredentials: "yes"
 
 sudo::config_file_replace: false
 sudo::purge: false
@@ -241,3 +244,32 @@ sssd::services:
 sssd::package_name:
   - "sssd"
   - "sssd-tools"  # not installed by default
+
+mit_krb5::includedir:
+  - "/etc/krb5.conf.d/"
+  - "/var/lib/sss/pubconf/krb5.include.d/"
+mit_krb5::default_realm: "LSST.CLOUD"
+mit_krb5::dns_lookup_realm: false
+mit_krb5::dns_lookup_kdc: false
+mit_krb5::rdns: false
+mit_krb5::dns_canonicalize_hostname: true
+mit_krb5::ticket_lifetime: "24h"
+mit_krb5::forwardable: true
+mit_krb5::default_cache_nname: "KEYRING:persistent:%{literal('%')}{uid}"
+mit_krb5::realms:
+  "%{lookup('mit_krb5::default_realm')}":
+    kdc: "%{lookup('easy_ipa::ipa_master_fqdn')}:88"
+    master_kdc: "%{lookup('easy_ipa::ipa_master_fqdn')}:88"
+    admin_server: "%{lookup('easy_ipa::ipa_master_fqdn')}:749"
+    kpasswd_server: "%{lookup('easy_ipa::ipa_master_fqdn')}:464"
+    default_domain: "%{lookup('easy_ipa::domain')}"
+    pkinit_anchors: "FILE:/var/lib/ipa-client/pki/kdc-ca-bundle.pem"
+    pkinit_pool: "FILE:/var/lib/ipa-client/pki/ca-bundle.pem"
+mit_krb5::domain_realms:
+  "%{lookup('mit_krb5::default_realm')}":
+    domains:
+      - ".%{lookup('easy_ipa::domain')}"
+      - "%{lookup('easy_ipa::domain')}"
+      - "%{facts.fqdn}"
+      - ".%{facts.domain}"
+      - "%{facts.domain}"

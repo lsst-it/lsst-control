@@ -12,14 +12,14 @@
 #   situations in which ntpd needs to be used instead of chrony (such as
 #   perfsonar nodes).
 #
-class profile::core::common (
+class profile::core::common(
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
   Boolean $manage_chrony = true,
   Boolean $manage_sssd = true,
   Boolean $manage_krb5 = true,
   Boolean $manage_ldap = true,
-){
+) {
   include accounts
   include augeas
   include easy_ipa

@@ -12,6 +12,18 @@
 #   situations in which ntpd needs to be used instead of chrony (such as
 #   perfsonar nodes).
 #
+# @param manage_sssd
+#   Enable or disable management of `/etc/sssd/sssd.conf`
+#
+# @param manage_krb5
+#   Enable or disable management of `/etc/krb5.conf`
+#
+# @param manage_ldap
+#   Enable or disable management of openldap ipa client config
+#
+# @param manage_ipa
+#   Enable or disable management of `/etc/ipa/default.conf`
+#
 class profile::core::common(
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
@@ -19,6 +31,7 @@ class profile::core::common(
   Boolean $manage_sssd = true,
   Boolean $manage_krb5 = true,
   Boolean $manage_ldap = true,
+  Boolean $manage_ipa = true,
 ) {
   include accounts
   include augeas
@@ -69,5 +82,10 @@ class profile::core::common(
     include openldap::client
     # run ipa-install-* script before trying to managing openldap
     Class[easy_ipa] -> Class[openldap::client]
+  }
+
+  if $manage_ipa {
+    include profile::core::ipa
+    Class[easy_ipa] -> Class[profile::core::ipa]
   }
 }

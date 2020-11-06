@@ -280,3 +280,13 @@ openldap::client::uri: "ldaps://%{lookup('easy_ipa::ipa_master_fqdn')}"
 openldap::client::base: "dc=lsst,dc=cloud"
 openldap::client::tls_cacert: "/etc/ipa/ca.crt"
 openldap::client::sasl_mech: "GSSAPI"
+
+profile::core::ipa::default:
+  global:
+    basedn: "%{lookup('openldap::client::base')}"
+    realm: "%{lookup('mit_krb5::default_realm')}"
+    domain: "%{lookup('easy_ipa::domain')}"
+    server: "%{lookup('easy_ipa::ipa_master_fqdn')}"
+    host: "%{facts.fqdn}"
+    xmlrpc_uri: "https://%{lookup('easy_ipa::ipa_master_fqdn')}/ipa/xml"
+    enable_ra: "True"

@@ -29,3 +29,12 @@ yum::repos:
     gpgcheck: false
     target: "/etc/yum.repos.d/dell.repo"
 profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"
+
+files:
+  # opensplice daemons/client running in pods as `saluser` use hostPath to share a
+  # path to a unix domain socket
+  /run/ospl:
+    ensure: "directory"
+    owner: 73006
+    group: 73006
+    mode: "0755"

@@ -42,6 +42,7 @@ class profile::core::common(
   include network
   include profile::core::dielibwrapdie
   include profile::core::hardware
+  include profile::core::ipa
   include profile::core::selinux
   include resolv_conf
   include rsyslog

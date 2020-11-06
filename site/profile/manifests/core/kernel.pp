@@ -1,4 +1,4 @@
-class profile::core::kernel (
+class profile::core::kernel(
   $version,
 ) {
   include yum::plugin::versionlock

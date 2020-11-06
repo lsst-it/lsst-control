@@ -1,7 +1,6 @@
 class profile::core::nm_dispatch (
   Optional[Hash[String, Array[String]]] $interfaces = undef,
 ) {
-
   if ($interfaces) {
     $interfaces.each |String $dev, Array $cmds| {
       # if restart is configured to be only per interface... needs some experimentation

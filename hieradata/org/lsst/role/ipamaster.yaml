@@ -5,6 +5,7 @@ classes:
 
 profile::core::common::manage_sssd: false
 profile::core::common::manage_krb5: false
+profile::core::common::manage_ipa: false
 profile::icinga::agent::host_template: "IpaTemplate"
 easy_ipa::ipa_role: "master"
 easy_ipa::install_ipa_server: true

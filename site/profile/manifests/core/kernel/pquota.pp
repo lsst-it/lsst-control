@@ -1,4 +1,4 @@
-class profile::core::kernel::pquota() {
+class profile::core::kernel::pquota {
   kernel_parameter { 'rootflags=pquota':
     ensure => present,
   }

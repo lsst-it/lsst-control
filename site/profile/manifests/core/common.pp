@@ -18,6 +18,7 @@ class profile::core::common (
   Boolean $manage_chrony = true,
   Boolean $manage_sssd = true,
   Boolean $manage_krb5 = true,
+  Boolean $manage_ldap = true,
 ){
   include accounts
   include augeas
@@ -62,5 +63,11 @@ class profile::core::common (
     include mit_krb5
     # run ipa-install-* script before trying to managing krb5.conf
     Class[easy_ipa] -> Class[mit_krb5]
+  }
+
+  if $manage_ldap {
+    include openldap::client
+    # run ipa-install-* script before trying to managing openldap
+    Class[easy_ipa] -> Class[openldap::client]
   }
 }

@@ -80,6 +80,19 @@ dhcp::pools:
       # 139.229.163.240/28 is reserved for the network gateway and static
       # IP addresses.
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  cds-arch:
+    network: "139.229.165.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.165.254"
+    range:
+      - "139.229.165.200 139.229.165.253"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  cds-arch-sal:
+    network: "139.229.166.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.166.254"
+    range:
+      - "139.229.166.200 139.229.166.253"
   ocs_app:
     network: "139.229.167.0"
     mask: "255.255.255.0"
@@ -99,7 +112,7 @@ dhcp::pools:
     mask: "255.255.255.0"
     gateway: "139.229.174.254"
     range:
-      - "139.229.174.1 139.229.174.99"
+      - "139.229.174.200 139.229.174.254"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   ccs_test_app:
     network: "139.229.175.128"

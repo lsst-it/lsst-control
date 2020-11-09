@@ -104,10 +104,10 @@ sal2::firewall::opensplice_subnets:
   - "141.142.238.0/23"
 
 sal2::ospl_version: "6.10.4"
-sal2::ospl_rpm_version: "6.10.4-5.el7"
-sal2::ts_dds_version: "6.10.4_2"
-sal2::ts_idl_version: "2.0.0_6.1.0_5.0.0"
-sal2::ts_salobj_version: "6.0.2"
+sal2::ospl_rpm_version: "6.10.4-6.el7"
+sal2::ts_dds_version: "6.10.4_6"
+sal2::ts_idl_version: "2.1.0_6.2.1_5.0.1"
+sal2::ts_salobj_version: "6.0.3"
 
 xcat::network_mgmt: "172.30.18.0/23"
 xcat::network_ipmi: "192.168.28.0/23"

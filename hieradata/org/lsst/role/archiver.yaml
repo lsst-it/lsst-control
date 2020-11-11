@@ -44,6 +44,14 @@ profile::archive::rabbitmq::user_permissions:
     configure_permission: ".*"
     read_permission: ".*"
     write_permission: ".*"
+  "iip@/test_at":
+    configure_permission: ".*"
+    read_permission: ".*"
+    write_permission: ".*"
+  "guest@/test_at":
+    configure_permission: ".*"
+    read_permission: ".*"
+    write_permission: ".*"
 profile::archive::rabbitmq::exchanges:
   "message@/test_cc":
     ensure: "present"
@@ -51,24 +59,31 @@ profile::archive::rabbitmq::exchanges:
     durable: true
     user: "%{lookup('profile::archive::rabbitmq::queue_user')}"  # secret
     password: "%{lookup('profile::archive::rabbitmq::queue_password')}"  # secret
+  "message@/test_at":
+    ensure: "present"
+    type: "direct"
+    durable: true
+    user: "%{lookup('profile::archive::rabbitmq::queue_user')}"  # secret
+    password: "%{lookup('profile::archive::rabbitmq::queue_password')}"  # secret
 profile::archive::rabbitmq::arc_queues:
-  - "at_foreman_consume"
-  - "at_foreman_ack_publish"
-  - "archive_ctrl_publish"
-  - "archive_ctrl_consume"
-  - "dmcs_consume"
-  - "dmcs_ack_consume"
-  - "ocs_dmcs_consume"
-  - "dmcs_ocs_publish"
-  - "dmcs_fault_consume"
-  - "gen_dmcs_consume"
-  - "at_forwarder_publish"
-  - "f99_consume"
-  - "f91_consume"
-  - "f92_consume"
-  - "f93_consume"
-  - "ar_foreman_ack_publish"
-  - "telemetry_queue"
+  "/test_cc":
+    - "f98_consume"
+    - "f99_consume"
+    - "cc_foreman_ack_publish"
+    - "cc_publish_to_oods"
+    - "oods_publish_to_cc"
+    - "archive_ctrl_publish"
+    - "archive_ctrl_consume"
+    - "telemetry_queue"
+  "/test_at":
+    - "f98_consume"
+    - "f99_consume"
+    - "at_foreman_ack_publish"
+    - "at_publish_to_oods"
+    - "oods_publish_to_at"
+    - "archive_ctrl_publish"
+    - "archive_ctrl_consume"
+    - "telemetry_queue"
 redis::bind: "0.0.0.0"
 redis::manage_repo: true
 redis::scl: true

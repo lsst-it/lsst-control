@@ -2,6 +2,7 @@ class profile::ccs::tomcat(
   Hash[String, Hash] $wars = {},
 ) {
   include ::nginx
+  include profile::core::letsencrypt
 
   $version       = '9.0.36'
   $root_path     = '/opt/tomcat'
@@ -94,6 +95,10 @@ class profile::ccs::tomcat(
   $access_log = '/var/log/nginx/tomcat.access.log'
   $error_log  = '/var/log/nginx/tomcat.error.log'
 
+  $fqdn    = $facts['networking']['fqdn']
+  $le_root = "/etc/letsencrypt/live/${fqdn}"
+
+
   nginx::resource::upstream { 'tomcat':
     ensure  => present,
     members => {
@@ -104,7 +109,11 @@ class profile::ccs::tomcat(
     },
   }
 
-  nginx::resource::server { 'tomcat-http':
+  letsencrypt::certonly { $fqdn:
+    plugin      => 'dns-route53',
+    manage_cron => true,
+  }
+  ~> nginx::resource::server { 'tomcat-http':
     ensure                => present,
     listen_port           => 80,
     ssl                   => false,

@@ -1,6 +1,7 @@
 ---
 classes:
   - "profile::core::ifdown"
+  - "profile::core::sysctl::disable_ipv6"
 packages:
   - "perccli"  # from dell repo
 profile::core::ifdown::interface: "em1"
@@ -18,13 +19,15 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-  p2p1.2400:  # 139.229.147.0/24
+  p2p1.2301:  # 139.229.145.0/24
     bootproto: "dhcp"
     defroute: "no"
     nozeroconf: "yes"
     onboot: "yes"
     type: "none"
     vlan: "yes"
+  p2p1.2400:  # 139.229.147.0/24
+    ensure: "absent"
 yum::managed_repos:
   - "dell"
 yum::repos:

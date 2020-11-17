@@ -1,4 +1,6 @@
 ---
+classes:
+  - "profile::core::sysctl::disable_ipv6"
 packages:
   - "perccli"  # from dell repo
 network::interfaces_hash:
@@ -16,6 +18,8 @@ network::interfaces_hash:
     master: "bond0"
     slave: "yes"
     nm_controlled: "no"
+  p2p1.1300:
+    ensure: "absent"
   p2p2:
     bootproto: "none"
     master: "bond0"
@@ -27,8 +31,15 @@ network::interfaces_hash:
     bonding_opts: "mode=4 miimon=100"
     bonding_master: "yes"
     nm_controlled: "no"
+  bond0.1201:  # 139.229.166.0/24
+    bootproto: "none"
+    defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
   bond0.1301:  # 139.229.167.0/24
-    bootproto: "dhcp"
+    bootproto: "none"
     defroute: "no"
     nozeroconf: "yes"
     onboot: "yes"
@@ -37,6 +48,9 @@ network::interfaces_hash:
   bond0.1300:
     ensure: "absent"
 network::mroutes_hash:
+  bond0.1201:
+    routes:
+      "139.229.147.0/24": "139.229.166.254"  # vlan2400@ls
   bond0.1301:
     routes:
       "139.229.170.0/24": "139.229.167.254"

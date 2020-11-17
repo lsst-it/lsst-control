@@ -85,9 +85,9 @@ dhcp::nameservers: &nameservers
   - "139.229.135.55"  # dns3.ls.lsst.org
 dhcp::ntpservers: &ntpservers
   - "ntp.shoa.cl"
+  - "ntp.cp.lsst.org"
   - "1.cl.pool.ntp.org"
   - "1.south-america.pool.ntp.org"
-  - "ntp.cp.lsst.org"
 
 chrony::servers: *ntpservers
 ntp::servers: *ntpservers

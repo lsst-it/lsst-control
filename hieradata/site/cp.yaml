@@ -86,8 +86,8 @@ dhcp::nameservers: &nameservers
   - "139.229.160.54"  # dns2.cp.lsst.org
   - "208.67.222.222"  # resolver1.opendns.com
 dhcp::ntpservers: &ntpservers
-  - "ntp.shoa.cl"
   - "ntp.cp.lsst.org"
+  - "ntp.shoa.cl"
   - "1.cl.pool.ntp.org"
   - "1.south-america.pool.ntp.org"
 

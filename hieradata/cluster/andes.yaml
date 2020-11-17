@@ -18,6 +18,8 @@ network::interfaces_hash:
     master: "bond0"
     slave: "yes"
     nm_controlled: "no"
+  p2p1.1300:
+    ensure: "absent"
   p2p2:
     bootproto: "none"
     master: "bond0"

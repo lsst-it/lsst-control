@@ -1,4 +1,6 @@
 ---
+classes:
+  - "profile::core::sysctl::disable_ipv6"
 packages:
   - "perccli"  # from dell repo
 network::interfaces_hash:

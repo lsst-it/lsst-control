@@ -11,11 +11,8 @@ class profile::core::ni_packages {
     'bzip2-devel',
     'libffi-devel',
     'libXinerama',
-    'libXinerama.i686',
     'mesa-libGL',
-    'mesa-libGL.i686',
     'libstdc++',
-    'libstdc++.i686',
     'libXft',
   ]
 

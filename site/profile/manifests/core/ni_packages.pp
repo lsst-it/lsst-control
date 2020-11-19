@@ -13,6 +13,7 @@ class profile::core::ni_packages {
     'libXinerama',
     'mesa-libGL',
     'libstdc++',
+    'libstdc++.i686',
     'libXft',
   ]
 

@@ -1,5 +1,6 @@
 ---
 profile::core::debugutils::packages:
+  - "ack"
   - "bridge-utils"
   - "dhcping"
   - "iftop"
@@ -14,6 +15,7 @@ profile::core::debugutils::packages:
   - "powertop"
   - "tcpdump"
   - "traceroute"
+  - "tree"
 profile::ccs::postfix::packages:
   # required for postfix sasl auth
   - "cyrus-sasl-plain"

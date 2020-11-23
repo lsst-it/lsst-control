@@ -1,0 +1,15 @@
+---
+classes:
+  - "profile::core::common"
+network::interfaces_hash:
+  em2:
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em2.1400:  # 139.229.170.0/24
+    bootproto: "dhcp"
+    defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"

@@ -10,6 +10,10 @@ packages:
   - "attr"
   - "parallel"
   - "gcc"
+  - "gcc-c++"
+  - "bzip2"
+  - "cmake"
+  - "flex"
   ## TODO only on "development" nodes.
   - "maven"
   - "centos-release-scl-rh"

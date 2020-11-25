@@ -1,0 +1,15 @@
+---
+classes:
+  - "profile::core::common"
+network::interfaces_hash:
+  em2.1400:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br1400"
+    type: "none"
+    nozeroconf: "yes"
+  br1400:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"

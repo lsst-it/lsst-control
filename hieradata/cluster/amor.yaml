@@ -1,0 +1,40 @@
+---
+network::interfaces_hash:
+  em1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p1:
+    bootproto: "none"
+    master: "bond0"
+    slave: "yes"
+    onboot: "yes"
+    hwaddr: "%{facts.networking.interfaces.p2p1.mac}"
+  p2p2:
+    bootproto: "none"
+    master: "bond0"
+    slave: "yes"
+    onboot: "yes"
+    hwaddr: "%{facts.networking.interfaces.p2p2.mac}"
+  bond0:
+    bonding_master: "yes"
+    bonding_opts: "mode=4 miimon=100"
+    bootproto: "none"
+    defroute: "no"
+    netmask: "255.255.255.0"
+    onboot: "yes"
+    type: "Bond"
+
+network::mroutes_hash:
+  bond0:
+    routes:
+      "139.229.147.0/24": "139.229.167.254"
+      "139.229.166.0/24": "139.229.167.254"
+      #"139.229.167.0/24": "139.229.167.254"
+      "139.229.170.0/24": "139.229.167.254"
+      "139.229.178.0/24": "139.229.167.254"

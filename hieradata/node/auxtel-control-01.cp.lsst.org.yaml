@@ -1,9 +1,33 @@
 ---
+classes:
+  - "profile::core::sysctl::disable_ipv6"
+
+network::interfaces_hash:
+  em1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p1:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p2:  # sal/dds/control
+    bootproto: "dhcp"
+    onboot: "yes"
+    type: "Ethernet"
 network::mroutes_hash:
   p2p2:
     # auxtel-control-01 is multihomed and has a default gateway of
     # 139.229.162.126. These explicit routes are required to direct
     # SAL traffic (and only SAL traffic) over the control network.
     routes:
-      "139.229.178.0/24": "139.229.170.254"
+      "139.229.147.0/24": "139.229.170.254"
+      "139.229.166.0/24": "139.229.170.254"
       "139.229.167.0/24": "139.229.170.254"
+      # "139.229.170.0/24": "139.229.170.254"
+      "139.229.178.0/24": "139.229.170.254"

@@ -1,6 +1,4 @@
 ---
-classes:
-  - "profile::core::sysctl::disable_ipv6"
 packages:
   - "perccli"  # from dell repo
 network::interfaces_hash:
@@ -9,7 +7,7 @@ network::interfaces_hash:
     defroute: "yes"
     onboot: "yes"
     type: "Ethernet"
-  em2:
+  em2:  # not connected
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
@@ -53,6 +51,9 @@ network::mroutes_hash:
       "139.229.147.0/24": "139.229.166.254"  # vlan2400@ls
   bond0.1301:
     routes:
+      #"139.229.147.0/24": "139.229.167.254"
+      #"139.229.166.0/24": "139.229.167.254"
+      #"139.229.167.0/24": "139.229.167.254"
       "139.229.170.0/24": "139.229.167.254"
       "139.229.178.0/24": "139.229.167.254"
   bond0.1300:

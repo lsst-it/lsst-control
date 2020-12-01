@@ -1,0 +1,37 @@
+---
+network::interfaces_hash:
+  em1:  # bond0
+    bootproto: "none"
+    master: "bond0"
+    slave: "yes"
+    nm_controlled: "no"
+  em2:  # bond0
+    bootproto: "none"
+    master: "bond0"
+    slave: "yes"
+    nm_controlled: "no"
+  em3:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em4:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p1:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p2:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  bond0:
+    bonding_master: "yes"
+    bonding_opts: "mode=4 miimon=100"
+    bootproto: "none"
+    gateway: "139.229.170.254"
+    ipaddress: "139.229.170.34"
+    netmask: "255.255.255.0"
+    nm_controlled: "no"
+    type: "Bond"

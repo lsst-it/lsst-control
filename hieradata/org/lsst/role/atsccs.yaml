@@ -1,6 +1,7 @@
 ---
 classes:
   - "profile::core::common"
+  - "profile::core::debugutils"
   - "profile::core::nfsclient"
 
 nfs::client_enabled: true

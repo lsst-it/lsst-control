@@ -1,6 +1,6 @@
 ---
 network::interfaces_hash:
-  em1:  # fqdn *and* sal/dds/control???
+  em1:  # fqdn *and* dds
     bootproto: "dhcp"
     defroute: "yes"
     onboot: "yes"
@@ -15,7 +15,8 @@ network::interfaces_hash:
     type: "Ethernet"
   em4:  # ccs-auxtel
     bootproto: "dhcp"
-    defroute: "yes"
+    defroute: "no"
+    nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
   p3p1:  # not connected

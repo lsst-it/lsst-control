@@ -1,0 +1,43 @@
+---
+classes:
+  - "profile::ccs::daq_interface"
+  - "hosts"
+
+profile::ccs::daq_interface::hwaddr: "f8:f2:1e:71:bc:a0"
+profile::ccs::daq_interface::uuid: "9129970c-d4b9-4602-82be-da776c06c064"
+profile::ccs::daq_interface::was: "p3p1"
+profile::ccs::daq_interface::mode: "dhcp-server"
+
+network::interfaces_hash:
+  em1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # 192.168.101.0/24
+    bootproto: "none"
+    ipaddress: "192.168.101.1"
+    netmask: "255.255.255.0"
+    onboot: "yes"
+    type: "Ethernet"
+  # 2020-12-01 -- this interface is currently down and @gregg and @josh don't
+  # know its purpose. This is possibly left over from a test and can be removed.2
+  em3:  # 192.168.102.0/24
+    bootproto: "none"
+    ipaddress: "192.168.102.1"
+    netmask: "255.255.255.0"
+    onboot: "yes"
+    type: "Ethernet"
+  em4:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  # p3p1 -> lsst-daq -- 192.168.100.0/24
+  p3p2:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+
+hosts::host_entries:
+  "auxtel-sm":
+    ip: "192.168.101.2"

@@ -9,14 +9,28 @@ accounts::user_list:
     sshkeys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGCCYvVfrd3RvPlGtXh+e3NWWw7OVzvIyX9jj1jT2omYt07gPv2nx9xgHqtkr1n39aezN4T2/9PuuCinN/dCOAmDd1J3lV+4rbWVUQD1o356ElxnVgdDm7RLwFfGjNW+WnVVOSXudZaO8wN6JqzG0SM21bmaIrT5b8pmXI9aafIEtnVhUKpVrqXOMQR8RNF9nvnzQulRkX7y/Kcy//a1v6/1lt4D+0Y5QaQujt04i8+QkcUBNe9sukjYWfzcPW9FpdJAiiydxwJl27f8OvJ4OMp1LJkB8lI5BLvJQpJ6u0DlfjkrSusDx60MSU3LQKP9TsaOW16b+/FqcHpkSpLGy/ foreman@foreman.cp.lsst.org"
 network::interfaces_hash:
-  # Note: em1 is not managed since this will apply to multiple hypervisors
-  em2:  # em2 is not connected
+  em1:  # fqdn
+    bootproto: "none"
+    defroute: "yes"
+    dns1: "%{lookup('dhcp::nameservers.0')}"
+    dns2: "%{lookup('dhcp::nameservers.1')}"
+    domain: "%{lookup('dhcp::dnsdomain.0')}"
+    gateway: "139.229.160.254"
+    netmask: "255.255.255.0"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # not connected
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
   p2p1:
     bootproto: "none"
     onboot: "yes"
+    type: "Ethernet"
+  p2p2:  # not connected
+    bootproto: "none"
+    onboot: "no"
     type: "Ethernet"
   p2p1.1101:
     bootproto: "none"
@@ -29,3 +43,5 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "yes"
     type: "bridge"
+  p2p1.1621:  # legacy IT network, no longer used
+    ensure: "absent"

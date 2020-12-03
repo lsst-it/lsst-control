@@ -24,6 +24,10 @@
 # @param manage_ipa
 #   Enable or disable management of `/etc/ipa/default.conf`
 #
+# @param disable_ipv6
+#   If `true`, disable ipv6 networking support. This parameter is intended to eventually
+#   replace the direct inclusion of the `profile::core::sysctl::disable_ipv6` class.
+#
 class profile::core::common(
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
@@ -32,6 +36,7 @@ class profile::core::common(
   Boolean $manage_krb5 = true,
   Boolean $manage_ldap = true,
   Boolean $manage_ipa = true,
+  Boolean $disable_ipv6 = false,
 ) {
   include accounts
   include augeas
@@ -88,5 +93,9 @@ class profile::core::common(
   if $manage_ipa {
     include profile::core::ipa
     Class[easy_ipa] -> Class[profile::core::ipa]
+  }
+
+  if $disable_ipv6 {
+    include profile::core::sysctl::disable_ipv6
   }
 }

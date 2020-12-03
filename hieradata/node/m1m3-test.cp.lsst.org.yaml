@@ -1,0 +1,11 @@
+---
+network::interfaces_hash:
+  enp3s0:  # fqdn *and* dds
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  enp4s6:  # connected but unconfigured?
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"

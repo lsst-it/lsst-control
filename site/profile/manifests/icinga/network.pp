@@ -37,6 +37,7 @@ class profile::icinga::network (
     'nob2-as04.ls.lsst.org,10.49.0.24',
     'bdc-is03.ls.lsst.org,10.49.0.27',
     'bdc-is06.ls.lsst.org,10.49.0.30',
+    'bdc-is09.ls.lsst.org,10.49.0.33',
     'bdc-is10.ls.lsst.org,10.49.0.34',
     'bdc-is13.ls.lsst.org,10.49.0.37',
     'bdc-is14.ls.lsst.org,10.49.0.38',
@@ -46,6 +47,7 @@ class profile::icinga::network (
     'bdc-cr01.ls.lsst.org,10.48.1.1',
     'bdc-cr02.ls.lsst.org,10.48.1.2',
     'rubinobs-br01.ls.lsst.org,10.48.1.4',
+    'rubinobs-br02.ls.lsst.org,10.49.0.101',
     'cube.ls.lsst.org,139.229.134.1',
   ]
   $summit_host_list  = [

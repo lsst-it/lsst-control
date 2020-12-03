@@ -1,25 +1,46 @@
 ---
-classes:
-  - "profile::core::sysctl::disable_ipv6"
-
 network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"
     defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  em2:
-    bootproto: "none"
-    onboot: "yes"
-    type: "Ethernet"
-  em2.2500:  # 139.229.150.0/25
-    bootproto: "none"
-    bridge: "br2500"
     nozeroconf: "yes"
     onboot: "yes"
-    type: "none"
+    type: "Ethernet"
+  em2:  # trunk
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+  em3:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em4:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em2.1501:
+    bootproto: "none"
+    onboot: "yes"
     vlan: "yes"
-  br2500:
+    bridge: "br1501"
+    type: "none"
+    nozeroconf: "yes"
+  em2.1502:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br1502"
+    type: "none"
+    nozeroconf: "yes"
+  br1501:
     bootproto: "none"
     onboot: "yes"
     type: "bridge"
+  br1502:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"
+  em2.2500:
+    ensure: "absent"
+  br2500:
+    ensure: "absent"

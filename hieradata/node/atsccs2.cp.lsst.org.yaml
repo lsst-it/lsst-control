@@ -1,13 +1,14 @@
 ---
 network::interfaces_hash:
-  em1:  # fqdn *and* dds
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  em2:  # ccs-auxtel
+  em1:  # dds
     bootproto: "dhcp"
     defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # fqdn *and* ccs-auxtel
+    bootproto: "dhcp"
+    defroute: "yes"
     nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
@@ -19,3 +20,12 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
+
+network::mroutes_hash:
+  em1:
+    routes:
+      "139.229.147.0/24": "139.229.170.254"
+      "139.229.166.0/24": "139.229.170.254"
+      "139.229.167.0/24": "139.229.170.254"
+      #"139.229.170.0/24": "139.229.170.254"
+      "139.229.178.0/24": "139.229.170.254"

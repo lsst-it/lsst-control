@@ -1,8 +1,10 @@
 ---
 classes:
+  - "profile::archive::rabbitmq"
   - "profile::core::common"
   - "profile::core::debugutils"
-  - "profile::archive::rabbitmq"
+  - "profile::core::nfsclient"
+  - "profile::core::nfsserver"
   - "redis"
   - "python"
   - "docker"
@@ -118,3 +120,5 @@ accounts::user_list:
 sudo::configs:
   comcam_archive_cmd:
     content: "%comcam-archive-sudo ALL=(arc,atadbot) NOPASSWD: ALL"
+
+nfs::server_enabled: true

@@ -1,38 +1,58 @@
 ---
-# andes source IPs may be in either 139.229.160.0/24 or 139.229.170.0/24
+# 139.229.146.0/24    antu
+# 139.229.160.0/24    cp general & andes
+# 139.229.165.0/24    cp archive
+# 139.229.175.0/26    comcam-ccs
+# 139.229.175.128/25  auxtel-ccs
 nfs::nfs_v4_export_root_clients: >-
+  %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.146.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.160.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.167.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.170.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.165.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.175.0/26(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.175.128/25(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
 nfs::nfs_exports_global:
   /data/home:
     clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.167.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/jhome:
     # nublado needs to be able to create user home dirs as root
     clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
-      139.229.167.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
-      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
   /data/lsstdata:
     clients: >-
       139.229.160.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.167.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.170.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.146.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.160.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.165.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.0/26(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.128/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
       atarchiver.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.170.21(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      ts-csc-generic-01.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      comcam-arctl01.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/project:
     clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.167.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/scratch:
     clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.167.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
 
 files:
   /data/project/shared:
@@ -59,20 +79,23 @@ files:
 
 nfs::client_enabled: true
 nfs::client_mounts:
-  /net/project:
-    share: "project"
-    server: "nfs1.cp.lsst.org"
-    atboot: true
-  /net/scratch:
-    share: "scratch"
-    server: "nfs1.cp.lsst.org"
-    atboot: true
-  /net/home:
+  /net/self/data/home:
     share: "home"
-    server: "nfs1.cp.lsst.org"
+    server: "%{facts.fqdn}"
     atboot: true
-  /net/lsstdata:
+  /net/self/data/jhome:
+    share: "jhome"
+    server: "%{facts.fqdn}"
+    atboot: true
+  /net/self/data/lsstdata:
     share: "lsstdata"
-    server: "nfs1.cp.lsst.org"
+    server: "%{facts.fqdn}"
     atboot: true
-    options_nfsv4: "ro,tcp,nolock,rsize=32768,wsize=32768,intr,noatime,actimeo=3"
+  /net/self/data/project:
+    share: "project"
+    server: "%{facts.fqdn}"
+    atboot: true
+  /net/self/data/scratch:
+    share: "scratch"
+    server: "%{facts.fqdn}"
+    atboot: true

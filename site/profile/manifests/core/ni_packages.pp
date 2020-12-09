@@ -2,6 +2,9 @@
 #  NI LabView 2018 requirement packages
 
 class profile::core::ni_packages {
+  $pre_packages = [
+    'libstdc++',
+  ]
   $packages = [
     'mlocate',
     'wget',
@@ -12,12 +15,15 @@ class profile::core::ni_packages {
     'libffi-devel',
     'libXinerama',
     'mesa-libGL',
-    'libstdc++',
     'libstdc++.i686',
     'libXft',
   ]
 
-  package { $packages:
+  package { $pre_packages:
     ensure => 'present',
+  }
+  package { $packages:
+    ensure  => 'present',
+    require => Package[$pre_packages],
   }
 }

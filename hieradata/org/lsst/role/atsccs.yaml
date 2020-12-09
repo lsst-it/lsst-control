@@ -10,4 +10,3 @@ nfs::client_mounts:
     share: "data"
     server: "atsdaq1.cp.lsst.org"
     atboot: true
-    options_nfsv4: "rw,sync,hard,intr"

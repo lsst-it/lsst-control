@@ -1,16 +1,25 @@
 ---
 network::interfaces_hash:
-  p2p1:
+  em1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p1:  # bond0
     bootproto: "none"
     master: "bond0"
     slave: "yes"
     nm_controlled: "no"
-  p2p2:
+  p2p2:  # bond0
     bootproto: "none"
     master: "bond0"
     slave: "yes"
     nm_controlled: "no"
-  bond0:
+  bond0:  # dds -- could be changed to dhcp?
     type: "Bond"
     bootproto: "none"
     ipaddress: "139.229.178.59"
@@ -21,5 +30,8 @@ network::interfaces_hash:
 network::mroutes_hash:
   bond0:
     routes:
-      "139.229.170.0/24": "139.229.178.254"
+      "139.229.147.0/24": "139.229.178.254"
+      "139.229.166.0/24": "139.229.178.254"
       "139.229.167.0/24": "139.229.178.254"
+      "139.229.170.0/24": "139.229.178.254"
+      #"139.229.178.0/24": "139.229.178.254"

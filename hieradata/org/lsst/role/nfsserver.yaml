@@ -1,0 +1,8 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::nfsserver"
+  - "profile::core::nfsclient"
+
+# Server configuration
+nfs::server_enabled: true

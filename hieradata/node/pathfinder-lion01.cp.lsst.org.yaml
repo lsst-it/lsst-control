@@ -1,8 +1,4 @@
 ---
-ccs_software::services:
-  prod:
-    - "comcam-quadbox"
-
 network::interfaces_hash:
   enp0s31f6:  # fqdn
     bootproto: "dhcp"
@@ -11,7 +7,7 @@ network::interfaces_hash:
     type: "Ethernet"
   enp3s0:  # 192.168.1.0/24
     bootproto: "none"
-    ipaddress: "192.168.1.122"
+    ipaddress: "192.168.1.125"
     netmask: "255.255.255.0"
     nozeroconf: "yes"
     onboot: "yes"

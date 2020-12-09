@@ -3,11 +3,12 @@ network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"
     defroute: "yes"
+    nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
-  em2:
+  em2:  # trunk
     bootproto: "none"
-    onboot: "no"
+    onboot: "yes"
     type: "Ethernet"
   em3:  # not connected
     bootproto: "none"
@@ -17,14 +18,29 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-  em2.1400:
+  em2.1501:
     bootproto: "none"
     onboot: "yes"
     vlan: "yes"
-    bridge: "br1400"
+    bridge: "br1501"
     type: "none"
     nozeroconf: "yes"
-  br1400:
+  em2.1502:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br1502"
+    type: "none"
+    nozeroconf: "yes"
+  br1501:
     bootproto: "none"
     onboot: "yes"
     type: "bridge"
+  br1502:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"
+  em2.2500:
+    ensure: "absent"
+  br2500:
+    ensure: "absent"

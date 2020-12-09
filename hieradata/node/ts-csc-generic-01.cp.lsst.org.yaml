@@ -1,15 +1,52 @@
 ---
 classes:
   - "profile::core::nfsclient"
+  - "docker::networks"
 
+docker::networks::networks:
+  dds-network:
+    ensure: "present"
+    driver: "macvlan"
+    subnet: "139.229.170.0/24"
+    gateway: "139.229.170.254"
+    options: ["parent=p2p1"]
+
+network::interfaces_hash:
+  em1:  # has link but unconfigured
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em2:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em3:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em4:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p1:  # dds
+    bootproto: "dhcp"
+    defroute: "no"
+    onboot: "yes"
+    type: "Ethernet"
+  p2p2:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
 network::mroutes_hash:
   p2p1:
-    # ts-csc-generic-01 is multihomed and has a default gateway of
-    # 139.229.162.126. These explicit routes are required to direct
-    # SAL traffic (and only SAL traffic) over the control network.
+    # dds
     routes:
-      "139.229.178.0/24": "139.229.170.254"
+      "139.229.147.0/24": "139.229.170.254"
+      "139.229.166.0/24": "139.229.170.254"
       "139.229.167.0/24": "139.229.170.254"
+      #"139.229.170.0/24": "139.229.170.254"
+      "139.229.178.0/24": "139.229.170.254"
 
 nfs::client_enabled: true
 nfs::client_mounts:
@@ -29,12 +66,8 @@ nfs::client_mounts:
     share: "lsstdata"
     server: "nfs1.cp.lsst.org"
     atboot: true
-  /mnt/dmcs/data:
-    share: "dbb"
-    server: "atarchiver.cp.lsst.org"
-    atboot: true
-  /mnt/dmcs/oods_butler_repo:
-    share: "butler/repo"
+  /net/auxtel/lsstdata:
+    share: "lsstdata"
     server: "atarchiver.cp.lsst.org"
     atboot: true
   /mnt/data:

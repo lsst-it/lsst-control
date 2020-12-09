@@ -1,18 +1,15 @@
 ---
-ccs_software::services:
-  prod:
-    - "rest-server"
-    - "localdb"
-
 network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"
     defroute: "yes"
     onboot: "yes"
     type: "Ethernet"
-  em2:  # not connected
+  em2:  # 10.9.57.0/23 (it was a /23 as found)
     bootproto: "none"
-    onboot: "no"
+    onboot: "yes"
+    ipaddress: "10.9.57.224"
+    netmask: "255.255.254.0"  # */23*
     type: "Ethernet"
   em3:  # not connected
     bootproto: "none"

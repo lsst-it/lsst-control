@@ -1,0 +1,88 @@
+---
+network::interfaces_hash:
+  em1:  # bond0
+    bootproto: "none"
+    master: "bond0"
+    slave: "yes"
+    nm_controlled: "no"
+  em2:  # bond0
+    bootproto: "none"
+    master: "bond0"
+    slave: "yes"
+    nm_controlled: "no"
+  em3:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em4:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p1:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p2:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  bond0:  # fqdn
+    bonding_master: "yes"
+    bonding_opts: "mode=4 miimon=100"
+    bootproto: "dhcp"
+    defroute: "yes"
+    nm_controlled: "no"
+    nozeroconf: "yes"
+    type: "Bond"
+  bond0.1201:  # 139.229.166.0/24
+    bootproto: "none"
+    ipaddress: "139.229.166.10"
+    netmask: "255.255.255.0"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
+
+# 139.229.146.0/24    antu
+# 139.229.160.0/24    cp general & andes
+# 139.229.165.0/24    cp archive
+# 139.229.175.128/25  auxtel-ccs
+nfs::nfs_v4_export_root_clients: >-
+  %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.146.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.160.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.165.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.175.128/25(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+nfs::nfs_exports_global:
+  /data/lsstdata:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.146.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.160.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.165.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.128/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  # sanity check mounts
+  /net/self/data/lsstdata:
+    share: "lsstdata"
+    server: "%{facts.fqdn}"
+    atboot: true
+  # remote mounts
+  /net/project:
+    share: "project"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/scratch:
+    share: "scratch"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/lsstdata:
+    share: "lsstdata"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/home:
+    share: "home"
+    server: "nfs1.cp.lsst.org"
+    atboot: true

@@ -5,3 +5,23 @@ ccs_software::services:
   prod:
     - "bonn-shutter"
     - "comcam-fcs"
+
+network::interfaces_hash:
+  eno1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  enp6s0:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  enp7s0:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  enp8s0:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"

@@ -6,7 +6,7 @@ classes:
   - "docker::networks"
 
 docker::networks::networks:
-  control-network:
+  dds-network:
     ensure: "present"
     driver: "macvlan"
     subnet: "139.229.167.0/24"

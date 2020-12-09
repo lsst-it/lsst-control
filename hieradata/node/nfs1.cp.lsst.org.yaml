@@ -1,16 +1,12 @@
 ---
-ccs_software::services:
-  prod:
-    - "rest-server"
-    - "localdb"
-
 network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"
     defroute: "yes"
+    nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
-  em2:  # not connected
+  em2:  # connected to same dds vlan as em1; shutdown
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"

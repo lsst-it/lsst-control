@@ -1,0 +1,32 @@
+---
+# XXX nfs mounts should be moved to the role or cluster level once those are determined
+classes:
+  - "profile::core::nfsclient"
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /data:
+    share: "data"
+    server: "atsdaq1.cp.lsst.org"
+    atboot: true
+
+network::interfaces_hash:
+  eno1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  enp6s0:  # 192.168.1.0/24
+    bootproto: "none"
+    ipaddress: "192.168.1.1"
+    netmask: "255.255.255.0"
+    onboot: "yes"
+    type: "Ethernet"
+  enp7s0:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  enp8s0:  # not connected / was connected to a PDU
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"

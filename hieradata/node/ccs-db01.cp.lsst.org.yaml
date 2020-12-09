@@ -1,9 +1,4 @@
 ---
-ccs_software::services:
-  prod:
-    - "rest-server"
-    - "localdb"
-
 network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"

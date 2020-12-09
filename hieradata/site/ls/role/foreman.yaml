@@ -31,7 +31,7 @@ dhcp::pools:
     gateway: "139.229.140.1"
     range: "139.229.140.24 139.229.140.30"  # ~ /30
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  bdc-teststand-sal:  # vlan2301
+  bdc-teststand-dds:  # vlan2301
     network: "139.229.145.0"
     mask: "255.255.255.0"
     gateway: "139.229.145.254"
@@ -43,7 +43,7 @@ dhcp::pools:
     gateway: "139.229.146.254"
     range: "139.229.146.225 139.229.146.253"  # ~ /27
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  base-control:  # https://jira.lsstcorp.org/browse/IT-1679
+  dds-base:  # https://jira.lsstcorp.org/browse/IT-1679
     network: "139.229.147.0"
     mask: "255.255.255.0"
     gateway: "139.229.147.254"

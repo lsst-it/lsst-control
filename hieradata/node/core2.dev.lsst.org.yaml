@@ -29,11 +29,11 @@ network::interfaces_hash:
     type: "Ethernet"
   p1p2.2101:
     bootproto: "dhcp"
-    onboot: "yes"
-    vlan: "yes"
     bridge: "br2101"
-    type: "none"
     nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
   br2101:
     bootproto: "none"
     onboot: "yes"

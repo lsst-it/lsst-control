@@ -6,6 +6,7 @@ profile::core::debugutils::packages:
   - "iftop"
   - "iperf"
   - "iperf3"
+  - "lsof"
   - "mtr"
   - "net-tools"
   - "nmap"

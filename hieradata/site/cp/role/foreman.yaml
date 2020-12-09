@@ -87,7 +87,7 @@ dhcp::pools:
     range:
       - "139.229.165.200 139.229.165.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  cds-arch-sal:
+  cds-arch-dds:
     network: "139.229.166.0"
     mask: "255.255.255.0"
     gateway: "139.229.166.254"
@@ -100,7 +100,7 @@ dhcp::pools:
     range:
       - "139.229.167.241 139.229.167.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  control_auxtel:
+  dds_auxtel:
     network: "139.229.170.0"
     mask: "255.255.255.0"
     gateway: "139.229.170.254"

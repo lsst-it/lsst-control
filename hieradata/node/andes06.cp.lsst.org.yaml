@@ -2,7 +2,5 @@
 network::interfaces_hash:
   bond0.1201:
     ipaddress: "139.229.166.9"
-    netmask: "255.255.255.0"
-  bond0.1301:
-    ipaddress: "139.229.167.243"
-    netmask: "255.255.255.0"
+  bond0.1400:
+    ipaddress: "139.229.170.16"

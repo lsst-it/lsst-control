@@ -4,3 +4,17 @@ network::interfaces_hash:
     ipaddress: "139.229.166.7"
   bond0.1400:
     ipaddress: "139.229.170.14"
+  enp59s0f0:
+    bootproto: "none"
+    master: "bond0"
+    slave: "yes"
+    nm_controlled: "no"
+  enp59s0f1:
+    bootproto: "none"
+    master: "bond0"
+    slave: "yes"
+    nm_controlled: "no"
+  p2p1:
+    ensure: "absent"
+  p2p2:
+    ensure: "absent"

@@ -1,6 +1,7 @@
 ---
 classes:
   - "profile::core::common"
+  - "profile::core::debugutils"
   - "docker"
   - "python"
   - "docker::networks"

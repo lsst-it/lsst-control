@@ -1,6 +1,7 @@
 ---
 classes:
   - "profile::core::common"
+  - "profile::core::debugutils"
   - "docker"
   - "python"
   - "docker::networks"
@@ -9,8 +10,8 @@ docker::networks::networks:
   dds-network:
     ensure: "present"
     driver: "macvlan"
-    subnet: "139.229.167.0/24"
-    gateway: "139.229.167.254"
+    subnet: "139.229.170.0/24"
+    gateway: "139.229.170.254"
     options: ["parent=bond0"]
 
 # disabling the kernel version check is needed on el7

@@ -1,4 +1,4 @@
 ---
 network::interfaces_hash:
   bond0:
-    ipaddress: "139.229.167.16"
+    ipaddress: "139.229.170.36"

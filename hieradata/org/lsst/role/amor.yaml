@@ -12,7 +12,7 @@ docker::networks::networks:
     driver: "macvlan"
     subnet: "139.229.170.0/24"
     gateway: "139.229.170.254"
-    options: ["parent=bond0"]
+    options: ["parent=p2p1"]
 
 # disabling the kernel version check is needed on el7
 docker::overlay2_override_kernel_check: true

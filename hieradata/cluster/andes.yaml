@@ -5,54 +5,53 @@ network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"
     defroute: "yes"
+    nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
   em2:  # not connected
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-  p2p1:
+  p2p1:  # trunk
     bootproto: "none"
-    master: "bond0"
-    slave: "yes"
-    nm_controlled: "no"
+    onboot: "yes"
+    type: "Ethernet"
+  p2p1.1201:  # 139.229.166.0/24
+    bootproto: "none"
+    defroute: "no"
+    netmask: "255.255.255.0"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
+  p2p1.1400:  # 139.229.170.0/24
+    bootproto: "none"
+    defroute: "no"
+    netmask: "255.255.255.0"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
   p2p1.1300:
     ensure: "absent"
   p2p1.1301:
     ensure: "absent"
-  p2p2:
+  p2p2:  # not connected; was bond0
     bootproto: "none"
-    master: "bond0"
-    slave: "yes"
-    nm_controlled: "no"
+    onboot: "no"
+    type: "Ethernet"
   bond0:
-    type: "Bond"
-    bootproto: "none"
-    bonding_opts: "mode=4 miimon=100"
-    bonding_master: "yes"
-    nm_controlled: "no"
-  bond0.1201:  # 139.229.166.0/24
-    bootproto: "none"
-    defroute: "no"
-    netmask: "255.255.255.0"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "none"
-    vlan: "yes"
-  bond0.1400:  # 139.229.170.0/24
-    bootproto: "none"
-    defroute: "no"
-    netmask: "255.255.255.0"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "none"
-    vlan: "yes"
+    ensure: "absent"
+  bond0.1201:
+    ensure: "absent"
   bond0.1300:
     ensure: "absent"
   bond0.1301:
     ensure: "absent"
-network::mroutes_hash:
   bond0.1400:
+    ensure: "absent"
+network::mroutes_hash:
+  p2p1.1400:
     routes:
       "139.229.147.0/24": "139.229.170.254"
       #"139.229.166.0/24": "139.229.170.254"
@@ -66,6 +65,9 @@ network::mroutes_hash:
     ensure: "absent"
     routes: {}
   bond0.1301:
+    ensure: "absent"
+    routes: {}
+  bond0.1400:
     ensure: "absent"
     routes: {}
 yum::managed_repos:

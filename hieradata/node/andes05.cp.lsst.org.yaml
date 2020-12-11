@@ -1,6 +1,6 @@
 ---
 network::interfaces_hash:
-  bond0.1201:
+  p2p1.1201:
     ipaddress: "139.229.166.8"
-  bond0.1400:
+  p2p1.1400:
     ipaddress: "139.229.170.15"

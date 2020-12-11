@@ -1,15 +1,15 @@
 ---
 network::interfaces_hash:
-  em1:  # bond0
+  em1:  # fqdn; was bond0
+    bootproto: "dhcp"
+    defroute: "yes"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # trunk; was bond0
     bootproto: "none"
-    master: "bond0"
-    slave: "yes"
-    nm_controlled: "no"
-  em2:  # bond0
-    bootproto: "none"
-    master: "bond0"
-    slave: "yes"
-    nm_controlled: "no"
+    onboot: "yes"
+    type: "Ethernet"
   em3:  # not connected
     bootproto: "none"
     onboot: "no"
@@ -26,15 +26,7 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-  bond0:  # fqdn
-    bonding_master: "yes"
-    bonding_opts: "mode=4 miimon=100"
-    bootproto: "dhcp"
-    defroute: "yes"
-    nm_controlled: "no"
-    nozeroconf: "yes"
-    type: "Bond"
-  bond0.1201:  # 139.229.166.0/24
+  em2.1201:  # 139.229.166.0/24
     bootproto: "none"
     ipaddress: "139.229.166.10"
     netmask: "255.255.255.0"
@@ -42,6 +34,24 @@ network::interfaces_hash:
     onboot: "yes"
     type: "none"
     vlan: "yes"
+  bond0:
+    ensure: "absent"
+  bond0.1201:
+    ensure: "absent"
+network::mroutes_hash:
+  p2p1.1400:
+    routes:
+      "139.229.147.0/24": "139.229.170.254"
+      #"139.229.166.0/24": "139.229.170.254"
+      "139.229.167.0/24": "139.229.170.254"
+      "139.229.170.0/24": "139.229.170.254"
+      "139.229.178.0/24": "139.229.170.254"
+  bond0:
+    ensure: "absent"
+    routes: {}
+  bond0.1201:
+    ensure: "absent"
+    routes: {}
 
 # 139.229.146.0/24    antu
 # 139.229.160.0/24    cp general & andes

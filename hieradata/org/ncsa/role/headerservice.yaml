@@ -10,4 +10,4 @@ classes:
 
 
 profile::headerservice_conda::fitsio_version: "1.0.4"
-profile::headerservice_conda::headerservice_version: "2.5.4"
+profile::headerservice_conda::headerservice_version: "2.6.0"

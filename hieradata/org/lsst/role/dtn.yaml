@@ -1,19 +1,8 @@
 ---
 classes:
-  - "sudo"
-  - "accounts"
-  - "puppet_agent"
-  - "ssh"
-  - "easy_ipa"
-  - "rsyslog"
-  - "profile::icinga::agent"
+  - "profile::core::common"
 
-ssh::server_options:
-  Port: 2712
-sudo::configs:
-  wheel_b:
-    content: "%wheel_b ALL=(ALL) NOPASSWD: ALL"
-
+profile::core::common::manage_firewall: false
 profile::core::common::deploy_icinga_agent: true
 profile::icinga::agent::host_template: "DtnTemplate"
 profile::icinga::agent::icinga_master_fqdn: "icinga-master.ls.lsst.org"

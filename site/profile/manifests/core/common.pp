@@ -4,6 +4,9 @@
 # @param deploy_icinga_agent
 #   Enables or disable the installation of icinga agent on the node
 #
+# @param manage_firewall
+#   Whether or not to include the firewall class
+#
 # @param manage_puppet_agent
 #   Whether or not to include the puppet_agent class
 #
@@ -37,12 +40,12 @@ class profile::core::common(
   Boolean $manage_ldap = true,
   Boolean $manage_ipa = true,
   Boolean $disable_ipv6 = false,
+  Boolean $manage_firewall = true,
 ) {
   include accounts
   include augeas
   include easy_ipa
   include epel
-  include firewall
   include irqbalance
   include network
   include profile::core::dielibwrapdie
@@ -62,6 +65,10 @@ class profile::core::common(
 
   if $deploy_icinga_agent {
     include profile::icinga::agent
+  }
+
+  if $manage_firewall {
+    include firewall
   }
 
   if $manage_puppet_agent {

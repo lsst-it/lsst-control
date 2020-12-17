@@ -1,0 +1,15 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::net_dx"
+network::interfaces_hash:
+  ens192:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  ens224:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"

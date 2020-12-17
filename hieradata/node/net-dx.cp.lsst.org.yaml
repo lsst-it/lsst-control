@@ -11,5 +11,7 @@ network::interfaces_hash:
     type: "Ethernet"
   ens224:  # not connected
     bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
+    defroute: "no"
+    ipaddress: "192.168.251.239"
+    netmask: "255.255.255.0"
+    onboot: "yes"

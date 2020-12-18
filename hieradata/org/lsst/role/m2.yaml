@@ -2,4 +2,5 @@
 classes:
   - "profile::core::common"
   - "profile::core::debugutils"
+  - "profile::core::ni_packages"
   - "x2go"

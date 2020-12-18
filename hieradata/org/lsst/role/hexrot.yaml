@@ -2,6 +2,7 @@
 classes:
   - "profile::core::common"
   - "profile::core::debugutils"
+  - "profile::core::ni_packages"
   - "docker"
   - "python"
   - "x2go"

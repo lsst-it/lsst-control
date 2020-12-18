@@ -1,0 +1,18 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::net_dx"
+network::interfaces_hash:
+  ens192:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  ens224:  # not connected
+    bootproto: "none"
+    defroute: "no"
+    ipaddress: "192.168.251.239"
+    netmask: "255.255.255.0"
+    gateway: "192.168.251.240"
+    onboot: "yes"

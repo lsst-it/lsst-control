@@ -5,14 +5,21 @@ classes:
 network::interfaces_hash:
   ens192:  # fqdn
     bootproto: "dhcp"
-    defroute: "yes"
+    defroute: "no"
     nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
-  ens224:  # not connected
+  ens224:  # CTIO backup
     bootproto: "none"
-    defroute: "no"
+    defroute: "yes"
     ipaddress: "192.168.251.239"
     netmask: "255.255.255.0"
-    gateway: "192.168.251.240"
+    gateway: "192.168.251.1"
     onboot: "yes"
+    dns_nameservers: "8.8.8.8 8.8.4.4"
+network::mroutes_hash:
+  ens192:
+    routes:
+      "139.229.130.0/19": "139.229.160.254"
+      "198.19.2.0/24": "139.229.160.254"
+      "198.19.100.0/24": "139.229.160.254"

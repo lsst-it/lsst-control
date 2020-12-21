@@ -118,6 +118,32 @@ class profile::icinga::agent(
         | CONTENT
     }
   }
+    if ($icinga_agent_fqdn =='net-dx.cp.lsst.org') {
+    archive {'/usr/lib64/nagios/plugins/check_netio2':
+      ensure => present,
+      source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
+    }
+    ->file { '/usr/lib64/nagios/plugins/check_netio2':
+      owner => 'root',
+      group => 'icinga',
+      mode  => '4755',
+    }
+    ->file {'/etc/icinga2/features-enabled/netio2.conf':
+      ensure  => 'present',
+      owner   => 'icinga',
+      group   => 'icinga',
+      mode    => '0640',
+      notify  => Service['icinga2'],
+      content => @("CONTENT")
+        object CheckCommand "netio2" {
+          command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
+          arguments = {
+            "-i" = "ens224"
+          }
+        }
+        | CONTENT
+    }
+  }
   #Memory Usage
   archive {'/usr/lib64/nagios/plugins/check_mem.pl':
     ensure => present,

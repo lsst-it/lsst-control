@@ -75,6 +75,7 @@ class profile::icinga::resources (
   $host_svc_disk_name   = "Host${disk_svc}"
   $host_svc_ssh_name    = "Host${ssh_svc}"
   $host_svc_ntp_name    = "Host${ntp_svc}"
+  $host_svc_nic2_name   = "Host${nic2_svc}"
   $comcam_svc_ping_name = "Comcam${ping_svc}"
   $comcam_svc_disk_name = "Comcam${disk_svc}"
   $comcam_svc_ssh_name  = "Comcam${ssh_svc}"
@@ -151,6 +152,7 @@ class profile::icinga::resources (
     "${host_template},${$disk_svc_template_name},${host_svc_disk_name}",
     "${host_template},${$ssh_svc_template_name},${host_svc_ssh_name}",
     "${host_template},${$ntp_svc_template_name},${host_svc_ntp_name}",
+    "net-dx.cp.lsst.org,${$nic2_svc_template_name},${host_svc_nic2_name}",
     "${comcam_template},${$ping_svc_template_name},${comcam_svc_ping_name}",
     "${comcam_template},${$disk_svc_template_name},${comcam_svc_disk_name}",
     "${comcam_template},${$ssh_svc_template_name},${comcam_svc_ssh_name}",

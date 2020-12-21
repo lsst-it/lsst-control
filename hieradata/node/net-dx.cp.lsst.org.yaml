@@ -17,3 +17,7 @@ network::interfaces_hash:
     gateway: "192.168.251.1"
     onboot: "yes"
     dns_nameservers: "8.8.8.8 8.8.4.4"
+network::mroutes_hash:
+  ens192:
+    routes:
+      "139.229.130.0/19": "139.229.160.254"

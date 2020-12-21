@@ -11,6 +11,7 @@ nfs::nfs_v4_export_root_clients: >-
   139.229.165.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.175.0/26(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.175.128/25(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.191.0/25(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
 nfs::nfs_exports_global:
   /data/home:
     clients: >-
@@ -53,6 +54,12 @@ nfs::nfs_exports_global:
       139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
+  /data/dimm:
+    clients: >-
+      %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.191.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
 
 files:
   /data/project/shared:
@@ -75,7 +82,7 @@ files:
     ensure: "directory"
     mode: "2775"
     owner: 0
-    group: 768  # jovyan, in the LSP context
+    group: 768  # jovyan, in the LSP context  
 
 nfs::client_enabled: true
 nfs::client_mounts:
@@ -97,5 +104,9 @@ nfs::client_mounts:
     atboot: true
   /net/self/data/scratch:
     share: "scratch"
+    server: "%{facts.fqdn}"
+    atboot: true
+  /net/self/dimm:
+    share: "dimm"
     server: "%{facts.fqdn}"
     atboot: true

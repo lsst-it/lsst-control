@@ -118,7 +118,7 @@ class profile::icinga::agent(
         | CONTENT
     }
   }
-    if ($icinga_agent_fqdn =='net-dx.cp.lsst.org') {
+  if ($icinga_agent_fqdn =='net-dx.cp.lsst.org') {
     archive {'/usr/lib64/nagios/plugins/check_netio2':
       ensure => present,
       source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',

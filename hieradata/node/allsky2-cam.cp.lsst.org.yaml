@@ -1,0 +1,15 @@
+---
+classes:
+ - "profile::core::nfsclient"
+
+files:
+  /dimm:
+    ensure: "directory"
+    mode: "1777"
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /dimm:
+    share: "dimm"
+    server: "nfs1.cp.lsst.org"
+    atboot: true

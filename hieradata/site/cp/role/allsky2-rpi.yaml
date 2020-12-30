@@ -1,0 +1,5 @@
+---
+classes:
+ - "profile::core::common"
+
+profile::core::common::deploy_icinga_agent: false

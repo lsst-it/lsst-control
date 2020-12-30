@@ -1,11 +1,12 @@
+---
 classes:
  - "profile::core::nfsclient"
+
 files:
   /dimm:
     ensure: "directory"
-    mode: "1775"
+    mode: "1777"
 
-profile::core::common::deploy_icinga_agent: false
 nfs::client_enabled: true
 nfs::client_mounts:
   /dimm:

@@ -1,3 +1,6 @@
+classes:
+ - "profile::core::nfsclient"
+
 profile::core::common::deploy_icinga_agent: false
 nfs::client_enabled: true
 nfs::client_mounts:

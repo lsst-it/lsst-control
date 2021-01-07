@@ -5,8 +5,8 @@ classes:
   - "profile::core::puppet_master"
   - "dhcp"
 
-dhcp::default_lease_time: 43200
-dhcp::max_lease_time: 86400
+dhcp::default_lease_time: &lease_time 900
+dhcp::max_lease_time: *lease_time
 dhcp::ddns_update_style: "none"
 dhcp::logfacility: "daemon"
 dhcp::bootp: true

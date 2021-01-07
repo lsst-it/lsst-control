@@ -19,7 +19,6 @@ network::interfaces_hash:
   p2p1.1400:  # 139.229.170.0/24
     bootproto: "none"
     defroute: "no"
-    netmask: "255.255.255.0"
     nozeroconf: "yes"
     onboot: "yes"
     type: "none"
@@ -45,14 +44,10 @@ network::interfaces_hash:
   bond0.1400:
     ensure: "absent"
 network::mroutes_hash:
-  p2p1.1400:
-    routes:
-      "139.229.147.0/24": "139.229.170.254"
-      "139.229.166.0/24": "139.229.170.254"
-      "139.229.167.0/24": "139.229.170.254"
-      #"139.229.170.0/24": "139.229.170.254"
-      "139.229.178.0/24": "139.229.170.254"
   p2p1.1201:
+    ensure: "absent"
+    routes: {}
+  p2p1.1400:
     ensure: "absent"
     routes: {}
   bond0.1201:

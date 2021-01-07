@@ -92,7 +92,7 @@ dhcp::pools:
     mask: "255.255.255.0"
     gateway: "139.229.170.254"
     range:
-      - "139.229.170.64 139.229.170.127"  # ~/26
+      - "139.229.170.64 139.229.170.191"  # ~/25
     search_domains: "%{alias('dhcp::dnsdomain')}"
   ccs_pathfinder:
     network: "139.229.174.0"

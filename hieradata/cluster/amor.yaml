@@ -10,10 +10,10 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-  p2p1:
+  p2p1:  # 139.229.170.0/24
     bootproto: "none"
     defroute: "no"
-    netmask: "255.255.255.0"
+    nozeroconf: "yes"
     onboot: "yes"
   p2p2:  # not connected; was bond0
     bootproto: "none"
@@ -24,12 +24,8 @@ network::interfaces_hash:
 
 network::mroutes_hash:
   p2p1:
-    routes:
-      "139.229.147.0/24": "139.229.170.254"
-      "139.229.166.0/24": "139.229.170.254"
-      "139.229.167.0/24": "139.229.170.254"
-      #"139.229.170.0/24": "139.229.170.254"
-      "139.229.178.0/24": "139.229.170.254"
+    ensure: "absent"
+    routes: {}
   bond0:
     ensure: "absent"
     routes: {}

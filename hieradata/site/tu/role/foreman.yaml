@@ -1,7 +1,6 @@
 ---
 classes:
   - "profile::core::sysctl::rp_filter"
-  - "dhcp"
 
 profile::core::sysctl::rp_filter::enable: false
 dhcp::interfaces:
@@ -9,17 +8,7 @@ dhcp::interfaces:
   - "eth4"
   - "eth5"
   - "eth6"
-dhcp::default_lease_time: 43200
-dhcp::max_lease_time: 86400
 dhcp::authoritative: false
-dhcp::ddns_update_style: "none"
-dhcp::logfacility: "daemon"
-# The following keys are defined in `site/cp.yaml` as they are shared between
-# the `dhcp`, `resolv_conf`, and `chrony` classes:
-# - dhcp::dnsdomain
-# - dhcp::nameservers
-# - dhcp::ntpservers
-dhcp::bootp: true
 dhcp::pxeserver: "140.252.34.132"
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:

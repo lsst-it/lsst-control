@@ -25,6 +25,7 @@ network::interfaces_hash:
     type: "Ethernet"
   p2p2:  # not connected
     bootproto: "none"
+    nozeroconf: "yes"
     onboot: "no"
     type: "Ethernet"
   em2.1201:  # 139.229.166.0/24

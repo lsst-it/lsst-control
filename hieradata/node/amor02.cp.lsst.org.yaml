@@ -1,4 +1,0 @@
----
-network::interfaces_hash:
-  p2p1:
-    ipaddress: "139.229.170.37"

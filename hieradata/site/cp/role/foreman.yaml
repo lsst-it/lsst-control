@@ -1,21 +1,8 @@
 ---
-classes:
-  - "dhcp"
-
 dhcp::interfaces:
   - "eth0"
 
-dhcp::default_lease_time: 43200
-dhcp::max_lease_time: 86400
 dhcp::authoritative: true
-dhcp::ddns_update_style: "none"
-dhcp::logfacility: "daemon"
-# The following keys are defined in `site/cp.yaml` as they are shared between
-# the `dhcp`, `resolv_conf`, and `chrony` classes:
-# - dhcp::dnsdomain
-# - dhcp::nameservers
-# - dhcp::ntpservers
-dhcp::bootp: true
 dhcp::pxeserver: "139.229.160.5"  # foreman
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:
@@ -105,7 +92,7 @@ dhcp::pools:
     mask: "255.255.255.0"
     gateway: "139.229.170.254"
     range:
-      - "139.229.170.64 139.229.170.127"  # ~/26
+      - "139.229.170.64 139.229.170.191"  # ~/25
     search_domains: "%{alias('dhcp::dnsdomain')}"
   ccs_pathfinder:
     network: "139.229.174.0"

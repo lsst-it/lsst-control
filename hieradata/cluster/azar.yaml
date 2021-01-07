@@ -33,7 +33,7 @@ network::interfaces_hash:
     onboot: "no"
     type: "Ethernet"
   em2.1400:  # 139.229.170.0/24
-    bootproto: "dhcp"
+    bootproto: "none"
     defroute: "no"
     nozeroconf: "yes"
     onboot: "yes"
@@ -41,12 +41,8 @@ network::interfaces_hash:
     vlan: "yes"
 network::mroutes_hash:
   em2.1400:
-    routes:
-      "139.229.147.0/24": "139.229.170.254"
-      "139.229.166.0/24": "139.229.170.254"
-      "139.229.167.0/24": "139.229.170.254"
-      #"139.229.170.0/24": "139.229.170.254"
-      "139.229.178.0/24": "139.229.170.254"
+    ensure: "absent"
+    routes: {}
 
 nfs::client_enabled: true
 nfs::client_mounts:

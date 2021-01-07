@@ -8,15 +8,6 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-  enp59s0f0.1201:  # 139.229.166.0/24
-    bootproto: "none"
-    defroute: "no"
-    ipaddress: "139.229.166.7"
-    netmask: "255.255.255.0"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "none"
-    vlan: "yes"
   enp59s0f0.1400:  # 139.229.170.0/24
     bootproto: "none"
     defroute: "no"
@@ -26,7 +17,11 @@ network::interfaces_hash:
     onboot: "yes"
     type: "none"
     vlan: "yes"
+  enp59s0f0.1201:
+    ensure: "absent"
   p2p1:
+    ensure: "absent"
+  p2p1.1201:
     ensure: "absent"
   p2p2:
     ensure: "absent"
@@ -34,7 +29,10 @@ network::mroutes_hash:
   enp59s0f0.1400:
     routes:
       "139.229.147.0/24": "139.229.170.254"
-      #"139.229.166.0/24": "139.229.170.254"
+      "139.229.166.0/24": "139.229.170.254"
       "139.229.167.0/24": "139.229.170.254"
       #"139.229.170.0/24": "139.229.170.254"
       "139.229.178.0/24": "139.229.170.254"
+  bond0.1400:
+    ensure: "absent"
+    routes: {}

@@ -1,16 +1,8 @@
 ---
-classes:
-  - "dhcp"
-
 dhcp::interfaces:
   - "eth0"
 
-dhcp::default_lease_time: 43200
-dhcp::max_lease_time: 86400
 dhcp::authoritative: true
-dhcp::ddns_update_style: "none"
-dhcp::logfacility: "daemon"
-dhcp::bootp: true
 dhcp::pxeserver: "139.229.134.5"  # foreman.dev.lsst.org
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:

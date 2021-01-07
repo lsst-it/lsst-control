@@ -3,6 +3,14 @@ classes:
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::puppet_master"
+  - "dhcp"
+
+dhcp::default_lease_time: 43200
+dhcp::max_lease_time: 86400
+dhcp::ddns_update_style: "none"
+dhcp::logfacility: "daemon"
+dhcp::bootp: true
+
 cron::job:
   r10k:
     command: "systemd-cat -t 'r10k-cron' /opt/puppetlabs/puppet/bin/r10k deploy environment -t -p"

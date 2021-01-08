@@ -1,0 +1,25 @@
+---
+packages:
+  - "perccli"  # from dell repo
+yum::managed_repos:
+  - "dell"
+yum::repos:
+  "dell":
+    ensure: "present"
+    descr: "Dell"
+    enabled: true
+    baseurl: "https://repo-nexus.lsst.org/nexus/repository/dell/"
+    gpgcheck: false
+    target: "/etc/yum.repos.d/dell.repo"
+
+docker::version: "19.03.13"
+profile::app::rke::version: "1.2.3"
+
+files:
+  # opensplice daemons/client running in pods as `saluser` use hostPath to share a
+  # path to a unix domain socket
+  /run/ospl:
+    ensure: "directory"
+    owner: 73006
+    group: 73006
+    mode: "0755"

@@ -22,3 +22,9 @@ python::python_pips:
   "docker-compose":
     virtualenv: "system"
     ensure: "1.25.0"
+files:
+  "/var/log/iip":
+    ensure: "directory"
+    mode: "0755"
+    owner: "iip"
+    group: "iip"

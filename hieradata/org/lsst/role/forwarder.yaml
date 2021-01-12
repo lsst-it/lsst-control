@@ -29,3 +29,8 @@ files:
     mode: "0755"
     owner: "iip"
     group: "iip"
+  "/var/tmp/data":
+    ensure: "directory"
+    mode: "0755"
+    owner: "iip"
+    group: "iip"

@@ -101,3 +101,9 @@ nfs::client_mounts:
     share: "home"
     server: "nfs1.cp.lsst.org"
     atboot: true
+
+profile::core::k5login::k5login:
+  "/home/saluser/.k5login":
+    ensure: "present"
+    principals:
+      - "iip/comcam-fwd02.cp.lsst.org@LSST.CLOUD"

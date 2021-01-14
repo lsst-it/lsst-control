@@ -238,9 +238,11 @@ sssd::domains:
 sssd::services:
   nss:
     homedir_substring: "/home"
-  sudo: {}
-  pam: {}
+  pam:
+    pam_response_filter:
+      - "ENV:KRB5CCNAME:sudo-i"
   ssh: {}
+  sudo: {}
 sssd::package_name:
   - "sssd"
   - "sssd-tools"  # not installed by default

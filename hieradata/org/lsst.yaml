@@ -234,7 +234,7 @@ sssd::domains:
     ipa_server:
       - "_srv_"
       - "%{lookup('easy_ipa::ipa_master_fqdn')}"
-    dns_discovery_domain: "%{lookup('easy_ipa::domain')}"
+    dns_discovery_domain: "%{::site}._locations.%{lookup('easy_ipa::domain')}"
 sssd::services:
   nss:
     homedir_substring: "/home"

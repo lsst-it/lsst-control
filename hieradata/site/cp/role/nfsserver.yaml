@@ -74,7 +74,9 @@ files:
     group: 768  # jovyan, in the LSP context
   /data/project/shared/auxTel/_parent:
     ensure: "link"
-    target: "/readonly/repo"
+    target: "/readonly/lsstdata/auxtel/base/auxtel/oods/butler/repo"
+    owner: 0
+    group: 0
   /data/project/shared/auxTel/rerun:
     ensure: "directory"
     mode: "2775"

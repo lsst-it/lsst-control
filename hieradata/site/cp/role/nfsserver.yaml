@@ -84,7 +84,7 @@ files:
     ensure: "directory"
     mode: "2775"
     owner: 0
-    group: 768  # jovyan, in the LSP context  
+    group: 768  # jovyan, in the LSP context
 
 nfs::client_enabled: true
 nfs::client_mounts:

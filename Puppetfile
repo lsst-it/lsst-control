@@ -17,9 +17,7 @@ mod 'puppet/r10k', '8.0.0'
 mod 'puppetlabs/ruby', '1.0.1'
 mod 'camptocamp/systemd', '2.6.0'
 mod 'bodgit/scl', '1.0.1'
-mod 'theforeman/dhcp',
-  git: 'https://github.com/lsst-it/puppet-dhcp',
-  ref: 'c9304257d4a800008baa3406e453fc9393faf7b7'
+mod 'theforeman/dhcp', '6.1.0'
 mod 'theforeman/dns', '8.0.0'
 mod 'duritong/sysctl',
   git: 'https://github.com/lsst-it/puppet-sysctl',

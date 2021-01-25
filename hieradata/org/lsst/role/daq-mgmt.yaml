@@ -11,6 +11,7 @@ chrony::queryhosts:
 chrony::clientlog: true
 
 # dhcp for DAQ + clients
+dhcp::authoritative: true
 dhcp::interfaces:
   - "lsst-daq"
 dhcp::bootp: true

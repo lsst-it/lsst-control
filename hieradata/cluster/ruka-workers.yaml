@@ -9,12 +9,12 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-  p1p2:  # fqdn
+  p1p1:  # fqdn
     bootproto: "dhcp"
     defroute: "yes"
     onboot: "yes"
     type: "Ethernet"
-  p1p1:
+  p1p2:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"

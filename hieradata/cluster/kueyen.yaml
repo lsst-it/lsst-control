@@ -4,6 +4,8 @@ classes:
   - "profile::core::sysctl::disable_ipv6"
 packages:
   - "perccli"  # from dell repo
+
+profile::core::k8s::enable_dhcp: true
 profile::core::ifdown::interface: "em1"
 network::interfaces_hash:
   em1:  # only for PXE

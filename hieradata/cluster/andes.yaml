@@ -1,6 +1,8 @@
 ---
 packages:
   - "perccli"  # from dell repo
+
+profile::core::k8s::enable_dhcp: true
 network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"

@@ -29,4 +29,4 @@ yum::repos:
     gpgcheck: false
     target: "/etc/yum.repos.d/dell.repo"
 
-profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"
+profile::core::kernel::version: "3.10.0-1160.11.1.el7.x86_64"

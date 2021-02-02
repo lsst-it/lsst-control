@@ -1,12 +1,13 @@
 ---
 classes:
-  - "profile::core::common"
-  - "profile::core::kernel"
-  - "profile::core::kernel::pquota"
   - "profile::app::helm"
   - "profile::app::rke"
-  - "profile::core::kubecompletion"
+  - "profile::core::common"
   - "profile::core::debugutils"
+  - "profile::core::k8s"
+  - "profile::core::kernel"
+  - "profile::core::kernel::pquota"
+  - "profile::core::kubecompletion"
   - "docker"
   - "yum"
 packages:

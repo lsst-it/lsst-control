@@ -1,11 +1,11 @@
 ---
 network::interfaces_hash:
-  eth0:  # fqdn
+  ens192:  # fqdn
     bootproto: "dhcp"
     defroute: "yes"
     onboot: "yes"
     type: "Ethernet"
-  eth1:  # 10.255.211.65/25
+  ens224:  # 10.255.211.65/25
     ipaddress: "10.255.211.68"
     netmask: "255.255.255.128"
     onboot: "yes"

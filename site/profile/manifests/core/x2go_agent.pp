@@ -14,4 +14,7 @@ class profile::core::x2go_agent {
   package { $packages:
     ensure => 'present',
   }
+  yum::group { 'Mate':
+    ensure => present,
+  }
 }

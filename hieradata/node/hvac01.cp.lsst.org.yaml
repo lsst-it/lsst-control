@@ -1,7 +1,4 @@
 ---
-classes:
-  - "x2go"
-
 network::interfaces_hash:
   eth0:  # fqdn
     bootproto: "dhcp"

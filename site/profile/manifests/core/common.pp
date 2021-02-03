@@ -41,6 +41,7 @@ class profile::core::common(
   Boolean $manage_ipa = true,
   Boolean $disable_ipv6 = false,
   Boolean $manage_firewall = true,
+  Boolean $install_x2go = true,
 ) {
   include accounts
   include augeas
@@ -78,6 +79,10 @@ class profile::core::common(
 
   if $manage_chrony {
     include chrony
+  }
+
+  if $install_x2go {
+    include profile::core::x2go_agent
   }
 
   if $manage_sssd {

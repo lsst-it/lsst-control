@@ -41,7 +41,7 @@ class profile::core::common(
   Boolean $manage_ipa = true,
   Boolean $disable_ipv6 = false,
   Boolean $manage_firewall = true,
-  Boolean $install_x2go = true,
+  Boolean $install_x2go = false,
 ) {
   include accounts
   include augeas

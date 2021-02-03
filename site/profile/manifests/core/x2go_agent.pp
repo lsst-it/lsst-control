@@ -3,18 +3,13 @@
 
 class profile::core::x2go_agent {
 
-  $packages = [
+  include mate
+  ensure_packages([
     'x2goserver',
     'x2goclient',
     'x2goserver-common',
     'x2goserver-xsession',
-    'x2goagent',
-  ]
+    'x2goagent'
+  ])
 
-  package { $packages:
-    ensure => 'present',
-  }
-  yum::group { 'Mate':
-    ensure => present,
-  }
 }

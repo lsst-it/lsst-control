@@ -3,4 +3,5 @@
 ---
 classes:
   - profile::core::common
-  - profile::core::remote_desktop
+
+profile::core::common::install_x2go: true

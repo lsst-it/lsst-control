@@ -2,6 +2,5 @@
 # point to otherwise isolated networks.
 ---
 classes:
-  - profile::core::common
-
-profile::core::common::install_x2go: true
+  - "profile::core::common"
+  - "profile::core::x2go_agent"

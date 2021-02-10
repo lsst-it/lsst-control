@@ -1,0 +1,12 @@
+---
+network::interfaces_hash:
+  ens192:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  ens224:  # 10.255.211.65/25
+    ipaddress: "10.255.211.68"
+    netmask: "255.255.255.128"
+    onboot: "yes"
+    type: "Ethernet"

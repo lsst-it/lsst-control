@@ -2,4 +2,4 @@
 classes:
   - "profile::core::common"
   - "profile::core::debugutils"
-  - "x2go"
+  - "profile::core::x2go_agent"

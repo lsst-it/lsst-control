@@ -3,11 +3,9 @@
 #   Provides base packages for SAL/DDS diagnostics
 #
 
-class profile::ccs::sal_dx (
-  String $username,
-  String $password,
-)
-{
+class profile::ccs::sal_dx {
+  include profile::ccs::ts_repo
+
   $directory = '/opt/lsst-ts'
   $packages = [
     'vim',
@@ -31,15 +29,7 @@ class profile::ccs::sal_dx (
     ensure => 'present'
   }
 
-  yumrepo { 'ts_yum_private':
-    ensure   => 'present',
-    enabled  => true,
-    gpgcheck => false,
-    descr    => 'LSST Telescope and Site packages',
-    baseurl  => "https://${username}:${password}@repo-nexus.lsst.org/nexus/repository/ts_yum_private",
-    target   => '/etc/yum.repos.d/ts_yum_private.repo',
-  }
-  ->package { 'OpenSpliceDDS-6.10.4-2':
+  package { 'OpenSpliceDDS-6.10.4-2':
     ensure => 'present'
   }
 

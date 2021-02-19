@@ -31,7 +31,7 @@ class profile::ccs::sal_dx (
     baseurl  => "https://${username}:${password}@repo-nexus.lsst.org/nexus/repository/ts_yum_private",
     target   => '/etc/yum.repos.d/ts_yum_private.repo',
   }
-  ->package {'OpenSpliceDDS-6.10.4-6':
+  ->package {'OpenSpliceDDS-6.10.4-6.el7':
     ensure => present,
   }
 

@@ -22,6 +22,6 @@ yum::repos:
     target: "/etc/yum.repos.d/lsst-ts-test.repo"
 
 packages:
-  - "OpenSpliceDDS-6.9.0-1.el7"
+  - "OpenSpliceDDS-6.9.0-12.el7"
 
 profile::ccs::ts_repo::username: "lsst_jenkins"

@@ -1,22 +1,12 @@
 ---
+classes:
+  - "profile::core::common"
 network::interfaces_hash:
-  em1:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
   em2:
     bootproto: "none"
-    onboot: "no"
+    onboot: "yes"
     type: "Ethernet"
-  em3:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  em4:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
+    mtu: "9000"
   em2.1400:
     bootproto: "none"
     onboot: "yes"
@@ -24,7 +14,9 @@ network::interfaces_hash:
     bridge: "br1400"
     type: "none"
     nozeroconf: "yes"
+    mtu: "9000"
   br1400:
     bootproto: "none"
     onboot: "yes"
     type: "bridge"
+    mtu: "9000"

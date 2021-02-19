@@ -1,0 +1,14 @@
+---
+classes:
+  - "profile::ccs::sal_dx"
+  - "profile::core::x2go_agent"
+
+network::interfaces_hash:
+  eth0:
+    bootproto: "dhcp"
+    onboot: "yes"
+    type: "Ethernet"
+    mtu: "9000"
+
+profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"
+profile::ccs::sal_dx::username: "lsst_jenkins"

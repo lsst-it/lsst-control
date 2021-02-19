@@ -20,16 +20,13 @@ class profile::ccs::sal_dx {
     'nethogs',
     'etherape',
     'iptraf-ng',
+    'OpenSpliceDDS-6.10.4-2',
   ]
 
   yum::group { 'Development Tools':
     ensure => present,
   }
   ->package { $packages:
-    ensure => 'present'
-  }
-
-  package { 'OpenSpliceDDS-6.10.4-2':
     ensure => 'present'
   }
 

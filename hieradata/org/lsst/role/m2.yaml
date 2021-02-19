@@ -7,4 +7,6 @@ classes:
   - "profile::ccs::ts_repo"
 
 packages:
-  - "OpenSpliceDDS-6.9.0-1"
+  - "OpenSpliceDDS-6.9.0-1.el7"
+
+profile::ccs::ts_repo::username: "lsst_jenkins"

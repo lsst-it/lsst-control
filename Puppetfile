@@ -72,7 +72,7 @@ mod 'puppet/ssh_keygen', '4.0.0'
 
 # This requires toml-rb, which should be installed on the puppet master.
 # @see profile::core::puppet_master
-mod 'puppet/telegraf', '3.0.0'
+mod 'puppet/telegraf', '4.0.0'
 mod 'puppetlabs-puppetserver_gem', '1.1.1'
 
 mod 'puppet/yum', '4.0.0'

@@ -114,7 +114,7 @@ mod 'lsst/ccs_hcu',
   ref: 'v0.1.0'
 mod 'lsst/ccs_monit',
   git: 'https://github.com/lsst-it/puppet-ccs_monit.git',
-  ref: 'v0.1.1'
+  ref: 'v0.1.2'
 mod 'lsst/ccs_mrtg',
   git: 'https://github.com/lsst-it/puppet-ccs_mrtg.git',
   ref: 'v0.1.1'

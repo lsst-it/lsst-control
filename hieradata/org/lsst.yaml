@@ -295,4 +295,4 @@ profile::core::ipa::default:
 
 profile::core::monitoring::url: "https://it-influxdb.ls.lsst.org:8086"
 profile::core::monitoring::database: "monitoring"
-profile::core::monitoring::username: "telegraf"
+profile::core::monitoring::username: "lsstadmin"

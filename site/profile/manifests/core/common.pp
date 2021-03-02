@@ -41,6 +41,7 @@ class profile::core::common(
   Boolean $manage_ipa = true,
   Boolean $disable_ipv6 = false,
   Boolean $manage_firewall = true,
+  Boolean $install_telegraf = true,
 ) {
   include accounts
   include augeas
@@ -66,6 +67,10 @@ class profile::core::common(
 
   if $deploy_icinga_agent {
     include profile::icinga::agent
+  }
+
+  if $install_telegraf {
+    include profile::core::monitoring
   }
 
   if $manage_firewall {

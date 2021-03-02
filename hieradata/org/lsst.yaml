@@ -293,5 +293,6 @@ profile::core::ipa::default:
     xmlrpc_uri: "https://%{lookup('easy_ipa::ipa_master_fqdn')}/ipa/xml"
     enable_ra: "True"
 
+profile::core::monitoring:url: "http://it-influxdb.ls.lsst.org:8086"
 profile::core::monitoring:database: "telegraf"
 profile::core::monitoring:username: "telegraf"

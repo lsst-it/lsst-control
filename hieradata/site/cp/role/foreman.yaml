@@ -108,6 +108,13 @@ dhcp::pools:
     range:
       - "139.229.175.1 139.229.175.61"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  ccs_lsstcam:
+    network: "139.229.175.64"
+    mask: "255.255.255.192"
+    gateway: "139.229.175.126"
+    range:
+      - "139.229.175.65 139.229.175.125"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   ccs_test_app:
     network: "139.229.175.128"
     mask: "255.255.255.128"

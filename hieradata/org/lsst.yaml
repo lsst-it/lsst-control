@@ -292,3 +292,6 @@ profile::core::ipa::default:
     host: "%{facts.fqdn}"
     xmlrpc_uri: "https://%{lookup('easy_ipa::ipa_master_fqdn')}/ipa/xml"
     enable_ra: "True"
+
+profile::core::monitoring:database: "telegraf"
+profile::core::monitoring:username: "telegraf"

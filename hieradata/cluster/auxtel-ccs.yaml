@@ -1,4 +1,84 @@
 ---
+packages:
+  # ccs stuff
+  - "epel-release"
+  - "git"
+  - "rsync"
+  - "emacs"
+  - "nano"
+  - "screen"
+  - "attr"
+  - "parallel"
+  - "gcc"
+  - "gcc-c++"
+  - "gcc-gfortran"
+  - "bzip2"
+  - "cmake"
+  - "blas"
+  - "bison"
+  - "flex"
+  - "tcl"
+  - "tcl-devel"
+  ## TODO only on "development" nodes.
+  - "maven"
+  - "centos-release-scl-rh"
+  - "devtoolset-8"
+
 sudo::configs:
   auxtel_ccs_cmd:
     content: "%auxtel-ccs-cmd ALL=(ccs) NOPASSWD: ALL"
+
+ccs_software::jdk8::rpm: "jdk-8u202-linux-x64.rpm"
+ccs_software::jdk8::package: "jdk1.8"
+ccs_software::jdk8::dir: "jdk1.8.0_202-amd64"
+ccs_software::jdk8::version: "2000:1.8.0_202-fcs"
+
+profile::ccs::clustershell::config: "auxtel-local.cfg"
+
+## Temporary, until nexus works.
+ccs_pkgarchive: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"
+
+
+ccs_monit::mailhost: "mail.lsst.org"
+## FIXME: new channel for auxtel
+ccs_monit::alert:
+  ## comcam-alerts
+  - "x7z0x9c0t2k4r1n1@lsstc.slack.com"
+
+java_artisanal::package: "jdk1.8"
+java_artisanal::dir: "jdk1.8.0_202-amd64"
+
+accounts::group_list:
+  lsstadm:
+    gid: 24000  # XXX reserve GID
+
+accounts::user_list:
+  ccs:
+    uid: 23000  # XXX 62000
+    gid: 23000
+    groups:
+      - "dialout"
+      - "lsstadm"
+    comment: "CCS Operator Account"
+  ccsadm:
+    uid: 23010  # XXX 62001
+    gid: 23010
+    groups:
+      - "lsstadm"
+    comment: "CCS Administrative Account"
+
+# XXX should all hosts be a desktop?
+ccs_software::desktop: true
+ccs_software::env: "ComCam"
+ccs_software::installations:
+  comcam-software-1.0.3:
+    aliases:
+      - "puppet-1.0.3"
+
+  comcam-software-1.0.5:
+    aliases:
+      - "puppet-1.0.5"
+
+  comcam-software-1.0.6:
+    aliases:
+      - "puppet-1.0.6"

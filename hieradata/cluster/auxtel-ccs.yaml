@@ -40,10 +40,8 @@ ccs_pkgarchive: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"
 
 
 ccs_monit::mailhost: "mail.lsst.org"
-## FIXME: new channel for auxtel
 ccs_monit::alert:
-  ## comcam-alerts
-  - "x7z0x9c0t2k4r1n1@lsstc.slack.com"
+  - "auxtel-ccs-alerts-aaaadjkgtdl6pb2omvdi732xci@lsstc.slack.com"
 
 java_artisanal::package: "jdk1.8"
 java_artisanal::dir: "jdk1.8.0_202-amd64"

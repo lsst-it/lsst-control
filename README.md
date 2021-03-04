@@ -1,4 +1,4 @@
 lsst-itconf
 ===
 
-[![Build Status](https://travis-ci.org/lsst-it/lsst-itconf.png)](https://travis-ci.org/lsst-it/lsst-itconf)
+[![Build Status](https://travis-ci.com/lsst-it/lsst-itconf.svg?branch=master)](https://travis-ci.com/lsst-it/lsst-itconf)

@@ -11,3 +11,5 @@ nfs::client_mounts:
     share: "data"
     server: "atsdaq1.cp.lsst.org"
     atboot: true
+
+ccs_monit::hwraid: false

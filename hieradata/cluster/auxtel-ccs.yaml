@@ -67,16 +67,8 @@ accounts::user_list:
 
 # XXX should all hosts be a desktop?
 ccs_software::desktop: true
-ccs_software::env: "ComCam"
+ccs_software::env: "ATS"
+## A safe default - use "ccs" or "daq" for specific hosts.
+ccs_software::hostname: "console"
 ccs_software::installations:
-  comcam-software-1.0.3:
-    aliases:
-      - "puppet-1.0.3"
-
-  comcam-software-1.0.5:
-    aliases:
-      - "puppet-1.0.5"
-
-  comcam-software-1.0.6:
-    aliases:
-      - "puppet-1.0.6"
+  master: {}

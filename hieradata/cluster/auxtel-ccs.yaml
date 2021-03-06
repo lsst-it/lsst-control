@@ -24,6 +24,23 @@ packages:
   - "centos-release-scl-rh"
   - "devtoolset-8"
 
+postfix::manage_root_alias: false
+postfix::inet_interfaces: "localhost"
+postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"
+postfix::relayhost: "[mail.lsst.org]:submission"
+postfix::mta: true
+postfix::configs:
+  smtp_sasl_auth_enable:
+    value: "yes"
+  smtp_tls_security_level:
+    value: "encrypt"
+  smtp_sasl_tls_security_options:
+    value: "noanonymous"
+  smtp_sasl_password_maps:
+    value: "hash:/etc/postfix/sasl_passwd"
+  smtp_sasl_mechanism_filter:
+    value: "plain, login"
+
 sudo::configs:
   auxtel_ccs_cmd:
     content: "%auxtel-ccs-cmd ALL=(ccs) NOPASSWD: ALL"

@@ -9,6 +9,7 @@ nfs::nfs_v4_export_root_clients: >-
   %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.146.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.160.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.163.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.165.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.170.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.175.0/26(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
@@ -59,6 +60,7 @@ nfs::nfs_exports_global:
     clients: >-
       %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.163.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.191.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)

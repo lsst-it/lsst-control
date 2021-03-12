@@ -14,18 +14,18 @@
 #
 class profile::headerservice_conda (
   Array  $allowed_subnets,
-  String $fitsio_version,
-  String $headerservice_version,
+  # String $fitsio_version,
+  # String $headerservice_version,
 ) {
 
   # CONDA PACKAGES
-  $conda_pkgs = [
-    'ipython',
-    'pyyaml',
-    "fitsio==${fitsio_version}",
-    "headerservice=${headerservice_version}",
-  ]
-  miniconda::package { $conda_pkgs : }
+  # $conda_pkgs = [
+  #   'ipython',
+  #   'pyyaml',
+  #   "fitsio==${fitsio_version}",
+  #   "headerservice=${headerservice_version}",
+  # ]
+  # miniconda::package { $conda_pkgs : }
 
   # FIREWALL
   $allowed_subnets.each | $source |

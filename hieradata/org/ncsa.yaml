@@ -84,9 +84,9 @@ python::pip: "present"
 python::python_pips:
   "docker-compose":
     virtualenv: "system"
-    ensure: "1.25.0"
+    ensure: "1.28.5"
 python::use_epel: false
-python::version: "python36"
+python::version: "python38"
 python::virtualenv: "present"
 
 rsyslog::use_upstream_repo: true

@@ -10,19 +10,19 @@ class profile::core::monitoring(
 ) {
 
   class { 'telegraf':
-    hostname => $facts['hostname'],
+    hostname => $facts['networking']['hostname'],
     outputs  => {
       'influxdb' => [{
-        'urls'     => [ $url ],
-        'database' => $database,
-        'username' => $username,
-        'password' => $password,
+          'urls'     => [ $url ],
+          'database' => $database,
+          'username' => $username,
+          'password' => $password,
       }]
     },
     inputs   => {
       'cpu'    => [{
-        'percpu'   => true,
-        'totalcpu' => true,
+          'percpu'   => true,
+          'totalcpu' => true,
       }],
       'mem'    => [{}],
       'io'     => [{}],

@@ -12,20 +12,6 @@ dhcp::pools:
     gateway: "139.229.158.254"
     range: "139.229.158.193 139.229.158.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  contractors_cp:
-    network: "139.229.191.0"
-    mask: "255.255.255.128"
-    gateway: "139.229.191.126"
-    range:
-      - "139.229.191.1 139.229.191.64"  # .65: dimm-laptop
-      - "139.229.191.66 139.229.191.100"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
-  guests_cp:
-    network: "139.229.191.128"
-    mask: "255.255.255.128"
-    gateway: "139.229.191.254"
-    range: "139.229.191.129 139.229.191.239"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
   guests_ls:
     network: "139.229.159.128"
     mask: "255.255.255.128"
@@ -66,6 +52,12 @@ dhcp::pools:
       - "139.229.163.1 139.229.163.239"
       # 139.229.163.240/28 is reserved for the network gateway and static
       # IP addresses.
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  Rubin_LHN:
+    network: "139.229.164.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.164.254"
+    range: "139.229.164.1 139.229.164.200"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   cds-arch:
     network: "139.229.165.0"
@@ -131,6 +123,21 @@ dhcp::pools:
       # host is statically allocated.
       - "139.229.178.2 139.229.178.62"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  contractors_cp:
+    network: "139.229.191.0"
+    mask: "255.255.255.128"
+    gateway: "139.229.191.126"
+    range:
+      - "139.229.191.1 139.229.191.64"  # .65: dimm-laptop
+      - "139.229.191.66 139.229.191.100"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  guests_cp:
+    network: "139.229.191.128"
+    mask: "255.255.255.128"
+    gateway: "139.229.191.254"
+    range: "139.229.191.129 139.229.191.239"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  
   it_ipmi_srv:
     network: "10.18.3.0"
     mask: "255.255.255.0"

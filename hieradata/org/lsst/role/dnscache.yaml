@@ -27,8 +27,9 @@ files:
     purge: false
 # forwarders/zones for ls,cp,dev but not tu
 dns::forwarders:
-  - "208.67.222.222"
-  - "208.67.220.220"
+  - "1.0.0.1"
+  - "1.1.1.1"
+  - "8.8.8.8"
 dns::allow_recursion:
   - "139.229.0.0/16"
   - "198.19.0.0/16"

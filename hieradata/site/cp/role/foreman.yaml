@@ -67,6 +67,12 @@ dhcp::pools:
       # 139.229.163.240/28 is reserved for the network gateway and static
       # IP addresses.
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  Rubin_LHN:
+    network: "139.229.164.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.164.254"
+    range: "139.229.164.1 139.229.164.200"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   cds-arch:
     network: "139.229.165.0"
     mask: "255.255.255.0"

@@ -84,7 +84,7 @@ dhcp::dnsdomain: &dnsdomains
 dhcp::nameservers: &nameservers
   - "139.229.160.53"  # dns1.cp.lsst.org
   - "139.229.160.54"  # dns2.cp.lsst.org
-  - "208.67.222.222"  # resolver1.opendns.com
+  - "1.0.0.1"         # cloudfare
 dhcp::ntpservers: &ntpservers
   - "ntp.cp.lsst.org"
   - "ntp.shoa.cl"

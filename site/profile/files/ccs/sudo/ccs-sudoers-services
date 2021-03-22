@@ -71,6 +71,9 @@ for s; do
 
     comma=
 
+    ## Escape sudo special characters.
+    s=${s//:/\\:}
+
     for a in $actions; do
         ## People wanted to use eg "start name.service" as well as
         ## "start name", so now we have this duplication.

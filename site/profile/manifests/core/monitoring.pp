@@ -10,7 +10,7 @@ class profile::core::monitoring(
 ) {
 
   class { 'telegraf':
-    hostname => $facts['networking']['hostname'],
+    hostname => $facts['networking']['fqdn'],
     outputs  => {
       'influxdb' => [{
           'urls'     => [ $url ],

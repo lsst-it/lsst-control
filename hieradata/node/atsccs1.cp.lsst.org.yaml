@@ -37,3 +37,7 @@ network::mroutes_hash:
       "139.229.167.0/24": "139.229.170.254"
       #"139.229.170.0/24": "139.229.170.254"
       "139.229.178.0/24": "139.229.170.254"
+
+ccs_software::global_properties:
+  - "org.hibernate.engine.internal.level=WARNING"
+  - ".level=WARNING"

@@ -24,6 +24,8 @@ packages:
   - "centos-release-scl-rh"
   - "devtoolset-8"
 
+## atsccs1 (at least) needs this, not sure why some hosts do and some don't.
+postfix::inet_protocols: "ipv4"
 postfix::manage_root_alias: false
 postfix::inet_interfaces: "localhost"
 postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"

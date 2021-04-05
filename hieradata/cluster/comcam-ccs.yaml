@@ -116,4 +116,8 @@ ccs_software::installations:
     aliases:
       - "puppet-2.0.1"
 
+  comcam-software-2.0.6:
+    aliases:
+      - "puppet-2.0.6"
+
 profile::icinga::agent::host_template: "ComCamHostTemplate"

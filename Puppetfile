@@ -120,7 +120,7 @@ mod 'lsst/ccs_mrtg',
   ref: 'v0.1.1'
 mod 'lsst/ccs_sal',
   git: 'https://github.com/lsst-it/puppet-ccs_sal.git',
-  ref: 'v0.1.0'
+  ref: 'v0.2.0'
 mod 'lsst/ccs_software',
   git: 'https://github.com/lsst-it/puppet-ccs_software.git',
   ref: 'auxtel-0.2'

@@ -58,9 +58,7 @@ mod 'attachmentgenie/ufw',
   commit: '58e0e9de'
 mod 'stm/debconf', '3.0.0'
 
-mod 'aboe/chrony',
-  git: 'https://github.com/lsst-it/puppet-chrony',
-  ref: 'ffa20883a41d7177da0d09f259b52ca463b778d8'
+mod 'puppet/chrony', '1.0.0'
 mod 'puppet/archive', '4.1.0'
 mod 'puppetlabs/concat', '6.0.0'
 mod 'puppetlabs/inifile', '4.3.0'

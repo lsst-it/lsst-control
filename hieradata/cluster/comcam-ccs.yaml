@@ -57,11 +57,11 @@ ccs_pkgarchive: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"
 ccs_database::database: "comcamdbprod"
 
 ccs_sal::rpms:
-  OpenSpliceDDS: "OpenSpliceDDS-6.9.0-5.x86_64.rpm"
+  OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"
   ts_sal_utils: "ts_sal_utils-4.0.0-1.x86_64.rpm"
 
-ccs_sal::address: "139.229.147.15"
-ccs_sal::dds_domain: "base"
+ccs_sal::dds_domain: "summit"
+ccs_sal::dds_interface: "comcam-mcm-dds"
 ccs_sal::instrument: "comcam"
 
 

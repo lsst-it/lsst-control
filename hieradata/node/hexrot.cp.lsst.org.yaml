@@ -19,3 +19,6 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
+
+chrony::queryhosts:
+  - 10.9.56.0/23

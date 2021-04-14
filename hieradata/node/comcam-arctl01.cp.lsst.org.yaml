@@ -112,12 +112,12 @@ files:
     ensure: "directory"
     mode: "0755"
     owner: 73006 # saluser
-    group: 0
+    group: 73006 # saluser
   /repo:
     ensure: "directory"
     mode: "0755"
     owner: 73006 # saluser
-    group: 0
+    group: 73006 # saluser
 
 nfs::client_enabled: true
 nfs::client_mounts:

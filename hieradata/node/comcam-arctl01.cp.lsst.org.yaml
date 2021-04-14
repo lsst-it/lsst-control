@@ -113,6 +113,11 @@ files:
     mode: "0755"
     owner: 73006 # saluser
     group: 0
+  /repo:
+    ensure: "directory"
+    mode: "0755"
+    owner: 73006 # saluser
+    group: 0
 
 nfs::client_enabled: true
 nfs::client_mounts:
@@ -120,7 +125,7 @@ nfs::client_mounts:
     share: "lsstdata"
     server: "%{facts.fqdn}"
     atboot: true
-  /net/self/data/repo:
+  /repo:
     share: "repo"
     server: "%{facts.fqdn}"
     atboot: true

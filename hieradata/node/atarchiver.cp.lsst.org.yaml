@@ -76,12 +76,35 @@ nfs::nfs_exports_global:
       139.229.160.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.165.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.128/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
+  /data/repo:
+    clients: >-
+      %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
+
+files:
+  /data/repo:
+    ensure: "directory"
+    mode: "0755"
+    owner: 73006 # saluser
+    group: 73006 # saluser
+  /repo:
+    ensure: "directory"
+    mode: "0755"
+    owner: 73006 # saluser
+    group: 73006 # saluser
 
 nfs::client_enabled: true
 nfs::client_mounts:
   # sanity check mounts
   /net/self/data/lsstdata:
     share: "lsstdata"
+    server: "%{facts.fqdn}"
+    atboot: true
+  /repo:
+    share: "repo"
     server: "%{facts.fqdn}"
     atboot: true
   # remote mounts

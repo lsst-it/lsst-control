@@ -21,3 +21,12 @@ profile::core::debugutils::packages:
 profile::ccs::postfix::packages:
   # required for postfix sasl auth
   - "cyrus-sasl-plain"
+
+profile::ts::nexusctio::repos:
+  "nexus-ctio":
+    ensure: "present"
+    descr: "CTIO Nexus Repository"
+    enabled: true
+    baseurl: "http://cagvm3.ctio.noao.edu/nexus/repository/labview-rpm/rubin/"
+    gpgcheck: false
+    target: "/etc/yum.repos.d/nexus-ctio.repo"

@@ -3,6 +3,7 @@ classes:
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
+  - "profile::ccs::common"
 
 nfs::client_enabled: true
 nfs::client_mounts:
@@ -10,3 +11,5 @@ nfs::client_mounts:
     share: "data"
     server: "atsdaq1.cp.lsst.org"
     atboot: true
+
+ccs_monit::hwraid: false

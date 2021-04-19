@@ -46,7 +46,7 @@ function find_services ()
 ## Convert a service name to a suitable sudo alias name.
 function aliasname ()
 {
-    echo "$@" | tr '[a-z]' '[A-Z]' | tr '-' '_'
+    echo "$@" | tr '[a-z]' '[A-Z]' | tr -- ':-' '_' | sed 's/@/_AT/'
 }
 
 
@@ -70,6 +70,9 @@ for s; do
     printf "Cmnd_Alias %s =" "$u"
 
     comma=
+
+    ## Escape sudo special characters.
+    s=${s//:/\\:}
 
     for a in $actions; do
         ## People wanted to use eg "start name.service" as well as

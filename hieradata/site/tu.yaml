@@ -1,4 +1,6 @@
 ---
+profile::core::common::disable_ipv6: true
+
 # dhcp::dnsdomain requires an array but only uses the first element to set the domain
 dhcp::dnsdomain: &dnsdomains
   - "tuc.lsst.cloud"

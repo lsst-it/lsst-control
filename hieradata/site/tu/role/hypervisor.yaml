@@ -9,31 +9,52 @@ accounts::user_list:
     sshkeys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGCCYvVfrd3RvPlGtXh+e3NWWw7OVzvIyX9jj1jT2omYt07gPv2nx9xgHqtkr1n39aezN4T2/9PuuCinN/dCOAmDd1J3lV+4rbWVUQD1o356ElxnVgdDm7RLwFfGjNW+WnVVOSXudZaO8wN6JqzG0SM21bmaIrT5b8pmXI9aafIEtnVhUKpVrqXOMQR8RNF9nvnzQulRkX7y/Kcy//a1v6/1lt4D+0Y5QaQujt04i8+QkcUBNe9sukjYWfzcPW9FpdJAiiydxwJl27f8OvJ4OMp1LJkB8lI5BLvJQpJ6u0DlfjkrSusDx60MSU3LQKP9TsaOW16b+/FqcHpkSpLGy/ foreman@foreman.tuc.lsst.cloud"
 network::interfaces_hash:
-  br32:
+  em1:  # fqdn
+    bootproto: "none"
+    defroute: "yes"
+    dns1: "%{lookup('dhcp::nameservers.0')}"
+    dns2: "%{lookup('dhcp::nameservers.1')}"
+    domain: "%{lookup('dhcp::dnsdomain.0')}"
+    gateway: "140.252.35.1"
+    netmask: "255.255.255.128"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p1:  # hypervisor
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+  p2p2:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p1.700: &vlan_int
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br700"
+    type: "none"
+    nozeroconf: "yes"
+  p2p1.800:
+    <<: *vlan_int
+    bridge: "br800"
+  p2p1.801:
+    <<: *vlan_int
+    bridge: "br801"
+  p2p1.3040:
+    <<: *vlan_int
+    bridge: "br3040"
+  br700: &bridge_int  # old auxtel - keep until pontus is moved to rm101
     bootproto: "none"
     onboot: "yes"
     type: "bridge"
-  br700:
-    bootproto: "none"
-    onboot: "yes"
-    type: "bridge"
-  br701:
-    bootproto: "none"
-    onboot: "yes"
-    type: "bridge"
-  br702:
-    bootproto: "none"
-    onboot: "yes"
-    type: "bridge"
-  br703:
-    bootproto: "none"
-    onboot: "yes"
-    type: "bridge"
-  br800:
-    bootproto: "none"
-    onboot: "yes"
-    type: "bridge"
-  br801:
-    bootproto: "none"
-    onboot: "yes"
-    type: "bridge"
+  br800:  # old svc
+    <<: *bridge_int
+  br801:  # old mgt
+    <<: *bridge_int
+  br3040:  # coresvc
+    <<: *bridge_int

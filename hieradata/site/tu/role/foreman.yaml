@@ -81,6 +81,12 @@ dhcp::pools:
     gateway: "140.252.147.65"
     range: "140.252.147.69 140.252.147.78"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  vlan3085:  # misc-dds
+    network: "140.252.147.128"
+    mask: "255.255.255.224"
+    gateway: "140.252.147.129"
+    range: "140.252.147.133 140.252.147.142"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
 sysctl::values::args:
   net.ipv4.conf.all.arp_filter:
     value: 1

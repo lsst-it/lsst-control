@@ -57,6 +57,12 @@ dhcp::pools:
     gateway: "140.252.147.1"
     range: "140.252.147.11 140.252.147.14"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  vlan3065:  # auxtel-dds
+    network: "140.252.147.16"
+    mask: "255.255.255.240"
+    gateway: "140.252.147.17"
+    range: "140.252.147.28 140.252.147.30"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
 sysctl::values::args:
   net.ipv4.conf.all.arp_filter:
     value: 1

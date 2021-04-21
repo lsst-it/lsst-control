@@ -1,6 +1,26 @@
 ---
 network::interfaces_hash:
-  p2p1:
+  em1:  # fqdn
+    bootproto: "none"
+    defroute: "yes"
+    dns1: "%{lookup('dhcp::nameservers.0')}"
+    dns2: "%{lookup('dhcp::nameservers.1')}"
+    domain: "%{lookup('dhcp::dnsdomain.0')}"
+    gateway: "140.252.35.1"
+    ipaddress: "140.252.35.7"
+    netmask: "255.255.255.128"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p1:  # hypervisor
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+  p2p2:  # not connected
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"

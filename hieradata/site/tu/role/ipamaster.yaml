@@ -1,0 +1,13 @@
+---
+network::interfaces_hash:
+  eth0:  # fqdn
+    bootproto: "none"
+    defroute: "yes"
+    dns1: "%{lookup('dhcp::nameservers.0')}"
+    dns2: "%{lookup('dhcp::nameservers.1')}"
+    domain: "%{lookup('dhcp::dnsdomain.0')}"
+    gateway: "140.252.34.129"
+    netmask: "255.255.255.192"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"

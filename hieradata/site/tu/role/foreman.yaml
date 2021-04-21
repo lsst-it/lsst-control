@@ -63,6 +63,12 @@ dhcp::pools:
     gateway: "140.252.147.17"
     range: "140.252.147.28 140.252.147.30"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  vlan3070:  # comcam
+    network: "140.252.147.32"
+    mask: "255.255.255.240"
+    gateway: "140.252.147.33"
+    range: "140.252.147.44 140.252.147.46"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
 sysctl::values::args:
   net.ipv4.conf.all.arp_filter:
     value: 1

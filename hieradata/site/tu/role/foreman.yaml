@@ -18,12 +18,6 @@ dhcp::pools:
     gateway: "140.252.34.1"
     range: "140.252.34.5 140.252.34.39"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  vlan703:
-    network: "140.252.34.64"
-    mask: "255.255.255.192"
-    gateway: "140.252.34.65"
-    range: "140.252.34.69 140.252.34.99"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan800:
     network: "140.252.34.128"
     mask: "255.255.255.192"

@@ -33,6 +33,12 @@ dhcp::pools:
     gateway: "140.252.35.1"
     range: "140.252.35.5 140.252.35.126"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  vlan3030:  # pillian
+    network: "140.252.146.32"
+    mask: "255.255.255.224"
+    gateway: "140.252.146.33"
+    range: "140.252.146.53 140.252.146.62"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan3040:  # coresvc
     network: "140.252.146.64"
     mask: "255.255.255.224"

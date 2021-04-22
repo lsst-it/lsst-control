@@ -97,3 +97,6 @@ sysctl::values::args:
 profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"
 profile::core::puppet_master::enable_puppetdb: true
 puppet::server::puppetdb::server: "puppetdb.tu.lsst.org"
+puppet::version: "6.21.1"  # agent version
+puppet::server_puppetserver_version: &server_version "6.15.1"  # XXX does this do anything?
+puppet::server_version: *server_version  # XXX does this do anything?

@@ -83,7 +83,7 @@ ssh::server_options:
 easy_ipa::idstart: 70000
 easy_ipa::idmax: 79999
 easy_ipa::domain: "lsst.cloud"
-easy_ipa::ipa_master_fqdn: "ipa1.tuc.lsst.cloud"
+easy_ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
 # easy_ipa client options
 easy_ipa::ipa_role: "client"
 easy_ipa::configure_ntp: false

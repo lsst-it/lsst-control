@@ -1,4 +1,5 @@
 ---
+easy_ipa::ipa_master_fqdn: "ipa1.tu.lsst.org"
 profile::core::common::disable_ipv6: true
 
 # dhcp::dnsdomain requires an array but only uses the first element to set the domain

@@ -7,4 +7,4 @@ classes:
 puppetdb::java_args:
   "-Xmx": "1g"
   "-Xms": "512m"
-puppetdb::globals::version: "6.11.3-1.el7"
+puppetdb::globals::version: "6.15.0-1.el7"

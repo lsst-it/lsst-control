@@ -2,6 +2,7 @@
 classes:
   - "profile::core::sysctl::rp_filter"
 
+foreman::version: "2.3.3"
 profile::core::sysctl::rp_filter::enable: false
 dhcp::interfaces:
   - "eth0"

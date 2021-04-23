@@ -94,7 +94,7 @@ mod 'puppet/letsencrypt',
   ref: 'c16fe95a432564a3ac62eb7f56dfafb06d207218'
 mod 'puppetlabs/puppetdb', '7.5.0'
 mod 'puppetlabs/postgresql', '6.6.0'
-mod 'theforeman/puppet', '14.1.0'
+mod 'theforeman/puppet', '14.2.1'
 mod 'puppet/extlib', '5.0.0'
 mod 'theforeman/foreman', '15.0.2'
 mod 'treydock/perfsonar',

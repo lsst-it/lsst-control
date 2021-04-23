@@ -92,7 +92,7 @@ mod 'lsst/cni', '0.1.2'
 mod 'puppet/letsencrypt',
   git: 'https://github.com/voxpupuli/puppet-letsencrypt',
   ref: 'c16fe95a432564a3ac62eb7f56dfafb06d207218'
-mod 'puppetlabs/puppetdb', '7.5.0'
+mod 'puppetlabs/puppetdb', '7.8.0'
 mod 'puppetlabs/postgresql', '7.1.0'
 mod 'theforeman/puppet', '14.2.1'
 mod 'puppet/extlib', '5.0.0'

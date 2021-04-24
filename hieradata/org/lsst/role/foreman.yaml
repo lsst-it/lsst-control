@@ -83,3 +83,5 @@ puppet::server_foreman: true
 puppet::server_foreman_facts: true
 puppet::server_jvm_min_heap_size: "2G"
 puppet::server_jvm_max_heap_size: "2G"
+profile::core::puppet_master::enable_puppetdb: true
+puppetdb::master::config::soft_write_failure: true

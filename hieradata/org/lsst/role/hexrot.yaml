@@ -10,6 +10,16 @@ classes:
 packages:
   - "runHexEui"
   - "runRotEui"
+files:
+  /rubin:
+    ensure: "directory"
+    recurse: true
+    owner: 73006  # saluser
+    group: 73006
+    mode: "0755"
+    subscribe:
+      - "Package[runHexEui]"
+      - "Package[runRotEui]"
 # disabling the kernel version check is needed on el7
 docker::overlay2_override_kernel_check: true
 # / on hexrot.cp was formated with xfs fstype=0 (long, long, long ago) and is

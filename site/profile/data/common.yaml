@@ -1,9 +1,9 @@
 ---
-# Override default hiera lookup options (keep this at the top)
-lookup_options:
-  profile::sal::miniconda_pkgs:
-    merge: "unique"
+# # Override default hiera lookup options (keep this at the top)
+# lookup_options:
+#   profile::sal::miniconda_pkgs:
+#     merge: "unique"
 
-# Everything else goes down below. Sort keys alphabetically
+# # Everything else goes down below. Sort keys alphabetically
 
-profile::sal::miniconda_pkgs: []
+# profile::sal::miniconda_pkgs: []

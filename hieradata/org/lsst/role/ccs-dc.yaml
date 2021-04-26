@@ -3,5 +3,6 @@ classes:
   - "profile::core::common"
   - "profile::ccs::common"
   - "profile::ccs::daq4"
+  - "profile::ccs::graphical"
 
 profile::ccs::facts::daq: true

@@ -25,6 +25,7 @@ packages:
   - "devtoolset-8"
 
 postfix::manage_root_alias: false
+postfix::inet_protocols: "ipv4"
 postfix::inet_interfaces: "localhost"
 postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"
 postfix::relayhost: "[mail.lsst.org]:submission"

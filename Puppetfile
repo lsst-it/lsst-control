@@ -58,9 +58,7 @@ mod 'attachmentgenie/ufw',
   commit: '58e0e9de'
 mod 'stm/debconf', '3.0.0'
 
-mod 'aboe/chrony',
-  git: 'https://github.com/lsst-it/puppet-chrony',
-  ref: 'ffa20883a41d7177da0d09f259b52ca463b778d8'
+mod 'puppet/chrony', '1.0.0'
 mod 'puppet/archive', '4.1.0'
 mod 'puppetlabs/concat', '6.0.0'
 mod 'puppetlabs/inifile', '4.3.0'
@@ -120,10 +118,10 @@ mod 'lsst/ccs_mrtg',
   ref: 'v0.1.1'
 mod 'lsst/ccs_sal',
   git: 'https://github.com/lsst-it/puppet-ccs_sal.git',
-  ref: 'v0.1.0'
+  ref: 'v0.3.1'
 mod 'lsst/ccs_software',
   git: 'https://github.com/lsst-it/puppet-ccs_software.git',
-  ref: 'v0.4.2'
+  ref: 'v0.5.0'
 mod 'lsst/maven',
   git: 'https://github.com/lsst-it/puppet-maven.git',
   ref: 'v1.0.0'

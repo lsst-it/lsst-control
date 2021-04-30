@@ -4,10 +4,10 @@ classes:
 
 profile::core::sysctl::rp_filter::enable: false
 dhcp::interfaces:
+  - "eth0"
   - "eth1"
-  - "eth4"
-  - "eth5"
-  - "eth6"
+  - "eth2"
+  - "eth3"
 dhcp::authoritative: false
 dhcp::pxeserver: "140.252.34.132"
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
@@ -17,12 +17,6 @@ dhcp::pools:
     mask: "255.255.255.192"
     gateway: "140.252.34.1"
     range: "140.252.34.5 140.252.34.39"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
-  vlan703:
-    network: "140.252.34.64"
-    mask: "255.255.255.192"
-    gateway: "140.252.34.65"
-    range: "140.252.34.69 140.252.34.99"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan800:
     network: "140.252.34.128"
@@ -38,6 +32,60 @@ dhcp::pools:
     mask: "255.255.255.128"
     gateway: "140.252.35.1"
     range: "140.252.35.5 140.252.35.126"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  vlan3030:  # pillian
+    network: "140.252.146.32"
+    mask: "255.255.255.224"
+    gateway: "140.252.146.33"
+    range: "140.252.146.53 140.252.146.62"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  vlan3040:  # coresvc
+    network: "140.252.146.64"
+    mask: "255.255.255.224"
+    gateway: "140.252.146.65"
+    range: "140.252.146.85 140.252.146.94"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  vlan3050:  # mgt
+    network: "140.252.146.128"
+    mask: "255.255.255.192"
+    gateway: "140.252.146.129"
+    range: "140.252.146.181 140.252.146.190"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  vlan3060:  # auxtel
+    network: "140.252.147.0"
+    mask: "255.255.255.240"
+    gateway: "140.252.147.1"
+    range: "140.252.147.11 140.252.147.14"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  vlan3065:  # auxtel-dds
+    network: "140.252.147.16"
+    mask: "255.255.255.240"
+    gateway: "140.252.147.17"
+    range: "140.252.147.28 140.252.147.30"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  vlan3070:  # comcam
+    network: "140.252.147.32"
+    mask: "255.255.255.240"
+    gateway: "140.252.147.33"
+    range: "140.252.147.44 140.252.147.46"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  vlan3075:  # comcam-dds
+    network: "140.252.147.48"
+    mask: "255.255.255.240"
+    gateway: "140.252.147.49"
+    range: "140.252.147.60 140.252.147.62"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  vlan3080:  # misc
+    network: "140.252.147.64"
+    mask: "255.255.255.224"
+    gateway: "140.252.147.65"
+    range: "140.252.147.69 140.252.147.78"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  vlan3085:  # misc-dds
+    network: "140.252.147.128"
+    mask: "255.255.255.224"
+    gateway: "140.252.147.129"
+    range: "140.252.147.133 140.252.147.142"
     search_domains: "%{alias('dhcp::dnsdomain')}"
 sysctl::values::args:
   net.ipv4.conf.all.arp_filter:

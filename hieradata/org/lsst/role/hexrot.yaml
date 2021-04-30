@@ -3,9 +3,13 @@ classes:
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::ni_packages"
+  - "profile::ts::nexusctio"
   - "docker"
   - "python"
   - "profile::core::x2go_agent"
+packages:
+  - "runHexEui"
+  - "runRotEui"
 # disabling the kernel version check is needed on el7
 docker::overlay2_override_kernel_check: true
 # / on hexrot.cp was formated with xfs fstype=0 (long, long, long ago) and is

@@ -24,6 +24,12 @@ lookup_options:
   ccs_software::installations:
     merge:
       strategy: "deep"
+  ccs_software::global_properties:
+    merge:
+      strategy: "unique"
+  ccs_software::udp_properties:
+    merge:
+      strategy: "unique"
   profile::core::ipset::set:
     merge:
       strategy: "deep"

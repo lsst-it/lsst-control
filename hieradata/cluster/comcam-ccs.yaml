@@ -59,7 +59,7 @@ ccs_pkgarchive: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"
 ccs_database::database: "comcamdbprod"
 
 ccs_sal::rpms:
-  OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"
+  OpenSpliceDDS: "OpenSpliceDDS-6.11.0-16.el7.x86_64.rpm"
   ts_sal_utils: "ts_sal_utils-4.0.0-1.x86_64.rpm"
 
 ccs_sal::dds_domain: "summit"
@@ -105,6 +105,10 @@ ccs_software::installations:
   comcam-software-2.0.7:
     aliases:
       - "puppet-2.0.7"
+
+  comcam-software-2.0.8:
+    aliases:
+      - "puppet-2.0.8"
 
 
 profile::icinga::agent::host_template: "ComCamHostTemplate"

@@ -1,0 +1,23 @@
+---
+network::interfaces_hash:
+  em1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # dds
+    bootproto: "dhcp"
+    defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+
+network::hostname: "%{facts.fqdn}"
+network::mroutes_hash:
+  em2:
+    routes:
+      "139.229.147.0/24": "139.229.166.254"
+      #"139.229.166.0/24": "139.229.166.254"
+      "139.229.167.0/24": "139.229.166.254"
+      "139.229.170.0/24": "139.229.166.254"
+      "139.229.178.0/24": "139.229.166.254"

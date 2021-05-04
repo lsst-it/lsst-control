@@ -60,7 +60,7 @@ mod 'stm/debconf', '3.0.0'
 
 mod 'puppet/chrony', '1.0.0'
 mod 'puppet/archive', '4.1.0'
-mod 'puppetlabs/concat', '6.0.0'
+mod 'puppetlabs/concat', '6.4.0'
 mod 'puppetlabs/inifile', '4.3.0'
 mod 'puppetlabs/java', '6.2.0'
 mod 'puppetlabs/stdlib', '6.6.0'

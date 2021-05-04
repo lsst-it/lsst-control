@@ -25,10 +25,11 @@ docker::version: "19.03.4"
 #epel::epel_baseurl: "http://lsst-repos01.ncsa.illinois.edu/centos/$releasever/$basearch/epel/2020-02-19-1582151101/"
 #epel::epel_exclude: "singularity*"
 
-miniconda::config::channels:
-  - lsstts
-  - lsstts/label/dev
-  - conda-forge
+# IT-2939 deprecate miniconda
+# miniconda::config::channels:
+#   - lsstts
+#   - lsstts/label/dev
+#   - conda-forge
 
 pakrat_client::default_snapshot: "2020-02-19-1582151101"
 pakrat_client::default_yumserver_url: "http://lsst-repos01.ncsa.illinois.edu"

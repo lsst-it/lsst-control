@@ -1,6 +1,6 @@
 # Setup SAL DDS software and dependencies
 class profile::sal (
-  Array $miniconda_pkgs,
+  # Array $miniconda_pkgs,
 ) {
 
   # include ::sal2

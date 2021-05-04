@@ -16,7 +16,7 @@ files:
     recurse: true
     owner: 73006  # saluser
     group: 73006
-    mode: "0755"
+    mode: "0775"
     subscribe:
       - "Package[runHexEui]"
       - "Package[runRotEui]"

@@ -1,6 +1,6 @@
 ---
 classes:
- - "profile::core::nfsclient"
+  - "profile::core::nfsclient"
 
 files:
   /dimm:

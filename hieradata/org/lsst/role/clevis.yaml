@@ -2,4 +2,4 @@
 classes:
   - "profile::core::common"
 
-profile::core::clevis::encrypt: true
+profile::core::common::encrypt: true

@@ -1,6 +1,9 @@
 # @summary
 #   Common functionality needed by standard nodes.
 #
+# @param encrypt
+#   Enable or disable system disk encryption
+#
 # @param deploy_icinga_agent
 #   Enables or disable the installation of icinga agent on the node
 #
@@ -54,6 +57,7 @@ class profile::core::common(
   Boolean $manage_powertop = false,
   Boolean $manage_scl = true,
   Boolean $manage_repos = true,
+  Boolean $encrypt = false,
 ) {
   include accounts
   include augeas
@@ -87,6 +91,10 @@ class profile::core::common(
         purge => true,
       }
     }
+  }
+
+  if $encrypt {
+    include profile::core::clevis
   }
 
   if $deploy_icinga_agent {

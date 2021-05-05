@@ -8,7 +8,7 @@ dhcp::dnsdomain: &dnsdomains
 dhcp::nameservers: &nameservers
   - "140.252.34.140"
   - "140.252.34.141"
-  - "140.252.34.142"
+  - "140.252.146.73"
 dhcp::ntpservers: &ntpservers
   - "140.252.1.140"
   - "140.252.1.141"

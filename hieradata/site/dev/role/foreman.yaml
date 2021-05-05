@@ -14,5 +14,4 @@ dhcp::pools:
     search_domains: "%{alias('dhcp::dnsdomain')}"
 
 profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"
-profile::core::puppet_master::enable_puppetdb: true
 puppet::server::puppetdb::server: "puppetdb.dev.lsst.org"

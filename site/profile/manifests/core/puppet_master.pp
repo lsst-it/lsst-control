@@ -12,6 +12,7 @@ class profile::core::puppet_master(
   include foreman::cli
   include foreman::compute::libvirt
   include foreman::plugin::remote_execution
+  include foreman::repo
   include puppet
   include r10k
   include r10k::webhook

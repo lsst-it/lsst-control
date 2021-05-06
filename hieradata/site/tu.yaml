@@ -7,7 +7,7 @@ dhcp::dnsdomain: &dnsdomains
   - "tu.lsst.org"
 dhcp::nameservers: &nameservers
   - "140.252.34.140"
-  - "140.252.34.141"
+  - "140.252.146.72"
   - "140.252.146.73"
 dhcp::ntpservers: &ntpservers
   - "140.252.1.140"

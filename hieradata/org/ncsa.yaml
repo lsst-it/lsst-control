@@ -31,7 +31,7 @@ docker::version: "19.03.4"
 #   - lsstts/label/dev
 #   - conda-forge
 
-pakrat_client::default_snapshot: "2020-02-19-1582151101"
+pakrat_client::default_snapshot: "2021-02-22-1614032701"
 pakrat_client::default_yumserver_url: "http://lsst-repos01.ncsa.illinois.edu"
 pakrat_client::repos:
   base:

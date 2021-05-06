@@ -33,7 +33,7 @@ class profile::docker {
     'OUTPUT:nat:IPv4',
     'PREROUTING:nat:IPv4',
   ]
-  $name_ignores = $docker_names + [ 'docker' ]
+  $name_ignores = $docker_names + [ 'docker', '-o br-', '-i br-' ]
 
   $name_ip_ignore_chains = [ 'POSTROUTING:nat:IPv4' ]
   $name_ip_ignores = $docker_names + [ '172.17', '172.18', '172.19' ]

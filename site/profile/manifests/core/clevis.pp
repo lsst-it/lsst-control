@@ -3,13 +3,16 @@
 
 class profile::core::clevis() {
   $packages = [
-    'vim',
     'clevis',
     'clevis-luks',
+    'clevis-dracut'
   ]
 
   ##Add require packages
   package { $packages:
     ensure => 'present',
+  }
+  ->exec { '/sbin/dracut -f --regenerate-all':
+    path        => ['/usr/bin', '/sbin']
   }
 }

@@ -5,6 +5,7 @@ class profile::core::clevis() {
   $packages = [
     'vim',
     'clevis',
+    'clevis-luks',
   ]
 
   ##Add require packages

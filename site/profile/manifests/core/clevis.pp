@@ -13,6 +13,7 @@ class profile::core::clevis() {
     ensure => 'present',
   }
   ->exec { '/sbin/dracut -f --regenerate-all':
-    path        => ['/usr/bin', '/sbin']
+    path   => ['/usr/bin', '/sbin'],
+    onlyif => 'test ! -f /usr/lib/dracut/modules.d/60clevis/clevis-hook.sh'
   }
 }

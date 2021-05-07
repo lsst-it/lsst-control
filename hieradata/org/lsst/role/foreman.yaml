@@ -47,41 +47,109 @@ r10k::deploy_settings:
   generate_types: true
 profile::core::common::manage_puppet_agent: false
 # copied from /etc/foreman-installer/scenarios.d/foreman-answers.yaml
-foreman::version: "2.4.0"
-foreman::unattended: true
 foreman::apache: true
-foreman::passenger: false
-#foreman::db_username:  # secret
+foreman::compute::libvirt: true
 #foreman::db_password:  # secret
-foreman::manage_user: true
-foreman::user: "foreman"
+#foreman::db_username:  # secret
+foreman::dynflow_manage_services: true
+foreman::dynflow_orchestrator_ensure: "present"
+# XXX under foreman 2.4.0, puma seems to be ignoring the number of threads
+#foreman::foreman_service_puma_threads_max: 16
+#foreman::foreman_service_puma_threads_min: 0
+foreman::foreman_service_puma_workers: 1
 foreman::group: "foreman"
-foreman::user_groups:
-  - "puppet"
+#foreman::initial_admin_password:  # secret
+#foreman::initial_admin_username:  # secret
+foreman::ipa_authentication: false  # XXX investigate setting up ipa via puppet
+foreman::manage_user: true
 foreman::oauth_active: true
 #foreman::oauth_consumer_key:  # secret
 #foreman::oauth_consumer_secret:  # secret
-#foreman::initial_admin_username:  # secret
-#foreman::initial_admin_password:  # secret
-# XXX investigate setting up ipa via puppet
-foreman::ipa_authentication: false
-foreman::compute::libvirt: true
+foreman::passenger: false  # use puma; param removed in theforman/foreman >= 17.0.0
+foreman::plugin::tasks::automatic_cleanup: true
+foreman_proxy::base_url: "https://%{facts.fqdn}"
+foreman_proxy::bind_host: '*'
+foreman_proxy::dhcp_listen_on: "https"
+foreman_proxy::dhcp_managed: false  # dhcp mod is used directly
+foreman_proxy::dhcp_ping_free_ip: false  # changing reservations is already a dumpster fire
+foreman_proxy::dhcp_provider: "isc"
+foreman_proxy::dhcp: true
+foreman_proxy::dns_listen_on: "https"
+foreman_proxy::dns_managed: true
+foreman_proxy::dns_provider: "route53"
+foreman_proxy::dns: true
+foreman_proxy::dns_ttl: 60
+foreman_proxy::httpboot_listen_on: "https"
+foreman_proxy::httpboot: true
+foreman_proxy::http: false
+foreman_proxy::log_buffer: 2000
+foreman_proxy::log_buffer_errors: 1000
+foreman_proxy::log_level: "INFO"
+foreman_proxy::log: "/var/log/foreman-proxy/proxy.log"
+foreman_proxy::plugin::dynflow::console_auth: true
+foreman_proxy::plugin::dynflow::core_listen: "0.0.0.0"
+foreman_proxy::plugin::dynflow::core_port: 8008
+foreman_proxy::plugin::dynflow::enabled: true
+foreman_proxy::plugin::dynflow::external_core: true
+foreman_proxy::plugin::dynflow::listen_on: "https"
+foreman_proxy::plugin::remote_execution::ssh::async_ssh: false
+foreman_proxy::plugin::remote_execution::ssh::enabled: true
+foreman_proxy::plugin::remote_execution::ssh::ssh_kerberos_auth: false
+foreman_proxy::puppetca_provider: "puppetca_hostname_whitelisting"
+foreman_proxy::puppetca: true
+foreman_proxy::puppet_listen_on: "https"
+foreman_proxy::puppet: true
+foreman_proxy::realm: false  # krb5 support for ssh -- untested
+foreman_proxy::realm_provider: "freeipa"
+foreman_proxy::register_in_foreman: false  # do not re-register proxy on every agent run
+foreman_proxy::ssl_ca: "/etc/puppetlabs/puppet/ssl/certs/ca.pem"
+foreman_proxy::ssl_cert: "/etc/puppetlabs/puppet/ssl/certs/%{facts.fqdn}.pem"
+foreman_proxy::ssl_key: "/etc/puppetlabs/puppet/ssl/private_keys/%{facts.fqdn}.pem"
+foreman_proxy::ssl_port: 8443
+foreman_proxy::ssl: true
+foreman_proxy::tftp_listen_on: "https"
+foreman_proxy::tftp_managed: true
+foreman_proxy::tftp_manage_wget: true
+foreman_proxy::tftp: true
+foreman_proxy::trusted_hosts: ["%{facts.fqdn}"]
+foreman::unattended: true
+foreman::user: "foreman"
+foreman::user_groups: ["puppet"]
+foreman::version: "2.4.0"
+postgresql::globals::bindir: "/usr/bin"
+postgresql::globals::client_package_name: "rh-postgresql12-syspaths"
+postgresql::globals::confdir: "/var/opt/rh/rh-postgresql12/lib/pgsql/data"
+postgresql::globals::contrib_package_name: "rh-postgresql12-postgresql-contrib-syspaths"
+postgresql::globals::datadir: "/var/opt/rh/rh-postgresql12/lib/pgsql/data"
+postgresql::globals::server_package_name: "rh-postgresql12-postgresql-server-syspaths"
+postgresql::globals::service_name: "postgresql"
+postgresql::globals::version: "12"
+profile::core::puppet_master::enable_puppetdb: true
 puppet::agent: true
-puppet::version: "6.22.1"  # agent version
-puppet::server: true
-puppet::server_puppetserver_version: &server_version "6.15.3"  # XXX does this do anything?
-puppet::server_version: *server_version  # XXX does this do anything?
 puppet::environment: "production"  # always overridden via enc
+puppet::master::config::soft_write_failure: true
 puppet::remove_lock: true
 puppet::report: true
-# default is: `basemodulepath = /etc/puppetlabs/code/environments/common:/etc/puppetlabs/code/modules:/opt/puppetlabs/puppet/modules:/usr/share/puppet/modules`
+# default is: `basemodulepath =
+# /etc/puppetlabs/code/environments/common:/etc/puppetlabs/code/modules:/opt/puppetlabs/puppet/modules:/usr/share/puppet/modules`
 # and we don't want to install code into any of those paths.
 puppet::server_common_modules_path: ""
+puppet::server_foreman_facts: true
+puppet::server_foreman: true
+puppet::server_jvm_max_heap_size: "2G"
+puppet::server_jvm_min_heap_size: "2G"
+puppet::server::puppetdb::soft_write_failure: true
+puppet::server_puppetserver_version: &server_version "6.15.3"  # XXX does this do anything?
 puppet::server_reports: "foreman,puppetdb"
 puppet::server_storeconfigs: false
-puppet::server_foreman: true
-puppet::server_foreman_facts: true
-puppet::server_jvm_min_heap_size: "2G"
-puppet::server_jvm_max_heap_size: "2G"
-profile::core::puppet_master::enable_puppetdb: true
-puppet::server::puppetdb::soft_write_failure: true
+puppet::server: true
+puppet::server_version: *server_version  # XXX does this do anything?
+puppet::version: "6.22.1"  # agent version
+redis::globals::scl: "rh-redis5"
+
+files:
+  /etc/foreman-proxy/settings.d:
+    ensure: "directory"
+    purge: true
+    recurse: true
+    force: true

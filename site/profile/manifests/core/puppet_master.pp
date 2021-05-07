@@ -12,6 +12,11 @@ class profile::core::puppet_master(
   include foreman::cli
   include foreman::compute::libvirt
   include foreman::plugin::remote_execution
+  include foreman::plugin::tasks
+  include foreman_proxy
+  include foreman_proxy::plugin::dns::route53
+  include foreman_proxy::plugin::dynflow
+  include foreman_proxy::plugin::remote_execution::ssh
   include foreman::repo
   include puppet
   include r10k

@@ -4,8 +4,8 @@
 class profile::core::tang() {
   #Variables
   $packages = [
-    'vim',
     'tang',
+    'cockpit'
   ]
 
   #Add require packages
@@ -37,9 +37,11 @@ class profile::core::tang() {
       ListenStream=7500
       | OVERRIDE
   }
-  exec { '/usr/bin/systemctl daemon-reload':
+  ->exec { '/usr/bin/systemctl daemon-reload':
     refreshonly => true,
-    subscribe   => File['/etc/systemd/system/tangd.socket.d/override.conf'],
     notify      => Service['tangd.socket']
+  }
+  service { 'cockpit.socket':
+    ensure => 'running'
   }
 }

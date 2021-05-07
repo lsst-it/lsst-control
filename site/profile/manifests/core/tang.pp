@@ -5,7 +5,8 @@ class profile::core::tang() {
   #Variables
   $packages = [
     'tang',
-    'cockpit'
+    'cockpit',
+    'cockpit-storaged'
   ]
 
   #Add require packages

@@ -4,9 +4,7 @@
 class profile::core::tang() {
   #Variables
   $packages = [
-    'tang',
-    'cockpit',
-    'cockpit-storaged'
+    'tang'
   ]
 
   #Add require packages
@@ -41,8 +39,5 @@ class profile::core::tang() {
   ->exec { '/usr/bin/systemctl daemon-reload':
     refreshonly => true,
     notify      => Service['tangd.socket']
-  }
-  service { 'cockpit.socket':
-    ensure => 'running'
   }
 }

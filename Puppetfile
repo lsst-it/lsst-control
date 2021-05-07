@@ -97,6 +97,8 @@ mod 'puppetlabs/postgresql', '7.1.0'
 mod 'theforeman/puppet', '14.2.1'
 mod 'puppet/extlib', '5.0.0'
 mod 'theforeman/foreman', '16.1.0'
+mod 'theforeman/foreman_proxy', '18.1.0'
+mod 'theforeman/tftp', '6.0.0'
 mod 'treydock/perfsonar',
   git: 'https://github.com/lsst-it/puppet-module-perfsonar',
   ref: 'production'

@@ -6,7 +6,7 @@ profile::core::common::disable_ipv6: true
 dhcp::dnsdomain: &dnsdomains
   - "tu.lsst.org"
 dhcp::nameservers: &nameservers
-  - "140.252.34.140"
+  - "140.252.146.71"
   - "140.252.146.72"
   - "140.252.146.73"
 dhcp::ntpservers: &ntpservers

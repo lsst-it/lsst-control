@@ -18,6 +18,10 @@ chrony::servers: *ntpservers
 ntp::servers: *ntpservers
 resolv_conf::nameservers: *nameservers
 resolv_conf::searchpath: *dnsdomains
+resolv_conf::options:
+  - "rotate"
+  - "timeout:2"
+  - "retries:1"
 
 accounts::user_list:
   root:

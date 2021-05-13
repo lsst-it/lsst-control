@@ -1,14 +1,15 @@
 ---
 network::interfaces_hash:
-  eth2:  # fqdn
+  eth1:  # fqdn
     bootproto: "none"
     defroute: "yes"
     dns1: "%{lookup('dhcp::nameservers.0')}"
     dns2: "%{lookup('dhcp::nameservers.1')}"
     domain: "tuc.lsst.cloud"
-    ipaddress: "140.252.34.132"
-    gateway: "140.252.34.129"
-    netmask: "255.255.255.192"
+    gateway: "140.252.146.65"
+    ipaddress: "140.252.146.80"
+    macaddr: "52:54:00:d4:45:77"
+    netmask: "255.255.255.224"
     nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"

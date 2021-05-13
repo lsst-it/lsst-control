@@ -9,7 +9,7 @@ dhcp::interfaces:
   - "eth2"
   - "eth3"
 dhcp::authoritative: false
-dhcp::pxeserver: "140.252.34.132"
+dhcp::pxeserver: "140.252.146.80"
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:
   vlan700:

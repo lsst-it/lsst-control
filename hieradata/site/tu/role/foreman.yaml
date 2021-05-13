@@ -12,27 +12,6 @@ dhcp::authoritative: false
 dhcp::pxeserver: "140.252.146.80"
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:
-  vlan700:
-    network: "140.252.34.0"
-    mask: "255.255.255.192"
-    gateway: "140.252.34.1"
-    range: "140.252.34.5 140.252.34.39"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
-  vlan800:
-    network: "140.252.34.128"
-    mask: "255.255.255.192"
-    gateway: "140.252.34.129"
-    #Excluding 150 for rancher.tu
-    range:
-      - "140.252.34.133 140.252.34.149"
-      - "140.252.34.151 140.252.34.190"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
-  vlan801:
-    network: "140.252.35.0"
-    mask: "255.255.255.128"
-    gateway: "140.252.35.1"
-    range: "140.252.35.5 140.252.35.126"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan3030:  # pillian
     network: "140.252.146.32"
     mask: "255.255.255.224"

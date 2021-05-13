@@ -23,7 +23,7 @@ mod 'duritong/sysctl',
   ref: 'working'
 mod 'example42/network',
   git: 'https://github.com/example42/puppet-network',
-  ref: 'b34d44d7818140d724333dfa00688fc46f6dae1a'  # post v3.5.3
+  ref: 'b2e402dff7ec54c4e6696dfd0d0591828bd13bd8'  # post v3.6.0
 mod 'cirrax/libvirt', '4.1.2'
 #mod 'puppetfinland/easy_ipa', '2.2.0'
 mod 'puppetfinland/easy_ipa',

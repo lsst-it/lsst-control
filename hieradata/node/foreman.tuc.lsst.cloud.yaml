@@ -1,6 +1,6 @@
 ---
 network::interfaces_hash:
-  eth1:  # fqdn
+  eth0:  # fqdn
     bootproto: "none"
     defroute: "yes"
     dns1: "%{lookup('dhcp::nameservers.0')}"

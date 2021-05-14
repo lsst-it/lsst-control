@@ -32,29 +32,14 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-  p2p1.700: &vlan_int
+  p2p1.3040: &vlan_int
     bootproto: "none"
-    onboot: "yes"
-    vlan: "yes"
-    bridge: "br700"
-    type: "none"
-    nozeroconf: "yes"
-  p2p1.800:
-    <<: *vlan_int
-    bridge: "br800"
-  p2p1.801:
-    <<: *vlan_int
-    bridge: "br801"
-  p2p1.3040:
-    <<: *vlan_int
     bridge: "br3040"
-  br700: &bridge_int  # old auxtel - keep until pontus is moved to rm101
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
+  br3040: &bridge_int  # coresvc
     bootproto: "none"
     onboot: "yes"
     type: "bridge"
-  br800:  # old svc
-    <<: *bridge_int
-  br801:  # old mgt
-    <<: *bridge_int
-  br3040:  # coresvc
-    <<: *bridge_int

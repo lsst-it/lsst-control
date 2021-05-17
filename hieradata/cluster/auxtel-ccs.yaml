@@ -23,6 +23,7 @@ packages:
   - "maven"
   - "centos-release-scl-rh"
   - "devtoolset-8"
+  - "rh-git218"
 
 ## atsccs1 (at least) needs this, not sure why some hosts do and some don't.
 postfix::inet_protocols: "ipv4"

@@ -1,5 +1,4 @@
 ---
-puppet_agent::package_version: "6.21.1"
 easy_ipa::ipa_master_fqdn: "ipa1.tu.lsst.org"
 profile::core::common::disable_ipv6: true
 

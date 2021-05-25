@@ -2,17 +2,6 @@
 classes:
   - "profile::core::sysctl::rp_filter"
 
-foreman::version: "2.3.3"
-redis::globals::scl: "rh-redis5"
-postgresql::globals::version: "12"
-postgresql::globals::client_package_name: "rh-postgresql12-syspaths"
-postgresql::globals::server_package_name: "rh-postgresql12-postgresql-server-syspaths"
-postgresql::globals::contrib_package_name: "rh-postgresql12-postgresql-contrib-syspaths"
-postgresql::globals::service_name: "postgresql"
-postgresql::globals::datadir: "/var/opt/rh/rh-postgresql12/lib/pgsql/data"
-postgresql::globals::confdir: "/var/opt/rh/rh-postgresql12/lib/pgsql/data"
-postgresql::globals::bindir: "/usr/bin"
-
 profile::core::sysctl::rp_filter::enable: false
 dhcp::interfaces:
   - "eth0"
@@ -107,6 +96,3 @@ sysctl::values::args:
     target: "/etc/sysctl.d/91-arp_filter.conf"
 profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"
 puppet::server::puppetdb::server: "puppetdb.tu.lsst.org"
-puppet::version: "6.21.1"  # agent version
-puppet::server_puppetserver_version: &server_version "6.15.1"  # XXX does this do anything?
-puppet::server_version: *server_version  # XXX does this do anything?

@@ -87,11 +87,11 @@ accounts::user_list:
 
 # XXX should all hosts be a desktop?
 ccs_software::desktop: true
-ccs_software::env: "ATS"
-## A safe default - use "ccs" or "daq" for specific hosts.
-ccs_software::hostname: "console"
+ccs_software::env: "AuxTel"
 ccs_software::installations:
-  master: {}
+  ats-software-2.0.0:
+    aliases:
+      - "puppet-2.0.0"
 
 ccs_sal::rpms:
   OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"

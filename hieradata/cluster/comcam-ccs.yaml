@@ -98,42 +98,6 @@ accounts::user_list:
 ccs_software::desktop: true
 ccs_software::env: "ComCam"
 ccs_software::installations:
-  comcam-software-1.0.3:
-    aliases:
-      - "puppet-1.0.3"
-
-  comcam-software-1.0.5:
-    aliases:
-      - "puppet-1.0.5"
-
-  comcam-software-1.0.6:
-    aliases:
-      - "puppet-1.0.6"
-
-  comcam-software-2.0.0:
-    aliases:
-      - "puppet-2.0.0"
-
-  comcam-software-2.0.1:
-    aliases:
-      - "puppet-2.0.1"
-
-  comcam-software-2.0.2:
-    aliases:
-      - "puppet-2.0.2"
-
-  comcam-software-2.0.3:
-    aliases:
-      - "puppet-2.0.3"
-
-  comcam-software-2.0.4:
-    aliases:
-      - "puppet-2.0.4"
-
-  comcam-software-2.0.5:
-    aliases:
-      - "puppet-2.0.5"
-
   comcam-software-2.0.6:
     aliases:
       - "puppet-2.0.6"
@@ -141,6 +105,14 @@ ccs_software::installations:
   comcam-software-2.0.7:
     aliases:
       - "puppet-2.0.7"
+
+  comcam-software-2.0.8:
+    aliases:
+      - "puppet-2.0.8"
+
+  comcam-software-2.0.9:
+    aliases:
+      - "puppet-2.0.9"
 
 
 profile::icinga::agent::host_template: "ComCamHostTemplate"

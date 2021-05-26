@@ -1,0 +1,27 @@
+---
+ccs_software::services:
+  prod:
+    - "pathfinder-refrig"
+
+network::interfaces_hash:
+  eno1:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  enp6s0:  # 192.168.1.0/24
+    bootproto: "none"
+    ipaddress: "192.168.1.122"
+    netmask: "255.255.255.0"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  enp7s0:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  enp8s0:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"

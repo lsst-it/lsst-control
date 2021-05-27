@@ -5,6 +5,7 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
+  - "profile::core::tmpfile"
   - "redis"
   - "python"
   - "docker"
@@ -122,3 +123,7 @@ sudo::configs:
     content: "%comcam-archive-sudo ALL=(arc,atadbot) NOPASSWD: ALL"
 
 nfs::server_enabled: true
+
+profile::core::tmpfile::file:
+  docker_tmp:  # XXX short term kludge
+    content: "d /tmp/docker_tmp 0777 saluser saluser -"

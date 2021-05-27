@@ -36,6 +36,9 @@ lookup_options:
   sssd::domains:
     merge:
       strategy: "deep"
+  profile::core::tmpfile::file:
+    merge:
+      strategy: "deep"
 
 timezone::timezone: "UTC"
 chrony::leapsectz: "right/UTC"

@@ -3,6 +3,7 @@ classes:
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::puppet_master"
+  - "profile::core::systemd"
   - "dhcp"
 
 dhcp::default_lease_time: &lease_time 900
@@ -174,6 +175,14 @@ profile::core::puppet_master::foreman_config:
     value: false
   destroy_vm_on_host_delete:
     value: false
+
+profile::core::systemd::dropin_file:
+  50-MemoryLimit.conf:
+    unit: "foreman.service"
+    #notify_service: true  # needs camptocamp/systemd > 3.0.0
+    content: |
+      [Service]
+      MemoryLimit=17179869184
 
 files:
   /etc/foreman-proxy/settings.d:

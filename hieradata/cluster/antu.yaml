@@ -70,6 +70,9 @@ sysctl::values::args:
     value: "fq"
     target: *tcpip
 
+docker::version: "19.03.13"
+profile::app::rke::version: "1.2.8"
+
 files:
   # opensplice daemons/client running in pods as `saluser` use hostPath to share a
   # path to a unix domain socket

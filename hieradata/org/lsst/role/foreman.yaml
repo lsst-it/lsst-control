@@ -148,6 +148,8 @@ puppet::server_puppetserver_version: &server_version "6.15.3"  # XXX does this d
 puppet::server_reports: "foreman,puppetdb"
 puppet::server_storeconfigs: false
 puppet::server: true
+puppet::server::puppetserver_metrics: false  # disabled for performance
+puppet::server::puppetserver_profiler: false  # disabled for performance
 puppet::server_version: *server_version  # XXX does this do anything?
 puppet::version: "6.22.1"  # agent version
 redis::globals::scl: "rh-redis5"

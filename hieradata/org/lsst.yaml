@@ -39,6 +39,9 @@ lookup_options:
   profile::core::tmpfile::file:
     merge:
       strategy: "deep"
+  profile::core::systemd::dropin_file:
+    merge:
+      strategy: "deep"
 
 timezone::timezone: "UTC"
 chrony::leapsectz: "right/UTC"

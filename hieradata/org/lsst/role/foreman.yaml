@@ -53,10 +53,9 @@ foreman::compute::libvirt: true
 #foreman::db_username:  # secret
 foreman::dynflow_manage_services: true
 foreman::dynflow_orchestrator_ensure: "present"
-# XXX under foreman 2.4.0, puma seems to be ignoring the number of threads
-#foreman::foreman_service_puma_threads_max: 16
-#foreman::foreman_service_puma_threads_min: 0
-foreman::foreman_service_puma_workers: 1
+foreman::foreman_service_puma_threads_max: 4  # XXX puma seems use 16t anyways?
+foreman::foreman_service_puma_threads_min: 4
+foreman::foreman_service_puma_workers: 4
 foreman::group: "foreman"
 #foreman::initial_admin_password:  # secret
 #foreman::initial_admin_username:  # secret

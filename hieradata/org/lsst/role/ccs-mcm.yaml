@@ -3,7 +3,7 @@ classes:
   - "profile::core::common"
   - "profile::ccs::common"
   #- "profile::ccs::tomcat"
-  - "profile::core::tmpfile"
+  - "profile::core::systemd"
   - "ccs_sal"
 
 nginx::confd_purge: true
@@ -19,6 +19,6 @@ profile::ccs::tomcat::wars:
     catalina_base: "/opt/tomcat/apache-tomcat-9.0.36"
     war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2-snapshots/org/lsst/CCSWebTrending/2.1-SNAPSHOT/CCSWebTrending-2.1-20200623.212832-4.war"
 
-profile::core::tmpfile::file:
+profile::core::systemd::tmpfile:
   docker_tmp:  # XXX short term kludge
     content: "d /tmp/docker_tmp 0777 saluser saluser -"

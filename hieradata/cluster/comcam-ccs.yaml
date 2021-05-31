@@ -58,6 +58,7 @@ ccs_pkgarchive: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"
 
 ccs_database::database: "comcamdbprod"
 
+ccs_sal::ospl_home: "/opt/OpenSpliceDDS/V6.10.4/HDE/x86_64.linux"
 ccs_sal::rpms:
   OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"
   ts_sal_utils: "ts_sal_utils-4.0.0-1.x86_64.rpm"

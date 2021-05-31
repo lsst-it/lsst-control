@@ -1,7 +1,7 @@
 ---
 classes:
   - "profile::core::common"
-  - "docker"
+  - "profile::core::rpi"
 
 profile::core::common::deploy_icinga_agent: false
 # disabling the kernel version check is needed on el7

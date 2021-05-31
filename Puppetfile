@@ -57,7 +57,8 @@ mod 'attachmentgenie/ufw',
   git: 'https://github.com/attachmentgenie/attachmentgenie-ufw',
   commit: '58e0e9de'
 mod 'stm/debconf', '3.0.0'
-
+# 2021-05-31 hreinking: snapd for EAS Raspberry Pi
+mod 'kemra102/snapd', '1.1.0'
 mod 'puppet/chrony', '1.0.0'
 mod 'puppet/archive', '4.1.0'
 mod 'puppetlabs/concat', '6.4.0'

@@ -1,10 +1,7 @@
 ---
 classes:
-  - "profile::core::common"
   - "profile::core::rpi"
 
-profile::core::common::install_telegraf: false
-profile::core::common::deploy_icinga_agent: false
 # disabling the kernel version check is needed on el7
 docker::overlay2_override_kernel_check: true
 docker::storage_driver: "overlay2"

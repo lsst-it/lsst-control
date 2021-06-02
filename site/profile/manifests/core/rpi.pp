@@ -8,13 +8,20 @@ class profile::core::rpi {
   $snap_packages = [
     'raspberry-pi-node-gpio',
     'picamera',
+    'raspi-config',
     'picamera-streaming-demo'
+  ]
+
+  #  Remove default docker packages
+  $docker_packages = [
+    'docker-1.13.1-205.git7d71120.el7.centos.aarch64',
+    'docker-client-1.13.1-205.git7d71120.el7.centos.aarch64',
+    'docker-common-1.13.1-205.git7d71120.el7.centos.aarch64'
   ]
 
   #  Packages to be installed through yum
   $yum_packages = [
     'nano',
-    'raspi-config',
     'git',
     'gcc',
     'gcc-c++',
@@ -44,11 +51,17 @@ class profile::core::rpi {
     'putty'
     ]
 
+  package { $docker_packages:
+    ensure => 'absent'
+  }
   package { $yum_packages:
     ensure => 'present',
   }
-  package { $snap_packages:
-    ensure   => 'present',
-    provider => snap,
+  $snap_packages.each |$snap|{
+    exec { "snap install --edge ${snap}":
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      unless   => "snap list | grep ${snap}",
+    }
   }
 }

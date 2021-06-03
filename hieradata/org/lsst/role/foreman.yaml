@@ -57,6 +57,7 @@ r10k::webhook::group: "root"
 r10k::deploy_settings:
   generate_types: true
 profile::core::common::manage_puppet_agent: false
+apache::mod::proxy::proxy_timeout: 300  # seconds -- allow long operations over rest api
 # copied from /etc/foreman-installer/scenarios.d/foreman-answers.yaml
 foreman::apache: true
 foreman::compute::libvirt: true

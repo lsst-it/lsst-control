@@ -75,7 +75,7 @@ mod 'puppetlabs-puppetserver_gem', '1.1.1'
 
 mod 'puppet/yum', '4.0.0'
 mod 'richardc/datacat', '0.6.2'
-mod 'stahnma/epel', '1.3.1'
+mod 'puppet/epel', '3.0.1'
 
 mod 'simp/mate', '1.0.2'
 mod 'simp/dconf', '0.0.3'

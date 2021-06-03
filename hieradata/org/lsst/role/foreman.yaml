@@ -42,10 +42,6 @@ r10k::sources:
     remote: "git@github.com:lsst-it/lsst-puppet-hiera-private.git"
     basedir: "/etc/puppetlabs/code/hieradata/private"
     invalid_branches: "correct"
-  lsst_hiera_public:
-    remote: "https://github.com/lsst-it/lsst-puppet-hiera.git"
-    basedir: "/etc/puppetlabs/code/hieradata/public"
-    invalid_branches: "correct"
 r10k::postrun: ['/bin/hammer', 'proxy', 'import-classes', '--id=1']
 r10k::webhook::config::use_mcollective: false
 r10k::webhook::config::enable_ssl: false

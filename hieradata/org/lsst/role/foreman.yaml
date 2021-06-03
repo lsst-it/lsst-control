@@ -94,7 +94,7 @@ foreman_proxy::httpboot: true
 foreman_proxy::http: false
 foreman_proxy::log_buffer: 2000
 foreman_proxy::log_buffer_errors: 1000
-foreman_proxy::log_level: "INFO"
+foreman_proxy::log_level: "DEBUG"
 foreman_proxy::log: "/var/log/foreman-proxy/proxy.log"
 foreman_proxy::plugin::dynflow::console_auth: true
 foreman_proxy::plugin::dynflow::core_listen: "0.0.0.0"

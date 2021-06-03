@@ -104,6 +104,7 @@ foreman_proxy::plugin::dynflow::listen_on: "https"
 foreman_proxy::plugin::remote_execution::ssh::async_ssh: false
 foreman_proxy::plugin::remote_execution::ssh::enabled: true
 foreman_proxy::plugin::remote_execution::ssh::ssh_kerberos_auth: false
+foreman_proxy::puppet_api_timeout: 1  # seconds
 foreman_proxy::puppetca_provider: "puppetca_hostname_whitelisting"
 foreman_proxy::puppetca: true
 foreman_proxy::puppet_listen_on: "https"

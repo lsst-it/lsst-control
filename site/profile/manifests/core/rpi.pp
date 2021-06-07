@@ -11,13 +11,13 @@ class profile::core::rpi {
   $conda_bin = "${root_dir}/conda/miniforge/condabin"
 
   #  Packages to be installed through snapd
-  # $snap_packages = [
+  $snap_packages = 'raspberry-pi-node-gpio'
+# $snap_packages = [
   #   'raspberry-pi-node-gpio',
   #   'picamera',
   #   'raspi-config',
   #   'picamera-streaming-demo'
   # ]
-  $snap_packages = 'raspberry-pi-node-gpio'
 
   #  Remove default docker packages
   $docker_packages = [
@@ -50,9 +50,9 @@ class profile::core::rpi {
     'gpiozero',
     'pylibftdi',
     'pyftdi',
-    'picamera',
-    'raspi-config',
-    'picamera-streaming-demo'
+    # 'picamera',
+    # 'raspi-config',
+    # 'picamera-streaming-demo'
   ]
 
   #  Packages to be installed through yum
@@ -92,6 +92,42 @@ class profile::core::rpi {
     "bash ${packages_dir}/miniforge.sh -b -p ${conda_dir}/miniforge,test -f ${conda_dir}/miniforge/etc/profile.d/conda.sh",
     "cp ${conda_dir}/miniforge/etc/profile.d/conda.sh /etc/profile.d/conda.sh, test -f /etc/profile.d/conda.sh",
     "${conda_bin}/conda config --add channels lsstts,${conda_bin}/conda config --show channels | grep lsstts"
+  ]
+
+  $libgphoto = @("RUN")
+    cd ${packages_dir}/libgphoto2
+    autoreconf --install --symlink
+    ./configure
+    make
+    make install
+    cp libgphoto2.pc /usr/share/pkgconfig
+    cp libgphoto2_port/libgphoto2_port.pc /usr/share/pkgconfig
+    printf "/usr/local/lib\n" >> /etc/ld.so.conf.d/gphoto2.conf
+    printf "/usr/local/lib/libgphoto2/2.5.26.1\n" >> /etc/ld.so.conf.d/gphoto2.conf
+    printf "/usr/local/lib/libgphoto2_port/0.12.0\n" >> /etc/ld.so.conf.d/gphoto2.conf
+    ldconfig
+    | RUN
+
+  $gphoto = @("RUN")
+    cd ${packages_dir}/gphoto2
+    autoreconf --install --symlink
+    ./configure
+    make
+    make install
+    | RUN
+
+  $python_gphoto = @("RUN")
+    cd ${packages_dir}/python-gphoto2
+    python setup.py build_swig
+    python setup.py build
+    python setup.py install
+    | RUN
+
+  #  Repo Array
+  $repo_name = [
+    "libgphoto2,gphoto/libgphoto2.git,${libgphoto},test -f /etc/ld.so.conf.d/gphoto2.conf",
+    "gphoto2,gphoto/gphoto2.git,${gphoto},test -f /etc/ld.so.conf.d/gphoto.conf",
+    "python-gphoto2,jim-easterbrook/python-gphoto2.git,${python_gphoto},test -f /etc/ld.so.conf.d/pythongphoto.conf"
   ]
   #<----------- END Variables ------------->
   #
@@ -165,4 +201,27 @@ class profile::core::rpi {
     }
   }
   #<-----------END Conda Install------------>
+  #
+  #
+  #<-------LibGPhoto Packages Install------->
+  $repo_name.each |$repo|{
+    $value = split($repo,',')
+    vcsrepo { "${packages_dir}/${value[0]}":
+      ensure   => present,
+      provider => git,
+      source   => "https://github.com/${value[1]}",
+    }
+    file {"${packages_dir}/${value[0]}/${value[0]}.sh":
+      ensure  => present,
+      mode    => '0755',
+      content => $value[2]
+    }
+    exec { "bash ${packages_dir}/${value[0]}/${value[0]}.sh":
+      cwd      => "${packages_dir}/${value[0]}",
+      path     => ['/sbin', '/usr/sbin', '/bin',"${packages_dir}/${value[0]}"],
+      provider => shell,
+      unless   => $value[3],
+    }
+  }
+  #<----END LibGPhoto Packages Install------>
 }

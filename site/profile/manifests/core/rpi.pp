@@ -85,7 +85,8 @@ class profile::core::rpi {
     'minicom',
     'screen',
     'putty',
-    'svn'
+    'svn',
+    'dh-autoreconf'
   ]
 
   $conda_install = [

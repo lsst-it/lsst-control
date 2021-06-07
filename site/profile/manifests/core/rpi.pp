@@ -6,13 +6,16 @@ class profile::core::rpi {
 
   #<------------ Variables -------------->
   $root_dir = '/opt'
-  $packages_dir = "${root_dir}/packages"
-  $conda_dir = "${root_dir}/conda"
-  $conda_bin = "${root_dir}/conda/miniforge/condabin"
+  $packages_dir          = "${root_dir}/packages"
+  $conda_dir             = "${root_dir}/conda"
+  $conda_bin             = "${root_dir}/conda/miniforge/condabin"
+  $libgphoto_version     = 'libgphoto2-2.5.27'
+  $gphoto_version        = 'gphoto2-2.5.27'
+  $python_gphoto_version = 'python-gphoto2-2.2.4'
 
   #  Packages to be installed through snapd
   $snap_packages = 'raspberry-pi-node-gpio'
-# $snap_packages = [
+  # $snap_packages = [
   #   'raspberry-pi-node-gpio',
   #   'picamera',
   #   'raspi-config',
@@ -86,7 +89,8 @@ class profile::core::rpi {
     'screen',
     'putty',
     'svn',
-    'dh-autoreconf'
+    'dh-autoreconf',
+    'libtool-ltdl-devel'
   ]
 
   $conda_install = [
@@ -96,40 +100,41 @@ class profile::core::rpi {
   ]
 
   $libgphoto = @("RUN")
-    cd ${packages_dir}/libgphoto2
-    autoreconf --install --symlink
-    ./configure
-    make
-    make install
-    cp libgphoto2.pc /usr/share/pkgconfig
-    cp libgphoto2_port/libgphoto2_port.pc /usr/share/pkgconfig
-    printf "/usr/local/lib\n" >> /etc/ld.so.conf.d/gphoto2.conf
-    printf "/usr/local/lib/libgphoto2/2.5.26.1\n" >> /etc/ld.so.conf.d/gphoto2.conf
-    printf "/usr/local/lib/libgphoto2_port/0.12.0\n" >> /etc/ld.so.conf.d/gphoto2.conf
+    cd ${packages_dir}/${libgphoto_version} && \
+    autoreconf --install --symlink && \
+    ./configure && \
+    make && \
+    make install && \
+    cp libgphoto2.pc /usr/share/pkgconfig && \
+    cp libgphoto2_port/libgphoto2_port.pc /usr/share/pkgconfig && \
+    echo "/usr/local/lib" >> /etc/ld.so.conf.d/gphoto2.conf && \
+    echo "/usr/local/lib/libgphoto2/2.5.27" >> /etc/ld.so.conf.d/gphoto2.conf && \
+    echo "/usr/local/lib/libgphoto2_port/0.12.0" >> /etc/ld.so.conf.d/gphoto2.conf && \
     ldconfig
     | RUN
 
   $gphoto = @("RUN")
-    cd ${packages_dir}/gphoto2
-    autoreconf --install --symlink
-    ./configure
-    make
+    cd ${packages_dir}/${gphoto_version} && \
+    autoreconf --install --symlink && \
+    ./configure && \
+    make && \
     make install
     | RUN
 
   $python_gphoto = @("RUN")
-    cd ${packages_dir}/python-gphoto2
-    python setup.py build_swig
-    python setup.py build
-    python setup.py install
+    cd ${packages_dir}/${python_gphoto_version}
+    python3 setup.py build_swig 
+    python3 setup.py build
+    python3 setup.py install
     | RUN
 
   #  Repo Array
   $repo_name = [
-    "libgphoto2,gphoto/libgphoto2.git,${libgphoto},test -f /etc/ld.so.conf.d/gphoto2.conf",
-    "gphoto2,gphoto/gphoto2.git,${gphoto},test -f /etc/ld.so.conf.d/gphoto.conf",
-    "python-gphoto2,jim-easterbrook/python-gphoto2.git,${python_gphoto},test -f /etc/ld.so.conf.d/pythongphoto.conf"
+    "libgphoto2,${libgphoto},test -f /usr/local/lib/pkgconfig/libgphoto2.pc,https://github.com/gphoto/libgphoto2/releases/download/v2.5.27/libgphoto2-2.5.27.tar.bz2,libgphoto2.tar.bz2,${libgphoto_version}",
+    "gphoto2,${gphoto},test -f /usr/local/bin/gphoto2,https://github.com/gphoto/gphoto2/releases/download/v2.5.27/gphoto2-2.5.27.tar.bz2,gphoto2-2.5.27.tar.bz2,${gphoto_version}",
+    "python-gphoto2,${python_gphoto},test -f /opt/conda/miniforge/lib/python3.8/site-packages/gphoto2-2.2.4-py3.8.egg-info,https://github.com/jim-easterbrook/python-gphoto2/archive/v2.2.4.tar.gz,python-gphoto2.tar.gz,${python_gphoto_version}"
   ]
+
   #<----------- END Variables ------------->
   #
   #
@@ -183,6 +188,11 @@ class profile::core::rpi {
     mode   => '0755',
     source => 'https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh'
   }
+  file { '/etc/profile.d/conda_source.sh':
+    ensure  => present,
+    mode    => '0755',
+    content => 'source /opt/conda/miniforge/bin/activate',
+  }
   $conda_install.each |$install|{
     $value = split($install,',')
     exec { $value[0]:
@@ -207,21 +217,22 @@ class profile::core::rpi {
   #<-------LibGPhoto Packages Install------->
   $repo_name.each |$repo|{
     $value = split($repo,',')
-    vcsrepo { "${packages_dir}/${value[0]}":
-      ensure   => present,
-      provider => git,
-      source   => "https://github.com/${value[1]}",
+    archive {"${packages_dir}/${value[4]}":
+      ensure       => present,
+      source       => $value[3],
+      extract      => true,
+      extract_path => $packages_dir
     }
-    file {"${packages_dir}/${value[0]}/${value[0]}.sh":
+    -> file {"${packages_dir}/${value[5]}/${value[0]}.sh":
       ensure  => present,
       mode    => '0755',
-      content => $value[2]
+      content => $value[1]
     }
-    exec { "bash ${packages_dir}/${value[0]}/${value[0]}.sh":
-      cwd      => "${packages_dir}/${value[0]}",
-      path     => ['/sbin', '/usr/sbin', '/bin',"${packages_dir}/${value[0]}"],
+    ->exec { "bash ${packages_dir}/${value[5]}/${value[0]}.sh":
+      cwd      => "${packages_dir}/${value[5]}",
+      path     => ['/sbin', '/usr/sbin', '/bin',"${packages_dir}/${value[5]}"],
       provider => shell,
-      unless   => $value[3],
+      unless   => $value[2],
     }
   }
   #<----END LibGPhoto Packages Install------>

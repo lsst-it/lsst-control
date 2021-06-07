@@ -5,9 +5,10 @@ class profile::core::rpi {
   include snapd
 
   #  Tmp directory
-  $packages_dir = '/opt/packages'
-  $conda_dir = '/opt/conda'
-  $conda_bin = '/opt/conda/miniforge/condabin'
+  $root_dir = '/opt'
+  $packages_dir = "${root_dir}/packages"
+  $conda_dir = "${root_dir}/conda"
+  $conda_bin = "${root_dir}/conda/miniforge/condabin"
 
   #  Packages to be installed through snapd
   # $snap_packages = [
@@ -27,13 +28,13 @@ class profile::core::rpi {
 
   #  Conda Packages
   $conda_packages =[
-    'python=3.8',
-    'wheel',
-    'conda-verify',
-    'conda-build',
-    'anaconda-client',
-    'setuptools_scm',
-    'numpy',
+    'python=3.8,python',
+    'wheel,wheel',
+    'conda-verify,conda-verify',
+    'conda-build,conda-build',
+    'anaconda-client,anaconda-client',
+    'setuptools_scm,setuptools_scm',
+    'numpy,numpy'
   ]
 
   #  PIP Packages
@@ -82,13 +83,14 @@ class profile::core::rpi {
     'emacs',
     'minicom',
     'screen',
-    'putty'
+    'putty',
+    'svn'
     ]
 
   $conda_install = [
     "bash ${packages_dir}/miniforge.sh -b -p ${conda_dir}/miniforge,test -f ${conda_dir}/miniforge/etc/profile.d/conda.sh",
     "cp ${conda_dir}/miniforge/etc/profile.d/conda.sh /etc/profile.d/conda.sh, test -f /etc/profile.d/conda.sh",
-    "${conda_install}/conda config --add channels lsstts,${conda_install}/conda config --show channels | grep lsstts"
+    "${conda_bin}/conda config --add channels lsstts,${conda_bin}/conda config --show channels | grep lsstts"
   ]
 
   #  Create Directory Packages
@@ -98,6 +100,14 @@ class profile::core::rpi {
   file { $conda_dir:
     ensure => 'directory'
   }
+
+  #  RPi Camera firmware
+  exec { 'svn export https://github.com/raspberrypi/firmware/trunk/hardfp/opt/vc':
+    cwd      => $root_dir,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    unless   => 'test -d /opt/vc'
+  }
   #  Remove preinstalled docker packages
   package { $docker_packages:
     ensure => 'absent'
@@ -105,6 +115,7 @@ class profile::core::rpi {
   package { $yum_packages:
     ensure => 'present',
   }
+
   # The required snap packages are in the edge channel, and provider option from package does not allow it.
   exec { "snap install --edge ${snap_packages}":
       path     => ['/sbin', '/usr/sbin', '/bin'],
@@ -118,8 +129,8 @@ class profile::core::rpi {
     mode   => '0755',
     source => 'https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh',
   }
-  $conda_install.each |$conda|{
-    $value = split($conda,',')
+  $conda_install.each |$install|{
+    $value = split($install,',')
     exec { $value[0]:
       cwd      => $conda_dir,
       path     => ['/sbin', '/usr/sbin', '/bin'],
@@ -127,12 +138,13 @@ class profile::core::rpi {
       unless   => $value[1],
     }
   }
-  $conda_packages.each |$conda|{
-    exec { "${conda_bin}/conda install -y ${conda}":
+  $conda_packages.each |$packages|{
+    $value = split($packages,',')
+    exec { "conda install -y ${value[0]}":
       cwd      => $packages_dir,
-      path     => ['/sbin', '/usr/sbin', '/bin'],
+      path     => ['/sbin', '/usr/sbin', '/bin', $conda_bin],
       provider => shell,
-#      unless   => "snap list | grep ${conda}",
+      unless   => "conda list | grep ${value[1]}",
     }
   }
 #   #  Install packages through pip

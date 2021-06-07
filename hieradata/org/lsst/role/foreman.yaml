@@ -47,7 +47,8 @@ r10k::sources:
     basedir: "/etc/puppetlabs/code/hieradata/private"
     invalid_branches: "correct"
     ignore_branch_prefixes: *ignore_branch
-r10k::postrun: ['/bin/hammer', 'proxy', 'import-classes', '--id=1']
+#r10k::postrun: ['/bin/hammer', 'proxy', 'import-classes', '--id=1']
+r10k::postrun: ['/bin/scl', 'enable', 'tfm', '--', 'systemd-cat', '-t', 'foreman_envsync', '/bin/foreman_envsync', '--verbose']
 r10k::webhook::config::use_mcollective: false
 r10k::webhook::config::enable_ssl: false
 r10k::webhook::config::protected: false

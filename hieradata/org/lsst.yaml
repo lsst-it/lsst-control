@@ -36,7 +36,13 @@ lookup_options:
   sssd::domains:
     merge:
       strategy: "deep"
-  profile::core::tmpfile::file:
+  profile::core::systemd::tmpfile:
+    merge:
+      strategy: "deep"
+  profile::core::systemd::dropin_file:
+    merge:
+      strategy: "deep"
+  r10k::sources:
     merge:
       strategy: "deep"
 

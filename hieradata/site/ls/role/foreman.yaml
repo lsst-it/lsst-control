@@ -77,3 +77,14 @@ dhcp::pools:
 profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"
 profile::icinga::agent::host_template: "HttpTemplate"
 puppet::server::puppetdb::server: "puppetdb.ls.lsst.org"
+
+r10k::sources:
+  control:
+    ignore_branch_prefixes: &ignore_branch
+      - "corecp_production"
+      - "coredev_production"
+      - "cp"
+      - "dev"
+      - "tu"
+  lsst_hiera_private:
+    ignore_branch_prefixes: *ignore_branch

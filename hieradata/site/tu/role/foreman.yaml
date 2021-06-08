@@ -96,3 +96,15 @@ sysctl::values::args:
     target: "/etc/sysctl.d/91-arp_filter.conf"
 profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"
 puppet::server::puppetdb::server: "puppetdb.tu.lsst.org"
+
+r10k::sources:
+  control:
+    ignore_branch_prefixes: &ignore_branch
+      - "corecp_production"
+      - "coredev_production"
+      - "corels_production"
+      - "cp"
+      - "dev"
+      - "ls"
+  lsst_hiera_private:
+    ignore_branch_prefixes: *ignore_branch

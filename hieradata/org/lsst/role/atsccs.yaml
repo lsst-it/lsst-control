@@ -3,7 +3,7 @@ classes:
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
-  - "profile::core::tmpfile"
+  - "profile::core::systemd"
   - "profile::ccs::common"
 
 nfs::client_enabled: true
@@ -15,6 +15,6 @@ nfs::client_mounts:
 
 ccs_monit::hwraid: false
 
-profile::core::tmpfile::file:
+profile::core::systemd::tmpfile:
   docker_tmp:  # XXX short term kludge
     content: "d /tmp/docker_tmp 0777 saluser saluser -"

@@ -2,7 +2,9 @@
 classes:
   - "profile::core::common"
   - "profile::core::debugutils"
+  - "profile::core::foreman_envsync"
   - "profile::core::puppet_master"
+  - "profile::core::systemd"
   - "dhcp"
 
 dhcp::default_lease_time: &lease_time 900
@@ -21,6 +23,15 @@ cron::job:
     weekday: "*"
     user: "root"
     description: "Run R10K"
+  foreman_restart:  # avoid conflict with cron job named "foreman" from foreman rpm
+    command: "systemctl restart foreman"
+    minute: "42"
+    hour: "5"
+    date: "*"
+    month: "*"
+    weekday: "*"
+    user: "root"
+    description: "restart foreman to control memory bloat"
 r10k::mcollective: false
 r10k::cachedir: "/var/cache/r10k"
 r10k::sources:
@@ -28,15 +39,17 @@ r10k::sources:
     remote: "https://github.com/lsst-it/lsst-itconf"
     basedir: "/etc/puppetlabs/code/environments"
     invalid_branches: "correct"
+    ignore_branch_prefixes: &ignore_branch
+      - "master"
+      - "ncsa_production"
+      - "disable"
   lsst_hiera_private:
     remote: "git@github.com:lsst-it/lsst-puppet-hiera-private.git"
     basedir: "/etc/puppetlabs/code/hieradata/private"
     invalid_branches: "correct"
-  lsst_hiera_public:
-    remote: "https://github.com/lsst-it/lsst-puppet-hiera.git"
-    basedir: "/etc/puppetlabs/code/hieradata/public"
-    invalid_branches: "correct"
-r10k::postrun: ['/bin/hammer', 'proxy', 'import-classes', '--id=1']
+    ignore_branch_prefixes: *ignore_branch
+#r10k::postrun: ['/bin/hammer', 'proxy', 'import-classes', '--id=1']
+r10k::postrun: ['/bin/scl', 'enable', 'tfm', '--', 'systemd-cat', '-t', 'foreman_envsync', '/bin/foreman_envsync', '--verbose']
 r10k::webhook::config::use_mcollective: false
 r10k::webhook::config::enable_ssl: false
 r10k::webhook::config::protected: false
@@ -46,6 +59,7 @@ r10k::webhook::group: "root"
 r10k::deploy_settings:
   generate_types: true
 profile::core::common::manage_puppet_agent: false
+apache::mod::proxy::proxy_timeout: 300  # seconds -- allow long operations over rest api
 # copied from /etc/foreman-installer/scenarios.d/foreman-answers.yaml
 foreman::apache: true
 foreman::compute::libvirt: true
@@ -53,10 +67,9 @@ foreman::compute::libvirt: true
 #foreman::db_username:  # secret
 foreman::dynflow_manage_services: true
 foreman::dynflow_orchestrator_ensure: "present"
-# XXX under foreman 2.4.0, puma seems to be ignoring the number of threads
-#foreman::foreman_service_puma_threads_max: 16
-#foreman::foreman_service_puma_threads_min: 0
-foreman::foreman_service_puma_workers: 1
+foreman::foreman_service_puma_threads_max: 4  # XXX puma seems use 16t anyways?
+foreman::foreman_service_puma_threads_min: 4
+foreman::foreman_service_puma_workers: 4
 foreman::group: "foreman"
 #foreman::initial_admin_password:  # secret
 #foreman::initial_admin_username:  # secret
@@ -84,7 +97,7 @@ foreman_proxy::httpboot: true
 foreman_proxy::http: false
 foreman_proxy::log_buffer: 2000
 foreman_proxy::log_buffer_errors: 1000
-foreman_proxy::log_level: "INFO"
+foreman_proxy::log_level: "DEBUG"
 foreman_proxy::log: "/var/log/foreman-proxy/proxy.log"
 foreman_proxy::plugin::dynflow::console_auth: true
 foreman_proxy::plugin::dynflow::core_listen: "0.0.0.0"
@@ -95,6 +108,7 @@ foreman_proxy::plugin::dynflow::listen_on: "https"
 foreman_proxy::plugin::remote_execution::ssh::async_ssh: false
 foreman_proxy::plugin::remote_execution::ssh::enabled: true
 foreman_proxy::plugin::remote_execution::ssh::ssh_kerberos_auth: false
+foreman_proxy::puppet_api_timeout: 1  # seconds
 foreman_proxy::puppetca_provider: "puppetca_hostname_whitelisting"
 foreman_proxy::puppetca: true
 foreman_proxy::puppet_listen_on: "https"
@@ -142,16 +156,38 @@ puppet::report: true
 puppet::server_common_modules_path: ""
 puppet::server_foreman_facts: true
 puppet::server_foreman: true
-puppet::server_jvm_max_heap_size: "2G"
-puppet::server_jvm_min_heap_size: "2G"
+puppet::server_max_active_instances: 8  # see https://puppet.com/docs/puppet/6/server/tuning_guide.html
+puppet::server_jvm_max_heap_size: &jvm_heap "5G"  # (max-act-inst * 0.5G) + 1G
+puppet::server_jvm_min_heap_size: *jvm_heap
+puppet::server_jvm_extra_args: ["-XX:ReservedCodeCacheSize=1G", "-Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"]
 puppet::server::puppetdb::soft_write_failure: true
 puppet::server_puppetserver_version: &server_version "6.15.3"  # XXX does this do anything?
 puppet::server_reports: "foreman,puppetdb"
 puppet::server_storeconfigs: false
 puppet::server: true
+puppet::server::puppetserver_metrics: false  # disabled for performance
+puppet::server::puppetserver_profiler: false  # disabled for performance
 puppet::server_version: *server_version  # XXX does this do anything?
 puppet::version: "6.22.1"  # agent version
 redis::globals::scl: "rh-redis5"
+
+profile::core::puppet_master::foreman_config:
+  matchers_inheritance:
+    value: false
+  host_power_status:
+    value: false
+  update_hostgroup_from_facts:
+    value: false
+  destroy_vm_on_host_delete:
+    value: false
+
+profile::core::systemd::dropin_file:
+  50-MemoryLimit.conf:
+    unit: "foreman.service"
+    #notify_service: true  # needs camptocamp/systemd > 3.0.0
+    content: |
+      [Service]
+      MemoryLimit=17179869184
 
 files:
   /etc/foreman-proxy/settings.d:

@@ -6,6 +6,7 @@
 class profile::core::puppet_master(
   Stdlib::HTTPSUrl $smee_url,
   Boolean $enable_puppetdb = false,
+  Optional[Hash[String, Hash]] $foreman_config = undef,
 ) {
   include cron
   include foreman
@@ -26,6 +27,10 @@ class profile::core::puppet_master(
 
   if $enable_puppetdb {
     include puppet::server::puppetdb
+  }
+
+  if $foreman_config {
+    ensure_resources('foreman_config_entry', $foreman_config)
   }
 
   Class['r10k::webhook::config'] -> Class['r10k::webhook']

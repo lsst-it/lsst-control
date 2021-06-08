@@ -199,3 +199,14 @@ dhcp::hosts:
 profile::icinga::agent::host_template: "HttpTemplate"
 profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"
 puppet::server::puppetdb::server: "puppetdb.cp.lsst.org"
+
+r10k::sources:
+  control:
+    ignore_branch_prefixes: &ignore_branch
+      - "coredev_production"
+      - "corels_production"
+      - "dev"
+      - "ls"
+      - "tu"
+  lsst_hiera_private:
+    ignore_branch_prefixes: *ignore_branch

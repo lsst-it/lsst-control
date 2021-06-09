@@ -1,4 +1,4 @@
 ---
 network::interfaces_hash:
   em1:  # fqdn
-    ipaddress: "140.252.35.8"
+    ipaddress: "140.252.146.69"

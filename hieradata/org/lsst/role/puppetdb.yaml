@@ -2,20 +2,23 @@
 classes:
   - "profile::core::common"
   - "puppetdb"
-  - "puppetdb::globals"
   - "scl"
 
+packages:
+  - "rh-postgresql12-syspaths"
+postgresql::client::package_name: "rh-postgresql12-syspaths"  # appears to be ignored
+# puppetdb::globals is declared by puppetdb::database::postgresql
+postgresql::globals::bindir: "/usr/bin"
+postgresql::globals::client_package_name: "rh-postgresql12-syspaths"  # appears to be ignored
+postgresql::globals::confdir: "/var/opt/rh/rh-postgresql12/lib/pgsql/data"
+postgresql::globals::contrib_package_name: "rh-postgresql12-postgresql-contrib-syspaths"
+postgresql::globals::datadir: "/var/opt/rh/rh-postgresql12/lib/pgsql/data"
+postgresql::globals::server_package_name: "rh-postgresql12-postgresql-server-syspaths"
+postgresql::globals::service_name: "postgresql"
+postgresql::globals::version: "12"
+puppetdb::database_listen_address: "localhost"
+puppetdb::globals::version: "6.16.1"
 puppetdb::java_args:
   "-Xmx": "1g"
   "-Xms": "512m"
-puppetdb::globals::version: "6.16.1"
 puppetdb::listen_address: "0.0.0.0"
-puppetdb::database_listen_address: "localhost"
-postgresql::globals::version: "12"
-postgresql::globals::client_package_name: "rh-postgresql12-syspaths"
-postgresql::globals::server_package_name: "rh-postgresql12-postgresql-server-syspaths"
-postgresql::globals::contrib_package_name: "rh-postgresql12-postgresql-contrib-syspaths"
-postgresql::globals::service_name: "postgresql"
-postgresql::globals::datadir: "/var/opt/rh/rh-postgresql12/lib/pgsql/data"
-postgresql::globals::confdir: "/var/opt/rh/rh-postgresql12/lib/pgsql/data"
-postgresql::globals::bindir: "/usr/bin"

@@ -7,7 +7,7 @@ accounts::user_list:
     managehome: true
     system: true
     sshkeys:
-      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGCCYvVfrd3RvPlGtXh+e3NWWw7OVzvIyX9jj1jT2omYt07gPv2nx9xgHqtkr1n39aezN4T2/9PuuCinN/dCOAmDd1J3lV+4rbWVUQD1o356ElxnVgdDm7RLwFfGjNW+WnVVOSXudZaO8wN6JqzG0SM21bmaIrT5b8pmXI9aafIEtnVhUKpVrqXOMQR8RNF9nvnzQulRkX7y/Kcy//a1v6/1lt4D+0Y5QaQujt04i8+QkcUBNe9sukjYWfzcPW9FpdJAiiydxwJl27f8OvJ4OMp1LJkB8lI5BLvJQpJ6u0DlfjkrSusDx60MSU3LQKP9TsaOW16b+/FqcHpkSpLGy/ foreman@foreman.tu.lsst.org"
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjbrCz3m21/gVUH34zoLsxzL1gYuVRNngZ5P6/3/Iw8LR0eMRmkqDZGDR27R91xQSQ4iazP35yeeWH18y+GLUXgfskjYpwqHZ+JBhnaYBoAUaogXYw2FGZAlvjtKZlFclSXu16jKq5sF0woDC6KBxRJuu24EuL2QY9pGPReFGNwgYmruhIDeRZpj/vy7+2+L/hqXTcq42xRMUYRLomR8C7LXkZvrH59QuWYh71Nsx8Qko901c/qpgEynu4ZQFOrSVRgEWPls/Y/aWSAT1k68tGaFQ+W0CP7CA2pbR+ZjcxbodXMoOwxUgHbhR3SwNpGeKEtKh4Csd5e6pgIskW2kX7 root@foreman.tuc.lsst.cloud"
 network::interfaces_hash:
   em1:  # fqdn
     bootproto: "none"
@@ -15,8 +15,8 @@ network::interfaces_hash:
     dns1: "%{lookup('dhcp::nameservers.0')}"
     dns2: "%{lookup('dhcp::nameservers.1')}"
     domain: "%{lookup('dhcp::dnsdomain.0')}"
-    gateway: "140.252.35.1"
-    netmask: "255.255.255.128"
+    gateway: "140.252.146.65"
+    netmask: "255.255.255.224"
     nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
@@ -32,29 +32,14 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-  p2p1.700: &vlan_int
+  p2p1.3040: &vlan_int
     bootproto: "none"
-    onboot: "yes"
-    vlan: "yes"
-    bridge: "br700"
-    type: "none"
-    nozeroconf: "yes"
-  p2p1.800:
-    <<: *vlan_int
-    bridge: "br800"
-  p2p1.801:
-    <<: *vlan_int
-    bridge: "br801"
-  p2p1.3040:
-    <<: *vlan_int
     bridge: "br3040"
-  br700: &bridge_int  # old auxtel - keep until pontus is moved to rm101
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
+  br3040: &bridge_int  # coresvc
     bootproto: "none"
     onboot: "yes"
     type: "bridge"
-  br800:  # old svc
-    <<: *bridge_int
-  br801:  # old mgt
-    <<: *bridge_int
-  br3040:  # coresvc
-    <<: *bridge_int

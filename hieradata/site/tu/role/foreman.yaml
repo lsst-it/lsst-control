@@ -19,7 +19,7 @@ dhcp::pools:
     network: "140.252.146.64"
     mask: "255.255.255.224"
     gateway: "140.252.146.65"
-    range: "140.252.146.85 140.252.146.94"
+    range: "140.252.146.90 140.252.146.94"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan3050:  # mgt
     network: "140.252.146.128"

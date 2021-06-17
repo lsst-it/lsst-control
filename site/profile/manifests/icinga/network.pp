@@ -43,11 +43,12 @@ class profile::icinga::network (
     'bdc-is14.ls.lsst.org,10.49.0.38',
     'bdc-as01.ls.lsst.org,10.49.0.91',
     'bdc-as02.ls.lsst.org,10.49.0.92',
+    'prep-room01.ls.lsst.org,10.49.0.99',
     'bdc-ds01.ls.lsst.org,10.49.0.254',
     'bdc-cr01.ls.lsst.org,10.48.1.1',
     'bdc-cr02.ls.lsst.org,10.48.1.2',
     'rubinobs-br01.ls.lsst.org,10.48.1.4',
-    'rubinobs-br02.ls.lsst.org,10.49.0.101',
+    'rubinobs-br02.ls.lsst.org,10.48.1.5',
     'cube.ls.lsst.org,139.229.134.1',
   ]
   $summit_host_list  = [
@@ -58,6 +59,7 @@ class profile::icinga::network (
     'casino-as01.cp.lsst.org,10.17.0.101',
     'penon-as01.cp.lsst.org,10.17.0.102',
     'eie-as01.cp.lsst.org,10.17.0.103',
+    'mill-as01.cp.lsst.org,10.17.0.104',
     'aux-as01.cp.lsst.org,10.17.0.13',
     'wst-as01.cp.lsst.org,10.17.0.14',
     'dimm-as01.cp.lsst.org,10.17.0.15',

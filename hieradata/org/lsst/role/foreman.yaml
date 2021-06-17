@@ -172,14 +172,10 @@ puppet::version: "6.22.1"  # agent version
 redis::globals::scl: "rh-redis5"
 
 profile::core::puppet_master::foreman_config:
-  matchers_inheritance:
-    value: false
-  host_power_status:
-    value: false
-  update_hostgroup_from_facts:
-    value: false
-  destroy_vm_on_host_delete:
-    value: false
+  destroy_vm_on_host_delete: {value: false}
+  host_power_status: {value: false}
+  matchers_inheritance: {value: false}
+  update_hostgroup_from_facts: {value: false}
 
 profile::core::systemd::dropin_file:
   50-MemoryLimit.conf:

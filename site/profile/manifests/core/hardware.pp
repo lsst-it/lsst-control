@@ -3,7 +3,8 @@
 class profile::core::hardware {
   # lint:ignore:case_without_default
   case $facts.dig('dmi', 'product', 'name') {
-    /PowerEdge/: {
+    # XXX add a fact to check /sys/class/ipmi/ instead of white listing specific models
+    /PowerEdge/, /1114S-WN10RT/: {
       include ipmi
     }
   }

@@ -6,8 +6,7 @@ class profile::core::hardware {
     /PowerEdge/: {
       include ipmi
       class { 'lldpd':
-        manage_facts => true,
-        manage_jq    => true,
+        manage_repo => true,
       }
     }
   }

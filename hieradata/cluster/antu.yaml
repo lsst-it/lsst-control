@@ -18,6 +18,7 @@ profile::core::nm_dispatch::interfaces:
     - "tc filter add dev ${DEV} parent 1:1 protocol ip prio 1 u32 match ip dst 141.142.0.0/16 flowid 1:10"
   em2:
     - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
+profile::core::ospl::enable_rundir: true
 network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"
@@ -76,12 +77,3 @@ sysctl::values::args:
 
 docker::version: "19.03.13"
 profile::app::rke::version: "1.2.8"
-
-files:
-  # opensplice daemons/client running in pods as `saluser` use hostPath to share a
-  # path to a unix domain socket
-  /run/ospl:
-    ensure: "directory"
-    owner: 73006
-    group: 73006
-    mode: "0755"

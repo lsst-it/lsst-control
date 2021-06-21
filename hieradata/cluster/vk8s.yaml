@@ -1,3 +1,4 @@
 ---
 profile::app::helm::version: "3.5.4"
+profile::app::rke::version: "1.2.8"
 profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"

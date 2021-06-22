@@ -13,7 +13,7 @@ dhcp::pools:
     network: "140.252.146.32"
     mask: "255.255.255.224"
     gateway: "140.252.146.33"
-    range: "140.252.146.53 140.252.146.62"
+    range: "140.252.146.60 140.252.146.62"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan3040:  # coresvc
     network: "140.252.146.64"

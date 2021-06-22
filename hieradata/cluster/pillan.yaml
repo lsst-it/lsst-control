@@ -7,19 +7,44 @@ profile::core::kernel::version: "3.10.0-1160.25.1.el7.x86_64"
 profile::core::ospl::enable_rundir: true
 
 network::interfaces_hash:
-  em1:  # fqdn
+  eno2d1:  # fqdn
     bootproto: "dhcp"
     defroute: "yes"
     onboot: "yes"
     type: "Ethernet"
-  em2:
+  eno1:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-  em2.700:  # 140.252.34.0/26
-    bootproto: "dhcp"
+  enp129s0f0:  # trunk vlans 3065, 3075, 3085
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+  enp129s0f0.3065: &vlan_int
+    bootproto: "none"
     defroute: "no"
     nozeroconf: "yes"
     onboot: "yes"
     type: "none"
     vlan: "yes"
+    bridge: "br3065"
+  enp129s0f0.3075:
+    <<: *vlan_int
+    bridge: "br3075"
+  enp129s0f0.3085:
+    <<: *vlan_int
+    bridge: "br3085"
+  br3065: &bridge_int
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"
+  br3075:
+    <<: *bridge_int
+  br3085:
+    <<: *bridge_int
+  em1:
+    ensure: "absent"
+  em2:
+    ensure: "absent"
+  em2.700:
+    ensure: "absent"

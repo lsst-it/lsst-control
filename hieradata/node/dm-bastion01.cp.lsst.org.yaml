@@ -1,0 +1,19 @@
+---
+classes:
+  - "profile::core::nfsclient"
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  # remote mounts
+  /project:
+    share: "project"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /scratch:
+    share: "scratch"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /lsstdata:
+    share: "lsstdata"
+    server: "nfs1.cp.lsst.org"
+    atboot: true

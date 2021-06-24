@@ -5,19 +5,15 @@ classes:
 nfs::client_enabled: true
 nfs::client_mounts:
   # remote mounts
-  /net/project:
+  /project:
     share: "project"
     server: "nfs1.cp.lsst.org"
     atboot: true
-  /net/scratch:
+  /scratch:
     share: "scratch"
     server: "nfs1.cp.lsst.org"
     atboot: true
-  /net/lsstdata:
+  /lsstdata:
     share: "lsstdata"
-    server: "nfs1.cp.lsst.org"
-    atboot: true
-  /net/home:
-    share: "home"
     server: "nfs1.cp.lsst.org"
     atboot: true

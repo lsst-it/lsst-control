@@ -1,6 +1,6 @@
 ---
 network::interfaces_hash:
-  eth0:  # fqdn
+  eth0:  # fqdn - vlan3040
     bootproto: "none"
     defroute: "yes"
     dns1: "%{lookup('dhcp::nameservers.0')}"
@@ -13,3 +13,19 @@ network::interfaces_hash:
     nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
+  eth1:  # dds vrf - vlan3085
+    bootproto: "none"
+    defroute: "no"
+    gateway: "140.252.147.129"
+    ipaddress: "140.252.147.132"
+    macaddr: "52:54:00:d4:45:78"
+    netmask: "255.255.255.224"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+
+network::mroutes_hash:
+  eth1:
+    routes:
+      "140.252.147.16/28": "140.252.147.129"
+      "140.252.147.48/28": "140.252.147.129"

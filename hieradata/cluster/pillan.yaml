@@ -1,5 +1,6 @@
 ---
 cni::plugins::checksum: "962100bbc4baeaaa5748cdbfce941f756b1531c2eadb290129401498bfac21e7"
+cni::plugins::enable: ["macvlan"]
 cni::plugins::version: "0.9.1"
 docker::version: "19.03.15"
 profile::app::helm::version: "3.5.4"

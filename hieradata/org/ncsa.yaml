@@ -31,7 +31,7 @@ docker::version: "19.03.4"
 #   - lsstts/label/dev
 #   - conda-forge
 
-pakrat_client::default_snapshot: "2021-02-22-1614032701"
+pakrat_client::default_snapshot: "2021-06-16-1623878701"
 pakrat_client::default_yumserver_url: "http://lsst-repos01.ncsa.illinois.edu"
 pakrat_client::repos:
   base:
@@ -55,10 +55,7 @@ pakrat_client::repos:
     gpgcheck: 1
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"
   puppet5:
-    descr: "Puppet 5 Repository el 7 - x86_64"
-    enabled: 1
-    gpgcheck: 1
-    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppet5-release"
+    ensure: "absent"
   puppetlabs-pc1:
     ensure: "absent"
   puppetlabs-pc1-source:
@@ -69,16 +66,16 @@ pakrat_client::repos:
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"
   # Ad-hoc security_updates repo (when we don't want to move all snapshots ahead)
   security_updates:
-    # snapshot will almost certainly differ than our current CentOS snapshot
-    snapshot: "2019-01-15-1547581639"
-    # if it is present, then we want it enabled
-    enabled: 1
     # set to absent when we do not need to use this repo; set to present when we need it
     ensure: "absent"
+    # snapshot will almost certainly differ than our current CentOS snapshot
+    #snapshot: "2019-01-15-1547581639"
+    # if it is present, then we want it enabled
+    #enabled: 1
     # set gpgcheck to 0 if we have built our own RPMs
-    gpgcheck: 0
+    #gpgcheck: 0
     # if we use GPG key checking, it's probably because we have only CentOS-built RPMs in the repo
-    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"
+    #gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"
 
 python::dev: "present"
 python::pip: "present"

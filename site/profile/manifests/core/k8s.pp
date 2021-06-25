@@ -11,4 +11,16 @@ class profile::core::k8s(
     include cni::plugins
     include cni::plugins::dhcp
   }
+
+  $user = 'rke'
+
+  vcsrepo { "/home/${user}/k8s-cookbook":
+    ensure             => present,
+    provider           => git,
+    source             => 'https://github.com/lsst-it/k8s-cookbook.git',
+    keep_local_changes => true,
+    user               => $user,
+    owner              => $user,
+    group              => $user,
+  }
 }

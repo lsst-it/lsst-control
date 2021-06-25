@@ -44,3 +44,39 @@ yum::repos:
 profile::app::helm::version: "3.0.3"
 profile::app::rke::version: "1.0.4"
 profile::core::kernel::version: "3.10.0-1062.12.1.el7.x86_64"
+
+files:
+  /home/rke/.bash_profile:
+    ensure: "file"
+    mode: "0600"
+    owner: &rke 75500
+    group: *rke
+    content: |
+      . ~/.bashrc
+  /home/rke/.bashrc:
+    ensure: "file"
+    mode: "0600"
+    owner: &rke 75500
+    group: *rke
+    content: |
+      # load .bashrc.d/ snippets
+      for i in `ls ~/.bashrc.d/*.sh`; do
+        . $i
+      done
+  /home/rke/.bashrc.d:
+    ensure: "directory"
+    mode: "0700"
+    owner: *rke
+    group: *rke
+  /home/rke/.bashrc.d/vimode.sh: &bashrc
+    ensure: "file"
+    mode: "0600"
+    owner: *rke
+    group: *rke
+    content: |
+      # enable vi mode
+      set -o vi
+  /home/rke/.bashrc.d/kubeconfig.sh:
+    <<: *bashrc
+    content: |
+      export KUBECONFIG=/home/rke/k8s-cookbook/%{::cluster}/rke/kube_config_cluster.yml

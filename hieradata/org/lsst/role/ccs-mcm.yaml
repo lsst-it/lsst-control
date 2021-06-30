@@ -20,5 +20,5 @@ profile::ccs::tomcat::wars:
     war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2-snapshots/org/lsst/CCSWebTrending/2.1-SNAPSHOT/CCSWebTrending-2.1-20200623.212832-4.war"
 
 profile::core::systemd::tmpfile:
-  docker_tmp:  # XXX short term kludge
+  docker_tmp.conf:  # XXX short term kludge
     content: "d /tmp/docker_tmp 0777 saluser saluser -"

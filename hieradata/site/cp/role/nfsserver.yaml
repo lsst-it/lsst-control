@@ -1,6 +1,8 @@
 ---
 # 139.229.146.0/24    antu
 # 139.229.160.0/24    cp general & andes
+# 139.229.163.0/24    Summit Wireless Network
+# 139.229.164.0/24    RubinObs-LHN
 # 139.229.165.0/24    cp archive
 # 139.229.170.0/24    AuxTel
 # 139.229.175.0/26    comcam-ccs
@@ -65,6 +67,7 @@ nfs::nfs_exports_global:
       %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.163.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.164.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.191.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)

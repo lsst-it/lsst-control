@@ -105,7 +105,8 @@ ccs_software::global_properties:
 ccs_sal::ospl_home: "/opt/OpenSpliceDDS/V6.10.4/HDE/x86_64.linux"
 ccs_sal::rpms:
   OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"
-  ts_sal_utils: "ts_sal_utils-5.1.1-1.x86_64.rpm"
+#  Removed for now, needs different repo
+#  ts_sal_utils: "ts_sal_utils-5.1.1-1.x86_64.rpm"
 
 ccs_sal::dds_domain: "summit"
 ccs_sal::dds_interface: "atsccs1-dds.cp.lsst.org"

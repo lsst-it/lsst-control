@@ -30,3 +30,27 @@ profile::ts::nexusctio::repos:
     baseurl: "http://cagvm3.ctio.noao.edu/nexus/repository/labview-rpm/rubin/"
     gpgcheck: false
     target: "/etc/yum.repos.d/nexus-ctio.repo"
+  "gpgrubin":
+    ensure: "present"
+    descr: "Nexus GPG Rubin Repository"
+    enabled: true
+    baseurl: "http://cagvm3.ctio.noao.edu/nexus/repository/gpg-rpm/rubin/"
+    gpgcheck: true
+    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-MSO"
+    target: "/etc/yum.repos.d/gpgrubin.repo"
+  "gpgmso":
+    ensure: "present"
+    descr: "Nexus GPG MSO Repository"
+    enabled: true
+    baseurl: "http://cagvm3.ctio.noao.edu/nexus/repository/gpg-rpm/MSO/"
+    gpgcheck: true
+    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-MSO"
+    target: "/etc/yum.repos.d/gpgmsoo.repo"
+  "gpgother":
+    ensure: "present"
+    descr: "Nexus GPG Other Repository"
+    enabled: true
+    baseurl: "http://cagvm3.ctio.noao.edu/nexus/repository/gpg-rpm/other/"
+    gpgcheck: true
+    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-MSO"
+    target: "/etc/yum.repos.d/gpgother.repo"

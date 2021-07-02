@@ -5,7 +5,7 @@ classes:
 packages:
   - "perccli"  # from dell repo
 
-profile::core::k8s::enable_dhcp: true
+profile::core::rke::enable_dhcp: true
 profile::core::nm_dispatch::interfaces:
   em1:
     - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"

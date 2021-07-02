@@ -5,7 +5,7 @@ cni::plugins::version: "0.9.1"
 docker::version: "19.03.15"
 profile::app::helm::version: "3.5.4"
 profile::app::rke::version: "1.2.8"
-profile::core::k8s::enable_dhcp: true
+profile::core::rke::enable_dhcp: true
 profile::core::kernel::version: "3.10.0-1160.25.1.el7.x86_64"
 profile::core::ospl::enable_rundir: true
 

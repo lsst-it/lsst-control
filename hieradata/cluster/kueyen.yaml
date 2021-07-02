@@ -5,7 +5,7 @@ classes:
 packages:
   - "perccli"  # from dell repo
 
-profile::core::k8s::enable_dhcp: true
+profile::core::rke::enable_dhcp: true
 profile::core::ifdown::interface: "em1"
 profile::core::ospl::enable_rundir: true
 network::interfaces_hash:

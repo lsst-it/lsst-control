@@ -4,8 +4,11 @@ class profile::core::rpi {
   include docker
   include snapd
 
+  #  Remove old docker packages first
+  Class['docker'] ~> Class['profile::core::rpi']
+
   #<------------ Variables -------------->
-  $root_dir = '/opt'
+  $root_dir              = '/opt'
   $packages_dir          = "${root_dir}/packages"
   $conda_dir             = "${root_dir}/conda"
   $conda_bin             = "${root_dir}/conda/miniforge/condabin"
@@ -15,12 +18,6 @@ class profile::core::rpi {
 
   #  Packages to be installed through snapd
   $snap_packages = 'raspberry-pi-node-gpio'
-  # $snap_packages = [
-  #   'raspberry-pi-node-gpio',
-  #   'picamera',
-  #   'raspi-config',
-  #   'picamera-streaming-demo'
-  # ]
 
   #  Remove default docker packages
   $docker_packages = [
@@ -52,7 +49,7 @@ class profile::core::rpi {
     'pigpio',
     'gpiozero',
     'pylibftdi',
-    'pyftdi',
+    'pyftdi'
     # 'picamera',
     # 'raspi-config',
     # 'picamera-streaming-demo'
@@ -154,7 +151,8 @@ class profile::core::rpi {
     cwd      => $root_dir,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    unless   => 'test -d /opt/vc'
+    unless   => 'test -d /opt/vc',
+    require  => Package[$yum_packages]
   }
   #<------------END RPi Camera ------------->
   #
@@ -166,74 +164,76 @@ class profile::core::rpi {
   }
   #  Install yum packages
   package { $yum_packages:
-    ensure => 'present'
+    ensure  => 'present',
+    require => Package[$docker_packages]
   }
   # The required snap packages are in the edge channel, and provider option from package does not allow it.
   exec { "snap install --edge ${snap_packages}":
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    unless   => "snap list | grep ${snap_packages}"
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      unless   => "snap list | grep ${snap_packages}"
   }
   #  Install packages through pip
   package { $pip_packages:
     ensure   => 'present',
     provider => pip3
   }
-  #<-------END Packages Installation-------->
-  #
-  #
-  #<------------Conda Install--------------->
-  file { "${packages_dir}/miniforge.sh":
-    ensure => present,
-    mode   => '0755',
-    source => 'https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh'
-  }
-  file { '/etc/profile.d/conda_source.sh':
-    ensure  => present,
-    mode    => '0755',
-    content => 'source /opt/conda/miniforge/bin/activate',
-  }
-  $conda_install.each |$install|{
-    $value = split($install,',')
-    exec { $value[0]:
-      cwd      => $conda_dir,
-      path     => ['/sbin', '/usr/sbin', '/bin'],
-      provider => shell,
-      unless   => $value[1]
-    }
-  }
-  $conda_packages.each |$packages|{
-    $value = split($packages,',')
-    exec { "conda install -y ${value[0]}":
-      cwd      => $packages_dir,
-      path     => ['/sbin', '/usr/sbin', '/bin', $conda_bin],
-      provider => shell,
-      unless   => "conda list | grep ${value[1]}"
-    }
-  }
-  #<-----------END Conda Install------------>
-  #
-  #
-  #<-------LibGPhoto Packages Install------->
-  $repo_name.each |$repo|{
-    $value = split($repo,',')
-    archive {"${packages_dir}/${value[4]}":
-      ensure       => present,
-      source       => $value[3],
-      extract      => true,
-      extract_path => $packages_dir
-    }
-    -> file {"${packages_dir}/${value[5]}/${value[0]}.sh":
-      ensure  => present,
-      mode    => '0755',
-      content => $value[1]
-    }
-    ->exec { "bash ${packages_dir}/${value[5]}/${value[0]}.sh":
-      cwd      => "${packages_dir}/${value[5]}",
-      path     => ['/sbin', '/usr/sbin', '/bin',"${packages_dir}/${value[5]}"],
-      provider => shell,
-      unless   => $value[2],
-    }
-  }
-  #<----END LibGPhoto Packages Install------>
+  # #<-------END Packages Installation-------->
+  # #
+  # #
+  # #<------------Conda Install--------------->
+  # file { "${packages_dir}/miniforge.sh":
+  #   ensure => present,
+  #   mode   => '0755',
+  #   source => 'https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh'
+  # }
+  # file { '/etc/profile.d/conda_source.sh':
+  #   ensure  => present,
+  #   mode    => '0755',
+  #   content => 'source /opt/conda/miniforge/bin/activate'
+  # }
+  # $conda_install.each |$install|{
+  #   $value = split($install,',')
+  #   exec { $value[0]:
+  #     cwd      => $conda_dir,
+  #     path     => ['/sbin', '/usr/sbin', '/bin'],
+  #     provider => shell,
+  #     unless   => $value[1]
+  #   }
+  # }
+  # $conda_packages.each |$packages|{
+  #   $value = split($packages,',')
+  #   exec { "conda install -y ${value[0]}":
+  #     cwd      => $packages_dir,
+  #     path     => ['/sbin', '/usr/sbin', '/bin', $conda_bin],
+  #     provider => shell,
+  #     unless   => "conda list | grep ${value[1]}",
+  #     before   => Package[$pip_packages]
+  #   }
+  # }
+  # #<-----------END Conda Install------------>
+  # #
+  # #
+  # #<-------LibGPhoto Packages Install------->
+  # $repo_name.each |$repo|{
+  #   $value = split($repo,',')
+  #   archive {"${packages_dir}/${value[4]}":
+  #     ensure       => present,
+  #     source       => $value[3],
+  #     extract      => true,
+  #     extract_path => $packages_dir
+  #   }
+  #   -> file {"${packages_dir}/${value[5]}/${value[0]}.sh":
+  #     ensure  => present,
+  #     mode    => '0755',
+  #     content => $value[1]
+  #   }
+  #   ->exec { "bash ${packages_dir}/${value[5]}/${value[0]}.sh":
+  #     cwd      => "${packages_dir}/${value[5]}",
+  #     path     => ['/sbin', '/usr/sbin', '/bin',"${packages_dir}/${value[5]}"],
+  #     provider => shell,
+  #     unless   => $value[2],
+  #   }
+  # }
+  # #<----END LibGPhoto Packages Install------>
 }

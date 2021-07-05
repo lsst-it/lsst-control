@@ -1,5 +1,6 @@
 ---
 classes:
+  - "profile::core::common"
   - "profile::core::rpi"
 
 # disabling the kernel version check is needed on el7
@@ -8,3 +9,6 @@ docker::storage_driver: "overlay2"
 # ipa docker group is 70014
 docker::socket_group: "70014"
 docker::socket_override: true
+
+profile::core::common::deploy_icinga_agent: false
+profile::core::common::install_telegraf: false

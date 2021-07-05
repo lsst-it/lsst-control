@@ -46,11 +46,3 @@ profile::ts::nexusctio::repos:
     gpgcheck: true
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-MSO"
     target: "/etc/yum.repos.d/gpgmsoo.repo"
-  # "gpgother":
-  #   ensure: "present"
-  #   descr: "Nexus GPG Other Repository"
-  #   enabled: true
-  #   baseurl: "http://cagvm3.ctio.noao.edu/nexus/repository/gpg-rpm/other/"
-  #   gpgcheck: true
-  #   gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-MSO"
-  #   target: "/etc/yum.repos.d/gpgother.repo"

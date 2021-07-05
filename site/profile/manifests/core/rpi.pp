@@ -28,7 +28,7 @@ class profile::core::rpi {
 
   #  Conda Packages
   $conda_packages = [
-    'python=3.8,python',
+    'python=3.8,python | grep 3.8',
     'wheel,wheel',
     'conda-verify,conda-verify',
     'conda-build,conda-build',

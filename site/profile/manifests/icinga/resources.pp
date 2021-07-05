@@ -11,6 +11,7 @@ class profile::icinga::resources (
   $master_ip  = $facts['networking']['ip']
 
   #Commands abreviation
+  $url_deploy    = "https://${master_fqdn}/director/config/deploy"
   $url_host      = "https://${master_fqdn}/director/host"
   $url_svc       = "https://${master_fqdn}/director/service"
   $url_hostgroup = "https://${master_fqdn}/director/hostgroup"
@@ -560,6 +561,12 @@ class profile::icinga::resources (
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $addhost_cond,
+    loglevel => debug,
+  }
+  exec { "${curl} '${credentials}' -H '${format}' -X POST '${url_deploy}'":
+    cwd      => $icinga_path,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
     loglevel => debug,
   }
   #<------------------END Files Creation and Deployement------------------>

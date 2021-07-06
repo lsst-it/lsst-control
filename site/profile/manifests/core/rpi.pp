@@ -11,7 +11,8 @@ class profile::core::rpi {
   $root_dir              = '/opt'
   $packages_dir          = "${root_dir}/packages"
   $conda_dir             = "${root_dir}/conda"
-  $cmake_dir             = "${root_dir}/cmake"
+  $cmake_dir             = "${root_dir}/CMake"
+  $cmake_version         = '3.20.5'
   $conda_bin             = "${root_dir}/conda/miniforge/condabin"
   $libgphoto_version     = 'libgphoto2-2.5.27'
   $gphoto_version        = 'gphoto2-2.5.27'
@@ -125,11 +126,11 @@ class profile::core::rpi {
     python3 setup.py install
     | RUN
 
-  $cmake = @("RUN")
-    cd ${cmake_dir}
-    python3 setup.py build_swig 
-    python3 setup.py build
-    python3 setup.py install
+  $cmake_run = @("RUN")
+    cd ${cmake_dir}-${cmake_version}
+    ./bootstrap
+    gmake
+    gmake install
     | RUN
 
   #  Repo Array
@@ -148,9 +149,6 @@ class profile::core::rpi {
     ensure => 'directory'
   }
   file { $conda_dir:
-    ensure => 'directory'
-  }
-  file { $cmake_dir:
     ensure => 'directory'
   }
   #<-----------END Directories ------------->
@@ -225,39 +223,49 @@ class profile::core::rpi {
   #
   #
   #<-------LibGPhoto Packages Install------->
-  $repo_name.each |$repo|{
-    $value = split($repo,',')
-    archive {"${packages_dir}/${value[4]}":
-      ensure       => present,
-      source       => $value[3],
-      extract      => true,
-      extract_path => $packages_dir
-    }
-    -> file {"${packages_dir}/${value[5]}/${value[0]}.sh":
-      ensure  => present,
-      mode    => '0755',
-      content => $value[1]
-    }
-    ->exec { "bash ${packages_dir}/${value[5]}/${value[0]}.sh":
-      cwd      => "${packages_dir}/${value[5]}",
-      path     => ['/sbin', '/usr/sbin', '/bin',"${packages_dir}/${value[5]}"],
-      provider => shell,
-      unless   => $value[2],
-    }
-  }
+  # $repo_name.each |$repo|{
+  #   $value = split($repo,',')
+  #   archive {"${packages_dir}/${value[4]}":
+  #     ensure       => present,
+  #     source       => $value[3],
+  #     extract      => true,
+  #     extract_path => $packages_dir
+  #   }
+  #   -> file {"${packages_dir}/${value[5]}/${value[0]}.sh":
+  #     ensure  => present,
+  #     mode    => '0755',
+  #     content => $value[1]
+  #   }
+  #   ->exec { "bash ${packages_dir}/${value[5]}/${value[0]}.sh":
+  #     cwd      => "${packages_dir}/${value[5]}",
+  #     path     => ['/sbin', '/usr/sbin', '/bin',"${packages_dir}/${value[5]}"],
+  #     provider => shell,
+  #     unless   => $value[2],
+  #   }
+  # }
   #<----END LibGPhoto Packages Install------>
   #
   #
   #<-------Compile and Install rawpy-------->
   archive { 'cmake.tar.gz':
     path         => '/tmp/cmake.tar.gz',
-    source       => 'https://github.com/Kitware/CMake/archive/refs/tags/v3.20.5.tar.gz',
+    source       => "https://github.com/Kitware/CMake/archive/refs/tags/v${cmake_version}.tar.gz",
     extract      => true,
-    extract_path => $cmake_dir,
-    creates      => "${cmake_dir}/cmake",
+    extract_path => $root_dir,
+    creates      => "${cmake_dir}-${cmake_version}",
     cleanup      => true
   }
-  # ->exec { 'title':
-  # }
+  -> file {"${cmake_dir}-${cmake_version}/cmake.sh":
+      ensure  => present,
+      mode    => '0755',
+      content => $cmake_run
+  }
+  -> exec { "bash ${cmake_dir}-${cmake_version}/cmake.sh":
+    cwd      => "${cmake_dir}-${cmake_version}",
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    timeout  => '0',
+    unless   => 'cmake --version',
+  }
   #<----END Compile and Install rawpy-------->
 }

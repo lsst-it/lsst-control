@@ -13,6 +13,7 @@ class profile::core::rpi {
   $conda_dir             = "${root_dir}/conda"
   $cmake_dir             = "${root_dir}/CMake"
   $cmake_version         = '3.20.5'
+  $libraw_dir            = "${root_dir}/libraw"
   $conda_bin             = "${root_dir}/conda/miniforge/condabin"
   $libgphoto_version     = 'libgphoto2-2.5.27'
   $gphoto_version        = 'gphoto2-2.5.27'
@@ -265,7 +266,13 @@ class profile::core::rpi {
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     timeout  => '0',
-    unless   => 'cmake --version',
+    unless   => 'test -f /usr/local/bin/cmake',
+  }
+  vcsrepo { $libraw_dir:
+    ensure   => present,
+    provider => git,
+    source   => 'git://github.com/LibRaw/LibRaw.git',
+    revision => '0.20.0',
   }
   #<----END Compile and Install rawpy-------->
 }

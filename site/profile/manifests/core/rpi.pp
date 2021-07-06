@@ -14,6 +14,8 @@ class profile::core::rpi {
   $cmake_dir             = "${root_dir}/CMake"
   $cmake_version         = '3.20.5'
   $libraw_dir            = "${root_dir}/libraw"
+  $libraw_make_dir       = "${root_dir}/libraw-make"
+  $rawpy_dir             = "${root_dir}/rawpy"
   $conda_bin             = "${root_dir}/conda/miniforge/condabin"
   $libgphoto_version     = 'libgphoto2-2.5.27'
   $gphoto_version        = 'gphoto2-2.5.27'
@@ -127,11 +129,28 @@ class profile::core::rpi {
     python3 setup.py install
     | RUN
 
+  # RawPy installation variables
   $cmake_run = @("RUN")
     cd ${cmake_dir}-${cmake_version}
     ./bootstrap
     gmake
     gmake install
+    | RUN
+
+  $libraw_run = @("RUN")
+    cd ${libraw_dir}
+    cp -R ../libraw-cmake/* .
+    cmake .
+    make install
+    echo "/usr/local/lib" | tee /etc/ld.so.conf.d/libraw-aarch64.conf
+    ldconfig
+    | RUN
+
+  $rawpy_run = @("RUN")
+    cd ${rawpy_dir}
+    export CPPFLAGS=-I/usr/local/include/libraw
+    export LDFLAGS=-L/usr/local/lib
+    /opt/conda/miniforge/bin/pip install .
     | RUN
 
   #  Repo Array
@@ -273,6 +292,41 @@ class profile::core::rpi {
     provider => git,
     source   => 'git://github.com/LibRaw/LibRaw.git',
     revision => '0.20.0',
+  }
+  vcsrepo { $libraw_make_dir:
+    ensure   => present,
+    provider => git,
+    source   => 'git://github.com/LibRaw/LibRaw-cmake.git'
+  }
+  -> file {"${libraw_dir}/libraw.sh":
+      ensure  => present,
+      mode    => '0755',
+      content => $libraw_run
+  }
+  -> exec { "bash ${libraw_dir}/libraw.sh":
+    cwd      => $libraw_dir,
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    timeout  => '0',
+    unless   => 'test -f /etc/ld.so.conf.d/libraw-aarch64.conf',
+  }
+  vcsrepo { $rawpy_dir:
+    ensure   => present,
+    provider => git,
+    source   => 'git://github.com/letmaik/rawpy',
+    require  => Exec["bash ${libraw_dir}/libraw.sh"]
+  }
+  -> file {"${rawpy_dir}/rawpy.sh":
+      ensure  => present,
+      mode    => '0755',
+      content => $rawpy_run
+  }
+  ->exec { "bash ${rawpy_dir}/rawpy.sh":
+    cwd      => $libraw_dir,
+    path     => ['/sbin', '/usr/sbin', '/bin','/opt/conda/miniforge/bin/pip'],
+    provider => shell,
+    timeout  => '0',
+    unless   => 'python -c "import rawpy"',
   }
   #<----END Compile and Install rawpy-------->
 }

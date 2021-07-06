@@ -11,6 +11,7 @@ class profile::core::rpi {
   $root_dir              = '/opt'
   $packages_dir          = "${root_dir}/packages"
   $conda_dir             = "${root_dir}/conda"
+  $cmake_dir             = "${root_dir}/cmake"
   $conda_bin             = "${root_dir}/conda/miniforge/condabin"
   $libgphoto_version     = 'libgphoto2-2.5.27'
   $gphoto_version        = 'gphoto2-2.5.27'
@@ -41,7 +42,6 @@ class profile::core::rpi {
   $pip_packages = [
     'numpy',
     'Pillow',
-    'rawpy',
     'asyncio',
     'pyserial',
     'RPi.GPIO',
@@ -125,6 +125,13 @@ class profile::core::rpi {
     python3 setup.py install
     | RUN
 
+  $cmake = @("RUN")
+    cd ${cmake_dir}
+    python3 setup.py build_swig 
+    python3 setup.py build
+    python3 setup.py install
+    | RUN
+
   #  Repo Array
   $repo_name = [
     "libgphoto2,${libgphoto},test -f /usr/local/lib/pkgconfig/libgphoto2.pc,https://github.com/gphoto/libgphoto2/releases/download/v2.5.27/libgphoto2-2.5.27.tar.bz2,libgphoto2.tar.bz2,${libgphoto_version}",
@@ -141,6 +148,9 @@ class profile::core::rpi {
     ensure => 'directory'
   }
   file { $conda_dir:
+    ensure => 'directory'
+  }
+  file { $cmake_dir:
     ensure => 'directory'
   }
   #<-----------END Directories ------------->
@@ -236,4 +246,18 @@ class profile::core::rpi {
     }
   }
   #<----END LibGPhoto Packages Install------>
+  #
+  #
+  #<-------Compile and Install rawpy-------->
+  archive { 'cmake.tar.gz':
+    path         => '/tmp/cmake.tar.gz',
+    source       => 'https://github.com/Kitware/CMake/archive/refs/tags/v3.20.5.tar.gz',
+    extract      => true,
+    extract_path => $cmake_dir,
+    creates      => "${cmake_dir}/cmake",
+    cleanup      => true
+  }
+  # ->exec { 'title':
+  # }
+  #<----END Compile and Install rawpy-------->
 }

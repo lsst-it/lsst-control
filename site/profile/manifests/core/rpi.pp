@@ -53,10 +53,8 @@ class profile::core::rpi {
     'pigpio',
     'gpiozero',
     'pylibftdi',
-    'pyftdi'
-    # 'picamera',
-    # 'raspi-config',
-    # 'picamera-streaming-demo'
+    'pyftdi',
+    'Cython'
   ]
 
   #  Packages to be installed through yum
@@ -243,26 +241,26 @@ class profile::core::rpi {
   #
   #
   #<-------LibGPhoto Packages Install------->
-  # $repo_name.each |$repo|{
-  #   $value = split($repo,',')
-  #   archive {"${packages_dir}/${value[4]}":
-  #     ensure       => present,
-  #     source       => $value[3],
-  #     extract      => true,
-  #     extract_path => $packages_dir
-  #   }
-  #   -> file {"${packages_dir}/${value[5]}/${value[0]}.sh":
-  #     ensure  => present,
-  #     mode    => '0755',
-  #     content => $value[1]
-  #   }
-  #   ->exec { "bash ${packages_dir}/${value[5]}/${value[0]}.sh":
-  #     cwd      => "${packages_dir}/${value[5]}",
-  #     path     => ['/sbin', '/usr/sbin', '/bin',"${packages_dir}/${value[5]}"],
-  #     provider => shell,
-  #     unless   => $value[2],
-  #   }
-  # }
+  $repo_name.each |$repo|{
+    $value = split($repo,',')
+    archive {"${packages_dir}/${value[4]}":
+      ensure       => present,
+      source       => $value[3],
+      extract      => true,
+      extract_path => $packages_dir
+    }
+    -> file {"${packages_dir}/${value[5]}/${value[0]}.sh":
+      ensure  => present,
+      mode    => '0755',
+      content => $value[1]
+    }
+    ->exec { "bash ${packages_dir}/${value[5]}/${value[0]}.sh":
+      cwd      => "${packages_dir}/${value[5]}",
+      path     => ['/sbin', '/usr/sbin', '/bin',"${packages_dir}/${value[5]}"],
+      provider => shell,
+      unless   => $value[2],
+    }
+  }
   #<----END LibGPhoto Packages Install------>
   #
   #

@@ -89,7 +89,8 @@ class profile::core::rpi {
     'putty',
     'svn',
     'dh-autoreconf',
-    'libtool-ltdl-devel'
+    'libtool-ltdl-devel',
+    'swig'
   ]
 
   $conda_install = [

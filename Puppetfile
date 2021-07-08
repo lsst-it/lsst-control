@@ -86,6 +86,7 @@ mod 'ccin2p3-etc_services', '1.1.1'
 mod 'puppetlabs/augeas_core', '1.1.1'
 mod 'camptocamp/openldap', '2.0.0'
 mod 'lsst/cni', '1.0.0'
+mod 'treydock/clustershell', '1.0.0'
 
 # latest puppet/letsencrypt release does not include dns_route53 plugin support
 mod 'puppet/letsencrypt',

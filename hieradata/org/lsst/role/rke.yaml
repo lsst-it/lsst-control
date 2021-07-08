@@ -80,3 +80,19 @@ files:
     <<: *bashrc
     content: |
       export KUBECONFIG=/home/rke/k8s-cookbook/%{::cluster}/rke/kube_config_cluster.yml
+  /home/rke/.bashrc.d/etc_bashrc.sh:
+    <<: *bashrc
+    content: |
+      # Source global definitions
+      if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+      fi
+  /home/rke/.bashrc.d/git-prompt.sh:
+    <<: *bashrc
+    content: |
+      if [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
+        . /usr/share/git-core/contrib/completion/git-prompt.sh
+      fi
+      export GIT_PS1_SHOWDIRTYSTATE=true
+      export GIT_PS1_SHOWUNTRACKEDFILES=true
+      export PS1='[\u@\h \W$(declare -F __git_ps1 &>/dev/null && __git_ps1 " (%s)")]\$ '

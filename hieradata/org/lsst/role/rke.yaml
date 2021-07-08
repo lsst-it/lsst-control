@@ -9,6 +9,7 @@ classes:
   - "profile::core::kernel::pquota"
   - "profile::core::kubecompletion"
   - "profile::core::ospl"
+  - "clustershell"
   - "docker"
   - "yum"
 packages:

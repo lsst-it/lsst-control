@@ -1,17 +1,44 @@
+# @summary
+#   versionlock kernel packages
+#
+# @param version
+#   kernel version string
+#
+# @param devel
+#   if true, install kernel-devel package
+#
 class profile::core::kernel(
-  $version,
+  String  $version,
+  Boolean $devel = false,
 ) {
   include yum::plugin::versionlock
 
   $k      = "kernel-${version}"
   $kt     = "kernel-tools-${version}"
   $ktlibs = "kernel-tools-libs-${version}"
+  $kdevel = "kernel-devel-${version}"
+
   yum::versionlock { [
       "0:${k}",
       "0:${kt}",
       "0:${ktlibs}",
     ]:
       ensure => present,
+  }
+
+  if $devel {
+    $kdevel_vl = "0:${kdevel}"
+
+    yum::versionlock { $kdevel_vl:
+      ensure => present,
+    }
+
+    # reboot is not needed for -devel
+    package { 'kernel-devel':
+      ensure  => present,
+      name    => $kdevel,
+      require => Yum::Versionlock[$kdevel_vl],
+    }
   }
 
   # reboot if changing the kernel version

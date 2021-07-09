@@ -2,6 +2,8 @@
 packages:
   - "perccli"  # from dell repo
 
+clustershell::groupmembers:
+  andes: {group: "andes", member: "andes[01-06]"}
 profile::core::rke::enable_dhcp: true
 profile::core::ospl::enable_rundir: true
 network::interfaces_hash:

@@ -1,0 +1,5 @@
+---
+# Be advised that there is a rancher cluster per site and changes here will
+# apply to all of them.
+clustershell::groupmembers:
+  kueyen: {group: "rancher", member: "rancher[1-3]"}

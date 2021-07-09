@@ -5,6 +5,8 @@ classes:
 packages:
   - "perccli"  # from dell repo
 
+clustershell::groupmembers:
+  antu: {group: "antu", member: "antu[01-09]"}
 profile::core::rke::enable_dhcp: true
 profile::core::nm_dispatch::interfaces:
   em1:

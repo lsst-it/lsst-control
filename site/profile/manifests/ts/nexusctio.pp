@@ -60,9 +60,9 @@ class profile::ts::nexusctio(
     -----END PGP PUBLIC KEY BLOCK----- 
     | GPG
 
-    file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-MSO':
-      ensure  => present,
-      content => $gpg_key,
-      mode    => '0644'
-    }
+  file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-MSO':
+    ensure  => present,
+    content => $gpg_key,
+    mode    => '0644'
+  }
 }

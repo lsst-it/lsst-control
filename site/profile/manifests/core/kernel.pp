@@ -7,9 +7,13 @@
 # @param devel
 #   if true, install kernel-devel package
 #
+# @param debuginfo
+#   if true, install kernel-debuginfo package
+#
 class profile::core::kernel(
   String  $version,
-  Boolean $devel = false,
+  Boolean $devel     = false,
+  Boolean $debuginfo = false,
 ) {
   include yum::plugin::versionlock
 
@@ -17,6 +21,7 @@ class profile::core::kernel(
   $kt     = "kernel-tools-${version}"
   $ktlibs = "kernel-tools-libs-${version}"
   $kdevel = "kernel-devel-${version}"
+  $kdebug = "kernel-debuginfo-${version}"
 
   yum::versionlock { [
       "0:${k}",
@@ -38,6 +43,22 @@ class profile::core::kernel(
       ensure  => present,
       name    => $kdevel,
       require => Yum::Versionlock[$kdevel_vl],
+    }
+  }
+
+  if $debuginfo {
+    $kdebug_vl = "0:${kdebug}"
+
+    yum::versionlock { $kdebug_vl:
+      ensure => present,
+    }
+
+    # reboot is not needed for -debuginfo
+    package { 'kernel-debuginfo':
+      ensure          => present,
+      name            => $kdebug,
+      install_options => ['--enablerepo', 'base-debuginfo'],
+      require         => Yum::Versionlock[$kdebug_vl],
     }
   }
 

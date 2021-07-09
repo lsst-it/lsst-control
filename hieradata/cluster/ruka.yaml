@@ -3,6 +3,9 @@ classes:
   - "profile::core::ifdown"
 packages:
   - "perccli"  # from dell repo
+
+clustershell::groupmembers:
+  ruka: {group: "ruka", member: "ruka[01-06]"}
 profile::core::ifdown::interface: "em1"
 network::interfaces_hash:
   em1:  # only for PXE

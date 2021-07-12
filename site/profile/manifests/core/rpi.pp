@@ -212,7 +212,10 @@ class profile::core::rpi {
   file { '/etc/profile.d/conda_source.sh':
     ensure  => present,
     mode    => '0644',
-    content => 'source /opt/conda/miniforge/bin/activate'
+    content => @(SOURCE)
+      #!/usr/bin/bash
+      source /opt/conda/miniforge/bin/activate
+      | SOURCE
   }
   $conda_install.each |$install|{
     $value = split($install,',')

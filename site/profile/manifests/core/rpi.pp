@@ -44,7 +44,6 @@ class profile::core::rpi {
 
   #  PIP Packages
   $pip_packages = [
-    'numpy',
     'Pillow',
     'asyncio',
     'pyserial',
@@ -197,19 +196,14 @@ class profile::core::rpi {
   }
   # The required snap packages are in the edge channel, and provider option from package does not allow it.
   exec { "snap install --edge ${snap_packages}":
-      path     => ['/sbin', '/usr/sbin', '/bin'],
-      provider => shell,
-      unless   => "snap list | grep ${snap_packages}"
-  }
-  #  Install packages through pip
-  package { $pip_packages:
-    ensure   => 'present',
-    provider => pip3
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    unless   => "snap list | grep ${snap_packages}"
   }
   #<-------END Packages Installation-------->
   #
   #
-  #<------------Conda Install--------------->
+  #<------------Conda and Python3.8 Install--------------->
   file { "${packages_dir}/miniforge.sh":
     ensure => present,
     mode   => '0755',
@@ -217,7 +211,7 @@ class profile::core::rpi {
   }
   file { '/etc/profile.d/conda_source.sh':
     ensure  => present,
-    mode    => '0755',
+    mode    => '0644',
     content => 'source /opt/conda/miniforge/bin/activate'
   }
   $conda_install.each |$install|{
@@ -229,8 +223,8 @@ class profile::core::rpi {
       unless   => $value[1]
     }
   }
-  $conda_packages.each |$packages|{
-    $value = split($packages,',')
+  $conda_packages.each |$conda|{
+    $value = split($conda,',')
     exec { "conda install -y ${value[0]}":
       cwd      => $packages_dir,
       path     => ['/sbin', '/usr/sbin', '/bin', $conda_bin],
@@ -238,6 +232,10 @@ class profile::core::rpi {
       unless   => "conda list | grep ${value[1]}",
       before   => Package[$pip_packages]
     }
+  }
+  package { $pip_packages:
+    ensure   => 'present',
+    provider => pip3
   }
   #<-----------END Conda Install------------>
   #
@@ -276,9 +274,9 @@ class profile::core::rpi {
     cleanup      => true
   }
   -> file {"${cmake_dir}-${cmake_version}/cmake.sh":
-      ensure  => present,
-      mode    => '0755',
-      content => $cmake_run
+    ensure  => present,
+    mode    => '0755',
+    content => $cmake_run
   }
   -> exec { "bash ${cmake_dir}-${cmake_version}/cmake.sh":
     cwd      => "${cmake_dir}-${cmake_version}",
@@ -299,9 +297,9 @@ class profile::core::rpi {
     source   => 'git://github.com/LibRaw/LibRaw-cmake.git'
   }
   -> file {"${libraw_dir}/libraw.sh":
-      ensure  => present,
-      mode    => '0755',
-      content => $libraw_run
+    ensure  => present,
+    mode    => '0755',
+    content => $libraw_run
   }
   -> exec { "bash ${libraw_dir}/libraw.sh":
     cwd      => $libraw_dir,
@@ -317,9 +315,9 @@ class profile::core::rpi {
     require  => Exec["bash ${libraw_dir}/libraw.sh"]
   }
   -> file {"${rawpy_dir}/rawpy.sh":
-      ensure  => present,
-      mode    => '0755',
-      content => $rawpy_run
+    ensure  => present,
+    mode    => '0755',
+    content => $rawpy_run
   }
   ->exec { "bash ${rawpy_dir}/rawpy.sh":
     cwd      => $libraw_dir,

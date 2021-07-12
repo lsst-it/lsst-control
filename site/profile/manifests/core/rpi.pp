@@ -123,6 +123,7 @@ class profile::core::rpi {
 
   $python_gphoto = @("RUN")
     cd ${packages_dir}/${python_gphoto_version}
+    source /opt/conda/miniforge/bin/activate
     python3 setup.py build_swig 
     python3 setup.py build
     python3 setup.py install
@@ -325,7 +326,7 @@ class profile::core::rpi {
     path     => ['/sbin', '/usr/sbin', '/bin','/opt/conda/miniforge/bin/pip'],
     provider => shell,
     timeout  => '0',
-    unless   => 'python -c "import rawpy"',
+    unless   => 'test -d /opt/conda/miniforge/lib/python3.8/site-packages/rawpy',
   }
   #<----END Compile and Install rawpy-------->
 }

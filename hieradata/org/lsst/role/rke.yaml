@@ -65,9 +65,12 @@ files:
       done
   /home/rke/.bashrc.d:
     ensure: "directory"
+    force: true
+    group: *rke
     mode: "0700"
     owner: *rke
-    group: *rke
+    purge: true
+    recurse: true
   /home/rke/.bashrc.d/vimode.sh: &bashrc
     ensure: "file"
     mode: "0600"

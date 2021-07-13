@@ -90,6 +90,13 @@ files:
       if [ -f /etc/bashrc ]; then
         . /etc/bashrc
       fi
+  /home/rke/.bashrc.d/k8s-cookbook-path.sh:
+    <<: *bashrc
+    content: |
+      export K8S_COOKBOOK_PATH=/home/rke/k8s-cookbook/%{::cluster}
+      if [ -d $K8S_COOKBOOK_PATH ]; then
+       cd $K8S_COOKBOOK_PATH
+      fi
   /home/rke/.bashrc.d/git-prompt.sh:
     <<: *bashrc
     content: |

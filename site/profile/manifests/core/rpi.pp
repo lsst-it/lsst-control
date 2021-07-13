@@ -261,6 +261,7 @@ class profile::core::rpi {
       cwd      => "${packages_dir}/${value[5]}",
       path     => ['/sbin', '/usr/sbin', '/bin',"${packages_dir}/${value[5]}"],
       provider => shell,
+      timeout  => '0',
       unless   => $value[2],
     }
   }

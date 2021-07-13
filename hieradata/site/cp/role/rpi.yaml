@@ -1,6 +1,3 @@
 ---
-classes:
-  - "profile::core::common"
-
 profile::core::common::install_telegraf: false
 profile::core::common::deploy_icinga_agent: false

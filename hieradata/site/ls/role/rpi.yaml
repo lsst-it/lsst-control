@@ -1,5 +1,3 @@
 ---
-profile::core::common::manage_puppet_agent: false
-profile::core::common::manage_firewall: true
-profile::core::common::deploy_icinga_agent: false
 profile::core::common::install_telegraf: false
+profile::core::common::deploy_icinga_agent: false

@@ -10,3 +10,14 @@ network::interfaces_hash:
     netmask: "255.255.255.128"
     onboot: "yes"
     type: "Ethernet"
+
+profile::core::common::deploy_icinga_agent: false
+profile::core::common::manage_puppet_agent: true
+profile::core::common::manage_chrony: true
+profile::core::common::manage_sssd: false
+profile::core::common::manage_krb5: false
+profile::core::common::manage_ldap: false
+profile::core::common::manage_ipa: false
+profile::core::common::disable_ipv6: false
+profile::core::common::manage_firewall: false
+profile::core::common::install_telegraf: true

@@ -10,3 +10,4 @@ network::interfaces_hash:
     netmask: "255.255.255.128"
     onboot: "yes"
     type: "Ethernet"
+

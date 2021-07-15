@@ -5,6 +5,7 @@ accounts::user_list:
     groups:
       - "libvirt"
     managehome: true
+    purge_sshkeys: true
     system: true
     sshkeys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjbrCz3m21/gVUH34zoLsxzL1gYuVRNngZ5P6/3/Iw8LR0eMRmkqDZGDR27R91xQSQ4iazP35yeeWH18y+GLUXgfskjYpwqHZ+JBhnaYBoAUaogXYw2FGZAlvjtKZlFclSXu16jKq5sF0woDC6KBxRJuu24EuL2QY9pGPReFGNwgYmruhIDeRZpj/vy7+2+L/hqXTcq42xRMUYRLomR8C7LXkZvrH59QuWYh71Nsx8Qko901c/qpgEynu4ZQFOrSVRgEWPls/Y/aWSAT1k68tGaFQ+W0CP7CA2pbR+ZjcxbodXMoOwxUgHbhR3SwNpGeKEtKh4Csd5e6pgIskW2kX7 root@foreman.tuc.lsst.cloud"

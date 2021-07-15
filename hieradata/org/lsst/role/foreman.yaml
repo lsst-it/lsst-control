@@ -192,3 +192,9 @@ files:
     purge: true
     recurse: true
     force: true
+  /usr/share/foreman/config/ignored_environments.yml:
+    ensure: "file"
+    mode: "0644"
+    content: |
+      :filters:
+        - !ruby/regexp '/^(?!profile::)/'

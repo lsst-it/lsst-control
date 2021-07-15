@@ -44,3 +44,90 @@ yum::repos:
 profile::app::helm::version: "3.0.3"
 profile::app::rke::version: "1.0.4"
 profile::core::kernel::version: "3.10.0-1062.12.1.el7.x86_64"
+
+files:
+  /home/rke/.bash_profile:
+    ensure: "file"
+    mode: "0600"
+    owner: &rke 75500
+    group: *rke
+    content: |
+      . ~/.bashrc
+  /home/rke/.bashrc:
+    ensure: "file"
+    mode: "0600"
+    owner: &rke 75500
+    group: *rke
+    content: |
+      # load .bashrc.d/ snippets
+      for i in `ls ~/.bashrc.d/*.sh`; do
+        . $i
+      done
+  /home/rke/.bashrc.d:
+    ensure: "directory"
+    force: true
+    group: *rke
+    mode: "0700"
+    owner: *rke
+    purge: true
+    recurse: true
+  /home/rke/.bashrc.d/vimode.sh: &bashrc
+    ensure: "file"
+    mode: "0600"
+    owner: *rke
+    group: *rke
+    content: |
+      # enable vi mode
+      set -o vi
+  /home/rke/.bashrc.d/10_k8s-cookbook-path.sh:
+    <<: *bashrc
+    content: |
+      _fmt_cluster_path() {
+        local slug="$1"
+        echo "${HOME}/k8s-cookbook/${slug}"
+      }
+
+      _cluster="%{::cluster}"
+      _cluster_site="%{::cluster}.%{::site}"
+      _cluster_path=$(_fmt_cluster_path "$_cluster")
+      _cluster_site_path=$(_fmt_cluster_path "$_cluster_site")
+
+      if [ -d "$_cluster_site_path" ]; then
+        export K8S_COOKBOOK_CLUSTER="$_cluster_site"
+        export K8S_COOKBOOK_PATH="$_cluster_site_path"
+      elif [ -d "$_cluster_path" ]; then
+        export K8S_COOKBOOK_CLUSTER="$_cluster"
+        export K8S_COOKBOOK_PATH="$_cluster_path"
+      fi
+
+      unset _fmt_cluster_path
+      unset _cluster
+      unset _cluster_site
+      unset _cluster_path
+      unset _cluster_site_path
+
+      cd "$K8S_COOKBOOK_PATH"
+  /home/rke/.bashrc.d/kubeconfig.sh:
+    <<: *bashrc
+    content: |
+      export KUBECONFIG="${HOME}/k8s-cookbook/${K8S_COOKBOOK_CLUSTER}/rke/kube_config_cluster.yml"
+  /home/rke/.bashrc.d/etc_bashrc.sh:
+    <<: *bashrc
+    content: |
+      # Source global definitions
+      if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+      fi
+  /home/rke/.bashrc.d/kubectl.sh:
+    <<: *bashrc
+    content: |
+      alias k='kubectl'
+  /home/rke/.bashrc.d/git-prompt.sh:
+    <<: *bashrc
+    content: |
+      if [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
+        . /usr/share/git-core/contrib/completion/git-prompt.sh
+      fi
+      export GIT_PS1_SHOWDIRTYSTATE=true
+      export GIT_PS1_SHOWUNTRACKEDFILES=true
+      export PS1='[\u@\h \W$(declare -F __git_ps1 &>/dev/null && __git_ps1 " (%s)")]\$ '

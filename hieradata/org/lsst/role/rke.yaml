@@ -118,6 +118,10 @@ files:
       if [ -f /etc/bashrc ]; then
         . /etc/bashrc
       fi
+  /home/rke/.bashrc.d/kubectl.sh:
+    <<: *bashrc
+    content: |
+      alias k='kubectl'
   /home/rke/.bashrc.d/git-prompt.sh:
     <<: *bashrc
     content: |

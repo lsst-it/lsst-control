@@ -262,6 +262,9 @@ sssd::package_name:
   - "sssd"
   - "sssd-tools"  # not installed by default
 
+telegraf::logfile: "/dev/null"
+telegraf::quiet: true
+
 mit_krb5::includedir:
   - "/etc/krb5.conf.d/"
   - "/var/lib/sss/pubconf/krb5.include.d/"

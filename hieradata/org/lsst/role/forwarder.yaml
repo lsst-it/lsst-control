@@ -3,6 +3,7 @@ classes:
   - "profile::archive::forwarder"
   - "profile::core::common"
   - "profile::core::debugutils"
+  - "profile::core::docker::prune"
   - "docker"
   - "python"
 

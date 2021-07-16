@@ -3,6 +3,7 @@ classes:
   - "profile::archive::rabbitmq"
   - "profile::core::common"
   - "profile::core::debugutils"
+  - "profile::core::docker::prune"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
   - "profile::core::systemd"

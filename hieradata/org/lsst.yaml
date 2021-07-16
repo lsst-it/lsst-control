@@ -111,7 +111,7 @@ ssh::client_options:
   GSSAPIDelegateCredentials: "yes"
 
 sudo::config_file_replace: false
-sudo::purge: false
+sudo::purge: true
 sudo::configs:
   wheel_b:  # backup wheel group in case of LDAP failure.
     content: "%wheel_b ALL=(ALL) NOPASSWD: ALL"

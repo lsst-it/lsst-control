@@ -5,7 +5,7 @@ classes:
 profile::core::sysctl::rp_filter::enable: false
 dhcp::interfaces:
   - "eth0"
-dhcp::authoritative: false
+dhcp::authoritative: true
 dhcp::pxeserver: "140.252.146.80"
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:

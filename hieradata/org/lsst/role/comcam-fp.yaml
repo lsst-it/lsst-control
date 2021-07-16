@@ -17,6 +17,7 @@ chrony::queryhosts:
 chrony::clientlog: true
 
 # dhcp for DAQ + clients
+dhcp::authoritative: true
 dhcp::interfaces:
   - "lsst-daq"
 dhcp::bootp: true
@@ -27,7 +28,6 @@ dhcp::pools:
     mask: "255.255.255.0"
     range: "192.168.100.2 192.168.100.254"
     pool_parameters:
-      - "authoritative"
       - "ddns-update-style none"
       - "default-lease-time -1"
       - "max-lease-time -1"

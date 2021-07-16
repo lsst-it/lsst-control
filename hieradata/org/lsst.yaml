@@ -110,7 +110,8 @@ ssh::client_options:
   GSSAPIAuthentication: "yes"
   GSSAPIDelegateCredentials: "yes"
 
-sudo::config_file_replace: false
+sudo::config_file_replace: true
+sudo::content: "profile/sudo/sudoers.epp"
 sudo::purge: true
 sudo::configs:
   wheel_b:  # backup wheel group in case of LDAP failure.

@@ -105,6 +105,7 @@ nfs::nfs_v4_idmap_domain: "%{::domain}"
 
 accounts::user_list:
   root:
+    purge_sshkeys: true
     sshkeys:
       # foreman-proxy
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIAmA8aQ9Qf8ok+zPUSwFWfEgNxUW1RptUhZE9/9PFGzhAi7XMnt6qaSFINlLxiECUXKeK3iwHI3rLxMsJpcGRGkkL9GGpUYNgyDVZt82AFN2rt7nvuYqm9M7M4Q6NeLlMEGUf9iSnzE/IpT4459iOiKdaB3SifuXWjJeUSOoNACugJcQCZm4nQGo9ZUVJcbhYael++pcobApctOOFjlaVi6s+iB4qdidMJ9CUEyQ8HBSDomBnj2dZ5QB/bDHUW1OKo/i+LbMdF1HrnEcI9AkSHfkW+OP7L5mkmRJBNsK5R6YzIb41LHCvO1Fvoinb71JkWD5ElzTLY5e7YkjRXkQV foreman-proxy@foreman.dev.lsst.org"

@@ -91,6 +91,7 @@ ssh::server_options:
   KerberosAuthentication: "no"
   AuthorizedKeysCommand: "/usr/bin/sss_ssh_authorizedkeys"
   AuthorizedKeysCommandUser: "nobody"
+  AuthorizedKeysFile: "none"
 
 # easy_ipa server options
 # defines the uid/gid of the admin user

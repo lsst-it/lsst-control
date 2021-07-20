@@ -40,3 +40,8 @@ files:
     owner: "root"
     group: "root"
     mode: "0644"
+ssh::server::match_block:
+  foreman:
+    type: "user"
+    options:
+      AuthorizedKeysFile: ".ssh/authorized_keys"

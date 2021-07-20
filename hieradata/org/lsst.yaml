@@ -133,6 +133,8 @@ sudo::configs:
 
       Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin
 
+      Defaults    lecture = never
+
       root	ALL=(ALL) 	ALL
 accounts::group_list:
   wheel_b: {}

@@ -12,6 +12,7 @@ profile::core::debugutils::packages:
   - "nmap"
   - "nmap-ncat"
   - "numactl"
+  - "nvme-cli"
   - "pciutils"
   - "powertop"
   - "socat"

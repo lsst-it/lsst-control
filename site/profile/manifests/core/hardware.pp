@@ -11,6 +11,8 @@ class profile::core::hardware {
       include ipmi
       # aspm is suspected of causing problems with internal NVMes
       include profile::core::kernel::pcie_aspm
+      # apst is suspected of causing problems with NVMes
+      include profile::core::kernel::nvme_apst
     }
   }
   # lint:endignore

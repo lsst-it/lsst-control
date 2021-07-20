@@ -127,4 +127,4 @@ nfs::server_enabled: true
 
 profile::core::systemd::tmpfile:
   docker_tmp.conf:  # XXX short term kludge
-    content: "d /tmp/docker_tmp 0777 saluser saluser -"
+    content: "x /tmp/docker_tmp 0777 saluser saluser -"

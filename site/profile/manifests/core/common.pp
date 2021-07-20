@@ -75,6 +75,7 @@ class profile::core::common(
 
   if $manage_firewall {
     include firewall
+    Class[easy_ipa] -> Class[firewall]
   }
 
   if $manage_puppet_agent {

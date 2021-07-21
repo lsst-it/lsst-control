@@ -3,6 +3,9 @@ classes:
   - "profile::core::common"
   - "clustershell"
   - "easy_ipa"
+packages:
+  - "bash-completion"
+  - "bash-completion-extras"
 
 profile::core::common::disable_ipv6: true
 profile::core::common::manage_ipa: false

@@ -18,3 +18,13 @@ network::interfaces_hash:
     onboot: "yes"
     type: "bridge"
     mtu: "9000"
+  p2p1:
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+  p2p2:
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p1.1101:
+    ensure: "absent"

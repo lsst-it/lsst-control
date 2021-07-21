@@ -1,0 +1,20 @@
+---
+network::interfaces_hash:
+  em2:
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+    mtu: "9000"
+  em2.1101:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br1101"
+    type: "none"
+    nozeroconf: "yes"
+    mtu: "9000"
+  br1101:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"
+    mtu: "9000"

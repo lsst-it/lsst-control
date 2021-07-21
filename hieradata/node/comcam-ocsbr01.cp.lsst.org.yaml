@@ -1,6 +1,4 @@
 ---
-classes:
-  - "profile::core::common"
 network::interfaces_hash:
   em2:
     bootproto: "none"

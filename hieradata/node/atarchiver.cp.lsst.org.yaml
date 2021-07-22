@@ -67,6 +67,7 @@ nfs::nfs_v4_export_root_clients: >-
   139.229.146.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.160.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.165.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.170.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.175.128/25(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
 nfs::nfs_exports_global:
   /data/lsstdata:
@@ -75,6 +76,7 @@ nfs::nfs_exports_global:
       139.229.146.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.160.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.165.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.128/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
   /data/repo:
     clients: >-
@@ -82,6 +84,7 @@ nfs::nfs_exports_global:
       139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
 
 files:

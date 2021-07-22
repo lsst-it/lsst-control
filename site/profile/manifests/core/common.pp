@@ -50,7 +50,6 @@ class profile::core::common(
   include irqbalance
   include network
   include profile::core::dielibwrapdie
-  include profile::core::hardware
   include profile::core::ipa
   include profile::core::k5login
   include profile::core::selinux
@@ -111,5 +110,13 @@ class profile::core::common(
 
   if $disable_ipv6 {
     include profile::core::sysctl::disable_ipv6
+  }
+
+  class { 'lldpd':
+    manage_repo => true,
+  }
+
+  unless $facts['is_virtual'] {
+    include profile::core::hardware
   }
 }

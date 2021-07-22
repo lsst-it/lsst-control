@@ -5,6 +5,7 @@ classes:
 profile::core::sysctl::rp_filter::enable: false
 dhcp::interfaces:
   - "eth0"
+  - "eth1"
 dhcp::authoritative: true
 dhcp::pxeserver: "140.252.146.80"
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
@@ -13,7 +14,7 @@ dhcp::pools:
     network: "140.252.146.32"
     mask: "255.255.255.224"
     gateway: "140.252.146.33"
-    range: "140.252.146.53 140.252.146.62"
+    range: "140.252.146.60 140.252.146.62"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan3040:  # coresvc
     network: "140.252.146.64"
@@ -37,7 +38,7 @@ dhcp::pools:
     network: "140.252.147.16"
     mask: "255.255.255.240"
     gateway: "140.252.147.17"
-    range: "140.252.147.28 140.252.147.30"
+    range: "140.252.147.25 140.252.147.30"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan3070:  # comcam
     network: "140.252.147.32"
@@ -49,7 +50,7 @@ dhcp::pools:
     network: "140.252.147.48"
     mask: "255.255.255.240"
     gateway: "140.252.147.49"
-    range: "140.252.147.60 140.252.147.62"
+    range: "140.252.147.58 140.252.147.62"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan3080:  # misc
     network: "140.252.147.64"
@@ -61,7 +62,7 @@ dhcp::pools:
     network: "140.252.147.128"
     mask: "255.255.255.224"
     gateway: "140.252.147.129"
-    range: "140.252.147.133 140.252.147.142"
+    range: "140.252.147.140 140.252.147.158"
     search_domains: "%{alias('dhcp::dnsdomain')}"
 sysctl::values::args:
   net.ipv4.conf.all.arp_filter:

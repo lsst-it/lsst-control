@@ -5,10 +5,6 @@ class profile::core::hardware {
   case $facts.dig('dmi', 'product', 'name') {
     /PowerEdge/: {
       include ipmi
-      class { 'lldpd':
-        manage_facts => true,
-        manage_jq    => true,
-      }
     }
   }
   # lint:endignore

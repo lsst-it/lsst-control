@@ -1,0 +1,11 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::debugutils"
+
+pulp::enable_admin: true
+pulp::enable_docker: true
+pulp::enable_ostree: true
+pulp::enable_puppet: true
+pulp::enable_python: true
+pulp::enable_rpm: true

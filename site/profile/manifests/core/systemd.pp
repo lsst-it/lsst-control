@@ -21,4 +21,8 @@ class profile::core::systemd(
   if $tmpfile {
     ensure_resources('systemd::tmpfile', $tmpfile)
   }
+
+  systemd::unit_file { 'reboot.target':
+    source => "puppet:///modules/${module_name}/systemd/reboot.target",
+  }
 }

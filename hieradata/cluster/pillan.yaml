@@ -1,42 +1,71 @@
 ---
-packages:
-  - "perccli"  # from dell repo
+clustershell::groupmembers:
+  pillan: {group: "pillan", member: "pillan[01-06]"}
+cni::plugins::checksum: "962100bbc4baeaaa5748cdbfce941f756b1531c2eadb290129401498bfac21e7"
+cni::plugins::enable: ["macvlan"]
+cni::plugins::version: "0.9.1"
+docker::version: "19.03.15"
+profile::app::helm::version: "3.5.4"
+profile::app::rke::version: "1.2.9"
+profile::core::common::manage_powertop: true
+profile::core::kernel::version: "3.10.0-1160.36.2.el7.x86_64"
+profile::core::ospl::enable_rundir: true
+profile::core::rke::enable_dhcp: true
 
-profile::core::k8s::enable_dhcp: true
 network::interfaces_hash:
-  em1:  # fqdn
+  eno1: &bond0   # fqdn 1/3
+    bootproto: "none"
+    master: "bond0"
+    onboot: "yes"
+    slave: "yes"
+    type: "Ethernet"
+  eno2d1:  # fqdn 2/3
+    <<: *bond0
+  enp129s0f0:  # fqdn 3/3
+    <<: *bond0
+  bond0:
+    bonding_master: "yes"
+    bonding_opts: "mode=4 miimon=100"
     bootproto: "dhcp"
     defroute: "yes"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Bond"
+  enp129s0f1:  # trunk vlans 3065, 3075, 3085
+    bootproto: "none"
     onboot: "yes"
     type: "Ethernet"
-  em2:
+  enp129s0f1.3065: &vlan_int
     bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  em2.700:  # 140.252.34.0/26
-    bootproto: "dhcp"
     defroute: "no"
     nozeroconf: "yes"
     onboot: "yes"
     type: "none"
     vlan: "yes"
-yum::managed_repos:
-  - "dell"
-yum::repos:
-  "dell":
-    ensure: "present"
-    descr: "Dell"
-    enabled: true
-    baseurl: "https://repo-nexus.lsst.org/nexus/repository/dell/"
-    gpgcheck: false
-    target: "/etc/yum.repos.d/dell.repo"
-profile::core::kernel::version: "3.10.0-1127.8.2.el7.x86_64"
-
-files:
-  # opensplice daemons/client running in pods as `saluser` use hostPath to share a
-  # path to a unix domain socket
-  /run/ospl:
-    ensure: "directory"
-    owner: 73006
-    group: 73006
-    mode: "0755"
+    bridge: "br3065"
+  enp129s0f1.3075:
+    <<: *vlan_int
+    bridge: "br3075"
+  enp129s0f1.3085:
+    <<: *vlan_int
+    bridge: "br3085"
+  br3065: &bridge_int
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"
+  br3075:
+    <<: *bridge_int
+  br3085:
+    <<: *bridge_int
+  em1:
+    ensure: "absent"
+  em2:
+    ensure: "absent"
+  em2.700:
+    ensure: "absent"
+  enp129s0f0.3065:
+    ensure: "absent"
+  enp129s0f0.3075:
+    ensure: "absent"
+  enp129s0f0.3085:
+    ensure: "absent"

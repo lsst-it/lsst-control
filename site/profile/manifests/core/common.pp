@@ -31,6 +31,9 @@
 #   If `true`, disable ipv6 networking support. This parameter is intended to eventually
 #   replace the direct inclusion of the `profile::core::sysctl::disable_ipv6` class.
 #
+# @param manage_powertop
+#   If `true`, enable powertop service
+#
 class profile::core::common(
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
@@ -42,6 +45,7 @@ class profile::core::common(
   Boolean $disable_ipv6 = false,
   Boolean $manage_firewall = true,
   Boolean $install_telegraf = true,
+  Boolean $manage_powertop = false,
 ) {
   include accounts
   include augeas
@@ -111,6 +115,10 @@ class profile::core::common(
 
   if $disable_ipv6 {
     include profile::core::sysctl::disable_ipv6
+  }
+
+  if $manage_powertop {
+    include profile::core::powertop
   }
 
   class { 'lldpd':

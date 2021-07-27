@@ -4,10 +4,12 @@ classes:
   - "profile::app::rke"
   - "profile::core::common"
   - "profile::core::debugutils"
-  - "profile::core::k8s"
+  - "profile::core::rke"
   - "profile::core::kernel"
   - "profile::core::kernel::pquota"
   - "profile::core::kubecompletion"
+  - "profile::core::ospl"
+  - "clustershell"
   - "docker"
   - "yum"
 packages:
@@ -43,6 +45,8 @@ yum::repos:
     target: "/etc/yum.repos.d/kubernetes.repo"
 profile::app::helm::version: "3.0.3"
 profile::app::rke::version: "1.0.4"
+profile::core::kernel::devel: true
+profile::core::kernel::debuginfo: true
 profile::core::kernel::version: "3.10.0-1062.12.1.el7.x86_64"
 
 files:

@@ -12,12 +12,14 @@ profile::core::debugutils::packages:
   - "nmap"
   - "nmap-ncat"
   - "numactl"
+  - "nvme-cli"
   - "pciutils"
   - "powertop"
   - "socat"
   - "tcpdump"
   - "traceroute"
   - "tree"
+  - "tuned-utils-systemtap"
 profile::ccs::postfix::packages:
   # required for postfix sasl auth
   - "cyrus-sasl-plain"

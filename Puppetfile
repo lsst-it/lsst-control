@@ -64,7 +64,7 @@ mod 'puppetlabs/concat', '6.4.0'
 mod 'puppetlabs/inifile', '4.3.0'
 mod 'puppetlabs/java', '6.2.0'
 mod 'puppetlabs/stdlib', '6.6.0'
-mod 'puppetlabs/vcsrepo', '3.0.0'
+mod 'puppetlabs/vcsrepo', '5.0.0'
 mod 'puppet/rsyslog', '4.0.0'
 mod 'puppet/ssh_keygen', '4.0.0'
 

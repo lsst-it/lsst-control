@@ -172,6 +172,7 @@ redis::globals::scl: "rh-redis5"
 
 profile::core::puppet_master::foreman_config:
   destroy_vm_on_host_delete: {value: false}
+  entries_per_page: {value: 100}
   host_power_status: {value: false}
   idle_timeout: {value: 7200}  # session timeout in minutes
   matchers_inheritance: {value: false}

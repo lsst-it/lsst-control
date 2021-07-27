@@ -96,4 +96,11 @@ class profile::core::puppet_master(
       ensure => absent,
     }
   }
+
+  # theforeman/foreman manages yum repos directly.  The foreman-release package
+  # is not needed after bootstraping and can be removed.
+  package { 'foreman-release':
+    ensure  => absent,
+    require => Class['foreman'],
+  }
 }

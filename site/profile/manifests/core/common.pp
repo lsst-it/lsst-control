@@ -34,6 +34,9 @@
 # @param manage_powertop
 #   If `true`, enable powertop service
 #
+# @param manage_scl
+#   If `true`, enable redhat scl repos
+#
 class profile::core::common(
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
@@ -46,6 +49,7 @@ class profile::core::common(
   Boolean $manage_firewall = true,
   Boolean $install_telegraf = true,
   Boolean $manage_powertop = false,
+  Boolean $manage_scl = true,
 ) {
   include accounts
   include augeas
@@ -121,6 +125,10 @@ class profile::core::common(
 
   if $manage_powertop {
     include profile::core::powertop
+  }
+
+  if $manage_scl {
+    include scl
   }
 
   class { 'lldpd':

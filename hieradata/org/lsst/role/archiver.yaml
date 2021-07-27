@@ -6,7 +6,6 @@ classes:
   - "profile::core::docker::prune"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
-  - "profile::core::systemd"
   - "redis"
   - "python"
   - "docker"

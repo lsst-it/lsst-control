@@ -53,6 +53,7 @@ class profile::core::common(
   include profile::core::ipa
   include profile::core::k5login
   include profile::core::selinux
+  include profile::core::systemd
   include resolv_conf
   include rsyslog
   include rsyslog::config

@@ -3,7 +3,6 @@ classes:
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
-  - "profile::core::systemd"
   - "profile::ccs::common"
 
 nfs::client_enabled: true

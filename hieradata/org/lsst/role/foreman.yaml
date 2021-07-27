@@ -125,10 +125,14 @@ foreman_proxy::tftp_managed: true
 foreman_proxy::tftp_manage_wget: true
 foreman_proxy::tftp: true
 foreman_proxy::trusted_hosts: ["%{facts.fqdn}"]
+foreman_proxy::version: "%{lookup('foreman::version')}"
+foreman::cli::version: "%{lookup('foreman::version')}"
+foreman::repo::configure_scl_repo: false
+foreman::repo::repo: "2.4"
 foreman::unattended: true
 foreman::user: "foreman"
 foreman::user_groups: ["puppet"]
-foreman::version: "2.4.0"
+foreman::version: "2.4.1"
 postgresql::globals::bindir: "/usr/bin"
 postgresql::globals::client_package_name: "rh-postgresql12-syspaths"
 postgresql::globals::confdir: "/var/opt/rh/rh-postgresql12/lib/pgsql/data"
@@ -174,6 +178,21 @@ profile::core::yum::versionlock:
     ensure: "present"
   0:puppetdb-termini-6.16.1-1.el7.noarch:
     ensure: "present"
+  0:foreman-2.4.1-1.el7.noarch:
+    ensure: "present"
+  0:foreman-libvirt-2.4.1-1.el7.noarch:
+    ensure: "present"
+  0:foreman-dynflow-sidekiq-2.4.1-1.el7.noarch:
+    ensure: "present"
+  0:foreman-service-2.4.1-1.el7.noarch:
+    ensure: "present"
+  0:foreman-postgresql-2.4.1-1.el7.noarch:
+    ensure: "present"
+  0:foreman-debug-2.4.1-1.el7.noarch:
+    ensure: "present"
+  0:foreman-cli-2.4.1-1.el7.noarch:
+    ensure: "present"
+
 redis::globals::scl: "rh-redis5"
 
 profile::core::puppet_master::foreman_config:

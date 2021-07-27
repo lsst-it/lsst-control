@@ -1,8 +1,7 @@
 ---
 classes:
   - "profile::core::common"
-  - "puppetdb"
-  - "scl"
+  - "profile::core::puppetdb"
 
 packages:
   - "rh-postgresql12-syspaths"

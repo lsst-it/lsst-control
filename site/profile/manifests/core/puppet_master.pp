@@ -89,4 +89,20 @@ class profile::core::puppet_master(
   package { 'toml-rb':
     provider => 'puppetserver_gem',
   }
+
+  # The foreman-selinux package is not managed by theforeman/foreman when selinux is disabled.  # This is to cleanup old installs.
+  unless $facts['os']['selinux']['enabled'] {
+    package { 'foreman-selinux':
+      ensure => absent,
+    }
+  }
+
+  # theforeman/foreman manages yum repos directly.  The foreman-release package
+  # is not needed after bootstraping and can be removed.
+  package { 'foreman-release':
+    ensure  => absent,
+    require => Class['foreman'],
+  }
+
+  Class['scl'] -> Class['foreman']
 }

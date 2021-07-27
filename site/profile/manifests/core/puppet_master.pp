@@ -103,4 +103,6 @@ class profile::core::puppet_master(
     ensure  => absent,
     require => Class['foreman'],
   }
+
+  Class['scl'] -> Class['foreman']
 }

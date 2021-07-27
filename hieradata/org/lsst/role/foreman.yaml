@@ -128,7 +128,7 @@ foreman_proxy::trusted_hosts: ["%{facts.fqdn}"]
 foreman::unattended: true
 foreman::user: "foreman"
 foreman::user_groups: ["puppet"]
-foreman::version: "2.4.0"
+foreman::version: "2.4.1"
 postgresql::globals::bindir: "/usr/bin"
 postgresql::globals::client_package_name: "rh-postgresql12-syspaths"
 postgresql::globals::confdir: "/var/opt/rh/rh-postgresql12/lib/pgsql/data"

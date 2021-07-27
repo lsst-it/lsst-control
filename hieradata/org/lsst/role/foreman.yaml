@@ -126,6 +126,7 @@ foreman_proxy::tftp_manage_wget: true
 foreman_proxy::tftp: true
 foreman_proxy::trusted_hosts: ["%{facts.fqdn}"]
 foreman_proxy::version: "%{lookup('foreman::version')}"
+foreman::cli::version: "%{lookup('foreman::version')}"
 foreman::unattended: true
 foreman::user: "foreman"
 foreman::user_groups: ["puppet"]

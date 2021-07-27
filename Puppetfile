@@ -17,7 +17,7 @@ mod 'puppet/cron', '1.3.1'
 mod 'puppet/r10k', '9.0.0'
 mod 'camptocamp/systemd', '3.0.0'
 mod 'bodgit/scl', '1.0.1'
-mod 'theforeman/dhcp', '6.2.0'
+mod 'theforeman/dhcp', '7.0.0'
 mod 'theforeman/dns', '8.2.0'
 mod 'duritong/sysctl',
   git: 'https://github.com/lsst-it/puppet-sysctl',

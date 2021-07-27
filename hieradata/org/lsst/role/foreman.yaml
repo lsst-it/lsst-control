@@ -188,6 +188,8 @@ profile::core::yum::versionlock:
     ensure: "present"
   0:foreman-debug-2.4.1-1.el7.noarch:
     ensure: "present"
+  0:foreman-cli-2.4.1-1.el7.noarch:
+    ensure: "present"
 
 redis::globals::scl: "rh-redis5"
 

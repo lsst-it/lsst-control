@@ -111,4 +111,4 @@ ccs_sal::rpms_private:
 
 ccs_sal::dds_domain: "summit"
 ccs_sal::dds_interface: "atsccs1-dds.cp.lsst.org"
-ccs_sal::instrument: "atcamera"
+ccs_sal::instrument: "ats"

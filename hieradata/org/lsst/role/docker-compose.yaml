@@ -1,16 +1,10 @@
 ---
 classes:
   - "profile::core::common"
+  - "profile::core::docker"
   - "profile::core::docker::prune"
-  - "docker"
   - "python"
-# disabling the kernel version check is needed on el7
-docker::overlay2_override_kernel_check: true
-docker::storage_driver: "overlay2"
-docker::version: "19.03.4"
-# ipa docker group is 70014
-docker::socket_group: "70014"
-docker::socket_override: true
+profile::core::docker::version: "19.03.4"
 # install docker-compose at system level
 python::version: "python36"
 python::pip: "present"

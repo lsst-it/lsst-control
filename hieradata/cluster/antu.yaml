@@ -77,5 +77,5 @@ sysctl::values::args:
     value: "fq"
     target: *tcpip
 
-docker::version: "19.03.13"
+profile::core::docker::version: "19.03.13"
 profile::app::rke::version: "1.2.8"

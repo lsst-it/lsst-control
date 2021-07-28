@@ -78,5 +78,4 @@ yum::repos:
     gpgcheck: false
     target: "/etc/yum.repos.d/dell.repo"
 
-profile::core::docker::version: "19.03.13"
 profile::app::rke::version: "1.2.3"

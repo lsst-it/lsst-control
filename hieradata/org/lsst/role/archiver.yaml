@@ -19,7 +19,6 @@ files:
     owner: "root"
     group: "root"
     content: ". /opt/rh/rh-redis5/enable"
-profile::core::docker::version: "19.03.4"
 rabbitmq::admin_enable: true
 rabbitmq::management_enable: true
 rabbitmq::manage_python: false

@@ -1,6 +1,5 @@
 ---
 clustershell::groupmembers:
   vk8s: {group: "vk8s", member: "vk8s[01-03]"}
-profile::core::docker::version: "19.03.15"
 profile::app::helm::version: "3.5.4"
 profile::app::rke::version: "1.2.8"

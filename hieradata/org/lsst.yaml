@@ -354,3 +354,32 @@ resolv_conf::options:
   - "rotate"
   - "timeout:2"
   - "retries:1"
+scl::repos:
+  centos-sclo-sclo:
+    baseurl: "http://mirror.centos.org/centos/%{facts.os.release.major}/sclo/$basearch/sclo/"
+    descr: "CentOS-%{facts.os.release.major} - SCLo sclo"
+    enabled: true
+    ensure: "present"
+    gpgcheck: true
+    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo"
+  centos-sclo-sclo-debuginfo:
+    baseurl: "http://debuginfo.centos.org/centos/%{facts.os.release.major}/sclo/$basearch/"
+    descr: "CentOS-%{facts.os.release.major} - SCLo sclo Debuginfo"
+    enabled: false
+    ensure: "present"
+    gpgcheck: true
+    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo"
+  centos-sclo-rh:
+    baseurl: "http://mirror.centos.org/centos/%{facts.os.release.major}/sclo/$basearch/rh/"
+    descr: "CentOS-%{facts.os.release.major} - SCLo rh"
+    enabled: true
+    ensure: "present"
+    gpgcheck: true
+    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo"
+  centos-sclo-rh-debuginfo:
+    baseurl: "http://debuginfo.centos.org/centos/%{facts.os.release.major}/sclo/$basearch/"
+    descr: "CentOS-%{facts.os.release.major} - SCLo rh Debuginfo"
+    enabled: false
+    ensure: "present"
+    gpgcheck: true
+    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo"

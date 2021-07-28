@@ -1,11 +1,7 @@
 # @summary
 #   Installs and configures all required packages for EAS Raspberry Pi
 class profile::core::rpi {
-  include docker
   include snapd
-
-  #  Remove old docker packages first
-  Class['docker'] ~> Class['profile::core::rpi']
 
   #<------------ Variables -------------->
   $root_dir              = '/opt'
@@ -26,9 +22,14 @@ class profile::core::rpi {
 
   #  Remove default docker packages
   $docker_packages = [
-    'docker-1.13.1-205.git7d71120.el7.centos.aarch64',
-    'docker-client-1.13.1-205.git7d71120.el7.centos.aarch64',
-    'docker-common-1.13.1-205.git7d71120.el7.centos.aarch64'
+    'docker',
+    'docker-client',
+    'docker-client-latest',
+    'docker-common',
+    'docker-latest',
+    'docker-latest-logrotate',
+    'docker-logrotate',
+    'docker-engine'
   ]
 
   #  Conda Packages

@@ -3,12 +3,12 @@ classes:
   - "profile::archive::rabbitmq"
   - "profile::core::common"
   - "profile::core::debugutils"
+  - "profile::core::docker"
   - "profile::core::docker::prune"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
-  - "redis"
   - "python"
-  - "docker"
+  - "redis"
 packages:
   - "git"
   - "cmake"
@@ -19,14 +19,7 @@ files:
     owner: "root"
     group: "root"
     content: ". /opt/rh/rh-redis5/enable"
-# disabling the kernel version check is needed on el7
-docker::overlay2_override_kernel_check: true
-docker::storage_driver: "overlay2"
-docker::version: "19.03.4"
-# ipa docker group is 70014
-docker::socket_group: &docker_gid "70014"
-docker::socket_override: true
-# install docker-compose at system level - "docker"
+profile::core::docker::version: "19.03.4"
 rabbitmq::admin_enable: true
 rabbitmq::management_enable: true
 rabbitmq::manage_python: false
@@ -95,6 +88,7 @@ python::version: "python36"
 python::pip: "present"
 python::dev: "present"
 python::virtualenv: "present"
+# install docker-compose at system level - "docker"
 python::python_pips:
   # docker-compose is python3 only
   "docker-compose":
@@ -107,7 +101,7 @@ accounts::group_list:
   # this is duplicating the ipa gid as a local group
   &docker_name docker-%{facts.hostname}:
     ensure: "present"
-    gid: *docker_gid
+    gid: 70014
     forcelocal: true
 accounts::user_list:
   arc:

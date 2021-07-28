@@ -2,12 +2,12 @@
 classes:
   - "profile::core::common"
   - "profile::core::debugutils"
+  - "profile::core::docker"
   - "profile::core::docker::prune"
   - "profile::core::ni_packages"
-  - "profile::ts::nexusctio"
-  - "docker"
-  - "python"
   - "profile::core::x2go_agent"
+  - "profile::ts::nexusctio"
+  - "python"
 packages:
   - "runHexEui"
   - "runRotEui"
@@ -21,15 +21,10 @@ files:
     subscribe:
       - "Package[runHexEui]"
       - "Package[runRotEui]"
-# disabling the kernel version check is needed on el7
-docker::overlay2_override_kernel_check: true
 # / on hexrot.cp was formated with xfs fstype=0 (long, long, long ago) and is
 # not compatible with overlayfs[2]
-docker::storage_driver: "devicemapper"
-docker::version: "19.03.4"
-# ipa docker group is 70014
-docker::socket_group: &docker_gid "70014"
-docker::socket_override: true
+profile::core::docker::storage_driver: "devicemapper"
+profile::core::docker::version: "19.03.4"
 # install docker-compose at system level
 python::version: "python36"
 python::pip: "present"
@@ -44,5 +39,5 @@ accounts::group_list:
   # this is duplicating the ipa gid as a local group
   &docker_name docker-%{facts.hostname}:
     ensure: "present"
-    gid: *docker_gid
+    gid: 70014
     forcelocal: true

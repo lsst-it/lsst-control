@@ -37,6 +37,9 @@
 # @param manage_scl
 #   If `true`, enable redhat scl repos
 #
+# @param manage_repos
+#   If `true`, manage core os yum repos
+#
 class profile::core::common(
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
@@ -50,6 +53,7 @@ class profile::core::common(
   Boolean $install_telegraf = true,
   Boolean $manage_powertop = false,
   Boolean $manage_scl = true,
+  Boolean $manage_repos = true,
 ) {
   include accounts
   include augeas
@@ -74,6 +78,16 @@ class profile::core::common(
   include sysstat
   include timezone
   include tuned
+
+  if $manage_repos {
+    if $facts['os']['name'] == 'CentOS' {
+      include profile::core::yum::centos
+
+      resources { 'yumrepo':
+        purge => true,
+      }
+    }
+  }
 
   if $deploy_icinga_agent {
     include profile::icinga::agent

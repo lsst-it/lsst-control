@@ -22,7 +22,7 @@ class profile::core::rpi {
 
   #  Remove default docker packages
   $docker_packages = [
-    'docker',
+    'docker-1.13*.aarch64',
     'docker-client',
     'docker-client-latest',
     'docker-common',
@@ -218,7 +218,7 @@ class profile::core::rpi {
       source /opt/conda/miniforge/bin/activate
       | SOURCE
   }
-  $conda_install.each |$install|{
+  $conda_install.each |$install| {
     $value = split($install,',')
     exec { $value[0]:
       cwd      => $conda_dir,
@@ -227,7 +227,7 @@ class profile::core::rpi {
       unless   => $value[1]
     }
   }
-  $conda_packages.each |$conda|{
+  $conda_packages.each |$conda| {
     $value = split($conda,',')
     exec { "conda install -y ${value[0]}":
       cwd      => $packages_dir,
@@ -245,15 +245,15 @@ class profile::core::rpi {
   #
   #
   #<-------LibGPhoto Packages Install------->
-  $repo_name.each |$repo|{
+  $repo_name.each |$repo| {
     $value = split($repo,',')
-    archive {"${packages_dir}/${value[4]}":
+    archive { "${packages_dir}/${value[4]}":
       ensure       => present,
       source       => $value[3],
       extract      => true,
       extract_path => $packages_dir
     }
-    -> file {"${packages_dir}/${value[5]}/${value[0]}.sh":
+    -> file { "${packages_dir}/${value[5]}/${value[0]}.sh":
       ensure  => present,
       mode    => '0755',
       content => $value[1]
@@ -278,7 +278,7 @@ class profile::core::rpi {
     creates      => "${cmake_dir}-${cmake_version}",
     cleanup      => true
   }
-  -> file {"${cmake_dir}-${cmake_version}/cmake.sh":
+  -> file { "${cmake_dir}-${cmake_version}/cmake.sh":
     ensure  => present,
     mode    => '0755',
     content => $cmake_run
@@ -301,7 +301,7 @@ class profile::core::rpi {
     provider => git,
     source   => 'git://github.com/LibRaw/LibRaw-cmake.git'
   }
-  -> file {"${libraw_dir}/libraw.sh":
+  -> file { "${libraw_dir}/libraw.sh":
     ensure  => present,
     mode    => '0755',
     content => $libraw_run
@@ -319,7 +319,7 @@ class profile::core::rpi {
     source   => 'git://github.com/letmaik/rawpy',
     require  => Exec["bash ${libraw_dir}/libraw.sh"]
   }
-  -> file {"${rawpy_dir}/rawpy.sh":
+  -> file { "${rawpy_dir}/rawpy.sh":
     ensure  => present,
     mode    => '0755',
     content => $rawpy_run

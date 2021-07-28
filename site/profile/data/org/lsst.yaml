@@ -50,7 +50,7 @@ profile::ts::nexusctio::repos:
     target: "/etc/yum.repos.d/gpgmsoo.repo"
 
 profile::core::yum::centos::repos:
-  base:
+  centos-base:
     descr: "CentOS-$releasever - Base"
     enabled: true
     ensure: "present"
@@ -58,7 +58,7 @@ profile::core::yum::centos::repos:
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"
     mirrorlist: "http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os&infra=$infra"
     target: "/etc/yum.repos.d/CentOS-Base.repo"
-  updates:
+  centos-updates:
     descr: "CentOS-$releasever - Updates"
     enabled: true
     ensure: "present"
@@ -66,7 +66,7 @@ profile::core::yum::centos::repos:
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"
     mirrorlist: "http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates&infra=$infra"
     target: "/etc/yum.repos.d/CentOS-Base.repo"
-  extras:
+  centos-extras:
     descr: "CentOS-$releasever - Extras"
     enabled: true
     ensure: "present"
@@ -74,7 +74,7 @@ profile::core::yum::centos::repos:
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"
     mirrorlist: "http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras&infra=$infra"
     target: "/etc/yum.repos.d/CentOS-Base.repo"
-  base-debuginfo:
+  centos-base-debuginfo:
     baseurl: "http://debuginfo.centos.org/7/$basearch/"
     descr: "CentOS-7 - Debuginfo"
     enabled: false

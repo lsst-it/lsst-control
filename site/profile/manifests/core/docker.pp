@@ -32,8 +32,8 @@ class profile::core::docker(
   }
 
   yum::versionlock {[
-      "0:${docker_ce_package}",
-      "0:${docker_ce_cli_package}",
+      "3:${docker_ce_package}",
+      "1:${docker_ce_cli_package}",
     ]:
       ensure => present,
   }

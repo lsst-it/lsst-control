@@ -1,6 +1,7 @@
 ---
 classes:
   - "profile::core::common"
+  - "profile::core::dtn"
 
 profile::core::common::manage_firewall: false
 profile::core::common::deploy_icinga_agent: true

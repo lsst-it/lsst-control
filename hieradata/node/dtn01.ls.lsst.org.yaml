@@ -1,0 +1,16 @@
+---
+network::interfaces_hash:
+  enp6s0:
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+    mtu: "9000"
+  enp6s0.330:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    type: "vlan"
+    ipaddress: "139.229.140.131"
+    netmask: "255.255.255.254"
+    nozeroconf: "yes"
+    mtu: "9000"

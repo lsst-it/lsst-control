@@ -38,6 +38,4 @@ class profile::core::dtn{
         value  => 'fq',
         target => '/etc/sysctl.d/99-sysctl.conf.conf',
   }
-  
-
 }

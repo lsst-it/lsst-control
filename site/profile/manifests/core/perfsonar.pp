@@ -22,7 +22,7 @@ class profile::core::perfsonar {
 
   # perfsonar-toolkit pulls in perfsonar-toolkit-systemenv-testpoint which pulls in yum-cron
   service { 'yum-cron':
-    enable => false,
     ensure => 'stopped',
+    enable => false,
   }
 }

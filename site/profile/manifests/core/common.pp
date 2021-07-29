@@ -141,8 +141,11 @@ class profile::core::common(
     include profile::core::powertop
   }
 
-  if $manage_scl {
-    include scl
+  if $facts['os']['architecture'] == 'x86_64' {
+    # no scl repos for aarch64
+    if $manage_scl {
+      include scl
+    }
   }
 
   class { 'lldpd':

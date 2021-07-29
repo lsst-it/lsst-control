@@ -1,3 +1,9 @@
 ---
 classes:
   - "profile::core::common"
+
+ssh::server_options:
+  Port: 2712
+sudo::configs:
+  wheel_b:
+    content: "%wheel_b ALL=(ALL) NOPASSWD: ALL"

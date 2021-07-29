@@ -102,9 +102,7 @@ mod 'puppet/extlib', '5.0.0'
 mod 'theforeman/foreman', '16.1.0'
 mod 'theforeman/foreman_proxy', '18.1.0'
 mod 'theforeman/tftp', '6.0.0'
-mod 'treydock/perfsonar',
-  git: 'https://github.com/lsst-it/puppet-module-perfsonar',
-  ref: 'production'
+mod 'treydock/perfsonar', '1.0.0'
 mod 'jamtur01/httpauth', '0.0.6'
 mod 'puppetlabs/ntp', '8.3.0'
 mod 'puppet/ipset', '1.2.3'

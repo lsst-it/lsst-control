@@ -57,6 +57,11 @@ files:
     mode: "0440"
     require: "Class[perfsonar]"
 
+# The perfsonar class does not allow a pS version to be set.
+# The yumrepo mirror list used:
+# http://software.internet2.edu/rpms/el7/mirrors-Toolkit-Internet2
+# always redirects to most recent mirror release
+# Manual yumrepo management will be required to version pin
 perfsonar::manage_pscheduler_agent: true
 perfsonar::pscheduler_agent_config:
   remotes:
@@ -65,3 +70,7 @@ perfsonar::pscheduler_agent_config:
 perfsonar::manage_lsregistrationdaemon: true
 perfsonar::lsregistrationdaemon_ensure: "stopped"
 perfsonar::lsregistrationdaemon_enable: false
+profile::core::yum::versionlock:
+  # XXX do we need to versionlock all of the sub-packages as well?
+  0:perfsonar-toolkit-4.4.0-1.el7.noarch:
+    ensure: "present"

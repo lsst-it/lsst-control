@@ -79,8 +79,8 @@ class profile::core::common(
   include timezone
   include tuned
 
-  if $manage_repos {
-    if $facts['os']['name'] == 'CentOS' {
+  if $facts['os']['name'] == 'CentOS' {
+    if $manage_repos {
       include profile::core::yum::centos
 
       resources { 'yumrepo':

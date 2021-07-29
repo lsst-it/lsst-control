@@ -17,7 +17,7 @@
 #   name of docker storage driver to use
 #
 class profile::core::docker(
-  Optional[String] $version     = '19.0.15',
+  Optional[String] $version     = '19.03.15',
   String $socket_group          = '70014',
   String $docker_ce_package     = 'docker-ce-19.03.15-3.el7.x86_64',
   String $docker_ce_cli_package = 'docker-ce-cli-19.03.15-3.el7.x86_64',

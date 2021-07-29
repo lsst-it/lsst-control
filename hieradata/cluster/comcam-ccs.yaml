@@ -61,13 +61,18 @@ ccs_database::database: "comcamdbprod"
 
 ccs_sal::ospl_home: "/opt/OpenSpliceDDS/V6.10.4/HDE/x86_64.linux"
 ccs_sal::rpms:
+  ts_sal_utils: "ts_sal_utils-5.1.1-1.x86_64.rpm"
+ccs_sal::rpms_private:
   OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"
-  ts_sal_utils: "ts_sal_utils-4.0.0-1.x86_64.rpm"
 
 ccs_sal::dds_domain: "summit"
 ccs_sal::dds_interface: "comcam-mcm-dds"
 ccs_sal::instrument: "comcam"
 
+ccs_software::global_properties:
+  - "org.lsst.ccs.subsystem.agent.property.instrument=comcam"
+  - "org.lsst.ccs.subsystem.agent.property.cluster=comcam"
+  - "org.lsst.ccs.subsystem.agent.property.site=summit"
 
 ccs_monit::mailhost: "mail.lsst.org"
 ccs_monit::alert:
@@ -115,6 +120,10 @@ ccs_software::installations:
   comcam-software-2.0.9:
     aliases:
       - "puppet-2.0.9"
+
+  comcam-software-2.1.0:
+    aliases:
+      - "puppet-2.1.0"
 
 
 profile::icinga::agent::host_template: "ComCamHostTemplate"

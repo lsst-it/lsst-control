@@ -41,8 +41,8 @@ network::mroutes_hash:
 
 ccs_software::services:
   prod:
-    - "comcam-mcm"
-    - "comcam-mmm"
+    - "mmm"
+    - "cluster-monitor"
 ## Next two are handled by the ccs_sal module. FIXME duplication.
 #    - "mcm-comcam"  # XXX should both comcam-mcm and mcm-comcam be running???
 #    - "ocs-bridge-comcam"

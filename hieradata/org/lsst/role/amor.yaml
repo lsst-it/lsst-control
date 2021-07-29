@@ -15,7 +15,6 @@ docker::networks::networks:
     gateway: "139.229.170.254"
     options: ["parent=p2p1"]
 
-profile::core::docker::version: "19.03.4"
 # install docker-compose at system level
 python::version: "python36"
 python::pip: "present"

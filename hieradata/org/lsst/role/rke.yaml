@@ -19,7 +19,6 @@ packages:
   - "bash-completion"
   - "bash-completion-extras"
   - "vim"
-profile::core::docker::version: "19.03.4"
 sysctl::values::args:
   net.bridge.bridge-nf-call-iptables:
     value: 1

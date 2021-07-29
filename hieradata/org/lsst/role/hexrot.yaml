@@ -24,7 +24,6 @@ files:
 # / on hexrot.cp was formated with xfs fstype=0 (long, long, long ago) and is
 # not compatible with overlayfs[2]
 profile::core::docker::storage_driver: "devicemapper"
-profile::core::docker::version: "19.03.4"
 # install docker-compose at system level
 python::version: "python36"
 python::pip: "present"

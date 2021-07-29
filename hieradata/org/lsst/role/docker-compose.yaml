@@ -4,7 +4,6 @@ classes:
   - "profile::core::docker"
   - "profile::core::docker::prune"
   - "python"
-profile::core::docker::version: "19.03.4"
 # install docker-compose at system level
 python::version: "python36"
 python::pip: "present"

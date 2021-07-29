@@ -7,7 +7,6 @@ classes:
   - "profile::core::nm_dispatch"
   - "profile::core::perfsonar"
   - "profile::core::perfsonar::sysctl"
-  - "profile::core::sysctl::disable_ipv6"
   - "ntp"
 
 # ensure chrony is not running

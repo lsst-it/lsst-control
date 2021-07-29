@@ -19,4 +19,10 @@ class profile::core::perfsonar {
     ssl_key            => "${le_root}/privkey.pem",
     require            => Class['epel'],
   }
+
+  # perfsonar-toolkit pulls in perfsonar-toolkit-systemenv-testpoint which pulls in yum-cron
+  service { 'yum-cron':
+    enable => false,
+    ensure => 'stopped',
+  }
 }

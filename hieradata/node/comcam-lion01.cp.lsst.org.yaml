@@ -2,6 +2,9 @@
 ccs_software::services:
   prod:
     - "comcam-quadbox"
+    - "comcam-mpm"
+  pathfinder-prod:
+    - "pathfinder-quadbox"
 
 network::interfaces_hash:
   enp0s31f6:  # fqdn

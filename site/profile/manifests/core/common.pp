@@ -54,12 +54,12 @@ class profile::core::common (
   Boolean $manage_powertop = false,
   Boolean $manage_scl = true,
   Boolean $manage_repos = true,
+  Boolean $manage_irqbalance = true,
 ) {
   include accounts
   include augeas
   include easy_ipa
   include epel
-  include irqbalance
   include network
   include profile::core::dielibwrapdie
   include profile::core::ifdown
@@ -89,6 +89,10 @@ class profile::core::common (
         purge => true,
       }
     }
+  }
+
+  if $manage_irqbalance {
+    include irqbalance
   }
 
   if $deploy_icinga_agent {

@@ -42,5 +42,5 @@ ccs_software::services:
   dev:
     - "ats-power"
   prod:
-    - "ats-vacuum"
+    - "ats"
     - "bonn-shutter"

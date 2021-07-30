@@ -4,6 +4,7 @@ classes:
   - "profile::core::dtn"
 
 profile::core::common::manage_firewall: false
+profile::core::common::manage_irqbalance: false
 profile::core::common::deploy_icinga_agent: true
 profile::icinga::agent::host_template: "DtnTemplate"
 profile::icinga::agent::icinga_master_fqdn: "icinga-master.ls.lsst.org"

@@ -6,7 +6,7 @@ class profile::ccs::tomcat(
   $version       = '9.0.36'
   $root_path     = '/opt/tomcat'
   $catalina_home = "${root_path}/apache-tomcat-${version}"
-  $catalina_base = $catalina_home
+  $catalina_base = "${root_path}/catalina_base"
 
   file { $root_path:
     ensure => directory,
@@ -67,7 +67,7 @@ class profile::ccs::tomcat(
     User=tomcat
     Group=tomcat
 
-    Environment="JAVA_HOME=/usr/lib/jvm/jre"
+    Environment="JAVA_HOME=/usr/java/default"
     Environment="JAVA_OPTS=-Djava.security.egd=file:///dev/urandom"
 
     Environment="CATALINA_BASE=${catalina_base}"

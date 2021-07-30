@@ -45,7 +45,7 @@ mod 'jhoblitt/ipmi', '2.3.0'
 mod 'puppet/lldpd', '3.0.0'
 mod 'puppet/rabbitmq', '11.1.0'
 mod 'puppet/redis', '6.0.0'
-mod 'puppetlabs/tomcat', '4.0.0'
+mod 'puppetlabs/tomcat', '6.0.0'
 mod 'puppet/nginx', '1.1.0'
 # 2020-07-07 hreinking: for icinga deployment
 mod 'icinga/icinga2', '2.4.1'

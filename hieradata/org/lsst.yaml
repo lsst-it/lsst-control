@@ -93,10 +93,14 @@ ssh::server_options:
   AuthorizedKeysCommandUser: "nobody"
   AuthorizedKeysFile: "none"
 ssh::server::match_block:
-  root:
+  root: &authorized_keys
     type: "user"
     options:
       AuthorizedKeysFile: ".ssh/authorized_keys"
+  hreinking_b:
+    <<: *authorized_keys
+  jhoblitt_b:
+    <<: *authorized_keys
 
 # easy_ipa server options
 # defines the uid/gid of the admin user

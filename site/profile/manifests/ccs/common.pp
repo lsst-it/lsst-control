@@ -22,4 +22,11 @@ class profile::ccs::common(
 
   Class['java_artisanal']
   -> Class['ccs_software']
+
+  ssh::server::match_block { 'ccs':
+    type    => 'User',
+    options => {
+      'AuthorizedKeysFile' => '.ssh/authorized_keys',
+    }
+  }
 }

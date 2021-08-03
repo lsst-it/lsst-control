@@ -36,6 +36,9 @@ lookup_options:
   sssd::domains:
     merge:
       strategy: "deep"
+  ssh::server::match_block:
+    merge:
+      strategy: "deep"
   profile::core::systemd::tmpfile:
     merge:
       strategy: "deep"
@@ -88,6 +91,16 @@ ssh::server_options:
   KerberosAuthentication: "no"
   AuthorizedKeysCommand: "/usr/bin/sss_ssh_authorizedkeys"
   AuthorizedKeysCommandUser: "nobody"
+  AuthorizedKeysFile: "none"
+ssh::server::match_block:
+  root: &authorized_keys
+    type: "user"
+    options:
+      AuthorizedKeysFile: ".ssh/authorized_keys"
+  hreinking_b:
+    <<: *authorized_keys
+  jhoblitt_b:
+    <<: *authorized_keys
 
 # easy_ipa server options
 # defines the uid/gid of the admin user

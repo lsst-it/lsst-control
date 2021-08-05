@@ -54,3 +54,5 @@ ccs_software::services:
   prod:
     - "ats-mmm"
     - "cluster-monitor"
+    - "localdb"
+    - "rest-server"

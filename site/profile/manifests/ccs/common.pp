@@ -11,7 +11,6 @@ class profile::ccs::common(
   include profile::ccs::monitoring
   include profile::ccs::postfix
   include profile::ccs::profile_d
-  include profile::ccs::sudo
 
   if ($sysctls) {
     include profile::ccs::sysctl

@@ -9,7 +9,7 @@ rules:
   comments-indentation: false
   comments:
     require-starting-space: false
-  quoted-strings: {quote-type: "double"}
+  quoted-strings: {quote-type: "any"}
 
 ignore: |
   .rubocop.yml

@@ -58,7 +58,7 @@ class profile::ccs::daq_interface(
   # a template to live in a profile.
   file { "/etc/NetworkManager/dispatcher.d/${file}":
     ensure  => file,
-    content => epp("${module_name}/ccs/daq_interface/${file}", {'interface' => $interface}),
+    content => epp("${module_name}/ccs/daq_interface/${file}.epp", {'interface' => $interface}),
     mode    => '0755',
   }
 }

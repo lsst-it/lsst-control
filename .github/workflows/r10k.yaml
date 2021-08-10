@@ -1,0 +1,22 @@
+---
+# yamllint disable rule:quoted-strings
+name: r10k
+
+on:
+  - push
+
+jobs:
+  r10k:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+      - name: Install r10k
+        run: gem install r10k -v 3.3.0
+      - name: r10k check
+        run: |
+          r10k puppetfile check
+          r10k puppetfile install -vt

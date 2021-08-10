@@ -1,5 +1,4 @@
 class profile::ccs::home {
-
   ## Change the default for home directories.
   ## TODO seems like all users should be in the same group though,
   ## rather than each having their own?
@@ -8,5 +7,4 @@ class profile::ccs::home {
     match => '^UMASK ',
     line  => 'UMASK 022',
   }
-
 }

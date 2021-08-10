@@ -7,7 +7,7 @@
 # @param keytab_base64
 #   base64 encoded krb5 keytab for the iip user
 #
-class profile::core::rke(
+class profile::core::rke (
   Boolean          $enable_dhcp   = false,
   Optional[String] $keytab_base64 = undef,
 ) {

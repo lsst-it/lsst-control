@@ -5,7 +5,6 @@
 ##   String (default SITE-local.cfg) naming the cfg file to install.
 
 class profile::ccs::clustershell (String $config = '') {
-
   ensure_packages(['clustershell'])
 
   $dest = '/etc/clustershell/groups.d/local.cfg'
@@ -18,5 +17,4 @@ class profile::ccs::clustershell (String $config = '') {
     ensure => present,
     source => "puppet:///modules/${module_name}/ccs/clustershell/${src}",
   }
-
 }

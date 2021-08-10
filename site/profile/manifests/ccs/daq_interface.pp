@@ -2,7 +2,7 @@
 # instead of resorting to conditional logic in a profile.  The main reason to
 # centralize it is to make it easier to change the rx/tx/etc. settings on all
 # hosts with a DAQ interface.
-class profile::ccs::daq_interface(
+class profile::ccs::daq_interface (
   String $hwaddr,
   String $uuid,
   String $was,
@@ -58,7 +58,7 @@ class profile::ccs::daq_interface(
   # a template to live in a profile.
   file { "/etc/NetworkManager/dispatcher.d/${file}":
     ensure  => file,
-    content => epp("${module_name}/ccs/daq_interface/${file}.epp", {'interface' => $interface}),
+    content => epp("${module_name}/ccs/daq_interface/${file}.epp", { 'interface' => $interface }),
     mode    => '0755',
   }
 }

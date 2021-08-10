@@ -40,7 +40,7 @@
 # @param manage_repos
 #   If `true`, manage core os yum repos
 #
-class profile::core::common(
+class profile::core::common (
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
   Boolean $manage_chrony = true,

@@ -17,8 +17,8 @@
 #   include profile::allow_ssh_from_BDC
 #
 class profile::ncsa::allow_ssh_from_bdc (
-  Array[ String ]    $allow_groups,
-  Array[ String, 1 ] $nodelist,
+  Array[String]    $allow_groups,
+  Array[String, 1] $nodelist,
   Hash               $custom_cfg,
 ) {
   $parms_local = {
@@ -37,7 +37,7 @@ class profile::ncsa::allow_ssh_from_bdc (
 
   $params = $parms_local + $groups + $custom_cfg
 
-  ::sshd::allow_from{ 'allow ssh from BDC nodes':
+  ::sshd::allow_from { 'allow ssh from BDC nodes':
     hostlist                => $nodelist,
     groups                  => $allow_groups,
     additional_match_params => $params,

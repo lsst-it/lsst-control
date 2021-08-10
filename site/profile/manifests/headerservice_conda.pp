@@ -17,7 +17,6 @@ class profile::headerservice_conda (
   # String $fitsio_version,
   # String $headerservice_version,
 ) {
-
   # CONDA PACKAGES
   # $conda_pkgs = [
   #   'ipython',
@@ -28,13 +27,11 @@ class profile::headerservice_conda (
   # miniconda::package { $conda_pkgs : }
 
   # FIREWALL
-  $allowed_subnets.each | $source |
-  {
+  $allowed_subnets.each | $source | {
     firewall { "510 ${module_name}::headerservice_conda allow access to HeaderService from ${source}" :
       dport  => [8000,9000],
       source => $source,
       action => 'accept',
     }
   }
-
 }

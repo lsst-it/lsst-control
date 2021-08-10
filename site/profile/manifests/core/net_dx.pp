@@ -3,7 +3,6 @@
 #
 
 class profile::core::net_dx {
-
   $packages = [
     'traceroute',
     'tcpdump',

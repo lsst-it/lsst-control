@@ -17,8 +17,8 @@
 #   include profile::allow_ssh_from_login
 #
 class profile::ncsa::allow_ssh_from_login (
-  Array[ String ]    $allow_groups,
-  Array[ String, 1 ] $login_nodelist,
+  Array[String]    $allow_groups,
+  Array[String, 1] $login_nodelist,
   Hash               $custom_cfg,
 ) {
   $parms_local = {
@@ -37,7 +37,7 @@ class profile::ncsa::allow_ssh_from_login (
 
   $params = $parms_local + $groups + $custom_cfg
 
-  ::sshd::allow_from{ 'sshd allow from login nodes':
+  ::sshd::allow_from { 'sshd allow from login nodes':
     hostlist                => $login_nodelist,
     groups                  => $allow_groups,
     additional_match_params => $params,

@@ -6,4 +6,3 @@
 class profile::ncsa::xcat_client {
   include ::xcat::client
 }
-

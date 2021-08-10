@@ -4,7 +4,7 @@
 class profile::icinga::resources (
   String $credentials_hash,
   String $dhcp_server,
-){
+) {
   #<----------Variables Definition------------>
   #Implicit usage of facts
   $master_fqdn  = $facts['networking']['fqdn']
@@ -274,7 +274,7 @@ class profile::icinga::resources (
   #
   #
   #<---------------------------Host-Templates----------------------------->
-  $host_names.each |$host|{
+  $host_names.each |$host| {
     $value = split($host,',')
     $host_path = "${$icinga_path}/${value[0]}.json"
     $host_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
@@ -325,12 +325,12 @@ class profile::icinga::resources (
   #
   #
   #<------------------------Service-Templates----------------------------->
-  $service_template.each |$stemplate|{
+  $service_template.each |$stemplate| {
     $value = split($stemplate, ',')
     $svc_template_path = "${icinga_path}/${value[1]}.json"
     $svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${value[1]}' ${lt}"
     $svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${svc_template_path}"
-    if ($value[2]=='0'){
+    if ($value[2]=='0') {
       $content = @("TEMPLATE"/L)
         {
         "check_command": "${value[0]}",
@@ -341,7 +341,7 @@ class profile::icinga::resources (
         }
         | TEMPLATE
     }
-    elsif ($value[2]=='1'){
+    elsif ($value[2]=='1') {
       $content = @("TEMPLATE1"/L)
         {
         "check_command": "${value[0]}",
@@ -355,7 +355,7 @@ class profile::icinga::resources (
         }
         | TEMPLATE1
     }
-    elsif ($value[2]=='2'){
+    elsif ($value[2]=='2') {
       $content = @("TEMPLATE2"/L)
         {
         "check_command": "${value[0]}",
@@ -370,7 +370,7 @@ class profile::icinga::resources (
         }
         | TEMPLATE2
     }
-    elsif ($value[2]=='3'){
+    elsif ($value[2]=='3') {
       $content = @("TEMPLATE3"/L)
         {
         "check_command": "${value[0]}",
@@ -385,7 +385,7 @@ class profile::icinga::resources (
         }
         | TEMPLATE3
     }
-    elsif ($value[2]=='4'){
+    elsif ($value[2]=='4') {
       $content = @("TEMPLATE4"/L)
         {
         "check_command": "${value[0]}",
@@ -421,7 +421,7 @@ class profile::icinga::resources (
   #
   #<-----------------------Services-Definiton----------------------------->
   ##HostTemplate Services
-  $host_services.each |$services|{
+  $host_services.each |$services| {
     $value = split($services,',')
     $svc_path  = "${icinga_path}/${value[2]}.json"
     $svc_cond  = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${value[2]}&host=${value[0]}' ${lt}"
@@ -477,7 +477,7 @@ class profile::icinga::resources (
   #
   #
   #<----------------------Host-Group-Definiton---------------------------->
-  $hostgroups_name.each |$hostgroup|{
+  $hostgroups_name.each |$hostgroup| {
     $value = split($hostgroup,',')
     $hostgroup_path = "${icinga_path}/${$value[0]}.json"
     $hostgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${value[0]}' ${lt}"
@@ -506,7 +506,7 @@ class profile::icinga::resources (
   #
   #
   #<------------------------Service-Group-Definiton----------------------->
-  $servicegroup_name.each |$svcgroup|{
+  $servicegroup_name.each |$svcgroup| {
     $value = split($svcgroup,',')
     $svcgroup_path = "${icinga_path}/${$value[1]}.json"
     $svcgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svcgroup}?name=${value[1]}' ${lt}"

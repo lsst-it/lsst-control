@@ -3,7 +3,7 @@
 
 class profile::icinga::network (
   String $credentials_hash,
-){
+) {
   #<-------------------------Variables Definition------------------------->
   #Implicit usage of facts
   $master_fqdn  = $facts['networking']['fqdn']
@@ -178,7 +178,7 @@ class profile::icinga::network (
   #<-------------------Files Creation and deployement--------------------->
   ##Network Host Template
   #Create network template file
-  $host_templates.each |$host|{
+  $host_templates.each |$host| {
     $host_path = "${$icinga_path}/${host}.json"
     $host_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${host}' ${lt}"
     $host_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${host_path}"
@@ -208,7 +208,7 @@ class profile::icinga::network (
 
   ##Network Hosts
   #Base Netowrk Hosts
-  $base_host_list.each |$host|{
+  $base_host_list.each |$host| {
     $value = split($host,',')
     $path = "${icinga_path}/${value[0]}.json"
     $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
@@ -241,7 +241,7 @@ class profile::icinga::network (
     }
   }
   #Summit Netowrk Hosts
-  $summit_host_list.each |$host|{
+  $summit_host_list.each |$host| {
     $value = split($host,',')
     $path = "${icinga_path}/${value[0]}.json"
     $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
@@ -275,7 +275,7 @@ class profile::icinga::network (
   }
   ##Gateways
   #Base Gateways
-  $base_gw_list.each |$gw|{
+  $base_gw_list.each |$gw| {
     $value = split($gw,',')
     $path = "${icinga_path}/${value[0]}.json"
     $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
@@ -308,7 +308,7 @@ class profile::icinga::network (
     }
   }
   #Summit Gateways
-  $summit_gw_list.each |$gw|{
+  $summit_gw_list.each |$gw| {
     $value = split($gw,',')
     $path = "${icinga_path}/${value[0]}.json"
     $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
@@ -341,7 +341,7 @@ class profile::icinga::network (
     }
   }
   ##Network Service Templates
-  $service_template.each |$names|{
+  $service_template.each |$names| {
     $value = split($names,',')
     $svc_template_path = "${icinga_path}/${value[0]}.json"
     $svc_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${value[0]}' ${lt}"
@@ -373,7 +373,7 @@ class profile::icinga::network (
     }
   }
   ##Network Services
-  $network_services.each |$nservice|{
+  $network_services.each |$nservice| {
     $value = split($nservice, ',')
     $svc_path = "${icinga_path}/${value[1]}.json"
     $svc_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_svc}?name=${value[1]}&host=${network_host_template_name}' ${lt}"
@@ -402,7 +402,7 @@ class profile::icinga::network (
   }
 
   ##Hostgroups
-  $hostgroups.each |$hnames|{
+  $hostgroups.each |$hnames| {
     $value = split($hnames,',')
     $hostgroup_path = "${icinga_path}/${value[2]}.json"
     $hostgroup_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_hostgroup}?name=${value[2]}' ${lt}"

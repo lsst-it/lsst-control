@@ -2,18 +2,17 @@
 #   Send metrics from telegraf to grafana
 #
 
-class profile::core::monitoring(
+class profile::core::monitoring (
   String $url,
   String $database,
   String $username,
   String $password,
 ) {
-
   class { 'telegraf':
     hostname => $facts['networking']['fqdn'],
     outputs  => {
       'influxdb' => [{
-          'urls'     => [ $url ],
+          'urls'     => [$url],
           'database' => $database,
           'username' => $username,
           'password' => $password,
@@ -32,5 +31,4 @@ class profile::core::monitoring(
       'system' => [{}],
     }
   }
-
 }

@@ -1,8 +1,7 @@
 #
 class profile::ncsa::allow_qualys_scan (
   String $ip,
-){
-
+) {
   $user  = 'qualys'
   $group = 'qualys'
 
@@ -82,15 +81,15 @@ class profile::ncsa::allow_qualys_scan (
 
   ### SSHD_CONFIG
   # Defaults
-  $config_defaults = { 'notify' => Service[ sshd ],
+  $config_defaults = { 'notify' => Service[sshd],
   }
   $config_match_defaults = $config_defaults + { 'position' => 'before first match' }
 
   $match_condition = "User ${user}"
 
   $match_params = {
-    'AllowGroups'           => [ $group ],
-    'AllowUsers'            => [ "${user}@${ip}" ],
+    'AllowGroups'           => [$group],
+    'AllowUsers'            => ["${user}@${ip}"],
     'PubkeyAuthentication'  => 'yes',
     'AuthenticationMethods' => 'publickey',
     'Banner'                => 'none',
@@ -116,5 +115,4 @@ class profile::ncsa::allow_qualys_scan (
       ;
     }
   }
-
 }

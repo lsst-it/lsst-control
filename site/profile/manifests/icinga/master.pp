@@ -21,7 +21,7 @@ class profile::icinga::master (
   String $api_user,
   String $api_pwd,
   String $ca_salt,
-){
+) {
   include profile::core::letsencrypt
   include remi
   include nginx
@@ -165,7 +165,7 @@ class profile::icinga::master (
     ensure          => 'present',
     endpoints       => {
       $master_fqdn    => {
-        'host'  =>  $master_ip
+        'host'  => $master_ip
       },
     },
     zones           => {
@@ -183,14 +183,14 @@ class profile::icinga::master (
   icinga2::object::apiuser { $api_user:
     ensure      => present,
     password    => $api_pwd,
-    permissions => [ '*' ],
+    permissions => ['*'],
     target      => '/etc/icinga2/features-enabled/api-users.conf',
   }
   icinga2::object::zone { 'director-global':
     global => true,
   }
   ##Icinga2 Perfdata
-  class {'::icinga2::feature::perfdata':
+  class { '::icinga2::feature::perfdata':
     ensure => present,
   }
   file { '/var/lib/pnp4nagios':
@@ -202,12 +202,12 @@ class profile::icinga::master (
     notify  => Service['npcd'],
   }
   ##IcingaWeb Config
-  class {'::icingaweb2':
+  class { '::icingaweb2':
     manage_repo   => false,
     logging_level => 'INFO',
     require       => Class['::icinga2'],
   }
-  class {'icingaweb2::module::monitoring':
+  class { 'icingaweb2::module::monitoring':
     ensure            => present,
     ido_host          => $master_ip,
     ido_type          => 'mysql',
@@ -225,7 +225,7 @@ class profile::icinga::master (
     }
   }
   ##IcingaWeb LDAP Config
-  icingaweb2::config::resource{ $ldap_resource:
+  icingaweb2::config::resource { $ldap_resource:
     type         => 'ldap',
     host         => $ldap_server,
     port         => 389,
@@ -258,7 +258,7 @@ class profile::icinga::master (
     permissions => 'application/share/navigation,application/stacktraces,application/log,module/director,module/doc,module/incubator,module/ipl,module/monitoring,monitoring/*,module/pnp,module/reactbundle,module/setup,module/translation',
   }
   ##IcingaWeb Director
-  class {'icingaweb2::module::director':
+  class { 'icingaweb2::module::director':
     git_revision  => 'v1.7.2',
     db_host       => $master_ip,
     db_name       => $mysql_director_db,
@@ -366,21 +366,21 @@ class profile::icinga::master (
     mode    => '0644',
   }
   ##IcingaWeb Reactbundle
-  class {'icingaweb2::module::reactbundle':
+  class { 'icingaweb2::module::reactbundle':
     ensure         => present,
     git_repository => 'https://github.com/Icinga/icingaweb2-module-reactbundle',
     git_revision   => 'v0.7.0',
     require        => Class['::icingaweb2'],
   }
   ##IcingaWeb IPL
-  class {'icingaweb2::module::ipl':
+  class { 'icingaweb2::module::ipl':
     ensure         => present,
     git_repository => 'https://github.com/Icinga/icingaweb2-module-ipl',
     git_revision   => 'v0.3.0',
     require        => Class['::icingaweb2'],
   }
   ##IcingaWeb Incubator
-  class {'icingaweb2::module::incubator':
+  class { 'icingaweb2::module::incubator':
     ensure         => present,
     git_repository => 'https://github.com/Icinga/icingaweb2-module-incubator',
     git_revision   => 'v0.5.0',

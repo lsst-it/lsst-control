@@ -1,4 +1,4 @@
-class profile::archive::rabbitmq(
+class profile::archive::rabbitmq (
   Hash[String, Hash] $users               = {},
   Hash[String, Hash] $vhosts              = {},
   Hash[String, Hash] $exchanges           = {},
@@ -8,7 +8,7 @@ class profile::archive::rabbitmq(
   Hash[String, Array[String]] $arc_queues = [],
   Optional[String]   $queue_user          = undef,
   Optional[String]   $queue_password      = undef,
-){
+) {
   include ::rabbitmq
 
   yum::install { 'erlang':

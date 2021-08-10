@@ -1,8 +1,7 @@
 # Configure host settings on a puppet master
-class profile::ncsa::puppet_master(
-  Array[ String, 1 ] $firewall_allow_from,
+class profile::ncsa::puppet_master (
+  Array[String, 1] $firewall_allow_from,
 ) {
-
   # allow incoming on port 8140
   $firewall_allow_from.each | String $cidr | {
     firewall { "500 profile::ncsa::puppet_master - puppet access from '${cidr}'" :
@@ -12,5 +11,4 @@ class profile::ncsa::puppet_master(
       source => $cidr,
     }
   }
-
 }

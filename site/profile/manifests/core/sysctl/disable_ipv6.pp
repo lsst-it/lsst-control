@@ -1,4 +1,4 @@
-class profile::core::sysctl::disable_ipv6(
+class profile::core::sysctl::disable_ipv6 (
   Boolean $disable = true,
 ) {
   $file = '/etc/sysctl.d/50-ipv6.conf'

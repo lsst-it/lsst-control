@@ -2,14 +2,14 @@
 ---
 # See lsst-itconf/site/profile/manifests/core/common.pp
 classes:
-  - timezone
+  - "timezone"
 #  - chrony    # skipped: not strictly necessary right now, dimm has ntp configured
 #  - ssh       # skipped: too intrusive
 #  - sudo      # skipped: too intrusive, there's about 15 manual sudo entries for the DIMM user
-  - accounts
-  - puppet_agent
-  - easy_ipa
-  - ufw
+  - "accounts"
+  - "puppet_agent"
+  - "easy_ipa"
+  - "ufw"
 ufw::allow:
   "dimm-webserver-16200":
     direction: "IN"

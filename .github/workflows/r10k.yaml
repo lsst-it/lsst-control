@@ -2,7 +2,7 @@
 # yamllint disable rule:quoted-strings
 name: r10k
 
-on:
+"on":
   - push
 
 jobs:

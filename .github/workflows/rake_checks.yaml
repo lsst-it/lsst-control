@@ -2,7 +2,7 @@
 # yamllint disable rule:quoted-strings
 name: rake checks
 
-on:
+"on":
   - push
 
 jobs:

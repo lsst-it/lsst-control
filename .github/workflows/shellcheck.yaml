@@ -2,7 +2,7 @@
 # yamllint disable rule:quoted-strings
 name: shellcheck
 
-on:
+"on":
   - push
 
 jobs:

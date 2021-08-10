@@ -2,7 +2,7 @@
 # yamllint disable rule:quoted-strings
 name: yamllint
 
-on:
+"on":
   - push
 
 jobs:

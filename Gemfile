@@ -30,6 +30,8 @@ group :development do
   gem "puppet-lint-no_erb_template-check", '~> 1.0.0',           require: false
   gem "puppet-lint-template_file_extension-check", '~> 0.1.3',   require: false
   gem 'puppet-lint-manifest_whitespace-check', '~> 0.1.17',      require: false
+  gem 'rubocop', '~> 1.6.1',                                     require: false
+  gem 'rubocop-i18n', '~> 3.0.0',                                require: false
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']

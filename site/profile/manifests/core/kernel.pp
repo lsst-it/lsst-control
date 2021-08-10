@@ -10,7 +10,7 @@
 # @param debuginfo
 #   if true, install kernel-debuginfo package
 #
-class profile::core::kernel(
+class profile::core::kernel (
   Optional[String] $version = undef,
   Boolean $devel            = false,
   Boolean $debuginfo        = false,

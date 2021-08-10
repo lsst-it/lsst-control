@@ -1,4 +1,4 @@
-class profile::ccs::postfix(
+class profile::ccs::postfix (
   String        $auth,
   Array[String] $packages,
 ) {

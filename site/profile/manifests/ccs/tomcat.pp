@@ -1,4 +1,4 @@
-class profile::ccs::tomcat(
+class profile::ccs::tomcat (
   Hash[String, Hash] $wars = {},
 ) {
   include ::nginx

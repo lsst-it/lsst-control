@@ -3,7 +3,7 @@
 #
 # @param enable_puppetdb
 #   Whether or not to enable puppetserver's puppetdb support
-class profile::core::puppet_master(
+class profile::core::puppet_master (
   Stdlib::HTTPSUrl $smee_url,
   Boolean $enable_puppetdb = false,
   Optional[Hash[String, Hash]] $foreman_config = undef,

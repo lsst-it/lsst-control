@@ -1,14 +1,14 @@
 # @summary
 #   Icinga agent creation for metric collections
 
-class profile::icinga::agent(
+class profile::icinga::agent (
   String $icinga_master_fqdn,
   String $icinga_master_ip,
   String $credentials_hash,
   String $host_template,
   String $ca_salt,
   String $ssh_port = '22',
-){
+) {
   #<-----------------------Variables-Definition--------------------------->
   $packages = [
     'nagios-plugins-all',
@@ -40,10 +40,10 @@ class profile::icinga::agent(
     accept_commands => true,
     endpoints       => {
       $icinga_agent_fqdn  => {
-        'host'  =>  $icinga_agent_ip
+        'host'  => $icinga_agent_ip
       },
       $icinga_master_fqdn => {
-        'host'  =>  $icinga_master_ip,
+        'host'  => $icinga_master_ip,
       },
     },
     zones           => {
@@ -68,7 +68,7 @@ class profile::icinga::agent(
     require => Package[$packages],
   }
   #Network Usage
-  archive {'/usr/lib64/nagios/plugins/check_netio':
+  archive { '/usr/lib64/nagios/plugins/check_netio':
     ensure => present,
     source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
   }
@@ -77,7 +77,7 @@ class profile::icinga::agent(
     group => 'icinga',
     mode  => '4755',
   }
-  ->file {'/etc/icinga2/features-enabled/netio.conf':
+  ->file { '/etc/icinga2/features-enabled/netio.conf':
     ensure  => 'present',
     owner   => 'icinga',
     group   => 'icinga',
@@ -93,7 +93,7 @@ class profile::icinga::agent(
       | CONTENT
   }
   if ($icinga_agent_fqdn =='comcam-fp01.ls.lsst.org' or $icinga_agent_fqdn =='comcam-mcm.ls.lsst.org') {
-    archive {'/usr/lib64/nagios/plugins/check_netio2':
+    archive { '/usr/lib64/nagios/plugins/check_netio2':
       ensure => present,
       source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
     }
@@ -102,7 +102,7 @@ class profile::icinga::agent(
       group => 'icinga',
       mode  => '4755',
     }
-    ->file {'/etc/icinga2/features-enabled/netio2.conf':
+    ->file { '/etc/icinga2/features-enabled/netio2.conf':
       ensure  => 'present',
       owner   => 'icinga',
       group   => 'icinga',
@@ -119,7 +119,7 @@ class profile::icinga::agent(
     }
   }
   if ($icinga_agent_fqdn =='net-dx.cp.lsst.org') {
-    archive {'/usr/lib64/nagios/plugins/check_netio2':
+    archive { '/usr/lib64/nagios/plugins/check_netio2':
       ensure => present,
       source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
     }
@@ -128,7 +128,7 @@ class profile::icinga::agent(
       group => 'icinga',
       mode  => '4755',
     }
-    ->file {'/etc/icinga2/features-enabled/netio2.conf':
+    ->file { '/etc/icinga2/features-enabled/netio2.conf':
       ensure  => 'present',
       owner   => 'icinga',
       group   => 'icinga',
@@ -145,7 +145,7 @@ class profile::icinga::agent(
     }
   }
   #Memory Usage
-  archive {'/usr/lib64/nagios/plugins/check_mem.pl':
+  archive { '/usr/lib64/nagios/plugins/check_mem.pl':
     ensure => present,
     source => 'https://raw.githubusercontent.com/justintime/nagios-plugins/master/check_mem/check_mem.pl',
   }
@@ -155,7 +155,7 @@ class profile::icinga::agent(
     mode  => '4755',
   }
   #Logged Users
-  archive {'/usr/lib64/nagios/plugins/check_users':
+  archive { '/usr/lib64/nagios/plugins/check_users':
     ensure => present,
     source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=1530&cf_id=24',
   }
@@ -165,7 +165,7 @@ class profile::icinga::agent(
     mode  => '4755',
   }
   #CPU usage
-  archive {'/usr/lib64/nagios/plugins/check_cpu':
+  archive { '/usr/lib64/nagios/plugins/check_cpu':
     ensure => present,
     source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=580&cf_id=29',
   }
@@ -175,7 +175,7 @@ class profile::icinga::agent(
     mode  => '4755',
   }
 
-  ->file {'/etc/icinga2/features-enabled/cpu.conf':
+  ->file { '/etc/icinga2/features-enabled/cpu.conf':
     ensure  => 'present',
     owner   => 'icinga',
     group   => 'icinga',
@@ -227,5 +227,3 @@ class profile::icinga::agent(
   }
   #<------------------End-Add-Host-to-Icinga-Master----------------------->
 }
-
-

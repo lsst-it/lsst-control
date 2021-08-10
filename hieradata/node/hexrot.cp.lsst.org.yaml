@@ -21,4 +21,4 @@ network::interfaces_hash:
     type: "Ethernet"
 
 chrony::queryhosts:
-  - 10.9.56.0/23
+  - "10.9.56.0/23"

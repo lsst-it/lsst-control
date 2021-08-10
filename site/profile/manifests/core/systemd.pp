@@ -7,7 +7,7 @@
 # @param tmpfile
 #   systemd::tmpfile hiera hook
 #
-class profile::core::systemd(
+class profile::core::systemd (
   Optional[Hash[String, Hash]] $dropin_file = undef,
   Optional[Hash[String, Hash]] $tmpfile = undef,
 ) {

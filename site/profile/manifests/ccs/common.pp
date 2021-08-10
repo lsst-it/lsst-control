@@ -2,7 +2,7 @@
 # @summary
 #   Common functionality needed by ccs nodes.
 #
-class profile::ccs::common(
+class profile::ccs::common (
   Boolean $sysctls = true,
 ) {
   include profile::ccs::clustershell

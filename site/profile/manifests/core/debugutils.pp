@@ -1,4 +1,4 @@
-class profile::core::debugutils(
+class profile::core::debugutils (
   Array[String] $packages,
 ) {
   unless (empty($packages)) {

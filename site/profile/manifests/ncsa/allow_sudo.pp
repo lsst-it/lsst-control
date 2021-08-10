@@ -17,10 +17,9 @@
 #   include profile::ncsa::allow_sudo
 #
 class profile::ncsa::allow_sudo (
-  Array[ String ] $users  = [],
-  Array[ String ] $groups = [],
+  Array[String] $users  = [],
+  Array[String] $groups = [],
 ) {
-
   # Validate Input
   if empty( $users ) and empty( $groups ) {
     fail( "'users' and 'groups' cannot both be empty" )
@@ -28,7 +27,6 @@ class profile::ncsa::allow_sudo (
 
   # GROUPS
   $groups.each |String $group| {
-
     sudo::conf { "sudo for group ${group}":
       content  => "%${group} ALL=(ALL) NOPASSWD: ALL",
     }
@@ -43,7 +41,6 @@ class profile::ncsa::allow_sudo (
 
   # USERS
   $users.each |String $user| {
-
     sudo::conf { "sudo for user ${user}":
       content => "%${user} ALL=(ALL) NOPASSWD: ALL",
     }
@@ -55,5 +52,4 @@ class profile::ncsa::allow_sudo (
       position   => '-1',
     }
   }
-
 }

@@ -1,0 +1,19 @@
+---
+# yamllint disable rule:quoted-strings
+name: rake checks
+
+"on":
+  - push
+
+jobs:
+  rake_checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+      - run: bundle install
+      - name: run rake checks
+        run: bundle exec rake check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint

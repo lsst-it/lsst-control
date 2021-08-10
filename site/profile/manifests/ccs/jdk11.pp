@@ -4,9 +4,7 @@
 ## @param ensure
 ##   String saying whether to install ('present') or remove ('absent').
 class profile::ccs::jdk11 ( String $ensure = 'present' ) {
-
   if $ensure =~ /(present|absent)/ {
-
     ensure_packages(['gzip', 'tar', 'unzip'])
 
     $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
@@ -26,7 +24,6 @@ class profile::ccs::jdk11 ( String $ensure = 'present' ) {
       cleanup      => true,
     }
 
-
     ## javafx is not included in this version.
     ## https://openjfx.io/openjfx-docs/#install-javafx
     $jfxver = $jdkver             # coincidence?
@@ -43,22 +40,19 @@ class profile::ccs::jdk11 ( String $ensure = 'present' ) {
       cleanup      => true,
     }
 
-
     $jdkcss = '/etc/ccs/jdk11'
 
     file { $jdkcss:
       ensure  => $ensure,
-      content => epp("${module_name}/ccs/jdk11/jdk11.epp", {'bindir' => "${jdkdest}/bin"}),
+      content => epp("${module_name}/ccs/jdk11/jdk11.epp", { 'bindir' => "${jdkdest}/bin" }),
     }
 
     file { '/etc/ccs/ccs-console.app':
       ensure  => $ensure,
       content => epp(
         "${module_name}/ccs/jdk11/ccs-console.epp",
-        {'libdir' => "${jfxdest}/lib", 'jdkcss' => $jdkcss}
+        { 'libdir' => "${jfxdest}/lib", 'jdkcss' => $jdkcss }
       ),
     }
-
   }
-
 }

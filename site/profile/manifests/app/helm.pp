@@ -1,4 +1,4 @@
-class profile::app::helm(
+class profile::app::helm (
   String $version = '3.0.3',
 ) {
   include archive

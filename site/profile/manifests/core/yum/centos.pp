@@ -4,7 +4,7 @@
 # @param repos
 #   Hash of yum::versionlock resources to create
 #
-class profile::core::yum::centos(
+class profile::core::yum::centos (
   Optional[Hash] $repos = undef,
 ) {
   if $repos {

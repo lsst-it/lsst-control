@@ -11,33 +11,31 @@ class profile::docker {
   ### ENSURE RULES CREATED BY DOCKER ARE NOT PURGED BY PUPPET
 
   # chain names created by docker
-  $docker_names = [ 'DOCKER',
+  $docker_names = ['DOCKER',
     'DOCKER-ISOLATION-STAGE-1',
     'DOCKER-ISOLATION-STAGE-2',
     'DOCKER-USER',
   ]
 
-
   # firewallchain names that will not be purged
   $filter_exempt_chains = $docker_names.map | $dname | {
     "${dname}:filter:IPv4"
   }
-  $nat_exempt_chains = [ 'DOCKER:nat:IPv4' ]
+  $nat_exempt_chains = ['DOCKER:nat:IPv4']
   $purge_exempt_chains = $filter_exempt_chains + $nat_exempt_chains
 
   # Existing chains that will need purge exceptions
-  $name_ignore_chains = [ 'INPUT:filter:IPv4',
+  $name_ignore_chains = ['INPUT:filter:IPv4',
     'OUTPUT:filter:IPv4',
     'FORWARD:filter:IPv4',
     'INPUT:nat:IPv4',
     'OUTPUT:nat:IPv4',
     'PREROUTING:nat:IPv4',
   ]
-  $name_ignores = $docker_names + [ 'docker', '-o br-', '-i br-' ]
+  $name_ignores = $docker_names + ['docker', '-o br-', '-i br-']
 
-  $name_ip_ignore_chains = [ 'POSTROUTING:nat:IPv4' ]
-  $name_ip_ignores = $docker_names + [ '-s 172\.', '-d 172\.' ]
-
+  $name_ip_ignore_chains = ['POSTROUTING:nat:IPv4']
+  $name_ip_ignores = $docker_names + ['-s 172\.', '-d 172\.']
 
   firewallchain {
     $purge_exempt_chains :
@@ -53,5 +51,4 @@ class profile::docker {
       purge => true,
       ;
   }
-
 }

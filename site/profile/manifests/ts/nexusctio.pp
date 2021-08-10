@@ -1,4 +1,4 @@
-class profile::ts::nexusctio(
+class profile::ts::nexusctio (
   Hash $repos,
 ) {
   unless (empty($repos)) {

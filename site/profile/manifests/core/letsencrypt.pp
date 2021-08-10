@@ -27,7 +27,7 @@
 #
 # @param aws_credentials
 #   `.aws/credentials` format string for aws route53 credentials
-class profile::core::letsencrypt(
+class profile::core::letsencrypt (
   Optional[Hash[String, Hash]] $certonly = undef,
   Optional[String] $aws_credentials      = undef,
 ) {

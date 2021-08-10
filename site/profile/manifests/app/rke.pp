@@ -1,4 +1,4 @@
-class profile::app::rke(
+class profile::app::rke (
   String $version = '1.0.4',
 ) {
   include archive

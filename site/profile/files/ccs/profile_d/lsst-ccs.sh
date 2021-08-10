@@ -11,4 +11,5 @@ _dir=/lsst/ccs/prod/bin
 [ -e $_dir ] && [[ $PATH != *$_dir* ]] && PATH=$_dir:$PATH
 unset _dir
 
+# shellcheck disable=SC1091
 [ ! -e /opt/rh/rh-git218 ] || source scl_source enable rh-git218

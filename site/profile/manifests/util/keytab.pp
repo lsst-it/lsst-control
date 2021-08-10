@@ -10,7 +10,7 @@
 # @param keytab_base64
 #   base64 encoded krb5 keytab for the user
 #
-define profile::util::keytab(
+define profile::util::keytab (
   Integer $uid,
   String  $keytab_base64,
 ) {

@@ -1,4 +1,4 @@
-class profile::core::sysctl::rp_filter(
+class profile::core::sysctl::rp_filter (
   Boolean $enable = true,
 ) {
   $file = '/etc/sysctl.d/92-rp_filter.conf'

@@ -18,7 +18,6 @@ packages:
   - "bash-completion"
   - "bash-completion-extras"
 libvirt::libvirtd_conf:
-  # yamllint disable-line rule:quoted-strings
   access_drivers: '[ "polkit" ]'
 files:
   # no current forge module has support for the modern polkit json rules

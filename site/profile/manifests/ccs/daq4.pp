@@ -2,7 +2,6 @@
 ##   Settings for DAQv4.
 
 class profile::ccs::daq4 ($instrument = 'comcam') {
-
   $dir = '/etc/ccs'
 
   $attributes = {
@@ -29,5 +28,4 @@ class profile::ccs::daq4 ($instrument = 'comcam') {
     content => "system.pre-execute=${daq4file}\n",
     *       => $attributes,
   }
-
 }

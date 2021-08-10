@@ -5,8 +5,8 @@
 # @param default
 #   Set values in `/etc/ipa/default.conf`.
 #
-class profile::core::ipa(
+class profile::core::ipa (
   Hash $default,
 ) {
-  inifile::create_ini_settings($default, { 'path' => '/etc/ipa/default.conf'})
+  inifile::create_ini_settings($default, { 'path' => '/etc/ipa/default.conf' })
 }

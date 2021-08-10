@@ -5,7 +5,6 @@
 ##   Boolean saying whether to enable or disable autologin.
 
 class profile::ccs::autologin (Boolean $enable = true) {
-
   if $enable {
     ensure_packages(['gdm'])
 
@@ -20,15 +19,11 @@ class profile::ccs::autologin (Boolean $enable = true) {
         | CMD
       # lint:endignore
     }
-
   } else {
-
     exec { 'Disable autologin for graphical ccs user':
       path    => ['/usr/bin'],
       onlyif  => 'grep -q ^AutomaticLogin=ccs /etc/gdm/custom.conf',
       command => 'sed -i "/^AutomaticLogin/d" /etc/gdm/custom.conf',
     }
-
   }
-
 }

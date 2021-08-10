@@ -11,9 +11,7 @@ class profile::ccs::graphical (
   Boolean $install = true,
   Boolean $officeapps = false,
 ) {
-
   if $install {
-
     ensure_packages(['gdm'])
 
     service { 'gdm':
@@ -48,12 +46,9 @@ class profile::ccs::graphical (
       ensure  => present,
       timeout => 900,
     }
-
   }
 
-
   if $officeapps {
-
     ensure_packages(['libreoffice-base'])
 
     $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
@@ -73,6 +68,4 @@ class profile::ccs::graphical (
       source   => $zoomfile,
     }
   }
-
-
 }

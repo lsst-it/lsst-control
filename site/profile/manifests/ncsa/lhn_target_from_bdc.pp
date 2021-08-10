@@ -1,6 +1,5 @@
 class profile::ncsa::lhn_target_from_bdc {
-
-  $protocols = [ 'udp', 'tcp' ]
+  $protocols = ['udp', 'tcp']
   $sources = [
     '139.229.140.0/22',
     '139.229.146.0/24',
@@ -18,5 +17,4 @@ class profile::ncsa::lhn_target_from_bdc {
       }
     }
   }
-
 }

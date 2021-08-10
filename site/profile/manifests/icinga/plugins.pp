@@ -1,9 +1,9 @@
 # @summary
 #   Icinga additional plugins
 
-class profile::icinga::plugins(
+class profile::icinga::plugins (
   String $credentials_hash,
-){
+) {
   #<----------------------------------------------- Variables------------------------------------------------->
   #Implicit usage of facts
   $master_fqdn  = $facts['networking']['fqdn']
@@ -44,20 +44,20 @@ class profile::icinga::plugins(
     revision => '1.4.9',
     require  => Class['::icingaweb2'],
   }
-  ->exec {'git submodule update --init':
+  ->exec { 'git submodule update --init':
     cwd      => $nwc_dir,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     onlyif   => "test ! -f ${$nwc_dir}/plugins-scripts/check_nwc_health",
     loglevel => debug,
   }
-  ->exec {"autoreconf;./configure ${conditions};make;make install;":
+  ->exec { "autoreconf;./configure ${conditions};make;make install;":
     cwd      => $nwc_dir,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => "test ! -f ${base_dir}/check_nwc_health",
     loglevel => debug,
   }
-  ->file {"${base_dir}/check_nwc_health":
+  ->file { "${base_dir}/check_nwc_health":
     ensure => 'present',
     source => "${$nwc_dir}/plugins-scripts/check_nwc_health",
     owner  => 'root',
@@ -65,7 +65,7 @@ class profile::icinga::plugins(
     mode   => '4755',
   }
   #Check memory plugin
-  archive {'/usr/lib64/nagios/plugins/check_mem':
+  archive { '/usr/lib64/nagios/plugins/check_mem':
     ensure => present,
     source => 'https://raw.githubusercontent.com/justintime/nagios-plugins/master/check_mem/check_mem.pl',
   }
@@ -75,7 +75,7 @@ class profile::icinga::plugins(
     mode  => '4755',
   }
   #Check logged users
-  archive {'/usr/lib64/nagios/plugins/check_users':
+  archive { '/usr/lib64/nagios/plugins/check_users':
     ensure => present,
     source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=1530&cf_id=24',
   }
@@ -85,7 +85,7 @@ class profile::icinga::plugins(
     mode  => '4755',
   }
   #Check CPU usage
-  archive {'/usr/lib64/nagios/plugins/check_cpu':
+  archive { '/usr/lib64/nagios/plugins/check_cpu':
     ensure => present,
     source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=580&cf_id=29',
   }
@@ -95,7 +95,7 @@ class profile::icinga::plugins(
     mode  => '4755',
   }
   #Check network traffic
-  archive {'/usr/lib64/nagios/plugins/check_netio':
+  archive { '/usr/lib64/nagios/plugins/check_netio':
     ensure => present,
     source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
   }
@@ -105,7 +105,7 @@ class profile::icinga::plugins(
     mode  => '4755',
   }
   #Check network traffic for devices with 2 NICS
-  archive {'/usr/lib64/nagios/plugins/check_netio2':
+  archive { '/usr/lib64/nagios/plugins/check_netio2':
     ensure => present,
     source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
   }
@@ -115,7 +115,7 @@ class profile::icinga::plugins(
     mode  => '4755',
   }
   #Add commands to Icinga Director
-  $commands.each |$name|{
+  $commands.each |$name| {
     $path = "${$icinga_path}/${$name}.json"
     $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_cmd}?name=${name}' ${lt}"
     $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_cmd}' -d @${path}"

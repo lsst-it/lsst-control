@@ -4,7 +4,7 @@
 # @param versionlock
 #   Hash of yum::versionlock resources to create
 #
-class profile::core::yum(
+class profile::core::yum (
   Optional[Hash[String, Hash]] $versionlock = undef,
 ) {
   include yum

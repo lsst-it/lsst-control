@@ -1,4 +1,4 @@
-class profile::core::firewall(
+class profile::core::firewall (
   Optional[Hash[String, Hash]] $firewall = undef,
   Boolean $purge_firewall = false,
 ) {

@@ -1,13 +1,13 @@
 ---
 classes:
-  - profile::ncsa::allow_qualys_scan
-  - profile::ncsa::allow_ssh_from_bdc
-  - profile::ncsa::allow_ssh_from_login
-  - profile::ncsa::baseline_cfg
-  - profile::ncsa::lhn_target_from_bdc
-  - profile::ncsa::system_authnz
-  - profile::ncsa::xcat_client
-  - profile::sal
+  - "profile::ncsa::allow_qualys_scan"
+  - "profile::ncsa::allow_ssh_from_bdc"
+  - "profile::ncsa::allow_ssh_from_login"
+  - "profile::ncsa::baseline_cfg"
+  - "profile::ncsa::lhn_target_from_bdc"
+  - "profile::ncsa::system_authnz"
+  - "profile::ncsa::xcat_client"
+  - "profile::sal"
 
 profile::ncsa::allow_sudo::groups:
   - "lsst_admin_tucson"

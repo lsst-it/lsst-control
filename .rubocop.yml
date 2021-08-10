@@ -4,26 +4,24 @@ require:
 - rubocop-i18n
 AllCops:
   DisplayCopNames: true
-  TargetRubyVersion: '2.1'
+  TargetRubyVersion: '2.7'
+  NewCops: enable
   Include:
-  - "./**/*.rb"
-  Exclude:
-  - bin/*
-  - ".vendor/**/*"
+  - "**/*.rb"
   - "**/Gemfile"
   - "**/Rakefile"
-  - pkg/**/*
-  - spec/fixtures/**/*
-  - vendor/**/*
-  - "**/Puppetfile"
-  - "**/Vagrantfile"
+  Exclude:
+  - ".bundle/**/*"
   - "**/Guardfile"
-Metrics/LineLength:
+  - "pkg/**/*"
+  - "**/Puppetfile"
+  - "spec/fixtures/**/*"
+  - "**/Vagrantfile"
+  - ".vendor/**/*"
+Layout/LineLength:
   Description: People have wide screens, use them.
   Max: 200
-GetText:
-  Enabled: false
-GetText/DecorateString:
+I18n/GetText/DecorateString:
   Description: We don't want to decorate test output.
   Exclude:
   - spec/**/*
@@ -67,7 +65,11 @@ Style/TrailingCommaInArguments:
   Description: Prefer always trailing comma on multiline argument lists. This makes
     diffs, and re-ordering nicer.
   EnforcedStyleForMultiline: comma
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
+  Description: Prefer always trailing comma on multiline literals. This makes diffs,
+    and re-ordering nicer.
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInHashLiteral:
   Description: Prefer always trailing comma on multiline literals. This makes diffs,
     and re-ordering nicer.
   EnforcedStyleForMultiline: comma
@@ -90,7 +92,7 @@ Style/StringMethods:
   Enabled: true
 Layout/EndOfLine:
   Enabled: false
-Layout/IndentHeredoc:
+Layout/HeredocIndentation:
   Enabled: false
 Metrics/AbcSize:
   Enabled: false
@@ -123,4 +125,6 @@ Style/AsciiComments:
 Style/IfUnlessModifier:
   Enabled: false
 Style/SymbolProc:
+  Enabled: false
+Style/MixinUsage:
   Enabled: false

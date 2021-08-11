@@ -1,15 +1,4 @@
 ---
-# XXX nfs mounts should be moved to the role or cluster level once those are determined
-classes:
-  - "profile::core::nfsclient"
-
-nfs::client_enabled: true
-nfs::client_mounts:
-  /data:
-    share: "data"
-    server: "atsdaq1.cp.lsst.org"
-    atboot: true
-
 network::interfaces_hash:
   eno1:  # fqdn
     bootproto: "dhcp"
@@ -30,17 +19,3 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-
-ccs_software::udp_properties:
-  - "org.lsst.ccs.jgroups.LOG.UDP.mcast_port=26978"
-  - "org.lsst.ccs.jgroups.STATUS.UDP.mcast_port=36978"
-  - "org.lsst.ccs.jgroups.COMMAND.UDP.mcast_port=46978"
-
-ccs_software::services:
-  ## FIXME this should be changed to prod, and a local systemctl override
-  ## used to get the dev version.
-  dev:
-    - "ats-power"
-  prod:
-    - "ats"
-    - "bonn-shutter"

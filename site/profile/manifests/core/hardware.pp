@@ -6,6 +6,10 @@ class profile::core::hardware {
     # XXX add a fact to check /sys/class/ipmi/ instead of white listing specific models
     /PowerEdge/: {
       include ipmi
+
+      if $facts['has_dellperc'] {
+        include profile::core::perccli
+      }
     }
     /1114S-WN10RT/: {
       include ipmi

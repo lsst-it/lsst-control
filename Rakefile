@@ -9,3 +9,15 @@ require 'puppet-strings/tasks' if Bundler.rubygems.find_name('puppet-strings').a
 
 PuppetLint.configuration.send('disable_relative')
 PuppetLint.configuration.send('disable_manifest_whitespace_closing_bracket_after')
+
+task default: %w[
+  check:symlinks
+  check:git_ignore
+  check:dot_underscore
+  check:test_file
+  rubocop
+  syntax
+  lint
+  metadata_lint
+  spec
+]

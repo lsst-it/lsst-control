@@ -16,4 +16,4 @@ jobs:
           ruby-version: 2.7.2
       - run: bundle install
       - name: run rake checks
-        run: bundle exec rake check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint
+        run: bundle exec rake

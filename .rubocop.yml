@@ -130,3 +130,5 @@ Style/MixinUsage:
   Enabled: false
 RSpec/ImplicitSubject:
   Enabled: false
+Style/CommentedKeyword:
+  Enabled: false

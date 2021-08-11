@@ -19,6 +19,7 @@ group :test do
   gem 'puppet-lint-trailing_newline-check', '~> 1.1.0',          require: false
   gem 'puppet-lint-unquoted_string-check', '~> 2.1.0',           require: false
   gem 'puppet-lint-variable_contains_upcase', '~> 1.2.0',        require: false
+  gem 'r10k',                                                    require: false
   gem 'rubocop', '~> 1.6.1',                                     require: false
   gem 'rubocop-i18n', '~> 3.0.0',                                require: false
 end

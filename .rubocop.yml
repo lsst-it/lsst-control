@@ -83,7 +83,7 @@ Style/Documentation:
   - lib/puppet/parser/functions/**/*
   - spec/**/*
 Style/WordArray:
-  EnforcedStyle: brackets
+  EnforcedStyle: percent
 Style/CollectionMethods:
   Enabled: true
 Style/MethodCalledOnDoEndBlock:
@@ -129,4 +129,6 @@ Style/SymbolProc:
 Style/MixinUsage:
   Enabled: false
 RSpec/ImplicitSubject:
+  Enabled: false
+Style/CommentedKeyword:
   Enabled: false

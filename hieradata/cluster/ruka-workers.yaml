@@ -1,8 +1,6 @@
 ---
 classes:
   - "profile::core::ifdown"
-packages:
-  - "perccli"  # from dell repo
 profile::core::ifdown::interface: "em1"
 network::interfaces_hash:
   em1:  # only for PXE
@@ -18,13 +16,3 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-yum::managed_repos:
-  - "dell"
-yum::repos:
-  "dell":
-    ensure: "present"
-    descr: "Dell"
-    enabled: true
-    baseurl: "https://repo-nexus.lsst.org/nexus/repository/dell/"
-    gpgcheck: false
-    target: "/etc/yum.repos.d/dell.repo"

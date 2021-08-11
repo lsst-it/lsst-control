@@ -1,8 +1,6 @@
 ---
 classes:
   - "profile::core::ifdown"
-packages:
-  - "perccli"  # from dell repo
 
 clustershell::groupmembers:
   ruka: {group: "ruka", member: "ruka[01-06]"}
@@ -21,16 +19,6 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-yum::managed_repos:
-  - "dell"
-yum::repos:
-  "dell":
-    ensure: "present"
-    descr: "Dell"
-    enabled: true
-    baseurl: "https://repo-nexus.lsst.org/nexus/repository/dell/"
-    gpgcheck: false
-    target: "/etc/yum.repos.d/dell.repo"
 
 # Ruka was reprovisioned and we don't have mirrors of the kernel defined in
 # hieradata/org/lsst/role/rke.yaml. This pins the kernel to the currently

@@ -31,5 +31,7 @@ task default: %w[
   syntax
   lint
   metadata_lint
+  r10k:check
+  r10k:install
   spec
 ]

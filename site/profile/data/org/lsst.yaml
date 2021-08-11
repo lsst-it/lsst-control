@@ -81,3 +81,11 @@ profile::core::yum::centos::repos:
     gpgcheck: true
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Debug-7"
     target: "/etc/yum.repos.d/CentOS-Debuginfo.repo"
+
+profile::core::yum::dell::repo:
+  ensure: "present"
+  descr: "Dell"
+  enabled: true
+  baseurl: "https://repo-nexus.lsst.org/nexus/repository/dell/"
+  gpgcheck: false
+  target: "/etc/yum.repos.d/dell.repo"

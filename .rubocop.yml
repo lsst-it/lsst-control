@@ -128,3 +128,5 @@ Style/SymbolProc:
   Enabled: false
 Style/MixinUsage:
   Enabled: false
+RSpec/ImplicitSubject:
+  Enabled: false

@@ -1,8 +1,6 @@
 ---
 classes:
   - "profile::core::nm_dispatch"
-packages:
-  - "perccli"  # from dell repo
 
 clustershell::groupmembers:
   antu: {group: "antu", member: "antu[01-09]"}
@@ -41,16 +39,6 @@ network::mroutes_hash:
   em2.2400:
     ensure: "absent"
     routes: {}
-yum::managed_repos:
-  - "dell"
-yum::repos:
-  "dell":
-    ensure: "present"
-    descr: "Dell"
-    enabled: true
-    baseurl: "https://repo-nexus.lsst.org/nexus/repository/dell/"
-    gpgcheck: false
-    target: "/etc/yum.repos.d/dell.repo"
 sysctl::values::args:
   # lhn tuning
   # See https://fasterdata.es.net/host-tuning/linux/

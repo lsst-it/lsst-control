@@ -131,6 +131,9 @@ mod 'lsst/maven',
 mod 'lsst/java_artisanal',
   git: 'https://github.com/lsst-it/puppet-java_artisanal.git',
   ref: 'v1.0.0'
+mod 'lsst/dellperc',
+  git: 'https://github.com/lsst-it/puppet-dellperc.git',
+  ref: 'master'
 
 # Needed by NCSA (sort into above later)
 #mod 'herculesteam/augeasproviders_sysctl', '2.3.1'  # conflicts duritong/sysctl

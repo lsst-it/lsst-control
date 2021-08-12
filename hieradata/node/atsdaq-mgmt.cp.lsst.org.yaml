@@ -1,6 +1,5 @@
 ---
 classes:
-  - "profile::ccs::daq_interface"
   - "hosts"
 
 profile::ccs::daq_interface::hwaddr: "f8:f2:1e:71:bc:a0"

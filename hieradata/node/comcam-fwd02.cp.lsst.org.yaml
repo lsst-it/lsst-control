@@ -1,6 +1,5 @@
 ---
 classes:
-  - "profile::ccs::daq_interface"
   - "profile::core::nm_dispatch"
   - "profile::core::sysctl::rp_filter"
 

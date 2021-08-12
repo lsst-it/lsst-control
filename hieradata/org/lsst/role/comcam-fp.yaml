@@ -4,9 +4,10 @@
 # It should go away once comcam has a dedicated daq managment node.
 #
 classes:
-  - "profile::core::common"
   - "profile::ccs::common"
   - "profile::ccs::daq4"
+  - "profile::ccs::daq_interface"
+  - "profile::core::common"
   - "dhcp"
 
 profile::ccs::facts::daq: true

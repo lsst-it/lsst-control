@@ -1,6 +1,7 @@
 ---
 classes:
   - "profile::archive::forwarder"
+  - "profile::ccs::daq_interface"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::docker"

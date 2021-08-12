@@ -55,4 +55,12 @@ def ensure_module_defined(module_name)
   end
 end
 
+def node_dir
+  File.join(root_path, 'hieradata', 'node')
+end
+
+def node_files
+  Dir.children(node_dir)
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

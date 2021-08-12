@@ -5,6 +5,7 @@ classes:
   - "profile::core::common"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
+  - "hosts"
 
 # Server configuration
 nfs::server_enabled: true

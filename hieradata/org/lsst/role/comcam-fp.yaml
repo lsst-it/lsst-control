@@ -9,6 +9,7 @@ classes:
   - "profile::ccs::daq_interface"
   - "profile::core::common"
   - "dhcp"
+  - "hosts"
 
 profile::ccs::facts::daq: true
 # enable ntp server for DAQ

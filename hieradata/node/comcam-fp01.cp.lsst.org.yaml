@@ -1,7 +1,6 @@
 ---
 classes:
   - "profile::core::nm_dispatch"
-  - "hosts"
 
 # allow net.core.[rw]mem_max to be set higher
 profile::ccs::common::sysctls: false

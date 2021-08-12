@@ -1,7 +1,4 @@
 ---
-classes:
-  - "hosts"
-
 profile::ccs::daq_interface::hwaddr: "f8:f2:1e:71:bc:a0"
 profile::ccs::daq_interface::uuid: "9129970c-d4b9-4602-82be-da776c06c064"
 profile::ccs::daq_interface::was: "p3p1"

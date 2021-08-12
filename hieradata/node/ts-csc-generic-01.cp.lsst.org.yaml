@@ -1,8 +1,4 @@
 ---
-classes:
-  - "profile::core::nfsclient"
-  - "docker::networks"
-
 docker::networks::networks:
   dds-network:
     ensure: "present"

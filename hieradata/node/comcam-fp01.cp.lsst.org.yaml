@@ -1,7 +1,4 @@
 ---
-classes:
-  - "profile::core::nm_dispatch"
-
 # allow net.core.[rw]mem_max to be set higher
 profile::ccs::common::sysctls: false
 profile::ccs::daq_interface::hwaddr: "b4:96:91:4d:d2:5c"

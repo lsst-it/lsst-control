@@ -1,7 +1,6 @@
 ---
 classes:
   - "profile::core::debugutils"  # XXX mv to permanent role (when known)
-  - "profile::core::nm_dispatch"
   - "profile::core::sysctl::rp_filter"
 
 profile::core::sysctl::rp_filter::enable: false

@@ -65,6 +65,7 @@ class profile::core::common (
   include profile::core::ipa
   include profile::core::k5login
   include profile::core::kernel
+  include profile::core::nm_dispatch
   include profile::core::selinux
   include profile::core::systemd
   include profile::core::yum

@@ -10,7 +10,5 @@ class profile::core::net_dx {
     'nmap',
   ]
 
-  package { $packages:
-    ensure => 'present',
-  }
+  ensure_packages($packages)
 }

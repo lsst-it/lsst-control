@@ -15,6 +15,14 @@ def fixtures_path
   File.join(root_path, 'spec', 'fixtures')
 end
 
+def control_hiera_config
+  File.join(root_path, 'hiera.yaml')
+end
+
+def control_hieradata_path
+  File.join(root_path, 'hieradata')
+end
+
 default_facts = {
   puppetversion: Puppet.version,
   facterversion: Facter.version,
@@ -58,7 +66,7 @@ def ensure_module_defined(module_name)
 end
 
 def node_dir
-  File.join(root_path, 'hieradata', 'node')
+  File.join(control_hieradata_path, 'node')
 end
 
 def node_files

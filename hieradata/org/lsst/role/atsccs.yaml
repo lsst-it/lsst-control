@@ -4,6 +4,7 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::ccs::common"
+  - "ccs_sal"
 
 nfs::client_enabled: true
 nfs::client_mounts:

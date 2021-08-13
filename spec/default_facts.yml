@@ -1,7 +1,1157 @@
-# Use default_module_facts.yml for module specific facts.
-#
-# Facts specified here will override the values provided by rspec-puppet-facts.
 ---
-ipaddress: "172.16.254.254"
+# yamllint disable rule:quoted-strings
+acpid_enabled: false
+aio_agent_version: 6.17.0
+apache_version: 2.4.6
+architecture: x86_64
+augeas:
+  version: 1.12.0
+augeasprovider_grub_version: 2
+augeasversion: 1.12.0
+bios_release_date: 01/01/2011
+bios_vendor: Seabios
+bios_version: 0.5.1
+blockdevice_vda_size: 42949672960
+blockdevice_vda_vendor: 0x1af4
+blockdevices: vda
+boot_dir_uuid: 4ff6cc1d-b747-4a7f-a82b-07bbc80dafc4
+chassistype: Other
+cmdline:
+  BOOT_IMAGE: /vmlinuz-3.10.0-1127.18.2.el7.x86_64
+  root: /dev/mapper/centos_jhoblitt--ps1-root
+  ro: ~
+  nofb: ~
+  splash: quiet
+  crashkernel: auto
+  rd.lvm.lv:
+    - centos_test1/root
+    - centos_test1/swap
+  rhgb: ~
+  quiet: ~
+  LANG: en_US.UTF-8
+cpuinfo:
+  processor0:
+    vendor_id: GenuineIntel
+    cpu_family: "6"
+    model: "13"
+    model_name: QEMU Virtual CPU version 1.5.3
+    stepping: "3"
+    microcode: 0x1
+    cpu_MHz: "2999.990"
+    cache_size: 4096 KB
+    physical_id: "0"
+    siblings: "1"
+    core_id: "0"
+    cpu_cores: "1"
+    apicid: "0"
+    initial_apicid: "0"
+    fpu: "yes"
+    fpu_exception: "yes"
+    cpuid_level: "4"
+    wp: "yes"
+    flags:
+      - fpu
+      - de
+      - pse
+      - tsc
+      - msr
+      - pae
+      - mce
+      - cx8
+      - apic
+      - sep
+      - mtrr
+      - pge
+      - mca
+      - cmov
+      - pse36
+      - clflush
+      - mmx
+      - fxsr
+      - sse
+      - sse2
+      - syscall
+      - nx
+      - lm
+      - rep_good
+      - nopl
+      - eagerfpu
+      - pni
+      - cx16
+      - hypervisor
+      - lahf_lm
+      - abm
+    bogomips: "5999.98"
+    clflush_size: "64"
+    cache_alignment: "64"
+    address_sizes: 39 bits physical, 48 bits virtual
+    power_management: power management
+  processor1:
+    vendor_id: GenuineIntel
+    cpu_family: "6"
+    model: "13"
+    model_name: QEMU Virtual CPU version 1.5.3
+    stepping: "3"
+    microcode: 0x1
+    cpu_MHz: "2999.990"
+    cache_size: 4096 KB
+    physical_id: "1"
+    siblings: "1"
+    core_id: "0"
+    cpu_cores: "1"
+    apicid: "1"
+    initial_apicid: "1"
+    fpu: "yes"
+    fpu_exception: "yes"
+    cpuid_level: "4"
+    wp: "yes"
+    flags:
+      - fpu
+      - de
+      - pse
+      - tsc
+      - msr
+      - pae
+      - mce
+      - cx8
+      - apic
+      - sep
+      - mtrr
+      - pge
+      - mca
+      - cmov
+      - pse36
+      - clflush
+      - mmx
+      - fxsr
+      - sse
+      - sse2
+      - syscall
+      - nx
+      - lm
+      - rep_good
+      - nopl
+      - eagerfpu
+      - pni
+      - cx16
+      - hypervisor
+      - lahf_lm
+      - abm
+    bogomips: "5999.98"
+    clflush_size: "64"
+    cache_alignment: "64"
+    address_sizes: 39 bits physical, 48 bits virtual
+    power_management: power management
+defaultgateway: 139.229.134.254
+defaultgatewayiface: eth0
+dhcp_servers:
+  eth0: 139.229.134.5
+  system: 139.229.134.5
+disks:
+  vda:
+    size: 40.00 GiB
+    size_bytes: 42949672960
+    vendor: 0x1af4
+dmi:
+  bios:
+    release_date: 01/01/2011
+    vendor: Seabios
+    version: 0.5.1
+  chassis:
+    type: Other
+  manufacturer: Red Hat
+  product:
+    name: KVM
+    uuid: E85B7438-A22B-440A-B305-2F3B9F652DD7
+docker_home_dirs:
+  root: /root
+  bin: /bin
+  daemon: /sbin
+  adm: /var/adm
+  lp: /var/spool/lpd
+  sync: /sbin
+  shutdown: /sbin
+  halt: /sbin
+  mail: /var/spool/mail
+  operator: /root
+  games: /usr/games
+  ftp: /var/ftp
+  nobody: /
+  systemd-network: /
+  dbus: /
+  polkitd: /
+  postfix: /var/spool/postfix
+  ntp: /etc/ntp
+  sshd: /var/empty/sshd
+  chrony: /var/lib/chrony
+  sssd: /
+  rpc: /var/lib/rpcbind
+  rpcuser: /var/lib/nfs
+  nfsnobody: /var/lib/nfs
+  tss: /dev/null
+  telegraf: /etc/telegraf
+  perfsonar: /tmp
+  nagios: /var/spool/nagios
+  pscheduler: /var/tmp
+  postgres: /var/lib/pgsql
+  owamp: /tmp
+  memcached: /run/memcached
+  nscd: /
+  apache: /usr/share/httpd
+  esmond: /tmp
+  avahi: /var/run/avahi-daemon
+  twamp: /tmp
+  cassandra: /usr/share/cassandra
+  jhoblitt_b: /home/jhoblitt_b
+  hreinking_b: /home/hreinking_b
+  tcpdump: /
+  maddash: /tmp
+  icinga: /var/spool/icinga2
+domain: dev.lsst.org
+env_temp_variable: /tmp
+extlib.puppet_config:
+  master:
+    localcacert: /etc/puppetlabs/puppet/ssl/certs/ca.pem
+    ssldir: /etc/puppetlabs/puppet/ssl
+  main:
+    hostpubkey: /etc/puppetlabs/puppet/ssl/public_keys/test1.dev.lsst.org.pem
+    hostprivkey: /etc/puppetlabs/puppet/ssl/private_keys/test1.dev.lsst.org.pem
+    hostcert: /etc/puppetlabs/puppet/ssl/certs/test1.dev.lsst.org.pem
+    localcacert: /etc/puppetlabs/puppet/ssl/certs/ca.pem
+    ssldir: /etc/puppetlabs/puppet/ssl
+    vardir: /opt/puppetlabs/puppet/cache
+    server: puppet
+extlib__puppet_config:
+  master:
+    localcacert: /etc/puppetlabs/puppet/ssl/certs/ca.pem
+    ssldir: /etc/puppetlabs/puppet/ssl
+  main:
+    hostpubkey: /etc/puppetlabs/puppet/ssl/public_keys/test1.dev.lsst.org.pem
+    hostprivkey: /etc/puppetlabs/puppet/ssl/private_keys/test1.dev.lsst.org.pem
+    hostcert: /etc/puppetlabs/puppet/ssl/certs/test1.dev.lsst.org.pem
+    localcacert: /etc/puppetlabs/puppet/ssl/certs/ca.pem
+    ssldir: /etc/puppetlabs/puppet/ssl
+    vardir: /opt/puppetlabs/puppet/cache
+    server: puppet
+facterversion: 3.14.12
+filesystems: xfs
+fips_ciphers:
+  - ECDHE-RSA-AES256-GCM-SHA384
+  - ECDHE-ECDSA-AES256-GCM-SHA384
+  - ECDHE-RSA-AES256-SHA384
+  - ECDHE-ECDSA-AES256-SHA384
+  - ECDHE-RSA-AES256-SHA
+  - ECDHE-ECDSA-AES256-SHA
+  - DH-DSS-AES256-GCM-SHA384
+  - DHE-DSS-AES256-GCM-SHA384
+  - DH-RSA-AES256-GCM-SHA384
+  - DHE-RSA-AES256-GCM-SHA384
+  - DHE-RSA-AES256-SHA256
+  - DHE-DSS-AES256-SHA256
+  - DH-RSA-AES256-SHA256
+  - DH-DSS-AES256-SHA256
+  - DHE-RSA-AES256-SHA
+  - DHE-DSS-AES256-SHA
+  - DH-RSA-AES256-SHA
+  - DH-DSS-AES256-SHA
+  - AECDH-AES256-SHA
+  - ADH-AES256-GCM-SHA384
+  - ADH-AES256-SHA256
+  - ADH-AES256-SHA
+  - ECDH-RSA-AES256-GCM-SHA384
+  - ECDH-ECDSA-AES256-GCM-SHA384
+  - ECDH-RSA-AES256-SHA384
+  - ECDH-ECDSA-AES256-SHA384
+  - ECDH-RSA-AES256-SHA
+  - ECDH-ECDSA-AES256-SHA
+  - AES256-GCM-SHA384
+  - AES256-SHA256
+  - AES256-SHA
+  - PSK-AES256-CBC-SHA
+  - ECDHE-RSA-AES128-GCM-SHA256
+  - ECDHE-ECDSA-AES128-GCM-SHA256
+  - ECDHE-RSA-AES128-SHA256
+  - ECDHE-ECDSA-AES128-SHA256
+  - ECDHE-RSA-AES128-SHA
+  - ECDHE-ECDSA-AES128-SHA
+  - DH-DSS-AES128-GCM-SHA256
+  - DHE-DSS-AES128-GCM-SHA256
+  - DH-RSA-AES128-GCM-SHA256
+  - DHE-RSA-AES128-GCM-SHA256
+  - DHE-RSA-AES128-SHA256
+  - DHE-DSS-AES128-SHA256
+  - DH-RSA-AES128-SHA256
+  - DH-DSS-AES128-SHA256
+  - DHE-RSA-AES128-SHA
+  - DHE-DSS-AES128-SHA
+  - DH-RSA-AES128-SHA
+  - DH-DSS-AES128-SHA
+  - AECDH-AES128-SHA
+  - ADH-AES128-GCM-SHA256
+  - ADH-AES128-SHA256
+  - ADH-AES128-SHA
+  - ECDH-RSA-AES128-GCM-SHA256
+  - ECDH-ECDSA-AES128-GCM-SHA256
+  - ECDH-RSA-AES128-SHA256
+  - ECDH-ECDSA-AES128-SHA256
+  - ECDH-RSA-AES128-SHA
+  - ECDH-ECDSA-AES128-SHA
+  - AES128-GCM-SHA256
+  - AES128-SHA256
+  - AES128-SHA
+  - PSK-AES128-CBC-SHA
+  - ECDHE-RSA-DES-CBC3-SHA
+  - ECDHE-ECDSA-DES-CBC3-SHA
+  - EDH-RSA-DES-CBC3-SHA
+  - EDH-DSS-DES-CBC3-SHA
+  - DH-RSA-DES-CBC3-SHA
+  - DH-DSS-DES-CBC3-SHA
+  - AECDH-DES-CBC3-SHA
+  - ADH-DES-CBC3-SHA
+  - ECDH-RSA-DES-CBC3-SHA
+  - ECDH-ECDSA-DES-CBC3-SHA
+  - DES-CBC3-SHA
+  - PSK-3DES-EDE-CBC-SHA
+  - KRB5-DES-CBC3-SHA
+fips_enabled: false
+foreman_ipa:
+  default_server: ipa1.dev.lsst.org
+  default_realm: LSST.CLOUD
+foreman_sssd:
+  services:
+    - nss
+    - sudo
+    - pam
+    - ssh
+fqdn: test1.dev.lsst.org
+fullrun: "false"
+gemhome: /opt/puppetlabs/puppet/lib/ruby/gems/2.5.0
+gid: root
+grub_version: 2.02~beta2
+hardwareisa: x86_64
+hardwaremodel: x86_64
+hostname: test1
+hypervisors:
+  kvm:
+    {}
+icinga2_puppet_hostcert: /etc/puppetlabs/puppet/ssl/certs/test1.dev.lsst.org.pem
+icinga2_puppet_hostprivkey: /etc/puppetlabs/puppet/ssl/private_keys/test1.dev.lsst.org.pem
+icinga2_puppet_localcacert: /etc/puppetlabs/puppet/ssl/certs/ca.pem
+id: root
+identity:
+  gid: 0
+  group: root
+  privileged: true
+  uid: 0
+  user: root
+init_systems:
+  - rc
+  - systemd
+  - sysv
+inodes_root: "18411520"
+interfaces: eth0,lo
+ip6tables_version: 1.4.21
+ipa:
+  basedn: dc=lsst,dc=cloud
+  realm: LSST.CLOUD
+  domain: lsst.cloud
+  server: ipa1.dev.lsst.org
+  connected: true
+  tls_ca_cert: /etc/ipa/ca.crt
+ipaddress: 139.229.134.127
+ipaddress_eth0: 139.229.134.127
+ipaddress_lo: 127.0.0.1
+iptables_version: 1.4.21
+ipv6_enabled: false
 is_pe: false
-macaddress: "AA:AA:AA:AA:AA:AA"
+is_virtual: true
+java_default_home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.262.b10-0.el7_8.x86_64
+java_libjvm_path: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.262.b10-0.el7_8.x86_64/jre/lib/amd64/server
+java_major_version: "8"
+java_patch_level: "262"
+java_version: 1.8.0_262
+kernel: Linux
+kernelmajversion: "3.10"
+kernelrelease: 3.10.0-1127.18.2.el7.x86_64
+kernelversion: 3.10.0
+letsencrypt_directory:
+  dev.lsst.org: /etc/letsencrypt/live/foo
+  test1.dev.lsst.org: /etc/letsencrypt/live/test1.dev.lsst.org
+load_averages:
+  15m: 0.05
+  1m: 0.02
+  5m: 0.05
+logical_volumes:
+  root:
+    uuid: JAKNCQ-42pu-0CMY-Pkx3-d5o1-Mx6v-wkmlH3
+    full_name: centos_test1/root
+    path: /dev/centos_test1/root
+    dm_path: /dev/mapper/centos_jhoblitt--ps1-root
+    attr: -wi-ao----
+    layout: linear
+    role: public
+    active: active
+    size: <35.12g
+    permissions: writeable
+  swap:
+    uuid: tGlPma-EAWe-vpy0-VBCe-9NsV-kJRI-VM9LVb
+    full_name: centos_test1/swap
+    path: /dev/centos_test1/swap
+    dm_path: /dev/mapper/centos_jhoblitt--ps1-swap
+    attr: -wi-ao----
+    layout: linear
+    role: public
+    active: active
+    size: <3.88g
+    permissions: writeable
+login_defs:
+  mail_dir: /var/spool/mail
+  pass_max_days: 99999
+  pass_min_days: 0
+  pass_min_len: 5
+  pass_warn_age: 7
+  uid_min: 1000
+  uid_max: 60000
+  sys_uid_min: 201
+  sys_uid_max: 999
+  gid_min: 1000
+  gid_max: 60000
+  sys_gid_min: 201
+  sys_gid_max: 999
+  create_home: true
+  umask: "077"
+  usergroups_enab: true
+  encrypt_method: SHA256
+  md5_crypt_enab: false
+lsbdistcodename: Core
+lsbdistdescription: CentOS Linux release 7.8.2003 (Core)
+lsbdistid: CentOS
+lsbdistrelease: 7.8.2003
+lsbmajdistrelease: "7"
+lsbminordistrelease: "8"
+lsbrelease: ":core-4.1-amd64:core-4.1-noarch"
+lvm_pv_0: /dev/vda2
+lvm_pvs: 1
+lvm_support: true
+lvm_vg_0: centos_test1
+lvm_vg_centos_test1_pvs: /dev/vda2
+lvm_vgs: 1
+macaddress: "52:54:00:c9:b0:70"
+macaddress_eth0: "52:54:00:c9:b0:70"
+manufacturer: Red Hat
+mco_confdir: /etc/mcollective/etc
+memory:
+  swap:
+    available: 3.87 GiB
+    available_bytes: 4160212992
+    capacity: 0.01%
+    total: 3.87 GiB
+    total_bytes: 4160745472
+    used: 520.00 KiB
+    used_bytes: 532480
+  system:
+    available: 841.45 MiB
+    available_bytes: 882319360
+    capacity: 77.79%
+    total: 3.70 GiB
+    total_bytes: 3973427200
+    used: 2.88 GiB
+    used_bytes: 3091107840
+memoryfree: 841.45 MiB
+memoryfree_mb: 841.4453125
+memorysize: 3.70 GiB
+memorysize_mb: 3789.35546875
+mountpoints:
+  /:
+    available: 30.22 GiB
+    available_bytes: 32445964288
+    capacity: 13.91%
+    device: /dev/mapper/centos_jhoblitt--ps1-root
+    filesystem: xfs
+    options:
+      - rw
+      - relatime
+      - attr2
+      - inode64
+      - noquota
+    size: 35.10 GiB
+    size_bytes: 37688381440
+    used: 4.88 GiB
+    used_bytes: 5242417152
+  /boot:
+    available: 790.20 MiB
+    available_bytes: 828579840
+    capacity: 22.07%
+    device: /dev/vda1
+    filesystem: xfs
+    options:
+      - rw
+      - relatime
+      - attr2
+      - inode64
+      - noquota
+    size: 1014.00 MiB
+    size_bytes: 1063256064
+    used: 223.80 MiB
+    used_bytes: 234676224
+  /dev:
+    available: 1.84 GiB
+    available_bytes: 1974718464
+    capacity: 0%
+    device: devtmpfs
+    filesystem: devtmpfs
+    options:
+      - rw
+      - nosuid
+      - size=1928436k
+      - nr_inodes=482109
+      - mode=755
+    size: 1.84 GiB
+    size_bytes: 1974718464
+    used: 0 bytes
+    used_bytes: 0
+  /dev/hugepages:
+    available: 0 bytes
+    available_bytes: 0
+    capacity: 100%
+    device: hugetlbfs
+    filesystem: hugetlbfs
+    options:
+      - rw
+      - relatime
+    size: 0 bytes
+    size_bytes: 0
+    used: 0 bytes
+    used_bytes: 0
+  /dev/mqueue:
+    available: 0 bytes
+    available_bytes: 0
+    capacity: 100%
+    device: mqueue
+    filesystem: mqueue
+    options:
+      - rw
+      - relatime
+    size: 0 bytes
+    size_bytes: 0
+    used: 0 bytes
+    used_bytes: 0
+  /dev/pts:
+    available: 0 bytes
+    available_bytes: 0
+    capacity: 100%
+    device: devpts
+    filesystem: devpts
+    options:
+      - rw
+      - nosuid
+      - noexec
+      - relatime
+      - gid=5
+      - mode=620
+      - ptmxmode=000
+    size: 0 bytes
+    size_bytes: 0
+    used: 0 bytes
+    used_bytes: 0
+  /dev/shm:
+    available: 1.85 GiB
+    available_bytes: 1986707456
+    capacity: 0.00%
+    device: tmpfs
+    filesystem: tmpfs
+    options:
+      - rw
+      - nosuid
+      - nodev
+    size: 1.85 GiB
+    size_bytes: 1986711552
+    used: 4.00 KiB
+    used_bytes: 4096
+  /run:
+    available: 1.84 GiB
+    available_bytes: 1977606144
+    capacity: 0.46%
+    device: tmpfs
+    filesystem: tmpfs
+    options:
+      - rw
+      - nosuid
+      - nodev
+      - mode=755
+    size: 1.85 GiB
+    size_bytes: 1986711552
+    used: 8.68 MiB
+    used_bytes: 9105408
+  /run/user/70001:
+    available: 378.94 MiB
+    available_bytes: 397344768
+    capacity: 0%
+    device: tmpfs
+    filesystem: tmpfs
+    options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=388032k
+      - mode=700
+      - uid=70001
+      - gid=70001
+    size: 378.94 MiB
+    size_bytes: 397344768
+    used: 0 bytes
+    used_bytes: 0
+  /run/user/988:
+    available: 378.94 MiB
+    available_bytes: 397344768
+    capacity: 0%
+    device: tmpfs
+    filesystem: tmpfs
+    options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=388032k
+      - mode=700
+      - uid=988
+      - gid=985
+    size: 378.94 MiB
+    size_bytes: 397344768
+    used: 0 bytes
+    used_bytes: 0
+  /sys/fs/cgroup:
+    available: 1.85 GiB
+    available_bytes: 1986711552
+    capacity: 0%
+    device: tmpfs
+    filesystem: tmpfs
+    options:
+      - ro
+      - nosuid
+      - nodev
+      - noexec
+      - mode=755
+    size: 1.85 GiB
+    size_bytes: 1986711552
+    used: 0 bytes
+    used_bytes: 0
+  /var/lib/nfs/rpc_pipefs:
+    available: 0 bytes
+    available_bytes: 0
+    capacity: 100%
+    device: sunrpc
+    filesystem: rpc_pipefs
+    options:
+      - rw
+      - relatime
+    size: 0 bytes
+    size_bytes: 0
+    used: 0 bytes
+    used_bytes: 0
+mtu_eth0: 1500
+mtu_lo: 65536
+mysql_server_id: 834672
+netmask: 255.255.255.0
+netmask_eth0: 255.255.255.0
+netmask_lo: 255.0.0.0
+network: 139.229.134.0
+network_eth0: 139.229.134.0
+network_lo: 127.0.0.0
+networking:
+  dhcp: 139.229.134.5
+  domain: dev.lsst.org
+  fqdn: test1.dev.lsst.org
+  hostname: test1
+  interfaces:
+    eth0:
+      bindings:
+        - address: 139.229.134.127
+          netmask: 255.255.255.0
+          network: 139.229.134.0
+      dhcp: 139.229.134.5
+      ip: 139.229.134.127
+      mac: "52:54:00:c9:b0:70"
+      mtu: 1500
+      netmask: 255.255.255.0
+      network: 139.229.134.0
+    lo:
+      bindings:
+        - address: 127.0.0.1
+          netmask: 255.0.0.0
+          network: 127.0.0.0
+      ip: 127.0.0.1
+      mtu: 65536
+      netmask: 255.0.0.0
+      network: 127.0.0.0
+  ip: 139.229.134.127
+  mac: "52:54:00:c9:b0:70"
+  mtu: 1500
+  netmask: 255.255.255.0
+  network: 139.229.134.0
+  primary: eth0
+operatingsystem: CentOS
+operatingsystemmajrelease: "7"
+operatingsystemrelease: 7.8.2003
+os:
+  architecture: x86_64
+  distro:
+    codename: Core
+    description: CentOS Linux release 7.8.2003 (Core)
+    id: CentOS
+    release:
+      full: 7.8.2003
+      major: "7"
+      minor: "8"
+    specification: ":core-4.1-amd64:core-4.1-noarch"
+  family: RedHat
+  hardware: x86_64
+  name: CentOS
+  release:
+    full: 7.8.2003
+    major: "7"
+    minor: "8"
+  selinux:
+    enabled: false
+osfamily: RedHat
+package_provider: yum
+partitions:
+  /dev/mapper/centos_jhoblitt--ps1-root:
+    filesystem: xfs
+    mount: /
+    size: 35.12 GiB
+    size_bytes: 37706792960
+    uuid: 382d0e79-5b41-454a-ae06-9c5a9d2fd842
+  /dev/mapper/centos_jhoblitt--ps1-swap:
+    filesystem: swap
+    size: 3.88 GiB
+    size_bytes: 4160749568
+    uuid: ceeec311-1fb6-490a-a3d4-c086390d3861
+  /dev/vda1:
+    filesystem: xfs
+    mount: /boot
+    size: 1.00 GiB
+    size_bytes: 1073741824
+    uuid: 4ff6cc1d-b747-4a7f-a82b-07bbc80dafc4
+  /dev/vda2:
+    filesystem: LVM2_member
+    size: 39.00 GiB
+    size_bytes: 41874882560
+    uuid: GYEcED-CLZL-FJSn-oscr-h4JV-nLYf-PHS9Lz
+path: "/usr/lib/perfsonar/scripts:/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin:/root/bin"
+physical_volumes:
+  /dev/vda2:
+    uuid: GYEcED-CLZL-FJSn-oscr-h4JV-nLYf-PHS9Lz
+    size: <39.00g
+    start: 1.00m
+    free: 4.00m
+    used: 38.99g
+    attr: a--
+    pe_count: "9983"
+    pe_alloc_count: "9982"
+    mda_count: "1"
+    mda_used_count: "1"
+    ba_start: "0"
+    ba_size: "0"
+physicalprocessorcount: 2
+processor0: QEMU Virtual CPU version 1.5.3
+processor1: QEMU Virtual CPU version 1.5.3
+processorcount: 2
+processors:
+  count: 2
+  isa: x86_64
+  models:
+    - QEMU Virtual CPU version 1.5.3
+    - QEMU Virtual CPU version 1.5.3
+  physicalcount: 2
+productname: KVM
+puppet_agent_pid: 4186
+puppet_client_datadir: /opt/puppetlabs/puppet/cache/client_data
+puppet_confdir: /etc/puppetlabs/puppet
+puppet_config: /etc/puppetlabs/puppet/puppet.conf
+puppet_environmentpath: /etc/puppetlabs/code/environments
+puppet_master_server: puppet
+puppet_server: puppet
+puppet_settings:
+  main:
+    facterng: "false"
+    confdir: /etc/puppetlabs/puppet
+    codedir: /etc/puppetlabs/code
+    vardir: /opt/puppetlabs/puppet/cache
+    name: "#<Puppet::Util::UnixRunMode:0x0000000002a40a90>"
+    logdir: /var/log/puppetlabs/puppet
+    log_level: notice
+    disable_warnings: "[]"
+    merge_dependency_warnings: "false"
+    strict: warning
+    disable_i18n: "false"
+    priority: ""
+    trace: "false"
+    puppet_trace: "false"
+    profile: "false"
+    future_features: "false"
+    versioned_environment_dirs: "false"
+    static_catalogs: "true"
+    strict_environment_mode: "false"
+    autoflush: "true"
+    syslogfacility: daemon
+    statedir: /opt/puppetlabs/puppet/cache/state
+    rundir: /var/run/puppetlabs
+    genconfig: "false"
+    genmanifest: "false"
+    color: ansi
+    mkusers: "false"
+    manage_internal_file_permissions: "true"
+    onetime: "false"
+    path: none
+    libdir: /opt/puppetlabs/puppet/cache/lib
+    environment: production
+    environmentpath: /etc/puppetlabs/code/environments
+    always_retry_plugins: "true"
+    diff_args: -u
+    diff: diff
+    show_diff: "false"
+    daemonize: "true"
+    maximum_uid: "4294967290"
+    route_file: /etc/puppetlabs/puppet/routes.yaml
+    node_terminus: plain
+    node_cache_terminus: ""
+    data_binding_terminus: hiera
+    hiera_config: /etc/puppetlabs/puppet/hiera.yaml
+    binder_config: ""
+    catalog_terminus: compiler
+    catalog_cache_terminus: ""
+    facts_terminus: facter
+    trusted_external_command: ""
+    default_file_terminus: rest
+    http_proxy_host: none
+    http_proxy_port: "3128"
+    http_proxy_user: none
+    http_proxy_password: none
+    no_proxy: localhost, 127.0.0.1
+    http_keepalive_timeout: "4"
+    http_debug: "false"
+    http_connect_timeout: "120"
+    http_read_timeout: "600"
+    http_user_agent: Puppet/6.17.0 Ruby/2.5.8-p224 (x86_64-linux)
+    filetimeout: "15"
+    environment_timeout: "0"
+    environment_data_provider: ""
+    prerun_command: ""
+    postrun_command: ""
+    freeze_main: "false"
+    preview_outputdir: /opt/puppetlabs/puppet/cache/preview
+    certname: test1.dev.lsst.org
+    dns_alt_names: ""
+    csr_attributes: /etc/puppetlabs/puppet/csr_attributes.yaml
+    certdir: /etc/puppetlabs/puppet/ssl/certs
+    ssldir: /etc/puppetlabs/puppet/ssl
+    ssl_lockfile: /etc/puppetlabs/puppet/ssl/ssl.lock
+    publickeydir: /etc/puppetlabs/puppet/ssl/public_keys
+    requestdir: /etc/puppetlabs/puppet/ssl/certificate_requests
+    privatekeydir: /etc/puppetlabs/puppet/ssl/private_keys
+    privatedir: /etc/puppetlabs/puppet/ssl/private
+    passfile: /etc/puppetlabs/puppet/ssl/private/password
+    hostcert: /etc/puppetlabs/puppet/ssl/certs/test1.dev.lsst.org.pem
+    hostprivkey: /etc/puppetlabs/puppet/ssl/private_keys/test1.dev.lsst.org.pem
+    hostpubkey: /etc/puppetlabs/puppet/ssl/public_keys/test1.dev.lsst.org.pem
+    localcacert: /etc/puppetlabs/puppet/ssl/certs/ca.pem
+    ca_fingerprint: ""
+    ssl_trust_store: ""
+    ssl_client_ca_auth: ""
+    hostcrl: /etc/puppetlabs/puppet/ssl/crl.pem
+    certificate_revocation: chain
+    key_type: rsa
+    named_curve: prime256v1
+    digest_algorithm: md5
+    supported_checksum_types: "[\"md5\", \"sha256\", \"sha384\", \"sha512\", \"sha224\"]"
+    logdest: ""
+    plugindest: /opt/puppetlabs/puppet/cache/lib
+    pluginsource: "puppet:///plugins"
+    pluginfactdest: /opt/puppetlabs/puppet/cache/facts.d
+    pluginfactsource: "puppet:///pluginfacts"
+    localedest: /opt/puppetlabs/puppet/cache/locales
+    localesource: "puppet:///locales"
+    pluginsignore: .svn CVS .git .hg
+    factpath: "/opt/puppetlabs/puppet/cache/lib/facter:/opt/puppetlabs/puppet/cache/facts"
+    external_nodes: none
+    rich_data: "true"
+  module_tool:
+    module_repository: "https://forgeapi.puppet.com"
+    module_working_dir: /opt/puppetlabs/puppet/cache/puppet-module
+    forge_authorization: ""
+    module_groups: ""
+  ca:
+    ca_name: "Puppet CA: test1.dev.lsst.org"
+    cadir: /etc/puppetlabs/puppet/ssl/ca
+    cacert: /etc/puppetlabs/puppet/ssl/ca/ca_crt.pem
+    cakey: /etc/puppetlabs/puppet/ssl/ca/ca_key.pem
+    capub: /etc/puppetlabs/puppet/ssl/ca/ca_pub.pem
+    cacrl: /etc/puppetlabs/puppet/ssl/ca/ca_crl.pem
+    csrdir: /etc/puppetlabs/puppet/ssl/ca/requests
+    signeddir: /etc/puppetlabs/puppet/ssl/ca/signed
+    serial: /etc/puppetlabs/puppet/ssl/ca/serial
+    autosign: /etc/puppetlabs/puppet/autosign.conf
+    allow_duplicate_certs: "false"
+    ca_ttl: "157680000"
+    crl_refresh_interval: ""
+    keylength: "4096"
+    cert_inventory: /etc/puppetlabs/puppet/ssl/ca/inventory.txt
+  application:
+    config_file_name: puppet.conf
+    config: /etc/puppetlabs/puppet/puppet.conf
+    pidfile: /var/run/puppetlabs/application.pid
+    sourceaddress: ""
+  environment:
+    manifest: /etc/puppetlabs/code/environments/production/manifests
+    modulepath: "/etc/puppetlabs/code/environments/production/modules:/etc/puppetlabs/code/modules:/opt/puppetlabs/puppet/modules"
+    config_version: ""
+  master:
+    user: puppet
+    group: puppet
+    default_manifest: ./manifests
+    disable_per_environment_manifest: "false"
+    code: ""
+    masterport: "8140"
+    bucketdir: /opt/puppetlabs/puppet/cache/bucket
+    trusted_oid_mapping_file: /etc/puppetlabs/puppet/custom_trusted_oid_mapping.yaml
+    basemodulepath: "/etc/puppetlabs/code/modules:/opt/puppetlabs/puppet/modules"
+    vendormoduledir: /opt/puppetlabs/puppet/vendor_modules
+    ssl_client_header: HTTP_X_CLIENT_DN
+    ssl_client_verify_header: HTTP_X_CLIENT_VERIFY
+    yamldir: /opt/puppetlabs/puppet/cache/yaml
+    server_datadir: /opt/puppetlabs/puppet/cache/server_data
+    reports: store
+    reportdir: /opt/puppetlabs/puppet/cache/reports
+    reporturl: "http://localhost:3000/reports/upload"
+    fileserverconfig: /etc/puppetlabs/puppet/fileserver.conf
+    strict_hostname_checking: "true"
+    storeconfigs: "false"
+    storeconfigs_backend: puppetdb
+  device:
+    devicedir: /opt/puppetlabs/puppet/cache/devices
+    deviceconfig: /etc/puppetlabs/puppet/device.conf
+  agent:
+    node_name_value: test1.dev.lsst.org
+    node_name_fact: ""
+    statefile: /opt/puppetlabs/puppet/cache/state/state.yaml
+    statettl: "2764800"
+    transactionstorefile: /opt/puppetlabs/puppet/cache/state/transactionstore.yaml
+    clientyamldir: /opt/puppetlabs/puppet/cache/client_yaml
+    client_datadir: /opt/puppetlabs/puppet/cache/client_data
+    classfile: /opt/puppetlabs/puppet/cache/state/classes.txt
+    resourcefile: /opt/puppetlabs/puppet/cache/state/resources.txt
+    puppetdlog: /var/log/puppetlabs/puppet/puppetd.log
+    deviceconfdir: /etc/puppetlabs/puppet/devices
+    server: foreman.dev.lsst.org
+    server_list: "[]"
+    use_srv_records: "false"
+    srv_domain: dev.lsst.org
+    http_extra_headers: "[]"
+    ignoreschedules: "true"
+    default_schedules: "true"
+    noop: "false"
+    runinterval: "1800"
+    runtimeout: "3600"
+    ca_server: foreman.dev.lsst.org
+    ca_port: "8140"
+    preferred_serialization_format: json
+    agent_catalog_run_lockfile: /opt/puppetlabs/puppet/cache/state/agent_catalog_run.lock
+    agent_disabled_lockfile: /opt/puppetlabs/puppet/cache/state/agent_disabled.lock
+    usecacheonfailure: "true"
+    use_cached_catalog: "false"
+    ignoremissingtypes: "false"
+    splaylimit: "1800"
+    splay: "false"
+    clientbucketdir: /opt/puppetlabs/puppet/cache/clientbucket
+    report_server: foreman.dev.lsst.org
+    report_port: "8140"
+    report: "true"
+    report_include_system_store: "false"
+    resubmit_facts: "false"
+    lastrunfile: /opt/puppetlabs/puppet/cache/state/last_run_summary.yaml
+    lastrunreport: /opt/puppetlabs/puppet/cache/state/last_run_report.yaml
+    graph: "false"
+    graphdir: /opt/puppetlabs/puppet/cache/state/graphs
+    waitforcert: "120"
+    maxwaitforcert: Infinity
+    waitforlock: "0"
+    maxwaitforlock: "60"
+  transaction:
+    tags: ""
+    skip_tags: ""
+    evaltrace: "false"
+    summarize: "false"
+  ldap:
+    ldapssl: "false"
+    ldaptls: "false"
+    ldapserver: ldap
+    ldapport: "389"
+    ldapstring: (&(objectclass=puppetClient)(cn=%s))
+    ldapclassattrs: puppetclass
+    ldapstackedattrs: puppetvar
+    ldapattrs: all
+    ldapparentattr: parentnode
+    ldapuser: ""
+    ldappassword: ""
+    ldapbase: ""
+  parser:
+    max_errors: "10"
+    max_warnings: "10"
+    max_deprecations: "10"
+    strict_variables: "false"
+    func3x_check: "true"
+    tasks: "false"
+  puppetdoc:
+    document_all: "false"
+puppet_ssldir: /etc/puppetlabs/puppet/ssl
+puppet_sslpaths:
+  privatedir:
+    path: /etc/puppetlabs/puppet/ssl/private
+    path_exists: true
+  privatekeydir:
+    path: /etc/puppetlabs/puppet/ssl/private_keys
+    path_exists: true
+  publickeydir:
+    path: /etc/puppetlabs/puppet/ssl/public_keys
+    path_exists: true
+  certdir:
+    path: /etc/puppetlabs/puppet/ssl/certs
+    path_exists: true
+  requestdir:
+    path: /etc/puppetlabs/puppet/ssl/certificate_requests
+    path_exists: true
+  hostcrl:
+    path: /etc/puppetlabs/puppet/ssl/crl.pem
+    path_exists: true
+puppet_stringify_facts: false
+puppet_vardir: /opt/puppetlabs/puppet/cache
+puppetversion: 6.17.0
+python2_release: "2.7"
+python2_version: 2.7.5
+python_release: "2.7"
+python_version: 2.7.5
+r10k_environment: production
+r10k_path: ""
+reboot_required: false
+root_dir_uuid: 382d0e79-5b41-454a-ae06-9c5a9d2fd842
+root_home: /root
+ruby:
+  platform: x86_64-linux
+  sitedir: /opt/puppetlabs/puppet/lib/ruby/site_ruby/2.5.0
+  version: 2.5.8
+rubyplatform: x86_64-linux
+rubysitedir: /opt/puppetlabs/puppet/lib/ruby/site_ruby/2.5.0
+rubyversion: 2.5.8
+runlevel: "3"
+selinux: false
+selinux_semanage_is_python3: false
+service_provider: systemd
+shmall: "18446744073692774399"
+simplib__networkmanager:
+  general:
+    status:
+      {}
+    hostname: ""
+  enabled: true
+  connection:
+    {}
+simplib__sshd_config:
+  AuthorizedKeysFile: .ssh/authorized_keys
+  version: 7.4p1
+  full_version: "OpenSSH_7.4p1, OpenSSL 1.0.2k-fips  26 Jan 2017\n"
+simplib_sysctl:
+  crypto.fips_enabled: 0
+  kernel.ctrl-alt-del: 0
+  kernel.modules_disabled: 0
+  kernel.shmall: "18446744073692774399"
+  kernel.shmmax: "18446744073692774399"
+  kernel.shmmni: "4096"
+  kernel.tainted: 0
+  kernel.threads-max: 30131
+  vm.swappiness: 10
+snmp_community: MhcZxm00k6GjpRedxFnnxA
+ssh:
+  ecdsa:
+    fingerprints:
+      sha1: SSHFP 3 1 5624e24ab083924eb1959e2a9416fbfdac845540
+      sha256: SSHFP 3 2 377a88124ed3e181a0e01ebec75e850fd079097457fb110c3494a0e015c496b1
+    key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNSPzCNFvUpCU1m0jMx33xFiCnf5B5G5PCu+zmirSBDG3f9CT1XlyPHZMaoOEGlyV9fvP9bFbUq56w/SgiW/t+w=
+    type: ecdsa-sha2-nistp256
+  ed25519:
+    fingerprints:
+      sha1: SSHFP 4 1 a2d91ee7e7f4cf9ed0ed2c1e3fc4dca146292dd6
+      sha256: SSHFP 4 2 6ba7c645a05f380616f43cabdb3acf610cec87ea321a85ef3cd1fb00c76545e5
+    key: AAAAC3NzaC1lZDI1NTE5AAAAIAynCRJpxVjR7mCnq/2sIJLinVcfEoLyu2pRj9+1930H
+    type: ssh-ed25519
+  rsa:
+    fingerprints:
+      sha1: SSHFP 1 1 51bd7d3b196aa88d8a8932e559a1264da9397c0c
+      sha256: SSHFP 1 2 f1f46723b42849f95ebd4801e421981a27c960227f3691f83be90877aaa534db
+    key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDTDSz6OcTs6k8L8v0HMiLwURWFeKsjsxRdMjQKkYnw5NhBny6mGUfilbB5kf9YrE/6Z6WrnLTTZnz1tFtcmD2YhZjLWBWBbBYMchkWFMmKqkUCwP0M2VHuGcvStcIVuVEYqTS176Z3PwhxLk4tM5ayewgyqFuKDMFh0R35jktAVDI4oCsexk+N6DWvG2f0O6pnIYEiEI0R1S8gPT8mC+5K3ya47w7HR0jQA2+zJANfXDqnrVQUxAVNurt3PccrAq7zrdeBIAFgAZFQD2T21CN0xkIaWWpd1gDtTZu1+hOqIxy+gZisW5g7iIMcK5/uf6zVxh4crAThWOLsS/Quaww9
+    type: ssh-rsa
+ssh_client_version_full: 7.4p1
+ssh_server_version_full: 7.4p1
+ssh_server_version_major: "7"
+ssh_server_version_release: "7.4"
+sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNSPzCNFvUpCU1m0jMx33xFiCnf5B5G5PCu+zmirSBDG3f9CT1XlyPHZMaoOEGlyV9fvP9bFbUq56w/SgiW/t+w=
+sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAIAynCRJpxVjR7mCnq/2sIJLinVcfEoLyu2pRj9+1930H
+sshfp_ecdsa: "SSHFP 3 1 5624e24ab083924eb1959e2a9416fbfdac845540\nSSHFP 3 2 377a88124ed3e181a0e01ebec75e850fd079097457fb110c3494a0e015c496b1"
+sshfp_ed25519: "SSHFP 4 1 a2d91ee7e7f4cf9ed0ed2c1e3fc4dca146292dd6\nSSHFP 4 2 6ba7c645a05f380616f43cabdb3acf610cec87ea321a85ef3cd1fb00c76545e5"
+sshfp_rsa: "SSHFP 1 1 51bd7d3b196aa88d8a8932e559a1264da9397c0c\nSSHFP 1 2 f1f46723b42849f95ebd4801e421981a27c960227f3691f83be90877aaa534db"
+sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDTDSz6OcTs6k8L8v0HMiLwURWFeKsjsxRdMjQKkYnw5NhBny6mGUfilbB5kf9YrE/6Z6WrnLTTZnz1tFtcmD2YhZjLWBWBbBYMchkWFMmKqkUCwP0M2VHuGcvStcIVuVEYqTS176Z3PwhxLk4tM5ayewgyqFuKDMFh0R35jktAVDI4oCsexk+N6DWvG2f0O6pnIYEiEI0R1S8gPT8mC+5K3ya47w7HR0jQA2+zJANfXDqnrVQUxAVNurt3PccrAq7zrdeBIAFgAZFQD2T21CN0xkIaWWpd1gDtTZu1+hOqIxy+gZisW5g7iIMcK5/uf6zVxh4crAThWOLsS/Quaww9
+sssd_domains: lsst.cloud
+sudoversion: 1.8.23
+swapfree: 3.87 GiB
+swapfree_mb: 3967.48828125
+swapsize: 3.87 GiB
+swapsize_mb: 3967.99609375
+system_uptime:
+  days: 1
+  hours: 26
+  seconds: 94297
+  uptime: 1 day
+systemd: true
+systemd_internal_services:
+  systemd-bootchart.service: disabled
+  systemd-nspawn@.service: disabled
+  systemd-readahead-collect.service: enabled
+  systemd-readahead-done.service: indirect
+  systemd-readahead-drop.service: enabled
+  systemd-readahead-replay.service: enabled
+systemd_version: "219"
+timezone: UTC
+tmp_mount_dev_shm: rw,nosuid,nodev
+tmp_mount_fstype_dev_shm: tmpfs
+tmp_mount_path_dev_shm: tmpfs
+tuned_profile: latency-performance
+tuned_profiles:
+  - balanced
+  - desktop
+  - hpc-compute
+  - latency-performance
+  - network-latency
+  - network-throughput
+  - powersave
+  - throughput-performance
+  - virtual-guest
+  - virtual-host
+tuned_version: 2.11.0
+uid_min: "1000"
+uptime: 1 day
+uptime_days: 1
+uptime_hours: 26
+uptime_seconds: 94297
+uuid: E85B7438-A22B-440A-B305-2F3B9F652DD7
+vcsrepo_svn_ver: ""
+virtual: kvm
+virtualenv_version: 15.1.0
+volume_groups:
+  centos_test1:
+    uuid: dHtm75-oqlC-U1gM-50cZ-dsTE-ewAz-zZvWUV
+    attr: wz--n-
+    permissions: writeable
+    allocation_policy: normal
+    size: <39.00g
+    free: 4.00m

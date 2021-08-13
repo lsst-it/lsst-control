@@ -22,6 +22,7 @@ group :test do
   gem 'r10k',                                                    require: false
   gem 'rubocop', '~> 1.6.1',                                     require: false
   gem 'rubocop-i18n', '~> 3.0.0',                                require: false
+  gem 'toml-rb',                                                 require: false # puppet/telegraf
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION'] || '~> 6.0'

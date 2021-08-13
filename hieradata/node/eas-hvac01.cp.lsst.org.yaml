@@ -1,7 +1,4 @@
 ---
-classes:
-  - "profile::core::x2go_agent"
-
 network::interfaces_hash:
   em1:  # 10.255.211.65/25
     ipaddress: "10.255.211.67"

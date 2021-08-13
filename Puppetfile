@@ -90,6 +90,7 @@ mod 'lsst/cni', '1.0.0'
 mod 'treydock/clustershell', '1.0.0'
 mod 'puppetlabs/yumrepo_core', '1.0.7'
 mod 'lsst/dellperc', '1.0.1'
+mod 'puppetlabs/mount_core', '1.0.4'
 
 # latest puppet/letsencrypt release does not include dns_route53 plugin support
 mod 'puppet/letsencrypt',

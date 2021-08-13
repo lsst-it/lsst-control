@@ -1,0 +1,44 @@
+---
+classes:
+  - "profile::ccs::common"
+  - "profile::core::common"
+  - "profile::core::nfsclient"
+  - "ccs_hcu"
+  ## Ultimately, next item should not be present, but people
+  ## are currently using HCUs in graphical mode.
+  - "profile::ccs::graphical"
+
+packages:
+  - "usbutils"
+
+ccs_monit::hwraid: false
+
+ccs_hcu::canbus::module: "advSocketCAN"
+ccs_hcu::canbus::version: "1.0.1.0"
+
+ccs_hcu::vldrive::module: "versaapi"
+ccs_hcu::vldrive::version: "1.5.0"
+
+ccs_hcu::imanager::module: "imanager"
+ccs_hcu::imanager::version: "1.5.0"
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /data:
+    share: "data"
+    server: "atsdaq1.cp.lsst.org"
+    atboot: true
+
+ccs_software::udp_properties:
+  - "org.lsst.ccs.jgroups.LOG.UDP.mcast_port=26978"
+  - "org.lsst.ccs.jgroups.STATUS.UDP.mcast_port=36978"
+  - "org.lsst.ccs.jgroups.COMMAND.UDP.mcast_port=46978"
+
+ccs_software::services:
+  ## FIXME this should be changed to prod, and a local systemctl override
+  ## used to get the dev version.
+  dev:
+    - "ats-power"
+  prod:
+    - "ats"
+    - "bonn-shutter"

@@ -5,18 +5,7 @@ require 'spec_helper'
 # XXX testing for classes in the catalog is not a great practice but it is
 # expendent to do here as the goal is primary to test branching based on facts.
 describe 'profile::core::hardware' do
-  let(:node_params) do
-    {
-      org: 'lsst',
-    }
-  end
-
-  let(:facts) do
-    {
-      osfamily: 'RedHat',
-      operatingsystemmajrelease: '7',
-    }
-  end
+  let(:facts) { {} }
 
   context 'with PowerEdge' do
     let(:facts) do
@@ -80,5 +69,5 @@ describe 'profile::core::hardware' do
       it { is_expected.to contain_class('profile::core::kernel::pcie_aspm') }
       it { is_expected.to contain_class('profile::core::kernel::nvme_apst') }
     end
-  end  # PowerEdge
+  end  # 1114S-WN10RT
 end

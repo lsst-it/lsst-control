@@ -1,7 +1,4 @@
 ---
-classes:
-  - "ccs_sal"
-
 network::interfaces_hash:
   em1:  # dds
     bootproto: "dhcp"

@@ -1,9 +1,11 @@
 ---
 classes:
-  - "profile::core::common"
-  - "profile::core::nfsserver"
-  - "profile::core::nfsclient"
   - "profile::ccs::common"
+  - "profile::ccs::daq_interface"
+  - "profile::core::common"
+  - "profile::core::nfsclient"
+  - "profile::core::nfsserver"
+  - "hosts"
 
 # Server configuration
 nfs::server_enabled: true

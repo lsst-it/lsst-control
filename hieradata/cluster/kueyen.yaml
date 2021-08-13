@@ -1,7 +1,4 @@
 ---
-classes:
-  - "profile::core::ifdown"
-
 clustershell::groupmembers:
   kueyen: {group: "kueyen", member: "kueyen[02-04]"}
 profile::core::rke::enable_dhcp: true

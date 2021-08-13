@@ -89,3 +89,29 @@ profile::core::yum::dell::repo:
   baseurl: "https://repo-nexus.lsst.org/nexus/repository/dell/"
   gpgcheck: false
   target: "/etc/yum.repos.d/dell.repo"
+
+profile::nfs::client::csc::mounts:
+  /net/project:
+    share: "project"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/scratch:
+    share: "scratch"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/home:
+    share: "home"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/lsstdata:
+    share: "lsstdata"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/auxtel/lsstdata:
+    share: "lsstdata"
+    server: "atarchiver.cp.lsst.org"
+    atboot: true
+  /mnt/data:
+    share: "data"
+    server: "atsdaq1.cp.lsst.org"
+    atboot: true

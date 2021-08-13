@@ -15,6 +15,14 @@ def fixtures_path
   File.join(root_path, 'spec', 'fixtures')
 end
 
+def control_hiera_config
+  File.join(root_path, 'hiera.yaml')
+end
+
+def control_hieradata_path
+  File.join(root_path, 'hieradata')
+end
+
 default_facts = {
   puppetversion: Puppet.version,
   facterversion: Facter.version,
@@ -38,6 +46,8 @@ end
 RSpec.configure do |c|
   c.default_facts = default_facts
   c.module_path = "#{File.join(root_path, 'site')}:#{File.join(fixtures_path, 'modules')}"
+  # c.manifest = File.join(root_path, 'manifests', 'site.pp')
+  c.hiera_config = File.join(fixtures_path, 'hiera.yaml')
   c.before :each do
     # set to strictest setting for testing
     # by default Puppet runs at warning level
@@ -53,6 +63,14 @@ def ensure_module_defined(module_name)
     last_module.const_set(next_module, Module.new) unless last_module.const_defined?(next_module, false)
     last_module.const_get(next_module, false)
   end
+end
+
+def node_dir
+  File.join(control_hieradata_path, 'node')
+end
+
+def node_files
+  Dir.children(node_dir)
 end
 
 # 'spec_overrides' from sync.yml will appear below this line

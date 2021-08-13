@@ -10,6 +10,8 @@ classes:
   - "puppet_agent"
   - "easy_ipa"
   - "ufw"
+
+easy_ipa::install_sssd: true
 ufw::allow:
   "dimm-webserver-16200":
     direction: "IN"

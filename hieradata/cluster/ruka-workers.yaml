@@ -1,6 +1,4 @@
 ---
-classes:
-  - "profile::core::ifdown"
 profile::core::ifdown::interface: "em1"
 network::interfaces_hash:
   em1:  # only for PXE

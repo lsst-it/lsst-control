@@ -4,22 +4,7 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::ni_packages"
   - "profile::core::x2go_agent"
-
-yum::repos:
-  "lsst-ts":
-    ensure: "present"
-    descr: "LSST Telescope and Site Packages"
-    enabled: true
-    baseurl: "https://repo-nexus.lsst.org/nexus/repository/ts_yum/releases"
-    gpgcheck: false
-    target: "/etc/yum.repos.d/lsst-ts.repo"
-  "lsst-ts-test":
-    ensure: "present"
-    descr: "LSST Telescope and Site Test Package"
-    enabled: true
-    baseurl: "https://repo-nexus.lsst.org/nexus/repository/ts_yum/test"
-    gpgcheck: false
-    target: "/etc/yum.repos.d/lsst-ts-test.repo"
+  - "profile::core::yum::lsst_ts_private"
 
 packages:
   - "OpenSpliceDDS-6.9.0-12.el7"

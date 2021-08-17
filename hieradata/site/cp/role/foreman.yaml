@@ -79,6 +79,13 @@ dhcp::pools:
     range:
       - "139.229.167.241 139.229.167.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  ocs_app_dome:
+    network: "139.229.168.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.168.254"
+    range:
+      - "139.229.168.193 139.229.168.253"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   dds_auxtel:
     network: "139.229.170.0"
     mask: "255.255.255.0"

@@ -115,3 +115,12 @@ profile::nfs::client::csc::mounts:
     share: "data"
     server: "atsdaq1.cp.lsst.org"
     atboot: true
+
+profile::core::yum::lsst_ts::repos:
+  lsst-ts:
+    baseurl: "https://repo-nexus.lsst.org/nexus/repository/ts_yum/releases"
+    descr: "LSST Telescope and Site Packages"
+    enabled: true
+    ensure: "present"
+    gpgcheck: false
+    target: "/etc/yum.repos.d/lsst-ts.repo"

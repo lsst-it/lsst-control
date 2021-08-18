@@ -74,7 +74,7 @@ mod 'puppet/ssh_keygen', '4.0.0'
 mod 'puppet/telegraf', '4.0.0'
 mod 'puppetlabs-puppetserver_gem', '1.1.1'
 
-mod 'puppet/yum', '4.0.0'
+mod 'puppet/yum', '5.1.0'
 mod 'richardc/datacat', '0.6.2'
 mod 'puppet/epel', '3.0.1'
 

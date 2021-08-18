@@ -4,5 +4,3 @@ classes:
   - "profile::core::common"
   - "profile::core::net_dx"
   - "profile::core::x2go_agent"
-
-profile::ccs::sal_dx::username: "lsst_jenkins"

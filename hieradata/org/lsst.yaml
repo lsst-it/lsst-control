@@ -396,3 +396,5 @@ scl::repos:
     ensure: "present"
     gpgcheck: true
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo"
+
+profile::ts::opensplicedds::ensure: "6.10.4-6.el7"

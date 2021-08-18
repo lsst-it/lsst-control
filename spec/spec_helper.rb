@@ -28,6 +28,20 @@ default_facts = {
   facterversion: Facter.version,
 }
 
+def lsst_sites
+  %w[
+    dev
+    ls
+    cp
+    tu
+  ]
+end
+
+def lsst_roles
+  role_dir = File.join(control_hiera_path, 'org', 'lsst', 'role')
+  Dir.entries(role_dir).grep_v(%r{^\.}).map { |x| x.sub('.yaml', '') }
+end
+
 default_fact_files = [
   File.expand_path(File.join(File.dirname(__FILE__), 'default_facts.yml')),
   File.expand_path(File.join(File.dirname(__FILE__), 'default_module_facts.yml')),
@@ -71,6 +85,12 @@ end
 
 def node_files
   Dir.children(node_dir)
+end
+
+shared_context 'with site.pp', :site do
+  before(:context) { RSpec.configuration.manifest = File.join(root_path, 'manifests', 'site.pp') }
+
+  after(:context) { RSpec.configuration.manifest = nil }
 end
 
 # 'spec_overrides' from sync.yml will appear below this line

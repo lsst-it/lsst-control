@@ -87,4 +87,10 @@ def node_files
   Dir.children(node_dir)
 end
 
+shared_context 'with site.pp', :site do
+  before(:context) { RSpec.configuration.manifest = File.join(root_path, 'manifests', 'site.pp') }
+
+  after(:context) { RSpec.configuration.manifest = nil }
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

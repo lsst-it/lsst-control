@@ -26,10 +26,8 @@ I18n/GetText/DecorateString:
   Exclude:
   - spec/**/*
 RSpec/BeforeAfterAll:
-  Description: Beware of using after(:all) as it may cause state to leak between tests.
-    A necessary evil in acceptance testing.
-  Exclude:
-  - spec/acceptance/**/*.rb
+  Description: This rule was also catching before(:context)...
+  Enabled: false
 RSpec/HookArgument:
   Description: Prefer explicit :each argument, matching existing module's style
   EnforcedStyle: each

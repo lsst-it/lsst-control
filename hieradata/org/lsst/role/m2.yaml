@@ -4,7 +4,4 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::ni_packages"
   - "profile::core::x2go_agent"
-  - "profile::core::yum::lsst_ts_private"
-
-packages:
-  - "OpenSpliceDDS-6.9.0-12.el7"
+  - "profile::ts::opensplicedds"

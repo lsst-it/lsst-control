@@ -10,7 +10,7 @@ describe 'profile::ccs::sal_dx' do
     it { is_expected.to contain_yumrepo('lsst-ts-private') }
 
     it do
-      is_expected.to contain_package('OpenSpliceDDS-6.10.4-6.el7')
+      is_expected.to contain_package('OpenSpliceDDS')
         .that_requires('Yumrepo[lsst-ts-private]')
     end
   end

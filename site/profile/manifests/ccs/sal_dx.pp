@@ -3,7 +3,7 @@
 #   Provides base packages for SAL/DDS diagnostics
 #
 class profile::ccs::sal_dx {
-  require profile::core::yum::lsst_ts_private
+  require profile::ts::opensplicedds
 
   $directory = '/opt/lsst-ts'
   $packages = [
@@ -20,10 +20,6 @@ class profile::ccs::sal_dx {
     'etherape',
     'iptraf-ng',
   ]
-
-  package { 'OpenSpliceDDS-6.10.4-6.el7':
-    ensure => present,
-  }
 
   yum::group { 'Development Tools':
     ensure => present,

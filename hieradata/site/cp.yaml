@@ -95,11 +95,6 @@ chrony::servers: *ntpservers
 ntp::servers: *ntpservers
 resolv_conf::nameservers: *nameservers
 resolv_conf::searchpath: *dnsdomains
-# Use NFSv4 on NFS enabled hosts.
-# @see site/cp/role/nfsserver.yaml
-nfs::nfs_v4: true
-nfs::nfs_v4_client: true
-nfs::nfs_v4_idmap_domain: "%{::domain}"
 
 accounts::user_list:
   root:

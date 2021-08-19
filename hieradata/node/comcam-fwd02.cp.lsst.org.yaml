@@ -1,5 +1,4 @@
 ---
-profile::ccs::common::sysctls: false
 profile::ccs::daq_interface::hwaddr: "f8:f2:1e:56:95:f0"
 profile::ccs::daq_interface::uuid: "b92aa237-1b70-4a2b-9bbb-da15a3f0e599"
 profile::ccs::daq_interface::was: "p2p1"

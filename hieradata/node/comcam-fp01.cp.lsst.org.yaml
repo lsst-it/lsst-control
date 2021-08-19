@@ -1,6 +1,4 @@
 ---
-# allow net.core.[rw]mem_max to be set higher
-profile::ccs::common::sysctls: false
 profile::ccs::daq_interface::hwaddr: "b4:96:91:4d:d2:5c"
 profile::ccs::daq_interface::uuid: "995511a3-a10e-490d-b65e-c0e40fc3e233"
 profile::ccs::daq_interface::was: "p1p1"

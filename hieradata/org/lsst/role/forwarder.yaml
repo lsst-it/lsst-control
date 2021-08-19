@@ -13,6 +13,7 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::docker"
   - "profile::core::docker::prune"
+  - "profile::core::sysctl::lhn"
   - "python"
 
 # install docker-compose at system level

@@ -15,11 +15,7 @@ describe 'test1.dev.lsst.org', :site do
           }
         end
 
-        it do
-          # is_host_example
-          is_expected.to compile.with_all_deps
-        end
-
+        it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('profile::core::common') }
         it { is_expected.to contain_class('profile::core::debugutils') }
         it { is_expected.to contain_class('profile::core::ni_packages') }
@@ -33,5 +29,5 @@ describe 'test1.dev.lsst.org', :site do
         end
       end
     end # site
-  end  # role
+  end # role
 end

@@ -42,7 +42,7 @@ mod 'puppetlabs/docker',
   ref: 'production'
 mod 'puppetlabs/reboot', '2.2.0'
 mod 'puppet/python', '3.0.1'
-mod 'derdanne/nfs', '2.1.2'
+mod 'derdanne/nfs', '2.1.6'
 mod 'jhoblitt/ipmi', '2.3.0'
 mod 'puppet/lldpd', '3.0.0'
 mod 'puppet/rabbitmq', '11.1.0'

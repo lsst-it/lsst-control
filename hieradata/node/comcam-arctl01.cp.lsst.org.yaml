@@ -53,31 +53,6 @@ network::mroutes_hash:
     ensure: "absent"
     routes: {}
 
-sysctl::values::args:
-  # lhn tuning
-  # See https://fasterdata.es.net/host-tuning/linux/
-  net.core.rmem_max:
-    value: 536870912
-    target: &tcpip "/etc/sysctl.d/93-tcp_ip.conf"
-  net.core.wmem_max:
-    value: 536870912
-    target: *tcpip
-  net.ipv4.tcp_rmem:
-    value: "4096 87380 536870912"
-    target: *tcpip
-  net.ipv4.tcp_wmem:
-    value: "4096 65536 536870912"
-    target: *tcpip
-  net.ipv4.tcp_congestion_control:
-    value: "htcp"
-    target: *tcpip
-  net.ipv4.tcp_mtu_probing:
-    value: 1
-    target: *tcpip
-  net.core.default_qdisc:
-    value: "fq"
-    target: *tcpip
-
 # 139.229.146.0/24    antu
 # 139.229.160.0/24    cp general & andes
 # 139.229.165.0/24    cp archive

@@ -3,6 +3,8 @@ easy_ipa::domain_join_password: "foofoofoofoo"  # 8 char min
 easy_ipa::admin_password: "foofoofoofoo"  # ipa master only
 easy_ipa::directory_services_password: "foofoofoofoo"  # ipa master only
 
+profile::archive::rabbitmq::queue_password: "foo"
+profile::archive::rabbitmq::queue_user: "foo"
 profile::ccs::postfix::auth: "foo"
 profile::core::monitoring::database: "foo"
 profile::core::monitoring::password: "foo"

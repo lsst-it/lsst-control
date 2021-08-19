@@ -164,3 +164,11 @@ profile::core::sysctl::lhn::sysctls:
   net.core.default_qdisc:
     value: "fq"
     target: *tcpip
+
+profile::ccs::sysctl::sysctls:
+  net.core.rmem_max:
+    value: 18874368
+    target: &daqccs "/etc/sysctl.d/99-lsst-daq-ccs.conf"
+  net.core.wmem_max:
+    value: 18874368
+    target: *daqccs

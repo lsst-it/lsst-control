@@ -38,7 +38,7 @@ dhcp::pools:
     network: "140.252.147.16"
     mask: "255.255.255.240"
     gateway: "140.252.147.17"
-    range: "140.252.147.25 140.252.147.30"
+    range: "140.252.147.24 140.252.147.30"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan3070:  # comcam
     network: "140.252.147.32"

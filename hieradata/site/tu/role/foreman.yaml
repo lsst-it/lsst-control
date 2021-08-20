@@ -50,7 +50,7 @@ dhcp::pools:
     network: "140.252.147.48"
     mask: "255.255.255.240"
     gateway: "140.252.147.49"
-    range: "140.252.147.58 140.252.147.62"
+    range: "140.252.147.56 140.252.147.62"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan3080:  # misc
     network: "140.252.147.64"

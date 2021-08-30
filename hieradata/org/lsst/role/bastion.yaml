@@ -4,3 +4,6 @@
 classes:
   - "profile::core::common"
   - "profile::core::x2go_agent"
+packages:
+  - "tmux"
+  - "rsync"

@@ -57,7 +57,7 @@ class profile::ts::nexusctio (
     GtqYBCi14V6IEZbVzYeIz1EkT12RP7CtnWYbJN/zyenK3LMowkPigythoAY8tRzL
     eO+RKR5uzsEbWmMvQkTP
     =vYiw
-    -----END PGP PUBLIC KEY BLOCK----- 
+    -----END PGP PUBLIC KEY BLOCK-----
     | GPG
 
   file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-MSO':

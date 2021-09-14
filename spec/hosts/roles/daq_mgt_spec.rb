@@ -58,6 +58,11 @@ describe 'daq-mgt role', :site do
     end
   end # site
 
+  # XXX is it wrong to tie role and host specific details together?  This may
+  # cause grief when refactoring in the future but it is also the only way to
+  # fully test features when depend upon host specific data.  An alternative
+  # would be to construct an alternate hiera hierarchy for testing each role
+  # with synthetic node data.
   context 'when host atsdaq-mgmt.cp.lsst.org', :site do
     let(:facts) { { fqdn: 'atsdaq-mgmt.cp.lsst.org' } }
     let(:node_params) do
@@ -75,7 +80,6 @@ describe 'daq-mgt role', :site do
       )
     end
 
-
     it do
       is_expected.to contain_class('hosts').with(
         host_entries: {
@@ -83,6 +87,24 @@ describe 'daq-mgt role', :site do
             'ip' => '192.168.101.2',
           },
         },
+      )
+    end
+  end
+
+  context 'when host daq-mgt.tu.lsst.org', :site do
+    let(:facts) { { fqdn: 'daq-mgt.tu.lsst.org' } }
+    let(:node_params) do
+      super().merge(
+        site: 'tu',
+      )
+    end
+
+    include_examples 'generic daq manager'
+    include_examples 'lsst-daq dhcp-server'
+
+    it do
+      is_expected.to contain_network__interface('p2p1').with(
+        ensure: 'absent',
       )
     end
   end

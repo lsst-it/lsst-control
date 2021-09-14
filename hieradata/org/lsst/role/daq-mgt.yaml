@@ -4,7 +4,6 @@ classes:
   - "profile::core::common"
   - "dhcp"
 
-profile::ccs::facts::daq: true
 # enable ntp server for DAQ
 chrony::port: 123
 chrony::queryhosts:

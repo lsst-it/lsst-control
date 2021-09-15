@@ -1,6 +1,6 @@
 # @summary
 #   Installs and configures all required packages for EAS Raspberry Pi
-class profile::core::rpi {
+class profile::ts::rpi {
   include snapd
 
   #<------------ Variables -------------->

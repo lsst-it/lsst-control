@@ -153,6 +153,26 @@ class profile::ts::rpi {
     /opt/conda/miniforge/bin/pip install .
     | RUN
 
+  $gpio_config = @(CONFIG)
+    enable_uart=1
+    dtoverlay=disable-bt
+    dtoverlay=uart1
+    dtoverlay=uart2
+    dtoverlay=uart3
+    dtoverlay=uart4
+    gpio=11,17,18,23=op,dh
+    gpio=3,7,24=ip
+    | CONFIG
+
+  $minicom_config = @(MINICOM)
+    pu port /dev/ttyAMA1
+    pu baudrate 19200
+    pu bits 8
+    pu parity N
+    pu stopbits 1
+    pu rtscts No
+    | MINICOM
+
   #  Repo Array
   $repo_name = [
     "libgphoto2,${libgphoto},test -f /usr/local/lib/pkgconfig/libgphoto2.pc,https://github.com/gphoto/libgphoto2/releases/download/v2.5.27/libgphoto2-2.5.27.tar.bz2,libgphoto2.tar.bz2,${libgphoto_version}",
@@ -332,4 +352,18 @@ class profile::ts::rpi {
     unless   => 'test -d /opt/conda/miniforge/lib/python3.8/site-packages/rawpy',
   }
   #<----END Compile and Install rawpy-------->
+  #
+  #
+  #<---------GPIO and Minicom config--------->
+  file { '/boot/config.txt':
+    ensure  => present,
+    mode    => '0755',
+    content => $gpio_config
+  }
+  file { '/etc/minirc.dfl':
+    ensure  => present,
+    mode    => '0755',
+    content => $minicom_config
+  }
+  #<------END GPIO and Minicom config-------->
 }

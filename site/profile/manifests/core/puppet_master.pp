@@ -12,6 +12,7 @@ class profile::core::puppet_master (
   include foreman
   include foreman::cli
   include foreman::compute::libvirt
+  include foreman::compute::vmware
   include foreman::plugin::remote_execution
   include foreman::plugin::tasks
   include foreman_proxy

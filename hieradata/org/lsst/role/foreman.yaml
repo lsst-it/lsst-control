@@ -62,6 +62,7 @@ apache::mod::proxy::proxy_timeout: 300  # seconds -- allow long operations over 
 # copied from /etc/foreman-installer/scenarios.d/foreman-answers.yaml
 foreman::apache: true
 foreman::compute::libvirt: true
+foreman::compute::vmware: true
 #foreman::db_password:  # secret
 #foreman::db_username:  # secret
 foreman::dynflow_manage_services: true

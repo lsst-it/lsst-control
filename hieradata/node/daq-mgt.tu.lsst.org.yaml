@@ -29,3 +29,7 @@ network::interfaces_hash:
   # p2p1 -> lsst-daq
   p2p2:
     <<: *not_connected
+
+hosts::host_entries:
+  "tts-sm":
+    ip: "10.0.0.212"

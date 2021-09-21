@@ -35,6 +35,19 @@ class profile::icinga::master (
   #Letsencrypt cert path
   $le_root = "/etc/letsencrypt/live/${master_fqdn}"
 
+  #incubator script
+  $incubator_script = @(INCUBATOR/L)
+    MODULE_NAME=incubator
+    MODULE_VERSION=v0.6.0
+    MODULES_PATH="/usr/share/icingaweb2/modules"
+    MODULE_PATH="${MODULES_PATH}/${MODULE_NAME}"
+    RELEASES="https://github.com/Icinga/icingaweb2-module-${MODULE_NAME}/archive"
+    mkdir "$MODULE_PATH" \
+    && wget -q $RELEASES/${MODULE_VERSION}.tar.gz -O - \
+    | tar xfz - -C "$MODULE_PATH" --strip-components 1
+    icingacli module enable "${MODULE_NAME}"
+    | INCUBATOR
+
   #pnp4nagios webpage integration
   $pnp4nagios_conf = @(PNPNAGIOS/L)
     location /pnp4nagios {
@@ -55,6 +68,7 @@ class profile::icinga::master (
             fastcgi_pass 127.0.0.1:9000;
     }
     | PNPNAGIOS
+
   #PNP plugin configuration
   $pnp_conf = @(PNP/)
     [pnp4nagios]
@@ -63,6 +77,7 @@ class profile::icinga::master (
     menu_disabled = "0"
     default_query = "host=icinga-master.ls.lsst.org&srv=MasterPingService"
     | PNP
+
   #Icinga tls keys
   $ssl_cert       = '/etc/ssl/certs/icinga.crt'
   $ssl_key        = '/etc/ssl/certs/icinga.key'
@@ -141,12 +156,12 @@ class profile::icinga::master (
   }
   ##Icinga2 Config
   class { '::icinga2':
-    confd       => false,
-    constants   => {
+    confd     => false,
+    constants => {
       'ZoneName'   => 'master',
       'TicketSalt' => $ca_salt,
     },
-    features    => ['checker','mainlog','statusdata','compatlog','command'],
+    features  => ['checker','mainlog','statusdata','compatlog','command'],
   }
   class { '::icinga2::feature::idomysql':
     user          => $mysql_icingaweb_user,
@@ -314,27 +329,46 @@ class profile::icinga::master (
     content => $pnp4nagios_conf,
     mode    => '0644',
   }
-  ##IcingaWeb Reactbundle
-  class { 'icingaweb2::module::reactbundle':
-    ensure         => present,
-    git_repository => 'https://github.com/Icinga/icingaweb2-module-reactbundle',
-    git_revision   => 'v0.7.0',
-    require        => Class['::icingaweb2'],
+  ##IcingaWeb PHP
+  archive { '/tmp/icinga-php':
+    ensure       => present,
+    extract      => true,
+    extract_path => '/tmp',
+    source       => 'https://github.com/Icinga/icinga-php-thirdparty/archive/refs/tags/v0.10.0.tar.gz',
+    creates      => '/usr/share/icinga-php/vendor',
+    cleanup      => true,
+    require      => Class['::icingaweb2'],
   }
+
   ##IcingaWeb IPL
-  class { 'icingaweb2::module::ipl':
-    ensure         => present,
-    git_repository => 'https://github.com/Icinga/icingaweb2-module-ipl',
-    git_revision   => 'v0.3.0',
-    require        => Class['::icingaweb2'],
+  archive { '/tmp/icinga-ipl':
+    ensure       => present,
+    extract      => true,
+    extract_path => '/tmp',
+    source       => 'https://github.com/Icinga/icinga-php-library/archive/refs/tags/v0.6.1.tar.gz',
+    creates      => '/usr/share/icinga-php/ipl',
+    cleanup      => true,
+    require      => Class['::icingaweb2'],
   }
+
   ##IcingaWeb Incubator
-  class { 'icingaweb2::module::incubator':
-    ensure         => present,
-    git_repository => 'https://github.com/Icinga/icingaweb2-module-incubator',
-    git_revision   => 'v0.5.0',
-    require        => Class['::icingaweb2'],
+  archive { '/tmp/icinga-incubator':
+    ensure       => present,
+    extract      => true,
+    extract_path => '/tmp',
+    source       => 'https://github.com/Icinga/icingaweb2-module-incubator/archive/refs/tags/v0.6.0.tar.gz',
+    creates      => '/usr/share/icinga-php/ipl',
+    cleanup      => true,
+    require      => Class['::icingaweb2'],
   }
+  -> exec { $incubator_script:
+    cwd      => '/tmp',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    #onlyif   => $host_cond,
+    loglevel => debug
+  }
+
   ##Nginx Resource Definition
   nginx::resource::server { 'icingaweb2':
     server_name          => [$master_fqdn],

@@ -20,8 +20,12 @@ network::interfaces_hash:
     <<: *not_connected
   em3:
     <<: *not_connected
-  em4:
-    <<: *not_connected
+  em4:  # 10.0.0/24
+    bootproto: "none"
+    ipaddress: "10.0.0.1"
+    netmask: "255.255.255.0"
+    onboot: "yes"
+    type: "Ethernet"
   # p2p1 -> lsst-daq
   p2p2:
     <<: *not_connected

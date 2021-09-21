@@ -86,6 +86,7 @@ class profile::icinga::master (
     'git',
     'pnp4nagios',
     'nagios-plugins-all',
+    'php-intl'
   ]
 
   #MySql options

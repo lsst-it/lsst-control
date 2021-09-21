@@ -27,14 +27,39 @@ class profile::icinga::master (
 
   #<-------------Variables Definition---------------->
 
-  #Implicit usage of facts
+  #  Implicit usage of facts
   $master_fqdn  = $facts[fqdn]
   $master_ip  = $facts[ipaddress]
 
-  #Letsencrypt cert path
+  #  Letsencrypt cert path
   $le_root = "/etc/letsencrypt/live/${master_fqdn}"
 
-  #incubator script
+  #  Director Service
+  $director_service = @(SERVICE)
+    [Unit]
+    Description=Icinga Director - Monitoring Configuration
+    Documentation=https://icinga.com/docs/director/latest/
+    Wants=network.target
+
+    [Service]
+    EnvironmentFile=-/etc/default/icinga-director
+    EnvironmentFile=-/etc/sysconfig/icinga-director
+    ExecStart=/bin/icingacli director daemon run
+    ExecReload=/bin/kill -HUP ${MAINPID}
+    User=icingadirector
+    SyslogIdentifier=icingadirector
+    Type=notify
+
+    NotifyAccess=main
+    WatchdogSec=10
+    RestartSec=30
+    Restart=always
+
+    [Install]
+    WantedBy=multi-user.target
+    | SERVICE
+
+  #  incubator script
   $incubator_script = @(INCUBATOR/L)
     MODULE_NAME=incubator
     MODULE_VERSION=v0.6.0
@@ -47,7 +72,7 @@ class profile::icinga::master (
     icingacli module enable "${MODULE_NAME}"
     | INCUBATOR
 
-  #pnp4nagios webpage integration
+  #  pnp4nagios webpage integration
   $pnp4nagios_conf = @(PNPNAGIOS/L)
     location /pnp4nagios {
             alias  /usr/share/nagios/html/pnp4nagios;
@@ -68,7 +93,7 @@ class profile::icinga::master (
     }
     | PNPNAGIOS
 
-  #PNP plugin configuration
+  #  PNP plugin configuration
   $pnp_conf = @(PNP/)
     [pnp4nagios]
     config_dir = "/etc/pnp4nagios"
@@ -285,6 +310,11 @@ class profile::icinga::master (
     api_username  => $api_user,
     api_password  => $api_pwd,
     require       => Mysql::Db[$mysql_director_db],
+  }
+  -> systemd::unit_file { 'icinga-director.service':
+    content => $director_service,
+    enable  => true,
+    active  => true,
   }
 
   ##IcingaWeb PNP

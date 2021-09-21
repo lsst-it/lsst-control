@@ -5,6 +5,7 @@ classes:
   - "profile::icinga::resources"
   - "profile::icinga::network"
   - "profile::icinga::plugins"
+  - "profile::icinga::opsgenie"
 packages:
   - "bash-completion"
   - "bash-completion-extras"
@@ -20,3 +21,5 @@ profile::icinga::master::ldap_group_base: "cn=groups,cn=accounts,dc=lsst,dc=clou
 #MySQL values
 profile::icinga::master::mysql_icingaweb_db: "icinga"
 profile::icinga::master::mysql_director_db: "director"
+#OpsGenie User
+profile::icinga::opsgenie::pager_user: "opsgenie-notifier"

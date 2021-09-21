@@ -6,7 +6,6 @@ class profile::icinga::resources (
   String $site,
   String $dhcp_server,
 ) {
-  include perl
   #<----------Variables Definition------------>
   #Implicit usage of facts
   $master_fqdn  = $facts['networking']['fqdn']
@@ -284,8 +283,7 @@ class profile::icinga::resources (
   #<-------------------------Packages Installation------------------------>
   #Packages Installation
   package { 'perl-Net-SNMP':
-    ensure  => 'present',
-    require => Yumrepo['perl'],
+    ensure  => 'present'
   }
   #<----------------------END-Packages Installation----------------------->
   #

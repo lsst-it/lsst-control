@@ -5,13 +5,12 @@ class profile::icinga::opsgenie (
   String $opsgenie_api,
   String $credentials_hash,
   String $pager_user,
-){
-
+) {
   #<-------------------------Variables Definition------------------------->
-  #Implicit usage of facts
+  #  Implicit usage of facts
   $master_fqdn  = $facts['networking']['fqdn']
 
-  #Names Definition
+  #  Names Definition
   $user_template                   = "${pager_user}-template"
   $command_host_name               = 'notify-cmd-host'
   $command_svc_name                = 'notify-cmd-svc'
@@ -20,7 +19,7 @@ class profile::icinga::opsgenie (
   $host_notification_name          = 'notify-host'
   $svc_notification_name           = 'notify-service'
 
-  #Commands abreviation
+  #  Commands abreviation
   $url_cmd     = "https://${master_fqdn}/director/command"
   $url_notify  = "https://${master_fqdn}/director/notification"
   $url_usr     = "https://${master_fqdn}/director/user"
@@ -30,12 +29,12 @@ class profile::icinga::opsgenie (
   $icinga_path = '/opt/icinga'
   $lt          = '| grep Failed'
 
-  #Notification Template Array
+  #  Notification Template Array
   $notification_template = [
     "${command_host_name},${host_notification_template_name}",
     "${command_svc_name},${svc_notification_template_name}",
   ]
-  #Notifications Array
+  #  Notifications Array
   $notification = [
     "${host_notification_template_name},${host_notification_name},host",
     "${svc_notification_template_name},${svc_notification_name},service",
@@ -70,7 +69,7 @@ class profile::icinga::opsgenie (
   #
   #
   #<-------------------Files Creation and deployement--------------------->
-  ##User Template Creation
+  #  User Template Creation
   $user_template_path = "${$icinga_path}/${user_template}.json"
   $user_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_usr}?name=${user_template}' ${lt}"
   $user_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_usr}' -d @${user_template_path}"
@@ -94,7 +93,7 @@ class profile::icinga::opsgenie (
     loglevel => debug,
   }
 
-  ##User Creation
+  #  User Creation
   $pager_user_path = "${$icinga_path}/${pager_user}.json"
   $pager_user_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_usr}?name=${pager_user}' ${lt}"
   $pager_user_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_usr}' -d @${pager_user_path}"
@@ -102,15 +101,15 @@ class profile::icinga::opsgenie (
   file { $pager_user_path:
     ensure  => 'present',
     content => @("USER_CONTENT"/)
-    {
-    "display_name": "Alert System Notification",
-    "imports": [
-      "${user_template}"
-    ],
-    "object_name": "${pager_user}",
-    "object_type": "object"
-    }
-    | USER_CONTENT
+      {
+        "display_name": "Alert System Notification",
+        "imports": [
+          "${user_template}"
+        ],
+        "object_name": "${pager_user}",
+        "object_type": "object"
+      }
+      | USER_CONTENT
   }
   ->exec { $pager_user_cmd:
     cwd      => $icinga_path,
@@ -120,8 +119,7 @@ class profile::icinga::opsgenie (
     loglevel => debug,
   }
 
-  ##Host and Service Command
-  #Host Command Creation
+  #  Host Command Creation
   $command_host_path = "${$icinga_path}/${command_host_name}.json"
   $command_host_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_cmd}?name=${command_host_name}' ${lt}"
   $command_host_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_cmd}' -d @${command_host_path}"
@@ -246,7 +244,7 @@ class profile::icinga::opsgenie (
     onlyif   => $command_host_cond,
     loglevel => debug,
   }
-  #Service Command Creation
+  #  Service Command Creation
   $command_svc_path = "${$icinga_path}/${command_svc_name}.json"
   $command_svc_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_cmd}?name=${command_svc_name}' ${lt}"
   $command_svc_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_cmd}' -d @${command_svc_path}"
@@ -451,8 +449,8 @@ class profile::icinga::opsgenie (
     loglevel => debug,
   }
 
-  #Notification Templates
-  $notification_template.each |$ntemplate|{
+  #  Notification Templates
+  $notification_template.each |$ntemplate| {
     $value = split($ntemplate, ',')
     $notification_template_path = "${$icinga_path}/${value[1]}.json"
     $notification_template_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${value[1]}' ${lt}"
@@ -478,18 +476,18 @@ class profile::icinga::opsgenie (
       path     => ['/sbin', '/usr/sbin', '/bin'],
       provider => shell,
       onlyif   => $notification_template_cond,
-      loglevel => debug,
+      loglevel => debug
     }
   }
 
-  # ##Host and Services Notification
-  $notification.each |$notify|{
+  # Host and Services Notification
+  $notification.each |$notify| {
     $value = split($notify,',')
     $notification_path = "${$icinga_path}/${value[1]}.json"
     $notification_cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_notify}?name=${value[1]}' ${lt}"
     $notification_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${notification_path}"
 
-    #Create Host Notification file
+    #  Create Host Notification file
     file { $notification_path:
       ensure  => 'present',
       content => @("HOST_NOTIFICATION")

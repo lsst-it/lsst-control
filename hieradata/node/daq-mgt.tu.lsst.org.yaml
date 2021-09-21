@@ -1,0 +1,35 @@
+---
+profile::ccs::daq_interface::hwaddr: "40:a6:b7:20:50:24"
+profile::ccs::daq_interface::uuid: "512124b2-7b70-40ed-9edc-746c121b651c"
+profile::ccs::daq_interface::was: "p2p1"
+profile::ccs::daq_interface::mode: "dhcp-server"
+
+network::interfaces_hash:
+  p1p1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  p1p2: &not_connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em1:
+    <<: *not_connected
+  em2:
+    <<: *not_connected
+  em3:
+    <<: *not_connected
+  em4:  # 10.0.0/24
+    bootproto: "none"
+    ipaddress: "10.0.0.1"
+    netmask: "255.255.255.0"
+    onboot: "yes"
+    type: "Ethernet"
+  # p2p1 -> lsst-daq
+  p2p2:
+    <<: *not_connected
+
+hosts::host_entries:
+  "tts-sm":
+    ip: "10.0.0.212"

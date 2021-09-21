@@ -141,7 +141,6 @@ class profile::icinga::master (
   }
   ##Icinga2 Config
   class { '::icinga2':
-    manage_repo => true,
     confd       => false,
     constants   => {
       'ZoneName'   => 'master',
@@ -272,18 +271,6 @@ class profile::icinga::master (
     api_username  => $api_user,
     api_password  => $api_pwd,
     require       => Mysql::Db[$mysql_director_db],
-  }
-  #  Director Dameon
-  class { 'icingaweb2::module::director::service':
-    ensure      => 'running',
-    enable      => true,
-    user        => 'icingadirector',
-    group       => 'icingaweb2',
-    manage_user => true,
-  }
-  systemd::unit_file { 'icinga-director.service':
-    content => template('icingaweb2/icinga-director.service.erb'),
-    notify  => Service['icinga-director'],
   }
 
   ##IcingaWeb PNP

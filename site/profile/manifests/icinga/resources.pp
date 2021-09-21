@@ -206,7 +206,7 @@ class profile::icinga::resources (
     "${dtn_template},0",
     "${tls_template},1",
   ]
-  #Host Groups Array
+  #Host Groups Array and ESXi Hosts
   if $site == 'base' {
     $hostgroups_name = [
       "${antu},AntuCluster,antu_cluster,host.display_name=%22antu%2A%22",
@@ -218,6 +218,12 @@ class profile::icinga::resources (
       "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
       "${bdc},BDC-Servers,bdc_servers,!(host.display_name=%22bdc%2A%22|host.display_name=%22Vlan%2A%22|host.display_name=%22nob%2A%22|host.display_name=%22rubinobs%2A%22)",
     ]
+    $esxi_list  = [
+      'vsphere04.ls.lsst.org,139.229.135.37',
+      'vsphere05.ls.lsst.org,139.229.135.38',
+      'vsphere06.ls.lsst.org,139.229.135.39',
+      'vcenter.cp.lsst.org,139.229.160.60'
+    ]
   }
   elsif $site == 'summit' {
     $hostgroups_name = [
@@ -225,6 +231,12 @@ class profile::icinga::resources (
       "${core},CoreCluster,core_cluster,host.display_name=%22core%2A%22",
       "${comcam},ComcamCluster,comcam_cluster,host.display_name=%22comcam%2A%22",
       "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
+    ]
+    $esxi_list  = [
+      'vsphere01.cp.lsst.org,139.229.160.57',
+      'vsphere02.cp.lsst.org,139.229.160.58',
+      'vsphere03.cp.lsst.org,139.229.160.59',
+      'vcenter.cp.lsst.org,139.229.160.60'
     ]
   }
 

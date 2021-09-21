@@ -23,7 +23,6 @@ class profile::icinga::master (
   String $ca_salt,
 ) {
   include profile::core::letsencrypt
-  include remi
   include nginx
 
   #<-------------Variables Definition---------------->
@@ -79,14 +78,13 @@ class profile::icinga::master (
     | PNP
 
   #Icinga tls keys
-  $ssl_cert       = '/etc/ssl/certs/icinga.crt'
-  $ssl_key        = '/etc/ssl/certs/icinga.key'
+  $ssl_cert  = '/etc/ssl/certs/icinga.crt'
+  $ssl_key   = '/etc/ssl/certs/icinga.key'
 
   #Package installation
   $packages = [
     'git',
     'pnp4nagios',
-    'centos-release-scl',
     'nagios-plugins-all',
   ]
 
@@ -365,8 +363,8 @@ class profile::icinga::master (
     cwd      => '/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    #onlyif   => $host_cond,
-    loglevel => debug
+    unless   => 'test -d /etc/icingaweb2/enabledModules/incubator/',
+    #loglevel => debug
   }
 
   ##Nginx Resource Definition

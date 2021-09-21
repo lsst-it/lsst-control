@@ -12,7 +12,6 @@ packages:
   - "vim"
 
 #LDAP Values
-profile::icinga::master::ldap_server: "139.229.135.6"
 profile::icinga::master::ldap_root: "cn=accounts,dc=lsst,dc=cloud"
 profile::icinga::master::ldap_resource: "rubinobs"
 profile::icinga::master::ldap_user_filter: "(memberof=cn=icinga-*,cn=groups,cn=accounts,dc=lsst,dc=cloud)"

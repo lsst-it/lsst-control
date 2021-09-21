@@ -3,8 +3,10 @@
 
 class profile::icinga::resources (
   String $credentials_hash,
+  String $site,
   String $dhcp_server,
 ) {
+  include perl
   #<----------Variables Definition------------>
   #Implicit usage of facts
   $master_fqdn  = $facts['networking']['fqdn']
@@ -117,6 +119,7 @@ class profile::icinga::resources (
   $dtn_svc_lhn_name     = 'LHN_Link'
 
   #Hostgroups Names
+  $andes    = 'andes_cluster'
   $antu     = 'antu_cluster'
   $ruka     = 'ruka_cluster'
   $kueyen   = 'kueyen_cluster'
@@ -165,7 +168,7 @@ class profile::icinga::resources (
     "${comcam_template},${$user_svc_template_name},${comcam_svc_user_name}",
     "${comcam_template},${$cpu_svc_template_name},${comcam_svc_cpu_name}",
     "${comcam_template},${$nic_svc_template_name},${comcam_svc_nic_name}",
-    "comcam-fp01.ls.lsst.org,${$nic2_svc_template_name},${comcam_svc_nic2_name}",
+    "comcam-fp01.cp.lsst.org,${$nic2_svc_template_name},${comcam_svc_nic2_name}",
     "${http_template},${$http_svc_template_name},${http_svc_name}",
     "${http_template},${$ping_svc_template_name},${http_svc_ping_name}",
     "${http_template},${$disk_svc_template_name},${http_svc_disk_name}",
@@ -204,16 +207,27 @@ class profile::icinga::resources (
     "${tls_template},1",
   ]
   #Host Groups Array
-  $hostgroups_name = [
-    "${antu},AntuCluster,antu_cluster,host.display_name=%22antu%2A%22",
-    "${ruka},RukaCluster,ruka_cluster,host.display_name=%22ruka%2A%22",
-    "${kueyen},KueyenCluster,kueyen_cluster,host.display_name=%22kueyen%2A%22",
-    "${core},CoreCluster,core_cluster,host.display_name=%22core%2A%22",
-    "${comcam},ComcamCluster,comcam_cluster,host.display_name=%22comcam%2A%22",
-    "${ls_nodes},LS_Nodes,ls_nodes,ls",
-    "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
-    "${bdc},BDC-Servers,bdc_servers,!(host.display_name=%22bdc%2A%22|host.display_name=%22Vlan%2A%22|host.display_name=%22nob%2A%22|host.display_name=%22rubinobs%2A%22)",
-  ]
+  if $site == 'base' {
+    $hostgroups_name = [
+      "${antu},AntuCluster,antu_cluster,host.display_name=%22antu%2A%22",
+      "${ruka},RukaCluster,ruka_cluster,host.display_name=%22ruka%2A%22",
+      "${kueyen},KueyenCluster,kueyen_cluster,host.display_name=%22kueyen%2A%22",
+      "${core},CoreCluster,core_cluster,host.display_name=%22core%2A%22",
+      "${comcam},ComcamCluster,comcam_cluster,host.display_name=%22comcam%2A%22",
+      "${ls_nodes},LS_Nodes,ls_nodes,ls",
+      "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
+      "${bdc},BDC-Servers,bdc_servers,!(host.display_name=%22bdc%2A%22|host.display_name=%22Vlan%2A%22|host.display_name=%22nob%2A%22|host.display_name=%22rubinobs%2A%22)",
+    ]
+  }
+  elsif $site == 'summit' {
+    $hostgroups_name = [
+      "${andes},AndesCluster,andes_cluster,host.display_name=%22andes%2A%22",
+      "${core},CoreCluster,core_cluster,host.display_name=%22core%2A%22",
+      "${comcam},ComcamCluster,comcam_cluster,host.display_name=%22comcam%2A%22",
+      "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
+    ]
+  }
+
   #Service Groups Array
   $servicegroup_name = [
     "${http_svc},${http_svc}Group",
@@ -256,15 +270,6 @@ class profile::icinga::resources (
   #
   #
   #<-------------------------Packages Installation------------------------>
-  yumrepo { 'perl':
-    ensure   => 'present',
-    enabled  => true,
-    descr    => 'Perl Modules (CentOS_7)',
-    baseurl  => 'http://download.opensuse.org/repositories/home:/csbuild:/Perl/CentOS_7/',
-    gpgcheck => true,
-    gpgkey   => 'http://download.opensuse.org/repositories/home:/csbuild:/Perl/CentOS_7/repodata/repomd.xml.key',
-    target   => '/etc/yum.repos.d/perl.repo',
-  }
   #Packages Installation
   package { 'perl-Net-SNMP':
     ensure  => 'present',
@@ -536,8 +541,7 @@ class profile::icinga::resources (
   #
   #
   #<--------------------Files Creation and Deployement-------------------->
-  ##Add Master Host
-  #Create master host file
+  #  Master Host
   file { $addhost_path:
     ensure  => 'present',
     content => @("MASTER_HOST"/L)

@@ -5,6 +5,7 @@ class profile::icinga::agent (
   String $icinga_master_fqdn,
   String $icinga_master_ip,
   String $credentials_hash,
+  String $site,
   String $host_template,
   String $ca_salt,
   String $ssh_port = '22',
@@ -92,56 +93,58 @@ class profile::icinga::agent (
       }
       | CONTENT
   }
-  if ($icinga_agent_fqdn =='comcam-fp01.ls.lsst.org' or $icinga_agent_fqdn =='comcam-mcm.ls.lsst.org') {
-    archive { '/usr/lib64/nagios/plugins/check_netio2':
-      ensure => present,
-      source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
-    }
-    ->file { '/usr/lib64/nagios/plugins/check_netio2':
-      owner => 'root',
-      group => 'icinga',
-      mode  => '4755',
-    }
-    ->file { '/etc/icinga2/features-enabled/netio2.conf':
-      ensure  => 'present',
-      owner   => 'icinga',
-      group   => 'icinga',
-      mode    => '0640',
-      notify  => Service['icinga2'],
-      content => @("CONTENT")
-        object CheckCommand "netio2" {
-          command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
-          arguments = {
-            "-i" = "lsst-daq"
+  if $site == 'summit' {
+    if ($icinga_agent_fqdn =='comcam-fp01.cp.lsst.org' or $icinga_agent_fqdn =='comcam-mcm.cp.lsst.org') {
+      archive { '/usr/lib64/nagios/plugins/check_netio2':
+        ensure => present,
+        source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
+      }
+      ->file { '/usr/lib64/nagios/plugins/check_netio2':
+        owner => 'root',
+        group => 'icinga',
+        mode  => '4755',
+      }
+      ->file { '/etc/icinga2/features-enabled/netio2.conf':
+        ensure  => 'present',
+        owner   => 'icinga',
+        group   => 'icinga',
+        mode    => '0640',
+        notify  => Service['icinga2'],
+        content => @("CONTENT")
+          object CheckCommand "netio2" {
+            command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
+            arguments = {
+              "-i" = "lsst-daq"
+            }
           }
-        }
-        | CONTENT
+          | CONTENT
+      }
     }
-  }
-  if ($icinga_agent_fqdn =='net-dx.cp.lsst.org') {
-    archive { '/usr/lib64/nagios/plugins/check_netio2':
-      ensure => present,
-      source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
-    }
-    ->file { '/usr/lib64/nagios/plugins/check_netio2':
-      owner => 'root',
-      group => 'icinga',
-      mode  => '4755',
-    }
-    ->file { '/etc/icinga2/features-enabled/netio2.conf':
-      ensure  => 'present',
-      owner   => 'icinga',
-      group   => 'icinga',
-      mode    => '0640',
-      notify  => Service['icinga2'],
-      content => @("CONTENT")
-        object CheckCommand "netio2" {
-          command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
-          arguments = {
-            "-i" = "ens224"
+    if ($icinga_agent_fqdn =='net-dx.cp.lsst.org') {
+      archive { '/usr/lib64/nagios/plugins/check_netio2':
+        ensure => present,
+        source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
+      }
+      ->file { '/usr/lib64/nagios/plugins/check_netio2':
+        owner => 'root',
+        group => 'icinga',
+        mode  => '4755',
+      }
+      ->file { '/etc/icinga2/features-enabled/netio2.conf':
+        ensure  => 'present',
+        owner   => 'icinga',
+        group   => 'icinga',
+        mode    => '0640',
+        notify  => Service['icinga2'],
+        content => @("CONTENT")
+          object CheckCommand "netio2" {
+            command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
+            arguments = {
+              "-i" = "ens224"
+            }
           }
-        }
-        | CONTENT
+          | CONTENT
+      }
     }
   }
   #Memory Usage

@@ -69,6 +69,8 @@ mod 'puppetlabs/vcsrepo', '5.0.0'
 mod 'puppet/rsyslog', '4.0.0'
 mod 'puppet/ssh_keygen', '4.0.0'
 
+# 2021-09-21 hreinking: control perl version
+mod 'fatmcgav/perl', '0.1.0'
 # This requires toml-rb, which should be installed on the puppet master.
 # @see profile::core::puppet_master
 mod 'puppet/telegraf', '4.0.0'

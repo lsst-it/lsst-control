@@ -1,9 +1,10 @@
 ---
 classes:
+  - "profile::ccs::common"
+  - "profile::ccs::daq_interface"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
-  - "profile::ccs::common"
   - "ccs_sal"
 
 nfs::client_enabled: true

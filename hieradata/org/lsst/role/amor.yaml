@@ -7,14 +7,6 @@ classes:
   - "profile::core::docker::prune"
   - "python"
 
-docker::networks::networks:
-  dds-network:
-    ensure: "present"
-    driver: "macvlan"
-    subnet: "139.229.170.0/24"
-    gateway: "139.229.170.254"
-    options: ["parent=p2p1"]
-
 # install docker-compose at system level
 python::version: "python36"
 python::pip: "present"
@@ -25,5 +17,8 @@ python::python_pips:
   "docker-compose":
     virtualenv: "system"
     ensure: "1.25.0"
+  "cryptography":
+    virtualenv: "system"
+    ensure: "3.3"
 packages:
   - "git"

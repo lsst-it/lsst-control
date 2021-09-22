@@ -12,7 +12,7 @@ class profile::icinga::agent (
 ) {
   #<-----------------------Variables-Definition--------------------------->
   $packages = [
-    'nagios-plugins-all',
+    'nagios-plugins-all'
   ]
   $nic = $facts['networking']['primary']
   $icinga_agent_fqdn = $facts['networking']['fqdn']

@@ -180,12 +180,13 @@ class profile::icinga::master (
   }
   ##Icinga2 Config
   class { '::icinga2':
-    confd     => false,
-    constants => {
+    manage_repo => true,
+    confd       => false,
+    constants   => {
       'ZoneName'   => 'master',
       'TicketSalt' => $ca_salt,
     },
-    features  => ['checker','mainlog','statusdata','compatlog','command'],
+    features    => ['checker','mainlog','statusdata','compatlog','command'],
   }
   class { '::icinga2::feature::idomysql':
     user          => $mysql_icingaweb_user,

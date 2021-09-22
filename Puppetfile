@@ -47,10 +47,10 @@ mod 'puppet/rabbitmq', '11.1.0'
 mod 'puppet/redis', '6.0.0'
 mod 'puppetlabs/tomcat', '6.0.0'
 mod 'puppet/nginx', '1.1.0'
-# 2020-07-07 hreinking: for icinga deployment
-mod 'icinga/icinga2', '3.1.3'
+# 2021-09-22 hreinking: for icinga deployment
+mod 'icinga-icinga', '2.3.3'
+mod 'icinga-icinga2', '3.1.3'
 mod 'icinga/icingaweb2', '3.1.0'
-mod 'hfm/remi','1.11.0'
 mod 'puppet/php', '7.1.0'
 # 2019-12-18 athebo: added for DIMM Ubuntu VM, we can remove this when the node is rebuilt
 mod 'attachmentgenie/ufw',

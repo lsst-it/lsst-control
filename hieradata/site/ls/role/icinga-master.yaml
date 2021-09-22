@@ -5,3 +5,4 @@ profile::core::common::deploy_icinga_agent: false
 profile::icinga::master::ldap_server: "139.229.135.6"
 profile::icinga::network::site: "base"
 profile::icinga::resources::site: "base"
+profile::icinga::opsgenie::site: "base"

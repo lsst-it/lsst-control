@@ -1,4 +1,0 @@
----
-#Set the Site
-profile::icinga::network::site: "base"
-profile::icinga::resources::site: "base"

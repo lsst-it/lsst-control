@@ -32,7 +32,7 @@ class profile::icinga::agent (
     confd       => false,
     features    => ['mainlog'],
   }
-  ##Icinga2 feature API config
+  #  Icinga2 feature API config
   class { '::icinga2::feature::api':
     ensure          => 'present',
     ca_host         => $icinga_master_ip,
@@ -61,14 +61,14 @@ class profile::icinga::agent (
   #
   #
   #<-------------------------Additional-Plugins--------------------------->
-  #Check disk
+  #  Check disk
   file { '/usr/lib64/nagios/plugins/check_disk':
     owner   => 'root',
     group   => 'root',
     mode    => '4755',
-    require => Package[$packages],
+    require => Package['nagios-plugins-all'],
   }
-  #Network Usage
+  #  Network Usage
   archive { '/usr/lib64/nagios/plugins/check_netio':
     ensure => present,
     source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
@@ -147,7 +147,7 @@ class profile::icinga::agent (
       }
     }
   }
-  #Memory Usage
+  #  Memory Usage
   archive { '/usr/lib64/nagios/plugins/check_mem.pl':
     ensure => present,
     source => 'https://raw.githubusercontent.com/justintime/nagios-plugins/master/check_mem/check_mem.pl',
@@ -157,7 +157,7 @@ class profile::icinga::agent (
     group => 'icinga',
     mode  => '4755',
   }
-  #Logged Users
+  #  Logged Users
   archive { '/usr/lib64/nagios/plugins/check_users':
     ensure => present,
     source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=1530&cf_id=24',
@@ -167,7 +167,7 @@ class profile::icinga::agent (
     group => 'icinga',
     mode  => '4755',
   }
-  #CPU usage
+  #  CPU usage
   archive { '/usr/lib64/nagios/plugins/check_cpu':
     ensure => present,
     source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=580&cf_id=29',
@@ -194,11 +194,11 @@ class profile::icinga::agent (
   #
   #
   #<----------------------Add-Host-to-Icinga-Master----------------------->
-  ##Create a directory to allocate json files
+  #  Create a directory to allocate json files
   file { $icinga_path:
     ensure => 'directory',
   }
-  ## Create host file
+  #  Create host file
   file { $path:
     ensure  => 'present',
     content => @("CONTENT"/L)
@@ -224,7 +224,7 @@ class profile::icinga::agent (
     onlyif   => $cond,
     loglevel => debug,
   }
-  ##Add require packages
+  #  Add require packages
   package { $packages:
     ensure => 'present',
   }

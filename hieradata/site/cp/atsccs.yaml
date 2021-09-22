@@ -1,0 +1,6 @@
+---
+nfs::client_mounts:
+  /data:
+    share: "data"
+    server: "atsdaq1.cp.lsst.org"
+    atboot: true

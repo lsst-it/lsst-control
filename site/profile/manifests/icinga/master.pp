@@ -296,7 +296,14 @@ class profile::icinga::master (
     permissions => 'application/share/navigation,application/stacktraces,application/log,module/director,module/doc,module/incubator,module/ipl,module/monitoring,monitoring/*,module/pnp,module/reactbundle,module/setup,module/translation',
   }
   ##IcingaWeb Director
-  class { 'icingaweb2::module::director':
+  user { 'icingadirector':
+    ensure => 'present',
+    shell  => '/bin/false',
+    gid    => 'icingaweb2',
+    home   => '/var/lib/icingadirector',
+    system => true
+  }
+  -> class { 'icingaweb2::module::director':
     git_revision  => 'v1.7.2',
     db_host       => $master_ip,
     db_name       => $mysql_director_db,

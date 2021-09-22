@@ -125,7 +125,6 @@ class profile::icinga::network (
       'Vlan1127_IT-CCTV,10.17.7.254',
       'Vlan1196_IT-CONTRACTORS,139.229.191.126',
       'Vlan1198_IT-GUEST,139.229.191.254',
-      'Vlan1621_IT-LEGACY,139.229.162.126',
       'Vlan1600_TCS_APP,139.229.178.254',
       'Vlan1601_TCS_EAS,139.229.178.254',
       'Vlan1300_OCS,139.229.167.254',

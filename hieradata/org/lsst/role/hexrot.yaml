@@ -34,6 +34,9 @@ python::python_pips:
   "docker-compose":
     virtualenv: "system"
     ensure: "1.25.0"
+  "cryptography":
+    virtualenv: "system"
+    ensure: "3.3"
 accounts::group_list:
   # this is duplicating the ipa gid as a local group
   &docker_name docker-%{facts.hostname}:

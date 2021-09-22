@@ -17,5 +17,8 @@ python::python_pips:
   "docker-compose":
     virtualenv: "system"
     ensure: "1.25.0"
+  "cryptography":
+    virtualenv: "system"
+    ensure: "3.3"
 packages:
   - "git"

@@ -239,7 +239,7 @@ class profile::icinga::opsgenie (
           "value": "$host.perfdata$"
         }
       },
-      "command": "\/usr\/bin\/icinga2opsgenie",
+      "command": "\/bin\/icinga2opsgenie",
       "methods_execute": "PluginNotification",
       "object_name": "notify-cmd-host",
       "object_type": "object",
@@ -443,7 +443,7 @@ class profile::icinga::opsgenie (
           "value": "$service.perfdata$"
         }        
       },
-      "command": "\/usr\/bin\/icinga2opsgenie",
+      "command": "\/bin\/icinga2opsgenie",
       "methods_execute": "PluginNotification",
       "object_name": "notify-cmd-svc",
       "object_type": "object",

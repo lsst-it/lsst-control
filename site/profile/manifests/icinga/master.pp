@@ -179,6 +179,9 @@ class profile::icinga::master (
     require  => Class['::mysql::server']
   }
   ##Icinga2 Config
+  class { '::icinga::repos':
+    manage_epel         => false
+  }
   class { '::icinga2':
     confd     => false,
     constants => {

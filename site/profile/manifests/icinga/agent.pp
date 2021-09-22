@@ -24,6 +24,9 @@ class profile::icinga::agent (
   #
   #
   #<-------------------------Icinga-Configuration------------------------->
+  class { '::icinga::repos':
+    manage_epel         => false
+  }
   class { '::icinga2':
     confd           => false
   }

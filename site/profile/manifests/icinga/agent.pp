@@ -11,9 +11,6 @@ class profile::icinga::agent (
   String $ssh_port = '22',
 ) {
   #<-----------------------Variables-Definition--------------------------->
-  $packages = [
-    'nagios-plugins-all'
-  ]
   $nic = $facts['networking']['primary']
   $icinga_agent_fqdn = $facts['networking']['fqdn']
   $icinga_agent_ip = $facts['networking']['ip']
@@ -28,9 +25,7 @@ class profile::icinga::agent (
   #
   #<-------------------------Icinga-Configuration------------------------->
   class { '::icinga2':
-    manage_repo => true,
-    confd       => false,
-    features    => ['mainlog'],
+    confd           => false
   }
   #  Icinga2 feature API config
   class { '::icinga2::feature::api':
@@ -224,8 +219,8 @@ class profile::icinga::agent (
     onlyif   => $cond,
     loglevel => debug,
   }
-  #  Add require packages
-  package { $packages:
+  #  Install Nagios plugins
+  package { 'nagios-plugins-all':
     ensure => 'present',
   }
   #<------------------End-Add-Host-to-Icinga-Master----------------------->

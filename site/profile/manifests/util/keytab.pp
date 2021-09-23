@@ -14,8 +14,15 @@ define profile::util::keytab (
   Integer $uid,
   String  $keytab_base64,
 ) {
-  $keytab_path = "/home/${name}/.keytab"
+  $home_path = "/home/${name}"
+  $keytab_path = "${home_path}/.keytab"
 
+  ensure_resource('file', $home_path, {
+      'ensure' => 'directory',
+      owner    => $name,
+      group    => $name,
+      mode     => '0700',
+  })
   file { $keytab_path:
     ensure  => file,
     owner   => $name,

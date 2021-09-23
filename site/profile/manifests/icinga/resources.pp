@@ -24,14 +24,15 @@ class profile::icinga::resources (
   $lt            = '| grep Failed'
 
   #Host Templates Names
-  $host_template   = 'GeneralHostTemplate'
-  $comcam_template = 'ComCamHostTemplate'
-  $http_template   = 'HttpTemplate'
-  $dns_template    = 'DnsTemplate'
-  $master_template = 'MasterTemplate'
-  $ipa_template    = 'IpaTemplate'
-  $tls_template    = 'TlsTemplate'
-  $dtn_template    = 'DtnTemplate'
+  $host_template      = 'GeneralHostTemplate'
+  $comcam_template    = 'ComCamHostTemplate'
+  $http_template      = 'HttpTemplate'
+  $dns_template       = 'DnsTemplate'
+  $master_template    = 'MasterTemplate'
+  $ipa_template       = 'IpaTemplate'
+  $tls_template       = 'TlsTemplate'
+  $dtn_template       = 'DtnTemplate'
+  $stayalive_template = 'OnlyPingTemplate'
 
   #Services Names
   $http_svc  = 'HttpService'
@@ -203,9 +204,10 @@ class profile::icinga::resources (
     "${dns_template},0",
     "${ipa_template},0",
     "${dtn_template},0",
+    "${stayalive_template},0",
     "${tls_template},1",
   ]
-  #Host Groups Array and ESXi Hosts
+  #Host Groups Array, ESXi Hosts and nodes
   if $site == 'base' {
     $hostgroups_name = [
       "${antu},AntuCluster,antu_cluster,host.display_name=%22antu%2A%22",
@@ -217,11 +219,12 @@ class profile::icinga::resources (
       "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
       "${bdc},BDC-Servers,bdc_servers,!(host.display_name=%22bdc%2A%22|host.display_name=%22Vlan%2A%22|host.display_name=%22nob%2A%22|host.display_name=%22rubinobs%2A%22)",
     ]
-    $esxi_list  = [
+    $nodes_list  = [
       'vsphere04.ls.lsst.org,139.229.135.37',
       'vsphere05.ls.lsst.org,139.229.135.38',
       'vsphere06.ls.lsst.org,139.229.135.39',
-      'vcenter.cp.lsst.org,139.229.160.60'
+      'vcenter.cp.lsst.org,139.229.160.60',
+      'icinga-master.cp.lsst.org,139.229.160.31'
     ]
   }
   elsif $site == 'summit' {
@@ -231,11 +234,12 @@ class profile::icinga::resources (
       "${comcam},ComcamCluster,comcam_cluster,host.display_name=%22comcam%2A%22",
       "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
     ]
-    $esxi_list  = [
+    $nodes_list  = [
       'vsphere01.cp.lsst.org,139.229.160.57',
       'vsphere02.cp.lsst.org,139.229.160.58',
       'vsphere03.cp.lsst.org,139.229.160.59',
-      'vcenter.cp.lsst.org,139.229.160.60'
+      'vcenter.cp.lsst.org,139.229.160.60',
+      'icinga-master.ls.lsst.org,139.229.135.31'
     ]
   }
 
@@ -570,18 +574,53 @@ class profile::icinga::resources (
       }
       | MASTER_HOST
   }
-  ->exec { $addhost_cmd:
+  -> exec { $addhost_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $addhost_cond,
     loglevel => debug,
   }
+  #  Schedule Deployment
   exec { "${curl} '${credentials}' -H '${format}' -X POST '${url_deploy}'":
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     loglevel => debug,
+  }
+
+  #  ESXi Hosts and Cross Site Check
+  $nodes_list.each |$host| {
+    $value = split($host,',')
+    $path = "${icinga_path}/${value[0]}.json"
+    $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
+    $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${path}"
+
+    file { $path:
+      ensure  => 'present',
+      content => @("HOST_CONTENT"/L)
+        {
+        "address": "${value[1]}",
+        "display_name": "${value[0]}",
+        "imports": [
+          "${stayalive_template}"
+        ],
+        "object_name":"${value[0]}",
+        "object_type": "object",
+        "vars": {
+            "safed_profile": "3"
+        },
+        "zone": "master"
+        }
+        | HOST_CONTENT
+    }
+    ->exec { $cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $cond,
+      loglevel => debug,
+      }
   }
   #<------------------END Files Creation and Deployement------------------>
 }

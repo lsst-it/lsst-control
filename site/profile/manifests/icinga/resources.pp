@@ -620,7 +620,7 @@ class profile::icinga::resources (
       provider => shell,
       onlyif   => $cond,
       loglevel => debug,
-      }
+    }
   }
   #<------------------END Files Creation and Deployement------------------>
 }

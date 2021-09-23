@@ -115,4 +115,5 @@ profile::core::common::deploy_icinga_agent: true
 profile::core::common::disable_ipv6: true
 profile::icinga::agent::icinga_master_fqdn: "icinga-master.ls.lsst.org"
 profile::icinga::agent::icinga_master_ip: "139.229.135.31"
+profile::icinga::agent::site: "base"
 profile::icinga::resources::dhcp_server: "139.229.134.5"

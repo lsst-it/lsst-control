@@ -3,6 +3,7 @@
 
 class profile::icinga::resources (
   String $credentials_hash,
+  String $site,
   String $dhcp_server,
 ) {
   #<----------Variables Definition------------>
@@ -23,14 +24,15 @@ class profile::icinga::resources (
   $lt            = '| grep Failed'
 
   #Host Templates Names
-  $host_template   = 'GeneralHostTemplate'
-  $comcam_template = 'ComCamHostTemplate'
-  $http_template   = 'HttpTemplate'
-  $dns_template    = 'DnsTemplate'
-  $master_template = 'MasterTemplate'
-  $ipa_template    = 'IpaTemplate'
-  $tls_template    = 'TlsTemplate'
-  $dtn_template    = 'DtnTemplate'
+  $host_template      = 'GeneralHostTemplate'
+  $comcam_template    = 'ComCamHostTemplate'
+  $http_template      = 'HttpTemplate'
+  $dns_template       = 'DnsTemplate'
+  $master_template    = 'MasterTemplate'
+  $ipa_template       = 'IpaTemplate'
+  $tls_template       = 'TlsTemplate'
+  $dtn_template       = 'DtnTemplate'
+  $stayalive_template = 'OnlyPingTemplate'
 
   #Services Names
   $http_svc  = 'HttpService'
@@ -117,6 +119,7 @@ class profile::icinga::resources (
   $dtn_svc_lhn_name     = 'LHN_Link'
 
   #Hostgroups Names
+  $andes    = 'andes_cluster'
   $antu     = 'antu_cluster'
   $ruka     = 'ruka_cluster'
   $kueyen   = 'kueyen_cluster'
@@ -165,7 +168,7 @@ class profile::icinga::resources (
     "${comcam_template},${$user_svc_template_name},${comcam_svc_user_name}",
     "${comcam_template},${$cpu_svc_template_name},${comcam_svc_cpu_name}",
     "${comcam_template},${$nic_svc_template_name},${comcam_svc_nic_name}",
-    "comcam-fp01.ls.lsst.org,${$nic2_svc_template_name},${comcam_svc_nic2_name}",
+    "comcam-fp01.cp.lsst.org,${$nic2_svc_template_name},${comcam_svc_nic2_name}",
     "${http_template},${$http_svc_template_name},${http_svc_name}",
     "${http_template},${$ping_svc_template_name},${http_svc_ping_name}",
     "${http_template},${$disk_svc_template_name},${http_svc_disk_name}",
@@ -201,19 +204,45 @@ class profile::icinga::resources (
     "${dns_template},0",
     "${ipa_template},0",
     "${dtn_template},0",
+    "${stayalive_template},0",
     "${tls_template},1",
   ]
-  #Host Groups Array
-  $hostgroups_name = [
-    "${antu},AntuCluster,antu_cluster,host.display_name=%22antu%2A%22",
-    "${ruka},RukaCluster,ruka_cluster,host.display_name=%22ruka%2A%22",
-    "${kueyen},KueyenCluster,kueyen_cluster,host.display_name=%22kueyen%2A%22",
-    "${core},CoreCluster,core_cluster,host.display_name=%22core%2A%22",
-    "${comcam},ComcamCluster,comcam_cluster,host.display_name=%22comcam%2A%22",
-    "${ls_nodes},LS_Nodes,ls_nodes,ls",
-    "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
-    "${bdc},BDC-Servers,bdc_servers,!(host.display_name=%22bdc%2A%22|host.display_name=%22Vlan%2A%22|host.display_name=%22nob%2A%22|host.display_name=%22rubinobs%2A%22)",
-  ]
+  #Host Groups Array, ESXi Hosts and nodes
+  if $site == 'base' {
+    $hostgroups_name = [
+      "${antu},AntuCluster,antu_cluster,host.display_name=%22antu%2A%22",
+      "${ruka},RukaCluster,ruka_cluster,host.display_name=%22ruka%2A%22",
+      "${kueyen},KueyenCluster,kueyen_cluster,host.display_name=%22kueyen%2A%22",
+      "${core},CoreCluster,core_cluster,host.display_name=%22core%2A%22",
+      "${comcam},ComcamCluster,comcam_cluster,host.display_name=%22comcam%2A%22",
+      "${ls_nodes},LS_Nodes,ls_nodes,ls",
+      "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
+      "${bdc},BDC-Servers,bdc_servers,!(host.display_name=%22bdc%2A%22|host.display_name=%22Vlan%2A%22|host.display_name=%22nob%2A%22|host.display_name=%22rubinobs%2A%22)",
+    ]
+    $nodes_list  = [
+      'vsphere04.ls.lsst.org,139.229.135.37',
+      'vsphere05.ls.lsst.org,139.229.135.38',
+      'vsphere06.ls.lsst.org,139.229.135.39',
+      'vcenter.cp.lsst.org,139.229.160.60',
+      'icinga-master.cp.lsst.org,139.229.160.31'
+    ]
+  }
+  elsif $site == 'summit' {
+    $hostgroups_name = [
+      "${andes},AndesCluster,andes_cluster,host.display_name=%22andes%2A%22",
+      "${core},CoreCluster,core_cluster,host.display_name=%22core%2A%22",
+      "${comcam},ComcamCluster,comcam_cluster,host.display_name=%22comcam%2A%22",
+      "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",
+    ]
+    $nodes_list  = [
+      'vsphere01.cp.lsst.org,139.229.160.57',
+      'vsphere02.cp.lsst.org,139.229.160.58',
+      'vsphere03.cp.lsst.org,139.229.160.59',
+      'vcenter.cp.lsst.org,139.229.160.60',
+      'icinga-master.ls.lsst.org,139.229.135.31'
+    ]
+  }
+
   #Service Groups Array
   $servicegroup_name = [
     "${http_svc},${http_svc}Group",
@@ -256,19 +285,9 @@ class profile::icinga::resources (
   #
   #
   #<-------------------------Packages Installation------------------------>
-  yumrepo { 'perl':
-    ensure   => 'present',
-    enabled  => true,
-    descr    => 'Perl Modules (CentOS_7)',
-    baseurl  => 'http://download.opensuse.org/repositories/home:/csbuild:/Perl/CentOS_7/',
-    gpgcheck => true,
-    gpgkey   => 'http://download.opensuse.org/repositories/home:/csbuild:/Perl/CentOS_7/repodata/repomd.xml.key',
-    target   => '/etc/yum.repos.d/perl.repo',
-  }
   #Packages Installation
   package { 'perl-Net-SNMP':
-    ensure  => 'present',
-    require => Yumrepo['perl'],
+    ensure  => 'present'
   }
   #<----------------------END-Packages Installation----------------------->
   #
@@ -536,8 +555,7 @@ class profile::icinga::resources (
   #
   #
   #<--------------------Files Creation and Deployement-------------------->
-  ##Add Master Host
-  #Create master host file
+  #  Master Host
   file { $addhost_path:
     ensure  => 'present',
     content => @("MASTER_HOST"/L)
@@ -556,18 +574,53 @@ class profile::icinga::resources (
       }
       | MASTER_HOST
   }
-  ->exec { $addhost_cmd:
+  -> exec { $addhost_cmd:
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => $addhost_cond,
     loglevel => debug,
   }
+  #  Schedule Deployment
   exec { "${curl} '${credentials}' -H '${format}' -X POST '${url_deploy}'":
     cwd      => $icinga_path,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     loglevel => debug,
+  }
+
+  #  ESXi Hosts and Cross Site Check
+  $nodes_list.each |$host| {
+    $value = split($host,',')
+    $path = "${icinga_path}/${value[0]}.json"
+    $cond = "${curl} '${credentials}' -H '${format}' -X GET '${url_host}?name=${value[0]}' ${lt}"
+    $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${path}"
+
+    file { $path:
+      ensure  => 'present',
+      content => @("HOST_CONTENT"/L)
+        {
+        "address": "${value[1]}",
+        "display_name": "${value[0]}",
+        "imports": [
+          "${stayalive_template}"
+        ],
+        "object_name":"${value[0]}",
+        "object_type": "object",
+        "vars": {
+            "safed_profile": "3"
+        },
+        "zone": "master"
+        }
+        | HOST_CONTENT
+    }
+    ->exec { $cmd:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      onlyif   => $cond,
+      loglevel => debug,
+      }
   }
   #<------------------END Files Creation and Deployement------------------>
 }

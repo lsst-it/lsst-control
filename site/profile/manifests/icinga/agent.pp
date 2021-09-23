@@ -5,14 +5,12 @@ class profile::icinga::agent (
   String $icinga_master_fqdn,
   String $icinga_master_ip,
   String $credentials_hash,
+  String $site,
   String $host_template,
   String $ca_salt,
   String $ssh_port = '22',
 ) {
   #<-----------------------Variables-Definition--------------------------->
-  $packages = [
-    'nagios-plugins-all',
-  ]
   $nic = $facts['networking']['primary']
   $icinga_agent_fqdn = $facts['networking']['fqdn']
   $icinga_agent_ip = $facts['networking']['ip']
@@ -26,12 +24,13 @@ class profile::icinga::agent (
   #
   #
   #<-------------------------Icinga-Configuration------------------------->
-  class { '::icinga2':
-    manage_repo => true,
-    confd       => false,
-    features    => ['mainlog'],
+  class { '::icinga::repos':
+    manage_epel         => false
   }
-  ##Icinga2 feature API config
+  class { '::icinga2':
+    confd           => false
+  }
+  #  Icinga2 feature API config
   class { '::icinga2::feature::api':
     ensure          => 'present',
     ca_host         => $icinga_master_ip,
@@ -60,14 +59,14 @@ class profile::icinga::agent (
   #
   #
   #<-------------------------Additional-Plugins--------------------------->
-  #Check disk
+  #  Check disk
   file { '/usr/lib64/nagios/plugins/check_disk':
     owner   => 'root',
     group   => 'root',
     mode    => '4755',
-    require => Package[$packages],
+    require => Package['nagios-plugins-all'],
   }
-  #Network Usage
+  #  Network Usage
   archive { '/usr/lib64/nagios/plugins/check_netio':
     ensure => present,
     source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
@@ -92,59 +91,61 @@ class profile::icinga::agent (
       }
       | CONTENT
   }
-  if ($icinga_agent_fqdn =='comcam-fp01.ls.lsst.org' or $icinga_agent_fqdn =='comcam-mcm.ls.lsst.org') {
-    archive { '/usr/lib64/nagios/plugins/check_netio2':
-      ensure => present,
-      source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
-    }
-    ->file { '/usr/lib64/nagios/plugins/check_netio2':
-      owner => 'root',
-      group => 'icinga',
-      mode  => '4755',
-    }
-    ->file { '/etc/icinga2/features-enabled/netio2.conf':
-      ensure  => 'present',
-      owner   => 'icinga',
-      group   => 'icinga',
-      mode    => '0640',
-      notify  => Service['icinga2'],
-      content => @("CONTENT")
-        object CheckCommand "netio2" {
-          command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
-          arguments = {
-            "-i" = "lsst-daq"
+  if $site == 'summit' {
+    if ($icinga_agent_fqdn =='comcam-fp01.cp.lsst.org' or $icinga_agent_fqdn =='comcam-mcm.cp.lsst.org') {
+      archive { '/usr/lib64/nagios/plugins/check_netio2':
+        ensure => present,
+        source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
+      }
+      ->file { '/usr/lib64/nagios/plugins/check_netio2':
+        owner => 'root',
+        group => 'icinga',
+        mode  => '4755',
+      }
+      ->file { '/etc/icinga2/features-enabled/netio2.conf':
+        ensure  => 'present',
+        owner   => 'icinga',
+        group   => 'icinga',
+        mode    => '0640',
+        notify  => Service['icinga2'],
+        content => @("CONTENT")
+          object CheckCommand "netio2" {
+            command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
+            arguments = {
+              "-i" = "lsst-daq"
+            }
           }
-        }
-        | CONTENT
+          | CONTENT
+      }
+    }
+    if ($icinga_agent_fqdn =='net-dx.cp.lsst.org') {
+      archive { '/usr/lib64/nagios/plugins/check_netio2':
+        ensure => present,
+        source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
+      }
+      ->file { '/usr/lib64/nagios/plugins/check_netio2':
+        owner => 'root',
+        group => 'icinga',
+        mode  => '4755',
+      }
+      ->file { '/etc/icinga2/features-enabled/netio2.conf':
+        ensure  => 'present',
+        owner   => 'icinga',
+        group   => 'icinga',
+        mode    => '0640',
+        notify  => Service['icinga2'],
+        content => @("CONTENT")
+          object CheckCommand "netio2" {
+            command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
+            arguments = {
+              "-i" = "ens224"
+            }
+          }
+          | CONTENT
+      }
     }
   }
-  if ($icinga_agent_fqdn =='net-dx.cp.lsst.org') {
-    archive { '/usr/lib64/nagios/plugins/check_netio2':
-      ensure => present,
-      source => 'https://www.claudiokuenzler.com/monitoring-plugins/check_netio.sh',
-    }
-    ->file { '/usr/lib64/nagios/plugins/check_netio2':
-      owner => 'root',
-      group => 'icinga',
-      mode  => '4755',
-    }
-    ->file { '/etc/icinga2/features-enabled/netio2.conf':
-      ensure  => 'present',
-      owner   => 'icinga',
-      group   => 'icinga',
-      mode    => '0640',
-      notify  => Service['icinga2'],
-      content => @("CONTENT")
-        object CheckCommand "netio2" {
-          command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
-          arguments = {
-            "-i" = "ens224"
-          }
-        }
-        | CONTENT
-    }
-  }
-  #Memory Usage
+  #  Memory Usage
   archive { '/usr/lib64/nagios/plugins/check_mem.pl':
     ensure => present,
     source => 'https://raw.githubusercontent.com/justintime/nagios-plugins/master/check_mem/check_mem.pl',
@@ -154,7 +155,7 @@ class profile::icinga::agent (
     group => 'icinga',
     mode  => '4755',
   }
-  #Logged Users
+  #  Logged Users
   archive { '/usr/lib64/nagios/plugins/check_users':
     ensure => present,
     source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=1530&cf_id=24',
@@ -164,7 +165,7 @@ class profile::icinga::agent (
     group => 'icinga',
     mode  => '4755',
   }
-  #CPU usage
+  #  CPU usage
   archive { '/usr/lib64/nagios/plugins/check_cpu':
     ensure => present,
     source => 'https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=580&cf_id=29',
@@ -191,11 +192,11 @@ class profile::icinga::agent (
   #
   #
   #<----------------------Add-Host-to-Icinga-Master----------------------->
-  ##Create a directory to allocate json files
+  #  Create a directory to allocate json files
   file { $icinga_path:
     ensure => 'directory',
   }
-  ## Create host file
+  #  Create host file
   file { $path:
     ensure  => 'present',
     content => @("CONTENT"/L)
@@ -221,8 +222,8 @@ class profile::icinga::agent (
     onlyif   => $cond,
     loglevel => debug,
   }
-  ##Add require packages
-  package { $packages:
+  #  Install Nagios plugins
+  package { 'nagios-plugins-all':
     ensure => 'present',
   }
   #<------------------End-Add-Host-to-Icinga-Master----------------------->

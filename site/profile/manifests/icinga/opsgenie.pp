@@ -2,7 +2,9 @@
 #   Define and integrate opsgenie to icinga2
 
 class profile::icinga::opsgenie (
-  String $opsgenie_api,
+  String $site,
+  String $og_api_bdc,
+  String $og_api_summit,
   String $credentials_hash,
   String $pager_user,
 ) {
@@ -39,6 +41,14 @@ class profile::icinga::opsgenie (
     "${host_notification_template_name},${host_notification_name},host",
     "${svc_notification_template_name},${svc_notification_name},service",
   ]
+
+  #  Site Option
+  if $site == 'base' {
+    $opsgenie_api = $og_api_bdc
+  }
+  elsif $site == 'summit' {
+    $opsgenie_api = $og_api_summit
+  }
   #<-----------------------End Variables Definition----------------------->
   #
   #
@@ -229,7 +239,7 @@ class profile::icinga::opsgenie (
           "value": "$host.perfdata$"
         }
       },
-      "command": "\/usr\/bin\/icinga2opsgenie",
+      "command": "\/bin\/icinga2opsgenie",
       "methods_execute": "PluginNotification",
       "object_name": "notify-cmd-host",
       "object_type": "object",
@@ -433,7 +443,7 @@ class profile::icinga::opsgenie (
           "value": "$service.perfdata$"
         }        
       },
-      "command": "\/usr\/bin\/icinga2opsgenie",
+      "command": "\/bin\/icinga2opsgenie",
       "methods_execute": "PluginNotification",
       "object_name": "notify-cmd-svc",
       "object_type": "object",

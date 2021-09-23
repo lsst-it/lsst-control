@@ -10,6 +10,10 @@ require 'puppet-strings/tasks' if Bundler.rubygems.find_name('puppet-strings').a
 PuppetLint.configuration.send('disable_relative')
 PuppetLint.configuration.send('disable_manifest_whitespace_closing_bracket_after')
 
+PuppetLint::RakeTask.new :lint do |config|
+  config.fail_on_warnings = true
+end
+
 namespace :r10k do
   desc 'Create puppet module fixtures using r10k'
   task :install do

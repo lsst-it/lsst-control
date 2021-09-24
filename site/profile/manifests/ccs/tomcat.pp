@@ -51,7 +51,8 @@ class profile::ccs::tomcat (
   unless (empty($wars)) {
     $wars.each |String $n, Hash $conf| {
       tomcat::war { $n:
-        * => $conf,
+        catalina_base => $catalina_base,
+        *             => $conf,
       }
     }
   }

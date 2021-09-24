@@ -3,7 +3,7 @@ class profile::ccs::tomcat (
 ) {
   include ::nginx
 
-  $version       = '9.0.36'
+  $version       = '9.0.53'
   $root_path     = '/opt/tomcat'
   $catalina_home = "${root_path}/apache-tomcat-${version}"
   $catalina_base = "${root_path}/catalina_base"

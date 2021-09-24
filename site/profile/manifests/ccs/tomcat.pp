@@ -22,6 +22,7 @@ class profile::ccs::tomcat (
   # set a service_name to be passed to tomcat::service.
   tomcat::instance { 'latest':
     catalina_home  => $catalina_home,
+    catalina_base  => $catalina_base,
     manage_service => false,
   }
 
@@ -33,7 +34,7 @@ class profile::ccs::tomcat (
     subscribe   => Service['tomcat'],
   }
 
-  file { "${catalina_home}/conf/Catalina/localhost/mrtg.xml":
+  file { "${catalina_base}/conf/Catalina/localhost/mrtg.xml":
     ensure  => file,
     owner   => 'tomcat',
     group   => 'tomcat',

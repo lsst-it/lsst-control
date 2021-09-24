@@ -29,7 +29,7 @@ class profile::ccs::tomcat (
   # XXX https://stackoverflow.com/a/8247293
   # tomcat may take a moment to startup and create the correct directly paths. Basically, we are busy waiting on the tomcat service -- this is UGLY
   exec { 'wait for tomcat':
-    command     => '/usr/bin/wget --spider --tries 10 --retry-connrefused --no-check-certificate http://localhost:8080',
+    command     => '/usr/bin/wget --spider --tries 10 --retry-connrefused --no-check-certificate http://localhost:8080/CCSWebTrending/',
     refreshonly => true,
     subscribe   => Service['tomcat'],
   }

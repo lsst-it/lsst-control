@@ -15,7 +15,7 @@ nginx::ssl_ciphers: |
 nginx::gzip_proxied: "any"
 profile::ccs::tomcat::wars:
   CCSWebTrending.war:
-    war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2-snapshots/org/lsst/CCSWebTrending/2.1-SNAPSHOT/CCSWebTrending-2.1-20200623.212832-4.war"
+    war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2-snapshots/org/lsst/CCSWebTrending/2.1-SNAPSHOT/CCSWebTrending-2.1-20210610.164057-16.war"
 
 profile::core::systemd::tmpfile:
   docker_tmp.conf:  # XXX short term kludge

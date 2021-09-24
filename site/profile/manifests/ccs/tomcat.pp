@@ -46,8 +46,24 @@ class profile::ccs::tomcat (
   # XXX appears to be broken... hardwired to look at $catalina_base/conf/context.xml
   tomcat::config::context::manager { 'org.apache.catalina.valves.RemoteAddrValve':
     ensure        => 'absent',
-    catalina_base => $catalina_base,
+    catalina_base => $catalina_home,
   }
+
+  # XXX work around for tomcat::config::context::manager
+  # file { "${catalina_home}/webapps/host-manager/manager.xml":
+  #   ensure  => file,
+  #   owner   => 'tomcat',
+  #   group   => 'tomcat',
+  #   mode    => '0664',
+  #   content => @(EOT)
+  #     <?xml version="1.0" encoding="UTF-8"?>
+  #     <Context docBase="${catalina.home}/webapps/manager"
+  #            privileged="true" antiResourceLocking="false" >
+  #     </Context>
+  #     | EOT
+  #   ,
+  #   require => Exec['wait for tomcat'],  # config dir creation
+  # }
 
   unless (empty($wars)) {
     $wars.each |String $n, Hash $conf| {

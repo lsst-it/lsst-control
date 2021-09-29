@@ -125,7 +125,7 @@ mod 'lsst/ccs_mrtg',
   ref: 'master'
 mod 'lsst/ccs_sal',
   git: 'https://github.com/lsst-it/puppet-ccs_sal.git',
-  ref: 'v0.7.0'
+  ref: 'v0.7.1'
 mod 'lsst/ccs_software',
   git: 'https://github.com/lsst-it/puppet-ccs_software.git',
   ref: 'v0.6.1'

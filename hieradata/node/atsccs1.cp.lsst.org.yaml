@@ -49,7 +49,7 @@ ccs_software::udp_properties:
 
 ccs_software::services:
   prod:
-    - "ats-mmm"
+    - "mmm"
     - "cluster-monitor"
     - "localdb"
     - "rest-server"

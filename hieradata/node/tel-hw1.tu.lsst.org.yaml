@@ -1,0 +1,32 @@
+---
+network::interfaces_hash:
+  ens1f0:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  ens1f1:  # misc-dds|140.252.147.128/27
+    bootproto: "none"
+    ipaddress: "140.252.147.135"
+    netmask: "255.255.255.224"
+    onboot: "yes"
+    type: "Ethernet"
+  eno1: &not_connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  eno2:
+    <<: *not_connected
+network::mroutes_hash:
+  ens1f1:
+    routes:
+      "140.252.147.16/28": "140.252.147.129"
+      "140.252.147.48/28": "140.252.147.129"
+
+docker::networks::networks:
+  dds-network:
+    ensure: "present"
+    driver: "macvlan"
+    subnet: "140.252.147.128/27"
+    gateway: "140.252.147.129"
+    options: ["parent=ens1f1"]

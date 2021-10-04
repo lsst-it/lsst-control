@@ -1,0 +1,43 @@
+---
+network::interfaces_hash:
+  p2p1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  p2p2:  # misc-dds|140.252.147.128/27
+    bootproto: "none"
+    ipaddress: "140.252.147.136"
+    netmask: "255.255.255.224"
+    onboot: "yes"
+    type: "Ethernet"
+  em1: &not_connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em2:
+    <<: *not_connected
+network::mroutes_hash:
+  p2p2:
+    routes:
+      "140.252.147.16/28": "140.252.147.129"
+      "140.252.147.48/28": "140.252.147.129"
+
+files:
+  #/data/repo:
+  #  ensure: "directory"
+  #  mode: "0755"
+  #  owner: 73006  # saluser
+  #  group: 73006  # saluser
+  /repo:
+    ensure: "directory"
+    mode: "0755"
+    owner: 73006  # saluser
+    group: 73006  # saluser
+
+profile::core::k5login::k5login:
+  "/home/saluser/.k5login":
+    ensure: "present"
+    principals:
+      - "iip/comcam-fwd01.tu.lsst.org@LSST.CLOUD"
+      - "iip/comcam-fwd02.tu.lsst.org@LSST.CLOUD"

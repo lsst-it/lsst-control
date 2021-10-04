@@ -12,7 +12,6 @@ packages:
   - "gcc"
   ## TODO only on "development" nodes.
   - "maven"
-  - "centos-release-scl-rh"
   - "devtoolset-8"
   - "rh-git218"
 

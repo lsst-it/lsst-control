@@ -3,7 +3,7 @@ class profile::ccs::tomcat (
 ) {
   include ::nginx
 
-  $version       = '9.0.36'
+  $version       = '9.0.53'
   $root_path     = '/opt/tomcat'
   $catalina_home = "${root_path}/apache-tomcat-${version}"
   $catalina_base = "${root_path}/catalina_base"
@@ -22,18 +22,19 @@ class profile::ccs::tomcat (
   # set a service_name to be passed to tomcat::service.
   tomcat::instance { 'latest':
     catalina_home  => $catalina_home,
+    catalina_base  => $catalina_base,
     manage_service => false,
   }
 
   # XXX https://stackoverflow.com/a/8247293
   # tomcat may take a moment to startup and create the correct directly paths. Basically, we are busy waiting on the tomcat service -- this is UGLY
   exec { 'wait for tomcat':
-    command     => '/usr/bin/wget --spider --tries 10 --retry-connrefused --no-check-certificate http://localhost:8080',
+    command     => '/usr/bin/wget --spider --tries 10 --retry-connrefused --no-check-certificate http://localhost:8080/CCSWebTrending/',
     refreshonly => true,
     subscribe   => Service['tomcat'],
   }
 
-  file { "${catalina_home}/conf/Catalina/localhost/mrtg.xml":
+  file { "${catalina_base}/conf/Catalina/localhost/mrtg.xml":
     ensure  => file,
     owner   => 'tomcat',
     group   => 'tomcat',
@@ -45,13 +46,30 @@ class profile::ccs::tomcat (
   # XXX appears to be broken... hardwired to look at $catalina_base/conf/context.xml
   tomcat::config::context::manager { 'org.apache.catalina.valves.RemoteAddrValve':
     ensure        => 'absent',
-    catalina_base => $catalina_base,
+    catalina_base => $catalina_home,
   }
+
+  # XXX work around for tomcat::config::context::manager
+  # file { "${catalina_home}/webapps/host-manager/manager.xml":
+  #   ensure  => file,
+  #   owner   => 'tomcat',
+  #   group   => 'tomcat',
+  #   mode    => '0664',
+  #   content => @(EOT)
+  #     <?xml version="1.0" encoding="UTF-8"?>
+  #     <Context docBase="${catalina.home}/webapps/manager"
+  #            privileged="true" antiResourceLocking="false" >
+  #     </Context>
+  #     | EOT
+  #   ,
+  #   require => Exec['wait for tomcat'],  # config dir creation
+  # }
 
   unless (empty($wars)) {
     $wars.each |String $n, Hash $conf| {
       tomcat::war { $n:
-        * => $conf,
+        catalina_base => $catalina_base,
+        *             => $conf,
       }
     }
   }

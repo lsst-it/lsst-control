@@ -1,0 +1,8 @@
+---
+classes:
+  - "profile::ccs::common"
+  - "profile::ccs::daq4"
+  - "profile::ccs::daq_interface"
+  - "profile::core::common"
+
+profile::ccs::facts::daq: true

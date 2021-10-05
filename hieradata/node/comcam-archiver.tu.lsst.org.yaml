@@ -39,5 +39,5 @@ profile::core::k5login::k5login:
   "/home/saluser/.k5login":
     ensure: "present"
     principals:
-      - "iip/comcam-fwd01.tu.lsst.org@LSST.CLOUD"
+      - "iip/forwarders.tu.lsst.org@LSST.CLOUD"
       - "iip/comcam-fwd02.tu.lsst.org@LSST.CLOUD"

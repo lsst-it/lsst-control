@@ -20,6 +20,7 @@ profile::core::debugutils::packages:
   - "traceroute"
   - "tree"
   - "tuned-utils-systemtap"
+  - "usbutils"
 profile::ccs::postfix::packages:
   # required for postfix sasl auth
   - "cyrus-sasl-plain"

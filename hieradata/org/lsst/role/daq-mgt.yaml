@@ -8,6 +8,11 @@ classes:
   - "dhcp"
   - "hosts"
 
+packages:
+  - "ckermit"
+  - "minicom"
+  - "setserial"
+
 # enable ntp server for DAQ
 chrony::port: 123
 chrony::queryhosts:

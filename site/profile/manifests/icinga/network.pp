@@ -81,6 +81,7 @@ class profile::icinga::network (
       'Vlan340_LHN-DTN02,139.229.140.132',
       'Vlan360_Perfsonar1-1,139.229.140.134',
       'Vlan370_Perfsonar1-2,139.229.140.136',
+      'bdc-wlc.ls.lsst.org,139.229.134.100'
     ]
   }
   elsif $site == 'summit' {
@@ -138,6 +139,7 @@ class profile::icinga::network (
       'Vlan1500_CSS,139.229.174.254',
       'Vlan1400_AUX,139.229.170.254',
       'Vlan1502_ACCS,139.229.175.254',
+      'comp-wlc.cp.lsst.org,139.229.160.100'
     ]
   }
 

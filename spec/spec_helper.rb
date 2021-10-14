@@ -23,6 +23,12 @@ def control_hieradata_path
   File.join(root_path, 'hieradata')
 end
 
+# extract public hiera hierarchy
+def public_hierarchy
+  hc = YAML.load_file(control_hiera_config)
+  hc['hierarchy'][1]['paths']
+end
+
 default_facts = {
   puppetversion: Puppet.version,
   facterversion: Facter.version,
@@ -38,7 +44,7 @@ def lsst_sites
 end
 
 def lsst_roles
-  role_dir = File.join(control_hiera_path, 'org', 'lsst', 'role')
+  role_dir = File.join(control_hieradata_path, 'org', 'lsst', 'role')
   Dir.entries(role_dir).grep_v(%r{^\.}).map { |x| x.sub('.yaml', '') }
 end
 

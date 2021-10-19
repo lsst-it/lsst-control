@@ -7,10 +7,17 @@ network::interfaces_hash:
     type: "Ethernet"
   p1p2:  # misc-dds|140.252.147.128/27
     bootproto: "none"
+    bridge: "dds"
+    defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+  dds:
+    bootproto: "none"
     ipaddress: "140.252.147.134"
     netmask: "255.255.255.224"
     onboot: "yes"
-    type: "Ethernet"
+    type: "bridge"
   em1: &not_connected
     bootproto: "none"
     onboot: "no"
@@ -22,7 +29,7 @@ network::interfaces_hash:
   em4:
     <<: *not_connected
 network::mroutes_hash:
-  p1p2:
+  dds:
     routes:
       "140.252.147.16/28": "140.252.147.129"
       "140.252.147.48/28": "140.252.147.129"

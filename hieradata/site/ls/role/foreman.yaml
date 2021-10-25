@@ -18,6 +18,12 @@ dhcp::pools:
     gateway: "139.229.137.254"
     range: "139.229.137.1 139.229.137.200"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  Rubin_DMZ01:
+    network: "139.229.138.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.138.254"
+    range: "139.229.138.200 139.229.138.250"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   archive-lhn:
     network: "139.229.140.0"
     mask: "255.255.255.224"

@@ -11,7 +11,7 @@ network::interfaces_hash:
     defroute: "no"
     nozeroconf: "yes"
     onboot: "yes"
-    type: "none"
+    type: "Ethernet"
   dds:
     bootproto: "none"
     ipaddress: "140.252.147.134"

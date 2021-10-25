@@ -65,4 +65,4 @@ network::mroutes_hash:
     ensure: "absent"
     routes: {}
 
-profile::app::rke::version: "1.2.3"
+profile::app::rke::version: "1.2.13"

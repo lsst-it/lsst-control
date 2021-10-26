@@ -210,8 +210,7 @@ puppet::server::puppetdb::server: "puppetdb.cp.lsst.org"
 r10k::sources:
   control:
     ignore_branch_prefixes: &ignore_branch
-      - "coredev_production"
-      - "corels_production"
+      - "core"
       - "dev"
       - "ls"
       - "tu"

@@ -1,0 +1,115 @@
+---
+easy_ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
+# sssd ipa client setup -- do not use on ipa servers
+sssd::domains:
+  "lsst.cloud":
+    ipa_server:
+      - "_srv_"
+      - "%{lookup('easy_ipa::ipa_master_fqdn')}"
+
+rsyslog::config::actions:
+  #Send copy to logs to GKE Graylog instance
+  graylogCloud:
+    type: "omfwd"
+    facility: "*.*"
+    config:
+      Target: "collector.lsst.cloud"
+      Port: 5514
+      Protocol: "udp"
+  #Send copy to logs to Base Graylog instance
+  graylogBase:
+    type: "omfwd"
+    facility: "*.*"
+    config:
+      Target: "collector.ls.lsst.org"
+      Port: 5514
+      Protocol: "udp"
+  # Log anything (except mail) of level info or higher.
+  # Don't log private authentication messages!
+  #
+  # local6 is used for logs that should only be forwarded to a central log
+  # server and should never be stored locally. See IT-1734.
+  messages:
+    type: "omfile"
+    facility: "*.info;mail.none;authpriv.none;cron.none;local6.none"
+    config:
+      file: "/var/log/messages"
+  # The authpriv file has restricted access.
+  secure:
+    type: "omfile"
+    facility: "authpriv.*"
+    config:
+      file: "/var/log/secure"
+  # Everybody gets emergency messages
+  emerg:
+    type: "omusrmsg"
+    facility: "*.emerg"
+    config:
+      users: "*"
+  maillog:
+    type: "omfile"
+    facility: "mail.*"
+    config:
+      file: "-/var/log/maillog"
+  cron:
+    type: "omfile"
+    facility: "cron.*"
+    config:
+      file: "/var/log/cron"
+  # local7 does not appear to be used by CentOS 7, but for the sake of
+  # consistency we preserve it to match the CentOS configuration.
+  boot:
+    type: "omfile"
+    facility: "local7.*"
+    config:
+      file: "-/var/log/boot.log"
+
+# The following keys are shared between the `dhcp` and `resolv_conf` classes:
+# - dhcp::dnsdomain
+# - dhcp::nameservers
+# - dhcp::ntpservers
+#
+# @see clusters/corecp/dhcp.yaml
+
+# resolv.conf allows for a maximum of 6 search domains with a max length of 256
+# characters.
+# @see man 5 resolv.conf
+# dhcp::dnsdomain requires an array but only uses the first element to set the domain
+dhcp::dnsdomain: &dnsdomains
+  - "ls.lsst.org"
+  - "lsst.cloud"
+  - "lsst.org"
+# resolv.conf allows for a maximum of 3 nameservers
+# @see man 5 resolv.conf
+dhcp::nameservers: &nameservers
+  - "1.0.0.1"
+  - "1.1.1.1"
+  - "8.8.8.8"
+dhcp::ntpservers: &ntpservers
+  - "ntp.shoa.cl"
+  - "1.cl.pool.ntp.org"
+  - "1.south-america.pool.ntp.org"
+
+chrony::servers: *ntpservers
+ntp::servers: *ntpservers
+resolv_conf::nameservers: *nameservers
+resolv_conf::searchpath: *dnsdomains
+# Use NFSv4 on NFS enabled hosts.
+# @see site/cp/role/nfsserver.yaml
+nfs::nfs_v4: true
+nfs::nfs_v4_client: true
+nfs::nfs_v4_idmap_domain: "%{::domain}"
+
+accounts::user_list:
+  root:
+    purge_sshkeys: true
+    sshkeys:
+      # foreman-proxy
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDN16b56V3j7wot509IlRvOFXaLxI9AH9/eOr1WuLEdpGoQ3lDuz26P6zFLbopjgsZxdzxE492QAmGpdUkn+Ducny1JK83L0N/d6INrM48fQeiUiSsN/YKua9qO8QQbvTsiiKanj38u9x1vOfqKn2/kK7BKAZblr+qT7U6nofMFlG3zJpNOCAIHyd4DJRrWB+xPR1YRwljV6BOtpI5+/FwdoX+/61cdsP0895iejDlnYRNFBYWRdGHDdDN6yfSNy00D/ADwaZP9sO+gyvHPqz/saPFYx8Petbhl/PlUjqWx7sktQxPgpMPBU/KQU5SEd5RkcT+CVjLHuHfOa3jXEdVx foreman-proxy@foreman.cp.lsst.org"
+
+profile::core::common::deploy_icinga_agent: false
+profile::icinga::agent::icinga_master_fqdn: "icinga-master.ls.lsst.org"
+profile::icinga::agent::icinga_master_ip: "139.229.135.31"
+profile::icinga::agent::site: "base"
+profile::icinga::resources::dhcp_server: "139.229.135.5"
+profile::core::common::disable_ipv6: true

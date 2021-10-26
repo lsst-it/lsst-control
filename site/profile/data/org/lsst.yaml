@@ -134,3 +134,8 @@ profile::core::yum::lsst_ts_private::repos:
     ensure: "present"
     gpgcheck: false
     target: "/etc/yum.repos.d/lsst-ts-private.repo"
+
+profile::core::docker::version: "19.03.15"
+profile::core::docker::versionlock:
+  - "1:docker-ce-cli-19.03.15-3.el7.x86_64"
+  - "3:docker-ce-19.03.15-3.el7.x86_64"

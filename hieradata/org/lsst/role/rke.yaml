@@ -11,9 +11,10 @@ classes:
   - "profile::core::ospl"
   - "profile::core::rke"
 packages:
-  - "kubectl"
-  - "git"
   - "gdisk"
+  - "git"
+  - "jq"
+  - "kubectl"
   # convenience utils
   - "ack"
   - "bash-completion"

@@ -1,10 +1,10 @@
 # @summary
-#   Configure CCS related sysctl(s) to tune for DAQ connection.
+#   Configure network related sysctl(s) to tune data transfer over the LHN.
 #
 # @param sysctls
 #   Hash of sysctl::value resources to create
 #
-class profile::ccs::sysctl (
+class profile::core::sysctl::lhn (
   Optional[Hash[String, Hash]] $sysctls = undef,
 ) {
   if $sysctls {

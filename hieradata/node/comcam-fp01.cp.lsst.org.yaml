@@ -1,6 +1,4 @@
 ---
-# allow net.core.[rw]mem_max to be set higher
-profile::ccs::common::sysctls: false
 profile::ccs::daq_interface::hwaddr: "b4:96:91:4d:d2:5c"
 profile::ccs::daq_interface::uuid: "995511a3-a10e-490d-b65e-c0e40fc3e233"
 profile::ccs::daq_interface::was: "p1p1"
@@ -70,28 +68,3 @@ ccs_software::services:
     # - "emu"
     # - "rce"
     # - "ssu"
-
-sysctl::values::args:
-  # lhn tuning
-  # See https://fasterdata.es.net/host-tuning/linux/
-  net.core.rmem_max:
-    value: 536870912
-    target: &tcpip "/etc/sysctl.d/93-tcp_ip.conf"
-  net.core.wmem_max:
-    value: 536870912
-    target: *tcpip
-  net.ipv4.tcp_rmem:
-    value: "4096 87380 536870912"
-    target: *tcpip
-  net.ipv4.tcp_wmem:
-    value: "4096 65536 536870912"
-    target: *tcpip
-  net.ipv4.tcp_congestion_control:
-    value: "htcp"
-    target: *tcpip
-  net.ipv4.tcp_mtu_probing:
-    value: 1
-    target: *tcpip
-  net.core.default_qdisc:
-    value: "fq"
-    target: *tcpip

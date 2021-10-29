@@ -99,4 +99,41 @@ shared_context 'with site.pp', :site do
   after(:context) { RSpec.configuration.manifest = nil }
 end
 
+shared_examples 'lhn sysctls', :lhn_node do
+  it do
+    is_expected.to contain_sysctl__value('net.core.rmem_max')
+      .with_value(536_870_912)
+  end
+
+  it do
+    is_expected.to contain_sysctl__value('net.core.wmem_max')
+      .with_value(536_870_912)
+  end
+
+  it do
+    is_expected.to contain_sysctl__value('net.ipv4.tcp_rmem')
+      .with_value('4096 87380 536870912')
+  end
+
+  it do
+    is_expected.to contain_sysctl__value('net.ipv4.tcp_wmem')
+      .with_value('4096 65536 536870912')
+  end
+
+  it do
+    is_expected.to contain_sysctl__value('net.ipv4.tcp_congestion_control')
+      .with_value('htcp')
+  end
+
+  it do
+    is_expected.to contain_sysctl__value('net.ipv4.tcp_mtu_probing')
+      .with_value(1)
+  end
+
+  it do
+    is_expected.to contain_sysctl__value('net.core.default_qdisc')
+      .with_value('fq')
+  end
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

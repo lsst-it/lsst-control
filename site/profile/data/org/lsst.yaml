@@ -172,3 +172,21 @@ profile::ccs::sysctl::sysctls:
   net.core.wmem_max:
     value: 18874368
     target: *daqccs
+
+profile::archive::data::files:
+  /data: &rootdir
+    ensure: "directory"
+    mode: "0755"
+    owner: 0
+    group: 0
+  /data/lsstdata:
+    <<: *rootdir
+  /data/repo: &saldir
+    ensure: "directory"
+    mode: "0755"
+    owner: &saluser 73006
+    group: *saluser
+  /data/staging:
+    <<: *saldir
+  /repo:
+    <<: *saldir

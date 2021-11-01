@@ -33,18 +33,6 @@ network::mroutes_hash:
     ensure: "absent"
     routes: {}
 
-files:
-  #/data/repo:
-  #  ensure: "directory"
-  #  mode: "0755"
-  #  owner: 73006  # saluser
-  #  group: 73006  # saluser
-  /repo:
-    ensure: "directory"
-    mode: "0755"
-    owner: 73006  # saluser
-    group: 73006  # saluser
-
 profile::core::k5login::k5login:
   "/home/saluser/.k5login":
     ensure: "present"

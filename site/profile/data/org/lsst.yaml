@@ -190,3 +190,10 @@ profile::archive::data::files:
     <<: *saldir
   /repo:
     <<: *saldir
+
+profile::archive::data::auxtel::files:
+  /data/repo/LATISS:
+    ensure: "directory"
+    mode: "1777"
+    owner: &saluser 73006
+    group: *saluser

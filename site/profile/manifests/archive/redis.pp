@@ -8,5 +8,12 @@ class profile::archive::redis (
     ensure_resources('file', $files)
   }
 
-  include ::redis
+  class { 'redis::globals':
+    scl => 'rh-redis5',
+  }
+  -> class { 'redis':
+    bind           => '0.0.0.0',
+    manage_repo    => true,
+    package_ensure => '5.0.5-1.el7.x86_64',
+  }
 }

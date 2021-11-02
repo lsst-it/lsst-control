@@ -18,6 +18,7 @@ describe 'test1.dev.lsst.org', :site do
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'lhn sysctls'
+        include_examples 'archiver'
       end
     end # site
   end # role

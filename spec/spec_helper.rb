@@ -136,4 +136,22 @@ shared_examples 'lhn sysctls', :lhn_node do
   end
 end
 
+shared_examples 'archiver', :archiver do
+  %w[
+    profile::archive::data
+    profile::archive::rabbitmq
+    profile::archive::redis
+    profile::core::common
+    profile::core::debugutils
+    profile::core::docker
+    profile::core::docker::prune
+    profile::core::nfsclient
+    profile::core::nfsserver
+    profile::core::sysctl::lhn
+    python
+  ].each do |c|
+    it { is_expected.to contain_class(c) }
+  end
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

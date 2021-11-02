@@ -5,7 +5,7 @@
 #   Version of gem to install
 #
 class profile::core::foreman_envsync (
-  String $version = '0.1.4',
+  String $version = '1.1.0',
 ) {
   include scl
 

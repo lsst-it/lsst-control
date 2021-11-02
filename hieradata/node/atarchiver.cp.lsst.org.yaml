@@ -111,22 +111,6 @@ nfs::client_mounts:
     server: "%{facts.fqdn}"
     atboot: true
   # remote mounts
-  /net/project:
-    share: "project"
-    server: "nfs1.cp.lsst.org"
-    atboot: true
-  /net/scratch:
-    share: "scratch"
-    server: "nfs1.cp.lsst.org"
-    atboot: true
-  /net/lsstdata:
-    share: "lsstdata"
-    server: "nfs1.cp.lsst.org"
-    atboot: true
-  /net/home:
-    share: "home"
-    server: "nfs1.cp.lsst.org"
-    atboot: true
   /net/dimm:
     share: "dimm"
     server: "nfs1.cp.lsst.org"

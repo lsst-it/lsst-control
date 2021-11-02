@@ -22,6 +22,10 @@ nfs::client_mounts:
     server: "atarchiver-1201.cp.lsst.org"
     atboot: true
   /repo/LATISS:
-    share: "LATISS"
+    share: "repo"
     server: "atarchiver-1201.cp.lsst.org"
+    atboot: true
+  /repo/LSSTComCam:
+    share: "repo"
+    server: "comcam-arctl01.cp.lsst.org"
     atboot: true

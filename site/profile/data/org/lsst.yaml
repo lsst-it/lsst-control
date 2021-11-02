@@ -204,3 +204,10 @@ profile::archive::data::comcam::files:
     mode: "1777"
     owner: &saluser 73006
     group: *saluser
+
+profile::archive::redis::files:
+  "/etc/profile.d/rh-redis5.sh":
+    mode: "0644"
+    owner: "root"
+    group: "root"
+    content: ". /opt/rh/rh-redis5/enable"

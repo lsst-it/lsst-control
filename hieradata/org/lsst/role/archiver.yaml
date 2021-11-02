@@ -15,11 +15,6 @@ packages:
   - "git"
   - "cmake"
   - "gcc-c++"
-rabbitmq::admin_enable: true
-rabbitmq::management_enable: true
-rabbitmq::manage_python: false
-rabbitmq::repos_ensure: true
-rabbitmq::package_ensure: "3.8.3-1.el7.noarch"
 profile::archive::rabbitmq::vhosts:
   "/test_at":
     ensure: "present"
@@ -118,8 +113,3 @@ nfs::server_enabled: true
 profile::core::systemd::tmpfile:
   docker_tmp.conf:  # XXX short term kludge
     content: "x /tmp/docker_tmp 0777 saluser saluser -"
-profile::core::yum::versionlock:
-  0:rabbitmq-server-3.8.3-1.el7.noarch:
-    ensure: "present"
-  0:erlang-22.3.4-1.el7.x86_64:
-    ensure: "present"

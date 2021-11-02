@@ -21,3 +21,7 @@ nfs::client_mounts:
     share: "lsstdata"
     server: "atarchiver-1201.cp.lsst.org"
     atboot: true
+  /repo/LATISS:
+    share: "LATISS"
+    server: "atarchiver-1201.cp.lsst.org"
+    atboot: true

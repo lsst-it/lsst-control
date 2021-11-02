@@ -2,6 +2,7 @@
 classes:
   - "profile::archive::data"
   - "profile::archive::rabbitmq"
+  - "profile::archive::redis"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::docker"
@@ -10,17 +11,10 @@ classes:
   - "profile::core::nfsserver"
   - "profile::core::sysctl::lhn"
   - "python"
-  - "redis"
 packages:
   - "git"
   - "cmake"
   - "gcc-c++"
-files:
-  "/etc/profile.d/rh-redis5.sh":
-    mode: "0644"
-    owner: "root"
-    group: "root"
-    content: ". /opt/rh/rh-redis5/enable"
 rabbitmq::admin_enable: true
 rabbitmq::management_enable: true
 rabbitmq::manage_python: false

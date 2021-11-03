@@ -19,6 +19,7 @@ describe 'profile::core::docker' do
 
   it { is_expected.to contain_class('yum::plugin::versionlock') }
   it { is_expected.to have_yum__versionlock_resource_count(2) }
+  it { is_expected.to contain_class('docker::networks') }
 
   context 'when site tu' do
     let(:node_params) do

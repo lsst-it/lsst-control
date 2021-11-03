@@ -19,6 +19,8 @@ class profile::core::docker (
   String $storage_driver               = 'overlay2',
   Optional[Array[String]] $versionlock = undef,
 ) {
+  include docker::networks
+
   class { 'docker':
     overlay2_override_kernel_check => true,  # needed on el7
     socket_group                   => $socket_group,

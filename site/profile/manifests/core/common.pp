@@ -61,6 +61,7 @@ class profile::core::common (
   include epel
   include irqbalance
   include network
+  include profile::core::ca
   include profile::core::dielibwrapdie
   include profile::core::ifdown
   include profile::core::ipa

@@ -4,7 +4,6 @@ classes:
   - "profile::core::docker"
   - "profile::core::docker::prune"
   - "profile::nfs::client::csc"
-  - "docker::networks"
   - "python"
 
 packages:

@@ -37,7 +37,9 @@ mod 'camptocamp/postfix', '1.8.0'
 mod 'camptocamp/augeas', '1.8.0'
 mod 'puppet/alternatives', '3.0.0'
 mod 'puppetlabs/mailalias_core', '1.0.5'
-mod 'puppetlabs/docker', '4.1.0'
+mod 'puppetlabs/docker',
+  git: 'https://github.com/lsst-it/puppetlabs-docker.git',
+  ref: 'production'
 mod 'puppetlabs/reboot', '2.2.0'
 mod 'puppet/python', '3.0.1'
 mod 'derdanne/nfs', '2.1.2'

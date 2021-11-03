@@ -85,12 +85,18 @@ class profile::core::puppet_master (
     | EOT
 
   systemd::unit_file { 'smee.service':
-    content => $service_unit,
-  }
-  ~> service { 'smee':
-    ensure    => 'running',
+    ensure    => 'present',
+    active    => true,
+    content   => $service_unit,
     enable    => true,
     subscribe => Exec['install-smee'],
+  }
+
+  cron { 'smee':
+    command => '/usr/bin/systemctl restart smee /dev/null 2>&1',
+    user    => 'root',
+    hour    => 4,
+    minute  => 42,
   }
 
   # The toml-rb gem is required for the telegraf module.

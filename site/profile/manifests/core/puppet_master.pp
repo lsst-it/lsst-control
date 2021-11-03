@@ -36,6 +36,16 @@ class profile::core::puppet_master (
 
   Class['r10k::webhook::config'] -> Class['r10k::webhook']
 
+  # el7 systemd is too old to support periodic graceful restarts of a service unit.
+  # Using cron seems slightly more obvious than creating a timer unit than triggers a one shot
+  # service to restart the original service unit.
+  cron { 'webhook':
+    command => '/usr/bin/systemctl restart webhook /dev/null 2>&1',
+    user    => 'root',
+    hour    => 4,
+    minute  => 42,
+  }
+
   $node_pkgs = [
     'rh-nodejs10',
     'rh-nodejs10-npm',

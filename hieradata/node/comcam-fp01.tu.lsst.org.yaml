@@ -48,4 +48,3 @@ ccs_software::services:
     - "comcam-ih"
     ## Non-standard ExecStart:
 #    - "h2db"
-

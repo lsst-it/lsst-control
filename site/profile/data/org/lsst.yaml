@@ -228,3 +228,25 @@ profile::archive::common::python_pips:
   "redis":
     virtualenv: "system"
     ensure: "3.5.1"
+
+profile::archive::common::group_list:
+  # this is duplicating the ipa gid as a local group
+  &docker_name docker-%{facts.hostname}:
+    ensure: "present"
+    gid: 70014
+    forcelocal: true
+profile::archive::common::user_list:
+  arc:
+    uid: 61000
+    gid: 61000
+    managehome: true
+    system: false
+    managevim: false
+  atadbot:
+    uid: 61002
+    gid: 61002
+    managehome: true
+    system: false
+    managevim: false
+    groups:
+      - *docker_name

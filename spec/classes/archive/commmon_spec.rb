@@ -11,6 +11,8 @@ describe 'profile::archive::common', :archiver do
     }
   end
 
+  let(:facts) { { hostname: 'foo' } }
+
   it { is_expected.to compile.with_all_deps }
 
   %w[
@@ -28,4 +30,8 @@ describe 'profile::archive::common', :archiver do
   ].each do |p|
     it { is_expected.to contain_python__pip(p) }
   end
+
+  it { is_expected.to contain_accounts__user('arc').with_uid('61000') }
+  it { is_expected.to contain_accounts__user('atadbot').with_uid('61002') }
+  it { is_expected.to contain_group('docker-foo').with_gid('70014') }
 end

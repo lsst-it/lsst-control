@@ -10,6 +10,8 @@
 class profile::archive::common (
   Optional[Array[String]]     $packages = undef,
   Optional[Hash[String,Hash]] $python_pips = undef,
+  Optional[Hash[String,Hash]] $user_list = undef,
+  Optional[Hash[String,Hash]] $group_list = undef,
 ) {
   include profile::archive::data
   include profile::archive::rabbitmq
@@ -32,5 +34,13 @@ class profile::archive::common (
     dev         => 'present',
     virtualenv  => 'present',
     python_pips => $python_pips,
+  }
+
+  if $user_list {
+    ensure_resources('accounts::user', $user_list)
+  }
+
+  if $group_list {
+    ensure_resources('group', $group_list)
   }
 }

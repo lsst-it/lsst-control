@@ -55,21 +55,6 @@ profile::archive::rabbitmq::arc_queues:
     - "archive_ctrl_publish"
     - "archive_ctrl_consume"
     - "telemetry_queue"
-accounts::group_list:
-  # this is duplicating the ipa gid as a local group
-  &docker_name docker-%{facts.hostname}:
-    ensure: "present"
-    gid: 70014
-    forcelocal: true
-accounts::user_list:
-  arc:
-    uid: 61000
-    gid: 61000
-  atadbot:
-    uid: 61002
-    gid: 61002
-    groups:
-      - *docker_name
 sudo::configs:
   comcam_archive_cmd:
     content: "%comcam-archive-sudo ALL=(arc,atadbot) NOPASSWD: ALL"

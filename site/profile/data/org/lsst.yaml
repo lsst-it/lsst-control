@@ -216,3 +216,15 @@ profile::archive::common::packages:
   - "cmake"
   - "gcc-c++"
   - "git"
+
+profile::archive::common::python_pips:
+  # install docker-compose at system level - "docker"
+  "docker-compose":
+    virtualenv: "system"
+    ensure: "1.25.0"
+  "cryptography":
+    virtualenv: "system"
+    ensure: "3.3"
+  "redis":
+    virtualenv: "system"
+    ensure: "3.5.1"

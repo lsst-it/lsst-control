@@ -55,22 +55,6 @@ profile::archive::rabbitmq::arc_queues:
     - "archive_ctrl_publish"
     - "archive_ctrl_consume"
     - "telemetry_queue"
-python::version: "python36"
-python::pip: "present"
-python::dev: "present"
-python::virtualenv: "present"
-# install docker-compose at system level - "docker"
-python::python_pips:
-  # docker-compose is python3 only
-  "docker-compose":
-    virtualenv: "system"
-    ensure: "1.25.0"
-  "cryptography":
-    virtualenv: "system"
-    ensure: "3.3"
-  "redis":
-    virtualenv: "system"
-    ensure: "3.5.1"
 accounts::group_list:
   # this is duplicating the ipa gid as a local group
   &docker_name docker-%{facts.hostname}:

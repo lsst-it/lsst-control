@@ -20,4 +20,12 @@ describe 'profile::archive::common', :archiver do
   ].each do |p|
     it { is_expected.to contain_package(p) }
   end
+
+  %w[
+    docker-compose
+    cryptography
+    redis
+  ].each do |p|
+    it { is_expected.to contain_python__pip(p) }
+  end
 end

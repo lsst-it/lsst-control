@@ -1,16 +1,6 @@
 ---
 classes:
-  - "profile::archive::data"
-  - "profile::archive::rabbitmq"
-  - "profile::archive::redis"
-  - "profile::core::common"
-  - "profile::core::debugutils"
-  - "profile::core::docker"
-  - "profile::core::docker::prune"
-  - "profile::core::nfsclient"
-  - "profile::core::nfsserver"
-  - "profile::core::sysctl::lhn"
-  - "python"
+  - "profile::archive::common"
 packages:
   - "git"
   - "cmake"

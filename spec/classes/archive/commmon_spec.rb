@@ -12,4 +12,12 @@ describe 'profile::archive::common', :archiver do
   end
 
   it { is_expected.to compile.with_all_deps }
+
+  %w[
+    git
+    cmake
+    gcc-c++
+  ].each do |p|
+    it { is_expected.to contain_package(p) }
+  end
 end

@@ -1,7 +1,12 @@
 # @summary
 #   Common archiver functionality.
 #
-class profile::archive::common {
+# @param packages
+#   List of packages to install.
+#
+class profile::archive::common (
+  Optional[Array[String]] $packages = undef,
+) {
   include profile::archive::data
   include profile::archive::rabbitmq
   include profile::archive::redis
@@ -13,4 +18,8 @@ class profile::archive::common {
   include profile::core::nfsserver
   include profile::core::sysctl::lhn
   include python
+
+  if $packages {
+    ensure_packages($packages)
+  }
 }

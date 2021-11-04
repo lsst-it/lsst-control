@@ -211,3 +211,8 @@ profile::archive::redis::files:
     owner: "root"
     group: "root"
     content: ". /opt/rh/rh-redis5/enable"
+
+profile::archive::common::packages:
+  - "cmake"
+  - "gcc-c++"
+  - "git"

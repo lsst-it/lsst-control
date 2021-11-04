@@ -1,6 +1,7 @@
 ---
 classes:
   - "profile::archive::common"
+  - "profile::archive::data::comcam"
 profile::archive::rabbitmq::vhosts:
   "/test_at":
     ensure: "present"

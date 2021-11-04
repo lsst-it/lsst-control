@@ -33,6 +33,7 @@ network::mroutes_hash:
     ensure: "absent"
     routes: {}
 
+nfs::server_enabled: true
 nfs::nfs_v4_export_root_clients: >-
   %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
   140.252.147.128/27(ro,fsid=root,insecure,no_subtree_check,async,root_squash)

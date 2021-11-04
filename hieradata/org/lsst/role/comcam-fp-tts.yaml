@@ -3,6 +3,7 @@ classes:
   - "profile::ccs::common"
   - "profile::ccs::daq4"
   - "profile::ccs::daq_interface"
+  - "profile::ccs::graphical"
   - "profile::core::common"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"

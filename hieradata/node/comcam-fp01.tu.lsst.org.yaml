@@ -41,3 +41,11 @@ nfs::client_mounts:
     share: "ccs-data"
     server: "%{facts.fqdn}"
     atboot: true
+
+ccs_software::services:
+  prod:
+    - "comcam-fp"
+    - "comcam-ih"
+    ## Non-standard ExecStart:
+#    - "h2db"
+

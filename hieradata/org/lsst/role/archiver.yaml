@@ -55,9 +55,6 @@ profile::archive::rabbitmq::arc_queues:
     - "archive_ctrl_publish"
     - "archive_ctrl_consume"
     - "telemetry_queue"
-sudo::configs:
-  comcam_archive_cmd:
-    content: "%comcam-archive-sudo ALL=(arc,atadbot) NOPASSWD: ALL"
 
 profile::core::systemd::tmpfile:
   docker_tmp.conf:  # XXX short term kludge

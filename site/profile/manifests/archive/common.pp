@@ -43,4 +43,8 @@ class profile::archive::common (
   if $group_list {
     ensure_resources('group', $group_list)
   }
+
+  sudo::conf { 'comcam_archive_cmd':
+    content => '%comcam-archive-sudo ALL=(arc,atadbot) NOPASSWD: ALL',
+  }
 }

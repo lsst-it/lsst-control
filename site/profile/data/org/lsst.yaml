@@ -194,14 +194,14 @@ profile::archive::data::files:
 profile::archive::data::auxtel::files:
   /data/repo/LATISS:
     ensure: "directory"
-    mode: "1777"
+    mode: "0777"
     owner: &saluser 73006
     group: *saluser
 
 profile::archive::data::comcam::files:
   /data/repo/LSSTComCam:
     ensure: "directory"
-    mode: "1777"
+    mode: "0777"
     owner: &saluser 73006
     group: *saluser
 

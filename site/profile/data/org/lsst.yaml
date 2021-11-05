@@ -209,6 +209,11 @@ profile::archive::data::comcam::files:
     mode: "0777"
     owner: &saluser 73006
     group: *saluser
+  /data/repo/LSSTComCam/u:
+    ensure: "directory"
+    mode: "1777"
+    owner: &saluser 73006
+    group: *saluser
 
 profile::archive::redis::files:
   "/etc/profile.d/rh-redis5.sh":

@@ -197,6 +197,11 @@ profile::archive::data::auxtel::files:
     mode: "0777"
     owner: &saluser 73006
     group: *saluser
+  /data/repo/LATISS/u:
+    ensure: "directory"
+    mode: "1777"
+    owner: &saluser 73006
+    group: *saluser
 
 profile::archive::data::comcam::files:
   /data/repo/LSSTComCam:

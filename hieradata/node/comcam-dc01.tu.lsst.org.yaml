@@ -16,3 +16,10 @@ network::interfaces_hash:
     type: "Ethernet"
   em2:
     <<: *not_connected
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /net/ccs-data:
+    share: "ccs-data"
+    server: "comcam-fp01.tu.lsst.org"
+    atboot: true

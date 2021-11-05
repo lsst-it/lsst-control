@@ -5,5 +5,6 @@ classes:
   - "profile::ccs::daq_interface"
   - "profile::ccs::graphical"
   - "profile::core::common"
+  - "profile::core::nfsclient"
 
 profile::ccs::facts::daq: true

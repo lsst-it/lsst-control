@@ -4,5 +4,7 @@ classes:
   - "profile::ccs::daq4"
   - "profile::ccs::daq_interface"
   - "profile::core::common"
+  - "profile::core::nfsclient"
+  - "profile::core::nfsserver"
 
 profile::ccs::facts::daq: true

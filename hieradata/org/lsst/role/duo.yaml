@@ -1,0 +1,6 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::duo"
+
+profile::core::duo::api: "api-b97bf6fc.duosecurity.com"

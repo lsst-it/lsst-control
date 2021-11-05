@@ -62,6 +62,7 @@ network::mroutes_hash:
 # 139.229.160.0/24    cp general & andes
 # 139.229.165.0/24    cp archive
 # 139.229.175.128/25  auxtel-ccs
+nfs::server_enabled: true
 nfs::nfs_v4_export_root_clients: >-
   %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.146.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
@@ -87,18 +88,6 @@ nfs::nfs_exports_global:
       139.229.170.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
 
-files:
-  /data/repo:
-    ensure: "directory"
-    mode: "0755"
-    owner: 73006  # saluser
-    group: 73006  # saluser
-  /repo:
-    ensure: "directory"
-    mode: "0755"
-    owner: 73006  # saluser
-    group: 73006  # saluser
-
 nfs::client_enabled: true
 nfs::client_mounts:
   # sanity check mounts
@@ -111,22 +100,6 @@ nfs::client_mounts:
     server: "%{facts.fqdn}"
     atboot: true
   # remote mounts
-  /net/project:
-    share: "project"
-    server: "nfs1.cp.lsst.org"
-    atboot: true
-  /net/scratch:
-    share: "scratch"
-    server: "nfs1.cp.lsst.org"
-    atboot: true
-  /net/lsstdata:
-    share: "lsstdata"
-    server: "nfs1.cp.lsst.org"
-    atboot: true
-  /net/home:
-    share: "home"
-    server: "nfs1.cp.lsst.org"
-    atboot: true
   /net/dimm:
     share: "dimm"
     server: "nfs1.cp.lsst.org"

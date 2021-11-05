@@ -1,0 +1,37 @@
+---
+classes:
+  - "profile::archive::common"
+  - "profile::archive::data::auxtel"
+profile::archive::rabbitmq::vhosts:
+  "/test_at":
+    ensure: "present"
+profile::archive::rabbitmq::user_permissions:
+  "iip@/test_at":
+    configure_permission: ".*"
+    read_permission: ".*"
+    write_permission: ".*"
+  "guest@/test_at":
+    configure_permission: ".*"
+    read_permission: ".*"
+    write_permission: ".*"
+profile::archive::rabbitmq::exchanges:
+  "message@/test_at":
+    ensure: "present"
+    type: "direct"
+    durable: true
+    user: "%{lookup('profile::archive::rabbitmq::queue_user')}"  # secret
+    password: "%{lookup('profile::archive::rabbitmq::queue_password')}"  # secret
+profile::archive::rabbitmq::arc_queues:
+  "/test_at":
+    - "f98_consume"
+    - "f99_consume"
+    - "at_foreman_ack_publish"
+    - "at_publish_to_oods"
+    - "oods_publish_to_at"
+    - "archive_ctrl_publish"
+    - "archive_ctrl_consume"
+    - "telemetry_queue"
+
+profile::core::systemd::tmpfile:
+  docker_tmp.conf:  # XXX short term kludge
+    content: "x /tmp/docker_tmp 0777 saluser saluser -"

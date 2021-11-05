@@ -172,3 +172,91 @@ profile::ccs::sysctl::sysctls:
   net.core.wmem_max:
     value: 18874368
     target: *daqccs
+
+profile::archive::data::files:
+  /data: &rootdir
+    ensure: "directory"
+    mode: "0755"
+    owner: 0
+    group: 0
+  /data/lsstdata:
+    <<: *rootdir
+  /data/repo: &saldir
+    ensure: "directory"
+    mode: "0755"
+    owner: &saluser 73006
+    group: *saluser
+  /data/staging:
+    <<: *saldir
+  /repo:
+    <<: *saldir
+
+profile::archive::data::auxtel::files:
+  /data/repo/LATISS:
+    ensure: "directory"
+    mode: "0777"
+    owner: &saluser 73006
+    group: *saluser
+  /data/repo/LATISS/u:
+    ensure: "directory"
+    mode: "1777"
+    owner: &saluser 73006
+    group: *saluser
+
+profile::archive::data::comcam::files:
+  /data/repo/LSSTComCam:
+    ensure: "directory"
+    mode: "0777"
+    owner: &saluser 73006
+    group: *saluser
+  /data/repo/LSSTComCam/u:
+    ensure: "directory"
+    mode: "1777"
+    owner: &saluser 73006
+    group: *saluser
+
+profile::archive::redis::files:
+  "/etc/profile.d/rh-redis5.sh":
+    mode: "0644"
+    owner: "root"
+    group: "root"
+    content: ". /opt/rh/rh-redis5/enable"
+
+profile::archive::common::packages:
+  - "cmake"
+  - "gcc-c++"
+  - "git"
+
+profile::archive::common::python_pips:
+  # install docker-compose at system level - "docker"
+  "docker-compose":
+    virtualenv: "system"
+    ensure: "1.25.0"
+  "cryptography":
+    virtualenv: "system"
+    ensure: "3.3"
+  "redis":
+    virtualenv: "system"
+    ensure: "3.5.1"
+
+profile::archive::common::group_list:
+  # this is duplicating the ipa gid as a local group
+  &docker_name docker-%{facts.hostname}:
+    ensure: "present"
+    gid: 70014
+    forcelocal: true
+profile::archive::common::user_list:
+  arc:
+    uid: 61000
+    gid: 61000
+    managehome: true
+    system: false
+    managevim: false
+  atadbot:
+    uid: 61002
+    gid: 61002
+    managehome: true
+    system: false
+    managevim: false
+    groups:
+      - *docker_name

@@ -398,3 +398,8 @@ scl::repos:
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo"
 
 profile::ts::opensplicedds::ensure: "6.10.4-6.el7"
+
+# Use NFSv4 on NFS enabled hosts.
+nfs::nfs_v4: true
+nfs::nfs_v4_client: true
+nfs::nfs_v4_idmap_domain: "%{::domain}"

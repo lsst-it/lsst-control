@@ -40,3 +40,5 @@ files:
     mode: "0755"
     owner: "iip"
     group: "iip"
+packages:
+  - "git"

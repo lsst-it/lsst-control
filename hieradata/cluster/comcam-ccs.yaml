@@ -64,14 +64,18 @@ ccs_sal::rpms:
 ccs_sal::rpms_private:
   OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"
 
-ccs_sal::dds_domain: "summit"
+## Used in lookups:
+ccs_site: "summit"
+ccs_instrument: "comcam"
+
+ccs_sal::dds_domain: "%{lookup('ccs_site')}"
 ccs_sal::dds_interface: "comcam-mcm-dds"
-ccs_sal::instrument: "comcam"
+ccs_sal::instrument: "%{lookup('ccs_instrument')}"
 
 ccs_software::global_properties:
-  - "org.lsst.ccs.subsystem.agent.property.instrument=comcam"
-  - "org.lsst.ccs.subsystem.agent.property.cluster=comcam"
-  - "org.lsst.ccs.subsystem.agent.property.site=summit"
+  - "org.lsst.ccs.subsystem.agent.property.instrument=%{lookup('ccs_instrument')}"
+  - "org.lsst.ccs.subsystem.agent.property.cluster=%{lookup('ccs_instrument')}"
+  - "org.lsst.ccs.subsystem.agent.property.site=%{lookup('ccs_site')}"
 
 ccs_monit::mailhost: "mail.lsst.org"
 ccs_monit::alert:

@@ -1,6 +1,2 @@
 ---
-
-ccs_software::global_properties:
-  - "org.lsst.ccs.subsystem.agent.property.instrument=comcam"
-  - "org.lsst.ccs.subsystem.agent.property.cluster=comcam"
-  - "org.lsst.ccs.subsystem.agent.property.site=tucson"
+ccs_site: "tucson"

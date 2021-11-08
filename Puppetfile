@@ -4,6 +4,8 @@ mod 'saz/timezone', '5.1.1'
 mod 'puppet/selinux', '3.0.0'
 mod 'puppetlabs/firewall', '2.0.0'
 mod 'juniorsysadmin/irqbalance', '1.1.0'
+# 2021-10-28 hreinking: Manage Firewalld
+mod 'puppet-firewalld', '4.4.0'
 mod 'qtechnologies/sysstat', '1.2.0'
 mod 'puppetlabs/sshkeys_core', '1.0.2'
 mod 'puppetlabs/accounts', '4.1.0'

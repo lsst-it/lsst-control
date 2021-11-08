@@ -5,3 +5,4 @@ classes:
   - "profile::core::dmz"
 
 profile::core::duo::api: "api-b97bf6fc.duosecurity.com"
+profile::core::common::manage_firewall: false

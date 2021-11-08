@@ -9,8 +9,7 @@ class profile::core::duo (
   String $ldap_server2,
   String $ldap_user,
   String $ldap_pwd,
-  String $ldap_basedn,
-  String $ldap_group,
+  String $ldap_basedn
 ) {
   #  Duo Archive Variables
   $source_name    = 'duoauthproxy'
@@ -45,7 +44,6 @@ class profile::core::duo (
     service_account_username=${ldap_user}
     service_account_password=${ldap_pwd}
     search_dn=${ldap_basedn}
-    security_group_dn=${ldap_group}
     username_attribute=uid
     [ldap_server_auto]
     ikey=${ikey}

@@ -2,5 +2,4 @@
 profile::core::duo::ldap_server1: "139.229.135.6"
 profile::core::duo::ldap_server2: "139.229.135.7"
 profile::core::duo::ldap_user: "uid=svc_duo,cn=users,cn=accounts,dc=lsst,dc=cloud"
-profile::core::duo::ldap_group: "uid=duo_admin,cn=groups,cn=accounts,dc=lsst,dc=cloud"
-profile::core::duo::ldap_basedn: "dc=lsst,dc=cloud"
+profile::core::duo::ldap_basedn: "cn=accounts,dc=lsst,dc=cloud"

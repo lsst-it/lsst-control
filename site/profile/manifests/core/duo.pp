@@ -6,6 +6,9 @@ class profile::core::duo (
   String $skey,
   String $api,
   String $ldap_server,
+  String $ldap_user,
+  String $ldap_pwd,
+  String $ldap_ldap_basedn,
 ) {
   #  Duo Archive Variables
   $source_name    = 'duoauthproxy'
@@ -33,16 +36,14 @@ class profile::core::duo (
   #  Duo Setup Script
   $duo_setup = @("DUO_SETUP")
     [ad_client]
-    host=
-    service_account_username=
-    service_account_password=
-    search_dn=
+    host=${ldap_server}
+    service_account_username=${ldap_user}
+    service_account_password=${ldap_pwd}
+    search_dn=${ldap_ldap_basedn}
     [radius_server_auto]
-    ikey=
-    skey=
-    api_host=
-    radius_ip_1=
-    radius_secret_1=
+    ikey=${ikey}
+    skey=${skey}
+    api_host=${api}
     failmode=safe
     client=ad_client
     port=1812
@@ -73,17 +74,24 @@ class profile::core::duo (
     unless   => "test -d ${install_path}/duoauthproxy-build",
     loglevel => debug,
     }
+  #  Create authproxy.cfg
+  file { '/opt/duoauthproxy/conf/authproxy.cfg':
+    ensure  => 'present',
+    mode    => '0640',
+    owner   => 'duo_authproxy_svc',
+    content => $duo_setup,
+  }
   #  Open ports 389 and 636 for Duo App
   firewalld_port { 'Enable 389 for ldap':
     ensure   => present,
     zone     => 'dmz',
     port     => 389,
-    protocol => 'tcp',
+    protocol => 'any',
   }
   firewalld_port { 'Enable 636 for ldap':
     ensure   => present,
     zone     => 'dmz',
     port     => 636,
-    protocol => 'udp',
+    protocol => 'any',
   }
 }

@@ -1,2 +1,4 @@
 ---
 profile::core::duo::ldap_server: "139.229.135.6"
+profile::core::duo::ldap_user: "uid=svc_duo,cn=users,cn=accounts,dc=lsst,dc=cloud"
+profile::core::duo::ldap_basedn: "cn=users,cn=accounts,dc=lsst,dc=cloud"

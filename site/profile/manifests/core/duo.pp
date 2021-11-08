@@ -55,4 +55,17 @@ class profile::core::duo (
     unless   => "test -d ${install_path}/duoauthproxy-build",
     loglevel => debug,
     }
+  #  Open ports 389 and 636 for Duo App
+  firewalld_port { 'Enable 389 for ldap':
+    ensure   => present,
+    zone     => 'dmz',
+    port     => 389,
+    protocol => 'tcp',
+  }
+  firewalld_port { 'Enable 636 for ldap':
+    ensure   => present,
+    zone     => 'dmz',
+    port     => 636,
+    protocol => 'udp',
+  }
 }

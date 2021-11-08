@@ -40,18 +40,20 @@ class profile::core::duo (
     [ad_client]
     host=${ldap_server1}
     host_2=${ldap_server2}
+    auth_type=plain
+    bind_dn=${ldap_user}
     service_account_username=${ldap_user}
     service_account_password=${ldap_pwd}
     search_dn=${ldap_basedn}
     security_group_dn=${ldap_group}
     username_attribute=uid
-    [radius_server_auto]
+    [ldap_server_auto]
     ikey=${ikey}
     skey=${skey}
     api_host=${api}
     failmode=safe
     client=ad_client
-    port=1812
+    port=389
     |DUO_SETUP
   #  Install Duo packages requirement
   package { $yum_packages:

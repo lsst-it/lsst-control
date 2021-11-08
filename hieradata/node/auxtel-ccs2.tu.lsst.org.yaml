@@ -4,3 +4,20 @@ profile::ccs::daq_interface::uuid: "fd524cfc-e6e4-4571-8fcb-7fbc0be591c1"
 profile::ccs::daq_interface::was: "p2p1"
 profile::ccs::daq_interface::mode: "dhcp-client"
 ccs_software::hostname: "atsccs2"
+
+nfs::server_enabled: true
+nfs::nfs_v4_export_root_clients: >-
+  %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  auxtel-ccs1.tu.lsst.org(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+nfs::nfs_exports_global:
+  /ccs-data:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      auxtel-ccs1.tu.lsst.org(ro,nohide,insecure,no_subtree_check,async,root_squash)
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /net/self/ccs-data:
+    share: "ccs-data"
+    server: "%{facts.fqdn}"
+    atboot: true

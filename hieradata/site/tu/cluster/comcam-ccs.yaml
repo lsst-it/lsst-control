@@ -1,6 +1,9 @@
 ---
 ccs_site: "tucson"
 
+## FIXME this should be "comcam-mcm-dds", same as real comcam.
+ccs_sal::dds_interface: "140.252.147.52"
+
 ccs_monit::alert:
   ## tucson-teststand-alerts
   - "tucson-teststand-aler-aaaae4zsdubhmm3n7mowaugr2y@lsstc.slack.com"

@@ -5,6 +5,7 @@ class profile::core::duo (
   String $ikey,
   String $skey,
   String $api,
+  String $ldap_server,
 ) {
   #  Duo Archive Variables
   $source_name    = 'duoauthproxy'
@@ -24,11 +25,28 @@ class profile::core::duo (
     'diffutils',
   ]
   #  Duo Installation Script
-  $duo_install = @("DUO")
+  $duo_install = @("DUO_INSTALL")
     cd ${install_path}
     make
     echo $? > ${install_path}/status
-    |DUO
+    |DUO_INSTALL
+  #  Duo Setup Script
+  $duo_setup = @("DUO_SETUP")
+    [ad_client]
+    host=
+    service_account_username=
+    service_account_password=
+    search_dn=
+    [radius_server_auto]
+    ikey=
+    skey=
+    api_host=
+    radius_ip_1=
+    radius_secret_1=
+    failmode=safe
+    client=ad_client
+    port=1812
+    |DUO_SETUP
   #  Install Duo packages requirement
   package { $yum_packages:
     ensure => 'present'

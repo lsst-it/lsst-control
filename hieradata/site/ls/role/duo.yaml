@@ -1,0 +1,2 @@
+---
+profile::core::duo::ldap_server: "139.229.135.6"

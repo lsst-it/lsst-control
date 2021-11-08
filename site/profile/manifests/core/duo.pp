@@ -78,7 +78,7 @@ class profile::core::duo (
     provider => shell,
     unless   => "test -d ${install_path}/duoauthproxy-build",
     loglevel => debug,
-    }
+  }
   #  Create authproxy.cfg
   file { '/opt/duoauthproxy/conf/authproxy.cfg':
     ensure  => 'present',

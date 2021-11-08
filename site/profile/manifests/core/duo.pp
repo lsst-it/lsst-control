@@ -8,7 +8,7 @@ class profile::core::duo (
   String $ldap_server,
   String $ldap_user,
   String $ldap_pwd,
-  String $ldap_ldap_basedn,
+  String $ldap_basedn,
 ) {
   #  Duo Archive Variables
   $source_name    = 'duoauthproxy'
@@ -39,7 +39,7 @@ class profile::core::duo (
     host=${ldap_server}
     service_account_username=${ldap_user}
     service_account_password=${ldap_pwd}
-    search_dn=${ldap_ldap_basedn}
+    search_dn=${ldap_basedn}
     [radius_server_auto]
     ikey=${ikey}
     skey=${skey}
@@ -86,12 +86,12 @@ class profile::core::duo (
     ensure   => present,
     zone     => 'dmz',
     port     => 389,
-    protocol => 'any',
+    protocol => 'tcp',
   }
   firewalld_port { 'Enable 636 for ldap':
     ensure   => present,
     zone     => 'dmz',
     port     => 636,
-    protocol => 'any',
+    protocol => 'tcp',
   }
 }

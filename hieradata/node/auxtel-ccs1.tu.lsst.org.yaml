@@ -4,3 +4,10 @@ profile::ccs::daq_interface::uuid: "ff897057-3958-47f7-bfe0-a2579288aebf"
 profile::ccs::daq_interface::was: "p2p1"
 profile::ccs::daq_interface::mode: "dhcp-client"
 ccs_software::hostname: "atsccs1"
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /ccs-data:
+    share: "ccs-data"
+    server: "auxtel-ccs2.tu.lsst.org"
+    atboot: true

@@ -5,10 +5,12 @@ class profile::core::duo (
   String $ikey,
   String $skey,
   String $api,
-  String $ldap_server,
+  String $ldap_server1,
+  String $ldap_server2,
   String $ldap_user,
   String $ldap_pwd,
   String $ldap_basedn,
+  String $ldap_group,
 ) {
   #  Duo Archive Variables
   $source_name    = 'duoauthproxy'
@@ -33,13 +35,16 @@ class profile::core::duo (
     make
     echo $? > ${install_path}/status
     |DUO_INSTALL
-  #  Duo Setup Script
+  #  Duo Setup Content
   $duo_setup = @("DUO_SETUP")
     [ad_client]
-    host=${ldap_server}
+    host=${ldap_server1}
+    host_2=${ldap_server2}
     service_account_username=${ldap_user}
     service_account_password=${ldap_pwd}
     search_dn=${ldap_basedn}
+    security_group_dn=${ldap_group}
+    username_attribute=uid
     [radius_server_auto]
     ikey=${ikey}
     skey=${skey}

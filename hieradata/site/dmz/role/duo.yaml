@@ -1,5 +1,5 @@
 ---
 profile::core::duo::ldap_server: "139.229.134.6"
-profile::core::duo::ldap_user: "uid=admin,cn=accounts,dc=lsst,dc=org"
-profile::core::duo::ldap_basedn: "cn=accounts,dc=lsst,dc=org"
+profile::core::duo::ldap_user: "cn=Directory Manager"
+profile::core::duo::ldap_basedn: "dc=lsst,dc=org"
 profile::core::duo::api: "api-c617a737.duosecurity.com"

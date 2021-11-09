@@ -38,22 +38,24 @@ network::mroutes_hash:
     ensure: "absent"
     routes: {}
 
+# 140.252.147.64/27 | misc
+# 140.252.146.32/27 | pillan
 nfs::server_enabled: true
 nfs::nfs_v4_export_root_clients: >-
   %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-  140.252.147.128/27(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  140.252.147.64/27(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
   140.252.146.32/27(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
 nfs::nfs_exports_global:
   /data/lsstdata:
     clients: >-
       %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      140.252.147.128/27(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      140.252.146.32/27(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+      140.252.147.64/27(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      140.252.146.32/27(ro,nohide,insecure,no_subtree_check,async,root_squash)
   /data/repo:
     clients: >-
       %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      140.252.147.128/27(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      140.252.146.32/27(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+      140.252.147.64/27(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      140.252.146.32/27(ro,nohide,insecure,no_subtree_check,async,root_squash)
 
 nfs::client_enabled: true
 nfs::client_mounts:

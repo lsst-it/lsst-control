@@ -1,0 +1,4 @@
+<%- | String $home | -%>
+# This file is managed by Puppet; changes may be overwritten
+export DAQ_HOME=<%= $home %>
+export LD_LIBRARY_PATH=$DAQ_HOME/x86/lib:$LD_LIBRARY_PATH

@@ -2,8 +2,10 @@
 #   Install and manage Duo 2fa proxy
 
 class profile::core::duo (
-  String $ikey,
-  String $skey,
+  String $ikey_ds,
+  String $ikey_app,
+  String $skey_ds,
+  String $skey_app,
   String $api,
   String $ldap_server1,
   String $ldap_server2,
@@ -46,12 +48,18 @@ class profile::core::duo (
     search_dn=${ldap_basedn}
     username_attribute=uid
     [ldap_server_auto]
-    ikey=${ikey}
-    skey=${skey}
+    ikey=${ikey_app}
+    skey=${skey_app}
     api_host=${api}
     failmode=safe
     client=ad_client
     port=389
+    [cloud]
+    ikey=${ikey_ds}
+    skey=${skey_ds}
+    api_host=${api}
+    service_account_username=${ldap_user}
+    service_account_password=${ldap_pwd}
     |DUO_SETUP
   #  Install Duo packages requirement
   package { $yum_packages:

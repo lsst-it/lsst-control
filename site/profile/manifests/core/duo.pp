@@ -7,8 +7,7 @@ class profile::core::duo (
   String $skey_ds,
   String $skey_app,
   String $api,
-  String $ldap_server1,
-  String $ldap_server2,
+  String $ldap_server,
   String $ldap_user,
   String $ldap_pwd,
   String $ldap_basedn
@@ -39,8 +38,7 @@ class profile::core::duo (
   #  Duo Setup Content
   $duo_setup = @("DUO_SETUP")
     [ad_client]
-    host=${ldap_server1}
-    host_2=${ldap_server2}
+    host=${ldap_server}
     auth_type=plain
     bind_dn=${ldap_user}
     service_account_username=${ldap_user}

@@ -45,6 +45,9 @@ class profile::core::duo (
     service_account_password=${ldap_pwd}
     search_dn=${ldap_basedn}
     username_attribute=uid
+    transport=ldaps
+    ssl_ca_certs_file=/etc/ipa/ca.crt
+    ssl_verify_hostname=false
     [ldap_server_auto]
     ikey=${ikey_app}
     skey=${skey_app}

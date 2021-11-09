@@ -46,5 +46,4 @@ ccs_software::services:
   prod:
     - "comcam-fp"
     - "comcam-ih"
-    ## Non-standard ExecStart:
-#    - "h2db"
+    - "h2db"

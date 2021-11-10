@@ -1,2 +1,0 @@
-<%- | String $setup_file | -%>
-system.pre-execute=<%= $setup_file %>

@@ -1,13 +1,13 @@
 ---
 classes:
   - "profile::ccs::common"
-  - "profile::ccs::daq_client"
   - "profile::ccs::daq_interface"
   - "profile::ccs::graphical"
+  - "ccs_daq"
   - "profile::core::common"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
 
 profile::ccs::facts::daq: true
 
-profile::ccs::daq_client::version: "R5-V0.6"
+ccs_daq::version: "R5-V0.6"

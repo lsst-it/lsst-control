@@ -101,17 +101,21 @@ ccs_software::installations:
     aliases:
       - "puppet-2.1.1"
 
+## Used in lookups:
+ccs_site: "summit"
+ccs_instrument: "ats"
+
+ccs_sal::dds_domain: "%{lookup('ccs_site')}"
+ccs_sal::dds_interface: "atsccs1-dds.cp.lsst.org"
+ccs_sal::instrument: "%{lookup('ccs_instrument')}"
+
 ccs_software::global_properties:
-  - "org.lsst.ccs.subsystem.agent.property.instrument=ats"
-  - "org.lsst.ccs.subsystem.agent.property.cluster=ats"
-  - "org.lsst.ccs.subsystem.agent.property.site=summit"
+  - "org.lsst.ccs.subsystem.agent.property.instrument=%{lookup('ccs_instrument')}"
+  - "org.lsst.ccs.subsystem.agent.property.cluster=%{lookup('ccs_instrument')}"
+  - "org.lsst.ccs.subsystem.agent.property.site=%{lookup('ccs_site')}"
 
 ccs_sal::ospl_home: "/opt/OpenSpliceDDS/V6.10.4/HDE/x86_64.linux"
 ccs_sal::rpms:
   ts_sal_utils: "ts_sal_utils-5.2.4-1.x86_64.rpm"
 ccs_sal::rpms_private:
   OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"
-
-ccs_sal::dds_domain: "summit"
-ccs_sal::dds_interface: "atsccs1-dds.cp.lsst.org"
-ccs_sal::instrument: "ats"

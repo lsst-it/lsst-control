@@ -1,8 +1,6 @@
 ---
 ccs_site: "tucson"
-
-## FIXME this should be "comcam-mcm-dds", same as real comcam.
-ccs_sal::dds_interface: "140.252.147.52"
+ccs_sal::dds_interface: "comcam-mcm-dds.tu.lsst.org"
 
 ccs_monit::alert:
   ## tucson-teststand-alerts

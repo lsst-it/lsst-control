@@ -159,4 +159,9 @@ class profile::core::common (
   unless $facts['is_virtual'] {
     include profile::core::hardware
   }
+
+  ensure_resource('service', 'NetworkManager', {
+      ensure => running,
+      enable => true,
+  })
 }

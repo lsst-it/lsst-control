@@ -59,6 +59,7 @@ class profile::core::common (
   include augeas
   include easy_ipa
   include epel
+  include hosts
   include irqbalance
   include network
   include profile::core::ca

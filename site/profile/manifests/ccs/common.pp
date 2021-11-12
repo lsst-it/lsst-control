@@ -5,7 +5,7 @@
 class profile::ccs::common (
   Boolean $sysctls = true,
 ) {
-  include profile::ccs::clustershell
+  include clustershell
   include profile::ccs::facts
   include profile::ccs::home
   include profile::ccs::monitoring

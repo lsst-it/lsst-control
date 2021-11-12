@@ -53,7 +53,10 @@ ccs_software::jdk8::package: "jdk1.8"
 ccs_software::jdk8::dir: "jdk1.8.0_202-amd64"
 ccs_software::jdk8::version: "2000:1.8.0_202-fcs"
 
-profile::ccs::clustershell::config: "auxtel-local.cfg"
+clustershell::groupmembers:
+  misc: {group: "misc", member: "atsccs[1-2],atsdaq1"}
+  hcu: {group: "hcu", member: "atshcu1"}
+  all: {group: "all", member: "@misc,@hcu"}
 
 ## Temporary, until nexus works.
 ccs_pkgarchive: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"

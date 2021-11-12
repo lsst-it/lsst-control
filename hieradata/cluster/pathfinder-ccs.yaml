@@ -40,7 +40,13 @@ ccs_software::jdk8::package: "jdk1.8"
 ccs_software::jdk8::dir: "jdk1.8.0_202-amd64"
 ccs_software::jdk8::version: "2000:1.8.0_202-fcs"
 
-profile::ccs::clustershell::config: "comcam-local.cfg"
+clustershell::groupmembers:
+  misc: {group: "misc", member: "comcam-db01,comcam-fp01,comcam-mcm,comcam-vw01"}
+  dc: {group: "dc", member: "comcam-dc01"}
+  all: {group: "all", member: "@dc,@misc,@uno,@lion"}
+  uno: {group: "uno", member: "comcam-hcu03"}
+  lion: {group: "lion", member: "comcam-lion[01-03],pathfinder-lion01"}
+  hcu: {group: "hcu", member: "@uno,@lion"}
 
 ## Temporary, until nexus works.
 ccs_pkgarchive: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"

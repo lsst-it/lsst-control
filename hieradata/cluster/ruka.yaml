@@ -17,8 +17,4 @@ network::interfaces_hash:
     onboot: "no"
     type: "Ethernet"
 
-# Ruka was reprovisioned and we don't have mirrors of the kernel defined in
-# hieradata/org/lsst/role/rke.yaml. This pins the kernel to the currently
-# available version; in the long run we can host CentOS mirrors to ensure
-# the availability of this package.
 profile::app::helm::version: "3.5.4"

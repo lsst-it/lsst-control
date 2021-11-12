@@ -10,7 +10,6 @@ classes:
   - "profile::core::common"
   - "profile::core::sysctl::lhn"
   - "dhcp"
-  - "hosts"
 
 profile::ccs::common::sysctls: false  # conflicts with lhn tuning
 profile::ccs::facts::daq: true

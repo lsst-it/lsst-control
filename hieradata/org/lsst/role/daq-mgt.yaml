@@ -6,7 +6,6 @@ classes:
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
   - "dhcp"
-  - "hosts"
 
 packages:
   - "ckermit"

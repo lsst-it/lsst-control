@@ -1,0 +1,28 @@
+---
+clustershell::groupmembers:
+  yagan: {group: "yagan", member: "yagan[01-07]"}
+profile::core::rke::enable_dhcp: true
+profile::core::ospl::enable_rundir: true
+network::interfaces_hash:
+  eno1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  eno2d1:  # trunk
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+  eno2d1.1201:  # 139.229.166.0/24
+    bootproto: "none"
+    defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
+
+profile::app::rke::version: "1.3.2"
+profile::app::helm::version: "3.5.4"
+profile::core::common::manage_powertop: true
+profile::core::rke::enable_dhcp: true

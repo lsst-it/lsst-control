@@ -1,6 +1,6 @@
 ---
 dhcp::interfaces:
-  - "eth0"
+  - "ens192"
 
 dhcp::authoritative: true
 dhcp::pxeserver: "139.229.134.5"  # foreman.dev.lsst.org

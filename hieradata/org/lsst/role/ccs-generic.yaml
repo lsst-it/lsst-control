@@ -1,3 +1,4 @@
 ---
 classes:
   - "profile::core::common"
+  - "profile::core::nfsclient"

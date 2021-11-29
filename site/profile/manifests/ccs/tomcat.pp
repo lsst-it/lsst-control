@@ -13,7 +13,7 @@ class profile::ccs::tomcat (
   }
 
   tomcat::install { $catalina_home:
-    source_url => "https://downloads.apache.org/tomcat/tomcat-9/v${version}/bin/apache-tomcat-${version}.tar.gz",
+    source_url => "https://archive.apache.org/dist/tomcat/tomcat-9/v${version}/bin/apache-tomcat-${version}.tar.gz",
   }
 
   # XXX shockingly, puppetlabs-tomcat is not able to create an init script

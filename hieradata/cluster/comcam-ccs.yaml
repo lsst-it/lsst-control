@@ -83,6 +83,9 @@ ccs_software::global_properties:
   - "org.lsst.ccs.subsystem.agent.property.cluster=%{lookup('ccs_instrument')}"
   - "org.lsst.ccs.subsystem.agent.property.site=%{lookup('ccs_site')}"
 
+## comcam-alerts
+ccs_software::service_email: "x7z0x9c0t2k4r1n1@lsstc.slack.com"
+
 ccs_monit::mailhost: "mail.lsst.org"
 ccs_monit::alert:
   ## comcam-alerts

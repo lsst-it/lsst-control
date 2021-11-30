@@ -119,7 +119,7 @@ class profile::icinga::resources (
   $dtn_svc_lhn_name     = 'LHN_Link'
 
   #Hostgroups Names
-  $andes    = 'andes_cluster'
+  $yagan    = 'yagan_cluster'
   $antu     = 'antu_cluster'
   $ruka     = 'ruka_cluster'
   $kueyen   = 'kueyen_cluster'
@@ -229,7 +229,7 @@ class profile::icinga::resources (
   }
   elsif $site == 'summit' {
     $hostgroups_name = [
-      "${andes},AndesCluster,andes_cluster,host.display_name=%22andes%2A%22",
+      "${yagan},YaganCluster,yagan_cluster,host.display_name=%22yagan%2A%22",
       "${core},CoreCluster,core_cluster,host.display_name=%22core%2A%22",
       "${comcam},ComcamCluster,comcam_cluster,host.display_name=%22comcam%2A%22",
       "${it_svc},IT-Services,it_services,host.display_name=%22dns%2A%22|host.display_name=%22ipa%2A%22|host.display_name=%22foreman%2A%22",

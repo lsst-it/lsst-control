@@ -40,6 +40,10 @@
 # @param manage_repos
 #   If `true`, manage core os yum repos
 #
+# @param manage_lldp
+#   If `true`, manage and install lldp
+#
+
 class profile::core::common (
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
@@ -54,6 +58,7 @@ class profile::core::common (
   Boolean $manage_powertop = false,
   Boolean $manage_scl = true,
   Boolean $manage_repos = true,
+  Boolean $manage_lldp = true,
 ) {
   include accounts
   include augeas
@@ -151,11 +156,11 @@ class profile::core::common (
       include scl
     }
   }
-
-  class { 'lldpd':
-    manage_repo => true,
+  if $manage_lldp {
+    class { 'lldpd':
+      manage_repo => true,
+    }
   }
-
   unless $facts['is_virtual'] {
     include profile::core::hardware
   }

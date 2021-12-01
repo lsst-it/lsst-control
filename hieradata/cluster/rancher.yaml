@@ -3,3 +3,5 @@
 # apply to all of them.
 clustershell::groupmembers:
   kueyen: {group: "rancher", member: "rancher[1-3]"}
+
+profile::core::common::manage_lldp: false

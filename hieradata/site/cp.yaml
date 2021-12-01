@@ -78,7 +78,7 @@ rsyslog::config::actions:
 dhcp::dnsdomain: &dnsdomains
   - "cp.lsst.org"
   - "lsst.org"
-  - "lsst.local"
+  - "lsst.cloud"
 # resolv.conf allows for a maximum of 3 nameservers
 # @see man 5 resolv.conf
 dhcp::nameservers: &nameservers

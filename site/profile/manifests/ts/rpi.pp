@@ -191,6 +191,9 @@ class profile::ts::rpi {
   file { $conda_dir:
     ensure => 'directory'
   }
+  file { '/dev/ttyAMA1':
+    group => '70014' # Docker
+  }
   #<-----------END Directories ------------->
   #
   #

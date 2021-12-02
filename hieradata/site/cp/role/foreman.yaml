@@ -79,12 +79,26 @@ dhcp::pools:
     range:
       - "139.229.167.241 139.229.167.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  ocs_app_dome:
+  ess_sensors:
     network: "139.229.168.0"
-    mask: "255.255.255.0"
+    mask: "255.255.255.128"
+    gateway: "139.229.168.126"
+    range:
+      - "139.229.168.100 139.229.168.125"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  dome_calibration:
+    network: "139.229.168.128"
+    mask: "255.255.255.192"
+    gateway: "139.229.168.191"
+    range:
+      - "139.229.168.180 139.229.168.190"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  mtdome_hardware:
+    network: "139.229.168.192"
+    mask: "255.255.255.192"
     gateway: "139.229.168.254"
     range:
-      - "139.229.168.193 139.229.168.253"
+      - "139.229.168.243 139.229.168.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   dds_auxtel:
     network: "139.229.170.0"

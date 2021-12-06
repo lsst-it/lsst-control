@@ -53,6 +53,8 @@ ccs_software::jdk8::package: "jdk1.8"
 ccs_software::jdk8::dir: "jdk1.8.0_202-amd64"
 ccs_software::jdk8::version: "2000:1.8.0_202-fcs"
 
+ccs_software::service_email: "auxtel-ccs-alerts-aaaadjkgtdl6pb2omvdi732xci@lsstc.slack.com"
+
 clustershell::groupmembers:
   misc: {group: "misc", member: "atsccs[1-2],atsdaq1"}
   hcu: {group: "hcu", member: "atshcu1"}

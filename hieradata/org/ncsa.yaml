@@ -20,7 +20,7 @@ chrony::leapsectz: "right/UTC"
 
 docker::overlay2_override_kernel_check: true
 docker::storage_driver: "overlay2"
-docker::version: "19.03.4"
+docker::version: "20.10.11"
 
 #epel::epel_baseurl: "http://lsst-repos01.ncsa.illinois.edu/centos/$releasever/$basearch/epel/2020-02-19-1582151101/"
 #epel::epel_exclude: "singularity*"

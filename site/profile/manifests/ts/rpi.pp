@@ -191,8 +191,18 @@ class profile::ts::rpi {
   file { $conda_dir:
     ensure => 'directory'
   }
-  file { '/dev/ttyAMA1':
+  #  Change Serial I/O group membership to docker
+  file { '/dev/ttyAMA0':
     group => '70014' # Docker
+  }
+  file { '/dev/ttyAMA1':
+    group => '70014'
+  }
+  file { '/dev/ttyAMA2':
+    group => '70014'
+  }
+  file { '/dev/ttyAMA3':
+    group => '70014'
   }
   #<-----------END Directories ------------->
   #

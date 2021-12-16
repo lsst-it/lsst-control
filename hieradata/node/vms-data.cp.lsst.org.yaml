@@ -40,3 +40,5 @@ nfs::client_mounts:
     share: "vms-data"
     server: "%{facts.fqdn}"
     atboot: true
+
+profile::core::common::manage_lldp: false

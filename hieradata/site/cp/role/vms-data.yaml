@@ -1,10 +1,4 @@
 ---
-classes:
-  - "profile::core::common"
-  - "profile::core::nfsserver"
-  - "profile::core::nfsclient"
-
-# Server configuration
 nfs::server_enabled: true
 nfs::nfs_v4_export_root_clients: >-
   %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)

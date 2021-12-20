@@ -1,0 +1,2 @@
+---
+profile::core::common::manage_lldp: false

@@ -101,6 +101,7 @@ class profile::icinga::network (
       'gen-as01.cp.lsst.org,10.17.0.17',
       'cam-as01.cp.lsst.org,10.17.0.2',
       'comp-ds01.cp.lsst.org,10.17.0.254',
+      'comp-prep01.cp.lsst.org,10.17.0.23',
       'comp-is01.cp.lsst.org,10.17.0.32',
       'comp-is02.cp.lsst.org,10.17.0.33',
       'comp-is03.cp.lsst.org,10.17.0.34',
@@ -114,6 +115,7 @@ class profile::icinga::network (
       'comp-as02.cp.lsst.org,10.17.0.52',
       'coat-as01.cp.lsst.org,10.17.0.53',
       'main5-as01.cp.lsst.org,10.17.0.54',
+      'main7-as01.cp.lsst.org,10.17.0.71',
       'm1m3-as01.cp.lsst.org,10.17.0.6',
     ]
     $gw_list  = [

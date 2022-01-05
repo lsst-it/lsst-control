@@ -1,3 +1,2 @@
 ---
-profile::app::helm::version: "3.5.4"
 profile::app::rke::version: "1.2.8"

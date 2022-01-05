@@ -18,4 +18,4 @@ network::interfaces_hash:
     type: "Ethernet"
 
 profile::app::helm::version: "3.5.4"
-profile::app::rke::version: "1.2.13"
+profile::app::rke::version: "1.3.3"

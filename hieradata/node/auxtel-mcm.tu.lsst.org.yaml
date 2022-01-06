@@ -39,8 +39,8 @@ network::interfaces_hash:
 network::mroutes_hash:
   dds:
     routes:
-      "140.252.147.48/28": "140.252.147.129"
-      "140.252.147.128/27": "140.252.147.129"
+      "140.252.147.48/28": "140.252.147.17"
+      "140.252.147.128/27": "140.252.147.17"
 
 nfs::client_enabled: true
 nfs::client_mounts:

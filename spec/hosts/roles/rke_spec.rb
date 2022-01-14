@@ -19,6 +19,12 @@ describe 'test1.dev.lsst.org', :site do
         include_examples 'debugutils'
 
         it { is_expected.to contain_class('profile::core::rke') }
+
+        it do
+          is_expected.to contain_file('/home/rke/.bashrc.d/kubectl.sh')
+            .with_content(%r{^alias k='kubectl'$})
+            .with_content(%r{^complete -o default -F __start_kubectl k$})
+        end
       end
     end # site
 

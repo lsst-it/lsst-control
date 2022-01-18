@@ -4,6 +4,7 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::docker"
   - "profile::core::docker::prune"
+  - "profile::core::nfsclient"
   - "python"
 
 # install docker-compose at system level

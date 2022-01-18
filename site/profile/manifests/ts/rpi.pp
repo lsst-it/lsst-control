@@ -16,10 +16,17 @@ class profile::ts::rpi {
   $libgphoto_version     = 'libgphoto2-2.5.27'
   $gphoto_version        = 'gphoto2-2.5.27'
   $python_gphoto_version = 'python-gphoto2-2.2.4'
-
+  $docker_group          = '70014'
   #  Packages to be installed through snapd
   $snap_packages = 'raspberry-pi-node-gpio'
 
+  #  I/O Interfaces
+  $io_interfaces = [
+    'AMA0',
+    'AMA1',
+    'AMA2',
+    'AMA3'
+  ]
   #  Remove default docker packages
   $docker_packages = [
     'docker-1.13*.aarch64',
@@ -191,8 +198,19 @@ class profile::ts::rpi {
   file { $conda_dir:
     ensure => 'directory'
   }
-  file { '/dev/ttyAMA1':
-    group => '70014' # Docker
+  #  Change Serial I/O group membership to docker
+  $io_interfaces.each |$io| {
+    file { "/dev/tty${io}":
+      group => $docker_group # Docker
+    }
+  }
+  #  Change libftdi rules group
+  file { '/etc/udev/rules.d/99-libftdi.rules':
+    owner   => 'root',
+    group   => 'root',
+    content => @("CONTENT")
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="0403", GROUP="${docker_group}", MODE="0660"
+      |CONTENT
   }
   #<-----------END Directories ------------->
   #

@@ -175,7 +175,7 @@ puppet::server_version: *server_version  # XXX does this do anything?
 puppet::version: "6.25.1"  # agent version
 puppetdb::globals::version: "6.16.1"
 profile::core::yum::versionlock:
-  0:puppetserver-0:6.17.1-1.el7.noarch:
+  0:puppetserver-6.17.1-1.el7.noarch:
     ensure: "present"
     before: "Package[puppetserver]"
   0:puppetdb-termini-6.19.1-1.el7.noarch:

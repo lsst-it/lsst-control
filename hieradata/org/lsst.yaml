@@ -195,13 +195,14 @@ selinux::mode: "disabled"
 # Stop iptables by default - the default rules are highly restrictive to the
 # point of harm and we don't have a meaningful permission set to make this useful.
 firewall::ensure: "stopped"
-puppet_agent::package_version: "6.22.1"
+puppet_agent::package_version: "6.25.1"
 puppet_agent::collection: "puppet6"
 puppet_agent::config:
   - {section: "agent", setting: "environment", ensure: "absent"}
 profile::core::yum::versionlock:
-  0:puppet-agent-6.22.1-1.el7.x86_64:
+  0:puppet-agent-6.25.1-1.el7.x86_64:
     ensure: "present"
+    before: "Package[puppet-agent]"
 
 # Rsyslog configuration is based on the default rsyslog.conf shipping with CentOS 7.7
 rsyslog::config::global_config:

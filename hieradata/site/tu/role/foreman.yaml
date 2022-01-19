@@ -58,6 +58,12 @@ dhcp::pools:
     gateway: "140.252.147.65"
     range: "140.252.147.69 140.252.147.78"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  vlan3090:  # laserlab
+    network: "140.252.147.96"
+    mask: "255.255.255.224"
+    gateway: "140.252.147.97"
+    range: "140.252.147.122 140.252.147.126"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan3085:  # misc-dds
     network: "140.252.147.128"
     mask: "255.255.255.224"

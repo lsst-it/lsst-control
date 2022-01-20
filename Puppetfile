@@ -140,9 +140,7 @@ mod 'lsst/maven',
 mod 'lsst/java_artisanal',
   git: 'https://github.com/lsst-it/puppet-java_artisanal.git',
   ref: 'v1.0.0'
-mod 'lsst/rke',
-  git: 'https://github.com/lsst-it/puppet-rke.git',
-  ref: 'IT-3452/rke'
+mod 'lsst/rke', '0.2.0'
 
 # Needed by NCSA (sort into above later)
 #mod 'herculesteam/augeasproviders_sysctl', '2.3.1'  # conflicts duritong/sysctl

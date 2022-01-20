@@ -7,9 +7,13 @@
 # @param keytab_base64
 #   base64 encoded krb5 keytab for the iip user
 #
+# @param version
+#   Version of rke utility to install
+#
 class profile::core::rke (
   Boolean          $enable_dhcp   = false,
   Optional[String] $keytab_base64 = undef,
+  String $version                 = '1.3.3',
 ) {
   $user = 'rke'
   $uid  = 75500
@@ -34,5 +38,18 @@ class profile::core::rke (
     user               => $user,
     owner              => $user,
     group              => $user,
+  }
+
+  $rke_checksum = $version ? {
+    '1.3.3' => '61088847d80292f305e233b7dff4ac8e47fefdd726e5245052450bf05da844aa',
+    default => undef,
+  }
+  unless ($rke_checksum) {
+    fail("Unknown checksum for rke version: ${version}")
+  }
+
+  class { 'rke':
+    version  => $version,
+    checksum => $rke_checksum,
   }
 }

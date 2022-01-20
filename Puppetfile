@@ -62,7 +62,7 @@ mod 'stm/debconf', '3.0.0'
 # 2021-05-31 hreinking: snapd for EAS Raspberry Pi
 mod 'fervid/snapd', '1.2.1'
 mod 'puppet/chrony', '1.0.0'
-mod 'puppet/archive', '4.1.0'
+mod 'puppet/archive', '6.0.2'
 mod 'puppetlabs/concat', '6.4.0'
 mod 'puppetlabs/inifile', '4.3.0'
 mod 'puppetlabs/java', '6.2.0'
@@ -140,6 +140,9 @@ mod 'lsst/maven',
 mod 'lsst/java_artisanal',
   git: 'https://github.com/lsst-it/puppet-java_artisanal.git',
   ref: 'v1.0.0'
+mod 'lsst/rke',
+  git: 'https://github.com/lsst-it/puppet-rke.git',
+  ref: 'IT-3452/rke'
 
 # Needed by NCSA (sort into above later)
 #mod 'herculesteam/augeasproviders_sysctl', '2.3.1'  # conflicts duritong/sysctl

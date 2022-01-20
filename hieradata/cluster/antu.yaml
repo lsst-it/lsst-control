@@ -36,4 +36,3 @@ network::mroutes_hash:
   em2.2400:
     ensure: "absent"
     routes: {}
-profile::app::rke::version: "1.3.3"

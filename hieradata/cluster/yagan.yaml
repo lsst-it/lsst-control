@@ -25,5 +25,4 @@ network::interfaces_hash:
     type: "none"
     vlan: "yes"
 
-profile::app::rke::version: "1.3.2"
 profile::core::common::manage_powertop: true

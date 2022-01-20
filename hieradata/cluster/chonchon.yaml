@@ -1,4 +1,3 @@
 ---
 clustershell::groupmembers:
   chonchon: {group: "chonchon", member: "chonchon[01-03]"}
-profile::app::rke::version: "1.3.2"

@@ -54,7 +54,7 @@ network::mroutes_hash:
     routes: {}
 
 # 139.229.146.0/24    antu
-# 139.229.160.0/24    cp general & andes
+# 139.229.160.0/24    cp general & yagan
 # 139.229.165.0/24    cp archive
 # 139.229.175.0/26    comcam-ccs
 nfs::server_enabled: true

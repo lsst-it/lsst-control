@@ -24,14 +24,14 @@ class profile::icinga::agent (
   #
   #
   #<-------------------------Icinga-Configuration------------------------->
-  class { '::icinga::repos':
-    manage_epel         => false
+  class { 'icinga::repos':
+    manage_epel         => false,
   }
-  class { '::icinga2':
-    confd           => false
+  class { 'icinga2':
+    confd           => false,
   }
   #  Icinga2 feature API config
-  class { '::icinga2::feature::api':
+  class { 'icinga2::feature::api':
     ensure          => 'present',
     ca_host         => $icinga_master_ip,
     ticket_salt     => $ca_salt,
@@ -39,7 +39,7 @@ class profile::icinga::agent (
     accept_commands => true,
     endpoints       => {
       $icinga_agent_fqdn  => {
-        'host'  => $icinga_agent_ip
+        'host'  => $icinga_agent_ip,
       },
       $icinga_master_fqdn => {
         'host'  => $icinga_master_ip,
@@ -53,7 +53,7 @@ class profile::icinga::agent (
       'master'           => {
         'endpoints' => [$icinga_master_fqdn],
       },
-    }
+    },
   }
   #<--------------------End-Icinga-Configuration-------------------------->
   #
@@ -77,12 +77,12 @@ class profile::icinga::agent (
     mode  => '4755',
   }
   ->file { '/etc/icinga2/features-enabled/netio.conf':
-    ensure  => 'present',
+    ensure  => 'file',
     owner   => 'icinga',
     group   => 'icinga',
     mode    => '0640',
     notify  => Service['icinga2'],
-    content => @("CONTENT")
+    content => @("CONTENT"),
       object CheckCommand "netio" {
         command = [ "/usr/lib64/nagios/plugins/check_netio" ]
         arguments = {
@@ -103,12 +103,12 @@ class profile::icinga::agent (
         mode  => '4755',
       }
       ->file { '/etc/icinga2/features-enabled/netio2.conf':
-        ensure  => 'present',
+        ensure  => 'file',
         owner   => 'icinga',
         group   => 'icinga',
         mode    => '0640',
         notify  => Service['icinga2'],
-        content => @("CONTENT")
+        content => @("CONTENT"),
           object CheckCommand "netio2" {
             command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
             arguments = {
@@ -129,12 +129,12 @@ class profile::icinga::agent (
         mode  => '4755',
       }
       ->file { '/etc/icinga2/features-enabled/netio2.conf':
-        ensure  => 'present',
+        ensure  => 'file',
         owner   => 'icinga',
         group   => 'icinga',
         mode    => '0640',
         notify  => Service['icinga2'],
-        content => @("CONTENT")
+        content => @("CONTENT"),
           object CheckCommand "netio2" {
             command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
             arguments = {
@@ -177,12 +177,12 @@ class profile::icinga::agent (
   }
 
   ->file { '/etc/icinga2/features-enabled/cpu.conf':
-    ensure  => 'present',
+    ensure  => 'file',
     owner   => 'icinga',
     group   => 'icinga',
     mode    => '0640',
     notify  => Service['icinga2'],
-    content => @(CONTENT)
+    content => @(CONTENT),
       object CheckCommand "cpu" {
         command = [ "/usr/lib64/nagios/plugins/check_cpu" ]
       }
@@ -198,8 +198,8 @@ class profile::icinga::agent (
   }
   #  Create host file
   file { $path:
-    ensure  => 'present',
-    content => @("CONTENT"/L)
+    ensure  => 'file',
+    content => @("CONTENT"/L),
       {
       "address": "${icinga_agent_ip}",
       "display_name": "${icinga_agent_fqdn}",

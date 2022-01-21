@@ -1,7 +1,7 @@
 class profile::ccs::tomcat (
   Hash[String, Hash] $wars = {},
 ) {
-  include ::nginx
+  include nginx
 
   $version       = '9.0.53'
   $root_path     = '/opt/tomcat'

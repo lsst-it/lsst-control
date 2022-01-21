@@ -3,7 +3,7 @@ class profile::sal (
   # Array $miniconda_pkgs,
 ) {
   # include ::sal2
-  include ::sal2::firewall
+  include sal2::firewall
   # include ::miniconda
   # include ::python
 

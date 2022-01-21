@@ -61,8 +61,8 @@ class profile::ts::nexusctio (
     | GPG
 
   file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-MSO':
-    ensure  => present,
+    ensure  => file,
     content => $gpg_key,
-    mode    => '0644'
+    mode    => '0644',
   }
 }

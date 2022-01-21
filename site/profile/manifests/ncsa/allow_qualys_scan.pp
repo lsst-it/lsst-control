@@ -35,7 +35,7 @@ class profile::ncsa::allow_qualys_scan (
       mode   => '0700',
       ;
     '/home/qualys/.ssh/authorized_keys':
-      ensure => 'present',
+      ensure => 'file',
       mode   => '0600',
       ;
     default:

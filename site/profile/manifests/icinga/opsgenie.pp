@@ -58,11 +58,11 @@ class profile::icinga::opsgenie (
     source => 'https://s3-us-west-2.amazonaws.com/opsgeniedownloads/repo/opsgenie-icinga2-2.17.0-1.all.noarch.rpm',
   }
   file { '/etc/opsgenie/conf/opsgenie-integration.conf':
-    ensure  => 'present',
+    ensure  => 'file',
     owner   => 'opsgenie',
     group   => 'opsgenie',
     mode    => '0775',
-    content => @("OPSGENIE")
+    content => @("OPSGENIE"),
       apiKey = ${opsgenie_api}
       icinga_server=default
       icinga2opsgenie.logger=warning
@@ -85,8 +85,8 @@ class profile::icinga::opsgenie (
   $user_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_usr}' -d @${user_template_path}"
 
   file { $user_template_path:
-    ensure  => 'present',
-    content => @("USER_TEMPLATE_CONTENT")
+    ensure  => 'file',
+    content => @("USER_TEMPLATE_CONTENT"),
       {
       "enable_notifications": true,
       "object_name": "${user_template}",
@@ -109,8 +109,8 @@ class profile::icinga::opsgenie (
   $pager_user_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_usr}' -d @${pager_user_path}"
 
   file { $pager_user_path:
-    ensure  => 'present',
-    content => @("USER_CONTENT"/)
+    ensure  => 'file',
+    content => @("USER_CONTENT"/),
       {
         "display_name": "Alert System Notification",
         "imports": [
@@ -135,8 +135,8 @@ class profile::icinga::opsgenie (
   $command_host_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_cmd}' -d @${command_host_path}"
 
   file { $command_host_path:
-    ensure  => 'present',
-    content => @(COMMAND_HOST)
+    ensure  => 'file',
+    content => @(COMMAND_HOST),
       {
       "arguments": {
         "-entityType": {
@@ -260,8 +260,8 @@ class profile::icinga::opsgenie (
   $command_svc_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_cmd}' -d @${command_svc_path}"
 
   file { $command_svc_path:
-    ensure  => 'present',
-    content => @(COMMAND_SVC)
+    ensure  => 'file',
+    content => @(COMMAND_SVC),
       {
       "arguments": {
         "-entityType": {
@@ -467,8 +467,8 @@ class profile::icinga::opsgenie (
     $notification_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_notify}' -d @${notification_template_path}"
 
     file { $notification_template_path:
-      ensure  => 'present',
-      content => @("HOST_NOTIFICATION_TEMPLATE")
+      ensure  => 'file',
+      content => @("HOST_NOTIFICATION_TEMPLATE"),
         {
         "command": "${value[0]}",
         "notification_interval": "60",
@@ -486,7 +486,7 @@ class profile::icinga::opsgenie (
       path     => ['/sbin', '/usr/sbin', '/bin'],
       provider => shell,
       onlyif   => $notification_template_cond,
-      loglevel => debug
+      loglevel => debug,
     }
   }
 
@@ -499,8 +499,8 @@ class profile::icinga::opsgenie (
 
     #  Create Host Notification file
     file { $notification_path:
-      ensure  => 'present',
-      content => @("HOST_NOTIFICATION")
+      ensure  => 'file',
+      content => @("HOST_NOTIFICATION"),
         {
         "apply_to": "${value[2]}",
         "assign_filter": "${value[2]}=true",

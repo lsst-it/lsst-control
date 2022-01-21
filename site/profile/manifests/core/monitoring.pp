@@ -16,7 +16,7 @@ class profile::core::monitoring (
           'database' => $database,
           'username' => $username,
           'password' => $password,
-      }]
+      }],
     },
     inputs   => {
       'cpu'    => [{
@@ -29,6 +29,6 @@ class profile::core::monitoring (
       'disk'   => [{}],
       'swap'   => [{}],
       'system' => [{}],
-    }
+    },
   }
 }

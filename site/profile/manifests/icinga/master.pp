@@ -111,14 +111,14 @@ class profile::icinga::master (
     'git',
     'pnp4nagios',
     'nagios-plugins-all',
-    'php-intl'
+    'php-intl',
   ]
 
   #MySql options
   $override_options = {
     'mysqld' => {
       'bind_address' => '0.0.0.0',
-    }
+    },
   }
   #Npcd file content
   $npcd_cont = @(NPCD/L)
@@ -157,7 +157,7 @@ class profile::icinga::master (
     ensure => 'present',
   }
   ##MySQL definition
-  class { '::mysql::server':
+  class { 'mysql::server':
     root_password           => $mysql_root,
     remove_default_accounts => true,
     restart                 => true,
@@ -168,7 +168,7 @@ class profile::icinga::master (
     password => $mysql_icingaweb_pwd,
     host     => $master_ip,
     grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
-    require  => Class['::mysql::server']
+    require  => Class['mysql::server'],
   }
   ->mysql::db { $mysql_director_db:
     user     => $mysql_director_user,
@@ -176,13 +176,13 @@ class profile::icinga::master (
     host     => $master_ip,
     charset  => 'utf8',
     grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
-    require  => Class['::mysql::server']
+    require  => Class['mysql::server'],
   }
   ##Icinga2 Config
-  class { '::icinga::repos':
-    manage_epel         => false
+  class { 'icinga::repos':
+    manage_epel         => false,
   }
-  class { '::icinga2':
+  class { 'icinga2':
     confd     => false,
     constants => {
       'ZoneName'   => 'master',
@@ -190,7 +190,7 @@ class profile::icinga::master (
     },
     features  => ['checker','mainlog','statusdata','compatlog','command'],
   }
-  class { '::icinga2::feature::idomysql':
+  class { 'icinga2::feature::idomysql':
     user          => $mysql_icingaweb_user,
     password      => $mysql_icingaweb_pwd,
     database      => $mysql_icingaweb_db,
@@ -198,7 +198,7 @@ class profile::icinga::master (
     import_schema => true,
     require       => Mysql::Db[$mysql_icingaweb_db],
   }
-  class { '::icinga2::feature::api':
+  class { 'icinga2::feature::api':
     pki             => 'none',
     accept_config   => true,
     accept_commands => true,
@@ -206,7 +206,7 @@ class profile::icinga::master (
     ensure          => 'present',
     endpoints       => {
       $master_fqdn    => {
-        'host'  => $master_ip
+        'host'  => $master_ip,
       },
     },
     zones           => {
@@ -215,9 +215,9 @@ class profile::icinga::master (
       },
     },
   }
-  include ::icinga2::pki::ca
+  include icinga2::pki::ca
 
-  class { '::icinga2::feature::notification':
+  class { 'icinga2::feature::notification':
     ensure    => present,
     enable_ha => true,
   }
@@ -231,7 +231,7 @@ class profile::icinga::master (
     global => true,
   }
   ##Icinga2 Perfdata
-  class { '::icinga2::feature::perfdata':
+  class { 'icinga2::feature::perfdata':
     ensure => present,
   }
   file { '/var/lib/pnp4nagios':
@@ -243,10 +243,10 @@ class profile::icinga::master (
     notify  => Service['npcd'],
   }
   ##IcingaWeb Config
-  class { '::icingaweb2':
+  class { 'icingaweb2':
     manage_repo   => false,
     logging_level => 'INFO',
-    require       => Class['::icinga2'],
+    require       => Class['icinga2'],
   }
   class { 'icingaweb2::module::monitoring':
     ensure            => present,
@@ -262,8 +262,8 @@ class profile::icinga::master (
         port      => 5665,
         username  => $api_user,
         password  => $api_pwd,
-      }
-    }
+      },
+    },
   }
   ##IcingaWeb LDAP Config
   icingaweb2::config::resource { $ldap_resource:
@@ -304,7 +304,7 @@ class profile::icinga::master (
     shell  => '/bin/false',
     gid    => 'icingaweb2',
     home   => '/var/lib/icingadirector',
-    system => true
+    system => true,
   }
   -> class { 'icingaweb2::module::director':
     git_revision  => 'v1.7.2',
@@ -333,7 +333,7 @@ class profile::icinga::master (
     provider => git,
     source   => 'git://github.com/Icinga/icingaweb2-module-pnp.git',
     revision => 'v1.1.0',
-    require  => Class['::icingaweb2'],
+    require  => Class['icingaweb2'],
   }
   exec { 'icingacli module enable pnp':
     cwd     => '/var/tmp/',
@@ -346,17 +346,17 @@ class profile::icinga::master (
     mode    => '0755',
     owner   => 'apache',
     group   => 'icingaweb2',
-    require => Class['::icingaweb2'],
+    require => Class['icingaweb2'],
   }
   -> file { '/etc/icingaweb2/modules/pnp/config.ini':
-    ensure  => 'present',
+    ensure  => 'file',
     mode    => '0660',
     owner   => 'apache',
     group   => 'icingaweb2',
     content => $pnp_conf,
   }
   file { '/etc/pnp4nagios/npcd.cfg':
-    ensure  => 'present',
+    ensure  => 'file',
     mode    => '0644',
     content => $npcd_cont,
     require => Package[$packages],
@@ -364,7 +364,7 @@ class profile::icinga::master (
   }
   ##PNP4Nagios Configuration
   file { '/etc/nginx/sites-available/pnp4nagios.conf':
-    ensure  => 'present',
+    ensure  => 'file',
     content => $pnp4nagios_conf,
     mode    => '0644',
   }
@@ -376,7 +376,7 @@ class profile::icinga::master (
     source       => 'https://github.com/Icinga/icinga-php-thirdparty/archive/refs/tags/v0.10.0.tar.gz',
     creates      => '/usr/share/icinga-php/vendor',
     cleanup      => true,
-    require      => Class['::icingaweb2'],
+    require      => Class['icingaweb2'],
   }
 
   ##IcingaWeb IPL
@@ -387,7 +387,7 @@ class profile::icinga::master (
     source       => 'https://github.com/Icinga/icinga-php-library/archive/refs/tags/v0.6.1.tar.gz',
     creates      => '/usr/share/icinga-php/ipl',
     cleanup      => true,
-    require      => Class['::icingaweb2'],
+    require      => Class['icingaweb2'],
   }
 
   ##IcingaWeb Incubator
@@ -398,7 +398,7 @@ class profile::icinga::master (
     source       => 'https://github.com/Icinga/icingaweb2-module-incubator/archive/refs/tags/v0.6.0.tar.gz',
     creates      => '/usr/share/icinga-php/ipl',
     cleanup      => true,
-    require      => Class['::icingaweb2'],
+    require      => Class['icingaweb2'],
   }
   -> exec { $incubator_script:
     cwd      => '/tmp',

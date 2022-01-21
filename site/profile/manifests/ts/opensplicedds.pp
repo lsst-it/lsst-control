@@ -7,6 +7,6 @@ class profile::ts::opensplicedds (
   require profile::core::yum::lsst_ts_private
 
   package { 'OpenSpliceDDS':
-    ensure => $ensure
+    ensure => $ensure,
   }
 }

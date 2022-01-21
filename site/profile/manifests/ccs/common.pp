@@ -27,6 +27,6 @@ class profile::ccs::common (
     type    => 'User',
     options => {
       'AuthorizedKeysFile' => '.ssh/authorized_keys',
-    }
+    },
   }
 }

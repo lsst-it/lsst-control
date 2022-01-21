@@ -224,7 +224,7 @@ class profile::icinga::resources (
       'vsphere05.ls.lsst.org,139.229.135.38',
       'vsphere06.ls.lsst.org,139.229.135.39',
       'vcenter.cp.lsst.org,139.229.160.60',
-      'icinga-master.cp.lsst.org,139.229.160.31'
+      'icinga-master.cp.lsst.org,139.229.160.31',
     ]
   }
   elsif $site == 'summit' {
@@ -239,7 +239,7 @@ class profile::icinga::resources (
       'vsphere02.cp.lsst.org,139.229.160.58',
       'vsphere03.cp.lsst.org,139.229.160.59',
       'vcenter.cp.lsst.org,139.229.160.60',
-      'icinga-master.ls.lsst.org,139.229.135.31'
+      'icinga-master.ls.lsst.org,139.229.135.31',
     ]
   }
 
@@ -287,7 +287,7 @@ class profile::icinga::resources (
   #<-------------------------Packages Installation------------------------>
   #Packages Installation
   package { 'perl-Net-SNMP':
-    ensure  => 'present'
+    ensure  => 'present',
   }
   #<----------------------END-Packages Installation----------------------->
   #
@@ -329,8 +329,8 @@ class profile::icinga::resources (
     }
     #Create host template file
     file { $host_path:
-      ensure  => 'present',
-      content => $content
+      ensure  => 'file',
+      content => $content,
     }
     ->exec { $host_cmd:
       cwd      => $icinga_path,
@@ -424,8 +424,8 @@ class profile::icinga::resources (
       notice("No content has beeing assigned to ${value[1]}")
     }
     file { $svc_template_path:
-      ensure  => 'present',
-      content => $content
+      ensure  => 'file',
+      content => $content,
     }
     ->exec { $svc_template_cmd:
       cwd      => $icinga_path,
@@ -447,8 +447,8 @@ class profile::icinga::resources (
     $svc_cmd   = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${svc_path}"
 
     file { $svc_path:
-      ensure  => 'present',
-      content => @("CONTENT"/L)
+      ensure  => 'file',
+      content => @("CONTENT"/L),
         {
         "host": "${value[0]}",
         "imports": [
@@ -469,8 +469,8 @@ class profile::icinga::resources (
   }
   #Creates dhcp resource file for MasterTemplate and DhcpServiceTemplate
   file { $master_svc_path1:
-    ensure  => 'present',
-    content => @("MASTER_SVC_1"/L)
+    ensure  => 'file',
+    content => @("MASTER_SVC_1"/L),
       {
       "host": "${master_template}",
       "imports": [
@@ -503,8 +503,8 @@ class profile::icinga::resources (
     $hostgroup_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${hostgroup_path}"
 
     file { $hostgroup_path:
-      ensure  => 'present',
-      content => @("CLUSTER"/L)
+      ensure  => 'file',
+      content => @("CLUSTER"/L),
         {
         "assign_filter": "${value[3]}",
         "display_name": "${value[1]}",
@@ -532,8 +532,8 @@ class profile::icinga::resources (
     $svcgroup_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svcgroup}' -d @${svcgroup_path}"
 
     file { $svcgroup_path:
-      ensure  => 'present',
-      content => @("GROUP"/L)
+      ensure  => 'file',
+      content => @("GROUP"/L),
         {
         "assign_filter": "service.name=%22%2A${value[0]}%22",
         "display_name": "${value[1]}",
@@ -557,8 +557,8 @@ class profile::icinga::resources (
   #<--------------------Files Creation and Deployement-------------------->
   #  Master Host
   file { $addhost_path:
-    ensure  => 'present',
-    content => @("MASTER_HOST"/L)
+    ensure  => 'file',
+    content => @("MASTER_HOST"/L),
       {
       "address": "${master_ip}",
       "display_name": "${master_fqdn}",
@@ -597,8 +597,8 @@ class profile::icinga::resources (
     $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${path}"
 
     file { $path:
-      ensure  => 'present',
-      content => @("HOST_CONTENT"/L)
+      ensure  => 'file',
+      content => @("HOST_CONTENT"/L),
         {
         "address": "${value[1]}",
         "display_name": "${value[0]}",

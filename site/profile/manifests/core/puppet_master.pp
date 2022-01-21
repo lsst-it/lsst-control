@@ -52,7 +52,7 @@ class profile::core::puppet_master (
   ]
 
   package { $node_pkgs:
-    require => Class['scl']
+    require => Class['scl'],
   }
 
   exec { 'install-smee':

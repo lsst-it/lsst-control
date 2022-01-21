@@ -1,10 +1,10 @@
 ---
 classes:
   - "clustershell"
-  - "profile::app::helm"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::docker"
+  - "profile::core::helm"
   - "profile::core::kernel::pquota"
   - "profile::core::kubecompletion"
   - "profile::core::ospl"
@@ -34,7 +34,7 @@ yum::repos:
     gpgcheck: true
     gpgkey: "https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"
     target: "/etc/yum.repos.d/kubernetes.repo"
-profile::app::helm::version: "3.5.4"
+profile::core::helm::version: "3.5.4"
 profile::core::kernel::devel: true
 profile::core::kernel::debuginfo: true
 profile::core::rke::version: "1.3.3"

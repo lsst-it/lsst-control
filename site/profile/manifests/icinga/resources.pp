@@ -448,6 +448,7 @@ class profile::icinga::resources (
 
     file { $svc_path:
       ensure  => 'file',
+      # lint:ignore:strict_indent
       content => @("CONTENT"/L),
         {
         "host": "${value[0]}",
@@ -458,6 +459,7 @@ class profile::icinga::resources (
         "object_type": "object"
         }
         | CONTENT
+      # lint:endignore
     }
     ->exec { $svc_cmd:
       cwd      => $icinga_path,
@@ -470,6 +472,7 @@ class profile::icinga::resources (
   #Creates dhcp resource file for MasterTemplate and DhcpServiceTemplate
   file { $master_svc_path1:
     ensure  => 'file',
+    # lint:ignore:strict_indent
     content => @("MASTER_SVC_1"/L),
       {
       "host": "${master_template}",
@@ -483,6 +486,7 @@ class profile::icinga::resources (
       }
       }
       | MASTER_SVC_1
+    # lint:endignore
   }
   ->exec { $master_svc_cmd1:
     cwd      => $icinga_path,
@@ -504,6 +508,7 @@ class profile::icinga::resources (
 
     file { $hostgroup_path:
       ensure  => 'file',
+      # lint:ignore:strict_indent
       content => @("CLUSTER"/L),
         {
         "assign_filter": "${value[3]}",
@@ -512,6 +517,7 @@ class profile::icinga::resources (
         "object_type": "object"
         }
         | CLUSTER
+      # lint:endignore
     }
     ->exec { $hostgroup_cmd:
       cwd      => $icinga_path,
@@ -533,6 +539,7 @@ class profile::icinga::resources (
 
     file { $svcgroup_path:
       ensure  => 'file',
+      # lint:ignore:strict_indent
       content => @("GROUP"/L),
         {
         "assign_filter": "service.name=%22%2A${value[0]}%22",
@@ -542,6 +549,7 @@ class profile::icinga::resources (
 
         }
         | GROUP
+      # lint:endignore
     }
     ->exec { $svcgroup_cmd:
       cwd      => $icinga_path,
@@ -558,6 +566,7 @@ class profile::icinga::resources (
   #  Master Host
   file { $addhost_path:
     ensure  => 'file',
+    # lint:ignore:strict_indent
     content => @("MASTER_HOST"/L),
       {
       "address": "${master_ip}",
@@ -573,6 +582,7 @@ class profile::icinga::resources (
       "zone": "master"
       }
       | MASTER_HOST
+    # lint:endignore
   }
   -> exec { $addhost_cmd:
     cwd      => $icinga_path,
@@ -598,6 +608,7 @@ class profile::icinga::resources (
 
     file { $path:
       ensure  => 'file',
+      # lint:ignore:strict_indent
       content => @("HOST_CONTENT"/L),
         {
         "address": "${value[1]}",
@@ -613,6 +624,7 @@ class profile::icinga::resources (
         "zone": "master"
         }
         | HOST_CONTENT
+      # lint:endignore
     }
     ->exec { $cmd:
       cwd      => $icinga_path,

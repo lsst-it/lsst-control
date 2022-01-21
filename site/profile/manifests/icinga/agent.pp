@@ -82,6 +82,7 @@ class profile::icinga::agent (
     group   => 'icinga',
     mode    => '0640',
     notify  => Service['icinga2'],
+    # lint:ignore:strict_indent
     content => @("CONTENT"),
       object CheckCommand "netio" {
         command = [ "/usr/lib64/nagios/plugins/check_netio" ]
@@ -90,6 +91,7 @@ class profile::icinga::agent (
         }
       }
       | CONTENT
+    # lint:endignore
   }
   if $site == 'summit' {
     if ($icinga_agent_fqdn =='comcam-fp01.cp.lsst.org' or $icinga_agent_fqdn =='comcam-mcm.cp.lsst.org') {
@@ -108,6 +110,7 @@ class profile::icinga::agent (
         group   => 'icinga',
         mode    => '0640',
         notify  => Service['icinga2'],
+        # lint:ignore:strict_indent
         content => @("CONTENT"),
           object CheckCommand "netio2" {
             command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
@@ -116,6 +119,7 @@ class profile::icinga::agent (
             }
           }
           | CONTENT
+        # lint:endignore
       }
     }
     if ($icinga_agent_fqdn =='net-dx.cp.lsst.org') {
@@ -134,6 +138,7 @@ class profile::icinga::agent (
         group   => 'icinga',
         mode    => '0640',
         notify  => Service['icinga2'],
+        # lint:ignore:strict_indent
         content => @("CONTENT"),
           object CheckCommand "netio2" {
             command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
@@ -142,6 +147,7 @@ class profile::icinga::agent (
             }
           }
           | CONTENT
+        # lint:endignore
       }
     }
   }
@@ -182,11 +188,13 @@ class profile::icinga::agent (
     group   => 'icinga',
     mode    => '0640',
     notify  => Service['icinga2'],
+    # lint:ignore:strict_indent
     content => @(CONTENT),
       object CheckCommand "cpu" {
         command = [ "/usr/lib64/nagios/plugins/check_cpu" ]
       }
       | CONTENT
+    # lint:endignore
   }
   #<---------------------END-Additional-Plugins--------------------------->
   #
@@ -199,6 +207,7 @@ class profile::icinga::agent (
   #  Create host file
   file { $path:
     ensure  => 'file',
+    # lint:ignore:strict_indent
     content => @("CONTENT"/L),
       {
       "address": "${icinga_agent_ip}",
@@ -214,6 +223,7 @@ class profile::icinga::agent (
       }
       }
       | CONTENT
+    # lint:endignore
   }
   -> exec { $cmd:
     cwd      => $icinga_path,

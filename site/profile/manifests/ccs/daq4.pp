@@ -1,7 +1,7 @@
 ## @summary
 ##   Settings for DAQv4.
 
-class profile::ccs::daq4 ($instrument = 'comcam') {
+class profile::ccs::daq4 (String $instrument = 'comcam') {
   $dir = '/etc/ccs'
 
   $attributes = {

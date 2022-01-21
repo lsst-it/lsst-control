@@ -208,9 +208,11 @@ class profile::ts::rpi {
   file { '/etc/udev/rules.d/99-libftdi.rules':
     owner   => 'root',
     group   => 'root',
+    # lint:ignore:strict_indent
     content => @("CONTENT"),
       SUBSYSTEMS=="usb", ATTRS{idVendor}=="0403", GROUP="${docker_group}", MODE="0660"
       |CONTENT
+    # lint:endignore
   }
   #<-----------END Directories ------------->
   #
@@ -254,10 +256,12 @@ class profile::ts::rpi {
   file { '/etc/profile.d/conda_source.sh':
     ensure  => file,
     mode    => '0644',
+    # lint:ignore:strict_indent
     content => @(SOURCE),
-      #!/usr/bin/bash
-      source /opt/conda/miniforge/bin/activate
-      | SOURCE
+        #!/usr/bin/bash
+        source /opt/conda/miniforge/bin/activate
+        | SOURCE
+    # lint:endignore
   }
   $conda_install.each |$install| {
     $value = split($install,',')

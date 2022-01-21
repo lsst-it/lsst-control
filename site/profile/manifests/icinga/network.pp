@@ -192,6 +192,7 @@ class profile::icinga::network (
 
     file { $host_path:
       ensure  => 'file',
+      # lint:ignore:strict_indent
       content => @("TEMPLATE"/L),
         {
         "accept_config": false,
@@ -203,6 +204,7 @@ class profile::icinga::network (
         "object_type": "template"
         }
         | TEMPLATE
+      # lint:endignore
     }
     ->exec { $host_cmd:
       cwd      => $icinga_path,
@@ -222,6 +224,7 @@ class profile::icinga::network (
 
     file { $path:
       ensure  => 'file',
+      # lint:ignore:strict_indent
       content => @("HOST_CONTENT"/L),
         {
         "address": "${value[1]}",
@@ -237,6 +240,7 @@ class profile::icinga::network (
         "zone": "master"
         }
         | HOST_CONTENT
+      # lint:endignore
     }
     ->exec { $cmd:
       cwd      => $icinga_path,
@@ -255,6 +259,7 @@ class profile::icinga::network (
 
     file { $path:
       ensure  => 'file',
+      # lint:ignore:strict_indent
       content => @("HOST_CONTENT"/L),
         {
         "address": "${value[1]}",
@@ -270,6 +275,7 @@ class profile::icinga::network (
         "zone": "master"
         }
         | HOST_CONTENT
+      # lint:endignore
     }
     ->exec { $cmd:
       cwd      => $icinga_path,
@@ -288,6 +294,7 @@ class profile::icinga::network (
 
     file { $svc_template_path:
       ensure  => 'file',
+      # lint:ignore:strict_indent
       content => @("SVC_TEMPLATE_CONTENT"/L),
         {
         "check_command": "${nwc_name}",
@@ -302,6 +309,7 @@ class profile::icinga::network (
         "zone": "master"
         }
         | SVC_TEMPLATE_CONTENT
+      # lint:endignore
     }
     -> exec { $svc_template_cmd:
       cwd      => $icinga_path,
@@ -320,6 +328,7 @@ class profile::icinga::network (
 
     file { $svc_path:
       ensure  => 'file',
+      # lint:ignore:strict_indent
       content => @("SVC"/L),
         {
         "host": "${network_host_template_name}",
@@ -330,6 +339,7 @@ class profile::icinga::network (
         "object_type": "object"
         }
         | SVC
+      # lint:endignore
     }
     -> exec { $svc_cmd:
       cwd      => $icinga_path,
@@ -349,6 +359,7 @@ class profile::icinga::network (
 
     file { $hostgroup_path:
       ensure  => 'file',
+      # lint:ignore:strict_indent
       content => @("HOSTGROUP"/L),
         {
         "assign_filter": "${value[0]}",
@@ -357,6 +368,7 @@ class profile::icinga::network (
         "object_type": "object"
         }
         | HOSTGROUP
+      # lint:endignore
     }
     ->exec { $hostgroup_cmd:
       cwd      => $icinga_path,

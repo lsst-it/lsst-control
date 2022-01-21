@@ -122,6 +122,7 @@ class profile::icinga::plugins (
 
     file { $path:
       ensure  => 'file',
+      # lint:ignore:strict_indent
       content => @("COMMAND_HOST"/$),
         {
         "command": "\/usr\/lib64\/nagios\/plugins\/check_${name}",
@@ -132,6 +133,7 @@ class profile::icinga::plugins (
         "zone": "master"
         }
         | COMMAND_HOST
+      # lint:endignore
     }
     ->exec { $cmd:
       cwd      => $icinga_path,

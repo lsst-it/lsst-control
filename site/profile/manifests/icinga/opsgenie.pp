@@ -62,6 +62,7 @@ class profile::icinga::opsgenie (
     owner   => 'opsgenie',
     group   => 'opsgenie',
     mode    => '0775',
+    # lint:ignore:strict_indent
     content => @("OPSGENIE"),
       apiKey = ${opsgenie_api}
       icinga_server=default
@@ -74,6 +75,7 @@ class profile::icinga::opsgenie (
       actions.AssignOwnership.script=icingaActionExecutor.groovy
       actions.Create.script=icingaActionExecutor.groovy
       | OPSGENIE
+    # lint:endignore
   }
   #<-------------------END-OpsGenie-Configuration------------------------->
   #
@@ -86,6 +88,7 @@ class profile::icinga::opsgenie (
 
   file { $user_template_path:
     ensure  => 'file',
+    # lint:ignore:strict_indent
     content => @("USER_TEMPLATE_CONTENT"),
       {
       "enable_notifications": true,
@@ -94,6 +97,7 @@ class profile::icinga::opsgenie (
       "zone": "master"
       }
       | USER_TEMPLATE_CONTENT
+    # lint:endignore
   }
   ->exec { $user_template_cmd:
     cwd      => $icinga_path,
@@ -110,6 +114,7 @@ class profile::icinga::opsgenie (
 
   file { $pager_user_path:
     ensure  => 'file',
+    # lint:ignore:strict_indent
     content => @("USER_CONTENT"/),
       {
         "display_name": "Alert System Notification",
@@ -120,6 +125,7 @@ class profile::icinga::opsgenie (
         "object_type": "object"
       }
       | USER_CONTENT
+    # lint:endignore
   }
   ->exec { $pager_user_cmd:
     cwd      => $icinga_path,
@@ -136,6 +142,7 @@ class profile::icinga::opsgenie (
 
   file { $command_host_path:
     ensure  => 'file',
+    # lint:ignore:strict_indent
     content => @(COMMAND_HOST),
       {
       "arguments": {
@@ -246,6 +253,7 @@ class profile::icinga::opsgenie (
       "zone": "master"
       }
       | COMMAND_HOST
+    # lint:endignore
   }
   ->exec { $command_host_cmd:
     cwd      => $icinga_path,
@@ -261,6 +269,7 @@ class profile::icinga::opsgenie (
 
   file { $command_svc_path:
     ensure  => 'file',
+    # lint:ignore:strict_indent
     content => @(COMMAND_SVC),
       {
       "arguments": {
@@ -450,6 +459,7 @@ class profile::icinga::opsgenie (
       "zone": "master"
       }
       | COMMAND_SVC
+    # lint:endignore
   }
   ->exec { $command_svc_cmd:
     cwd      => $icinga_path,
@@ -468,6 +478,7 @@ class profile::icinga::opsgenie (
 
     file { $notification_template_path:
       ensure  => 'file',
+      # lint:ignore:strict_indent
       content => @("HOST_NOTIFICATION_TEMPLATE"),
         {
         "command": "${value[0]}",
@@ -480,6 +491,7 @@ class profile::icinga::opsgenie (
         "zone": "master"
         }
         | HOST_NOTIFICATION_TEMPLATE
+      # lint:endignore
     }
     ->exec { $notification_template_cmd:
       cwd      => $icinga_path,
@@ -500,6 +512,7 @@ class profile::icinga::opsgenie (
     #  Create Host Notification file
     file { $notification_path:
       ensure  => 'file',
+      # lint:ignore:strict_indent
       content => @("HOST_NOTIFICATION"),
         {
         "apply_to": "${value[2]}",
@@ -514,6 +527,7 @@ class profile::icinga::opsgenie (
         ]
         }
         | HOST_NOTIFICATION
+      # lint:endignore
     }
     ->exec { $notification_cmd:
       cwd      => $icinga_path,

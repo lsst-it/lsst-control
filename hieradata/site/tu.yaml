@@ -31,7 +31,19 @@ profile::core::common::manage_powertop: true
 
 tuned::profile: "powersave"
 
-profile::core::docker::version: "20.10.9"
+profile::core::docker::version: "20.10.12"
 profile::core::docker::versionlock:
-  - "1:docker-ce-cli-20.10.9-3.el7.*"
-  - "3:docker-ce-20.10.9-3.el7.*"
+  0:containerd.io-1.4.12-3.1.el7.x86_64:
+    # puppetlabs/docker only specifies a package resource for containerd.io for uninstall
+    ensure: "present"
+  0:docker-ce-rootless-extras-20.10.12-3.el7.x86_64:
+    ensure: "present"
+  0:docker-scan-plugin-0.12.0-3.el7.x86_64:
+    ensure: "present"
+  1:docker-ce-cli-20.10.12-3.el7.x86_64:
+    ensure: "present"
+    before: "Package[docker-ce-cli]"
+  3:docker-ce-20.10.12-3.el7.x86_64:
+    ensure: "present"
+    # the puppet package resource name is `docker` with a seperate name param of `docker-ce`
+    before: "Package[docker]"

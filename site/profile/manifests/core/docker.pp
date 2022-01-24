@@ -32,8 +32,6 @@ class profile::core::docker (
   if $versionlock {
     include yum::plugin::versionlock
 
-    yum::versionlock { [$versionlock]:
-      ensure => present,
-    }
+    ensure_resources('yum::versionlock', $versionlock)
   }
 }

@@ -137,8 +137,13 @@ profile::core::yum::lsst_ts_private::repos:
 
 profile::core::docker::version: "19.03.15"
 profile::core::docker::versionlock:
-  - "1:docker-ce-cli-19.03.15-3.el7.x86_64"
-  - "3:docker-ce-19.03.15-3.el7.x86_64"
+  1:docker-ce-cli-19.03.15-3.el7.x86_64:
+    ensure: "present"
+    before: "Package[docker-ce-cli]"
+  3:docker-ce-19.03.15-3.el7.x86_64:
+    ensure: "present"
+    # the puppet package resource name is `docker` with a seperate name param of `docker-ce`
+    before: "Package[docker]"
 
 profile::core::sysctl::lhn::sysctls:
   # lhn tuning

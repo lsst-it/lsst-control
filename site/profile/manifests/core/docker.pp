@@ -15,9 +15,9 @@
 #
 class profile::core::docker (
   Optional[String] $version,
-  String $socket_group                 = '70014',
-  String $storage_driver               = 'overlay2',
-  Optional[Array[String]] $versionlock = undef,
+  String $socket_group                      = '70014',
+  String $storage_driver                    = 'overlay2',
+  Optional[Hash[String, Hash]] $versionlock = undef,
 ) {
   include docker::networks
 
@@ -32,8 +32,6 @@ class profile::core::docker (
   if $versionlock {
     include yum::plugin::versionlock
 
-    yum::versionlock { [$versionlock]:
-      ensure => present,
-    }
+    ensure_resources('yum::versionlock', $versionlock)
   }
 }

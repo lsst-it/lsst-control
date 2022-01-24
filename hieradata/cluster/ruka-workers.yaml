@@ -17,5 +17,9 @@ network::interfaces_hash:
 
 profile::core::docker::version: "20.10.9"
 profile::core::docker::versionlock:
-  - "1:docker-ce-cli-20.10.9-3.el7.*"
-  - "3:docker-ce-20.10.9-3.el7.*"
+  1:docker-ce-cli-20.10.9-3.el7.*:
+    ensure: "present"
+    before: "Package[docker-ce-cli]"
+  3:docker-ce-20.10.9-3.el7.*:
+    ensure: "present"
+    before: "Package[docker]"

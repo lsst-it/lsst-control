@@ -28,6 +28,6 @@ describe 'profile::core::docker' do
       )
     end
 
-    it { is_expected.to contain_class('docker').with(version: '20.10.9') }
+    it { is_expected.to contain_class('docker').with(version: '20.10.12') }
   end
 end

@@ -1,0 +1,24 @@
+---
+network::interfaces_hash:
+  eno1:
+    bootproto: "none"
+    defroute: "yes"
+    gateway: "139.229.127.97"
+    ipaddress: "139.229.127.99"
+    netmask: "255.255.255.224"
+    nozeroconf: "yes"
+    onboot: "yes"
+  enp6s0:
+    bootproto: "none"
+    onboot: "yes"
+    type: "Ethernet"
+    mtu: "9000"
+  enp6s0.330:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    type: "vlan"
+    ipaddress: "139.229.140.131"
+    netmask: "255.255.255.254"
+    nozeroconf: "yes"
+    mtu: "9000"

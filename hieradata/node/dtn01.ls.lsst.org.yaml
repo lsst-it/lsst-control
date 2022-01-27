@@ -22,3 +22,8 @@ network::interfaces_hash:
     netmask: "255.255.255.254"
     nozeroconf: "yes"
     mtu: "9000"
+profile::core::nm_dispatch::interfaces:
+  enp6s0:
+    - "/sbin/ip link set ${DEV} txqueuelen 20000"
+    - "/sbin/ethtool --features ${DEV} lro on"
+    - "/sbin/ethtool --set-ring ${DEV} rx 8192 tx 8192"

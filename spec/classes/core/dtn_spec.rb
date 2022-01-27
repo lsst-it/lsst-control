@@ -30,4 +30,7 @@ describe 'profile::core::dtn' do
   end
 
   it { is_expected.to have_sysctl__value_resource_count(sysctls.size) }
+
+  it { is_expected.to contain_package('hwloc') }
+  it { is_expected.to contain_package('hwloc-gui') }
 end

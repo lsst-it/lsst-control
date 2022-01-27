@@ -4,21 +4,19 @@
 # @param sysctls
 #   Hash of sysctl::value resources to create
 #
+# @param packages
+#   List of packages to install.
+#
 class profile::core::dtn (
   Optional[Hash[String, Hash]] $sysctls = undef,
+  Optional[Array] $packages             = undef,
 ) {
   if $sysctls {
     ensure_resources('sysctl::value', $sysctls)
   }
 
-  $packages = [
-    'hwloc',
-    'hwloc-gui'
-  ]
-
-  # Require Packages
-  package { $packages:
-    ensure => 'present'
+  if $packages {
+    ensure_packages($packages)
   }
 
   # Stop irqbalance

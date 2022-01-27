@@ -294,3 +294,7 @@ profile::core::dtn::sysctls:
   net.core.default_qdisc:
     value: "fq"
     target: *tcpip
+
+profile::core::dtn::packages:
+  - "hwloc"
+  - "hwloc-gui"

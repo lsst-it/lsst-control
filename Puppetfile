@@ -138,7 +138,7 @@ mod 'lsst/maven',
   git: 'https://github.com/lsst-it/puppet-maven.git',
   ref: 'v1.0.0'
 mod 'lsst/java_artisanal', '2.0.0'
-mod 'lsst/rke', '0.2.0'
+mod 'lsst/rke', '1.0.0'
 mod 'lsst/helm_binary', '1.0.0'
 
 # Needed by NCSA (sort into above later)

@@ -137,9 +137,7 @@ mod 'lsst/ccs_software',
 mod 'lsst/maven',
   git: 'https://github.com/lsst-it/puppet-maven.git',
   ref: 'v1.0.0'
-mod 'lsst/java_artisanal',
-  git: 'https://github.com/lsst-it/puppet-java_artisanal.git',
-  ref: 'v1.0.0'
+mod 'lsst/java_artisanal', '2.0.0'
 mod 'lsst/rke', '0.2.0'
 mod 'lsst/helm_binary', '0.1.0'
 

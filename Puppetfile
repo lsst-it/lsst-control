@@ -117,7 +117,7 @@ mod 'lsst/ccs_daq',
   ref: 'v0.1.0'
 mod 'lsst/ccs_database',
   git: 'https://github.com/lsst-it/puppet-ccs_database.git',
-  ref: 'v0.1.0'
+  ref: 'v2.0.0'
 mod 'puppetlabs/mysql', '10.4.0'
 mod 'lsst/ccs_hcu',
   git: 'https://github.com/lsst-it/puppet-ccs_hcu.git',

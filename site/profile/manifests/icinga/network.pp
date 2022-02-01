@@ -1,6 +1,13 @@
 # @summary
 #   Define and create icinga objects for network monitoring
-
+#
+# @param site
+#  `summit` or `base` . XXX This does not conform to the standard two letter tu/ls/cp site
+#  codes.
+#
+# @param credentials_hash
+#   HTTP auth
+#
 class profile::icinga::network (
   String $site,
   String $credentials_hash,

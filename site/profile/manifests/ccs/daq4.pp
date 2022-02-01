@@ -1,6 +1,9 @@
-## @summary
-##   Settings for DAQv4.
-
+# @summary
+#   Settings for DAQv4.
+#
+# @param instrument
+#   Instrument (camera) name.
+#
 class profile::ccs::daq4 (String $instrument = 'comcam') {
   $dir = '/etc/ccs'
 

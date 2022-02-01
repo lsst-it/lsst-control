@@ -1,6 +1,27 @@
 # @summary
 #   Icinga agent creation for metric collections
-
+#
+# @param icinga_master_fqdn
+#   Icinga master hostname.
+#
+# @param icinga_master_ip
+#   IP address of icinga master. XXX We should only be using DNS records to resolve hosts.
+#
+# @param credentials_hash
+#   HTTP auth
+#
+# @param host_template
+#   Icinga template to import
+#
+# @param site
+#   `summit` or not. XXX This does not conform to the standard two letter tu/ls/cp site codes.
+#
+# @param ca_salt
+#   x509 CA salt string
+#
+# @param ssh_port
+#   Port upon which sshd is listening.
+#
 class profile::icinga::agent (
   String $icinga_master_fqdn,
   String $icinga_master_ip,

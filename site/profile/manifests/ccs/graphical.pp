@@ -1,12 +1,12 @@
-## @summary
-##   Settings for hosts that should run in graphical mode.
-##   Note: needs ccs_pkgarchive
-##
-## @param install
-##   Boolean, false means do nothing.
-## @param officeapps
-##   Boolean, true means install libreoffice etc.
-
+# @summary
+#   Settings for hosts that should run in graphical mode.
+#   Note: needs ccs_pkgarchive
+#
+# @param install
+#   Boolean, false means do nothing.
+# @param officeapps
+#   Boolean, true means install libreoffice etc.
+#
 class profile::ccs::graphical (
   Boolean $install = true,
   Boolean $officeapps = false,

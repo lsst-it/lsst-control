@@ -1,3 +1,8 @@
+# @summary
+#   Allow Qualys scans on host
+#
+# @param ip
+#   Source IP of scanner.
 #
 class profile::ncsa::allow_qualys_scan (
   String $ip,

@@ -1,3 +1,9 @@
+# @summary
+#   Enable/disable reverse path filtering for all interfaces on a host.
+#
+# @param enable
+#   If `true`, enable.  If `false, disable.
+#
 class profile::core::sysctl::rp_filter (
   Boolean $enable = true,
 ) {

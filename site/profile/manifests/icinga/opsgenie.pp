@@ -1,6 +1,22 @@
 # @summary
 #   Define and integrate opsgenie to icinga2
-
+#
+# @param site
+#  `summit` or `base` . XXX This does not conform to the standard two letter tu/ls/cp site
+#  codes.
+#
+# @param og_api_bdc
+#   API key???
+#
+# @param og_api_summit
+#   API key???
+#
+# @param credentials_hash
+#   HTTP auth
+#
+# @param pager_user
+#   Pager user name???
+#
 class profile::icinga::opsgenie (
   String $site,
   String $og_api_bdc,
@@ -450,7 +466,7 @@ class profile::icinga::opsgenie (
         "-spd": {
           "command_id": "234",
           "value": "$service.perfdata$"
-        }        
+        }
       },
       "command": "\/bin\/icinga2opsgenie",
       "methods_execute": "PluginNotification",

@@ -1,14 +1,12 @@
 # @summary Allow sudo access for users and/or groups
 #          Configures sudoers and access.conf
 #
-# @param
-#   users
+# @param users
 #   Type: Array
 #   Desc: one or more LDAP / UNIX users that are allowed sudo access
 #   Note: can be empty
 #
-# @param
-#   groups
+# @param groups
 #   Type: Array
 #   Desc: one or more LDAP / UNIX groups that are allowed to login from
 #   Note: can be empty

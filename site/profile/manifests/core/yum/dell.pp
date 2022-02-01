@@ -1,7 +1,7 @@
 # @summary
 #   Manage dell yumrepo
 #
-# @param repos
+# @param repo
 #   Parameters of yumrepo resoursce
 #
 class profile::core::yum::dell (

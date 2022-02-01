@@ -1,6 +1,8 @@
-#
 # @summary
 #   Common functionality needed by ccs nodes.
+#
+# @param sysctls
+#   if `true`, enable `profile::ccs::sysctl` sysctls.
 #
 class profile::ccs::common (
   Boolean $sysctls = true,

@@ -1,6 +1,26 @@
 # @summary
 #   Definition of icinga and icingaweb master module
-
+#
+# @param ldap_server
+# @param ldap_root
+# @param ldap_user
+# @param ldap_pwd
+# @param ldap_resource
+# @param ldap_user_filter
+# @param ldap_group_filter
+# @param ldap_group_base
+# @param mysql_root
+# @param mysql_icingaweb_db
+# @param mysql_icingaweb_user
+# @param mysql_icingaweb_pwd
+# @param mysql_director_db
+# @param mysql_director_user
+# @param mysql_director_pwd
+# @param api_name
+# @param api_user
+# @param api_pwd
+# @param ca_salt
+#
 class profile::icinga::master (
   String $ldap_server,
   String $ldap_root,

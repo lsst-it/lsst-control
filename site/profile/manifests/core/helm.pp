@@ -1,6 +1,9 @@
 # @summary
 #   Install Helm
 #
+# @param version
+#   Version to install.
+#
 # XXX consider moving the checksum lookup into lsst/helm_binary as a helper class.
 #
 class profile::core::helm (

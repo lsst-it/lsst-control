@@ -1,3 +1,9 @@
+# @summary
+#   Install CCS tomcat based services
+#
+# @param wars
+#   `tomcat::wars` resources to create.
+#
 class profile::ccs::tomcat (
   Hash[String, Hash] $wars = {},
 ) {

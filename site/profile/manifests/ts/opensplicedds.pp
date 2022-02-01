@@ -1,6 +1,9 @@
 # @summary
 #   Manages OpenSpliceDDS package
 #
+# @param ensure
+#   Ensure parameter for openslice package resource.
+#
 class profile::ts::opensplicedds (
   String $ensure = 'present',
 ) {

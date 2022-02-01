@@ -4,13 +4,10 @@
 # @param deploy_icinga_agent
 #   Enables or disable the installation of icinga agent on the node
 #
-# @param manage_firewall
-#   Whether or not to include the firewall class
-#
 # @param manage_puppet_agent
 #   Whether or not to include the puppet_agent class
 #
-# @param chrony
+# @param manage_chrony
 #   Enable or disable inclusion of the chrony class.  There are a few special
 #   situations in which ntpd needs to be used instead of chrony (such as
 #   perfsonar nodes).
@@ -31,8 +28,14 @@
 #   If `true`, disable ipv6 networking support. This parameter is intended to eventually
 #   replace the direct inclusion of the `profile::core::sysctl::disable_ipv6` class.
 #
+# @param manage_firewall
+#   Whether or not to include the firewall class
+#
+# @param install_telegraf
+#   If `true`, manage telegraf
+#
 # @param manage_powertop
-#   If `true`, enable powertop service
+#   If `true`, manage powertop service
 #
 # @param manage_scl
 #   If `true`, enable redhat scl repos
@@ -41,9 +44,11 @@
 #   If `true`, manage core os yum repos
 #
 # @param manage_lldp
-#   If `true`, manage and install lldp
+#   If `true`, manage lldp
 #
-
+# @param manage_irqbalance
+#   If `true`, manage irqbalance
+#
 class profile::core::common (
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,

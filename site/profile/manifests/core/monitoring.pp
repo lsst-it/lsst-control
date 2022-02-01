@@ -1,7 +1,18 @@
 # @summary
 #   Send metrics from telegraf to grafana
 #
-
+# @param url
+#   URL of influxdb instance.
+#
+# @param database
+#   Name of influxdb instance.
+#
+# @param username
+#   Influxdb username.
+#
+# @param password
+#   Influxdb password.
+#
 class profile::core::monitoring (
   String $url,
   String $database,

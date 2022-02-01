@@ -1,6 +1,16 @@
 # @summary
 #   Define and create all file resources of icinga master
-
+#
+# @param credentials_hash
+#   HTTP auth
+#
+# @param site
+#  `summit` or `base` . XXX This does not conform to the standard two letter tu/ls/cp site
+#  codes.
+#
+# @param dhcp_server
+#   IP of dhcp server???
+#
 class profile::icinga::resources (
   String $credentials_hash,
   String $site,

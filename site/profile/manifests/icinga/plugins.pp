@@ -1,6 +1,9 @@
 # @summary
 #   Icinga additional plugins
-
+#
+# @param credentials_hash
+#   HTTP auth
+#
 class profile::icinga::plugins (
   String $credentials_hash,
 ) {

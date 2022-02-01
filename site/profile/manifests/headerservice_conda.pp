@@ -6,12 +6,12 @@
 # @param allowed_subnets
 #        Web access allowed from these networks
 #
-# @param fitsio_version
-#        Version string for fitsio conda package
-#
-# @param version
-#        Version string for headerservice conda package
-#
+## @param fitsio_version
+##        Version string for fitsio conda package
+##
+## @param headerservice_version
+##        Version string for headerservice conda package
+##
 class profile::headerservice_conda (
   Array  $allowed_subnets,
   # String $fitsio_version,

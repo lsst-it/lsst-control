@@ -1,3 +1,9 @@
+# @summary
+#   Enable/Disable ipv6 support on host via sysctls.
+#
+# @param disable
+#   If `true`, disable.  If `false, enable.
+#
 class profile::core::sysctl::disable_ipv6 (
   Boolean $disable = true,
 ) {

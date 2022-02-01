@@ -1,10 +1,10 @@
-## @summary
-##   Define some variables
-##
-## @param daq
-##   String naming the DAQ network interface; or true to detect it; or
-##   false if none.
-
+# @summary
+#   Define some variables
+#
+# @param daq
+#   String naming the DAQ network interface; or true to detect it; or
+#   false if none.
+#
 class profile::ccs::facts (Variant[Boolean,String] $daq = false) {
   ## Interfaces matching given ip pattern.
   $ifaces = $facts['networking']['interfaces'].filter |$eth, $hash| {

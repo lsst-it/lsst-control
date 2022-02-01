@@ -1,3 +1,9 @@
+# @summary
+#   Manage nexusctio yumrepo
+#
+# @param repos
+#   `yumrepo` resources to create.
+#
 class profile::ts::nexusctio (
   Hash $repos,
 ) {

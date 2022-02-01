@@ -89,7 +89,7 @@ mod 'ccin2p3/mit_krb5', '1.2.1'
 mod 'ccin2p3-etc_services', '1.1.1'
 mod 'puppetlabs/augeas_core', '1.1.1'
 mod 'camptocamp/openldap', '2.0.0'
-mod 'lsst/cni', '1.0.0'
+mod 'lsst/cni', '2.0.0'
 mod 'treydock/clustershell', '1.0.0'
 mod 'puppetlabs/yumrepo_core', '1.0.7'
 mod 'lsst/dellperc', '1.0.1'
@@ -117,11 +117,11 @@ mod 'lsst/ccs_daq',
   ref: 'v0.1.0'
 mod 'lsst/ccs_database',
   git: 'https://github.com/lsst-it/puppet-ccs_database.git',
-  ref: 'v0.1.0'
+  ref: 'v2.0.0'
 mod 'puppetlabs/mysql', '10.4.0'
 mod 'lsst/ccs_hcu',
   git: 'https://github.com/lsst-it/puppet-ccs_hcu.git',
-  ref: 'v0.1.1'
+  ref: 'v2.0.0'
 mod 'lsst/ccs_monit',
   git: 'https://github.com/lsst-it/puppet-ccs_monit.git',
   ref: 'v0.1.2'
@@ -133,15 +133,13 @@ mod 'lsst/ccs_sal',
   ref: 'v0.7.1'
 mod 'lsst/ccs_software',
   git: 'https://github.com/lsst-it/puppet-ccs_software.git',
-  ref: 'v0.8.0'
+  ref: 'v1.0.0'
 mod 'lsst/maven',
   git: 'https://github.com/lsst-it/puppet-maven.git',
   ref: 'v1.0.0'
-mod 'lsst/java_artisanal',
-  git: 'https://github.com/lsst-it/puppet-java_artisanal.git',
-  ref: 'v1.0.0'
-mod 'lsst/rke', '0.2.0'
-mod 'lsst/helm_binary', '0.1.0'
+mod 'lsst/java_artisanal', '2.0.0'
+mod 'lsst/rke', '1.0.0'
+mod 'lsst/helm_binary', '1.0.0'
 
 # Needed by NCSA (sort into above later)
 #mod 'herculesteam/augeasproviders_sysctl', '2.3.1'  # conflicts duritong/sysctl

@@ -42,6 +42,7 @@ class profile::core::rke (
 
   $rke_checksum = $version ? {
     '1.3.3' => '61088847d80292f305e233b7dff4ac8e47fefdd726e5245052450bf05da844aa',
+    '1.3.6' => 'c02a8dd7405e3729e004bb1d551fda4c1437f5e0e8279ea67efba8056c0d4898',
     default => undef,
   }
   unless ($rke_checksum) {

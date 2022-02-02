@@ -5,8 +5,8 @@
 # and
 # https://github.com/lsst-it/puppet-baseline_cfg/blob/c9fcdf072126c3f42a0322ffef9ddfad46a05e2/manifests/firewall.pp
 class profile::docker {
-  include ::docker
-  include ::python
+  include docker
+  include python
 
   ### ENSURE RULES CREATED BY DOCKER ARE NOT PURGED BY PUPPET
 

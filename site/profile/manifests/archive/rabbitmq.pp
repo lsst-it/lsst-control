@@ -1,3 +1,33 @@
+# @summary
+#   Configure rabbitmq for archiver user
+#
+# @param users
+#   `rabbitmq_user` resources to create.
+#
+# @param vhosts
+#   `rabbitmq_vhost` resources to create.
+#
+# @param exchanges
+#   `rabbitmq_exchange` resources to create.
+#
+# @param queues
+#   `rabbitmq_queues` resources to create.
+#
+# @param bindings
+#   `rabbitmq_binding` resources to create.
+#
+# @param user_permissions
+#   `rabbitmq_user_permissions` resources to create.
+#
+# @param arc_queues
+#   List of message queue/bindings to create.
+#
+# @param queue_user
+#   Name of message queue user.
+#
+# @param queue_password
+#   Message queue user password.
+#
 class profile::archive::rabbitmq (
   Hash[String, Hash] $users               = {},
   Hash[String, Hash] $vhosts              = {},
@@ -6,8 +36,8 @@ class profile::archive::rabbitmq (
   Hash[String, Hash] $bindings            = {},
   Hash[String, Hash] $user_permissions    = {},
   Hash[String, Array[String]] $arc_queues = {},
-  Optional[String]   $queue_user          = undef,
-  Optional[String]   $queue_password      = undef,
+  Optional[String] $queue_user            = undef,
+  Optional[String] $queue_password        = undef,
 ) {
   class { 'rabbitmq':
     admin_enable      => true,

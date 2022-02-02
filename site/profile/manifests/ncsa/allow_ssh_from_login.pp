@@ -2,17 +2,20 @@
 #
 # @summary Allow incoming ssh from any login nodes
 #
-# @param
-#   login_nodelist
+# @param login_nodelist
 #   Type: Array
 #   Desc: one or more hostnames / IPs / CIDRs
 #         Note: must contain at least 1 item
-# @param
-#   allow_groups
+#
+# @param allow_groups
 #   Type: Array
 #   Desc: one or more LDAP / UNIX groups that are allowed to login from
 #         any of the nodes in login_nodelist
 #         Note: can be empty
+#
+# @param custom_cfg
+#   Additional sshd configuration parameters.
+#
 # @example
 #   include profile::allow_ssh_from_login
 #

@@ -21,6 +21,6 @@ class profile::core::dtn (
 
   # Stop irqbalance
   service { 'irqbalance':
-    ensure => 'stopped'
+    ensure => 'stopped',
   }
 }

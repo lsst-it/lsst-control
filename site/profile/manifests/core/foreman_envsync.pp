@@ -15,7 +15,7 @@ class profile::core::foreman_envsync (
   ]
 
   package { $pkgs:
-    require => Class['scl']
+    require => Class['scl'],
   }
 
   $gem  = 'foreman_envsync'

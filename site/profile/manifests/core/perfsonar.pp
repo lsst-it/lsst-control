@@ -10,7 +10,7 @@ class profile::core::perfsonar {
     plugin      => 'dns-route53',
     manage_cron => true,
   }
-  -> class { '::perfsonar':
+  -> class { 'perfsonar':
     manage_apache      => true,
     remove_root_prompt => true,
     manage_epel        => false,

@@ -1,4 +1,8 @@
-# Configure host settings on a puppet master
+# @summary
+#   Configure host settings on a puppet master
+#
+# @param firewall_allow_from
+#   List of source IPs to allow access from
 class profile::ncsa::puppet_master (
   Array[String, 1] $firewall_allow_from,
 ) {

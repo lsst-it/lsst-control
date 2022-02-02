@@ -7,7 +7,7 @@ class profile::ccs::cfs ( ) {
   $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
 
   file { '/usr/local/bin/cfs':
-    ensure => present,
+    ensure => file,
     source => "${ccs_pkgarchive}/cfs",
     owner  => 'root',
     group  => 'root',

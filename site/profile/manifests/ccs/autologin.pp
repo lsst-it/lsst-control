@@ -1,9 +1,9 @@
-## @summary
-##   Control automatic login for ccs graphical session.
-##
-## @param enable
-##   Boolean saying whether to enable or disable autologin.
-
+# @summary
+#   Control automatic login for ccs graphical session.
+#
+# @param enable
+#   Boolean saying whether to enable or disable autologin.
+#
 class profile::ccs::autologin (Boolean $enable = true) {
   if $enable {
     ensure_packages(['gdm'])

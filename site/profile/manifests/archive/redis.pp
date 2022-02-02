@@ -1,6 +1,9 @@
 # @summary
 #   Simple redis wrapper class for archiver
 #
+# @param files
+#   `file` resources to create.
+#
 class profile::archive::redis (
   Optional[Hash[String, Hash]] $files = undef,
 ) {

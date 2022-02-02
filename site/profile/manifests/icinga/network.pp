@@ -1,6 +1,13 @@
 # @summary
 #   Define and create icinga objects for network monitoring
-
+#
+# @param site
+#  `summit` or `base` . XXX This does not conform to the standard two letter tu/ls/cp site
+#  codes.
+#
+# @param credentials_hash
+#   HTTP auth
+#
 class profile::icinga::network (
   String $site,
   String $credentials_hash,
@@ -81,7 +88,7 @@ class profile::icinga::network (
       'Vlan340_LHN-DTN02,139.229.140.132',
       'Vlan360_Perfsonar1-1,139.229.140.134',
       'Vlan370_Perfsonar1-2,139.229.140.136',
-      'bdc-wlc.ls.lsst.org,139.229.134.100'
+      'bdc-wlc.ls.lsst.org,139.229.134.100',
     ]
   }
   elsif $site == 'summit' {
@@ -141,7 +148,7 @@ class profile::icinga::network (
       'Vlan1500_CSS,139.229.174.254',
       'Vlan1400_AUX,139.229.170.254',
       'Vlan1502_ACCS,139.229.175.254',
-      'comp-wlc.cp.lsst.org,139.229.160.100'
+      'comp-wlc.cp.lsst.org,139.229.160.100',
     ]
   }
 
@@ -191,8 +198,9 @@ class profile::icinga::network (
     $host_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${host_path}"
 
     file { $host_path:
-      ensure  => 'present',
-      content => @("TEMPLATE"/L)
+      ensure  => 'file',
+      # lint:ignore:strict_indent
+      content => @("TEMPLATE"/L),
         {
         "accept_config": false,
         "check_command": "hostalive",
@@ -203,6 +211,7 @@ class profile::icinga::network (
         "object_type": "template"
         }
         | TEMPLATE
+      # lint:endignore
     }
     ->exec { $host_cmd:
       cwd      => $icinga_path,
@@ -221,8 +230,9 @@ class profile::icinga::network (
     $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${path}"
 
     file { $path:
-      ensure  => 'present',
-      content => @("HOST_CONTENT"/L)
+      ensure  => 'file',
+      # lint:ignore:strict_indent
+      content => @("HOST_CONTENT"/L),
         {
         "address": "${value[1]}",
         "display_name": "${value[0]}",
@@ -237,6 +247,7 @@ class profile::icinga::network (
         "zone": "master"
         }
         | HOST_CONTENT
+      # lint:endignore
     }
     ->exec { $cmd:
       cwd      => $icinga_path,
@@ -254,8 +265,9 @@ class profile::icinga::network (
     $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_host}' -d @${path}"
 
     file { $path:
-      ensure  => 'present',
-      content => @("HOST_CONTENT"/L)
+      ensure  => 'file',
+      # lint:ignore:strict_indent
+      content => @("HOST_CONTENT"/L),
         {
         "address": "${value[1]}",
         "display_name": "${value[0]}",
@@ -270,6 +282,7 @@ class profile::icinga::network (
         "zone": "master"
         }
         | HOST_CONTENT
+      # lint:endignore
     }
     ->exec { $cmd:
       cwd      => $icinga_path,
@@ -287,8 +300,9 @@ class profile::icinga::network (
     $svc_template_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${$svc_template_path}"
 
     file { $svc_template_path:
-      ensure  => 'present',
-      content => @("SVC_TEMPLATE_CONTENT"/L)
+      ensure  => 'file',
+      # lint:ignore:strict_indent
+      content => @("SVC_TEMPLATE_CONTENT"/L),
         {
         "check_command": "${nwc_name}",
         "object_name": "${value[0]}",
@@ -302,6 +316,7 @@ class profile::icinga::network (
         "zone": "master"
         }
         | SVC_TEMPLATE_CONTENT
+      # lint:endignore
     }
     -> exec { $svc_template_cmd:
       cwd      => $icinga_path,
@@ -319,8 +334,9 @@ class profile::icinga::network (
     $svc_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_svc}' -d @${svc_path}"
 
     file { $svc_path:
-      ensure  => 'present',
-      content => @("SVC"/L)
+      ensure  => 'file',
+      # lint:ignore:strict_indent
+      content => @("SVC"/L),
         {
         "host": "${network_host_template_name}",
         "imports": [
@@ -330,6 +346,7 @@ class profile::icinga::network (
         "object_type": "object"
         }
         | SVC
+      # lint:endignore
     }
     -> exec { $svc_cmd:
       cwd      => $icinga_path,
@@ -348,8 +365,9 @@ class profile::icinga::network (
     $hostgroup_cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_hostgroup}' -d @${hostgroup_path}"
 
     file { $hostgroup_path:
-      ensure  => 'present',
-      content => @("HOSTGROUP"/L)
+      ensure  => 'file',
+      # lint:ignore:strict_indent
+      content => @("HOSTGROUP"/L),
         {
         "assign_filter": "${value[0]}",
         "display_name": "${value[1]}",
@@ -357,6 +375,7 @@ class profile::icinga::network (
         "object_type": "object"
         }
         | HOSTGROUP
+      # lint:endignore
     }
     ->exec { $hostgroup_cmd:
       cwd      => $icinga_path,

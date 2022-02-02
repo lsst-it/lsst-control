@@ -1,8 +1,16 @@
 # @summary
 #   Install foreman/puppetserver
 #
+# @param smee_url
+#   URL to the smee topic to watch for webhook events.
+#
 # @param enable_puppetdb
-#   Whether or not to enable puppetserver's puppetdb support
+#   Whether or not to enable puppetserver's puppetdb support.
+#
+# @param foreman_config
+#   `foreman_config_entry` resources to create.  Note that these parameters are called
+#   "Settings" in the foreman UI.
+#
 class profile::core::puppet_master (
   Stdlib::HTTPSUrl $smee_url,
   Boolean $enable_puppetdb = false,
@@ -52,7 +60,7 @@ class profile::core::puppet_master (
   ]
 
   package { $node_pkgs:
-    require => Class['scl']
+    require => Class['scl'],
   }
 
   exec { 'install-smee':

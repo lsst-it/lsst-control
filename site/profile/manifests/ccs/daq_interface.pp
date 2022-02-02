@@ -1,3 +1,19 @@
+# @summary
+#   Configure a DAQ network interface named `lsst-daq`.
+#
+# @param hwaddr
+#   MAC address of DAQ network interface
+#
+# @param uuid
+#   NetworkManager UUID of DAQ network interface
+#
+# @param was
+#   Name of the interface *before* it has been renamed to `lsst-daq`.
+#
+# @param mode
+#   Is this a `dhcp-client` or `dhcp-server` node.  Only one host per DAQ network may be a
+#   `dhcp-server.
+#
 # XXX it might be better to simply set a per host network interface setup
 # instead of resorting to conditional logic in a profile.  The main reason to
 # centralize it is to make it easier to change the rx/tx/etc. settings on all

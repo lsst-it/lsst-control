@@ -1,3 +1,9 @@
+# @summary
+#   Manage nexusctio yumrepo
+#
+# @param repos
+#   `yumrepo` resources to create.
+#
 class profile::ts::nexusctio (
   Hash $repos,
 ) {
@@ -61,8 +67,8 @@ class profile::ts::nexusctio (
     | GPG
 
   file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-MSO':
-    ensure  => present,
+    ensure  => file,
     content => $gpg_key,
-    mode    => '0644'
+    mode    => '0644',
   }
 }

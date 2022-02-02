@@ -29,7 +29,7 @@ class profile::ccs::sal_dx {
   }
 
   file { $directory:
-    ensure => 'directory'
+    ensure => 'directory',
   }
   vcsrepo { "${directory}/ts_sal":
     ensure   => present,

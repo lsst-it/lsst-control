@@ -1,10 +1,10 @@
-## @summary
-##   Add (or remove) nvidia settings.
-##
-## @param ensure
-##   String saying whether to install ('present') or remove ('absent') module.
-##
-## TODO actually install the driver if possible.
+# @summary
+#   Add (or remove) nvidia settings.
+#
+# @param ensure
+#   String saying whether to install ('present') or remove ('absent') module.
+#
+# TODO actually install the driver if possible.
 class profile::ccs::nvidia (String $ensure = 'present') {
   if $ensure =~ /(present|absent)/ {
     ## This takes care of the /etc/kernel/postinst.d/ part,

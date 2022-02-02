@@ -25,7 +25,7 @@ class profile::ts::rpi {
     'AMA0',
     'AMA1',
     'AMA2',
-    'AMA3'
+    'AMA3',
   ]
   #  Remove default docker packages
   $docker_packages = [
@@ -36,7 +36,7 @@ class profile::ts::rpi {
     'docker-latest',
     'docker-latest-logrotate',
     'docker-logrotate',
-    'docker-engine'
+    'docker-engine',
   ]
 
   #  Conda Packages
@@ -47,7 +47,7 @@ class profile::ts::rpi {
     'conda-build,conda-build',
     'anaconda-client,anaconda-client',
     'setuptools_scm,setuptools_scm',
-    'numpy,numpy'
+    'numpy,numpy',
   ]
 
   #  PIP Packages
@@ -61,7 +61,7 @@ class profile::ts::rpi {
     'gpiozero',
     'pylibftdi',
     'pyftdi',
-    'Cython'
+    'Cython',
   ]
 
   #  Packages to be installed through yum
@@ -97,13 +97,13 @@ class profile::ts::rpi {
     'svn',
     'dh-autoreconf',
     'libtool-ltdl-devel',
-    'swig'
+    'swig',
   ]
 
   $conda_install = [
     "bash ${packages_dir}/miniforge.sh -b -p ${conda_dir}/miniforge,test -f ${conda_dir}/miniforge/etc/profile.d/conda.sh",
     "cp ${conda_dir}/miniforge/etc/profile.d/conda.sh /etc/profile.d/conda.sh, test -f /etc/profile.d/conda.sh",
-    "${conda_bin}/conda config --add channels lsstts,${conda_bin}/conda config --show channels | grep lsstts"
+    "${conda_bin}/conda config --add channels lsstts,${conda_bin}/conda config --show channels | grep lsstts",
   ]
 
   $libgphoto = @("RUN")
@@ -184,7 +184,7 @@ class profile::ts::rpi {
   $repo_name = [
     "libgphoto2,${libgphoto},test -f /usr/local/lib/pkgconfig/libgphoto2.pc,https://github.com/gphoto/libgphoto2/releases/download/v2.5.27/libgphoto2-2.5.27.tar.bz2,libgphoto2.tar.bz2,${libgphoto_version}",
     "gphoto2,${gphoto},test -f /usr/local/bin/gphoto2,https://github.com/gphoto/gphoto2/releases/download/v2.5.27/gphoto2-2.5.27.tar.bz2,gphoto2-2.5.27.tar.bz2,${gphoto_version}",
-    "python-gphoto2,${python_gphoto},test -f /opt/conda/miniforge/lib/python3.8/site-packages/gphoto2-2.2.4-py3.8.egg-info,https://github.com/jim-easterbrook/python-gphoto2/archive/v2.2.4.tar.gz,python-gphoto2.tar.gz,${python_gphoto_version}"
+    "python-gphoto2,${python_gphoto},test -f /opt/conda/miniforge/lib/python3.8/site-packages/gphoto2-2.2.4-py3.8.egg-info,https://github.com/jim-easterbrook/python-gphoto2/archive/v2.2.4.tar.gz,python-gphoto2.tar.gz,${python_gphoto_version}",
   ]
 
   #<----------- END Variables ------------->
@@ -193,10 +193,10 @@ class profile::ts::rpi {
   #<------------ Directories -------------->
   #  Create Directory Packages
   file { $packages_dir:
-    ensure => 'directory'
+    ensure => 'directory',
   }
   file { $conda_dir:
-    ensure => 'directory'
+    ensure => 'directory',
   }
   #  Change Serial I/O group membership to docker
   $io_interfaces.each |$io| {
@@ -208,9 +208,11 @@ class profile::ts::rpi {
   file { '/etc/udev/rules.d/99-libftdi.rules':
     owner   => 'root',
     group   => 'root',
-    content => @("CONTENT")
+    # lint:ignore:strict_indent
+    content => @("CONTENT"),
       SUBSYSTEMS=="usb", ATTRS{idVendor}=="0403", GROUP="${docker_group}", MODE="0660"
       |CONTENT
+    # lint:endignore
   }
   #<-----------END Directories ------------->
   #
@@ -221,7 +223,7 @@ class profile::ts::rpi {
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     unless   => 'test -d /opt/vc',
-    require  => Package[$yum_packages]
+    require  => Package[$yum_packages],
   }
   #<------------END RPi Camera ------------->
   #
@@ -229,35 +231,37 @@ class profile::ts::rpi {
   #<-------- Packages Installation---------->
   #  Remove preinstalled docker packages
   package { $docker_packages:
-    ensure => 'absent'
+    ensure => 'absent',
   }
   #  Install yum packages
   package { $yum_packages:
     ensure  => 'present',
-    require => Package[$docker_packages]
+    require => Package[$docker_packages],
   }
   # The required snap packages are in the edge channel, and provider option from package does not allow it.
   exec { "snap install --edge ${snap_packages}":
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
-    unless   => "snap list | grep ${snap_packages}"
+    unless   => "snap list | grep ${snap_packages}",
   }
   #<-------END Packages Installation-------->
   #
   #
   #<------------Conda and Python3.8 Install--------------->
   file { "${packages_dir}/miniforge.sh":
-    ensure => present,
+    ensure => file,
     mode   => '0755',
-    source => 'https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh'
+    source => 'https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh',
   }
   file { '/etc/profile.d/conda_source.sh':
-    ensure  => present,
+    ensure  => file,
     mode    => '0644',
-    content => @(SOURCE)
-      #!/usr/bin/bash
-      source /opt/conda/miniforge/bin/activate
-      | SOURCE
+    # lint:ignore:strict_indent
+    content => @(SOURCE),
+        #!/usr/bin/bash
+        source /opt/conda/miniforge/bin/activate
+        | SOURCE
+    # lint:endignore
   }
   $conda_install.each |$install| {
     $value = split($install,',')
@@ -265,7 +269,7 @@ class profile::ts::rpi {
       cwd      => $conda_dir,
       path     => ['/sbin', '/usr/sbin', '/bin'],
       provider => shell,
-      unless   => $value[1]
+      unless   => $value[1],
     }
   }
   $conda_packages.each |$conda| {
@@ -275,12 +279,12 @@ class profile::ts::rpi {
       path     => ['/sbin', '/usr/sbin', '/bin', $conda_bin],
       provider => shell,
       unless   => "conda list | grep ${value[1]}",
-      before   => Package[$pip_packages]
+      before   => Package[$pip_packages],
     }
   }
   package { $pip_packages:
     ensure   => 'present',
-    provider => pip3
+    provider => pip3,
   }
   #<-----------END Conda Install------------>
   #
@@ -292,12 +296,12 @@ class profile::ts::rpi {
       ensure       => present,
       source       => $value[3],
       extract      => true,
-      extract_path => $packages_dir
+      extract_path => $packages_dir,
     }
     -> file { "${packages_dir}/${value[5]}/${value[0]}.sh":
-      ensure  => present,
+      ensure  => file,
       mode    => '0755',
-      content => $value[1]
+      content => $value[1],
     }
     ->exec { "bash ${packages_dir}/${value[5]}/${value[0]}.sh":
       cwd      => "${packages_dir}/${value[5]}",
@@ -317,12 +321,12 @@ class profile::ts::rpi {
     extract      => true,
     extract_path => $root_dir,
     creates      => "${cmake_dir}-${cmake_version}",
-    cleanup      => true
+    cleanup      => true,
   }
   -> file { "${cmake_dir}-${cmake_version}/cmake.sh":
-    ensure  => present,
+    ensure  => file,
     mode    => '0755',
-    content => $cmake_run
+    content => $cmake_run,
   }
   -> exec { "bash ${cmake_dir}-${cmake_version}/cmake.sh":
     cwd      => "${cmake_dir}-${cmake_version}",
@@ -340,12 +344,12 @@ class profile::ts::rpi {
   vcsrepo { $libraw_make_dir:
     ensure   => present,
     provider => git,
-    source   => 'git://github.com/LibRaw/LibRaw-cmake.git'
+    source   => 'git://github.com/LibRaw/LibRaw-cmake.git',
   }
   -> file { "${libraw_dir}/libraw.sh":
-    ensure  => present,
+    ensure  => file,
     mode    => '0755',
-    content => $libraw_run
+    content => $libraw_run,
   }
   -> exec { "bash ${libraw_dir}/libraw.sh":
     cwd      => $libraw_dir,
@@ -358,12 +362,12 @@ class profile::ts::rpi {
     ensure   => present,
     provider => git,
     source   => 'git://github.com/letmaik/rawpy',
-    require  => Exec["bash ${libraw_dir}/libraw.sh"]
+    require  => Exec["bash ${libraw_dir}/libraw.sh"],
   }
   -> file { "${rawpy_dir}/rawpy.sh":
-    ensure  => present,
+    ensure  => file,
     mode    => '0755',
-    content => $rawpy_run
+    content => $rawpy_run,
   }
   ->exec { "bash ${rawpy_dir}/rawpy.sh":
     cwd      => $libraw_dir,
@@ -377,14 +381,14 @@ class profile::ts::rpi {
   #
   #<---------GPIO and Minicom config--------->
   file { '/boot/config.txt':
-    ensure  => present,
+    ensure  => file,
     mode    => '0755',
-    content => $gpio_config
+    content => $gpio_config,
   }
   file { '/etc/minirc.dfl':
-    ensure  => present,
+    ensure  => file,
     mode    => '0755',
-    content => $minicom_config
+    content => $minicom_config,
   }
   #<------END GPIO and Minicom config-------->
 }

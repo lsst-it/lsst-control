@@ -1,7 +1,13 @@
+# @summary
+#   Install CCS tomcat based services
+#
+# @param wars
+#   `tomcat::wars` resources to create.
+#
 class profile::ccs::tomcat (
   Hash[String, Hash] $wars = {},
 ) {
-  include ::nginx
+  include nginx
 
   $version       = '9.0.53'
   $root_path     = '/opt/tomcat'

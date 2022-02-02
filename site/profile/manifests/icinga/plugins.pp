@@ -1,6 +1,9 @@
 # @summary
 #   Icinga additional plugins
-
+#
+# @param credentials_hash
+#   HTTP auth
+#
 class profile::icinga::plugins (
   String $credentials_hash,
 ) {
@@ -42,7 +45,7 @@ class profile::icinga::plugins (
     provider => git,
     source   => 'https://github.com/lausser/check_nwc_health',
     revision => '1.4.9',
-    require  => Class['::icingaweb2'],
+    require  => Class['icingaweb2'],
   }
   ->exec { 'git submodule update --init':
     cwd      => $nwc_dir,
@@ -58,7 +61,7 @@ class profile::icinga::plugins (
     loglevel => debug,
   }
   ->file { "${base_dir}/check_nwc_health":
-    ensure => 'present',
+    ensure => 'file',
     source => "${$nwc_dir}/plugins-scripts/check_nwc_health",
     owner  => 'root',
     group  => 'icinga',
@@ -121,8 +124,9 @@ class profile::icinga::plugins (
     $cmd  = "${curl} '${credentials}' -H '${format}' -X POST '${url_cmd}' -d @${path}"
 
     file { $path:
-      ensure  => 'present',
-      content => @("COMMAND_HOST"/$)
+      ensure  => 'file',
+      # lint:ignore:strict_indent
+      content => @("COMMAND_HOST"/$),
         {
         "command": "\/usr\/lib64\/nagios\/plugins\/check_${name}",
         "methods_execute": "PluginCheck",
@@ -132,6 +136,7 @@ class profile::icinga::plugins (
         "zone": "master"
         }
         | COMMAND_HOST
+      # lint:endignore
     }
     ->exec { $cmd:
       cwd      => $icinga_path,

@@ -1,6 +1,27 @@
 # @summary
 #   Icinga agent creation for metric collections
-
+#
+# @param icinga_master_fqdn
+#   Icinga master hostname.
+#
+# @param icinga_master_ip
+#   IP address of icinga master. XXX We should only be using DNS records to resolve hosts.
+#
+# @param credentials_hash
+#   HTTP auth
+#
+# @param host_template
+#   Icinga template to import
+#
+# @param site
+#   `summit` or not. XXX This does not conform to the standard two letter tu/ls/cp site codes.
+#
+# @param ca_salt
+#   x509 CA salt string
+#
+# @param ssh_port
+#   Port upon which sshd is listening.
+#
 class profile::icinga::agent (
   String $icinga_master_fqdn,
   String $icinga_master_ip,
@@ -24,14 +45,14 @@ class profile::icinga::agent (
   #
   #
   #<-------------------------Icinga-Configuration------------------------->
-  class { '::icinga::repos':
-    manage_epel         => false
+  class { 'icinga::repos':
+    manage_epel         => false,
   }
-  class { '::icinga2':
-    confd           => false
+  class { 'icinga2':
+    confd           => false,
   }
   #  Icinga2 feature API config
-  class { '::icinga2::feature::api':
+  class { 'icinga2::feature::api':
     ensure          => 'present',
     ca_host         => $icinga_master_ip,
     ticket_salt     => $ca_salt,
@@ -39,7 +60,7 @@ class profile::icinga::agent (
     accept_commands => true,
     endpoints       => {
       $icinga_agent_fqdn  => {
-        'host'  => $icinga_agent_ip
+        'host'  => $icinga_agent_ip,
       },
       $icinga_master_fqdn => {
         'host'  => $icinga_master_ip,
@@ -53,7 +74,7 @@ class profile::icinga::agent (
       'master'           => {
         'endpoints' => [$icinga_master_fqdn],
       },
-    }
+    },
   }
   #<--------------------End-Icinga-Configuration-------------------------->
   #
@@ -77,12 +98,13 @@ class profile::icinga::agent (
     mode  => '4755',
   }
   ->file { '/etc/icinga2/features-enabled/netio.conf':
-    ensure  => 'present',
+    ensure  => 'file',
     owner   => 'icinga',
     group   => 'icinga',
     mode    => '0640',
     notify  => Service['icinga2'],
-    content => @("CONTENT")
+    # lint:ignore:strict_indent
+    content => @("CONTENT"),
       object CheckCommand "netio" {
         command = [ "/usr/lib64/nagios/plugins/check_netio" ]
         arguments = {
@@ -90,6 +112,7 @@ class profile::icinga::agent (
         }
       }
       | CONTENT
+    # lint:endignore
   }
   if $site == 'summit' {
     if ($icinga_agent_fqdn =='comcam-fp01.cp.lsst.org' or $icinga_agent_fqdn =='comcam-mcm.cp.lsst.org') {
@@ -103,12 +126,13 @@ class profile::icinga::agent (
         mode  => '4755',
       }
       ->file { '/etc/icinga2/features-enabled/netio2.conf':
-        ensure  => 'present',
+        ensure  => 'file',
         owner   => 'icinga',
         group   => 'icinga',
         mode    => '0640',
         notify  => Service['icinga2'],
-        content => @("CONTENT")
+        # lint:ignore:strict_indent
+        content => @("CONTENT"),
           object CheckCommand "netio2" {
             command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
             arguments = {
@@ -116,6 +140,7 @@ class profile::icinga::agent (
             }
           }
           | CONTENT
+        # lint:endignore
       }
     }
     if ($icinga_agent_fqdn =='net-dx.cp.lsst.org') {
@@ -129,12 +154,13 @@ class profile::icinga::agent (
         mode  => '4755',
       }
       ->file { '/etc/icinga2/features-enabled/netio2.conf':
-        ensure  => 'present',
+        ensure  => 'file',
         owner   => 'icinga',
         group   => 'icinga',
         mode    => '0640',
         notify  => Service['icinga2'],
-        content => @("CONTENT")
+        # lint:ignore:strict_indent
+        content => @("CONTENT"),
           object CheckCommand "netio2" {
             command = [ "/usr/lib64/nagios/plugins/check_netio2" ]
             arguments = {
@@ -142,6 +168,7 @@ class profile::icinga::agent (
             }
           }
           | CONTENT
+        # lint:endignore
       }
     }
   }
@@ -177,16 +204,18 @@ class profile::icinga::agent (
   }
 
   ->file { '/etc/icinga2/features-enabled/cpu.conf':
-    ensure  => 'present',
+    ensure  => 'file',
     owner   => 'icinga',
     group   => 'icinga',
     mode    => '0640',
     notify  => Service['icinga2'],
-    content => @(CONTENT)
+    # lint:ignore:strict_indent
+    content => @(CONTENT),
       object CheckCommand "cpu" {
         command = [ "/usr/lib64/nagios/plugins/check_cpu" ]
       }
       | CONTENT
+    # lint:endignore
   }
   #<---------------------END-Additional-Plugins--------------------------->
   #
@@ -198,8 +227,9 @@ class profile::icinga::agent (
   }
   #  Create host file
   file { $path:
-    ensure  => 'present',
-    content => @("CONTENT"/L)
+    ensure  => 'file',
+    # lint:ignore:strict_indent
+    content => @("CONTENT"/L),
       {
       "address": "${icinga_agent_ip}",
       "display_name": "${icinga_agent_fqdn}",
@@ -214,6 +244,7 @@ class profile::icinga::agent (
       }
       }
       | CONTENT
+    # lint:endignore
   }
   -> exec { $cmd:
     cwd      => $icinga_path,

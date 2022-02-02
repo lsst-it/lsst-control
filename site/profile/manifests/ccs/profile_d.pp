@@ -4,7 +4,7 @@ class profile::ccs::profile_d {
   $file = 'lsst-ccs.sh'
 
   file { "/etc/profile.d/${file}":
-    ensure => present,
+    ensure => file,
     source => "puppet:///modules/${module_name}/ccs/profile_d/${file}",
   }
 }

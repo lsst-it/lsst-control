@@ -1,8 +1,8 @@
-## @summary
-##   Install newer java version for font rescaling on big display.
-##
-## @param ensure
-##   String saying whether to install ('present') or remove ('absent').
+# @summary
+#   Install newer java version for font rescaling on big display.
+#
+# @param ensure
+#   String saying whether to install ('present') or remove ('absent').
 class profile::ccs::jdk11 ( String $ensure = 'present' ) {
   if $ensure =~ /(present|absent)/ {
     ensure_packages(['gzip', 'tar', 'unzip'])

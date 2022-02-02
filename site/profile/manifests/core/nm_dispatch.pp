@@ -1,3 +1,12 @@
+# @summary
+#   Manage NetworkManager dispatch scripts.
+#
+# @param interfaces
+#   Hash of interfaces names paired with an array of shell one liners to run for that
+#   interface when the state changes to "up".  The name of that interface is available as the
+#   `$DEV` shellvar.
+#
+# XXX This is generic functionality that should be an external module.
 class profile::core::nm_dispatch (
   Optional[Hash[String, Array[String]]] $interfaces = undef,
 ) {

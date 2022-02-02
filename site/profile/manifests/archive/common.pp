@@ -7,6 +7,12 @@
 # @param python_pips
 #   python pips to install.
 #
+# @param user_list
+#   List of local unix users to create.
+#
+# @param group_list
+#   List of local unix groups  to create.
+#
 class profile::archive::common (
   Optional[Array[String]]     $packages = undef,
   Optional[Hash[String,Hash]] $python_pips = undef,

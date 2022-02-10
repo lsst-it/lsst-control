@@ -1,4 +1,6 @@
 ---
+clustershell::groupmembers:
+  ruka: {group: "ruka", member: "ruka[01-06]"}
 profile::core::ifdown::interface: "em1"
 network::interfaces_hash:
   em1:  # only for PXE
@@ -14,12 +16,3 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-
-profile::core::docker::version: "20.10.9"
-profile::core::docker::versionlock:
-  1:docker-ce-cli-20.10.9-3.el7.*:
-    ensure: "present"
-    before: "Package[docker-ce-cli]"
-  3:docker-ce-20.10.9-3.el7.*:
-    ensure: "present"
-    before: "Package[docker]"

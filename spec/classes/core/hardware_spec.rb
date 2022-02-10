@@ -26,6 +26,7 @@ describe 'profile::core::hardware' do
       it { is_expected.not_to contain_class('profile::core::perccli') }
       it { is_expected.not_to contain_class('profile::core::kernel::pcie_aspm') }
       it { is_expected.not_to contain_class('profile::core::kernel::nvme_apst') }
+      it { is_expected.not_to contain_profile__util__kernel_param('pci=pcie_bus_perf') }
     end
 
     context 'with fact has_dellperc: true' do
@@ -36,6 +37,7 @@ describe 'profile::core::hardware' do
       it { is_expected.to contain_class('profile::core::perccli') }
       it { is_expected.not_to contain_class('profile::core::kernel::pcie_aspm') }
       it { is_expected.not_to contain_class('profile::core::kernel::nvme_apst') }
+      it { is_expected.not_to contain_profile__util__kernel_param('pci=pcie_bus_perf') }
     end
   end  # PowerEdge
 
@@ -58,6 +60,11 @@ describe 'profile::core::hardware' do
       it { is_expected.not_to contain_class('profile::core::perccli') }
       it { is_expected.to contain_class('profile::core::kernel::pcie_aspm') }
       it { is_expected.to contain_class('profile::core::kernel::nvme_apst') }
+
+      it do
+        is_expected.to contain_profile__util__kernel_param('pci=pcie_bus_perf')
+          .with_reboot(false)
+      end
     end
 
     context 'with fact has_dellperc: true' do
@@ -68,6 +75,11 @@ describe 'profile::core::hardware' do
       it { is_expected.not_to contain_class('profile::core::perccli') }
       it { is_expected.to contain_class('profile::core::kernel::pcie_aspm') }
       it { is_expected.to contain_class('profile::core::kernel::nvme_apst') }
+
+      it do
+        is_expected.to contain_profile__util__kernel_param('pci=pcie_bus_perf')
+          .with_reboot(false)
+      end
     end
   end  # 1114S-WN10RT
 end

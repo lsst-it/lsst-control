@@ -52,6 +52,7 @@ lookup_options:
     merge:
       strategy: "deep"
 
+hosts::purge_hosts: true
 timezone::timezone: "UTC"
 chrony::leapsectz: "right/UTC"
 ssh::storeconfigs_enabled: false

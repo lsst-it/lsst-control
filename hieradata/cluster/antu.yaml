@@ -1,6 +1,6 @@
 ---
 clustershell::groupmembers:
-  antu: {group: "antu", member: "antu[01-09]"}
+  antu: {group: "antu", member: "antu[01-09],ls-dtn[01-02],ls-efdetl01,ls-fwdr02"}
 profile::core::rke::enable_dhcp: true
 profile::core::nm_dispatch::interfaces:
   em1:

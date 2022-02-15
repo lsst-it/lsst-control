@@ -16,6 +16,12 @@ describe 'test1.dev.lsst.org', :site do
         end
 
         it { is_expected.to compile.with_all_deps }
+
+        it do
+          is_expected.to contain_nginx__resource__server('icingaweb2').with(
+            ssl_cert: %r{fullchain.pem$},
+          )
+        end
       end
     end # site
   end # role

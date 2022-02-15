@@ -432,7 +432,7 @@ class profile::icinga::master (
   nginx::resource::server { 'icingaweb2':
     server_name          => [$master_fqdn],
     ssl                  => true,
-    ssl_cert             => "${le_root}/cert.pem",
+    ssl_cert             => "${le_root}/fullchain.pem",
     ssl_key              => "${le_root}/privkey.pem",
     ssl_redirect         => true,
     index_files          => ['index.php'],

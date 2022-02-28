@@ -66,7 +66,7 @@ ccs_database::database: "comcamdbprod"
 
 ccs_sal::ospl_home: "/opt/OpenSpliceDDS/V6.10.4/HDE/x86_64.linux"
 ccs_sal::rpms:
-  ts_sal_utils: "ts_sal_utils-6.0.0-1.x86_64.rpm"
+  ts_sal_utils: "ts_sal_utils-6.1.0-1.x86_64.rpm"
 ccs_sal::rpms_private:
   OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"
 
@@ -152,5 +152,13 @@ ccs_software::installations:
   comcam-software-2.2.7:
     aliases:
       - "puppet-2.2.7"
+
+  comcam-software-2.3.0:
+    aliases:
+      - "puppet-2.3.0"
+
+  comcam-software-2.3.1:
+    aliases:
+      - "puppet-2.3.1"
 
 profile::icinga::agent::host_template: "ComCamHostTemplate"

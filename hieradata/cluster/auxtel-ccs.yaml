@@ -106,6 +106,14 @@ ccs_software::installations:
     aliases:
       - "puppet-2.1.1"
 
+  ats-software-2.2.0:
+    aliases:
+      - "puppet-2.2.0"
+
+  ats-software-2.2.1:
+    aliases:
+      - "puppet-2.2.1"
+
 ## Used in lookups:
 ccs_site: "summit"
 ccs_instrument: "ats"
@@ -121,6 +129,6 @@ ccs_software::global_properties:
 
 ccs_sal::ospl_home: "/opt/OpenSpliceDDS/V6.10.4/HDE/x86_64.linux"
 ccs_sal::rpms:
-  ts_sal_utils: "ts_sal_utils-6.0.0-1.x86_64.rpm"
+  ts_sal_utils: "ts_sal_utils-6.1.0-1.x86_64.rpm"
 ccs_sal::rpms_private:
   OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"

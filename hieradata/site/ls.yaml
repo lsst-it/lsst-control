@@ -8,7 +8,7 @@ sssd::domains:
       - "%{lookup('easy_ipa::ipa_master_fqdn')}"
 
 rsyslog::config::actions:
-#Send copy to logs to GKE Graylog instance
+# Send copy to logs to GKE Graylog instance
   graylogCloud:
     type: "omfwd"
     facility: "*.*"
@@ -16,12 +16,20 @@ rsyslog::config::actions:
       Target: "collector.lsst.cloud"
       Port: 5514
       Protocol: "udp"
-#Send copy to logs to Base Graylog instance
+# Send copy to logs to Base Graylog instance
   graylogBase:
     type: "omfwd"
     facility: "*.*"
     config:
       Target: "collector.ls.lsst.org"
+      Port: 5514
+      Protocol: "udp"
+# Send copy to logs to Summit Graylog instance
+  graylogSummit:
+    type: "omfwd"
+    facility: "*.*"
+    config:
+      Target: "collector.cp.lsst.org"
       Port: 5514
       Protocol: "udp"
   # Log anything (except mail) of level info or higher.

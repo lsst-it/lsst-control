@@ -1,8 +1,11 @@
 # @summary
 #   Send metrics from telegraf to grafana
 #
-# @param url
-#   URL of influxdb instance.
+# @param url_ls
+#   URL of influxdb Base instance.
+#
+# @param url_cp
+#   URL of influxdb Summit instance.
 #
 # @param database
 #   Name of influxdb instance.
@@ -14,7 +17,8 @@
 #   Influxdb password.
 #
 class profile::core::monitoring (
-  String $url,
+  String $url_ls,
+  String $url_cp,
   String $database,
   String $username,
   String $password,
@@ -23,7 +27,7 @@ class profile::core::monitoring (
     hostname => $facts['networking']['fqdn'],
     outputs  => {
       'influxdb' => [{
-          'urls'     => [$url],
+          'urls'     => [$url_ls,$url_cp],
           'database' => $database,
           'username' => $username,
           'password' => $password,

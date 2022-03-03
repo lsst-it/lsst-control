@@ -11,19 +11,12 @@ rsyslog::config::actions:
       Port: 5514
       Protocol: "udp"
 # Send copy to logs to Base Graylog instance
+# This must be replaced once a TU graylog instance is set.
   graylogBase:
     type: "omfwd"
     facility: "*.*"
     config:
       Target: "collector.ls.lsst.org"
-      Port: 5514
-      Protocol: "udp"
-# Send copy to logs to Summit Graylog instance
-  graylogSummit:
-    type: "omfwd"
-    facility: "*.*"
-    config:
-      Target: "collector.cp.lsst.org"
       Port: 5514
       Protocol: "udp"
   # Log anything (except mail) of level info or higher.
@@ -91,6 +84,8 @@ accounts::user_list:
 
 profile::core::common::deploy_icinga_agent: false
 profile::core::common::manage_powertop: true
+# To be replaced once a production monitoring instance is set at TU site
+profile::core::monitoring::url: "http://it-influxdb.ls.lsst.org:8086"
 
 tuned::profile: "powersave"
 

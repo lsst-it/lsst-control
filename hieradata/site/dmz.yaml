@@ -121,3 +121,4 @@ profile::icinga::agent::icinga_master_ip: "139.229.135.31"
 profile::icinga::agent::site: "base"
 profile::icinga::resources::dhcp_server: "139.229.135.5"
 profile::core::common::disable_ipv6: true
+profile::core::monitoring::url: "http://it-influxdb.ls.lsst.org:8086"

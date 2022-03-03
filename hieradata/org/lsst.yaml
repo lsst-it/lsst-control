@@ -362,8 +362,6 @@ profile::core::ipa::default:
     xmlrpc_uri: "https://%{lookup('easy_ipa::ipa_master_fqdn')}/ipa/xml"
     enable_ra: "True"
 
-profile::core::monitoring::url_ls: "http://it-influxdb.ls.lsst.org:8086"
-profile::core::monitoring::url_cp: "http://it-influxdb.cp.lsst.org:8086"
 profile::core::monitoring::database: "telegraf"
 profile::core::monitoring::username: "lsstadmin"
 resolv_conf::options:

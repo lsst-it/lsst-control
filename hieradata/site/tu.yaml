@@ -82,8 +82,11 @@ accounts::user_list:
       # foreman-proxy
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjbrCz3m21/gVUH34zoLsxzL1gYuVRNngZ5P6/3/Iw8LR0eMRmkqDZGDR27R91xQSQ4iazP35yeeWH18y+GLUXgfskjYpwqHZ+JBhnaYBoAUaogXYw2FGZAlvjtKZlFclSXu16jKq5sF0woDC6KBxRJuu24EuL2QY9pGPReFGNwgYmruhIDeRZpj/vy7+2+L/hqXTcq42xRMUYRLomR8C7LXkZvrH59QuWYh71Nsx8Qko901c/qpgEynu4ZQFOrSVRgEWPls/Y/aWSAT1k68tGaFQ+W0CP7CA2pbR+ZjcxbodXMoOwxUgHbhR3SwNpGeKEtKh4Csd5e6pgIskW2kX7 root@foreman.tuc.lsst.cloud"
 
-profile::core::common::deploy_icinga_agent: false
 profile::core::common::manage_powertop: true
+profile::core::common::deploy_icinga_agent: true
+profile::icinga::agent::icinga_master_fqdn: "icinga-master.ls.lsst.org"
+profile::icinga::agent::icinga_master_ip: "139.229.135.31"
+profile::icinga::agent::site: "base"
 # To be replaced once a production monitoring instance is set at TU site
 profile::core::monitoring::url: "http://it-influxdb.ls.lsst.org:8086"
 

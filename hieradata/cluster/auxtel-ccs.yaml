@@ -24,7 +24,7 @@ packages:
   - "devtoolset-8"
   - "rh-git218"
 
-## atsccs1 (at least) needs this, not sure why some hosts do and some don't.
+## auxtel-mcm (at least) needs this, not sure why some hosts do and some don't.
 postfix::inet_protocols: "ipv4"
 postfix::manage_root_alias: false
 postfix::inet_interfaces: "localhost"
@@ -56,8 +56,8 @@ ccs_software::jdk8::version: "2000:1.8.0_202-fcs"
 ccs_software::service_email: "auxtel-ccs-alerts-aaaadjkgtdl6pb2omvdi732xci@lsstc.slack.com"
 
 clustershell::groupmembers:
-  misc: {group: "misc", member: "atsccs[1-2],atsdaq1"}
-  hcu: {group: "hcu", member: "atshcu1"}
+  misc: {group: "misc", member: "auxtel-mcm,auxtel-dc01,auxtel-fp01"}
+  hcu: {group: "hcu", member: "auxtel-hcu01"}
   all: {group: "all", member: "@misc,@hcu"}
 
 ## Temporary, until nexus works.
@@ -119,7 +119,7 @@ ccs_site: "summit"
 ccs_instrument: "ats"
 
 ccs_sal::dds_domain: "%{lookup('ccs_site')}"
-ccs_sal::dds_interface: "atsccs1-dds.cp.lsst.org"
+ccs_sal::dds_interface: "auxtel-mcm-dds.cp.lsst.org"
 ccs_sal::instrument: "%{lookup('ccs_instrument')}"
 
 ccs_software::global_properties:

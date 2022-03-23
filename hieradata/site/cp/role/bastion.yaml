@@ -19,5 +19,5 @@ nfs::client_mounts:
     atboot: true
   /readonly/lsstdata/auxtel:
     share: "lsstdata"
-    server: "atarchiver.cp.lsst.org"
+    server: "auxtel-archiver.cp.lsst.org"
     atboot: true

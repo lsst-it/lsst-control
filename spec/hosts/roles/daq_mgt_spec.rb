@@ -63,8 +63,8 @@ describe 'daq-mgt role', :site do
   # fully test features when depend upon host specific data.  An alternative
   # would be to construct an alternate hiera hierarchy for testing each role
   # with synthetic node data.
-  context 'when host atsdaq-mgmt.cp.lsst.org', :site do
-    let(:facts) { { fqdn: 'atsdaq-mgmt.cp.lsst.org' } }
+  context 'when host auxtel-daq-mgt.cp.lsst.org', :site do
+    let(:facts) { { fqdn: 'auxtel-daq-mgt.cp.lsst.org' } }
     let(:node_params) do
       super().merge(
         site: 'cp',

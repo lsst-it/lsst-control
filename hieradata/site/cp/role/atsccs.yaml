@@ -2,5 +2,5 @@
 nfs::client_mounts:
   /data:
     share: "data"
-    server: "atsdaq1.cp.lsst.org"
+    server: "auxtel-fp01.cp.lsst.org"
     atboot: true

@@ -110,11 +110,11 @@ profile::nfs::client::csc::mounts:
     atboot: true
   /net/auxtel/lsstdata:
     share: "lsstdata"
-    server: "atarchiver.cp.lsst.org"
+    server: "auxtel-archiver.cp.lsst.org"
     atboot: true
   /mnt/data:
     share: "data"
-    server: "atsdaq1.cp.lsst.org"
+    server: "auxtel-fp01.cp.lsst.org"
     atboot: true
 
 profile::core::yum::lsst_ts::repos:

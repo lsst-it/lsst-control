@@ -4,6 +4,7 @@
 # It should go away once comcam has a dedicated daq managment node.
 #
 classes:
+  - "profile::ccs::krb5_token"
   - "profile::ccs::common"
   - "profile::ccs::daq4"
   - "profile::ccs::daq_interface"
@@ -36,3 +37,5 @@ dhcp::pools:
       - "ddns-update-style none"
       - "default-lease-time -1"
       - "max-lease-time -1"
+profile::ccs::krb5_token::user: "ccs-ipa"
+profile::ccs::krb5_token::uid: 72055

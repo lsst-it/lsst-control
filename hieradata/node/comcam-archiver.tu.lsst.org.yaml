@@ -68,3 +68,4 @@ profile::core::k5login::k5login:
     ensure: "present"
     principals:
       - "iip/forwarders.tu.lsst.org@LSST.CLOUD"
+      - "ccs-ipa/comcam-fp01.tu.lsst.org@LSST.CLOUD"

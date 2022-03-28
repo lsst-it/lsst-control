@@ -1,5 +1,6 @@
 ---
 classes:
+  - "profile::ccs::krb5_token"
   - "profile::ccs::common"
   - "profile::ccs::daq_interface"
   - "profile::ccs::graphical"
@@ -11,3 +12,5 @@ classes:
 profile::ccs::facts::daq: true
 
 ccs_daq::version: "R5-V0.6"
+profile::ccs::krb5_token::user: "ccs-ipa"
+profile::ccs::krb5_token::uid: 72055

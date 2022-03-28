@@ -3,5 +3,8 @@ classes:
   # XXX this should migrate up to the top level role but it is first being
   # tested in the TTS
   - "ccs_daq"
+  - "profile::ccs::krb5_token"
 
 ccs_daq::version: "R5-V0.6"
+profile::ccs::krb5_token::user: "ccs-ipa"
+profile::ccs::krb5_token::uid: 72055

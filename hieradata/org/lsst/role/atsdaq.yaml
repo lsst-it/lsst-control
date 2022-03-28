@@ -1,7 +1,11 @@
 ---
 classes:
+  - "profile::ccs::krb5_token"
   - "profile::ccs::common"
   - "profile::ccs::daq_interface"
   - "profile::core::common"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
+
+profile::ccs::krb5_token::user: "ccs-ipa"
+profile::ccs::krb5_token::uid: 72055

@@ -74,6 +74,9 @@ nfs::nfs_exports_global:
       139.229.191.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
 
 files:
+  /data/project:
+    ensure: "directory"
+    mode: "1777"
   /data/project/shared:
     ensure: "directory"
     mode: "0755"

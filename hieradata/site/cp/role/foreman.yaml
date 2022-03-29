@@ -158,7 +158,13 @@ dhcp::pools:
     gateway: "139.229.191.254"
     range: "139.229.191.129 139.229.191.239"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-
+  it_cctv:
+    network: "10.17.7.0"
+    mask: "255.255.255.0"
+    gateway: "10.17.7.254"
+    range:
+      - "10.17.7.200 10.17.7.250"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   it_ipmi_srv:
     network: "10.18.3.0"
     mask: "255.255.255.0"

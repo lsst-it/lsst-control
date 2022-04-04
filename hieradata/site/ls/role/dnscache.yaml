@@ -6,21 +6,8 @@ network::interfaces_hash:
     dns1: "%{lookup('dhcp::nameservers.0')}"
     dns2: "%{lookup('dhcp::nameservers.1')}"
     domain: "%{lookup('dhcp::dnsdomain.0')}"
-    gateway: "139.229.160.254"
+    gateway: "139.229.135.254"
     netmask: "255.255.255.0"
     nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
-
-dns::zones:
-  lsst.local:
-    zonetype: "forward"
-    forward: "only"
-    forwarders:
-      - &dc-cp-01 "139.229.160.113"
-  "136.229.139.in-addr.arpa":
-    reverse: true
-    zonetype: "forward"
-    forward: "only"
-    forwarders:
-      - *dc-cp-01

@@ -49,11 +49,5 @@ dns::zones:
     forward: "only"
     forwarders:
       - *crux
-  # cl.lsst.org should be retired once all hosts are migrated to {cp,ls}.lsst.org
-  cl.lsst.org:
-    zonetype: "forward"
-    forward: "only"
-    forwarders:
-      - *crux
 
 profile::icinga::agent::host_template: "DnsTemplate"

@@ -21,6 +21,5 @@ to `role` layers.
 | cluster/%{cluster}.yaml                           | no                      |
 | site/%{site}/role/%{role}.yaml                    | yes                     |
 | site/%{site}.yaml                                 | no                      |
-| org/%{org}/role/%{role}.yaml                      | yes                     |
 | role/%{role}.yaml                                 | yes                     |
-| org/%{org}.yaml                                   | no                      |
+| common.yaml                                       | no                      |

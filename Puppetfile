@@ -54,11 +54,6 @@ mod 'icinga-icinga', '2.3.3'
 mod 'icinga-icinga2', '3.1.3'
 mod 'icinga/icingaweb2', '3.1.0'
 mod 'puppet/php', '7.1.0'
-# 2019-12-18 athebo: added for DIMM Ubuntu VM, we can remove this when the node is rebuilt
-mod 'attachmentgenie/ufw',
-  git: 'https://github.com/attachmentgenie/attachmentgenie-ufw',
-  commit: '58e0e9de'
-mod 'stm/debconf', '3.0.0'
 # 2021-05-31 hreinking: snapd for EAS Raspberry Pi
 mod 'fervid/snapd', '1.2.1'
 mod 'puppet/chrony', '1.0.0'

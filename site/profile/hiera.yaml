@@ -19,5 +19,4 @@ hierarchy:
       - "os/%{facts.os.name}.yaml"
   - name: "common"
     paths:
-      - "org/%{org}.yaml"
       - "common.yaml"

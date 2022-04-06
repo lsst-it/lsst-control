@@ -1,5 +1,0 @@
----
-profile::ncsa::allow_ssh_from_login:
-  - "lsst_level1_adm"
-profile::ncsa::allow_sudo::groups:
-  - "lsst_level1_adm"

@@ -44,4 +44,5 @@ gem 'rake', require: false
 puppetversion = ENV['PUPPET_VERSION'] || '>= 6.0'
 gem 'puppet', puppetversion, require: false, groups: [:test]
 
+gem 'librarian-puppet'
 # vim: syntax=ruby

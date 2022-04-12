@@ -87,7 +87,7 @@ mod 'puppet/scl', git: 'https://github.com/lsst-it/puppet-scl', ref: 'production
 mod 'puppet/selinux', '3.4.1'
 mod 'puppet/ssh_keygen', '5.0.2'
 mod 'puppet/systemd', '3.8.0'
-mod 'puppet/telegraf', git: 'https://github.com/voxpupuli/puppet-telegraf', ref: '25623148e19f4d5ff77c4dece3ba02e3c910802f' # requires toml-rb installed on master
+mod 'puppet/telegraf', git: 'https://github.com/voxpupuli/puppet-telegraf', ref: '2562314' # requires toml-rb installed on master
 mod 'puppet/yum', '5.3.1'
 mod 'qtechnologies/sysstat', '1.2.4'
 mod 'richardc/datacat', '0.6.2'

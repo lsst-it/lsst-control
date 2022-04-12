@@ -25,7 +25,7 @@ profile::core::docker::storage_driver: "devicemapper"
 python::version: "python36"
 python::pip: "present"
 python::dev: "present"
-python::virtualenv: "present"
+python::venv: "present"
 python::python_pips:
   # docker-compose is python3 only
   "docker-compose":

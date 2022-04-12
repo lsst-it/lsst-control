@@ -13,7 +13,7 @@ packages:
 python::version: "python36"
 python::pip: "present"
 python::dev: "present"
-python::virtualenv: "present"
+python::venv: "present"
 # docker-compose is python3 only
 python::python_pips:
   "docker-compose":

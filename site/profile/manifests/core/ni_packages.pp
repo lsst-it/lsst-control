@@ -17,6 +17,9 @@ class profile::core::ni_packages {
     'mesa-libGL',
     'libstdc++.i686',
     'libXft',
+    'libXinerama.i686',
+    'mesa-libGL.i686',
+    'libstdc++"'
   ]
 
   package { $pre_packages:

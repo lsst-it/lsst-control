@@ -29,4 +29,7 @@ class profile::core::ni_packages {
     ensure  => 'present',
     require => Package[$pre_packages],
   }
+  host { 'cagvm3.ctio.noao.edu':
+    ip => '139.229.3.76'
+  }
 }

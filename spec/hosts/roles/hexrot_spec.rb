@@ -31,8 +31,6 @@ describe 'test1.dev.lsst.org', :site do
         ].each do |c|
           it { is_expected.to contain_class(c) }
         end
-
-        it { is_expected.not_to contain_class('profile::ts::nexusctio') }
       end
     end # site
   end # role

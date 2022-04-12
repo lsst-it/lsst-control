@@ -7,7 +7,8 @@ class profile::core::ni_packages {
   ]
   $hexrot_packages = [
     'runHexEui',
-    'runRotEui'
+    'runRotEui',
+    'runM2Cntlr',
   ]
   $packages = [
     'git',
@@ -37,6 +38,6 @@ class profile::core::ni_packages {
     require => Package[$pre_packages],
   }
   host { 'cagvm3.ctio.noao.edu':
-    ip => '139.229.3.76'
+    ip => '139.229.3.76',
   }
 }

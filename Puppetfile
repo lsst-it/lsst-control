@@ -8,7 +8,7 @@ mod 'ccin2p3/mit_krb5', '1.4.0'
 mod 'cirrax/libvirt', '4.3.3'
 mod 'derdanne/nfs', '2.1.8'
 mod 'duritong/sysctl', git: 'https://github.com/duritong/puppet-sysctl', ref: '847ec1c'  # migrate to herculesteam/augeasproviders_sysctl
-mod 'example42/network', git: 'https://github.com/lsst-it/puppet-network', ref: 'production'  # unmaintained. Migrate to puppet/network?
+mod 'example42/network', git: 'https://github.com/lsst-it/puppet-network', ref: 'v3.6.1'  # unmaintained. Migrate to puppet/network?
 mod 'fervid/snapd', '1.2.1' # 2021-05-31 hreinking: snapd for EAS Raspberry Pi
 mod 'ghoneycutt/hosts', git: 'https://github.com/ghoneycutt/puppet-module-hosts', ref: '32315d8'  # stdlib
 mod 'herculesteam/augeasproviders_core', '3.1.0'

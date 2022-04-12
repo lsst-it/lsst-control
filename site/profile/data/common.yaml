@@ -29,14 +29,14 @@ profile::ts::nexusctio::repos:
   "nexus-ctio":
     ensure: "present"
     descr: "CTIO Nexus Repository"
-    enabled: true
+    enabled: false
     baseurl: "http://cagvm3.ctio.noao.edu/nexus/repository/labview-rpm/rubin/"
     gpgcheck: false
     target: "/etc/yum.repos.d/nexus-ctio.repo"
   "gpgrubin":
     ensure: "present"
     descr: "Nexus GPG Rubin Repository"
-    enabled: true
+    enabled: false
     baseurl: "http://cagvm3.ctio.noao.edu/nexus/repository/gpg-rpm/rubin/"
     gpgcheck: true
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-MSO"
@@ -44,7 +44,7 @@ profile::ts::nexusctio::repos:
   "gpgmso":
     ensure: "present"
     descr: "Nexus GPG MSO Repository"
-    enabled: true
+    enabled: false
     baseurl: "http://cagvm3.ctio.noao.edu/nexus/repository/gpg-rpm/MSO/"
     gpgcheck: true
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-MSO"

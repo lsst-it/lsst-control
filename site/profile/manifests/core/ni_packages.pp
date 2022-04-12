@@ -5,7 +5,12 @@ class profile::core::ni_packages {
   $pre_packages = [
     'libstdc++',
   ]
+  $hexrot_packages = [
+    'runHexEui',
+    'runRotEui'
+  ]
   $packages = [
+    'git',
     'mlocate',
     'wget',
     'openssl-devel',
@@ -19,9 +24,11 @@ class profile::core::ni_packages {
     'libXft',
     'libXinerama.i686',
     'mesa-libGL.i686',
-    'libstdc++"'
   ]
-
+  package { $hexrot_packages:
+    ensure          => present,
+    install_options => ['--enablerepo','nexus-ctio'];
+  }
   package { $pre_packages:
     ensure => 'present',
   }

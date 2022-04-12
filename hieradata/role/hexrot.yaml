@@ -6,10 +6,8 @@ classes:
   - "profile::core::docker::prune"
   - "profile::core::ni_packages"
   - "profile::core::x2go_agent"
+  - "profile::ts::nexusctio"
   - "python"
-packages:
-  - "runHexEui"
-  - "runRotEui"
 files:
   /rubin:
     ensure: "directory"

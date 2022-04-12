@@ -70,6 +70,7 @@ mod 'puppetlabs/stdlib', '7.1.0'
 mod 'puppetlabs/tomcat', git: 'https://github.com/puppetlabs/puppetlabs-tomcat', ref: '406510c'  # archive
 mod 'puppetlabs/translate', '2.2.0'
 mod 'puppetlabs/vcsrepo', '5.0.0'
+mod 'puppetlabs/xinetd', '3.3.0'
 mod 'puppetlabs/yumrepo_core', '1.1.0'
 mod 'puppet/letsencrypt', '8.0.2'
 mod 'puppet/lldpd', '3.3.0'

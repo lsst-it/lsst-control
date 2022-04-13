@@ -102,8 +102,8 @@ mod 'simp/polkit', '6.4.0'
 mod 'simp/simplib', '4.10.2'
 mod 'theforeman/dhcp', '8.1.0'
 mod 'theforeman/dns', '9.2.0'
-mod 'theforeman/foreman', '19.3.0'
-mod 'theforeman/foreman_proxy', '21.0.0'
+mod 'theforeman/foreman', git: 'https://github.com/lsst-it/puppet-foreman', ref: 'IT-3565/puppet-mod-tidy'  # foreman 2.4 compat
+mod 'theforeman/foreman_proxy', git: 'https://github.com/lsst-it/puppet-foreman_proxy', ref: 'IT-3565/puppet-mod-tidy'  # extlib
 mod 'theforeman/puppet', '16.1.0'
 mod 'theforeman/puppetserver_foreman', '2.1.0'
 mod 'theforeman/tftp', '7.1.0'

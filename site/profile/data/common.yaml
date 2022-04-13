@@ -238,12 +238,15 @@ profile::archive::common::python_pips:
   "docker-compose":
     virtualenv: "system"
     ensure: "1.25.0"
+    pip_provider: "pip3"
   "cryptography":
     virtualenv: "system"
     ensure: "3.3"
+    pip_provider: "pip3"
   "redis":
     virtualenv: "system"
     ensure: "3.5.1"
+    pip_provider: "pip3"
 
 profile::archive::common::group_list:
   # this is duplicating the ipa gid as a local group

@@ -11,7 +11,7 @@ class profile::core::foreman_envsync (
 
   $pkgs = [
     'devtoolset-7',
-    'rh-ruby25-ruby-devel',
+    'rh-ruby27-ruby-devel',
   ]
 
   package { $pkgs:
@@ -20,13 +20,13 @@ class profile::core::foreman_envsync (
 
   $gem  = 'foreman_envsync'
   # need to avoid breaking foreman's ruby deps
-  $opts = '--bindir /bin --ignore-dependencies --no-ri --no-rdoc'
+  $opts = '--bindir /bin --ignore-dependencies --no-document'
   $scls = 'devtoolset-7 tfm'
 
   $scl_enable = "/bin/scl enable ${scls}"
   $install_cmd = "gem install --version ${version} ${opts} ${gem}"
 
-  exec { $install_cmd:
+  exec { 'install foreman_envsync':
     command => "${scl_enable} -- ${install_cmd}",
     unless  => "${scl_enable} -- gem list -i -l --version ${version} ${gem}",
     require => Package[$pkgs],

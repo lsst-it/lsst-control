@@ -7,22 +7,32 @@ cni::plugins::version: "0.9.1"
 profile::core::rke::enable_dhcp: true
 profile::core::ospl::enable_rundir: true
 network::interfaces_hash:
-  eno1:  # fqdn
-    bootproto: "dhcp"
+  enp1s0f0:  # fqdn
+    bootproto: "none"
     defroute: "yes"
+    dns1: "%{lookup('dhcp::nameservers.0')}"
+    dns2: "%{lookup('dhcp::nameservers.1')}"
+    domain: "%{lookup('dhcp::dnsdomain.0')}"
+    gateway: "139.229.160.254"
+    netmask: "255.255.255.0"
     nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
-  eno2d1:  # trunk
+  enp1s0f1:  # trunk
     bootproto: "none"
     onboot: "yes"
     type: "Ethernet"
-  eno2d1.1201:  # 139.229.166.0/24
+  enp1s0f1.1201:  # 139.229.166.0/24
     bootproto: "none"
     defroute: "no"
     nozeroconf: "yes"
     onboot: "yes"
     type: "none"
     vlan: "yes"
-
+  eno1:
+    ensure: "absent"
+  eno2d1:
+    ensure: "absent"
+  eno2d1.1201:
+    ensure: "absent"
 profile::core::common::manage_powertop: true

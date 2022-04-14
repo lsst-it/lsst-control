@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-FOREMAN_VERSION = '2.4.1'
+FOREMAN_VERSION = '3.2.1'
 PUPPETSERVER_VERSION = '6.19.0'
 TERMINI_VERSION = '6.19.1'
 
@@ -30,10 +30,12 @@ describe 'test1.dev.lsst.org' do
 
         it do
           is_expected.to contain_class('foreman::repo').with(
-            repo: '2.4',
+            repo: '3.2',
           )
         end
 
+        it { is_expected.to contain_foreman__plugin('puppet') }
+        it { is_expected.to contain_foreman__cli__plugin('foreman_puppet') }
         it { is_expected.to contain_foreman__plugin('tasks') }
         it { is_expected.to contain_foreman__plugin('remote_execution') }
 
@@ -47,7 +49,9 @@ describe 'test1.dev.lsst.org' do
           "0:foreman-service-#{FOREMAN_VERSION}-1.el7.noarch",
           "0:puppetdb-termini-#{TERMINI_VERSION}-1.el7.noarch",
           "0:puppetserver-#{PUPPETSERVER_VERSION}-1.el7.noarch",
-          # "1:foreman-installer-#{FOREMAN_VERSION}-1.el7.noarch",
+          "1:foreman-installer-#{FOREMAN_VERSION}-1.el7.noarch",
+          "0:foreman-proxy-#{FOREMAN_VERSION}-1.el7.noarch",
+          "0:foreman-vmware-#{FOREMAN_VERSION}-1.el7.noarch",
         ].each do |pkg|
           it { is_expected.to contain_yum__versionlock(pkg) }
         end

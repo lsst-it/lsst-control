@@ -92,7 +92,7 @@ dhcp::dnsdomain: &dnsdomains
 # resolv.conf allows for a maximum of 3 nameservers
 # @see man 5 resolv.conf
 dhcp::nameservers: &nameservers
-  - "139.229.134.7"  # dns1.dev.lsst.org
+  - "139.229.134.53"  # dns1.dev.lsst.org
   - "139.229.135.54"  # dns2.ls.lsst.org
   - "139.229.135.55"  # dns3.ls.lsst.org
 dhcp::ntpservers: &ntpservers

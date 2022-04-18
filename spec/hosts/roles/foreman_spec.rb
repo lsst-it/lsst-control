@@ -58,6 +58,8 @@ describe 'test1.dev.lsst.org' do
           it { is_expected.to contain_yum__versionlock(pkg) }
         end
 
+        it { is_expected.to contain_class('foreman_proxy::plugin::dynflow') }
+
         it { is_expected.to contain_class('puppetdb::globals').with_version(TERMINI_VERSION) }
 
         it do

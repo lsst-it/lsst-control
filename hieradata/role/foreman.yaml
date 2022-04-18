@@ -61,8 +61,6 @@ profile::core::common::manage_puppet_agent: false
 apache::mod::proxy::proxy_timeout: 300  # seconds -- allow long operations over rest api
 # copied from /etc/foreman-installer/scenarios.d/foreman-answers.yaml
 foreman::apache: true
-foreman::compute::libvirt: true
-foreman::compute::vmware: true
 #foreman::db_password:  # secret
 #foreman::db_username:  # secret
 foreman::dynflow_manage_services: true
@@ -78,7 +76,6 @@ foreman::manage_user: true
 foreman::oauth_active: true
 #foreman::oauth_consumer_key:  # secret
 #foreman::oauth_consumer_secret:  # secret
-foreman::passenger: false  # use puma; param removed in theforman/foreman >= 17.0.0
 foreman::plugin::tasks::automatic_cleanup: true
 foreman_proxy::base_url: "https://%{facts.fqdn}"
 foreman_proxy::bind_host: '*'

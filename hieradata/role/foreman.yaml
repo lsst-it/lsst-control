@@ -105,9 +105,11 @@ foreman_proxy::plugin::dynflow::core_port: 8008
 foreman_proxy::plugin::dynflow::enabled: true
 foreman_proxy::plugin::dynflow::external_core: true
 foreman_proxy::plugin::dynflow::listen_on: "https"
-foreman_proxy::plugin::remote_execution::ssh::async_ssh: false
-foreman_proxy::plugin::remote_execution::ssh::enabled: true
-foreman_proxy::plugin::remote_execution::ssh::ssh_kerberos_auth: false
+foreman_proxy::plugin::remote_execution::script::mode: "ssh"
+foreman_proxy::plugin::remote_execution::script::enabled: true
+foreman_proxy::plugin::remote_execution::script::ssh_kerberos_auth: false
+foreman_proxy::plugin::remote_execution::script::listen_on: "https"
+foreman_proxy::plugin::remote_execution::script::ssh_log_level: "debug"
 foreman_proxy::puppet_api_timeout: 1  # seconds
 foreman_proxy::puppetca_provider: "puppetca_hostname_whitelisting"
 foreman_proxy::puppetca: true

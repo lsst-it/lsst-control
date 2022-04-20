@@ -127,6 +127,11 @@ ccs_software::global_properties:
   - "org.lsst.ccs.subsystem.agent.property.cluster=%{lookup('ccs_instrument')}"
   - "org.lsst.ccs.subsystem.agent.property.site=%{lookup('ccs_site')}"
 
+ccs_software::udp_properties:
+  - "org.lsst.ccs.jgroups.LOG.UDP.mcast_port=26978"
+  - "org.lsst.ccs.jgroups.STATUS.UDP.mcast_port=36978"
+  - "org.lsst.ccs.jgroups.COMMAND.UDP.mcast_port=46978"
+
 ccs_sal::ospl_home: "/opt/OpenSpliceDDS/V6.10.4/HDE/x86_64.linux"
 ccs_sal::rpms:
   ts_sal_utils: "ts_sal_utils-6.1.0-1.x86_64.rpm"

@@ -200,6 +200,14 @@ profile::core::yum::versionlock:
 
 redis::globals::scl: "rh-redis5"
 
+ssh::client_options:
+  "ProxyCommand": "--"
+ssh::client_match_block:
+  "foreman,foreman-proxy":
+    type: "!localuser"
+    options:
+      ProxyCommand: "/usr/bin/sss_ssh_knownhostsproxy -p %p %h"
+
 profile::core::puppet_master::foreman_config:
   destroy_vm_on_host_delete: {value: false}
   entries_per_page: {value: 100}

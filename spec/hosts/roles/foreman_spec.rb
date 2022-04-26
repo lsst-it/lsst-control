@@ -68,6 +68,23 @@ describe 'test1.dev.lsst.org' do
             server_version: PUPPETSERVER_VERSION,
           )
         end
+
+        it 'has global ProxyCommand knocked out with --' do
+          expect(catalogue.resource('class', 'ssh')[:client_options]).to include(
+            'ProxyCommand' => '',
+          )
+        end
+
+        it 'has foreman & foreman-proxy user exempt from ProxyCommand' do
+          expect(catalogue.resource('class', 'ssh')[:client_match_block]).to include(
+            'foreman,foreman-proxy' => {
+              'type' => '!localuser',
+              'options' => {
+                'ProxyCommand' => '/usr/bin/sss_ssh_knownhostsproxy -p %p %h',
+              },
+            },
+          )
+        end
       end
     end # site
   end # role

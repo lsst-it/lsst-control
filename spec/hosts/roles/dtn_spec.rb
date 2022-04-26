@@ -18,8 +18,8 @@ describe 'test1.dev.lsst.org' do
         it { is_expected.to contain_class('profile::core::dtn') }
 
         it do
-          is_expected.to contain_class('ssh').with(
-            server_options: { 'Port' => [22, 2712] },
+          expect(catalogue.resource('class', 'ssh')[:server_options]).to include(
+            'Port' => [22, 2712],
           )
         end
       end

@@ -24,9 +24,9 @@ class profile::core::puppet_master (
   include foreman::cli::tasks
   include foreman::compute::libvirt
   include foreman::compute::vmware
+  include foreman::plugin::puppet
   include foreman::plugin::remote_execution
   include foreman::plugin::tasks
-  include foreman::plugin::puppet
   include foreman_proxy
   include foreman_proxy::plugin::dns::route53
   include foreman_proxy::plugin::dynflow

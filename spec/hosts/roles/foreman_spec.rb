@@ -40,6 +40,8 @@ describe 'test1.dev.lsst.org' do
         it { is_expected.to contain_foreman__cli__plugin('foreman_tasks') }
         it { is_expected.to contain_foreman__plugin('remote_execution') }
         it { is_expected.to contain_foreman__cli__plugin('foreman_remote_execution') }
+        it { is_expected.to contain_foreman__plugin('templates') }
+        it { is_expected.to contain_foreman__cli__plugin('foreman_templates') }
 
         [
           "0:foreman-cli-#{FOREMAN_VERSION}-1.el7.noarch",

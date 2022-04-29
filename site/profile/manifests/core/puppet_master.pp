@@ -22,11 +22,13 @@ class profile::core::puppet_master (
   include foreman::cli::puppet
   include foreman::cli::remote_execution
   include foreman::cli::tasks
+  include foreman::cli::templates
   include foreman::compute::libvirt
   include foreman::compute::vmware
   include foreman::plugin::puppet
   include foreman::plugin::remote_execution
   include foreman::plugin::tasks
+  include foreman::plugin::templates
   include foreman_proxy
   include foreman_proxy::plugin::dns::route53
   include foreman_proxy::plugin::dynflow

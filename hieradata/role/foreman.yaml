@@ -211,6 +211,14 @@ ssh::client_match_block:
 profile::core::puppet_master::foreman_config:
   destroy_vm_on_host_delete: {value: false}
   entries_per_page: {value: 100}
+  # remove "docker*" from default excluded_facts
+  # XXX using block scalar style results in the double quotes being preceeded
+  # with a \ as an escape, so we are resorting to a YAML single quoted string.
+  # This is possibly a YAML parser bug...
+  # XXX disabled as while the quoting hack works, it is not idempotent
+  # see: https://github.com/theforeman/puppet-foreman/issues/1048
+  #excluded_facts:
+  #  value: '["lo", "en*v*", "usb*", "vnet*", "macvtap*", ";vdsmdummy;", "veth*", "tap*", "qbr*", "qvb*", "qvo*", "qr-*", "qg-*", "vlinuxbr*", "vovsbr*", "br-int", "vif*", "load_averages::*", "memory::swap::available*", "memory::swap::capacity", "memory::swap::used*", "memory::system::available*", "memory::system::capacity", "memory::system::used*", "memoryfree", "memoryfree_mb", "swapfree", "swapfree_mb", "uptime_hours", "uptime_days"]'
   host_power_status: {value: false}
   idle_timeout: {value: 7200}  # session timeout in minutes
   matchers_inheritance: {value: false}

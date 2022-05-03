@@ -18,7 +18,7 @@ mod 'icinga-icinga2', '3.2.2'
 mod 'icinga-icinga', '2.7.0'
 mod 'icinga/icingaweb2', '3.3.0'
 mod 'jamtur01/httpauth', '0.0.6'
-mod 'jcpunk/irqbalance', git: 'https://github.com/lsst-it/puppet-irqbalance', ref: 'IT-3565/puppet-mod-tidy'  # fix facter 3.x compat
+mod 'jcpunk/irqbalance', '1.0.2'
 mod 'jhoblitt/ipmi', '3.1.0'
 mod 'lsst/ccs_daq', git: 'https://github.com/lsst-it/puppet-ccs_daq', ref: 'v0.1.0'
 mod 'lsst/ccs_database', git: 'https://github.com/lsst-it/puppet-ccs_database', ref: 'v2.0.0'

@@ -108,4 +108,4 @@ mod 'theforeman/puppet', '16.1.0'
 mod 'theforeman/puppetserver_foreman', '2.1.0'
 mod 'theforeman/tftp', '7.1.0'
 mod 'treydock/clustershell', git: 'https://github.com/lsst-it/puppet-module-clustershell', ref: 'IT-3565/puppet-mod-tidy'  # stdlib, epel
-mod 'treydock/perfsonar', git: 'https://github.com/lsst-it/puppet-module-perfsonar', ref: 'IT-3565/puppet-mod-tidy'  # stdlib, epel
+mod 'treydock/perfsonar', '2.0.0'

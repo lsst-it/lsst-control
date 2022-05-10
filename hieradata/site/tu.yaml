@@ -12,11 +12,11 @@ rsyslog::config::actions:
       Protocol: "udp"
 # Send copy to logs to Base Graylog instance
 # This must be replaced once a TU graylog instance is set.
-  graylogBase:
+  graylogTucson:
     type: "omfwd"
     facility: "*.*"
     config:
-      Target: "collector.ls.lsst.org"
+      Target: "collector.tu.lsst.org"
       Port: 5514
       Protocol: "udp"
   # Log anything (except mail) of level info or higher.
@@ -88,7 +88,7 @@ profile::icinga::agent::icinga_master_fqdn: "icinga-master.ls.lsst.org"
 profile::icinga::agent::icinga_master_ip: "139.229.135.31"
 profile::icinga::agent::site: "base"
 # To be replaced once a production monitoring instance is set at TU site
-profile::core::monitoring::url: "http://it-influxdb.ls.lsst.org:8086"
+profile::core::monitoring::url: "http://it-influxdb.tu.lsst.org:8086"
 
 tuned::profile: "powersave"
 

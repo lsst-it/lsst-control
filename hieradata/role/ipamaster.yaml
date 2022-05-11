@@ -1,8 +1,8 @@
 ---
 classes:
-  - "profile::core::common"
   - "clustershell"
   - "easy_ipa"
+  - "profile::core::common"
 packages:
   - "bash-completion"
   - "bash-completion-extras"

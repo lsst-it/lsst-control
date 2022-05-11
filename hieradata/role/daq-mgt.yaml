@@ -1,11 +1,11 @@
 ---
 classes:
+  - "dhcp"
   - "profile::ccs::daq_interface"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
-  - "dhcp"
 
 packages:
   - "ckermit"

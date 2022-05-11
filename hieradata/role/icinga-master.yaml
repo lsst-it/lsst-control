@@ -2,10 +2,10 @@
 classes:
   - "profile::core::common"
   - "profile::icinga::master"
-  - "profile::icinga::resources"
   - "profile::icinga::network"
-  - "profile::icinga::plugins"
   - "profile::icinga::opsgenie"
+  - "profile::icinga::plugins"
+  - "profile::icinga::resources"
 packages:
   - "bash-completion"
   - "bash-completion-extras"

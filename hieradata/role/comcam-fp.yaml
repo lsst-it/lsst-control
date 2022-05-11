@@ -4,6 +4,7 @@
 # It should go away once comcam has a dedicated daq managment node.
 #
 classes:
+  - "dhcp"
   - "profile::ccs::common"
   - "profile::ccs::daq4"
   - "profile::ccs::daq_interface"
@@ -13,7 +14,6 @@ classes:
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
   - "profile::core::sysctl::lhn"
-  - "dhcp"
 
 profile::ccs::common::sysctls: false  # conflicts with lhn tuning
 profile::ccs::facts::daq: true

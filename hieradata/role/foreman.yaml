@@ -1,10 +1,10 @@
 ---
 classes:
+  - "dhcp"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::foreman_envsync"
   - "profile::core::puppet_master"
-  - "dhcp"
 
 dhcp::default_lease_time: &lease_time 900
 dhcp::max_lease_time: *lease_time

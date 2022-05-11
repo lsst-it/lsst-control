@@ -14,9 +14,7 @@ hieradata_pathname = Pathname.new(control_hieradata_path)
 describe 'hiera' do
   non_role_layers.each do |layer_conf|
     describe "layer #{layer_conf}" do
-      yaml_glob = layer_conf.gsub(%r{%{\w+?}}, '**')
-      glob = File.join(control_hieradata_path, yaml_glob)
-      Dir[glob].sort.each do |y|
+      hiera_files_in_layer(layer_conf).sort.each do |y|
         y_relpath = Pathname.new(y).relative_path_from(hieradata_pathname)
         describe y_relpath do
           # #safe_load failed on anchor/aliases

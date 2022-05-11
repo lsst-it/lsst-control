@@ -1,9 +1,9 @@
 ---
 classes:
-  - "profile::core::common"
-  - "profile::ccs::common"
   - "profile::ccs::autologin"
+  - "profile::ccs::common"
   - "profile::ccs::graphical"
+  - "profile::core::common"
 
 profile::ccs::graphical::officeapps: true
 

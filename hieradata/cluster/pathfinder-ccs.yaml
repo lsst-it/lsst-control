@@ -1,19 +1,17 @@
 ---
 packages:
-  # ccs stuff
-  - "epel-release"
-  - "git"
-  - "rsync"
-  - "emacs"
-  - "nano"
-  - "screen"
   - "attr"
-  - "parallel"
-  - "gcc"
-  ## TODO only on "development" nodes.
-  - "maven"
   - "devtoolset-8"
+  - "emacs"
+  - "epel-release"
+  - "gcc"
+  - "git"
+  - "maven"
+  - "nano"
+  - "parallel"
   - "rh-git218"
+  - "rsync"
+  - "screen"
 
 postfix::manage_root_alias: false
 postfix::inet_interfaces: "localhost"

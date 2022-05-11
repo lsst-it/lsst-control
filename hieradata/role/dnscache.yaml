@@ -1,7 +1,7 @@
 ---
 classes:
-  - "profile::core::common"
   - "dns"
+  - "profile::core::common"
 dns::forward: "only"
 dns::listen_on_v6: false
 dns::sysconfig_startup_options: "-4"

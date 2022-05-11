@@ -1,10 +1,10 @@
 ---
 classes:
-  - "profile::core::common"
-  - "profile::ccs::common"
-  - "profile::ccs::tomcat"
-  - "profile::ccs::graphical"
   - "ccs_sal"
+  - "profile::ccs::common"
+  - "profile::ccs::graphical"
+  - "profile::ccs::tomcat"
+  - "profile::core::common"
 
 nginx::confd_purge: true
 nginx::server_purge: true

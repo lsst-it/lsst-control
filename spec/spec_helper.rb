@@ -26,6 +26,10 @@ def public_hierarchy
   hc['hierarchy'][1]['paths']
 end
 
+def hiera_all_files
+  public_hierarchy.map { |l| hiera_files_in_layer(l) }.flatten
+end
+
 default_facts = {
   puppetversion: Puppet.version,
   facterversion: Facter.version,
@@ -40,9 +44,20 @@ def lsst_sites
   ]
 end
 
-def lsst_roles
-  role_dir = File.join(control_hieradata_path, 'org', 'lsst', 'role')
+def hiera_roles
+  role_dir = File.join(control_hieradata_path, 'role')
   Dir.entries(role_dir).grep_v(%r{^\.}).map { |x| x.sub('.yaml', '') }
+end
+
+# all hiera role layers
+def hiera_role_layers
+  public_hierarchy.grep(%r{role})
+end
+
+def hiera_files_in_layer(layer)
+  yaml_glob = layer.gsub(%r{%{\w+?}}, '**')
+  glob = File.join(control_hieradata_path, yaml_glob)
+  Dir[glob]
 end
 
 default_fact_files = [

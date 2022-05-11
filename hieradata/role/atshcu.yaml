@@ -1,12 +1,10 @@
 ---
 classes:
+  - "ccs_hcu"
   - "profile::ccs::common"
+  - "profile::ccs::graphical"  # Ultimately, next item should not be present, but people are currently using HCUs in graphical mode.
   - "profile::core::common"
   - "profile::core::nfsclient"
-  - "ccs_hcu"
-  ## Ultimately, next item should not be present, but people
-  ## are currently using HCUs in graphical mode.
-  - "profile::ccs::graphical"
 
 packages:
   - "usbutils"

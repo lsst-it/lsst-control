@@ -20,6 +20,10 @@ def control_hieradata_path
   File.join(root_path, 'hieradata')
 end
 
+def puppetfile_path
+  File.join(root_path, 'Puppetfile')
+end
+
 # extract public hiera hierarchy
 def public_hierarchy
   hc = YAML.load_file(control_hiera_config)

@@ -50,6 +50,12 @@ def hiera_role_layers
   public_hierarchy.grep(%r{role})
 end
 
+def hiera_files_in_layer(layer)
+  yaml_glob = layer.gsub(%r{%{\w+?}}, '**')
+  glob = File.join(control_hieradata_path, yaml_glob)
+  Dir[glob]
+end
+
 default_fact_files = [
   File.expand_path(File.join(File.dirname(__FILE__), 'default_facts.yml')),
   File.expand_path(File.join(File.dirname(__FILE__), 'default_module_facts.yml')),

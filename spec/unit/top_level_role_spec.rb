@@ -7,14 +7,8 @@ def bottom_role_layers
   hiera_role_layers[0...-1]
 end
 
-def files_in_layer(layer)
-  yaml_glob = layer.gsub(%r{%{\w+?}}, '**')
-  glob = File.join(control_hieradata_path, yaml_glob)
-  Dir[glob]
-end
-
 def bottom_role_files
-  bottom_role_layers.map { |l| files_in_layer(l) }.flatten
+  bottom_role_layers.map { |l| hiera_files_in_layer(l) }.flatten
 end
 
 hieradata_pathname = Pathname.new(control_hieradata_path)

@@ -26,6 +26,10 @@ def public_hierarchy
   hc['hierarchy'][1]['paths']
 end
 
+def hiera_all_files
+  public_hierarchy.map { |l| hiera_files_in_layer(l) }.flatten
+end
+
 default_facts = {
   puppetversion: Puppet.version,
   facterversion: Facter.version,

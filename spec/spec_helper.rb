@@ -40,8 +40,8 @@ def lsst_sites
   ]
 end
 
-def lsst_roles
-  role_dir = File.join(control_hieradata_path, 'org', 'lsst', 'role')
+def hiera_roles
+  role_dir = File.join(control_hieradata_path, 'role')
   Dir.entries(role_dir).grep_v(%r{^\.}).map { |x| x.sub('.yaml', '') }
 end
 

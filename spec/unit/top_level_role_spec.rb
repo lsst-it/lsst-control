@@ -2,14 +2,9 @@
 
 require 'spec_helper'
 
-# all hiera role layers
-def role_layers
-  public_hierarchy.grep(%r{role})
-end
-
 def bottom_role_layers
   # remove lowest priority layer
-  role_layers[0...-1]
+  hiera_role_layers[0...-1]
 end
 
 def files_in_layer(layer)

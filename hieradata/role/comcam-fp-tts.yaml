@@ -1,13 +1,14 @@
 ---
 classes:
-  - "profile::ccs::krb5_token"
   - "profile::ccs::common"
   - "profile::ccs::daq_interface"
   - "profile::ccs::graphical"
-  - "ccs_daq"
+  - "profile::ccs::krb5_token"
   - "profile::core::common"
+  - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
+  - "ccs_daq"
 
 profile::ccs::facts::daq: true
 

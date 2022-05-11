@@ -1,9 +1,10 @@
 ---
 classes:
-  - "profile::ccs::krb5_token"
   - "profile::ccs::common"
   - "profile::ccs::daq_interface"
+  - "profile::ccs::krb5_token"
   - "profile::core::common"
+  - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
 

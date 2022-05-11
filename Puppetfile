@@ -1,7 +1,7 @@
 forge 'https://forgeapi.puppetlabs.com'
 
 mod 'bodgit/bodgitlib', '3.0.3'
-mod 'bodgit/sssd', git: 'https://github.com/lsst-it/puppet-sssd.git', branch: 'IT-3565/puppet-mod-tidy'  # https://github.com/bodgit/puppet-sssd/pull/35
+mod 'bodgit/sssd', git: 'https://github.com/lsst-it/puppet-sssd.git', branch: 'production'  # https://github.com/bodgit/puppet-sssd/pull/35
 mod 'camptocamp/augeas', '1.9.0'
 mod 'ccin2p3-etc_services', '2.0.3'
 mod 'ccin2p3/mit_krb5', '1.4.0'
@@ -33,7 +33,7 @@ mod 'lsst/helm_binary', '1.0.0'
 mod 'lsst/java_artisanal', '2.0.0'
 mod 'lsst/maven', '2.0.1'
 mod 'lsst/rke', '1.0.0'
-mod 'lsst/tuned', git: 'https://github.com/lsst-it/puppet-tuned', branch: 'IT-3565/puppet-mod-tidy'  # https://github.com/CERIT-SC/puppet-tuned/pull/21
+mod 'lsst/tuned', git: 'https://github.com/lsst-it/puppet-tuned', branch: 'production'  # https://github.com/CERIT-SC/puppet-tuned/pull/21
 mod 'puppet/alternatives', '4.0.0'
 mod 'puppet/archive', '6.0.2'
 mod 'puppet/chrony', '2.3.0'

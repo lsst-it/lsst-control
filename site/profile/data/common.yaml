@@ -16,6 +16,7 @@ profile::core::debugutils::packages:
   - "pciutils"
   - "powertop"
   - "socat"
+  - "strace"
   - "tcpdump"
   - "traceroute"
   - "tree"

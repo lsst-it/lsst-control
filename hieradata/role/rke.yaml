@@ -10,14 +10,13 @@ classes:
   - "profile::core::ospl"
   - "profile::core::rke"
 packages:
+  - "ack"
+  - "bash-completion"
+  - "bash-completion-extras"
   - "gdisk"
   - "git"
   - "jq"
   - "kubectl"
-  # convenience utils
-  - "ack"
-  - "bash-completion"
-  - "bash-completion-extras"
   - "vim"
 sysctl::values::args:
   net.bridge.bridge-nf-call-iptables:

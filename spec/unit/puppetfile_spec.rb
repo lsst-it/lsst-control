@@ -22,4 +22,13 @@ describe 'Puppetfile' do
     # convert arrays into strings so rspec will produce a diff with useful context
     expect(mods.join("\n")).to eq coreutils_sort(mods).join("\n")
   end
+
+  it 'mod names use slash instead of dash as namespace separator' do
+    # ignore lines which aren't declaring a module
+    mods = puppetfile.split("\n").grep(%r{^\s*mod})
+
+    names = mods.map { |l| l.split[1] }
+
+    names.each { |n| expect(n).not_to match('-') }
+  end
 end

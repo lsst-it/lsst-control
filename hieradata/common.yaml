@@ -404,3 +404,20 @@ profile::ts::opensplicedds::ensure: "6.10.4-6.el7"
 nfs::nfs_v4: true
 nfs::nfs_v4_client: true
 nfs::nfs_v4_idmap_domain: "%{::domain}"
+
+profile::core::docker::version: "20.10.12"
+profile::core::docker::versionlock:
+  0:containerd.io-1.4.12-3.1.el7.x86_64:
+    # puppetlabs/docker only specifies a package resource for containerd.io for uninstall
+    ensure: "present"
+  0:docker-ce-rootless-extras-20.10.12-3.el7.x86_64:
+    ensure: "present"
+  0:docker-scan-plugin-0.12.0-3.el7.x86_64:
+    ensure: "present"
+  1:docker-ce-cli-20.10.12-3.el7.x86_64:
+    ensure: "present"
+    before: "Package[docker-ce-cli]"
+  3:docker-ce-20.10.12-3.el7.x86_64:
+    ensure: "present"
+    # the puppet package resource name is `docker` with a seperate name param of `docker-ce`
+    before: "Package[docker]"

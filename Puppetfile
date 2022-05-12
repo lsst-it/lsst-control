@@ -100,6 +100,7 @@ mod 'simp/gnome', '9.1.0'
 mod 'simp/mate', '1.2.0'
 mod 'simp/polkit', '6.4.0'
 mod 'simp/simplib', '4.10.2'
+mod 'stm/debconf', '4.1.0'
 mod 'theforeman/dhcp', '8.1.0'
 mod 'theforeman/dns', '9.2.0'
 mod 'theforeman/foreman', git: 'https://github.com/lsst-it/puppet-foreman', ref: 'IT-3565/puppet-mod-tidy'  # foreman 2.4 compat

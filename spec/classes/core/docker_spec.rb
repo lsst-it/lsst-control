@@ -13,12 +13,12 @@ describe 'profile::core::docker' do
       socket_group: 70_014,
       socket_override: false,
       storage_driver: 'overlay2',
-      version: '19.03.15',
+      version: '20.10.12',
     )
   end
 
   it { is_expected.to contain_class('yum::plugin::versionlock') }
-  it { is_expected.to have_yum__versionlock_resource_count(2) }
+  it { is_expected.to have_yum__versionlock_resource_count(5) }
   it { is_expected.to contain_class('docker::networks') }
 
   it do
@@ -30,15 +30,5 @@ describe 'profile::core::docker' do
 
   it do
     is_expected.to contain_file('/etc/systemd/system/docker.service.d/wait-for-docker-group.conf').with_content(%r{Requires=docker.socket containerd.service sssd.service})
-  end
-
-  context 'when site tu' do
-    let(:node_params) do
-      super().merge(
-        site: 'tu',
-      )
-    end
-
-    it { is_expected.to contain_class('docker').with(version: '20.10.12') }
   end
 end

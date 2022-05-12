@@ -110,20 +110,3 @@ profile::icinga::agent::site: "summit"
 profile::icinga::resources::dhcp_server: "139.229.160.5"
 profile::core::common::disable_ipv6: true
 profile::core::monitoring::url: "http://it-influxdb.cp.lsst.org:8086"
-
-profile::core::docker::version: "20.10.12"
-profile::core::docker::versionlock:
-  0:containerd.io-1.4.12-3.1.el7.x86_64:
-    # puppetlabs/docker only specifies a package resource for containerd.io for uninstall
-    ensure: "present"
-  0:docker-ce-rootless-extras-20.10.12-3.el7.x86_64:
-    ensure: "present"
-  0:docker-scan-plugin-0.12.0-3.el7.x86_64:
-    ensure: "present"
-  1:docker-ce-cli-20.10.12-3.el7.x86_64:
-    ensure: "present"
-    before: "Package[docker-ce-cli]"
-  3:docker-ce-20.10.12-3.el7.x86_64:
-    ensure: "present"
-    # the puppet package resource name is `docker` with a seperate name param of `docker-ce`
-    before: "Package[docker]"

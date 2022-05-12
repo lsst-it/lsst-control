@@ -61,4 +61,17 @@ class profile::core::docker (
       | EOS
     # lint:endignore
   }
+
+  file { '/etc/docker/daemon.json':
+    ensure  => file,
+    mode    => '0644',
+    # lint:ignore:strict_indent
+    content => @(JSON),
+      {
+        "live-restore": true
+      }
+    | JSON
+    # lint:endignore
+    notify  => Service['docker'],
+  }
 }

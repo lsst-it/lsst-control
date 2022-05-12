@@ -31,4 +31,8 @@ describe 'profile::core::docker' do
   it do
     is_expected.to contain_file('/etc/systemd/system/docker.service.d/wait-for-docker-group.conf').with_content(%r{Requires=docker.socket containerd.service sssd.service})
   end
+
+  it do
+    is_expected.to contain_file('/etc/docker/daemon.json').with_content(%r{"live-restore": true})
+  end
 end

@@ -346,7 +346,7 @@ mit_krb5::domain_realms:
       - "%{facts.domain}"
 
 openldap::client::tls_cacertdir: "/etc/openldap/certs"
-openldap::client::sasl_nocanon: "on"
+openldap::client::sasl_nocanon: true
 openldap::client::uri: "ldaps://%{lookup('easy_ipa::ipa_master_fqdn')}"
 openldap::client::base: "dc=lsst,dc=cloud"
 openldap::client::tls_cacert: "/etc/ipa/ca.crt"

@@ -38,7 +38,7 @@ class profile::archive::common (
     version     => 'python36',
     pip         => 'present',
     dev         => 'present',
-    virtualenv  => 'present',
+    venv        => 'present',
     python_pips => $python_pips,
   }
 

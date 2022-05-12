@@ -1,0 +1,19 @@
+---
+# yamllint disable rule:quoted-strings
+name: librarian-puppet
+
+"on":
+  - push
+
+jobs:
+  librarian_puppet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+      - run: bundle install
+      - name: Puppetfile recursive dependency check
+        run: bundle exec librarian-puppet install --verbose

@@ -12,6 +12,7 @@ AllCops:
   Exclude:
   - ".bundle/**/*"
   - "**/Guardfile"
+  - "modules/**/*"
   - "pkg/**/*"
   - "**/Puppetfile"
   - "spec/fixtures/**/*"

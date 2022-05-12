@@ -1,0 +1,9 @@
+---
+network::interfaces_hash:
+  ens192:  # fqdn
+    bootproto: "none"
+    defroute: "yes"
+    gateway: "139.229.160.254"
+    ipaddress: "139.229.160.14"
+    netmask: "255.255.255.0"
+    onboot: "yes"

@@ -87,6 +87,8 @@ describe 'test1.dev.lsst.org' do
             },
           )
         end
+
+        it { is_expected.to contain_foreman_config_entry('host_details_ui').with_value(false) }
       end
     end # site
   end # role

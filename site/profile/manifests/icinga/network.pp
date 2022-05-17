@@ -89,6 +89,8 @@ class profile::icinga::network (
       'Vlan360_Perfsonar1-1,139.229.140.134',
       'Vlan370_Perfsonar1-2,139.229.140.136',
       'bdc-wlc.ls.lsst.org,139.229.134.100',
+      'new-pfsense01.ls.lsst.org,10.50.3.201',
+      'new-pfsense02.ls.lsst.org,10.50.3.202',
     ]
   }
   elsif $site == 'summit' {

@@ -55,6 +55,14 @@ class profile::icinga::master (
   $le_root = "/etc/letsencrypt/live/${master_fqdn}"
 
   #  Director Service
+  $pnp_url = 'https://github.com/Icinga/icingaweb2-module-pnp/archive/refs/tags/v1.1.0.tar.gz'
+  $pnp_install = @("PNP_INSTALL")
+    mkdir /usr/share/icingaweb2/modules/pnp
+    wget -O pnp.tar.gz ${pnp_url}
+    tar zxvf pnp.tar.gz -C pnp --strip-components 1
+    | PNP_INSTALL
+
+  #  Director Service
   $director_service = @(SERVICE)
     [Unit]
     Description=Icinga Director - Monitoring Configuration
@@ -348,12 +356,11 @@ class profile::icinga::master (
   }
 
   ##IcingaWeb PNP
-  vcsrepo { '/usr/share/icingaweb2/modules/pnp':
-    ensure   => present,
-    provider => git,
-    source   => 'git://github.com/Icinga/icingaweb2-module-pnp.git',
-    revision => 'v1.1.0',
-    require  => Class['icingaweb2'],
+  exec { $pnp_install :
+    cwd     => '/var/tmp/',
+    path    => ['/sbin', '/usr/sbin', '/bin'],
+    onlyif  => ['test ! -d /usr/share/icingaweb2/modules/pnp'],
+    require => Class['icingaweb2::module::director'],
   }
   exec { 'icingacli module enable pnp':
     cwd     => '/var/tmp/',

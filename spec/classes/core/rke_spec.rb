@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe 'profile::core::rke' do
-  let(:node_params) { { org: 'lsst' } }
-
   context 'with no params' do
     it { is_expected.to compile.with_all_deps }
 

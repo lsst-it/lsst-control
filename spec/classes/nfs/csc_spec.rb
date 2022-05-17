@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe 'profile::nfs::client::csc' do
-  let(:node_params) { { org: 'lsst' } }
-
   context 'with default module data' do
     it { is_expected.to compile.with_all_deps }
     it { is_expected.to contain_class('nfs::client') }

@@ -5,7 +5,6 @@ require 'spec_helper'
 describe 'profile::core::common' do
   let(:node_params) do
     {
-      org: 'lsst',
       site: 'dev',
       ipa_force_join: false,  # XXX fix easy_ipa mod
     }

@@ -123,6 +123,7 @@ describe 'foreman role' do
     include_examples 'generic foreman'
 
     it { is_expected.to contain_foreman_global_parameter('site').with_value('dev') }
+    it { is_expected.to contain_foreman_hostgroup('dev') }
   end # host
 
   describe 'foreman.tu.lsst.org', :site, :common do
@@ -140,6 +141,7 @@ describe 'foreman role' do
     include_examples 'generic foreman'
 
     it { is_expected.to contain_foreman_global_parameter('site').with_value('tu') }
+    it { is_expected.to contain_foreman_hostgroup('tu') }
   end # host
 
   describe 'foreman.ls.lsst.org', :site, :common do
@@ -158,6 +160,7 @@ describe 'foreman role' do
     include_examples 'generic foreman'
 
     it { is_expected.to contain_foreman_global_parameter('site').with_value('ls') }
+    it { is_expected.to contain_foreman_hostgroup('ls') }
   end # host
 
   describe 'foreman.cp.lsst.org', :site, :common do
@@ -176,5 +179,6 @@ describe 'foreman role' do
     include_examples 'generic foreman'
 
     it { is_expected.to contain_foreman_global_parameter('site').with_value('cp') }
+    it { is_expected.to contain_foreman_hostgroup('cp') }
   end # host
 end # role

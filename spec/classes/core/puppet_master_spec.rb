@@ -37,4 +37,24 @@ describe 'profile::core::puppet_master' do
 
     it { is_expected.to contain_foreman_hostgroup('foo').with_description('bar') }
   end
+
+  context 'with foreman_global_parameter param' do
+    let(:params) do
+      {
+        foreman_global_parameter: {
+          foo: {
+            parameter_type: 'baz',
+            value: 'bar',
+          },
+        },
+      }
+    end
+
+    it do
+      is_expected.to contain_foreman_global_parameter('foo').with(
+        parameter_type: 'baz',
+        value: 'bar',
+      )
+    end
+  end
 end

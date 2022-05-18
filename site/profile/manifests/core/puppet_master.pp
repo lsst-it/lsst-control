@@ -14,11 +14,15 @@
 # @param foreman_hostgroup
 #   `foreman_hostgroup` resources to create.
 #
+# @param foreman_global_parameter
+#   `foreman_global_parameter` resources to create.
+#
 class profile::core::puppet_master (
   Stdlib::HTTPSUrl $smee_url,
   Boolean $enable_puppetdb = false,
   Optional[Hash[String, Hash]] $foreman_config = undef,
   Optional[Hash[String, Hash]] $foreman_hostgroup = undef,
+  Optional[Hash[String, Hash]] $foreman_global_parameter = undef,
 ) {
   include cron
   include foreman
@@ -54,6 +58,10 @@ class profile::core::puppet_master (
 
   if $foreman_hostgroup {
     ensure_resources('foreman_hostgroup', $foreman_hostgroup)
+  }
+
+  if $foreman_global_parameter {
+    ensure_resources('foreman_global_parameter', $foreman_global_parameter)
   }
 
   Class['r10k::webhook::config'] -> Class['r10k::webhook']

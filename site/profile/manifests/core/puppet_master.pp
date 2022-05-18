@@ -11,10 +11,14 @@
 #   `foreman_config_entry` resources to create.  Note that these parameters are called
 #   "Settings" in the foreman UI.
 #
+# @param foreman_hostgroup
+#   `foreman_hostgroup` resources to create.
+#
 class profile::core::puppet_master (
   Stdlib::HTTPSUrl $smee_url,
   Boolean $enable_puppetdb = false,
   Optional[Hash[String, Hash]] $foreman_config = undef,
+  Optional[Hash[String, Hash]] $foreman_hostgroup = undef,
 ) {
   include cron
   include foreman
@@ -46,6 +50,10 @@ class profile::core::puppet_master (
 
   if $foreman_config {
     ensure_resources('foreman_config_entry', $foreman_config)
+  }
+
+  if $foreman_hostgroup {
+    ensure_resources('foreman_hostgroup', $foreman_hostgroup)
   }
 
   Class['r10k::webhook::config'] -> Class['r10k::webhook']

@@ -234,6 +234,36 @@ profile::core::puppet_master::foreman_config:
   idle_timeout: {value: 7200}  # session timeout in minutes
   matchers_inheritance: {value: false}
   update_hostgroup_from_facts: {value: false}
+profile::core::puppet_master::foreman_global_parameter:
+  bootloader-append:
+    parameter_type: "string"
+    value: "nofb"
+  disable-firewall:
+    parameter_type: "boolean"
+    value: true
+  enable-epel:
+    parameter_type: "boolean"
+    value: true
+  enable-puppetlabs-puppet6-repo:
+    parameter_type: "boolean"
+    value: true
+  host_registration_insights:
+    parameter_type: "boolean"
+    value: false
+  host_registration_remote_execution:
+    parameter_type: "boolean"
+    value: true
+  org:
+    ensure: "absent"
+  package_upgrade:
+    parameter_type: "boolean"
+    value: true
+  selinux-mode:
+    parameter_type: "string"
+    value: "disabled"
+  site:
+    parameter_type: "string"
+    value: "%{::site}"
 
 profile::core::systemd::dropin_file:
   50-MemoryLimit.conf:

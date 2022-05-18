@@ -76,6 +76,16 @@ shared_examples 'generic foreman' do
   end
 
   it { is_expected.to contain_foreman_config_entry('host_details_ui').with_value(false) }
+
+  it { is_expected.to contain_foreman_global_parameter('bootloader-append').with_value('nofb') }
+  it { is_expected.to contain_foreman_global_parameter('disable-firewall').with_value(true) }
+  it { is_expected.to contain_foreman_global_parameter('enable-epel').with_value(true) }
+  it { is_expected.to contain_foreman_global_parameter('enable-puppetlabs-puppet6-repo').with_value(true) }
+  it { is_expected.to contain_foreman_global_parameter('host_registration_insights').with_value(false) }
+  it { is_expected.to contain_foreman_global_parameter('host_registration_remote_execution').with_value(true) }
+  it { is_expected.to contain_foreman_global_parameter('org').with_ensure('absent') }
+  it { is_expected.to contain_foreman_global_parameter('package_upgrade').with_value(true) }
+  it { is_expected.to contain_foreman_global_parameter('selinux-mode').with_value('disabled') }
 end
 
 describe 'foreman role' do
@@ -94,6 +104,8 @@ describe 'foreman role' do
     it { is_expected.to compile.with_all_deps }
 
     include_examples 'generic foreman'
+
+    it { is_expected.to contain_foreman_global_parameter('site').with_value('dev') }
   end # host
 
   describe 'foreman.tu.lsst.org', :site, :common do
@@ -102,6 +114,8 @@ describe 'foreman role' do
     it { is_expected.to compile.with_all_deps }
 
     include_examples 'generic foreman'
+
+    it { is_expected.to contain_foreman_global_parameter('site').with_value('tu') }
   end # host
 
   describe 'foreman.ls.lsst.org', :site, :common do
@@ -110,6 +124,8 @@ describe 'foreman role' do
     it { is_expected.to compile.with_all_deps }
 
     include_examples 'generic foreman'
+
+    it { is_expected.to contain_foreman_global_parameter('site').with_value('ls') }
   end # host
 
   describe 'foreman.cp.lsst.org', :site, :common do
@@ -118,5 +134,7 @@ describe 'foreman role' do
     it { is_expected.to compile.with_all_deps }
 
     include_examples 'generic foreman'
+
+    it { is_expected.to contain_foreman_global_parameter('site').with_value('cp') }
   end # host
 end # role

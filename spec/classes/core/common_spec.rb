@@ -19,4 +19,8 @@ describe 'profile::core::common' do
   it do
     is_expected.to contain_service('NetworkManager').with(ensure: 'running', enable: true)
   end
+
+  it do
+    is_expected.to contain_file('/etc/sysconfig/network-scripts/ifcfg-').with_ensure('absent')
+  end
 end

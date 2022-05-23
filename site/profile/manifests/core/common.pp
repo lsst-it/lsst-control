@@ -172,4 +172,11 @@ class profile::core::common (
       ensure => running,
       enable => true,
   })
+
+  # foreman provisioning templates created a `ifcfg-` on many hosts.  This seemed harmless but
+  # it has been discovered that this causes libvirt report a change interfaces with no name
+  # when enumerating the physical interfaces via the api.
+  file { '/etc/sysconfig/network-scripts/ifcfg-':
+    ensure => absent,
+  }
 }

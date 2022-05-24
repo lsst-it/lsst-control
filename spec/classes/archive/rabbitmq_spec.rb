@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe 'profile::archive::rabbitmq' do
-  let(:node_params) { { org: 'lsst' } }
-
   it { is_expected.to compile.with_all_deps }
 
   it { is_expected.to contain_class('rabbitmq').with_package_ensure('3.8.3-1.el7.noarch') }

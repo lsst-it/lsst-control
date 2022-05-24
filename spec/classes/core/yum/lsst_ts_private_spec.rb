@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe 'profile::core::yum::lsst_ts_private' do
-  let(:node_params) { { org: 'lsst' } }
-
   context 'without params' do
     it { is_expected.to compile.with_all_deps }
 

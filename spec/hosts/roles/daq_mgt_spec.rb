@@ -38,7 +38,6 @@ end
 describe 'daq-mgt role', :site do
   let(:node_params) do
     {
-      org: 'lsst',
       role: 'daq-mgt',
       ipa_force_join: false, # easy_ipa
     }

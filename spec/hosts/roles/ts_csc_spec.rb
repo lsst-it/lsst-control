@@ -8,7 +8,6 @@ describe 'test1.dev.lsst.org', :site do
       context "with site #{site}" do
         let(:node_params) do
           {
-            org: 'lsst',
             site: site,
             role: 'ts-csc',
             cluster: 'trewa',

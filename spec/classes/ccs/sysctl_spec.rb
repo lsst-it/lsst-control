@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe 'profile::ccs::sysctl' do
-  let(:node_params) { { org: 'lsst' } }
-
   it { is_expected.to compile.with_all_deps }
   it { is_expected.to have_sysctl__value_resource_count(2) }
 

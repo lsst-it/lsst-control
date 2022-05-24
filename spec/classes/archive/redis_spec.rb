@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe 'profile::archive::redis' do
-  let(:node_params) { { org: 'lsst' } }
-
   it { is_expected.to compile.with_all_deps }
 
   it do

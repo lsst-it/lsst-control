@@ -338,13 +338,13 @@ class profile::ts::rpi {
   vcsrepo { $libraw_dir:
     ensure   => present,
     provider => git,
-    source   => 'git://github.com/LibRaw/LibRaw.git',
+    source   => 'git://github.com/libraw/libraw.git',
     revision => '0.20.0',
   }
   vcsrepo { $libraw_make_dir:
     ensure   => present,
     provider => git,
-    source   => 'git://github.com/LibRaw/LibRaw-cmake.git',
+    source   => 'git://github.com/libraw/libraw-cmake.git',
   }
   -> file { "${libraw_dir}/libraw.sh":
     ensure  => file,

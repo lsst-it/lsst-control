@@ -8,10 +8,10 @@ class profile::core::velero {
   vcsrepo { '/usr/share/velero':
     ensure   => present,
     provider => git,
-    source   => 'git://github.com/vmware-tanzu/velero.git',
+    source   => 'https://github.com/vmware-tanzu/velero.git',
     revision => 'v1.8.1',
   }
-  exec { $command:
+  -> exec { $command:
     cwd      => '/var/tmp',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,

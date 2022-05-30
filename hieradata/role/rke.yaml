@@ -9,6 +9,7 @@ classes:
   - "profile::core::kubecompletion"
   - "profile::core::ospl"
   - "profile::core::rke"
+  - "profile::core::velero"
 packages:
   - "ack"
   - "bash-completion"

@@ -4,4 +4,3 @@ network::interfaces_hash:
     bootproto: "dhcp"
     onboot: "yes"
     type: "Ethernet"
-    mtu: "9000"

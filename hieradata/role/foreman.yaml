@@ -264,6 +264,9 @@ profile::core::puppet_master::foreman_global_parameter:
   site:
     parameter_type: "string"
     value: "%{::site}"
+  fips_enabled:
+    parameter_type: "boolean"
+    value: true
 
 profile::core::systemd::dropin_file:
   50-MemoryLimit.conf:

@@ -172,7 +172,7 @@ puppet::server: true
 puppet::server::puppetserver_metrics: false  # disabled for performance
 puppet::server::puppetserver_profiler: false  # disabled for performance
 puppet::server_version: *server_version  # XXX does this do anything?
-puppet::version: "6.25.1"  # agent version
+puppet::version: "%{lookup('puppet_agent::package_version')}"  # agent version
 puppetdb::globals::version: "6.16.1"
 profile::core::yum::versionlock:
   0:puppetserver-6.17.1-1.el7.noarch:

@@ -37,6 +37,13 @@ dhcp::pools:
     range:
       - "139.229.160.1 139.229.160.99"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  it_gs:
+    network: "139.229.161.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.161.254"
+    range:
+      - "139.229.161.1 139.229.161.99"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   users:
     network: "139.229.162.0"
     mask: "255.255.255.128"

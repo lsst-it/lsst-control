@@ -87,6 +87,7 @@ shared_examples 'generic foreman' do
   it { is_expected.to contain_foreman_global_parameter('package_upgrade').with_value(true) }
   it { is_expected.to contain_foreman_global_parameter('selinux-mode').with_value('disabled') }
   it { is_expected.to contain_foreman_global_parameter('fips_enabled').with_value(true) }
+  it { is_expected.to contain_foreman_global_parameter('role').with_value('generic') }
 end
 
 describe 'foreman role' do

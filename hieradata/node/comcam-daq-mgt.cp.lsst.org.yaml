@@ -1,0 +1,25 @@
+---
+profile::ccs::daq_interface::hwaddr: "f8:f2:1e:82:a9:b0"
+profile::ccs::daq_interface::uuid: "757b897b-0721-44b6-86fc-be1d86d144cd"
+profile::ccs::daq_interface::was: "p2p1"
+profile::ccs::daq_interface::mode: "dhcp-server"
+
+network::interfaces_hash:
+  em1:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  # p2p1 -> lsst-daq -- 192.168.100.0/24
+  p2p2:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+
+hosts::host_entries:
+  "comcam-sm":
+    ip: "10.0.0.212"

@@ -53,12 +53,6 @@ nfs::nfs_exports_global:
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
       comcam-dc01.cp.lsst.org(ro,nohide,insecure,no_subtree_check,async,root_squash)
       comcam-vs01.cp.lsst.org(ro,nohide,insecure,no_subtree_check,async,root_squash)
-  /srv/nfs/dsl:
-    clients: >-
-      192.168.100.0/24(rw,no_subtree_check,all_squash,anongid=2660,insecure)
-  /srv/nfs/lsst-daq:
-    clients: >-
-      192.168.100.0/24(rw,no_subtree_check,all_squash,anongid=2660,insecure)
 
 nfs::client_enabled: true
 nfs::nfs_v4_client: false  # XXX disable v4 because of DAQ

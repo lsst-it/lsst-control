@@ -1,10 +1,5 @@
 ---
-#
-# This role is essentially <daq-mgmt role> + <profile::ccs::common profile>.
-# It should go away once comcam has a dedicated daq managment node.
-#
 classes:
-  - "dhcp"
   - "profile::ccs::common"
   - "profile::ccs::daq4"
   - "profile::ccs::daq_interface"
@@ -17,26 +12,5 @@ classes:
 
 profile::ccs::common::sysctls: false  # conflicts with lhn tuning
 profile::ccs::facts::daq: true
-# enable ntp server for DAQ
-chrony::port: 123
-chrony::queryhosts:
-  - "192.168.100/24"
-chrony::clientlog: true
-
-# dhcp for DAQ + clients
-dhcp::authoritative: true
-dhcp::interfaces:
-  - "lsst-daq"
-dhcp::bootp: true
-dhcp::logfacility: "local7"
-dhcp::pools:
-  daq_clients:
-    network: "192.168.100.0"
-    mask: "255.255.255.0"
-    range: "192.168.100.2 192.168.100.254"
-    pool_parameters:
-      - "ddns-update-style none"
-      - "default-lease-time -1"
-      - "max-lease-time -1"
 profile::ccs::krb5_token::user: "ccs-ipa"
 profile::ccs::krb5_token::uid: 72055

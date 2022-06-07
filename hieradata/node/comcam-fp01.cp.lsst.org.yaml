@@ -2,7 +2,7 @@
 profile::ccs::daq_interface::hwaddr: "b4:96:91:4d:d2:5c"
 profile::ccs::daq_interface::uuid: "995511a3-a10e-490d-b65e-c0e40fc3e233"
 profile::ccs::daq_interface::was: "p1p1"
-profile::ccs::daq_interface::mode: "dhcp-server"
+profile::ccs::daq_interface::mode: "dhcp-client"
 profile::core::nm_dispatch::interfaces:
   em1:
     - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
@@ -40,9 +40,6 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-hosts::host_entries:
-  "comcam-sm":
-    ip: "10.0.0.212"
 
 nfs::server_enabled: true
 nfs::server::nfs_v4: false  # XXX disable v4 style exports because of the DAQ

@@ -42,20 +42,19 @@ network::interfaces_hash:
     type: "Ethernet"
 
 nfs::server_enabled: true
-nfs::server::nfs_v4: false  # XXX disable v4 style exports because of the DAQ
-#nfs::nfs_v4_export_root_clients: >-
-#  %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-#  comcam-dc01.cp.lsst.org(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-#  comcam-vs01.cp.lsst.org(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+nfs::server::nfs_v4: true
+nfs::nfs_v4_export_root_clients: >-
+  %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  comcam-dc01.cp.lsst.org(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  comcam-vs01.cp.lsst.org(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
 nfs::nfs_exports_global:
   /ccs-data:
     clients: >-
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
       comcam-dc01.cp.lsst.org(ro,nohide,insecure,no_subtree_check,async,root_squash)
       comcam-vs01.cp.lsst.org(ro,nohide,insecure,no_subtree_check,async,root_squash)
-
 nfs::client_enabled: true
-nfs::nfs_v4_client: false  # XXX disable v4 because of DAQ
+nfs::nfs_v4_client: true
 nfs::client_mounts:
   /net/self/ccs-data:
     share: "/ccs-data"

@@ -15,11 +15,12 @@ describe 'comcam-fp role' do
           }
         end
 
-        let(:facts) {{ fqdn: self.class.description }}
+        let(:facts) { { fqdn: self.class.description } }
 
         it { is_expected.to compile.with_all_deps }
         it { is_expected.not_to contain_class('profile::core::sysctl::lhn') }
         it { is_expected.not_to contain_class('dhcp') }
+        it { is_expected.to contain_class('dhcp::disable') }
         it { is_expected.to contain_class('ccs_daq') }
 
         it do

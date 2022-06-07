@@ -1,6 +1,7 @@
 ---
 classes:
   - "ccs_daq"
+  - "dhcp::disable"
   - "profile::ccs::common"
   - "profile::ccs::daq_interface"
   - "profile::ccs::graphical"

@@ -1,5 +1,6 @@
 ---
 classes:
+  - "ccs_daq"
   - "dhcp"
   - "profile::ccs::daq_interface"
   - "profile::core::common"
@@ -12,6 +13,9 @@ packages:
   - "ckermit"
   - "minicom"
   - "setserial"
+
+
+ccs_daq::version: "R5-V3.2"
 
 # enable ntp server for DAQ
 chrony::port: 123

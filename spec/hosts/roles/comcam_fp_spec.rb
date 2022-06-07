@@ -18,9 +18,7 @@ describe 'comcam-fp role' do
         let(:facts) {{ fqdn: self.class.description }}
 
         it { is_expected.to compile.with_all_deps }
-
-        include_examples 'lhn sysctls'
-
+        it { is_expected.not_to contain_class('profile::core::sysctl::lhn') }
         it { is_expected.not_to contain_class('dhcp') }
 
         it do

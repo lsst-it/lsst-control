@@ -8,9 +8,7 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
-  - "profile::core::sysctl::lhn"
 
-profile::ccs::common::sysctls: false  # conflicts with lhn tuning
 profile::ccs::facts::daq: true
 profile::ccs::krb5_token::user: "ccs-ipa"
 profile::ccs::krb5_token::uid: 72055

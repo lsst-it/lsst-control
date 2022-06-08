@@ -33,3 +33,16 @@ dhcp::pools:
       - "ddns-update-style none"
       - "default-lease-time -1"
       - "max-lease-time -1"
+
+accounts::user_list:
+  rce: &daq_user
+    uid: 62002
+    gid: 62002
+    managehome: true
+    system: false
+    managevim: false
+    shell: "/sbin/nologin"
+  dsid:
+    <<: *daq_user
+    uid: 62003
+    gid: 62003

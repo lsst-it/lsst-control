@@ -19,6 +19,22 @@ shared_examples 'generic daq manager' do
       queryhosts: ['192.168/16'],
     )
   end
+
+  it do
+    is_expected.to contain_accounts__user('rce').with(
+      uid: '62002',
+      gid: '62002',
+      shell: '/sbin/nologin',
+    )
+  end
+
+  it do
+    is_expected.to contain_accounts__user('dsid').with(
+      uid: '62003',
+      gid: '62003',
+      shell: '/sbin/nologin',
+    )
+  end
 end
 
 shared_examples 'lsst-daq dhcp-server' do

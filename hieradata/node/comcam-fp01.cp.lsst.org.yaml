@@ -20,26 +20,17 @@ network::interfaces_hash:
     defroute: "yes"
     onboot: "yes"
     type: "Ethernet"
-  em2:  # comcam-sm
-    bootproto: "none"
-    defroute: "no"
-    ipaddress: "10.0.0.1"
-    ipv6init: "no"
-    netmask: "255.255.255.0"
-    onboot: "yes"
-    type: "Ethernet"
-  em3:  # not connected
+  em2: &not_connected
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-  em4:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  p1p2:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
+  em3:
+    <<: *not_connected
+  em4:
+    <<: *not_connected
+  # p2p1 -> lsst-daq -- 192.168.100.0/24
+  p1p2:
+    <<: *not_connected
 
 nfs::server_enabled: true
 nfs::server::nfs_v4: true

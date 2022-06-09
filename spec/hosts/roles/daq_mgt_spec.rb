@@ -122,5 +122,17 @@ describe 'daq-mgt role', :site do
         ensure: 'absent',
       )
     end
+
+    it do
+      is_expected.to contain_network__interface('em2').with(
+        bootproto: 'none',
+        defroute: 'no',
+        ipaddress: '10.0.0.1',
+        ipv6init: 'no',
+        netmask: '255.255.255.0',
+        onboot: 'yes',
+        type: 'Ethernet',
+      )
+    end
   end
 end

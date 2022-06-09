@@ -10,9 +10,13 @@ network::interfaces_hash:
     defroute: "yes"
     onboot: "yes"
     type: "Ethernet"
-  em2:  # not connected
+  em2:  # comcam-sm
     bootproto: "none"
-    onboot: "no"
+    defroute: "no"
+    ipaddress: "10.0.0.1"
+    ipv6init: "no"
+    netmask: "255.255.255.0"
+    onboot: "yes"
     type: "Ethernet"
   # p2p1 -> lsst-daq -- 192.168.100.0/24
   p2p2:  # not connected

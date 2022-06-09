@@ -35,6 +35,12 @@ shared_examples 'generic daq manager' do
       shell: '/sbin/nologin',
     )
   end
+
+  it 'enables NFS V2' do
+    is_expected.to contain_augeas('RPCNFSDARGS="-V 2"').with(
+      changes: 'set RPCNFSDARGS \'"-V 2"\'',
+    )
+  end
 end
 
 shared_examples 'lsst-daq dhcp-server' do

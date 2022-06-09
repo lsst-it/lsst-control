@@ -6,6 +6,7 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
+  - "profile::nfs::v2"
 
 packages:
   - "ckermit"

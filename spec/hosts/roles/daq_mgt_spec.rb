@@ -6,7 +6,8 @@ shared_examples 'generic daq manager' do
   it { is_expected.to contain_class('profile::core::common') }
   it { is_expected.to contain_class('hosts') }
   it { is_expected.to contain_class('nfs') }
-  it { is_expected.to contain_class('ccs_daq').with_version('R5-V3.2') }
+  it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V3.2') }
+  it { is_expected.to contain_class('daq::rptsdk').with_version('V3.5.3') }
 
   it do
     is_expected.to contain_class('dhcp').with(

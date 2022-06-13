@@ -10,6 +10,7 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
+  - "profile::daq::common"
   - "profile::nfs::v2"
 
 packages:

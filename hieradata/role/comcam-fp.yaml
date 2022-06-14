@@ -11,7 +11,6 @@ classes:
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
 
-ccs_daq::version: "R5-V0.6"
 profile::ccs::facts::daq: true
 profile::ccs::krb5_token::user: "ccs-ipa"
 profile::ccs::krb5_token::uid: 72055

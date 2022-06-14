@@ -11,3 +11,5 @@ ccs_monit::hwraid: false
 
 clustershell::groupmembers:
   all: {group: "all", member: "auxtel-fp01,auxtel-mcm"}
+
+daq::daqsdk::version: "R5-V0.6"

@@ -76,6 +76,16 @@ foreman::manage_user: true
 foreman::oauth_active: true
 #foreman::oauth_consumer_key:  # secret
 #foreman::oauth_consumer_secret:  # secret
+foreman::passenger: false  # use puma; param removed in theforman/foreman >= 17.0.0
+foreman::plugin::column_view::columns:
+  role:
+    title: "Role"
+    after: "name"
+    content: "params['role']"
+  cluster:
+    title: "Cluster"
+    after: "name"
+    content: "params['cluster']"
 foreman::plugin::tasks::automatic_cleanup: true
 foreman_proxy::base_url: "https://%{facts.fqdn}"
 foreman_proxy::bind_host: '*'

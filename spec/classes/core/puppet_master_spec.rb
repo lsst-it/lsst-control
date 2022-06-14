@@ -23,6 +23,7 @@ describe 'profile::core::puppet_master' do
   it { is_expected.to contain_foreman__cli__plugin('foreman_remote_execution') }
   it { is_expected.to contain_foreman__plugin('templates') }
   it { is_expected.to contain_foreman__cli__plugin('foreman_templates') }
+  it { is_expected.to contain_foreman__plugin('column_view') }
 
   context 'with foreman_hostgroup param' do
     let(:params) do

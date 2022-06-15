@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 shared_examples 'generic comcam-fp' do
-  it { is_expected.to compile.with_all_deps }
+  include_examples 'lsst-daq sysctls'
   it { is_expected.not_to contain_class('profile::core::sysctl::lhn') }
   it { is_expected.not_to contain_class('dhcp') }
   it { is_expected.to contain_class('dhcp::disable') }

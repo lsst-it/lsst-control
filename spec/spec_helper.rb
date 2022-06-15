@@ -170,4 +170,16 @@ shared_examples 'archiver', :archiver do
   end
 end
 
+shared_examples 'lsst-daq sysctls' do
+  it do
+    is_expected.to contain_sysctl__value('net.core.rmem_max')
+      .with_value(18_874_368)
+  end
+
+  it do
+    is_expected.to contain_sysctl__value('net.core.wmem_max')
+      .with_value(18_874_368)
+  end
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

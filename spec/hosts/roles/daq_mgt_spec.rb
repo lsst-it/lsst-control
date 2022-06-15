@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 shared_examples 'generic daq manager' do
+  include_examples 'lsst-daq sysctls'
+
   it { is_expected.to contain_class('profile::core::common') }
   it { is_expected.to contain_class('hosts') }
   it { is_expected.to contain_class('nfs') }

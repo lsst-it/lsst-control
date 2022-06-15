@@ -11,6 +11,7 @@ classes:
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
   - "profile::daq::common"
+  - "profile::daq::sysctl"
   - "profile::nfs::v2"
 
 packages:

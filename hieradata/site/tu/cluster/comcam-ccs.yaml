@@ -11,3 +11,5 @@ ccs_monit::hwraid: false
 
 clustershell::groupmembers:
   all: {group: "all", member: "comcam-dc01,comcam-fp01,comcam-mcm"}
+
+daq::daqsdk::version: "R5-V3.2"

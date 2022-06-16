@@ -1,12 +1,13 @@
+# XXX rename to auxtel-mcm
 ---
 classes:
   - "ccs_sal"
   - "profile::ccs::common"
-  - "profile::ccs::daq_interface"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
+  - "profile::daq::daq_interface"
 
 nfs::client_enabled: true
 

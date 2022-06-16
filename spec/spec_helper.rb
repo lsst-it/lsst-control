@@ -182,4 +182,14 @@ shared_examples 'lsst-daq sysctls' do
   end
 end
 
+shared_examples 'lsst-daq client' do
+  include_examples 'lsst-daq sysctls'
+
+  it do
+    is_expected.to contain_network__interface('lsst-daq').with(
+      bootproto: 'dhcp',
+    )
+  end
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

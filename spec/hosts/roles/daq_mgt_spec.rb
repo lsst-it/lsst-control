@@ -69,19 +69,7 @@ describe 'daq-mgt role' do
     }
   end
 
-  lsst_sites.each do |site|
-    context "with site #{site}", :site do
-      let(:node_params) do
-        super().merge(
-          site: site,
-        )
-      end
-
-      it { is_expected.to compile.with_all_deps }
-
-      include_examples 'generic daq manager'
-    end
-  end # site
+  let(:facts) { { fqdn: self.class.description } }
 
   # XXX is it wrong to tie role and host specific details together?  This may
   # cause grief when refactoring in the future but it is also the only way to
@@ -89,7 +77,6 @@ describe 'daq-mgt role' do
   # would be to construct an alternate hiera hierarchy for testing each role
   # with synthetic node data.
   describe 'auxtel-daq-mgt.cp.lsst.org', :site do
-    let(:facts) { { fqdn: self.class.description } }
     let(:node_params) do
       super().merge(
         site: 'cp',
@@ -113,7 +100,6 @@ describe 'daq-mgt role' do
   end
 
   describe 'daq-mgt.tu.lsst.org', :site do
-    let(:facts) { { fqdn: self.class.description } }
     let(:node_params) do
       super().merge(
         site: 'tu',
@@ -127,7 +113,6 @@ describe 'daq-mgt role' do
   end
 
   describe 'comcam-daq-mgt.cp.lsst.org', :site do
-    let(:facts) { { fqdn: self.class.description } }
     let(:node_params) do
       super().merge(
         site: 'cp',

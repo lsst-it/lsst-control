@@ -1,12 +1,14 @@
+# XXX rename to auxtel-fp
 ---
 classes:
   - "profile::ccs::common"
-  - "profile::ccs::daq_interface"
   - "profile::ccs::krb5_token"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
+  - "profile::daq::daq_interface"
 
+profile::ccs::facts::daq: true
 profile::ccs::krb5_token::user: "ccs-ipa"
 profile::ccs::krb5_token::uid: 72055

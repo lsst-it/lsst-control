@@ -3,17 +3,11 @@
 require 'spec_helper'
 
 shared_examples 'generic comcam-fp' do
-  include_examples 'lsst-daq sysctls'
+  include_examples 'lsst-daq client'
   it { is_expected.not_to contain_class('profile::core::sysctl::lhn') }
   it { is_expected.not_to contain_class('dhcp') }
   it { is_expected.to contain_class('dhcp::disable') }
   it { is_expected.to contain_class('ccs_daq') }
-
-  it do
-    is_expected.to contain_class('profile::ccs::daq_interface').with(
-      mode: 'dhcp-client',
-    )
-  end
 end
 
 describe 'comcam-fp role' do
@@ -25,14 +19,14 @@ describe 'comcam-fp role' do
     }
   end
 
+  let(:facts) { { fqdn: self.class.description } }
+
   describe 'comcam-fp01.cp.lsst.org', :site do
     let(:node_params) do
       super().merge(
         site: 'cp',
       )
     end
-
-    let(:facts) { { fqdn: self.class.description } }
 
     it { is_expected.to compile.with_all_deps }
 
@@ -47,8 +41,6 @@ describe 'comcam-fp role' do
         site: 'tu',
       )
     end
-
-    let(:facts) { { fqdn: self.class.description } }
 
     it { is_expected.to compile.with_all_deps }
 

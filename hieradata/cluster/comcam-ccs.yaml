@@ -168,3 +168,4 @@ ccs_software::installations:
       - "puppet-2.3.3"
 
 profile::icinga::agent::host_template: "ComCamHostTemplate"
+daq::daqsdk::purge: false

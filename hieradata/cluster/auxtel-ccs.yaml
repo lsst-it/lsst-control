@@ -147,3 +147,5 @@ ccs_sal::rpms:
   ts_sal_utils: "ts_sal_utils-6.1.0-1.x86_64.rpm"
 ccs_sal::rpms_private:
   OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"
+
+daq::daqsdk::purge: false

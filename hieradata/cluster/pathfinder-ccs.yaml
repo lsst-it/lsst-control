@@ -101,3 +101,5 @@ ccs_software::installations:
       - "puppet-pathfinder-1.0.2"
       ## Disabled 20210316 to avoid clobbering local link on comcam-lion01.
       #      - "pathfinder-prod"
+
+daq::daqsdk::purge: false

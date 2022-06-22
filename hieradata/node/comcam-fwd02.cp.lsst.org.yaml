@@ -1,8 +1,8 @@
 ---
-profile::ccs::daq_interface::hwaddr: "f8:f2:1e:56:95:f0"
-profile::ccs::daq_interface::uuid: "b92aa237-1b70-4a2b-9bbb-da15a3f0e599"
-profile::ccs::daq_interface::was: "p2p1"
-profile::ccs::daq_interface::mode: "dhcp-client"
+profile::daq::daq_interface::hwaddr: "f8:f2:1e:56:95:f0"
+profile::daq::daq_interface::uuid: "b92aa237-1b70-4a2b-9bbb-da15a3f0e599"
+profile::daq::daq_interface::was: "p2p1"
+profile::daq::daq_interface::mode: "dhcp-client"
 profile::core::nm_dispatch::interfaces:
   em1:
     - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"

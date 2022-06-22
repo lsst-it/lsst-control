@@ -2,23 +2,50 @@
 
 require 'spec_helper'
 
-describe 'test1.dev.lsst.org', :site do
-  describe 'comcam-fp role' do
-    lsst_sites.each do |site|
-      context "with site #{site}" do
-        let(:node_params) do
-          {
-            site: site,
-            role: 'comcam-fp',
-            cluster: 'comcam-ccs',
-            ipa_force_join: false, # easy_ipa
-          }
-        end
-
-        it { is_expected.to compile.with_all_deps }
-
-        include_examples 'lhn sysctls'
-      end
-    end # site
-  end # role
+shared_examples 'generic comcam-fp' do
+  include_examples 'lsst-daq client'
+  it { is_expected.not_to contain_class('profile::core::sysctl::lhn') }
+  it { is_expected.not_to contain_class('dhcp') }
+  it { is_expected.to contain_class('dhcp::disable') }
+  it { is_expected.to contain_class('ccs_daq') }
 end
+
+describe 'comcam-fp role' do
+  let(:node_params) do
+    {
+      role: 'comcam-fp',
+      cluster: 'comcam-ccs',
+      ipa_force_join: false, # easy_ipa
+    }
+  end
+
+  let(:facts) { { fqdn: self.class.description } }
+
+  describe 'comcam-fp01.cp.lsst.org', :site do
+    let(:node_params) do
+      super().merge(
+        site: 'cp',
+      )
+    end
+
+    it { is_expected.to compile.with_all_deps }
+
+    include_examples 'generic comcam-fp'
+
+    it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V3.2') }
+  end # host
+
+  describe 'comcam-fp01.tu.lsst.org', :site do
+    let(:node_params) do
+      super().merge(
+        site: 'tu',
+      )
+    end
+
+    it { is_expected.to compile.with_all_deps }
+
+    include_examples 'generic comcam-fp'
+
+    it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V3.2') }
+  end # host
+end # role

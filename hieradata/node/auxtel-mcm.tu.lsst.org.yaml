@@ -1,8 +1,8 @@
 ---
-profile::ccs::daq_interface::hwaddr: "40:a6:b7:20:4c:1c"
-profile::ccs::daq_interface::uuid: "ff897057-3958-47f7-bfe0-a2579288aebf"
-profile::ccs::daq_interface::was: "p2p1"
-profile::ccs::daq_interface::mode: "dhcp-client"
+profile::daq::daq_interface::hwaddr: "40:a6:b7:20:4c:1c"
+profile::daq::daq_interface::uuid: "ff897057-3958-47f7-bfe0-a2579288aebf"
+profile::daq::daq_interface::was: "p2p1"
+profile::daq::daq_interface::mode: "dhcp-client"
 ccs_software::hostname: "atsccs1"
 
 network::interfaces_hash:

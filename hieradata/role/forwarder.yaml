@@ -8,12 +8,12 @@
 ---
 classes:
   - "profile::archive::forwarder"
-  - "profile::ccs::daq_interface"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::docker"
   - "profile::core::docker::prune"
   - "profile::core::sysctl::lhn"
+  - "profile::daq::daq_interface"
   - "python"
 
 # install docker-compose at system level

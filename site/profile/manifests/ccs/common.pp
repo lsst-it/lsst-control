@@ -16,7 +16,7 @@ class profile::ccs::common (
   include profile::ccs::profile_d
 
   if ($sysctls) {
-    include profile::ccs::sysctl
+    include profile::daq::sysctl
   }
 
   include ccs_software

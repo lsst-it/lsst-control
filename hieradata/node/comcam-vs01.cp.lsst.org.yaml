@@ -1,6 +1,6 @@
 ---
 nfs::client_enabled: true
-nfs::nfs_v4_client: false  # XXX disable v4 because of DAQ
+nfs::nfs_v4_client: true
 nfs::client_mounts:
   /net/ccs-data:
     share: "/ccs-data"

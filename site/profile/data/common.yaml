@@ -171,10 +171,10 @@ profile::core::sysctl::lhn::sysctls:
     value: "fq"
     target: *tcpip
 
-profile::ccs::sysctl::sysctls:
+profile::daq::sysctl::sysctls:
   net.core.rmem_max:
     value: 18874368
-    target: &daqccs "/etc/sysctl.d/99-lsst-daq-ccs.conf"
+    target: &daqccs "/etc/sysctl.d/99-lsst-daq.conf"
   net.core.wmem_max:
     value: 18874368
     target: *daqccs

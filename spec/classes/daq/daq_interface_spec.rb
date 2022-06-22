@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'profile::ccs::daq_interface' do
+describe 'profile::daq::daq_interface' do
   let(:facts) do
     {
       architecture: 'x86_64',

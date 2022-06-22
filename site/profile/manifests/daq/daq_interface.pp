@@ -18,7 +18,7 @@
 # instead of resorting to conditional logic in a profile.  The main reason to
 # centralize it is to make it easier to change the rx/tx/etc. settings on all
 # hosts with a DAQ interface.
-class profile::ccs::daq_interface (
+class profile::daq::daq_interface (
   Optional[String] $hwaddr                           = undef,
   Optional[String] $uuid                             = undef,
   Optional[String] $was                              = undef,

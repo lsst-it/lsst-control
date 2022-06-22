@@ -1,11 +1,18 @@
 ---
 classes:
+  - "daq::daqsdk"
+  - "daq::rptsdk"
+  - "daq::service::dsid"
+  - "daq::service::rce"
   - "dhcp"
-  - "profile::ccs::daq_interface"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
+  - "profile::daq::common"
+  - "profile::daq::daq_interface"
+  - "profile::daq::sysctl"
+  - "profile::nfs::v2"
 
 packages:
   - "ckermit"
@@ -17,6 +24,9 @@ chrony::port: 123
 chrony::queryhosts:
   - "192.168/16"
 chrony::clientlog: true
+
+daq::daqsdk::version: "R5-V3.2"
+daq::rptsdk::version: "V3.5.3"
 
 # dhcp for DAQ + clients
 dhcp::authoritative: true
@@ -33,3 +43,16 @@ dhcp::pools:
       - "ddns-update-style none"
       - "default-lease-time -1"
       - "max-lease-time -1"
+
+accounts::user_list:
+  rce: &daq_user
+    uid: 62002
+    gid: 62002
+    managehome: true
+    system: false
+    managevim: false
+    shell: "/sbin/nologin"
+  dsid:
+    <<: *daq_user
+    uid: 62003
+    gid: 62003

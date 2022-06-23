@@ -1,0 +1,4 @@
+---
+dhcp::dnsdomain: []  # ignore site value & mod default
+dhcp::nameservers: ~  # ignore site value
+dhcp::ntpservers: ~  # ignore site value

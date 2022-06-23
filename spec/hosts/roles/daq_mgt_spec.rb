@@ -13,7 +13,10 @@ shared_examples 'generic daq manager' do
 
   it do
     is_expected.to contain_class('dhcp').with(
+      dnsdomain: [],
       interfaces: ['lsst-daq'],
+      nameservers: [],
+      ntpservers: [],
     )
   end
 

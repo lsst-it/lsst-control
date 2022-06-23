@@ -102,7 +102,8 @@ ssh::server::match_block:
     <<: *authorized_keys
   jhoblitt_b:
     <<: *authorized_keys
-
+  cbarria_b:
+    <<: *authorized_keys
 # easy_ipa server options
 # defines the uid/gid of the admin user
 # needs to be coordinated between master + replicas
@@ -180,6 +181,12 @@ accounts::user_list:
     purge_sshkeys: true
     sshkeys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCn8ssc5uxsHRdhvykrrQWiDMLzpjH/GC2011SyQBpBS43grDpxpGXXSL28LTMRxw3TZhAL4F1szLWR0O7kmKwTcK5OyF/7X/qvZ+w8ZtOxIU/FsSWEXbG2wrkX7fT+SvF/1WS97cu/EacjmFdQUQyYwPcF3MvmBMp3Hk1eSgJA97I7dUiUJjPda2iNFCnaTW9yJIUYfBPvXeO2FePzCUp8ImBZSkst/VLMTrTQ9DFB+Aj0E8npet8JFn2pUxG198yS2MH7tr3s9XKCUcpUXqySQNwIbtNsEKXljpxpQ3ftcaxo3fw0tgjdBr5BDjrBXbVsw+eVz3vwT7GvGHCGTeDP hreinking@NBB40230-1-A.local"
+  cbarria_b:  # backup access in case LDAP fails
+    groups:
+      - "wheel_b"
+    purge_sshkeys: true
+    sshkeys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6Iv2NrQicUm7IHkglP1LM8aetFx68efqeNbLVnxCvoPZf9kx+EDiqpReFHjxLMJ9LvH/z4+9uYDTumdO9kzKwJwFFQ9vIt3nhekZ50fS3Wv8/21nZBPwzupdmFdJLiuiU7fjaHcSPIK2er53MISGq1Zgo50zk3EpzyGfDqWDhNsGLHehBeCADCK4euSUcXbGuQTbKcucaZKD/RMUzcM+7C5gi7290ie+K3ksO4vYeRPYIQtcXXZsP8fnIH4IJ+ZKvBVqceJJGifsyM4NqF8bGXZPPIqehbJFUUdnRy071HpvO7VQo3O0QVq6ewKje3EVBQYFcBzc9ZswDnstINNnL cbarria@foreman.dev.lsst.org"
   lssttech: &rm_user
     ensure: "absent"
     managehome: true

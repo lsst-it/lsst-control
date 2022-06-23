@@ -65,6 +65,17 @@ class profile::core::puppet_master (
     ensure_resources('foreman_global_parameter', $foreman_global_parameter)
   }
 
+  # kickstart wants a comma-serparated list without spaces of ntp servers.
+  # hiera interpolation always returns a string. A direct lookup() is the only option to
+  # stay DRY.
+  $ntpservers = lookup('dhcp::ntpservers', Array[String], undef, [])
+  if $ntpservers {
+    foreman_global_parameter { 'ntp-server':
+      parameter_type => 'string',
+      value          => join($ntpservers, ','),
+    }
+  }
+
   Class['r10k::webhook::config'] -> Class['r10k::webhook']
 
   # el7 systemd is too old to support periodic graceful restarts of a service unit.

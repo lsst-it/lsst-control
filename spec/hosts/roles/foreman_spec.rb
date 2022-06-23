@@ -88,6 +88,13 @@ shared_examples 'generic foreman' do
   it { is_expected.to contain_foreman_global_parameter('selinux-mode').with_value('disabled') }
   it { is_expected.to contain_foreman_global_parameter('fips_enabled').with_value(true) }
   it { is_expected.to contain_foreman_global_parameter('role').with_value('generic') }
+
+  it do
+    is_expected.to contain_foreman_global_parameter('ntp-server')
+      .with_value(ntpservers.join(','))
+  end
+
+  it { is_expected.to contain_class('dhcp').with_ntpservers(ntpservers) }
 end
 
 describe 'foreman role' do
@@ -102,6 +109,14 @@ describe 'foreman role' do
 
   describe 'foreman.dev.lsst.org', :site, :common do
     let(:site) { 'dev' }
+    let(:ntpservers) do
+      %w[
+        ntp.shoa.cl
+        ntp.cp.lsst.org
+        1.cl.pool.ntp.org
+        1.south-america.pool.ntp.org
+      ]
+    end
 
     it { is_expected.to compile.with_all_deps }
 
@@ -112,6 +127,13 @@ describe 'foreman role' do
 
   describe 'foreman.tu.lsst.org', :site, :common do
     let(:site) { 'tu' }
+    let(:ntpservers) do
+      %w[
+        140.252.1.140
+        140.252.1.141
+        140.252.1.142
+      ]
+    end
 
     it { is_expected.to compile.with_all_deps }
 
@@ -122,6 +144,14 @@ describe 'foreman role' do
 
   describe 'foreman.ls.lsst.org', :site, :common do
     let(:site) { 'ls' }
+    let(:ntpservers) do
+      %w[
+        ntp.shoa.cl
+        ntp.cp.lsst.org
+        1.cl.pool.ntp.org
+        1.south-america.pool.ntp.org
+      ]
+    end
 
     it { is_expected.to compile.with_all_deps }
 
@@ -132,6 +162,14 @@ describe 'foreman role' do
 
   describe 'foreman.cp.lsst.org', :site, :common do
     let(:site) { 'cp' }
+    let(:ntpservers) do
+      %w[
+        ntp.cp.lsst.org
+        ntp.shoa.cl
+        1.cl.pool.ntp.org
+        1.south-america.pool.ntp.org
+      ]
+    end
 
     it { is_expected.to compile.with_all_deps }
 

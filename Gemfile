@@ -10,6 +10,7 @@ group :test do
 
   gem 'puppet-lint-legacy_facts-check', '~> 1.0.4',            require: false
   gem 'puppet-lint-no_erb_template-check', '~> 1.0.0',         require: false
+  gem 'puppet-lint-optional_default-check',                    require: false
   gem 'puppet-lint-package_ensure-check', '~> 0.2.0',          require: false
   gem 'puppet-lint-resource_reference_syntax', '~> 1.1.0',     require: false
   gem 'puppet-lint-strict_indent-check', '~> 2.0.8',           require: false

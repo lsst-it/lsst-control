@@ -95,6 +95,28 @@ shared_examples 'generic foreman' do
   end
 
   it { is_expected.to contain_class('dhcp').with_ntpservers(ntpservers) }
+
+  it { is_expected.to contain_foreman_config_entry('template_sync_branch').with_value(site) }
+  it { is_expected.to contain_foreman_global_parameter('site').with_value(site) }
+  it { is_expected.to contain_foreman_hostgroup(site) }
+
+  {
+    template_sync_associate: 'always',
+    template_sync_commit_msg: 'Templates export made by a Foreman user',
+    template_sync_dirname: '/',
+    template_sync_filter: '',
+    template_sync_force: true,
+    template_sync_lock: 'keep',
+    template_sync_metadata_export_mode: 'refresh',
+    template_sync_negate: false,
+    template_sync_prefix: '',
+    template_sync_repo: 'ssh://git@github.com/lsst-it/foreman_templates',
+    template_sync_verbose: true,
+  }.each do |k, v|
+    it { is_expected.to contain_foreman_config_entry(k).with_value(v) }
+  end
+
+  it { is_expected.to contain_foreman_config_entry('template_sync_branch').with_value(site) }
 end
 
 describe 'foreman role' do

@@ -234,6 +234,19 @@ profile::core::puppet_master::foreman_config:
   idle_timeout: {value: 7200}  # session timeout in minutes
   matchers_inheritance: {value: false}
   update_hostgroup_from_facts: {value: false}
+  template_sync_associate: {value: "always"}
+  template_sync_branch: {value: "%{::site}"}
+  template_sync_commit_msg: {value: "Templates export made by a Foreman user"}
+  template_sync_dirname: {value: "/"}
+  template_sync_filter: {value: ""}
+  template_sync_force: {value: true}
+  template_sync_lock: {value: "keep"}
+  template_sync_metadata_export_mode: {value: "refresh"}
+  template_sync_negate: {value: false}
+  template_sync_prefix: {value: ""}
+  template_sync_repo: {value: "ssh://git@github.com/lsst-it/foreman_templates"}
+  template_sync_verbose: {value: true}
+
 profile::core::puppet_master::foreman_global_parameter:
   bootloader-append:
     parameter_type: "string"

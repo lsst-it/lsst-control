@@ -17,4 +17,6 @@ describe 'profile::core::puppet_master' do
 
   it { is_expected.to contain_foreman__plugin('puppet') }
   it { is_expected.to contain_foreman__cli__plugin('foreman_puppet') }
+  it { is_expected.to contain_foreman__plugin('remote_execution') }
+  it { is_expected.to contain_foreman__cli__plugin('foreman_remote_execution') }
 end

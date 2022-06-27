@@ -217,6 +217,10 @@ ssh::client_match_block:
     type: "!localuser"
     options:
       ProxyCommand: "/usr/bin/sss_ssh_knownhostsproxy -p %p %h"
+  "github.com":
+    type: "host"
+    options:
+      StrictHostKeyChecking: "no"  # el7 does not support "accept-new"
 
 profile::core::puppet_master::foreman_config:
   destroy_vm_on_host_delete: {value: false}

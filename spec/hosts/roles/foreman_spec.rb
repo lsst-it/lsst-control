@@ -75,6 +75,17 @@ shared_examples 'generic foreman' do
     )
   end
 
+  it 'disables StrictHostKeyChecking for github.com' do
+    expect(catalogue.resource('class', 'ssh')[:client_match_block]).to include(
+      'github.com' => {
+        'type' => 'host',
+        'options' => {
+          'StrictHostKeyChecking' => 'no',
+        },
+      },
+    )
+  end
+
   it { is_expected.to contain_foreman_config_entry('host_details_ui').with_value(false) }
 
   it { is_expected.to contain_foreman_global_parameter('bootloader-append').with_value('nofb') }

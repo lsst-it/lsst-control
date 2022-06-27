@@ -243,4 +243,8 @@ shared_examples 'daq common' do
   end
 end
 
+shared_examples 'debugutils' do
+  it { is_expected.to contain_package('jq') }
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

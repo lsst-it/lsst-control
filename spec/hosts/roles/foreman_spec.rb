@@ -21,6 +21,8 @@ describe 'test1.dev.lsst.org', :site do
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('profile::core::puppet_master') }
 
+        include_examples 'debugutils'
+
         it do
           is_expected.to contain_class('foreman').with(
             version: FOREMAN_VERSION,

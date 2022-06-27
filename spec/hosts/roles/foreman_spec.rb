@@ -106,7 +106,7 @@ shared_examples 'generic foreman' do
     template_sync_dirname: '/',
     template_sync_filter: '',
     template_sync_force: true,
-    template_sync_lock: 'keep',
+    template_sync_lock: 'unlock',
     template_sync_metadata_export_mode: 'refresh',
     template_sync_negate: false,
     template_sync_prefix: '',

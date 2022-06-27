@@ -240,7 +240,7 @@ profile::core::puppet_master::foreman_config:
   template_sync_dirname: {value: "/"}
   template_sync_filter: {value: ""}
   template_sync_force: {value: true}
-  template_sync_lock: {value: "keep"}
+  template_sync_lock: {value: "unlock"}
   template_sync_metadata_export_mode: {value: "refresh"}
   template_sync_negate: {value: false}
   template_sync_prefix: {value: ""}

@@ -53,6 +53,8 @@ class profile::core::puppet_master (
     include puppet::server::puppetdb
   }
 
+  Yum::Versionlock<| |> -> Class[foreman]
+
   if $foreman_config {
     ensure_resources('foreman_config_entry', $foreman_config)
   }

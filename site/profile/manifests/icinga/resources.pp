@@ -153,12 +153,12 @@ class profile::icinga::resources (
     "http,${tls_svc_template_name},1,http_certificate,30",
     "ntp_time,${ntp_svc_template_name},1,ntp_address,ntp.shoa.cl",
     "ldap,${ipa_svc_template_name},2",
-    "disk,${disk_svc_template_name},3,disk_cfree,3%,disk_wfree,6%",
     "procs,${proc_svc_template_name},3,procs_warning,650,procs_critical,700",
     "swap,${swap_svc_template_name},3,users_cgreater,50,users_wgreater,40",
     "users,${user_svc_template_name},3,users_cgreater,50,users_wgreater,40",
     "ping,${lhn_svc_template_name},4,ping_address,starlight-dtn.ncsa.illinois.edu,ping_crta,250,ping_wrta,225",
     "mem,${ram_svc_template_name},4,mem_free,true,mem_warning,0.05,mem_critical,0.01",
+    "disk,${disk_svc_template_name},5,disk_cfree,3%,disk_wfree,6%,disk_ereg_path,.*,disk_ignore_ereg_path,^/var/lib/kubelet.*,disk_exclude_type,overlay,tmpfs,nsfs,sysfs,shm,debugfs,tracefs",
   ]
   #Host Services Array
   $host_services = [
@@ -429,6 +429,24 @@ class profile::icinga::resources (
         "zone": "master"
         }
         | TEMPLATE4
+    }
+    elsif ($value[2]=='5') {
+      $content = @("TEMPLATE5"/L)
+        {
+        "check_command": "${value[0]}",
+        "object_name": "${value[1]}",
+        "object_type": "template",
+        "use_agent": true,
+        "vars": {
+            "${value[3]}": "${value[4]}",
+            "${value[5]}": "${value[6]}",
+            "${value[7]}": "${value[8]}",
+            "${value[9]}": "${value[10]}",
+            "${value[11]}": ["${value[12]}","${value[13]}","${value[14]}","${value[15]}","${value[16]}","${value[17]}","${value[18]}"]
+        },
+        "zone": "master"
+        }
+        | TEMPLATE5
     }
     else {
       notice("No content has beeing assigned to ${value[1]}")

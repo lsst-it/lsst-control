@@ -158,7 +158,7 @@ class profile::icinga::resources (
     "users,${user_svc_template_name},3,users_cgreater,50,users_wgreater,40",
     "ping,${lhn_svc_template_name},4,ping_address,starlight-dtn.ncsa.illinois.edu,ping_crta,250,ping_wrta,225",
     "mem,${ram_svc_template_name},4,mem_free,true,mem_warning,0.05,mem_critical,0.01",
-    "disk,${disk_svc_template_name},5,disk_cfree,3%,disk_wfree,6%,ereg-path,.*,ignore_ereg_path,/var/lib/kubelet/pods/*,exclude-type,overlay,tmpfs,nsfs,sysfs,shm,debugfs,tracefs",
+    "disk,${disk_svc_template_name},5,disk_cfree,3%,disk_wfree,6%,disk_ereg_path,.*,disk_ignore_ereg_path,^/var/lib/kubelet.*,disk_exclude_type,overlay,tmpfs,nsfs,sysfs,shm,debugfs,tracefs",
   ]
   #Host Services Array
   $host_services = [

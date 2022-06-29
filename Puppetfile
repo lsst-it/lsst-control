@@ -94,7 +94,7 @@ mod 'puppet/yum', '5.3.1'
 mod 'qtechnologies/sysstat', '1.2.4'
 mod 'richardc/datacat', '0.6.2'
 mod 'saz/resolv_conf', '5.0.0'
-mod 'saz/ssh', '9.0.0'
+mod 'saz/ssh', git: 'https://github.com/lsst-it/saz-puppet-ssh', ref: '7f1a892'  # ssh::client::match_block
 mod 'saz/sudo', '7.0.2'
 mod 'saz/timezone', git: 'https://github.com/saz/puppet-timezone', ref: '6f1a8e1'  # stdlib https://github.com/saz/puppet-timezone/pull/103
 mod 'simp/dconf', '0.2.0'

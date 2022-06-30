@@ -7,9 +7,13 @@
 
 class profile::core::ipa_pwd_reset (
   String $keytab_base64,
+  String $secret_key,
+  String $ldap_user,
 ) {
   include ::redis
 
+  $keytab_path = '/opt/IPAPasswordReset'
+  $keytab_path_settings = "${keytab_path}/PasswordReset/PasswordReset"
   #  Install required packages
   $yum_packages = [
     'python2-pip',
@@ -18,11 +22,12 @@ class profile::core::ipa_pwd_reset (
   ]
 
   # Initialize Virtenv
-  $init_virtualenv = @(VIRTUALENV)
-    cd /opt/IPAPasswordReset/
+  $init_virtualenv = @("VIRTUALENV")
+    cd ${keytab_path}
     virtualenv --system-site-packages ./virtualenv
     . ./virtualenv/bin/activate
     pip install -r requirements.txt
+    systemctl daemon-reload
     | VIRTUALENV
 
   # HTTP Content
@@ -35,6 +40,13 @@ class profile::core::ipa_pwd_reset (
       ProxyPass "http://127.0.0.1:8000/reset/"
     </Location>
     | HTTP
+
+  #  Modify ldap-password-reset settings.py
+  $ldap_setting = @("SETTINGS")
+    sed 's/^SECRET_KEY/SECRET_KEY=\"${secret_key}\"/g' ${keytab_path_settings}/settings.py.example > ${keytab_path_settings}/temp.py
+    sed -i '174,197d' ${keytab_path_settings}/temp.py
+    sed -i '144,157d' ${keytab_path_settings}/temp.py
+    | SETTINGS
 
   #  Install packages
   package { $yum_packages:
@@ -50,25 +62,39 @@ class profile::core::ipa_pwd_reset (
   }
 
   #  Create folder, generate keytab and deploy virtenv
-  file { '/opt/IPAPasswordReset':
+  file { $keytab_path:
     ensure => directory
   }
-  -> vcsrepo { '/opt/IPAPasswordReset/':
+  -> vcsrepo { $keytab_path:
     ensure   => present,
     provider => git,
     source   => 'https://github.com/larrabee/freeipa-password-reset.git',
   }
-  -> file { '/opt/IPAPasswordReset/ldap-passwd-reset.keytab':
+  -> file { "/etc/systemd/system/${ldap_user}.service":
+    mode   => '0644',
+    owner  => 'root',
+    group  => 'root',
+    source => "file://${keytab_path}/service/${ldap_user}.service"
+  }
+  -> file { "${keytab_path}/${ldap_user}.keytab":
     ensure  => present,
     content => base64('decode', $keytab_base64),
     mode    => '0600',
-    owner   => 'ldap-passwd-reset',
-    group   => 'ldap-passwd-reset',
+    owner   => $ldap_user,
+    group   => $ldap_user,
   }
   -> exec { $init_virtualenv:
     cwd     => '/var/tmp/',
     path    => ['/sbin', '/usr/sbin', '/bin'],
-    onlyif  => ['test ! -f /opt/IPAPasswordReset/virtualenv/pip-selfcheck.json'],
+    onlyif  => ["test ! -d ${keytab_path}/virtualenv"],
     require => Package[$yum_packages],
+  }
+  -> service { "${ldap_user}.service":
+    ensure => 'running',
+  }
+  -> exec { $ldap_setting:
+    cwd    => '/var/tmp/',
+    path   => ['/sbin', '/usr/sbin', '/bin'],
+    onlyif => ["test ! -f  ${keytab_path_settings}/temp.py"],
   }
 }

@@ -20,7 +20,7 @@ class profile::core::ipa_pwd_reset (
   # Initialize Virtenv
   $init_virtualenv = @(VIRTUALENV)
     cd /opt/IPAPasswordReset/
-    virtualenv-3 --system-site-packages ./virtualenv
+    virtualenv --system-site-packages ./virtualenv
     . ./virtualenv/bin/activate
     pip install -r requirements.txt
     | VIRTUALENV
@@ -53,6 +53,11 @@ class profile::core::ipa_pwd_reset (
   file { '/opt/IPAPasswordReset':
     ensure => directory
   }
+  -> vcsrepo { '/opt/IPAPasswordReset/':
+    ensure   => present,
+    provider => git,
+    source   => 'https://github.com/larrabee/freeipa-password-reset.git',
+  }
   -> file { '/opt/IPAPasswordReset/ldap-passwd-reset.keytab':
     ensure  => present,
     content => base64('decode', $keytab_base64),
@@ -63,7 +68,7 @@ class profile::core::ipa_pwd_reset (
   -> exec { $init_virtualenv:
     cwd     => '/var/tmp/',
     path    => ['/sbin', '/usr/sbin', '/bin'],
-    onlyif  => ['test ! -d /opt/IPAPasswordReset/virtualenv'],
+    onlyif  => ['test ! -f /opt/IPAPasswordReset/virtualenv/pip-selfcheck.json'],
     require => Package[$yum_packages],
   }
 }

@@ -52,7 +52,6 @@ nfs::client_mounts:
     server: "%{facts.fqdn}"
     atboot: true
 
-ccs_monit::temp: true
 ccs_monit::ping_hosts:
   - "comcam-db01"
   - "comcam-dc01"

@@ -86,6 +86,17 @@ shared_examples 'generic foreman' do
     )
   end
 
+  it 'disables StrictHostKeyChecking for foreman user' do
+    expect(catalogue.resource('class', 'ssh')[:client_match_block]).to include(
+      'foreman' => {
+        'type' => 'localuser',
+        'options' => {
+          'StrictHostKeyChecking' => 'no',
+        },
+      },
+    )
+  end
+
   it { is_expected.to contain_foreman_config_entry('host_details_ui').with_value(false) }
 
   it { is_expected.to contain_foreman_global_parameter('bootloader-append').with_value('nofb') }

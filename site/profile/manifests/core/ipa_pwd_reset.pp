@@ -8,23 +8,48 @@
 class profile::core::ipa_pwd_reset (
   String $keytab_base64,
 ) {
+  include ::redis
 
+  #  Install required packages
   $yum_packages = [
     'python2-pip',
     'python-virtualenv',
     'git-core',
-    'redis',
   ]
-  # $init_virtualenv = @(VIRTUALENV)
-  #   cd /opt/IPAPasswordReset/
-  #   virtualenv-3 --system-site-packages ./virtualenv
-  #   . ./virtualenv/bin/activate
-  #   pip install -r requirements.txt
-  # | VIRTUALENV
 
+  # Initialize Virtenv
+  $init_virtualenv = @(VIRTUALENV)
+    cd /opt/IPAPasswordReset/
+    virtualenv-3 --system-site-packages ./virtualenv
+    . ./virtualenv/bin/activate
+    pip install -r requirements.txt
+    | VIRTUALENV
+
+  # HTTP Content
+  $ipa_reset_http = @(HTTP)
+    <Location "/reset">
+      RedirectMatch 301 ^/reset$ /reset/
+    </Location>
+
+    <Location "/reset/">
+      ProxyPass "http://127.0.0.1:8000/reset/"
+    </Location>
+    | HTTP
+
+  #  Install packages
   package { $yum_packages:
     ensure => 'present'
   }
+
+  #  Declare reset interface
+  file { '/etc/httpd/conf.d/ipa-password-reset.conf':
+    ensure  => present,
+    mode    => '0644',
+    content => $ipa_reset_http,
+    notify  => Service['httpd']
+  }
+
+  #  Create folder, generate keytab and deploy virtenv
   file { '/opt/IPAPasswordReset':
     ensure => directory
   }
@@ -35,10 +60,10 @@ class profile::core::ipa_pwd_reset (
     owner   => 'ldap-passwd-reset',
     group   => 'ldap-passwd-reset',
   }
-  # -> exec { $init_virtualenv:
-  #   cwd     => '/var/tmp/',
-  #   path    => ['/sbin', '/usr/sbin', '/bin'],
-  #   onlyif  => ['test ! -d /opt/IPAPasswordReset/virtualenv'],
-  #   require => Packages[$yum_packages],
-  # }
+  -> exec { $init_virtualenv:
+    cwd     => '/var/tmp/',
+    path    => ['/sbin', '/usr/sbin', '/bin'],
+    onlyif  => ['test ! -d /opt/IPAPasswordReset/virtualenv'],
+    require => Package[$yum_packages],
+  }
 }

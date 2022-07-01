@@ -7,6 +7,7 @@ shared_examples 'generic daq manager' do
   include_examples 'lsst-daq sysctls'
   include_examples 'nfsv2 enabled'
   include_examples 'daq common'
+  include_examples 'daq nfs exports'
 
   it { is_expected.to contain_class('profile::core::common') }
   it { is_expected.to contain_class('hosts') }
@@ -141,7 +142,6 @@ describe 'daq-mgt role' do
     end
 
     include_examples 'generic daq manager'
-    include_examples 'daq nfs exports'
 
     it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }
   end
@@ -154,7 +154,6 @@ describe 'daq-mgt role' do
     end
 
     include_examples 'generic daq manager'
-    include_examples 'daq nfs exports'
 
     it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }
 

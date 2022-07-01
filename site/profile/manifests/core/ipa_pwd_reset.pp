@@ -53,7 +53,10 @@ class profile::core::ipa_pwd_reset (
 
   #  Modify ldap-password-reset settings.py
   $ldap_setting = @("SETTINGS")
+    #!/usr/bin/env bash
     sed 's/^SECRET_KEY.*/SECRET_KEY=\"${secret_key}\"/g' ${keytab_path_settings}/settings.py.example > ${keytab_path_settings}/settings.py
+    sed -i 's/^KEYTAB_PATH.*/KEYTAB_PATH=\"\/opt\/IPAPasswordReset\/ldap-passwd-reset.keytab\"/g' ${keytab_path_settings}/settings.py
+    sed -i 's/^TOKEN_LEN.*/TOKEN_LEN=10/g' ${keytab_path_settings}/settings.py
     sed -i '174,197d' ${keytab_path_settings}/settings.py
     sed -i '144,157d' ${keytab_path_settings}/settings.py
     sed -i 's/            "msg_template.*/            "msg_template": "Your one-time token is: {0} \\nDo not share the token with anyone. The token has a duration of 60min.\\n\\nBest RegardsnRubinObs IT",/g' ${keytab_path_settings}/settings.py
@@ -62,8 +65,8 @@ class profile::core::ipa_pwd_reset (
     sed -i 's/            "smtp_user.*/            "smtp_user": "ipa-passwd-reset@lsst.local",/g' ${keytab_path_settings}/settings.py
     sed -i 's/            "smtp_pass.*/            "smtp_pass": "${ldap_pwd}",/g' ${keytab_path_settings}/settings.py
     sed -i 's/            "smtp_server_addr.*/            "smtp_server_addr": "endeavour.lsst.org",/g' ${keytab_path_settings}/settings.py
-    sed -i 's/            "smtp_server_port.*/            "smtp_server_addr": 587,/g' ${keytab_path_settings}/settings.py
-    sed -i 's/            "smtp_server_tls.*/            "smtp_server_addr": True,/g' ${keytab_path_settings}/settings.py
+    sed -i 's/            "smtp_server_port.*/            "smtp_server_port": 587,/g' ${keytab_path_settings}/settings.py
+    sed -i 's/            "smtp_server_tls.*/            "smtp_server_tls": True,/g' ${keytab_path_settings}/settings.py
     sed -i 's/        "enabled.*/        "enabled": True,/g' ${keytab_path_settings}/settings.py
     | SETTINGS
 
@@ -98,6 +101,12 @@ class profile::core::ipa_pwd_reset (
     content => $ipa_reset_http,
     notify  => Service['httpd'],
   }
+  file { "${keytab_path}/settings_mod.sh":
+    ensure  => file,
+    mode    => '0755',
+    content => $ldap_setting,
+    require => File[$keytab_path],
+  }
 
   #  Create folder, generate keytab and deploy virtenv
   file { $keytab_path:
@@ -115,7 +124,7 @@ class profile::core::ipa_pwd_reset (
     loglevel => debug,
     require  => Package[$yum_packages],
   }
-  -> exec { $ldap_setting:
+  -> exec { "${keytab_path}/settings_mod.sh":
     cwd      => '/var/tmp/',
     path     => ['/sbin', '/usr/sbin', '/bin'],
     loglevel => debug,

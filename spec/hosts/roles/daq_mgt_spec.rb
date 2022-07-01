@@ -132,6 +132,18 @@ describe 'daq-mgt role' do
         },
       )
     end
+
+    it do
+      is_expected.to contain_network__interface('em2').with(
+        bootproto: 'none',
+        # defroute: 'no',
+        ipaddress: '192.168.101.1',
+        # ipv6init: 'no',
+        netmask: '255.255.255.0',
+        onboot: 'yes',
+        type: 'Ethernet',
+      )
+    end
   end
 
   describe 'daq-mgt.tu.lsst.org', :site do

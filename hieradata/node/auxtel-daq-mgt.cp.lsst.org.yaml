@@ -37,3 +37,27 @@ network::interfaces_hash:
 hosts::host_entries:
   "auxtel-sm":
     ip: "192.168.101.2"
+
+nfs::server_enabled: true
+nfs::server::nfs_v4: false  # XXX disable v4 style exports because of the DAQ
+nfs::nfs_exports_global:
+  /srv/nfs/dsl:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,crossmnt,no_subtree_check,all_squash,anongid=2660,insecure)
+      192.168.100.0/24(rw,nohide,crossmnt,no_subtree_check,all_squash,anongid=2660,insecure)
+  /srv/nfs/lsst-daq:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,crossmnt,no_subtree_check,all_squash,anongid=2660,insecure)
+      192.168.100.0/24(rw,nohide,crossmnt,no_subtree_check,all_squash,anongid=2660,insecure)
+
+nfs::client_enabled: true
+nfs::nfs_v4_client: false  # XXX disable v4 because of DAQ
+nfs::client_mounts:
+  /net/self/dsl:
+    share: "/srv/nfs/dsl"
+    server: "%{facts.fqdn}"
+    atboot: true
+  /net/self/lsst-daq:
+    share: "/srv/nfs/lsst-daq"
+    server: "%{facts.fqdn}"
+    atboot: true

@@ -192,4 +192,55 @@ shared_examples 'lsst-daq client' do
   end
 end
 
+shared_examples 'nfsv2 enabled' do
+  it 'enables NFS V2' do
+    is_expected.to contain_augeas('RPCNFSDARGS="-V 2"').with(
+      changes: 'set RPCNFSDARGS \'"-V 2"\'',
+    )
+  end
+end
+
+shared_examples 'daq common' do
+  %w[
+    /srv
+    /srv/nfs
+    /srv/nfs/dsl
+    /srv/nfs/lsst-daq
+    /srv/nfs/lsst-daq/daq-sdk
+  ].each do |f|
+    it do
+      is_expected.to contain_file(f).with(
+        ensure: 'directory',
+        owner: 'root',
+        group: 'root',
+        mode: '0755',
+      )
+    end
+  end
+
+  it do
+    is_expected.to contain_mount('/srv/nfs/lsst-daq/daq-sdk').with(
+      device: '/opt/lsst/daq-sdk',
+      fstype: 'none',
+      options: 'defaults,bind',
+    ).that_requires('File[/srv/nfs/lsst-daq/daq-sdk]')
+  end
+
+  it do
+    is_expected.to contain_mount('/srv/nfs/lsst-daq/rpt-sdk').with(
+      device: '/opt/lsst/rpt-sdk',
+      fstype: 'none',
+      options: 'defaults,bind',
+    ).that_requires('File[/srv/nfs/lsst-daq/rpt-sdk]')
+  end
+
+  it do
+    is_expected.to contain_mount('/srv/nfs/dsl').with(
+      device: '/opt/lsst/rpt-sdk',
+      fstype: 'none',
+      options: 'defaults,bind',
+    ).that_requires('File[/srv/nfs/dsl]')
+  end
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

@@ -6,6 +6,7 @@ shared_examples 'generic daq manager' do
   include_examples 'lsst-daq dhcp-server'
   include_examples 'lsst-daq sysctls'
   include_examples 'nfsv2 enabled'
+  include_examples 'daq common'
 
   it { is_expected.to contain_class('profile::core::common') }
   it { is_expected.to contain_class('hosts') }

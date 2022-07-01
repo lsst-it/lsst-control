@@ -5,6 +5,7 @@ class profile::daq::common {
   file { [
       '/srv',
       '/srv/nfs',
+      '/srv/nfs/dsl',
       '/srv/nfs/lsst-daq',
       '/srv/nfs/lsst-daq/daq-sdk',
     ]:
@@ -20,5 +21,13 @@ class profile::daq::common {
     fstype  => 'none',
     options => 'defaults,bind',
     require => File['/srv/nfs/lsst-daq/daq-sdk'],  # mount will autorequire the device
+  }
+
+  mount { '/srv/nfs/dsl':
+    ensure  => 'mounted',
+    device  => '/opt/lsst/rpt-sdk',
+    fstype  => 'none',
+    options => 'defaults,bind',
+    require => File['/srv/nfs/dsl'],  # mount will autorequire the device
   }
 }

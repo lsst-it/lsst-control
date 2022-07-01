@@ -89,33 +89,38 @@ class profile::core::ipa_pwd_reset (
     [Install]
     WantedBy=multi-user.target
     |SERVICE
+
   #  Install packages
   package { $yum_packages:
     ensure => 'present',
   }
 
-  #  Declare reset interface
-  file { '/etc/httpd/conf.d/ipa-password-reset.conf':
-    ensure  => file,
-    mode    => '0644',
-    content => $ipa_reset_http,
-    notify  => Service['httpd'],
-  }
-  file { "${keytab_path}/settings_mod.sh":
-    ensure  => file,
-    mode    => '0755',
-    content => $ldap_setting,
-    require => File[$keytab_path],
-  }
-
-  #  Create folder, generate keytab and deploy virtenv
-  file { $keytab_path:
-    ensure => directory,
-  }
-  -> vcsrepo { $keytab_path:
+  vcsrepo { "${keytab_path}/":
     ensure   => present,
     provider => git,
     source   => 'https://github.com/larrabee/freeipa-password-reset.git',
+  }
+  #  Create Keytab
+  file { "${keytab_path}/${ldap_user}.keytab":
+    ensure  => file,
+    content => base64('decode', $keytab_base64),
+    mode    => '0600',
+    owner   => $ldap_user,
+    group   => $ldap_user,
+  }
+  #  Script to modify settings.py
+  -> file { "${keytab_path}/settings_mod.sh":
+    ensure  => file,
+    mode    => '0755',
+    content => $ldap_setting,
+  }
+  #  Create ldap-passwd-reset service
+  -> file { "/etc/systemd/system/${ldap_user}.service":
+    ensure  => file,
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+    content => $ldap_service,
   }
   -> exec { $init_virtualenv:
     cwd      => '/var/tmp/',
@@ -138,22 +143,11 @@ class profile::core::ipa_pwd_reset (
     require => File["/etc/systemd/system/${ldap_user}.service"],
   }
 
-  #  Create ldap-passwd-reset service
-  file { "/etc/systemd/system/${ldap_user}.service":
+  #  Declare reset interface
+  file { '/etc/httpd/conf.d/ipa-password-reset.conf':
     ensure  => file,
     mode    => '0644',
-    owner   => 'root',
-    group   => 'root',
-    content => $ldap_service,
-    require => File[$keytab_path],
-  }
-  #  Create Keytab
-  file { "${keytab_path}/${ldap_user}.keytab":
-    ensure  => file,
-    content => base64('decode', $keytab_base64),
-    mode    => '0600',
-    owner   => $ldap_user,
-    group   => $ldap_user,
-    require => File[$keytab_path],
+    content => $ipa_reset_http,
+    notify  => Service['httpd'],
   }
 }

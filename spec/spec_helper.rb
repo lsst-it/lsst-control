@@ -227,6 +227,14 @@ shared_examples 'daq common' do
   end
 
   it do
+    is_expected.to contain_mount('/srv/nfs/lsst-daq/rpt-sdk').with(
+      device: '/opt/lsst/rpt-sdk',
+      fstype: 'none',
+      options: 'defaults,bind',
+    ).that_requires('File[/srv/nfs/lsst-daq/rpt-sdk]')
+  end
+
+  it do
     is_expected.to contain_mount('/srv/nfs/dsl').with(
       device: '/opt/lsst/rpt-sdk',
       fstype: 'none',

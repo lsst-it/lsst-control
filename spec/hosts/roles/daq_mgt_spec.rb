@@ -156,6 +156,28 @@ describe 'daq-mgt role' do
     include_examples 'generic daq manager'
 
     it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }
+
+    it do
+      is_expected.to contain_class('hosts').with(
+        host_entries: {
+          'tts-sm' => {
+            'ip' => '10.0.0.212',
+          },
+        },
+      )
+    end
+
+    it do
+      is_expected.to contain_network__interface('em4').with(
+        bootproto: 'none',
+        # defroute: 'no',
+        ipaddress: '10.0.0.1',
+        # ipv6init: 'no',
+        netmask: '255.255.255.0',
+        onboot: 'yes',
+        type: 'Ethernet',
+      )
+    end
   end
 
   describe 'comcam-daq-mgt.cp.lsst.org', :site do

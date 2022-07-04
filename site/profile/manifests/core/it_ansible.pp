@@ -18,9 +18,15 @@ class profile::core::it_ansible (
     chmod 644 ${ansible_path}/.ssh/known_hosts
     |KNOWN
 
-  $pip_packages = [
-    'ansible',
-  ]
+  $ansible_installation = @(ANSIBLE)
+    #!/usr/bin/bash
+    export PYTHONIOENCODING=utf8
+    export LC_ALL=en_US.UTF-8
+    python3 -m pip install --upgrade pip
+    sudo -u ansible_net python3 -m pip install --user ansible
+    sudo -u ansible_net python3 -m pip install --user paramiko
+    sudo -u ansible_net python3 -m pip install --user ansible-pylibssh
+    |ANSIBLE
 
   file { $ansible_path:
     ensure => directory,
@@ -68,8 +74,14 @@ class profile::core::it_ansible (
       onlyif => ["test ! -d ${ansible_path}/.ansible/collections/ansible_collections/${value[0]}/${value[1]}"],
     }
   }
-  package { $pip_packages:
-    ensure   => 'present',
-    provider => 'pip3',
+  file { "${ansible_path}/ansible_installation.sh":
+    ensure  => file,
+    content => $ansible_installation,
+    mode    => '0755',
+  }
+  -> exec { "${ansible_path}/ansible_installation.sh":
+    cwd    => '/var/tmp/',
+    path   => ['/sbin', '/usr/sbin', '/bin'],
+    unless => ['sudo -u ansible_net python3 -m pip list | grep ansible-core'],
   }
 }

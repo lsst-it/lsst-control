@@ -1,0 +1,14 @@
+---
+classes:
+  - "ansible"
+  - "profile::core::common"
+  - "profile::core::it_ansible"
+
+
+ansible::roles_path: '/opt/ansible_network/playbooks'
+ansible::timeout: 30
+ansible::log_path: '/var/log/ansible.log'
+ansible::private_key_file: '/opt/ansible_network/.ssh/id_rsa'
+ansible::remote_user: 'ansible_net'
+
+profile::core::common::manage_epel: false

@@ -5,3 +5,4 @@ classes:
 
 packages:
   - "git"
+  - "ansible"

@@ -48,6 +48,6 @@ class profile::core::it_ansible (
   -> file { '/etc/ansible/ansible.cfg':
     ensure => file,
     mode   => '0644',
-    source => "file://${ansible_repo}/playbook/ansible.cfg",
+    source => "file:///${ansible_repo}/playbooks/ansible.cfg",
   }
 }

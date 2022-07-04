@@ -21,7 +21,7 @@ class profile::core::it_ansible (
   vcsrepo { $ansible_repo:
     ensure   => present,
     provider => git,
-    source   => 'ssh://git@github.com:lsst-it/ansible_network.git',
+    source   => 'git@github.com:lsst-it/ansible_network.git',
     identity => "${ansible_path}/.ssh/id_rsa",
     require  => File["${ansible_path}/.ssh/id_rsa"],
   }

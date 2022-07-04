@@ -45,4 +45,9 @@ class profile::core::it_ansible (
     owner    => 'ansible_net',
     require  => File["${ansible_path}/.ssh/id_rsa"],
   }
+  -> file { '/etc/ansible/ansible.cfg':
+    ensure => file,
+    mode   => '0644',
+    source => "file://${ansible_repo}/playbook/ansible.cfg",
+  }
 }

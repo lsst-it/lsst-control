@@ -35,7 +35,6 @@ mod 'lsst/java_artisanal', '2.0.0'
 mod 'lsst/maven', '2.0.1'
 mod 'lsst/rke', '1.0.0'
 mod 'lsst/tuned', git: 'https://github.com/lsst-it/puppet-tuned', branch: 'production'  # https://github.com/CERIT-SC/puppet-tuned/pull/21
-mod 'otherskins/ansible', '2.0.2'
 mod 'puppet/alternatives', '4.0.0'
 mod 'puppet/archive', '6.0.2'
 mod 'puppet/chrony', '2.3.0'

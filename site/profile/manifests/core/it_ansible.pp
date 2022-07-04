@@ -17,6 +17,11 @@ class profile::core::it_ansible (
     chown ansible_net:ansible_net ${ansible_path}/.ssh/known_hosts
     chmod 644 ${ansible_path}/.ssh/known_hosts
     |KNOWN
+
+  $pip_packages = [
+    'ansible',
+  ]
+
   file { $ansible_path:
     ensure => directory,
     owner  => 'ansible_net',
@@ -62,5 +67,9 @@ class profile::core::it_ansible (
       path   => ['/sbin', '/usr/sbin', '/bin'],
       onlyif => ["test ! -d ${ansible_path}/.ansible/collections/ansible_collections/${value[0]}/${value[1]}"],
     }
+  }
+  package { $pip_packages:
+    ensure   => 'present',
+    provider => 'pip3',
   }
 }

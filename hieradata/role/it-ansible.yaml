@@ -2,7 +2,7 @@
 classes:
   - "profile::core::common"
   - "profile::core::it_ansible"
+  - "python"
 
 packages:
-  - "ansible"
   - "git"

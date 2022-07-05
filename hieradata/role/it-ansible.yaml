@@ -2,7 +2,14 @@
 classes:
   - "profile::core::common"
   - "profile::core::it_ansible"
-  - "python"
 
 packages:
   - "git"
+  - "rh-python38"
+  - "rh-python38-python-pip"
+  - "rh-python38-python-pip-wheel"
+  - "rh-python38-python-wheel-wheel"
+  - "rh-python38-python-pip"
+  - "rh-python38-python-pip"
+  - "rh-python38-python-pip"
+  - "rh-python38-python-pip"

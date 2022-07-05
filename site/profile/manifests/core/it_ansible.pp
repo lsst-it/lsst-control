@@ -12,26 +12,38 @@ class profile::core::it_ansible (
     'cisco,ios',
     'community,network',
   ]
+  $python38_bin = '/opt/rh/rh-python38/root/usr/bin/python3.8'
   $known_hosts = @("KNOWN")
     sudo -u ansible_net ssh-keyscan -t rsa github.com > ${ansible_path}/.ssh/known_hosts
     chown ansible_net:ansible_net ${ansible_path}/.ssh/known_hosts
     chmod 644 ${ansible_path}/.ssh/known_hosts
     |KNOWN
 
-  $ansible_installation = @(ANSIBLE)
+  $ansible_installation = @("ANSIBLE")
     #!/usr/bin/bash
     export PYTHONIOENCODING=utf8
     export LC_ALL=en_US.UTF-8
-    python3 -m pip install --upgrade pip
-    sudo -u ansible_net python3 -m pip install --user ansible
-    sudo -u ansible_net python3 -m pip install --user paramiko
-    sudo -u ansible_net python3 -m pip install --user ansible-pylibssh
+    scl enable rh-python38 bash
+    sudo -H -u ansible_net bash -c '${python38_bin} -m pip install --upgrade pip'
+    sudo -H -u ansible_net bash -c '${python38_bin} -m pip install --user ansible'
+    sudo -H -u ansible_net bash -c '${python38_bin} -m pip install --user paramiko'
+    sudo -H -u ansible_net bash -c '${python38_bin} -m pip install --user ansible-pylibssh'
     |ANSIBLE
+
+  $python38_content = @(PROFILE)
+    source /opt/rh/rh-python38/enable
+    export X_SCLS="`scl enable rh-python38 'echo $X_SCLS'`"
+    |PROFILE
 
   file { $ansible_path:
     ensure => directory,
     owner  => 'ansible_net',
     group  => 'ansible_net',
+  }
+  file { '/etc/profile.d/python38.sh':
+    ensure  => file,
+    mode    => '0644',
+    content => $python38_content,
   }
   file { "${ansible_path}/.ssh":
     ensure => directory,
@@ -82,6 +94,6 @@ class profile::core::it_ansible (
   -> exec { "${ansible_path}/ansible_installation.sh":
     cwd    => '/var/tmp/',
     path   => ['/sbin', '/usr/sbin', '/bin'],
-    unless => ['sudo -u ansible_net python3 -m pip list | grep ansible-core'],
+    unless => ["sudo -H -u ansible_net bash -c '${python38_bin} -m pip list | grep ansible-pylibssh'"],
   }
 }

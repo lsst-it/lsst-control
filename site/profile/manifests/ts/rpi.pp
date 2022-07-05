@@ -168,7 +168,8 @@ class profile::ts::rpi {
     dtoverlay=uart3
     dtoverlay=uart4
     gpio=11,17,18,23=op,dh
-    gpio=3,7,24=ip
+    gpio=7,24=ip
+    gpio=3=op
     | CONFIG
 
   $minicom_config = @(MINICOM)

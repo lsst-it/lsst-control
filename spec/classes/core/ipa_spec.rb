@@ -26,6 +26,6 @@ describe 'profile::core::ipa' do
       section: 'foo',
       setting: 'bar',
       value: 'baz',
-    )
+    ).that_requires('Class[easy_ipa]')
   end
 end

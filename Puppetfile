@@ -41,7 +41,7 @@ mod 'puppet/chrony', '2.3.0'
 mod 'puppet/cron', '3.0.0'
 mod 'puppet/epel', '4.1.0'
 mod 'puppet/extlib', '6.0.0'
-mod 'puppetfinland/easy_ipa', git: 'https://github.com/lsst-it/puppet-ipa', ref: 'production'  # https://github.com/Puppet-Finland/puppet-ipa/pull/32
+mod 'puppetfinland/easy_ipa', git: 'https://github.com/lsst-it/puppet-ipa', ref: 'lsst-2.3.0'  # https://github.com/Puppet-Finland/puppet-ipa/pull/32
 mod 'puppet/ipset', '2.1.0'
 mod 'puppetlabs/accounts', '7.1.1'
 mod 'puppetlabs/apache', '7.0.0'

@@ -7,6 +7,7 @@ class profile::core::it_ansible (
   include cron
 
   $ansible_path = '/opt/ansible'
+  $ansible_logs = "${ansible_path}/log"
   $ansible_repo = "${ansible_path}/ansible_network"
   $ansible_plugins = [
     'cisco,nxos',
@@ -39,8 +40,9 @@ class profile::core::it_ansible (
 
   $network_backup = @("BACKUP")
     #!/usr/bin/env bash
-    ansible-playbook -i ${ansible_repo}/playbooks/inventory_netdevices.yml ${ansible_repo}/playbooks/backup_netdevices.yml
-    ansible-playbook -i ${ansible_repo}/playbooks/inventory_pfsense.yml ${ansible_repo}/playbooks/backup_pfsense.yml
+    ansible-playbook -i ${ansible_repo}/playbooks/inventory_netdevices.yml ${ansible_repo}/playbooks/backup_netdevices.yml 2>&1 >${ansible_logs}/$(date "+%F-%H").log
+    ansible-playbook -i ${ansible_repo}/playbooks/inventory_pfsense.yml ${ansible_repo}/playbooks/backup_pfsense.yml 2>&1 >>${ansible_logs}/$(date "+%F-%H").log
+    find ${ansible_logs} -name "*.log" -type f -mtime +30 -delete
     |BACKUP
 
   file { $ansible_path:
@@ -111,6 +113,11 @@ class profile::core::it_ansible (
     mode    => '0755',
     content => $network_backup,
   }
+  -> file { "${ansible_path}/log":
+    ensure => directory,
+    owner  => 'ansible_net',
+    group  => 'ansible_net',
+  }
   cron::job { 'switches_backup':
     ensure      => present,
     minute      => '*',
@@ -120,7 +127,7 @@ class profile::core::it_ansible (
     weekday     => '*',
     user        => 'ansible_net',
     command     => "${ansible_path}/network_backup.sh",
-    environment => [ "PATH='/usr/bin:/bin:${ansible_path}/.local/bin'", ],
+    environment => ["PATH='/usr/bin:/bin:${ansible_path}/.local/bin'"],
     description => 'Switches Backup',
     require     => File["${ansible_path}/network_backup.sh"],
   }

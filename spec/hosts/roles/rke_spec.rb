@@ -10,7 +10,6 @@ describe 'test1.dev.lsst.org', :site do
           {
             site: site,
             role: 'rke',
-            ipa_force_join: false, # easy_ipa
           }
         end
 
@@ -34,7 +33,6 @@ describe 'test1.dev.lsst.org', :site do
           site: 'ls',
           role: 'rke',
           cluster: 'antu',
-          ipa_force_join: false, # easy_ipa
         }
       end
 

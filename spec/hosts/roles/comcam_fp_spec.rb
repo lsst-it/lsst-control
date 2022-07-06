@@ -15,7 +15,6 @@ describe 'comcam-fp role' do
     {
       role: 'comcam-fp',
       cluster: 'comcam-ccs',
-      ipa_force_join: false, # easy_ipa
     }
   end
 

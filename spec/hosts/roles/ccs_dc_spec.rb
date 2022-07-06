@@ -11,7 +11,6 @@ describe 'ccs-dc role' do
     {
       role: 'ccs-dc',
       cluster: 'comcam-ccs',
-      ipa_force_join: false, # easy_ipa
     }
   end
 

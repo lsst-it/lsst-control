@@ -13,7 +13,6 @@ describe 'atsdaq role' do
     {
       role: 'atsdaq',
       cluster: 'auxtel-ccs',
-      ipa_force_join: false, # easy_ipa
     }
   end
 

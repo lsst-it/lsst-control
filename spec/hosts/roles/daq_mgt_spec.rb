@@ -101,7 +101,6 @@ describe 'daq-mgt role' do
   let(:node_params) do
     {
       role: 'daq-mgt',
-      ipa_force_join: false, # easy_ipa
     }
   end
 

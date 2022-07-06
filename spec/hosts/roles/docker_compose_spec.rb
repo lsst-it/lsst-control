@@ -11,7 +11,6 @@ describe 'test1.dev.lsst.org', :site do
             site: site,
             role: 'docker-compose',
             cluster: 'azar',
-            ipa_force_join: false, # easy_ipa
           }
         end
 

@@ -6,7 +6,6 @@ describe 'profile::archive::common', :archiver do
   let(:node_params) do
     {
       site: 'dev',
-      ipa_force_join: false,  # XXX fix easy_ipa mod
     }
   end
 

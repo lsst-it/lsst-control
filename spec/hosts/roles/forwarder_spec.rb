@@ -10,7 +10,6 @@ describe 'forwarder role' do
           site: site,
           role: 'forwarder',
           cluster: 'comcam-archive',
-          ipa_force_join: false, # easy_ipa
         }
       end
 

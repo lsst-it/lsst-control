@@ -11,7 +11,6 @@ describe 'atsccs role' do
     {
       role: 'atsccs',
       cluster: 'auxtel-ccs',
-      ipa_force_join: false, # easy_ipa
     }
   end
 

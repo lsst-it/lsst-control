@@ -10,7 +10,6 @@ describe 'test1.dev.lsst.org', :site do
           {
             site: site,
             role: 'auxtel-archiver',
-            ipa_force_join: false, # easy_ipa
           }
         end
 

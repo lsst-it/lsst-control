@@ -6,10 +6,10 @@ FOREMAN_VERSION = '2.4.1'
 PUPPETSERVER_VERSION = '6.19.0'
 TERMINI_VERSION = '6.19.1'
 
-describe 'test1.dev.lsst.org', :site do
+describe 'test1.dev.lsst.org' do
   describe 'foreman role' do
     lsst_sites.each do |site|
-      context "with site #{site}" do
+      context "with site #{site}", :site, :common do
         let(:node_params) do
           {
             site: site,

@@ -115,6 +115,14 @@ shared_context 'with site.pp', :site do
   after(:context) { RSpec.configuration.manifest = nil }
 end
 
+shared_examples 'common', :common do
+  it do
+    is_expected.to contain_concat__fragment('mit_krb5::libdefaults').with(
+      content: %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}},
+    )
+  end
+end
+
 shared_examples 'lhn sysctls', :lhn_node do
   it do
     is_expected.to contain_sysctl__value('net.core.rmem_max')

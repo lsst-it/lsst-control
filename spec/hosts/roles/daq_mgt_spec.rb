@@ -111,7 +111,7 @@ describe 'daq-mgt role' do
   # fully test features when depend upon host specific data.  An alternative
   # would be to construct an alternate hiera hierarchy for testing each role
   # with synthetic node data.
-  describe 'auxtel-daq-mgt.cp.lsst.org', :site do
+  describe 'auxtel-daq-mgt.cp.lsst.org', :site, :common do
     let(:node_params) do
       super().merge(
         site: 'cp',
@@ -145,7 +145,7 @@ describe 'daq-mgt role' do
     end
   end
 
-  describe 'daq-mgt.tu.lsst.org', :site do
+  describe 'daq-mgt.tu.lsst.org', :site, :common do
     let(:node_params) do
       super().merge(
         site: 'tu',
@@ -179,7 +179,7 @@ describe 'daq-mgt role' do
     end
   end
 
-  describe 'comcam-daq-mgt.cp.lsst.org', :site do
+  describe 'comcam-daq-mgt.cp.lsst.org', :site, :common do
     let(:node_params) do
       super().merge(
         site: 'cp',

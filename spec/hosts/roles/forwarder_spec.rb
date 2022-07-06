@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'forwarder role' do
   lsst_sites.each do |site|
-    context "with site #{site}", :site do
+    context "with site #{site}", :site, :common do
       let(:node_params) do
         {
           site: site,

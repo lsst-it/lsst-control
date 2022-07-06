@@ -1,7 +1,0 @@
----
-profile::core::common::deploy_icinga_agent: true
-profile::core::common::manage_sssd: true
-profile::core::common::manage_krb5: false
-profile::core::common::manage_ldap: false
-profile::core::common::manage_ipa: true
-profile::core::common::install_telegraf: true

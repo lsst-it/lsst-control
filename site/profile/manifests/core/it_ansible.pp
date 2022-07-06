@@ -114,7 +114,7 @@ class profile::core::it_ansible (
   cron::job { 'switches_backup':
     ensure      => present,
     minute      => '*',
-    hour        => '8,18',
+    hour        => '4,14',
     date        => '*',
     month       => '*',
     weekday     => '*',

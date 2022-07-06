@@ -4,6 +4,8 @@
 
 class profile::core::it_ansible (
 ) {
+  include cron
+
   $ansible_path = '/opt/ansible'
   $ansible_repo = "${ansible_path}/ansible_network"
   $ansible_plugins = [
@@ -34,6 +36,12 @@ class profile::core::it_ansible (
     source /opt/rh/rh-python38/enable
     export X_SCLS="`scl enable rh-python38 'echo $X_SCLS'`"
     |PROFILE
+
+  $network_backup = @("BACKUP")
+    #!/usr/bin/env bash
+    ansible-playbook -i ${ansible_repo}/playbooks/inventory_netdevices.yml ${ansible_repo}/playbooks/backup_netdevices.yml
+    ansible-playbook -i ${ansible_repo}/playbooks/inventory_pfsense.yml ${ansible_repo}/playbooks/backup_pfsense.yml
+    |BACKUP
 
   file { $ansible_path:
     ensure => directory,
@@ -95,5 +103,25 @@ class profile::core::it_ansible (
     cwd    => '/var/tmp/',
     path   => ['/sbin', '/usr/sbin', '/bin'],
     unless => ["sudo -H -u ansible_net bash -c '${python38_bin} -m pip list | grep ansible-pylibssh'"],
+  }
+  file { "${ansible_path}/network_backup.sh":
+    ensure  => file,
+    owner   => 'ansible_net',
+    group   => 'ansible_net',
+    mode    => '0755',
+    content => $network_backup,
+  }
+  cron::job { 'switches_backup':
+    ensure      => present,
+    minute      => '*',
+    hour        => '8,18',
+    date        => '*',
+    month       => '*',
+    weekday     => '*',
+    user        => 'ansible_net',
+    command     => "${ansible_path}/network_backup.sh",
+    environment => [ "PATH='/usr/bin:/bin:${ansible_path}/.local/bin'", ],
+    description => 'Switches Backup',
+    require     => File["${ansible_path}/network_backup.sh"],
   }
 }

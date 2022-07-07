@@ -48,7 +48,7 @@ class profile::core::puppet_master (
   # Using cron seems slightly more obvious than creating a timer unit than triggers a one shot
   # service to restart the original service unit.
   cron { 'webhook':
-    command => '/usr/bin/systemctl restart webhook /dev/null 2>&1',
+    command => '/usr/bin/systemctl restart webhook > /dev/null 2>&1',
     user    => 'root',
     hour    => 4,
     minute  => 42,
@@ -101,7 +101,7 @@ class profile::core::puppet_master (
   }
 
   cron { 'smee':
-    command => '/usr/bin/systemctl restart smee /dev/null 2>&1',
+    command => '/usr/bin/systemctl restart smee > /dev/null 2>&1',
     user    => 'root',
     hour    => 4,
     minute  => 42,

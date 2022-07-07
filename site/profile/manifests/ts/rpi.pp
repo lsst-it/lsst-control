@@ -336,34 +336,10 @@ class profile::ts::rpi {
     timeout  => '0',
     unless   => 'test -f /usr/local/bin/cmake',
   }
-  vcsrepo { $libraw_dir:
-    ensure   => present,
-    provider => git,
-    source   => 'https://github.com/libraw/libraw.git',
-    revision => '0.20.0',
-  }
-  vcsrepo { $libraw_make_dir:
-    ensure   => present,
-    provider => git,
-    source   => 'https://github.com/libraw/libraw-cmake.git',
-  }
-  -> file { "${libraw_dir}/libraw.sh":
-    ensure  => file,
-    mode    => '0755',
-    content => $libraw_run,
-  }
-  -> exec { "bash ${libraw_dir}/libraw.sh":
-    cwd      => $libraw_dir,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    timeout  => '0',
-    unless   => 'test -f /etc/ld.so.conf.d/libraw-aarch64.conf',
-  }
   vcsrepo { $rawpy_dir:
     ensure   => present,
     provider => git,
     source   => 'https://github.com/letmaik/rawpy',
-    require  => Exec["bash ${libraw_dir}/libraw.sh"],
   }
   -> file { "${rawpy_dir}/rawpy.sh":
     ensure  => file,

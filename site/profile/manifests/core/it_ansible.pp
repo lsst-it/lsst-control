@@ -40,8 +40,10 @@ class profile::core::it_ansible (
 
   $network_backup = @("BACKUP")
     #!/usr/bin/env bash
-    ansible-playbook -i ${ansible_repo}/playbooks/inventory_netdevices.yml ${ansible_repo}/playbooks/backup_netdevices.yml 2>&1 >${ansible_logs}/$(date "+%F-%H").log
-    ansible-playbook -i ${ansible_repo}/playbooks/inventory_pfsense.yml ${ansible_repo}/playbooks/backup_pfsense.yml 2>&1 >>${ansible_logs}/$(date "+%F-%H").log
+    export PYTHONIOENCODING=utf8
+    export LC_ALL=en_US.UTF-8
+    ${ansible_path}/.local/bin/ansible-playbook -i ${ansible_repo}/playbooks/inventory_netdevices.yml ${ansible_repo}/playbooks/backup_netdevices.yml 2>&1 >${ansible_logs}/$(date "+%F-%H").log
+    ${ansible_path}/.local/bin/ansible-playbook -i ${ansible_repo}/playbooks/inventory_pfsense.yml ${ansible_repo}/playbooks/backup_pfsense.yml 2>&1 >>${ansible_logs}/$(date "+%F-%H").log
     find ${ansible_logs} -name "*.log" -type f -mtime +30 -delete
     |BACKUP
 

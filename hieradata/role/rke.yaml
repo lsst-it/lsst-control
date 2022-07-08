@@ -16,7 +16,6 @@ packages:
   - "bash-completion-extras"
   - "gdisk"
   - "git"
-  - "jq"
   - "kubectl"
   - "vim"
 sysctl::values::args:

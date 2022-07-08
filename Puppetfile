@@ -26,7 +26,7 @@ mod 'lsst/ccs_hcu', git: 'https://github.com/lsst-it/puppet-ccs_hcu', ref: 'v2.0
 mod 'lsst/ccs_monit', git: 'https://github.com/lsst-it/puppet-ccs_monit', ref: 'v0.1.2'
 mod 'lsst/ccs_mrtg', git: 'https://github.com/lsst-it/puppet-ccs_mrtg', ref: 'v1.1.0'
 mod 'lsst/ccs_sal', git: 'https://github.com/lsst-it/puppet-ccs_sal', ref: 'v1.0.1'
-mod 'lsst/ccs_software', git: 'https://github.com/lsst-it/puppet-ccs_software', ref: 'v1.0.1'
+mod 'lsst/ccs_software', git: 'https://github.com/lsst-it/puppet-ccs_software', ref: 'v1.0.2'
 mod 'lsst/cni', '2.1.0'
 mod 'lsst/daq', '1.0.0'
 mod 'lsst/dellperc', '1.0.1'

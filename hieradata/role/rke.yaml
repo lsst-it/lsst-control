@@ -115,6 +115,7 @@ files:
     <<: *bashrc
     content: |
       alias k='kubectl'
+      complete -o default -F __start_kubectl k
   /home/rke/.bashrc.d/git-prompt.sh:
     <<: *bashrc
     content: |

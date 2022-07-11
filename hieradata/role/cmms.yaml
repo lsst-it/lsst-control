@@ -2,9 +2,9 @@
 classes:
   - "accounts"
   - "easy_ipa"
+  - "profile::core::cmms"
   - "puppet_agent"
   - "ssh"
   - "sudo"
-  - "profile::core::cmms"
 
 easy_ipa::install_sssd: true

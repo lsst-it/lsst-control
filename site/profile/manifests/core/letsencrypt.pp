@@ -35,7 +35,9 @@ class profile::core::letsencrypt (
   include letsencrypt::plugin::dns_route53
 
   # XXX https://github.com/voxpupuli/puppet-letsencrypt/issues/230
-  ensure_packages(['python2-futures.noarch'])
+  if $facts['os']['name'] == 'CentOS' {
+    ensure_packages(['python2-futures.noarch'])
+  }
 
   if ($certonly) {
     ensure_resources('letsencrypt::certonly', $certonly)

@@ -2,9 +2,16 @@
 ##   Install cfs binary.
 
 class profile::ccs::cfs ( ) {
+  $cfs_tmp = '/var/tmp/cfs'
+  archive { $cfs_tmp:
+    ensure   => present,
+    source   => "${profile::ccs::common::pkgurl}/cfs",
+    username => $profile::ccs::common::pkgurl_user,
+    password => $profile::ccs::common::pkgurl_pass,
+  }
   file { '/usr/local/bin/cfs':
     ensure => file,
-    source => "${profile::ccs::common::pkgurl}/cfs",
+    source => $cfs_tmp,
     owner  => 'root',
     group  => 'root',
     mode   => '0755',

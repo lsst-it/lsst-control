@@ -18,6 +18,8 @@ class profile::ccs::jdk11 ( String $ensure = 'present' ) {
       extract      => true,
       extract_path => $jvmdir,
       source       => "${profile::ccs::common::pkgurl}/${jdktar}",
+      username     => $profile::ccs::common::pkgurl_user,
+      password     => $profile::ccs::common::pkgurl_pass,
       creates      => $jdkdest,
       cleanup      => true,
     }
@@ -34,6 +36,8 @@ class profile::ccs::jdk11 ( String $ensure = 'present' ) {
       extract      => true,
       extract_path => $jvmdir,
       source       => "${profile::ccs::common::pkgurl}/${jfxzip}",
+      username     => $profile::ccs::common::pkgurl_user,
+      password     => $profile::ccs::common::pkgurl_pass,
       creates      => $jfxdest,
       cleanup      => true,
     }

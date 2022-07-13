@@ -54,8 +54,10 @@ class profile::ccs::graphical (
     $zoomfile = "/var/tmp/${zoomrpm}"
 
     archive { $zoomfile:
-      ensure => present,
-      source => "${profile::ccs::common::pkgurl}/${zoomrpm}",
+      ensure   => present,
+      source   => "${profile::ccs::common::pkgurl}/${zoomrpm}",
+      username => $profile::ccs::common::pkgurl_user,
+      password => $profile::ccs::common::pkgurl_pass,
     }
 
     ## TODO use a local yum repository?

@@ -1,6 +1,5 @@
 # @summary
 #   Settings for hosts that should run in graphical mode.
-#   Note: needs ccs_pkgarchive
 #
 # @param install
 #   Boolean, false means do nothing.
@@ -51,14 +50,12 @@ class profile::ccs::graphical (
   if $officeapps {
     ensure_packages(['libreoffice-base'])
 
-    $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
-
     $zoomrpm = 'zoom.x86_64.rpm'
     $zoomfile = "/var/tmp/${zoomrpm}"
 
     archive { $zoomfile:
       ensure => present,
-      source => "${ccs_pkgarchive}/${zoomrpm}",
+      source => "${profile::ccs::common::pkgurl}/${zoomrpm}",
     }
 
     ## TODO use a local yum repository?

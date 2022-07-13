@@ -3,9 +3,12 @@
 #
 # @param sysctls
 #   if `true`, enable `profile::ccs::sysctl` sysctls.
+# @param pkgurl
+#   String specifying URL to fetch sources from
 #
 class profile::ccs::common (
   Boolean $sysctls = true,
+  String $pkgurl = 'https://example.org',
 ) {
   include clustershell
   include profile::ccs::cfs

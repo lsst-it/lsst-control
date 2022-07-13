@@ -46,9 +46,6 @@ clustershell::groupmembers:
   lion: {group: "lion", member: "comcam-lion[01-03],pathfinder-lion01"}
   hcu: {group: "hcu", member: "@uno,@lion"}
 
-## Temporary, until nexus works.
-ccs_pkgarchive: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"
-
 ccs_database::database: "comcamdbprod"
 
 ccs_sal::rpms:

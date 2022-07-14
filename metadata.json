@@ -1,0 +1,23 @@
+{
+  "name": "lsst-itconf",
+  "version": "0.1.0",
+  "author": "AURA/LSST/Rubin Observatory",
+  "summary": "LSST/Rubin control repo",
+  "license": "Apache-2.0",
+  "source": "https://github.com/lsst-it/lsst-itconf",
+  "dependencies": [],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 6.0.0 < 8.0.0"
+    }
+  ]
+}

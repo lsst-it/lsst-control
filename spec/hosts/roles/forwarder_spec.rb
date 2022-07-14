@@ -2,22 +2,36 @@
 
 require 'spec_helper'
 
-describe 'forwarder role' do
-  lsst_sites.each do |site|
-    context "with site #{site}", :site, :common do
+role = 'forwarder'
+
+describe "#{role} role" do
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts.merge(
+          fqdn: self.class.description,
+        )
+      end
+
       let(:node_params) do
         {
+          role: role,
           site: site,
-          role: 'forwarder',
           cluster: 'comcam-archive',
         }
       end
 
-      it { is_expected.to compile.with_all_deps }
+      lsst_sites.each do |site|
+        describe "#{role}.#{site}.lsst.org", :site, :common do
+          let(:site) { site }
 
-      include_examples 'lhn sysctls'
+          it { is_expected.to compile.with_all_deps }
 
-      it { is_expected.to contain_package('git') }
-    end
-  end # site
+          include_examples 'lhn sysctls'
+
+          it { is_expected.to contain_package('git') }
+        end # host
+      end # lsst_sites
+    end # on os
+  end # on_supported_os
 end # role

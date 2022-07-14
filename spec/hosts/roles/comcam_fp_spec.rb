@@ -2,49 +2,43 @@
 
 require 'spec_helper'
 
-shared_examples 'generic comcam-fp' do
-  include_examples 'lsst-daq client'
-  it { is_expected.not_to contain_class('profile::core::sysctl::lhn') }
-  it { is_expected.not_to contain_class('dhcp') }
-  it { is_expected.to contain_class('dhcp::disable') }
-  it { is_expected.to contain_class('ccs_daq') }
-end
+role = 'comcam-fp'
 
-describe 'comcam-fp role' do
-  let(:node_params) do
-    {
-      role: 'comcam-fp',
-      cluster: 'comcam-ccs',
-    }
-  end
+describe "#{role} role" do
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts.merge(
+          fqdn: self.class.description,
+        )
+      end
 
-  let(:facts) { { fqdn: self.class.description } }
+      let(:node_params) do
+        {
+          role: role,
+          site: site,
+          cluster: 'comcam-ccs',
+        }
+      end
 
-  describe 'comcam-fp01.cp.lsst.org', :site, :common do
-    let(:node_params) do
-      super().merge(
-        site: 'cp',
-      )
-    end
+      lsst_sites.each do |site|
+        describe "comcam-fp01.#{site}.lsst.org", :site, :common do
+          let(:site) { site }
 
-    it { is_expected.to compile.with_all_deps }
+          it { is_expected.to compile.with_all_deps }
 
-    include_examples 'generic comcam-fp'
+          case site
+          when 'tu', 'cp'
+            include_examples 'lsst-daq client'
+          end
 
-    it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V3.2') }
-  end # host
-
-  describe 'comcam-fp01.tu.lsst.org', :site, :common do
-    let(:node_params) do
-      super().merge(
-        site: 'tu',
-      )
-    end
-
-    it { is_expected.to compile.with_all_deps }
-
-    include_examples 'generic comcam-fp'
-
-    it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V3.2') }
-  end # host
+          it { is_expected.not_to contain_class('profile::core::sysctl::lhn') }
+          it { is_expected.not_to contain_class('dhcp') }
+          it { is_expected.to contain_class('dhcp::disable') }
+          it { is_expected.to contain_class('ccs_daq') }
+          it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V3.2') }
+        end # host
+      end # lsst_sites
+    end # on os
+  end # on_supported_os
 end # role

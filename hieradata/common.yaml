@@ -412,6 +412,10 @@ nfs::nfs_v4: true
 nfs::nfs_v4_client: true
 nfs::nfs_v4_idmap_domain: "%{::domain}"
 
+profile::ccs::common::pkgurl: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"
+ccs_hcu::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
+ccs_monit::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
+
 profile::core::docker::version: "20.10.12"
 profile::core::docker::versionlock:
   0:containerd.io-1.4.12-3.1.el7.x86_64:

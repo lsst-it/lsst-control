@@ -412,7 +412,7 @@ nfs::nfs_v4: true
 nfs::nfs_v4_client: true
 nfs::nfs_v4_idmap_domain: "%{::domain}"
 
-profile::ccs::common::pkgurl: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"
+profile::ccs::common::pkgurl: "https://repo-nexus.lsst.org/nexus/repository/ccs_private"
 ccs_hcu::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
 ccs_monit::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
 

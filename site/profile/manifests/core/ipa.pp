@@ -8,5 +8,10 @@
 class profile::core::ipa (
   Hash $default,
 ) {
-  inifile::create_ini_settings($default, { 'path' => '/etc/ipa/default.conf' })
+  $param_defaults = {
+    'path'  => '/etc/ipa/default.conf',
+    require => Class[easy_ipa],
+  }
+
+  inifile::create_ini_settings($default, $param_defaults)
 }

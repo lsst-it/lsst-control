@@ -15,13 +15,12 @@ describe 'comcam-fp role' do
     {
       role: 'comcam-fp',
       cluster: 'comcam-ccs',
-      ipa_force_join: false, # easy_ipa
     }
   end
 
   let(:facts) { { fqdn: self.class.description } }
 
-  describe 'comcam-fp01.cp.lsst.org', :site do
+  describe 'comcam-fp01.cp.lsst.org', :site, :common do
     let(:node_params) do
       super().merge(
         site: 'cp',
@@ -35,7 +34,7 @@ describe 'comcam-fp role' do
     it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V3.2') }
   end # host
 
-  describe 'comcam-fp01.tu.lsst.org', :site do
+  describe 'comcam-fp01.tu.lsst.org', :site, :common do
     let(:node_params) do
       super().merge(
         site: 'tu',

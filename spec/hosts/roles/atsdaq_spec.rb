@@ -13,13 +13,12 @@ describe 'atsdaq role' do
     {
       role: 'atsdaq',
       cluster: 'auxtel-ccs',
-      ipa_force_join: false, # easy_ipa
     }
   end
 
   let(:facts) { { fqdn: self.class.description } }
 
-  describe 'auxtel-fp01.cp.lsst.org', :site do
+  describe 'auxtel-fp01.cp.lsst.org', :site, :common do
     let(:node_params) do
       super().merge(
         site: 'cp',
@@ -31,7 +30,7 @@ describe 'atsdaq role' do
     include_examples 'generic auxtel-fp'
   end # host
 
-  describe 'auxtel-fp01.tu.lsst.org', :site do
+  describe 'auxtel-fp01.tu.lsst.org', :site, :common do
     let(:node_params) do
       super().merge(
         site: 'tu',

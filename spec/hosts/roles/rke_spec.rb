@@ -2,15 +2,14 @@
 
 require 'spec_helper'
 
-describe 'test1.dev.lsst.org', :site do
+describe 'test1.dev.lsst.org' do
   describe 'rke role' do
     lsst_sites.each do |site|
-      context "with site #{site}" do
+      context "with site #{site}", :site, :common do
         let(:node_params) do
           {
             site: site,
             role: 'rke',
-            ipa_force_join: false, # easy_ipa
           }
         end
 
@@ -28,13 +27,12 @@ describe 'test1.dev.lsst.org', :site do
       end
     end # site
 
-    context 'with antu cluster', :lhn_node do
+    context 'with antu cluster', :lhn_node, :site, :common do
       let(:node_params) do
         {
           site: 'ls',
           role: 'rke',
           cluster: 'antu',
-          ipa_force_join: false, # easy_ipa
         }
       end
 

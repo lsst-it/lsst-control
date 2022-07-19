@@ -61,8 +61,6 @@ profile::core::common::manage_puppet_agent: false
 apache::mod::proxy::proxy_timeout: 300  # seconds -- allow long operations over rest api
 # copied from /etc/foreman-installer/scenarios.d/foreman-answers.yaml
 foreman::apache: true
-foreman::compute::libvirt: true
-foreman::compute::vmware: true
 #foreman::db_password:  # secret
 #foreman::db_username:  # secret
 foreman::dynflow_manage_services: true
@@ -79,6 +77,15 @@ foreman::oauth_active: true
 #foreman::oauth_consumer_key:  # secret
 #foreman::oauth_consumer_secret:  # secret
 foreman::passenger: false  # use puma; param removed in theforman/foreman >= 17.0.0
+foreman::plugin::column_view::columns:
+  role:
+    title: "Role"
+    after: "name"
+    content: "params['role']"
+  cluster:
+    title: "Cluster"
+    after: "name"
+    content: "params['cluster']"
 foreman::plugin::tasks::automatic_cleanup: true
 foreman_proxy::base_url: "https://%{facts.fqdn}"
 foreman_proxy::bind_host: '*'
@@ -100,14 +107,13 @@ foreman_proxy::log_buffer_errors: 1000
 foreman_proxy::log_level: "DEBUG"
 foreman_proxy::log: "/var/log/foreman-proxy/proxy.log"
 foreman_proxy::plugin::dynflow::console_auth: true
-foreman_proxy::plugin::dynflow::core_listen: "0.0.0.0"
-foreman_proxy::plugin::dynflow::core_port: 8008
 foreman_proxy::plugin::dynflow::enabled: true
-foreman_proxy::plugin::dynflow::external_core: true
 foreman_proxy::plugin::dynflow::listen_on: "https"
-foreman_proxy::plugin::remote_execution::ssh::async_ssh: false
-foreman_proxy::plugin::remote_execution::ssh::enabled: true
-foreman_proxy::plugin::remote_execution::ssh::ssh_kerberos_auth: false
+foreman_proxy::plugin::remote_execution::script::mode: "ssh"
+foreman_proxy::plugin::remote_execution::script::enabled: true
+foreman_proxy::plugin::remote_execution::script::ssh_kerberos_auth: false
+foreman_proxy::plugin::remote_execution::script::listen_on: "https"
+foreman_proxy::plugin::remote_execution::script::ssh_log_level: "debug"
 foreman_proxy::puppet_api_timeout: 1  # seconds
 foreman_proxy::puppetca_provider: "puppetca_hostname_whitelisting"
 foreman_proxy::puppetca: true
@@ -129,11 +135,11 @@ foreman_proxy::trusted_hosts: ["%{facts.fqdn}"]
 foreman_proxy::version: "%{lookup('foreman::version')}"
 foreman::cli::version: "%{lookup('foreman::version')}"
 foreman::repo::configure_scl_repo: false
-foreman::repo::repo: "2.4"
+foreman::repo::repo: "3.2"
 foreman::unattended: true
 foreman::user: "foreman"
 foreman::user_groups: ["puppet"]
-foreman::version: "2.4.1"
+foreman::version: "3.2.1"
 postgresql::globals::bindir: "/usr/bin"
 postgresql::globals::client_package_name: "rh-postgresql12-syspaths"
 postgresql::globals::confdir: "/var/opt/rh/rh-postgresql12/lib/pgsql/data"
@@ -181,30 +187,110 @@ profile::core::yum::versionlock:
   0:puppetdb-termini-6.19.1-1.el7.noarch:
     ensure: "present"
     before: "Package[puppetdb-termini]"
-  0:foreman-2.4.1-1.el7.noarch:
+  0:foreman-3.2.1-1.el7.noarch:
     ensure: "present"
-  0:foreman-libvirt-2.4.1-1.el7.noarch:
+  0:foreman-libvirt-3.2.1-1.el7.noarch:
     ensure: "present"
-  0:foreman-dynflow-sidekiq-2.4.1-1.el7.noarch:
+  0:foreman-dynflow-sidekiq-3.2.1-1.el7.noarch:
     ensure: "present"
-  0:foreman-service-2.4.1-1.el7.noarch:
+  0:foreman-service-3.2.1-1.el7.noarch:
     ensure: "present"
-  0:foreman-postgresql-2.4.1-1.el7.noarch:
+  0:foreman-postgresql-3.2.1-1.el7.noarch:
     ensure: "present"
-  0:foreman-debug-2.4.1-1.el7.noarch:
+  0:foreman-debug-3.2.1-1.el7.noarch:
     ensure: "present"
-  0:foreman-cli-2.4.1-1.el7.noarch:
+  0:foreman-cli-3.2.1-1.el7.noarch:
+    ensure: "present"
+  1:foreman-installer-3.2.1-1.el7.noarch:
+    ensure: "present"
+  0:foreman-proxy-3.2.1-1.el7.noarch:
+    ensure: "present"
+  0:foreman-vmware-3.2.1-1.el7.noarch:
     ensure: "present"
 
 redis::globals::scl: "rh-redis5"
 
+ssh::client_options:
+  "ProxyCommand": "--"
+ssh::client_match_block:
+  "foreman,foreman-proxy":
+    type: "!localuser"
+    options:
+      ProxyCommand: "/usr/bin/sss_ssh_knownhostsproxy -p %p %h"
+  "github.com":
+    type: "host"
+    options:
+      StrictHostKeyChecking: "no"  # el7 does not support "accept-new"
+  "foreman":  # foreman ssh to libvirt compute resources
+    type: "localuser"
+    options:
+      StrictHostKeyChecking: "no"  # el7 does not support "accept-new"
+
 profile::core::puppet_master::foreman_config:
   destroy_vm_on_host_delete: {value: false}
   entries_per_page: {value: 100}
+  # remove "docker*" from default excluded_facts
+  # XXX using block scalar style results in the double quotes being preceeded
+  # with a \ as an escape, so we are resorting to a YAML single quoted string.
+  # This is possibly a YAML parser bug...
+  # XXX disabled as while the quoting hack works, it is not idempotent
+  # see: https://github.com/theforeman/puppet-foreman/issues/1048
+  #excluded_facts:
+  #  value: '["lo", "en*v*", "usb*", "vnet*", "macvtap*", ";vdsmdummy;", "veth*", "tap*", "qbr*", "qvb*", "qvo*", "qr-*", "qg-*", "vlinuxbr*", "vovsbr*", "br-int", "vif*", "load_averages::*", "memory::swap::available*", "memory::swap::capacity", "memory::swap::used*", "memory::system::available*", "memory::system::capacity", "memory::system::used*", "memoryfree", "memoryfree_mb", "swapfree", "swapfree_mb", "uptime_hours", "uptime_days"]'
+  host_details_ui: {value: false}  # https://projects.theforeman.org/issues/35115
   host_power_status: {value: false}
   idle_timeout: {value: 7200}  # session timeout in minutes
   matchers_inheritance: {value: false}
   update_hostgroup_from_facts: {value: false}
+  template_sync_associate: {value: "always"}
+  template_sync_branch: {value: "%{::site}"}
+  template_sync_commit_msg: {value: "Templates export made by a Foreman user"}
+  template_sync_dirname: {value: "/"}
+  template_sync_filter: {value: ""}
+  template_sync_force: {value: true}
+  template_sync_lock: {value: "unlock"}
+  template_sync_metadata_export_mode: {value: "refresh"}
+  template_sync_negate: {value: false}
+  template_sync_prefix: {value: ""}
+  template_sync_repo: {value: "ssh://git@github.com/lsst-it/foreman_templates"}
+  template_sync_verbose: {value: true}
+
+profile::core::puppet_master::foreman_global_parameter:
+  bootloader-append:
+    parameter_type: "string"
+    value: "nofb"
+  disable-firewall:
+    parameter_type: "boolean"
+    value: true
+  enable-epel:
+    parameter_type: "boolean"
+    value: true
+  enable-puppetlabs-puppet6-repo:
+    parameter_type: "boolean"
+    value: true
+  host_registration_insights:
+    parameter_type: "boolean"
+    value: false
+  host_registration_remote_execution:
+    parameter_type: "boolean"
+    value: true
+  org:
+    ensure: "absent"
+  package_upgrade:
+    parameter_type: "boolean"
+    value: true
+  selinux-mode:
+    parameter_type: "string"
+    value: "disabled"
+  site:
+    parameter_type: "string"
+    value: "%{::site}"
+  fips_enabled:
+    parameter_type: "boolean"
+    value: true
+  role:
+    parameter_type: "string"
+    value: "generic"
 
 profile::core::systemd::dropin_file:
   50-MemoryLimit.conf:

@@ -11,22 +11,37 @@
 #   `foreman_config_entry` resources to create.  Note that these parameters are called
 #   "Settings" in the foreman UI.
 #
+# @param foreman_hostgroup
+#   `foreman_hostgroup` resources to create.
+#
+# @param foreman_global_parameter
+#   `foreman_global_parameter` resources to create.
+#
 class profile::core::puppet_master (
   Stdlib::HTTPSUrl $smee_url,
   Boolean $enable_puppetdb = false,
   Optional[Hash[String, Hash]] $foreman_config = undef,
+  Optional[Hash[String, Hash]] $foreman_hostgroup = undef,
+  Optional[Hash[String, Hash]] $foreman_global_parameter = undef,
 ) {
   include cron
   include foreman
   include foreman::cli
+  include foreman::cli::puppet
+  include foreman::cli::remote_execution
+  include foreman::cli::tasks
+  include foreman::cli::templates
   include foreman::compute::libvirt
   include foreman::compute::vmware
+  include foreman::plugin::column_view
+  include foreman::plugin::puppet
   include foreman::plugin::remote_execution
   include foreman::plugin::tasks
+  include foreman::plugin::templates
   include foreman_proxy
   include foreman_proxy::plugin::dns::route53
   include foreman_proxy::plugin::dynflow
-  include foreman_proxy::plugin::remote_execution::ssh
+  include foreman_proxy::plugin::remote_execution::script
   include foreman::repo
   include puppet
   include r10k
@@ -38,8 +53,29 @@ class profile::core::puppet_master (
     include puppet::server::puppetdb
   }
 
+  Yum::Versionlock<| |> -> Class[foreman]
+
   if $foreman_config {
     ensure_resources('foreman_config_entry', $foreman_config)
+  }
+
+  if $foreman_hostgroup {
+    ensure_resources('foreman_hostgroup', $foreman_hostgroup)
+  }
+
+  if $foreman_global_parameter {
+    ensure_resources('foreman_global_parameter', $foreman_global_parameter)
+  }
+
+  # kickstart wants a comma-serparated list without spaces of ntp servers.
+  # hiera interpolation always returns a string. A direct lookup() is the only option to
+  # stay DRY.
+  $ntpservers = lookup('dhcp::ntpservers', Array[String], undef, [])
+  if $ntpservers {
+    foreman_global_parameter { 'ntp-server':
+      parameter_type => 'string',
+      value          => join($ntpservers, ','),
+    }
   }
 
   Class['r10k::webhook::config'] -> Class['r10k::webhook']

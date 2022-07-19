@@ -58,9 +58,6 @@ clustershell::groupmembers:
   hcu: {group: "hcu", member: "auxtel-hcu01"}
   all: {group: "all", member: "@misc,@hcu"}
 
-## Temporary, until nexus works.
-ccs_pkgarchive: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"
-
 
 ccs_monit::mailhost: "mail.lsst.org"
 ccs_monit::alert:

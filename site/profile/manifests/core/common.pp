@@ -43,9 +43,6 @@
 # @param manage_repos
 #   If `true`, manage core os yum repos
 #
-# @param manage_lldp
-#   If `true`, manage lldp
-#
 # @param manage_irqbalance
 #   If `true`, manage irqbalance
 #
@@ -63,7 +60,6 @@ class profile::core::common (
   Boolean $manage_powertop = false,
   Boolean $manage_scl = true,
   Boolean $manage_repos = true,
-  Boolean $manage_lldp = true,
   Boolean $manage_irqbalance = true,
 ) {
   include accounts
@@ -165,10 +161,8 @@ class profile::core::common (
       include scl
     }
   }
-  if $manage_lldp {
-    class { 'lldpd':
-      manage_repo => true,
-    }
+  class { 'lldpd':
+    manage_repo => true,
   }
   unless $facts['is_virtual'] {
     include profile::core::hardware
@@ -178,4 +172,11 @@ class profile::core::common (
       ensure => running,
       enable => true,
   })
+
+  # foreman provisioning templates created a `ifcfg-` on many hosts.  This seemed harmless but
+  # it has been discovered that this causes libvirt report a change interfaces with no name
+  # when enumerating the physical interfaces via the api.
+  file { '/etc/sysconfig/network-scripts/ifcfg-':
+    ensure => absent,
+  }
 }

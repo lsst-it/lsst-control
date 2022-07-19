@@ -115,6 +115,19 @@ shared_context 'with site.pp', :site do
   after(:context) { RSpec.configuration.manifest = nil }
 end
 
+shared_examples 'krb5.conf content' do |match|
+  it do
+    is_expected.to contain_concat__fragment('mit_krb5::libdefaults').with(
+      content: match,
+    )
+  end
+end
+
+shared_examples 'common', :common do
+  include_examples 'krb5.conf content', %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}}
+  include_examples 'krb5.conf content', %r{udp_preference_limit = 0}
+end
+
 shared_examples 'lhn sysctls', :lhn_node do
   it do
     is_expected.to contain_sysctl__value('net.core.rmem_max')
@@ -241,6 +254,10 @@ shared_examples 'daq common' do
       options: 'defaults,bind',
     ).that_requires('File[/srv/nfs/dsl]')
   end
+end
+
+shared_examples 'debugutils' do
+  it { is_expected.to contain_package('jq') }
 end
 
 # 'spec_overrides' from sync.yml will appear below this line

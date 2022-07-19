@@ -62,6 +62,7 @@ class profile::ts::rpi {
     'pylibftdi',
     'pyftdi',
     'Cython',
+    'rawpy',
   ]
 
   #  Packages to be installed through yum
@@ -168,7 +169,8 @@ class profile::ts::rpi {
     dtoverlay=uart3
     dtoverlay=uart4
     gpio=11,17,18,23=op,dh
-    gpio=3,7,24=ip
+    gpio=7,24=ip
+    gpio=3=op
     | CONFIG
 
   $minicom_config = @(MINICOM)
@@ -184,7 +186,7 @@ class profile::ts::rpi {
   $repo_name = [
     "libgphoto2,${libgphoto},test -f /usr/local/lib/pkgconfig/libgphoto2.pc,https://github.com/gphoto/libgphoto2/releases/download/v2.5.27/libgphoto2-2.5.27.tar.bz2,libgphoto2.tar.bz2,${libgphoto_version}",
     "gphoto2,${gphoto},test -f /usr/local/bin/gphoto2,https://github.com/gphoto/gphoto2/releases/download/v2.5.27/gphoto2-2.5.27.tar.bz2,gphoto2-2.5.27.tar.bz2,${gphoto_version}",
-    "python-gphoto2,${python_gphoto},test -d /opt/conda/miniforge/lib/python3.8/site-packages/gphoto2-2.2.4-py3.8-linux-aarch64.egg,https://github.com/jim-easterbrook/python-gphoto2/archive/v2.2.4.tar.gz,python-gphoto2.tar.gz,${python_gphoto_version}",
+    "python-gphoto2,${python_gphoto},test -f /opt/conda/miniforge/lib/python3.8/site-packages/gphoto2-2.2.4-py3.8.egg-info,https://github.com/jim-easterbrook/python-gphoto2/archive/v2.2.4.tar.gz,python-gphoto2.tar.gz,${python_gphoto_version}",
   ]
 
   #<----------- END Variables ------------->
@@ -312,71 +314,6 @@ class profile::ts::rpi {
     }
   }
   #<----END LibGPhoto Packages Install------>
-  #
-  #
-  #<-------Compile and Install rawpy-------->
-  archive { 'cmake.tar.gz':
-    path         => '/tmp/cmake.tar.gz',
-    source       => "https://github.com/Kitware/CMake/archive/refs/tags/v${cmake_version}.tar.gz",
-    extract      => true,
-    extract_path => $root_dir,
-    creates      => "${cmake_dir}-${cmake_version}",
-    cleanup      => true,
-  }
-  -> file { "${cmake_dir}-${cmake_version}/cmake.sh":
-    ensure  => file,
-    mode    => '0755',
-    content => $cmake_run,
-  }
-  -> exec { "bash ${cmake_dir}-${cmake_version}/cmake.sh":
-    cwd      => "${cmake_dir}-${cmake_version}",
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    timeout  => '0',
-    unless   => 'test -f /usr/local/bin/cmake',
-  }
-  vcsrepo { $libraw_dir:
-    ensure   => present,
-    provider => git,
-    source   => 'https://github.com/libraw/libraw.git',
-    revision => '0.20.0',
-  }
-  vcsrepo { $libraw_make_dir:
-    ensure   => present,
-    provider => git,
-    source   => 'https://github.com/libraw/libraw-cmake.git',
-  }
-  -> file { "${libraw_dir}/libraw.sh":
-    ensure  => file,
-    mode    => '0755',
-    content => $libraw_run,
-  }
-  -> exec { "bash ${libraw_dir}/libraw.sh":
-    cwd      => $libraw_dir,
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    timeout  => '0',
-    unless   => 'test -f /etc/ld.so.conf.d/libraw-aarch64.conf',
-  }
-  vcsrepo { $rawpy_dir:
-    ensure   => present,
-    provider => git,
-    source   => 'https://github.com/letmaik/rawpy',
-    require  => Exec["bash ${libraw_dir}/libraw.sh"],
-  }
-  -> file { "${rawpy_dir}/rawpy.sh":
-    ensure  => file,
-    mode    => '0755',
-    content => $rawpy_run,
-  }
-  ->exec { "bash ${rawpy_dir}/rawpy.sh":
-    cwd      => $libraw_dir,
-    path     => ['/sbin', '/usr/sbin', '/bin','/opt/conda/miniforge/bin/pip'],
-    provider => shell,
-    timeout  => '0',
-    unless   => 'test -d /opt/conda/miniforge/lib/python3.8/site-packages/rawpy',
-  }
-  #<----END Compile and Install rawpy-------->
   #
   #
   #<---------GPIO and Minicom config--------->

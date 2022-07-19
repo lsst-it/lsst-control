@@ -2,7 +2,7 @@
 classes:
   - "accounts"
   - "easy_ipa"
-  - "network"
+  - "profile::core::cmms"
   - "puppet_agent"
   - "ssh"
   - "sudo"

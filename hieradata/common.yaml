@@ -326,14 +326,15 @@ telegraf::quiet: true
 mit_krb5::includedir:
   - "/etc/krb5.conf.d/"
   - "/var/lib/sss/pubconf/krb5.include.d/"
+mit_krb5::default_ccache_name: "FILE:/tmp/krb5cc_%{literal('%')}{uid}"
 mit_krb5::default_realm: "LSST.CLOUD"
-mit_krb5::dns_lookup_realm: false
-mit_krb5::dns_lookup_kdc: false
-mit_krb5::rdns: false
 mit_krb5::dns_canonicalize_hostname: true
-mit_krb5::ticket_lifetime: "24h"
+mit_krb5::dns_lookup_kdc: false
+mit_krb5::dns_lookup_realm: false
 mit_krb5::forwardable: true
-mit_krb5::default_cache_nname: "KEYRING:persistent:%{literal('%')}{uid}"
+mit_krb5::rdns: false
+mit_krb5::ticket_lifetime: "24h"
+mit_krb5::udp_preference_limit: "0"
 mit_krb5::realms:
   "%{lookup('mit_krb5::default_realm')}":
     kdc: "%{lookup('easy_ipa::ipa_master_fqdn')}:88"
@@ -411,6 +412,10 @@ profile::ts::opensplicedds::ensure: "6.10.4-6.el7"
 nfs::nfs_v4: true
 nfs::nfs_v4_client: true
 nfs::nfs_v4_idmap_domain: "%{::domain}"
+
+profile::ccs::common::pkgurl: "https://repo-nexus.lsst.org/nexus/repository/ccs_private"
+ccs_hcu::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
+ccs_monit::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
 
 profile::core::docker::version: "20.10.12"
 profile::core::docker::versionlock:

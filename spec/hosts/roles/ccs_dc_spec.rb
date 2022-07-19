@@ -11,13 +11,12 @@ describe 'ccs-dc role' do
     {
       role: 'ccs-dc',
       cluster: 'comcam-ccs',
-      ipa_force_join: false, # easy_ipa
     }
   end
 
   let(:facts) { { fqdn: self.class.description } }
 
-  describe 'comcam-dc01.cp.lsst.org', :site do
+  describe 'comcam-dc01.cp.lsst.org', :site, :common do
     let(:node_params) do
       super().merge(
         site: 'cp',
@@ -29,7 +28,7 @@ describe 'ccs-dc role' do
     include_examples 'generic ccs-dc'
   end # host
 
-  describe 'comcam-dc01.tu.lsst.org', :site do
+  describe 'comcam-dc01.tu.lsst.org', :site, :common do
     let(:node_params) do
       super().merge(
         site: 'tu',

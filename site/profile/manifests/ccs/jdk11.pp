@@ -7,8 +7,6 @@ class profile::ccs::jdk11 ( String $ensure = 'present' ) {
   if $ensure =~ /(present|absent)/ {
     ensure_packages(['gzip', 'tar', 'unzip'])
 
-    $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
-
     $jvmdir = '/usr/lib/jvm'      # somewhere in /usr/local better?
     $jdkver = '11.0.2'
     $jdktar = "openjdk-${jdkver}_linux-x64_bin.tar.gz"
@@ -19,7 +17,9 @@ class profile::ccs::jdk11 ( String $ensure = 'present' ) {
       ensure       => present,
       extract      => true,
       extract_path => $jvmdir,
-      source       => "${ccs_pkgarchive}/${jdktar}",
+      source       => "${profile::ccs::common::pkgurl}/${jdktar}",
+      username     => $profile::ccs::common::pkgurl_user,
+      password     => $profile::ccs::common::pkgurl_pass,
       creates      => $jdkdest,
       cleanup      => true,
     }
@@ -35,7 +35,9 @@ class profile::ccs::jdk11 ( String $ensure = 'present' ) {
       ensure       => present,
       extract      => true,
       extract_path => $jvmdir,
-      source       => "${ccs_pkgarchive}/${jfxzip}",
+      source       => "${profile::ccs::common::pkgurl}/${jfxzip}",
+      username     => $profile::ccs::common::pkgurl_user,
+      password     => $profile::ccs::common::pkgurl_pass,
       creates      => $jfxdest,
       cleanup      => true,
     }

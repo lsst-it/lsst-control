@@ -3,6 +3,7 @@ classes:
   - "clustershell"
   - "easy_ipa"
   - "profile::core::common"
+  - "profile::core::ipa_pwd_reset"
 packages:
   - "bash-completion"
   - "bash-completion-extras"
@@ -55,3 +56,5 @@ profile::core::yum::versionlock:
     ensure: "present"
   0:ipa-server-4.6.8-5.el7.centos.6.x86_64:
     ensure: "present"
+
+profile::core::ipa_pwd_reset::ldap_user: "ldap-passwd-reset"

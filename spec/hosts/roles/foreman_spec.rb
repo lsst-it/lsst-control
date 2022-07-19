@@ -6,20 +6,21 @@ FOREMAN_VERSION = '2.4.1'
 PUPPETSERVER_VERSION = '6.19.0'
 TERMINI_VERSION = '6.19.1'
 
-describe 'test1.dev.lsst.org', :site do
+describe 'test1.dev.lsst.org' do
   describe 'foreman role' do
     lsst_sites.each do |site|
-      context "with site #{site}" do
+      context "with site #{site}", :site, :common do
         let(:node_params) do
           {
             site: site,
             role: 'foreman',
-            ipa_force_join: false, # easy_ipa
           }
         end
 
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('profile::core::puppet_master') }
+
+        include_examples 'debugutils'
 
         it do
           is_expected.to contain_class('foreman').with(

@@ -1,0 +1,14 @@
+---
+network::interfaces_hash:
+  ens33:  # fqdn
+    onboot: "yes"
+    bootproto: "none"
+    type: "Ethernet"
+    defroute: "yes"
+    ipaddress: "139.229.160.4"
+    netmask: "255.255.255.0"
+    gateway: "139.229.160.254"
+    dns1: "%{lookup('dhcp::nameservers.0')}"
+    dns2: "%{lookup('dhcp::nameservers.1')}"
+    domain: "%{lookup('dhcp::dnsdomain.0')}"
+    nozeroconf: "yes"

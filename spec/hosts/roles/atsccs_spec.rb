@@ -11,7 +11,6 @@ describe 'atsccs role' do
     {
       role: 'atsccs',
       cluster: 'auxtel-ccs',
-      ipa_force_join: false, # easy_ipa
     }
   end
 
@@ -24,7 +23,7 @@ describe 'atsccs role' do
       )
     end
 
-    describe 'auxtel-mcm.tu.lsst.org', :site do
+    describe 'auxtel-mcm.tu.lsst.org', :site, :common do
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'generic auxtel-mcm'
@@ -38,7 +37,7 @@ describe 'atsccs role' do
       )
     end
 
-    describe 'auxtel-mcm.cp.lsst.org', :site do
+    describe 'auxtel-mcm.cp.lsst.org', :site, :common do
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'generic auxtel-mcm'

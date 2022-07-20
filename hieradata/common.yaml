@@ -290,6 +290,7 @@ rsyslog::config::actions:
       file: "-/var/log/boot.log"
 
 yum::plugin::versionlock::clean: true  # trigger `yum clean all`
+yum::manage_os_default_repos: true
 
 letsencrypt::email: "rubinobs-it-las@lsst.org"
 profile::icinga::agent::host_template: "GeneralHostTemplate"

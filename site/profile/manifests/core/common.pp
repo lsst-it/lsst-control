@@ -89,10 +89,8 @@ class profile::core::common (
   include timezone
   include tuned
 
-  if $facts['os']['name'] == 'CentOS' {
+  if $facts['os']['family'] == 'RedHat' {
     if $manage_repos {
-      include profile::core::yum::centos
-
       resources { 'yumrepo':
         purge => true,
       }

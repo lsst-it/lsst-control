@@ -6,12 +6,14 @@
 #   Set values in `/etc/ipa/default.conf`.
 #
 class profile::core::ipa (
-  Hash $default,
+  Optional[Hash] $default = undef,
 ) {
   $param_defaults = {
     'path'  => '/etc/ipa/default.conf',
     require => Class[easy_ipa],
   }
 
-  inifile::create_ini_settings($default, $param_defaults)
+  if $default {
+    inifile::create_ini_settings($default, $param_defaults)
+  }
 }

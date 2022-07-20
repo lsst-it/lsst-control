@@ -83,7 +83,6 @@ class profile::core::common (
   include profile::core::nm_dispatch
   include profile::core::selinux
   include profile::core::systemd
-  include profile::core::yum
   include rsyslog
   include rsyslog::config
   include selinux
@@ -95,6 +94,8 @@ class profile::core::common (
   include tuned
 
   if fact('os.family') == 'RedHat' {
+    include profile::core::yum
+
     if $manage_repos {
       resources { 'yumrepo':
         purge => true,

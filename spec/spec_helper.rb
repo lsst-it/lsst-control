@@ -149,6 +149,7 @@ shared_examples 'common' do |facts:, no_auth: false|
     it { is_expected.to contain_yum__versionlock('puppet-agent').with_version('7.18.0') }
     it { is_expected.to contain_class('yum').with_manage_os_default_repos(true) }
     it { is_expected.to contain_resources('yumrepo').with_purge(true) }
+    it { is_expected.to contain_class('profile::core::yum') }
 
     # extras repo should be enabled. puppet/yum disables it by default on EL7.
     it do

@@ -9,7 +9,7 @@ describe 'profile::ts::opensplicedds' do
 
     it do
       is_expected.to contain_package('OpenSpliceDDS')
-        .with_ensure('6.10.4-6.el7')
+        .with_ensure('present')
         .that_requires('Yumrepo[lsst-ts-private]')
     end
   end

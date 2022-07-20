@@ -1,0 +1,10 @@
+---
+version: 5
+defaults:
+  data_hash: "yaml_data"
+hierarchy:
+  - name: "private hiera"
+    datadir: "./hieradata"
+    paths:
+      - "profile-only.yaml"
+      - "common.yaml"

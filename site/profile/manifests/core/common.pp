@@ -70,7 +70,6 @@ class profile::core::common (
   include accounts
   include augeas
   include easy_ipa
-  include epel
   include hosts
   include network
   include profile::core::ca
@@ -94,6 +93,7 @@ class profile::core::common (
   include tuned
 
   if fact('os.family') == 'RedHat' {
+    include epel
     include profile::core::yum
 
     if $manage_repos {

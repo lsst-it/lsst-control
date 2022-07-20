@@ -145,6 +145,7 @@ shared_examples 'common' do |facts:, no_auth: false|
   end
 
   if facts[:os]['family'] == 'RedHat'
+    it { is_expected.to contain_class('epel') }
     it { is_expected.to contain_class('yum::plugin::versionlock').with_clean(true) }
     it { is_expected.to contain_yum__versionlock('puppet-agent').with_version('7.18.0') }
     it { is_expected.to contain_class('yum').with_manage_os_default_repos(true) }
@@ -169,6 +170,7 @@ shared_examples 'common' do |facts:, no_auth: false|
       it { is_expected.not_to contain_class('scl') }
     end
   else
+    it { is_expected.not_to contain_class('epel') }
     it { is_expected.not_to contain_class('yum::plugin::versionlock') }
     it { is_expected.to contain_yum__versionlock('puppet-agent') }
     it { is_expected.not_to contain_class('yum') }

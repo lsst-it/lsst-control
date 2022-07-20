@@ -11,12 +11,12 @@ describe 'profile::core::docker' do
       socket_group: 70_014,
       socket_override: false,
       storage_driver: 'overlay2',
-      version: '20.10.12',
+      version: '19.03.15',
     )
   end
 
   it { is_expected.to contain_class('yum::plugin::versionlock') }
-  it { is_expected.to have_yum__versionlock_resource_count(5) }
+  it { is_expected.to have_yum__versionlock_resource_count(2) }
   it { is_expected.to contain_class('docker::networks') }
 
   it do

@@ -9,23 +9,28 @@ describe 'profile::core::ipa' do
       include sssd
     PP
   end
-  let(:params) do
-    {
-      default: {
-        foo: {
-          bar: 'baz',
-        },
-      },
-    }
+
+  context 'with no params' do
+    it { is_expected.to compile.with_all_deps }
   end
 
-  it { is_expected.to compile.with_all_deps }
+  context 'with default param' do
+    let(:params) do
+      {
+        default: {
+          foo: {
+            bar: 'baz',
+          },
+        },
+      }
+    end
 
-  it do
-    is_expected.to contain_ini_setting('/etc/ipa/default.conf [foo] bar').with(
-      section: 'foo',
-      setting: 'bar',
-      value: 'baz',
-    ).that_requires('Class[easy_ipa]')
+    it do
+      is_expected.to contain_ini_setting('/etc/ipa/default.conf [foo] bar').with(
+        section: 'foo',
+        setting: 'bar',
+        value: 'baz',
+      ).that_requires('Class[easy_ipa]')
+    end
   end
 end

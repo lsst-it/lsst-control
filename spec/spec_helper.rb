@@ -82,8 +82,7 @@ end
 RSpec.configure do |c|
   c.default_facts = default_facts
   c.module_path = "#{File.join(root_path, 'site')}:#{File.join(fixtures_path, 'modules')}"
-  # c.manifest = File.join(root_path, 'manifests', 'site.pp')
-  c.hiera_config = File.join(fixtures_path, 'hiera.yaml')
+  c.hiera_config = File.join(fixtures_path, 'hiera-profile-mod.yaml')
   c.before :each do
     # set to strictest setting for testing
     # by default Puppet runs at warning level
@@ -110,7 +109,10 @@ def node_files
 end
 
 shared_context 'with site.pp', :site do
-  before(:context) { RSpec.configuration.manifest = File.join(root_path, 'manifests', 'site.pp') }
+  before(:context) do
+    RSpec.configuration.manifest = File.join(root_path, 'manifests', 'site.pp')
+    RSpec.configuration.hiera_config = File.join(fixtures_path, 'hiera.yaml')
+  end
 
   after(:context) { RSpec.configuration.manifest = nil }
 end

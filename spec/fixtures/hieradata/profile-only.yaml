@@ -1,0 +1,15 @@
+---
+# These values are *only* to be used for testing the *profile* module. When
+# testing the profile module, we want to intentionally exclude the production
+# hiera hierarchy. However, due to recursive class inclusion by profile classes,
+# a number of modules are pulled in which have mandatory parameters which
+# would otherwise have to be declared in most spec files.
+easy_ipa::domain: "example.org"
+easy_ipa::ipa_role: "client"
+easy_ipa::ipa_master_fqdn: "foo.example.org"
+easy_ipa::install_sssd: false
+
+resolv_conf::nameservers:
+  - "1.1.1.1"
+
+mit_krb5::default_realm: "example.org"

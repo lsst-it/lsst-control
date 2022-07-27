@@ -31,6 +31,7 @@ class profile::ccs::common (
   include ccs_software
   include java_artisanal
   include java_artisanal::java17
+  include maven
 
   Class['java_artisanal']
   -> Class['ccs_software']

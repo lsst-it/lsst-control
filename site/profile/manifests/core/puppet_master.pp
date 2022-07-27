@@ -84,6 +84,12 @@ class profile::core::puppet_master (
 
   Class['r10k::webhook::config'] -> Class['r10k::webhook']
 
+  class { 'smee':
+    url  => $smee_url,
+    path => '/payload',
+    port => 8088,
+  }
+
   # el7 systemd is too old to support periodic graceful restarts of a service unit.
   # Using cron seems slightly more obvious than creating a timer unit than triggers a one shot
   # service to restart the original service unit.
@@ -92,52 +98,6 @@ class profile::core::puppet_master (
     user    => 'root',
     hour    => 4,
     minute  => 42,
-  }
-
-  $node_pkgs = [
-    'rh-nodejs10',
-    'rh-nodejs10-npm',
-  ]
-
-  package { $node_pkgs:
-    require => Class['scl'],
-  }
-
-  exec { 'install-smee':
-    creates   => '/opt/rh/rh-nodejs10/root/usr/bin/smee',
-    command   => 'npm install --global smee-client',
-    subscribe => Package['rh-nodejs10-npm'],
-    path      => [
-      '/opt/rh/rh-nodejs10/root/usr/bin',
-      '/usr/sbin',
-      '/usr/bin',
-    ],
-  }
-
-  $service_unit = @("EOT")
-    [Unit]
-    Description=smee.io webhook daemon
-
-    [Service]
-    Type=simple
-    ExecStart=/usr/bin/scl enable rh-nodejs10 -- \
-      /opt/rh/rh-nodejs10/root/usr/bin/smee \
-      --url ${smee_url} \
-      -P /payload \
-      -p 8088
-    Restart=on-failure
-    RestartSec=10
-
-    [Install]
-    WantedBy=default.target
-    | EOT
-
-  systemd::unit_file { 'smee.service':
-    ensure    => 'present',
-    active    => true,
-    content   => $service_unit,
-    enable    => true,
-    subscribe => Exec['install-smee'],
   }
 
   cron { 'smee':

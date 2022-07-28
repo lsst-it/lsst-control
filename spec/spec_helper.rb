@@ -8,6 +8,10 @@ def root_path
   File.expand_path(File.join(__FILE__, '..', '..'))
 end
 
+def spec_path
+  File.join(root_path, 'spec')
+end
+
 def fixtures_path
   File.join(root_path, 'spec', 'fixtures')
 end

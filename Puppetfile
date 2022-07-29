@@ -12,7 +12,6 @@ mod 'example42/network', git: 'https://github.com/lsst-it/puppet-network', ref: 
 mod 'fervid/snapd', '1.2.1' # 2021-05-31 hreinking: snapd for EAS Raspberry Pi
 mod 'ghoneycutt/hosts', git: 'https://github.com/ghoneycutt/puppet-module-hosts', ref: '32315d8'  # https://github.com/ghoneycutt/puppet-module-hosts/pull/86
 mod 'herculesteam/augeasproviders_core', '3.1.0'
-mod 'herculesteam/augeasproviders_grub', git: 'https://github.com/lsst-it/puppet-augeasproviders_grub', ref: 'sazzle2611-dependencies'  # https://github.com/voxpupuli/puppet-augeasproviders_grub/pull/67
 mod 'herculesteam/augeasproviders_shellvar', '4.1.0'
 mod 'icinga/icinga2', '3.2.2'
 mod 'icinga/icinga', '2.7.0'
@@ -37,6 +36,7 @@ mod 'lsst/rke', '1.0.0'
 mod 'lsst/tuned', git: 'https://github.com/lsst-it/puppet-tuned', branch: 'production'  # https://github.com/CERIT-SC/puppet-tuned/pull/21
 mod 'puppet/alternatives', '4.0.0'
 mod 'puppet/archive', '6.0.2'
+mod 'puppet/augeasproviders_grub', '4.0.0'
 mod 'puppet/chrony', '2.3.0'
 mod 'puppet/cron', '3.0.0'
 mod 'puppet/epel', '4.1.0'

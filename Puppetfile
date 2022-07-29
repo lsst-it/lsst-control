@@ -80,7 +80,7 @@ mod 'puppet/nginx', '3.3.0'
 mod 'puppet/openldap', '5.0.1'
 mod 'puppet/php', '8.0.3'
 mod 'puppet/postfix',  '3.0.0'
-mod 'puppet/python', git: 'https://github.com/voxpupuli/puppet-python', ref: '339d2a1'  # https://github.com/voxpupuli/puppet-python/pull/633
+mod 'puppet/python', '6.3.0'
 mod 'puppet/r10k', '10.1.1'
 mod 'puppet/rabbitmq', '12.0.0'
 mod 'puppet/redis', '8.3.0'

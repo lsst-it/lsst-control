@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-role = 'docker-compose'
+role = 'it-ansible'
 
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
@@ -17,8 +17,13 @@ describe "#{role} role" do
         {
           role: role,
           site: site,
-          cluster: 'azar',
         }
+      end
+
+      let(:pre_condition) do
+        <<~PP
+          file { '/opt/ansible/.ssh/id_rsa': }
+        PP
       end
 
       lsst_sites.each do |site|
@@ -26,9 +31,6 @@ describe "#{role} role" do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }
-
-          it { is_expected.to contain_class('docker') }
-          it { is_expected.to contain_class('docker::networks') }
         end # host
       end # lsst_sites
     end # on os

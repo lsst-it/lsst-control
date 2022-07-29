@@ -2,41 +2,37 @@
 
 require 'spec_helper'
 
-shared_examples 'generic ccs-dc' do
-  include_examples 'lsst-daq client'
-end
+role = 'ccs-dc'
 
-describe 'ccs-dc role' do
-  let(:node_params) do
-    {
-      role: 'ccs-dc',
-      cluster: 'comcam-ccs',
-    }
-  end
+describe "#{role} role" do
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts.merge(
+          fqdn: self.class.description,
+        )
+      end
 
-  let(:facts) { { fqdn: self.class.description } }
+      let(:node_params) do
+        {
+          role: role,
+          site: site,
+          cluster: 'comcam-ccs',
+        }
+      end
 
-  describe 'comcam-dc01.cp.lsst.org', :site, :common do
-    let(:node_params) do
-      super().merge(
-        site: 'cp',
-      )
-    end
+      lsst_sites.each do |site|
+        describe "comcam-dc01.#{site}.lsst.org", :site, :common do
+          let(:site) { site }
 
-    it { is_expected.to compile.with_all_deps }
+          it { is_expected.to compile.with_all_deps }
 
-    include_examples 'generic ccs-dc'
-  end # host
-
-  describe 'comcam-dc01.tu.lsst.org', :site, :common do
-    let(:node_params) do
-      super().merge(
-        site: 'tu',
-      )
-    end
-
-    it { is_expected.to compile.with_all_deps }
-
-    include_examples 'generic ccs-dc'
-  end # host
+          case site
+          when 'tu', 'cp'
+            include_examples 'lsst-daq client'
+          end
+        end # host
+      end # lsst_sites
+    end # on os
+  end # on_supported_os
 end # role

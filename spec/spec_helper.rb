@@ -8,6 +8,10 @@ def root_path
   File.expand_path(File.join(__FILE__, '..', '..'))
 end
 
+def spec_path
+  File.join(root_path, 'spec')
+end
+
 def fixtures_path
   File.join(root_path, 'spec', 'fixtures')
 end
@@ -125,9 +129,11 @@ shared_examples 'krb5.conf content' do |match|
   end
 end
 
-shared_examples 'common', :common do
-  include_examples 'krb5.conf content', %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}}
-  include_examples 'krb5.conf content', %r{udp_preference_limit = 0}
+shared_examples 'common', :common do |opts = {}|
+  if opts[:no_auth].nil?
+    include_examples 'krb5.conf content', %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}}
+    include_examples 'krb5.conf content', %r{udp_preference_limit = 0}
+  end
 end
 
 shared_examples 'lhn sysctls', :lhn_node do

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-role = 'docker-compose'
+role = 'ipareplica'
 
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
@@ -17,18 +17,16 @@ describe "#{role} role" do
         {
           role: role,
           site: site,
-          cluster: 'azar',
         }
       end
 
       lsst_sites.each do |site|
-        describe "#{role}.#{site}.lsst.org", :site, :common do
+        describe "#{role}.#{site}.lsst.org", :site do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }
 
-          it { is_expected.to contain_class('docker') }
-          it { is_expected.to contain_class('docker::networks') }
+          include_examples 'common', no_auth: true
         end # host
       end # lsst_sites
     end # on os

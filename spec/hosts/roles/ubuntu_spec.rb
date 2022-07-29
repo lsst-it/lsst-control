@@ -2,10 +2,19 @@
 
 require 'spec_helper'
 
-role = 'docker-compose'
+role = 'ubuntu'
 
 describe "#{role} role" do
-  on_supported_os.each do |os, facts|
+  test_on = {
+    supported_os: [
+      {
+        'operatingsystem' => 'Ubuntu',
+        'operatingsystemrelease' => ['20.04', '22.04'],
+      },
+    ],
+  }
+
+  on_supported_os(test_on).each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts.merge(
@@ -17,18 +26,14 @@ describe "#{role} role" do
         {
           role: role,
           site: site,
-          cluster: 'azar',
         }
       end
 
       lsst_sites.each do |site|
-        describe "#{role}.#{site}.lsst.org", :site, :common do
+        describe "#{role}.#{site}.lsst.org", :site do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }
-
-          it { is_expected.to contain_class('docker') }
-          it { is_expected.to contain_class('docker::networks') }
         end # host
       end # lsst_sites
     end # on os

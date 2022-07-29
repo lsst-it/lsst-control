@@ -66,6 +66,7 @@ mod 'puppetlabs/puppet_agent', '4.10.0'
 mod 'puppetlabs/puppetdb', '7.10.0'
 mod 'puppetlabs/puppetserver_gem', '1.1.1'
 mod 'puppetlabs/reboot', '4.1.0'
+mod 'puppetlabs/selinux_core', '1.2.0'
 mod 'puppetlabs/sshkeys_core', '2.3.0'
 mod 'puppetlabs/stdlib', '7.1.0'
 mod 'puppetlabs/tomcat', git: 'https://github.com/puppetlabs/puppetlabs-tomcat', ref: '406510c'  # https://github.com/puppetlabs/puppetlabs-tomcat/pull/477

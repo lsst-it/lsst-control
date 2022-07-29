@@ -11,7 +11,18 @@ network::interfaces_hash:
     bridge: "br1101"
     type: "none"
     nozeroconf: "yes"
+  em2.1600:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    bridge: "br1600"
+    type: "none"
+    nozeroconf: "yes"
   br1101:
+    bootproto: "none"
+    onboot: "yes"
+    type: "bridge"
+  br1600:
     bootproto: "none"
     onboot: "yes"
     type: "bridge"

@@ -133,12 +133,15 @@ class profile::core::puppet_master (
     Class['scl'] -> Class['foreman']
   }
 
-  # XXX theforeman/puppet does not manage the yumrepo.  puppetlabs/puppet_agent is hardwired
-  # to manage the puppet package and conflicts with theforeman/puppet.  We should try to
-  # submit support to puppetlabs/puppet_agent for managing only the yumrepo.
+  # XXX theforeman/puppet does not manage the yumrepo.  puppetlabs/puppet_agent
+  # is hardwired to manage the puppet package and conflicts with
+  # theforeman/puppet.  We should try to submit support to
+  # puppetlabs/puppet_agent for managing only the yumrepo. The
+  # puppet_agent::prepare class can not be directly included as
+  # puppet_agent::osfamily::redhat uses puppet_agent::* variables.
   yumrepo { 'pc_repo':
     ensure   => 'present',
-    baseurl  => 'http://yum.puppet.com/puppet7/el/7/x86_64',
+    baseurl  => "http://yum.puppet.com/puppet7/el/${fact('os.release.major')}/x86_64",
     descr    => 'Puppet Labs puppet6 Repository',
     enabled  => true,
     gpgcheck => '1',

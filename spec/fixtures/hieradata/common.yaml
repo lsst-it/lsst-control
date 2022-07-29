@@ -1,11 +1,17 @@
 ---
-easy_ipa::domain_join_password: "foofoofoofoo"  # 8 char min
+ccs_database::database: "comcamdbprod"
+ccs_database::password: "foo"
 easy_ipa::admin_password: "foofoofoofoo"  # ipa master only
 easy_ipa::directory_services_password: "foofoofoofoo"  # ipa master only
-
+easy_ipa::domain_join_password: "foofoofoofoo"  # 8 char min
+foreman_proxy::plugin::dns::route53::aws_access_key: "foo"
+foreman_proxy::plugin::dns::route53::aws_secret_key: "foo"
 profile::archive::forwarder::keytab_base64: "foo"
 profile::archive::rabbitmq::queue_password: "foo"
 profile::archive::rabbitmq::queue_user: "foo"
+profile::ccs::krb5_token::keytab_base64: "foo"
+profile::ccs::krb5_token::uid: "foo"
+profile::ccs::krb5_token::user: "foo"
 profile::ccs::postfix::auth: "foo"
 profile::core::monitoring::database: "foo"
 profile::core::monitoring::password: "foo"
@@ -38,13 +44,3 @@ profile::icinga::resources::credentials_hash: "foo"
 profile::icinga::resources::dhcp_server: "192.168.1.1"
 profile::icinga::resources::site:dhcp_server: "foo"
 profile::icinga::resources::site: "summit"
-
-ccs_database::database: "comcamdbprod"
-ccs_database::password: "foo"
-
-foreman_proxy::plugin::dns::route53::aws_access_key: "foo"
-foreman_proxy::plugin::dns::route53::aws_secret_key: "foo"
-
-profile::ccs::krb5_token::user: "foo"
-profile::ccs::krb5_token::uid: "foo"
-profile::ccs::krb5_token::keytab_base64: "foo"

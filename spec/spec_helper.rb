@@ -134,6 +134,8 @@ shared_examples 'common', :common do |opts = {}|
     include_examples 'krb5.conf content', %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}}
     include_examples 'krb5.conf content', %r{udp_preference_limit = 0}
   end
+
+  it { is_expected.to contain_class('yum::plugin::versionlock').with_clean(true) }
 end
 
 shared_examples 'lhn sysctls', :lhn_node do

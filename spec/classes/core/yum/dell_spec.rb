@@ -3,13 +3,19 @@
 require 'spec_helper'
 
 describe 'profile::core::yum::dell' do
-  it { is_expected.to compile.with_all_deps }
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) { facts }
 
-  it do
-    is_expected.to contain_yumrepo('dell').with(
-      descr: 'Dell',
-      ensure: 'present',
-      enabled: true,
-    )
+      it { is_expected.to compile.with_all_deps }
+
+      it do
+        is_expected.to contain_yumrepo('dell').with(
+          descr: 'Dell',
+          ensure: 'present',
+          enabled: true,
+        )
+      end
+    end
   end
 end

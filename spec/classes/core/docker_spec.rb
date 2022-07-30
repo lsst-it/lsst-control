@@ -5,9 +5,7 @@ require 'spec_helper'
 describe 'profile::core::docker' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts
-      end
+      let(:facts) { facts }
 
       it { is_expected.to compile.with_all_deps }
 

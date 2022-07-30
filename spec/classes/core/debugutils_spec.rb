@@ -3,7 +3,13 @@
 require 'spec_helper'
 
 describe 'profile::core::debugutils' do
-  it { is_expected.to compile.with_all_deps }
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) { facts }
 
-  include_examples 'debugutils'
+      it { is_expected.to compile.with_all_deps }
+
+      include_examples 'debugutils'
+    end
+  end
 end

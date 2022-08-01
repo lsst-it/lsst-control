@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-role = 'generic'
+role = 'ccs-mcm'
 
 describe "#{role} role" do
   on_supported_os.each do |os, facts|

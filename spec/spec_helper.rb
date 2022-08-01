@@ -178,8 +178,6 @@ end
 shared_examples 'archiver', :archiver do
   %w[
     profile::archive::data
-    profile::archive::rabbitmq
-    profile::archive::redis
     profile::core::common
     profile::core::debugutils
     profile::core::docker

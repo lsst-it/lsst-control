@@ -35,7 +35,18 @@ describe 'profile::core::docker' do
       end
 
       it do
-        is_expected.to contain_file('/etc/docker/daemon.json').with_content(%r{"live-restore": true})
+        is_expected.to contain_file('/etc/docker').with(
+          ensure: 'directory',
+          mode: '0755',
+        ).that_comes_before('File[/etc/docker/daemon.json]')
+      end
+
+      it do
+        is_expected.to contain_file('/etc/docker/daemon.json').with(
+          ensure: 'file',
+          mode: '0644',
+          content: %r{"live-restore": true},
+        ).that_notifies('Service[docker]')
       end
     end
   end

@@ -65,6 +65,14 @@ class profile::core::docker (
     # lint:endignore
   }
 
+  # /etc/docker is normally created by dockerd the first time the service is
+  # started.  However, we would like daemon.json to be in place prior to the
+  # first startup.
+  file { '/etc/docker':
+    ensure => directory,
+    mode   => '0755',
+  }
+
   file { '/etc/docker/daemon.json':
     ensure  => file,
     mode    => '0644',

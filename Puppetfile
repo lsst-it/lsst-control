@@ -50,7 +50,7 @@ mod 'puppetlabs/apt', '8.3.0'
 mod 'puppetlabs/augeas_core', '1.2.0'
 mod 'puppetlabs/concat', '7.1.1'
 mod 'puppetlabs/cron_core', '1.1.0'
-mod 'puppetlabs/docker', git: 'https://github.com/puppetlabs/puppetlabs-docker', ref: '9e5ff53'  # https://github.com/puppetlabs/puppetlabs-docker/pull/783
+mod 'puppetlabs/docker', '4.4.0'
 mod 'puppetlabs/facts', '1.4.0'
 mod 'puppetlabs/firewall', '3.4.0'
 mod 'puppetlabs/host_core', '1.1.0'

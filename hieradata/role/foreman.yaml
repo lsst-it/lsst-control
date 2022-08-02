@@ -3,6 +3,8 @@ classes:
   - "dhcp"
   - "profile::core::common"
   - "profile::core::debugutils"
+  - "profile::core::docker"
+  - "profile::core::docker::prune"
   - "profile::core::foreman_envsync"
   - "profile::core::puppet_master"
 

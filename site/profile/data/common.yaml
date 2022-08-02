@@ -137,8 +137,13 @@ profile::core::yum::lsst_ts_private::repos:
     gpgcheck: false
     target: "/etc/yum.repos.d/lsst-ts-private.repo"
 
-profile::core::docker::version: "19.03.15"
+profile::core::docker::version: "20.10.12"
 profile::core::docker::versionlock:
+  containerd.io:
+    # puppetlabs/docker only specifies a package resource for containerd.io for uninstall
+    ensure: "present"
+    version: "1.4.12"
+    release: "3.1.el7"
   docker-ce:
     ensure: "present"
     epoch: 3
@@ -152,6 +157,14 @@ profile::core::docker::versionlock:
     version: "%{lookup('profile::core::docker::version')}"
     release: *docker_release
     before: "Package[docker-ce-cli]"
+  docker-ce-rootless-extras:
+    ensure: "present"
+    version: "%{lookup('profile::core::docker::version')}"
+    release: *docker_release
+  docker-scan-plugin:
+    ensure: "present"
+    version: "0.12.0"
+    release: *docker_release
 
 profile::core::sysctl::lhn::sysctls:
   # lhn tuning

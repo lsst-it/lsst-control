@@ -35,8 +35,10 @@ class profile::core::docker (
     ensure_resources('yum::versionlock', $versionlock)
   }
 
-  # allow docker.socket activitation to proceed before sssd is running and the `docker` group
-  # can be resolved via IPA.  It is fine to allow the socket be created with a group of `root`  # as dockerd will chgrp the socket to the correct group when it starts up.
+  # allow docker.socket activitation to proceed before sssd is running and the
+  # `docker` group can be resolved via IPA.  It is fine to allow the socket be
+  # created with a group of `root`  # as dockerd will chgrp the socket to the
+  # correct group when it starts up.
   systemd::dropin_file { 'wait-for-docker-group.conf':
     unit    => 'docker.socket',
     # lint:ignore:strict_indent

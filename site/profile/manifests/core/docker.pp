@@ -23,6 +23,7 @@ class profile::core::docker (
 
   class { 'docker':
     overlay2_override_kernel_check => true,  # needed on el7
+    package_source                 => 'docker-ce',
     socket_group                   => $socket_group,
     socket_override                => false,
     storage_driver                 => $storage_driver,

@@ -29,13 +29,15 @@ roles_without_spec.each do |role|
           }
         end
 
-        lsst_sites.each do |site|
-          describe "#{role}.#{site}.lsst.org", :site, :common do
-            let(:site) { site }
+        # as a performance optimization, test with only one site.  If it is
+        # important that a role is better tested, it should have its own spec
+        # file.
+        site = lsst_sites.sample
+        describe "#{role}.#{site}.lsst.org", :site, :common do
+          let(:site) { site }
 
-            it { is_expected.to compile.with_all_deps }
-          end # host
-        end # lsst_sites
+          it { is_expected.to compile.with_all_deps }
+        end # host
       end # on os
     end # on_supported_os
   end # role

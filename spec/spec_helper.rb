@@ -150,13 +150,21 @@ shared_examples 'common' do |facts:, no_auth: false|
     it { is_expected.to contain_class('yum').with_manage_os_default_repos(true) }
     it { is_expected.to contain_resources('yumrepo').with_purge(true) }
 
+    # extras repo should be enabled. puppet/yum disables it by default on EL7.
+    it do
+      expect(catalogue.resource('class', 'yum')[:repos]['extras']).to include('enabled' => true)
+    end
+
     if facts[:os]['release']['major'] == '7'
+      it { is_expected.to contain_class('yum').with_managed_repos(['extras']) }
+
       if facts[:os]['architecture'] == 'x86_64'
         it { is_expected.to contain_class('scl') }
       else
         it { is_expected.not_to contain_class('scl') }
       end
     else
+      it { is_expected.not_to contain_class('yum').with_managed_repos(['extras']) }
       it { is_expected.not_to contain_class('scl') }
     end
   else

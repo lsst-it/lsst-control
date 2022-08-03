@@ -3,5 +3,11 @@
 require 'spec_helper'
 
 describe 'profile::daq::common' do
-  include_examples 'daq common'
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) { facts }
+
+      include_examples 'daq common'
+    end
+  end
 end

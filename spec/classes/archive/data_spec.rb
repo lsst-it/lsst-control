@@ -3,14 +3,20 @@
 require 'spec_helper'
 
 describe 'profile::archive::data' do
-  it { is_expected.to compile.with_all_deps }
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) { facts }
 
-  it { is_expected.to contain_file('/data').with_ensure('directory') }
-  it { is_expected.to contain_file('/data/lsstdata').with_ensure('directory') }
-  it { is_expected.to contain_file('/data/repo').with_ensure('directory') }
-  it { is_expected.to contain_file('/data/staging').with_ensure('directory') }
-  it { is_expected.to contain_file('/repo').with_ensure('directory') }
+      it { is_expected.to compile.with_all_deps }
 
-  it { is_expected.not_to contain_file('/data/repo/LATISS') }
-  it { is_expected.not_to contain_file('/data/repo/LSSTComCam') }
+      it { is_expected.to contain_file('/data').with_ensure('directory') }
+      it { is_expected.to contain_file('/data/lsstdata').with_ensure('directory') }
+      it { is_expected.to contain_file('/data/repo').with_ensure('directory') }
+      it { is_expected.to contain_file('/data/staging').with_ensure('directory') }
+      it { is_expected.to contain_file('/repo').with_ensure('directory') }
+
+      it { is_expected.not_to contain_file('/data/repo/LATISS') }
+      it { is_expected.not_to contain_file('/data/repo/LSSTComCam') }
+    end
+  end
 end

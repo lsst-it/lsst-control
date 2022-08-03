@@ -5,81 +5,85 @@ require 'spec_helper'
 # XXX testing for classes in the catalog is not a great practice but it is
 # expendent to do here as the goal is primary to test branching based on facts.
 describe 'profile::core::hardware' do
-  let(:facts) { {} }
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) { facts }
 
-  context 'with PowerEdge' do
-    let(:facts) do
-      super().merge(
-        dmi: {
-          product: {
-            name: 'PowerEdge',
-          },
-        },
-      )
+      context 'with PowerEdge' do
+        let(:facts) do
+          super().merge(
+            dmi: {
+              product: {
+                name: 'PowerEdge',
+              },
+            },
+          )
+        end
+
+        context 'with fact has_dellperc: false' do
+          let(:facts) { super().merge(has_dellperc: false) }
+
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.to contain_class('ipmi') }
+          it { is_expected.not_to contain_class('profile::core::perccli') }
+          it { is_expected.not_to contain_class('profile::core::kernel::pcie_aspm') }
+          it { is_expected.not_to contain_class('profile::core::kernel::nvme_apst') }
+          it { is_expected.not_to contain_profile__util__kernel_param('pci=pcie_bus_perf') }
+        end
+
+        context 'with fact has_dellperc: true' do
+          let(:facts) { super().merge(has_dellperc: true) }
+
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.to contain_class('ipmi') }
+          it { is_expected.to contain_class('profile::core::perccli') }
+          it { is_expected.not_to contain_class('profile::core::kernel::pcie_aspm') }
+          it { is_expected.not_to contain_class('profile::core::kernel::nvme_apst') }
+          it { is_expected.not_to contain_profile__util__kernel_param('pci=pcie_bus_perf') }
+        end
+      end  # PowerEdge
+
+      context 'with 1114S-WN10RT' do
+        let(:facts) do
+          super().merge(
+            dmi: {
+              product: {
+                name: '1114S-WN10RT',
+              },
+            },
+          )
+        end
+
+        context 'with fact has_dellperc: false' do
+          let(:facts) { super().merge(has_dellperc: false) }
+
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.to contain_class('ipmi') }
+          it { is_expected.not_to contain_class('profile::core::perccli') }
+          it { is_expected.to contain_class('profile::core::kernel::pcie_aspm') }
+          it { is_expected.to contain_class('profile::core::kernel::nvme_apst') }
+
+          it do
+            is_expected.to contain_profile__util__kernel_param('pci=pcie_bus_perf')
+              .with_reboot(false)
+          end
+        end
+
+        context 'with fact has_dellperc: true' do
+          let(:facts) { super().merge(has_dellperc: true) }
+
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.to contain_class('ipmi') }
+          it { is_expected.not_to contain_class('profile::core::perccli') }
+          it { is_expected.to contain_class('profile::core::kernel::pcie_aspm') }
+          it { is_expected.to contain_class('profile::core::kernel::nvme_apst') }
+
+          it do
+            is_expected.to contain_profile__util__kernel_param('pci=pcie_bus_perf')
+              .with_reboot(false)
+          end
+        end
+      end  # 1114S-WN10RT
     end
-
-    context 'with fact has_dellperc: false' do
-      let(:facts) { super().merge(has_dellperc: false) }
-
-      it { is_expected.to compile.with_all_deps }
-      it { is_expected.to contain_class('ipmi') }
-      it { is_expected.not_to contain_class('profile::core::perccli') }
-      it { is_expected.not_to contain_class('profile::core::kernel::pcie_aspm') }
-      it { is_expected.not_to contain_class('profile::core::kernel::nvme_apst') }
-      it { is_expected.not_to contain_profile__util__kernel_param('pci=pcie_bus_perf') }
-    end
-
-    context 'with fact has_dellperc: true' do
-      let(:facts) { super().merge(has_dellperc: true) }
-
-      it { is_expected.to compile.with_all_deps }
-      it { is_expected.to contain_class('ipmi') }
-      it { is_expected.to contain_class('profile::core::perccli') }
-      it { is_expected.not_to contain_class('profile::core::kernel::pcie_aspm') }
-      it { is_expected.not_to contain_class('profile::core::kernel::nvme_apst') }
-      it { is_expected.not_to contain_profile__util__kernel_param('pci=pcie_bus_perf') }
-    end
-  end  # PowerEdge
-
-  context 'with 1114S-WN10RT' do
-    let(:facts) do
-      super().merge(
-        dmi: {
-          product: {
-            name: '1114S-WN10RT',
-          },
-        },
-      )
-    end
-
-    context 'with fact has_dellperc: false' do
-      let(:facts) { super().merge(has_dellperc: false) }
-
-      it { is_expected.to compile.with_all_deps }
-      it { is_expected.to contain_class('ipmi') }
-      it { is_expected.not_to contain_class('profile::core::perccli') }
-      it { is_expected.to contain_class('profile::core::kernel::pcie_aspm') }
-      it { is_expected.to contain_class('profile::core::kernel::nvme_apst') }
-
-      it do
-        is_expected.to contain_profile__util__kernel_param('pci=pcie_bus_perf')
-          .with_reboot(false)
-      end
-    end
-
-    context 'with fact has_dellperc: true' do
-      let(:facts) { super().merge(has_dellperc: true) }
-
-      it { is_expected.to compile.with_all_deps }
-      it { is_expected.to contain_class('ipmi') }
-      it { is_expected.not_to contain_class('profile::core::perccli') }
-      it { is_expected.to contain_class('profile::core::kernel::pcie_aspm') }
-      it { is_expected.to contain_class('profile::core::kernel::nvme_apst') }
-
-      it do
-        is_expected.to contain_profile__util__kernel_param('pci=pcie_bus_perf')
-          .with_reboot(false)
-      end
-    end
-  end  # 1114S-WN10RT
+  end
 end

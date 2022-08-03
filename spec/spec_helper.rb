@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 require 'voxpupuli/test/spec_helper'
-
 include RspecPuppetFacts
+
+# facterdb does not include puppetlabs/stdlib facts
+add_stdlib_facts
+# voxpupuli-test 5.4.1 does not include puppetlabs/stdlib package_provider fact
+add_custom_fact :package_provider, 'yum', confine: 'centos-7-x86_64' # puppet/yum
 
 def root_path
   File.expand_path(File.join(__FILE__, '..', '..'))

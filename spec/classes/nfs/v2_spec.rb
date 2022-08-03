@@ -3,5 +3,11 @@
 require 'spec_helper'
 
 describe 'profile::nfs::v2' do
-  include_examples 'nfsv2 enabled'
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) { facts }
+
+      include_examples 'nfsv2 enabled'
+    end
+  end
 end

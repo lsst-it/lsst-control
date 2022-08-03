@@ -24,7 +24,6 @@ describe 'profile::archive::common', :archiver do
   %w[
     docker-compose
     cryptography
-    redis
   ].each do |p|
     it { is_expected.to contain_python__pip(p) }
   end

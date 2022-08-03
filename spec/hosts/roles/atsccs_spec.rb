@@ -2,45 +2,34 @@
 
 require 'spec_helper'
 
-shared_examples 'generic auxtel-mcm' do
-  it { is_expected.to contain_class('ccs_sal') }
-end
+role = 'atsccs'
 
-describe 'atsccs role' do
-  let(:node_params) do
-    {
-      role: 'atsccs',
-      cluster: 'auxtel-ccs',
-    }
-  end
+describe "#{role} role" do
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts.merge(
+          fqdn: self.class.description,
+        )
+      end
 
-  let(:facts) { { fqdn: self.class.description } }
+      let(:node_params) do
+        {
+          role: role,
+          site: site,
+          cluster: 'auxtel-ccs',
+        }
+      end
 
-  context 'with tu site' do
-    let(:node_params) do
-      super().merge(
-        site: 'tu',
-      )
-    end
+      lsst_sites.each do |site|
+        describe "#{role}.#{site}.lsst.org", :site, :common do
+          let(:site) { site }
 
-    describe 'auxtel-mcm.tu.lsst.org', :site, :common do
-      it { is_expected.to compile.with_all_deps }
+          it { is_expected.to compile.with_all_deps }
 
-      include_examples 'generic auxtel-mcm'
-    end
-  end # site
-
-  context 'with cp site' do
-    let(:node_params) do
-      super().merge(
-        site: 'cp',
-      )
-    end
-
-    describe 'auxtel-mcm.cp.lsst.org', :site, :common do
-      it { is_expected.to compile.with_all_deps }
-
-      include_examples 'generic auxtel-mcm'
-    end
-  end # site
-end
+          it { is_expected.to contain_class('ccs_sal') }
+        end # host
+      end # lsst_sites
+    end # on os
+  end # on_supported_os
+end # role

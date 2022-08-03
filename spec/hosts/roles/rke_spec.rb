@@ -2,45 +2,62 @@
 
 require 'spec_helper'
 
-describe 'test1.dev.lsst.org' do
-  describe 'rke role' do
-    lsst_sites.each do |site|
-      context "with site #{site}", :site, :common do
-        let(:node_params) do
-          {
-            site: site,
-            role: 'rke',
-          }
-        end
+shared_examples 'generic rke' do
+  include_examples 'debugutils'
 
-        it { is_expected.to compile.with_all_deps }
+  it { is_expected.to contain_class('profile::core::rke') }
 
-        include_examples 'debugutils'
+  it do
+    is_expected.to contain_file('/home/rke/.bashrc.d/kubectl.sh')
+      .with_content(%r{^alias k='kubectl'$})
+      .with_content(%r{^complete -o default -F __start_kubectl k$})
+  end
+end
 
-        it { is_expected.to contain_class('profile::core::rke') }
+role = 'rke'
 
-        it do
-          is_expected.to contain_file('/home/rke/.bashrc.d/kubectl.sh')
-            .with_content(%r{^alias k='kubectl'$})
-            .with_content(%r{^complete -o default -F __start_kubectl k$})
-        end
+describe "#{role} role" do
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts.merge(
+          fqdn: self.class.description,
+        )
       end
-    end # site
 
-    context 'with antu cluster', :lhn_node, :site, :common do
       let(:node_params) do
         {
-          site: 'ls',
-          role: 'rke',
-          cluster: 'antu',
+          role: role,
+          site: site,
         }
       end
 
-      it { is_expected.to compile.with_all_deps }
+      lsst_sites.each do |site|
+        describe "#{role}.#{site}.lsst.org", :site, :common do
+          let(:site) { site }
 
-      include_examples 'debugutils'
+          it { is_expected.to compile.with_all_deps }
 
-      it { is_expected.to contain_class('profile::core::rke') }
-    end
-  end # role
-end
+          include_examples 'generic rke'
+        end # host
+      end # lsst_sites
+
+      context 'with antu cluster' do
+        describe 'antu01.ls.lsst.org', :lhn_node, :site, :common do
+          let(:site) { 'ls' }
+          let(:node_params) do
+            super().merge(
+              site: site,
+              role: 'rke',
+              cluster: 'antu',
+            )
+          end
+
+          it { is_expected.to compile.with_all_deps }
+
+          include_examples 'generic rke'
+        end
+      end
+    end # on os
+  end # on_supported_os
+end # role

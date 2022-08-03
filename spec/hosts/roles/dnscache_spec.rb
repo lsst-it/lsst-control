@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-role = 'comcam-fp'
+role = 'dnscache'
 
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
@@ -17,26 +17,24 @@ describe "#{role} role" do
         {
           role: role,
           site: site,
-          cluster: 'comcam-ccs',
         }
       end
 
       lsst_sites.each do |site|
-        describe "comcam-fp01.#{site}.lsst.org", :site, :common do
+        describe "#{role}.#{site}.lsst.org", :site, :common do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }
 
-          case site
-          when 'tu', 'cp'
-            include_examples 'lsst-daq client'
+          it do
+            is_expected.to contain_class('dns').with(
+              forwarders: [
+                '1.0.0.1',
+                '1.1.1.1',
+                '8.8.8.8',
+              ],
+            )
           end
-
-          it { is_expected.not_to contain_class('profile::core::sysctl::lhn') }
-          it { is_expected.not_to contain_class('dhcp') }
-          it { is_expected.to contain_class('dhcp::disable') }
-          it { is_expected.to contain_class('ccs_daq') }
-          it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V3.2') }
         end # host
       end # lsst_sites
     end # on os

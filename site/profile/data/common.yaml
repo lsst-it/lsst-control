@@ -222,13 +222,6 @@ profile::archive::data::comcam::files:
     owner: &saluser 73006
     group: *saluser
 
-profile::archive::redis::files:
-  "/etc/profile.d/rh-redis5.sh":
-    mode: "0644"
-    owner: "root"
-    group: "root"
-    content: ". /opt/rh/rh-redis5/enable"
-
 profile::archive::common::packages:
   - "cmake"
   - "gcc-c++"
@@ -243,10 +236,6 @@ profile::archive::common::python_pips:
   "cryptography":
     virtualenv: "system"
     ensure: "3.3"
-    pip_provider: "pip3"
-  "redis":
-    virtualenv: "system"
-    ensure: "3.5.1"
     pip_provider: "pip3"
 
 profile::archive::common::group_list:

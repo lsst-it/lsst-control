@@ -20,8 +20,6 @@ class profile::archive::common (
   Optional[Hash[String,Hash]] $group_list = undef,
 ) {
   include profile::archive::data
-  include profile::archive::rabbitmq
-  include profile::archive::redis
   include profile::core::common
   include profile::core::debugutils
   include profile::core::docker

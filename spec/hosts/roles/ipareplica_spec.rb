@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-role = 'comcam-archiver'
+role = 'ipareplica'
 
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
@@ -21,15 +21,12 @@ describe "#{role} role" do
       end
 
       lsst_sites.each do |site|
-        describe "#{role}.#{site}.lsst.org", :site, :common do
+        describe "#{role}.#{site}.lsst.org", :site do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'lhn sysctls'
-          include_examples 'archiver'
-
-          it { is_expected.to contain_file('/data/repo/LSSTComCam') }
+          include_examples 'common', no_auth: true
         end # host
       end # lsst_sites
     end # on os

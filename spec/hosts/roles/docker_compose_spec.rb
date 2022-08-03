@@ -2,23 +2,35 @@
 
 require 'spec_helper'
 
-describe 'test1.dev.lsst.org' do
-  describe 'docker-compose role' do
-    lsst_sites.each do |site|
-      context "with site #{site}", :site, :common do
-        let(:node_params) do
-          {
-            site: site,
-            role: 'docker-compose',
-            cluster: 'azar',
-          }
-        end
+role = 'docker-compose'
 
-        it { is_expected.to compile.with_all_deps }
-
-        it { is_expected.to contain_class('docker') }
-        it { is_expected.to contain_class('docker::networks') }
+describe "#{role} role" do
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts.merge(
+          fqdn: self.class.description,
+        )
       end
-    end # site
-  end # role
-end
+
+      let(:node_params) do
+        {
+          role: role,
+          site: site,
+          cluster: 'azar',
+        }
+      end
+
+      lsst_sites.each do |site|
+        describe "#{role}.#{site}.lsst.org", :site, :common do
+          let(:site) { site }
+
+          it { is_expected.to compile.with_all_deps }
+
+          it { is_expected.to contain_class('docker') }
+          it { is_expected.to contain_class('docker::networks') }
+        end # host
+      end # lsst_sites
+    end # on os
+  end # on_supported_os
+end # role

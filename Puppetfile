@@ -66,6 +66,7 @@ mod 'puppetlabs/puppet_agent', '4.10.0'
 mod 'puppetlabs/puppetdb', '7.10.0'
 mod 'puppetlabs/puppetserver_gem', '1.1.1'
 mod 'puppetlabs/reboot', '4.1.0'
+mod 'puppetlabs/selinux_core', '1.2.0'
 mod 'puppetlabs/sshkeys_core', '2.3.0'
 mod 'puppetlabs/stdlib', '7.1.0'
 mod 'puppetlabs/tomcat', git: 'https://github.com/puppetlabs/puppetlabs-tomcat', ref: '406510c'  # https://github.com/puppetlabs/puppetlabs-tomcat/pull/477
@@ -80,9 +81,8 @@ mod 'puppet/nginx', '3.3.0'
 mod 'puppet/openldap', '5.0.1'
 mod 'puppet/php', '8.0.3'
 mod 'puppet/postfix',  '3.0.0'
-mod 'puppet/python', git: 'https://github.com/voxpupuli/puppet-python', ref: '339d2a1'  # https://github.com/voxpupuli/puppet-python/pull/633
+mod 'puppet/python', '6.3.0'
 mod 'puppet/r10k', '10.1.1'
-mod 'puppet/rabbitmq', '12.0.0'
 mod 'puppet/redis', '8.3.0'
 mod 'puppet/rsyslog', git: 'https://github.com/voxpupuli/puppet-rsyslog/', ref: 'dfec146'  # concat https://github.com/voxpupuli/puppet-rsyslog/pull/186
 mod 'puppet/scl', git: 'https://github.com/lsst-it/puppet-scl', ref: 'production'  # https://github.com/bodgit/puppet-scl/pull/2

@@ -97,119 +97,121 @@ shared_examples 'daq nfs exports' do
   end
 end
 
-describe 'daq-mgt role' do
-  let(:node_params) do
-    {
-      role: 'daq-mgt',
-    }
-  end
+# XXX is it wrong to tie role and host specific details together?  This may
+# cause grief when refactoring in the future but it is also the only way to
+# fully test features when depend upon host specific data.  An alternative
+# would be to construct an alternate hiera hierarchy for testing each role
+# with synthetic node data.
 
-  let(:facts) { { fqdn: self.class.description } }
+role = 'daq-mgt'
 
-  # XXX is it wrong to tie role and host specific details together?  This may
-  # cause grief when refactoring in the future but it is also the only way to
-  # fully test features when depend upon host specific data.  An alternative
-  # would be to construct an alternate hiera hierarchy for testing each role
-  # with synthetic node data.
-  describe 'auxtel-daq-mgt.cp.lsst.org', :site, :common do
-    let(:node_params) do
-      super().merge(
-        site: 'cp',
-      )
-    end
+describe "#{role} role" do
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts.merge(
+          fqdn: self.class.description,
+        )
+      end
 
-    include_examples 'generic daq manager'
+      let(:node_params) do
+        {
+          role: role,
+          site: site,
+        }
+      end
 
-    it { is_expected.to contain_network__interface('p3p1').with_ensure('absent') }
+      describe 'auxtel-daq-mgt.cp.lsst.org', :site, :common do
+        let(:site) { 'cp' }
 
-    it do
-      is_expected.to contain_class('hosts').with(
-        host_entries: {
-          'auxtel-sm' => {
-            'ip' => '192.168.101.2',
-          },
-        },
-      )
-    end
+        it { is_expected.to compile.with_all_deps }
 
-    it do
-      is_expected.to contain_network__interface('em2').with(
-        bootproto: 'none',
-        # defroute: 'no',
-        ipaddress: '192.168.101.1',
-        # ipv6init: 'no',
-        netmask: '255.255.255.0',
-        onboot: 'yes',
-        type: 'Ethernet',
-      )
-    end
-  end
+        include_examples 'generic daq manager'
 
-  describe 'daq-mgt.tu.lsst.org', :site, :common do
-    let(:node_params) do
-      super().merge(
-        site: 'tu',
-      )
-    end
+        it { is_expected.to contain_network__interface('p3p1').with_ensure('absent') }
 
-    include_examples 'generic daq manager'
+        it do
+          is_expected.to contain_class('hosts').with(
+            host_entries: {
+              'auxtel-sm' => {
+                'ip' => '192.168.101.2',
+              },
+            },
+          )
+        end
 
-    it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }
+        it do
+          is_expected.to contain_network__interface('em2').with(
+            bootproto: 'none',
+            # defroute: 'no',
+            ipaddress: '192.168.101.1',
+            # ipv6init: 'no',
+            netmask: '255.255.255.0',
+            onboot: 'yes',
+            type: 'Ethernet',
+          )
+        end
+      end
 
-    it do
-      is_expected.to contain_class('hosts').with(
-        host_entries: {
-          'tts-sm' => {
-            'ip' => '10.0.0.212',
-          },
-        },
-      )
-    end
+      describe 'daq-mgt.tu.lsst.org', :site, :common do
+        let(:site) { 'tu' }
 
-    it do
-      is_expected.to contain_network__interface('em4').with(
-        bootproto: 'none',
-        # defroute: 'no',
-        ipaddress: '10.0.0.1',
-        # ipv6init: 'no',
-        netmask: '255.255.255.0',
-        onboot: 'yes',
-        type: 'Ethernet',
-      )
-    end
-  end
+        include_examples 'generic daq manager'
 
-  describe 'comcam-daq-mgt.cp.lsst.org', :site, :common do
-    let(:node_params) do
-      super().merge(
-        site: 'cp',
-      )
-    end
+        it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }
 
-    include_examples 'generic daq manager'
+        it do
+          is_expected.to contain_class('hosts').with(
+            host_entries: {
+              'tts-sm' => {
+                'ip' => '10.0.0.212',
+              },
+            },
+          )
+        end
 
-    it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }
+        it do
+          is_expected.to contain_network__interface('em4').with(
+            bootproto: 'none',
+            # defroute: 'no',
+            ipaddress: '10.0.0.1',
+            # ipv6init: 'no',
+            netmask: '255.255.255.0',
+            onboot: 'yes',
+            type: 'Ethernet',
+          )
+        end
+      end
 
-    it do
-      is_expected.to contain_class('hosts').with(
-        host_entries: {
-          'comcam-sm' => {
-            'ip' => '10.0.0.212',
-          },
-        },
-      )
-    end
+      describe 'comcam-daq-mgt.cp.lsst.org', :site, :common do
+        let(:site) { 'cp' }
 
-    it do
-      is_expected.to contain_network__interface('em2').with(
-        bootproto: 'none',
-        defroute: 'no',
-        ipaddress: '10.0.0.1',
-        ipv6init: 'no',
-        netmask: '255.255.255.0',
-        onboot: 'yes',
-        type: 'Ethernet',
-      )
-    end
-  end
-end
+        include_examples 'generic daq manager'
+
+        it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }
+
+        it do
+          is_expected.to contain_class('hosts').with(
+            host_entries: {
+              'comcam-sm' => {
+                'ip' => '10.0.0.212',
+              },
+            },
+          )
+        end
+
+        it do
+          is_expected.to contain_network__interface('em2').with(
+            bootproto: 'none',
+            defroute: 'no',
+            ipaddress: '10.0.0.1',
+            ipv6init: 'no',
+            netmask: '255.255.255.0',
+            onboot: 'yes',
+            type: 'Ethernet',
+          )
+        end
+      end
+    end # on os
+  end # on_supported_os
+end # role

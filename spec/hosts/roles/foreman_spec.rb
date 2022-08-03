@@ -141,88 +141,97 @@ shared_examples 'generic foreman' do
   it { is_expected.to contain_foreman_config_entry('template_sync_branch').with_value(site) }
 end
 
-describe 'foreman role' do
-  let(:node_params) do
-    {
-      role: 'foreman',
-      site: site,
-    }
+role = 'foreman'
+
+describe "#{role} role" do
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts.merge(
+          fqdn: self.class.description,
+        )
+      end
+      let(:node_params) do
+        {
+          role: 'foreman',
+          site: site,
+        }
+      end
+
+      describe 'foreman.dev.lsst.org', :site, :common do
+        let(:site) { 'dev' }
+        let(:ntpservers) do
+          %w[
+            ntp.shoa.cl
+            ntp.cp.lsst.org
+            1.cl.pool.ntp.org
+            1.south-america.pool.ntp.org
+          ]
+        end
+
+        it { is_expected.to compile.with_all_deps }
+
+        include_examples 'generic foreman'
+
+        it { is_expected.to contain_foreman_global_parameter('site').with_value('dev') }
+        it { is_expected.to contain_foreman_hostgroup('dev') }
+      end # host
+
+      describe 'foreman.tu.lsst.org', :site, :common do
+        let(:site) { 'tu' }
+        let(:ntpservers) do
+          %w[
+            140.252.1.140
+            140.252.1.141
+            140.252.1.142
+          ]
+        end
+
+        it { is_expected.to compile.with_all_deps }
+
+        include_examples 'generic foreman'
+
+        it { is_expected.to contain_foreman_global_parameter('site').with_value('tu') }
+        it { is_expected.to contain_foreman_hostgroup('tu') }
+      end # host
+
+      describe 'foreman.ls.lsst.org', :site, :common do
+        let(:site) { 'ls' }
+        let(:ntpservers) do
+          %w[
+            ntp.shoa.cl
+            ntp.cp.lsst.org
+            1.cl.pool.ntp.org
+            1.south-america.pool.ntp.org
+          ]
+        end
+
+        it { is_expected.to compile.with_all_deps }
+
+        include_examples 'generic foreman'
+
+        it { is_expected.to contain_foreman_global_parameter('site').with_value('ls') }
+        it { is_expected.to contain_foreman_hostgroup('ls') }
+      end # host
+
+      describe 'foreman.cp.lsst.org', :site, :common do
+        let(:site) { 'cp' }
+        let(:ntpservers) do
+          %w[
+            ntp.cp.lsst.org
+            ntp.shoa.cl
+            1.cl.pool.ntp.org
+            1.south-america.pool.ntp.org
+          ]
+        end
+
+        it { is_expected.to compile.with_all_deps }
+
+        include_examples 'generic foreman'
+
+        it { is_expected.to contain_foreman_global_parameter('site').with_value('cp') }
+        it { is_expected.to contain_foreman_hostgroup('cp') }
+      end # host
+    end
   end
-
-  let(:facts) { { fqdn: self.class.description } }
-
-  describe 'foreman.dev.lsst.org', :site, :common do
-    let(:site) { 'dev' }
-    let(:ntpservers) do
-      %w[
-        ntp.shoa.cl
-        ntp.cp.lsst.org
-        1.cl.pool.ntp.org
-        1.south-america.pool.ntp.org
-      ]
-    end
-
-    it { is_expected.to compile.with_all_deps }
-
-    include_examples 'generic foreman'
-
-    it { is_expected.to contain_foreman_global_parameter('site').with_value('dev') }
-    it { is_expected.to contain_foreman_hostgroup('dev') }
-  end # host
-
-  describe 'foreman.tu.lsst.org', :site, :common do
-    let(:site) { 'tu' }
-    let(:ntpservers) do
-      %w[
-        140.252.1.140
-        140.252.1.141
-        140.252.1.142
-      ]
-    end
-
-    it { is_expected.to compile.with_all_deps }
-
-    include_examples 'generic foreman'
-
-    it { is_expected.to contain_foreman_global_parameter('site').with_value('tu') }
-    it { is_expected.to contain_foreman_hostgroup('tu') }
-  end # host
-
-  describe 'foreman.ls.lsst.org', :site, :common do
-    let(:site) { 'ls' }
-    let(:ntpservers) do
-      %w[
-        ntp.shoa.cl
-        ntp.cp.lsst.org
-        1.cl.pool.ntp.org
-        1.south-america.pool.ntp.org
-      ]
-    end
-
-    it { is_expected.to compile.with_all_deps }
-
-    include_examples 'generic foreman'
-
-    it { is_expected.to contain_foreman_global_parameter('site').with_value('ls') }
-    it { is_expected.to contain_foreman_hostgroup('ls') }
-  end # host
-
-  describe 'foreman.cp.lsst.org', :site, :common do
-    let(:site) { 'cp' }
-    let(:ntpservers) do
-      %w[
-        ntp.cp.lsst.org
-        ntp.shoa.cl
-        1.cl.pool.ntp.org
-        1.south-america.pool.ntp.org
-      ]
-    end
-
-    it { is_expected.to compile.with_all_deps }
-
-    include_examples 'generic foreman'
-
-    it { is_expected.to contain_foreman_global_parameter('site').with_value('cp') }
-    it { is_expected.to contain_foreman_hostgroup('cp') }
-  end # host
-end # role
+end

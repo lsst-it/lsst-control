@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 IPA_SERVER_VERSION = '4.6.8'
-IPA_SERVER_RELEASE = '5.el7.centos.6'
+IPA_SERVER_RELEASE = '5.el7.centos.7'
 
 role = 'ipareplica'
 

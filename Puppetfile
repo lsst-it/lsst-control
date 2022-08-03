@@ -69,7 +69,7 @@ mod 'puppetlabs/reboot', '4.1.0'
 mod 'puppetlabs/selinux_core', '1.2.0'
 mod 'puppetlabs/sshkeys_core', '2.3.0'
 mod 'puppetlabs/stdlib', '7.1.0'
-mod 'puppetlabs/tomcat', git: 'https://github.com/puppetlabs/puppetlabs-tomcat', ref: '406510c'  # https://github.com/puppetlabs/puppetlabs-tomcat/pull/477
+mod 'puppetlabs/tomcat', '6.2.0'
 mod 'puppetlabs/translate', '2.2.0'
 mod 'puppetlabs/vcsrepo', '5.0.0'
 mod 'puppetlabs/xinetd', '3.3.0'

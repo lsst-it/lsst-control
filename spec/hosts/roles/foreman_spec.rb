@@ -152,6 +152,18 @@ shared_examples 'generic foreman' do
   it { is_expected.to contain_foreman_hostgroup(site) }
 
   it { is_expected.to contain_class('foreman_envsync') }
+
+  it do
+    is_expected.to contain_class('r10k').with_postrun(
+      [
+        'systemd-cat',
+        '-t',
+        'foreman_envsync',
+        '/bin/foreman_envsync',
+        '--verbose',
+      ],
+    )
+  end
 end
 
 role = 'foreman'

@@ -84,7 +84,7 @@ mod 'puppet/postfix',  '3.0.0'
 mod 'puppet/python', '6.3.0'
 mod 'puppet/r10k', '10.1.1'
 mod 'puppet/redis', '8.3.0'
-mod 'puppet/rsyslog', git: 'https://github.com/voxpupuli/puppet-rsyslog/', ref: 'dfec146'  # concat https://github.com/voxpupuli/puppet-rsyslog/pull/186
+mod 'puppet/rsyslog', '6.0.0'
 mod 'puppet/scl', git: 'https://github.com/lsst-it/puppet-scl', ref: 'production'  # https://github.com/bodgit/puppet-scl/pull/2
 mod 'puppet/selinux', '3.4.1'
 mod 'puppet/ssh_keygen', '5.0.2'

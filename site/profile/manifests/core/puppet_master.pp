@@ -27,6 +27,7 @@ class profile::core::puppet_master (
   include cron
   include foreman
   include foreman::cli
+  include foreman::cli::discovery
   include foreman::cli::puppet
   include foreman::cli::remote_execution
   include foreman::cli::tasks
@@ -34,11 +35,13 @@ class profile::core::puppet_master (
   include foreman::compute::libvirt
   include foreman::compute::vmware
   include foreman::plugin::column_view
+  include foreman::plugin::discovery
   include foreman::plugin::puppet
   include foreman::plugin::remote_execution
   include foreman::plugin::tasks
   include foreman::plugin::templates
   include foreman_proxy
+  include foreman_proxy::plugin::discovery
   include foreman_proxy::plugin::dns::route53
   include foreman_proxy::plugin::dynflow
   include foreman_proxy::plugin::remote_execution::script

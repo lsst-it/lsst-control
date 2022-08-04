@@ -39,6 +39,14 @@ shared_examples 'generic foreman' do
     it { is_expected.to contain_yum__versionlock(pkg) }
   end
 
+  it do
+    is_expected.to contain_class('foreman_proxy::plugin::discovery').with(
+      image_name: 'fdi-image-4.99.99-6224850.tar',
+      install_images: true,
+      source_url: 'https://github.com/lsst-it/foreman-discovery-image/releases/download/lsst-4.99.99/',
+    )
+  end
+
   it { is_expected.to contain_class('puppetdb::globals').with_version(TERMINI_VERSION) }
 
   it do
@@ -113,6 +121,7 @@ shared_examples 'generic foreman' do
   end
 
   {
+    default_pxe_item_global: 'discovery',
     host_details_ui: false,
     template_sync_associate: 'always',
     template_sync_commit_msg: 'Templates export made by a Foreman user',

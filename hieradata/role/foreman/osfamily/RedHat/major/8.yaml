@@ -1,0 +1,53 @@
+---
+profile::core::yum::versionlock:
+  puppetserver:
+    ensure: "present"
+    version: "7.9.0"
+    release: "1.el8"
+    before: "Package[puppetserver]"
+  puppetdb-termini:
+    ensure: "present"
+    version: "7.11.0"
+    release: "1.el8"
+    before: "Package[puppetdb-termini]"
+  foreman:
+    ensure: "present"
+    version: "%{lookup('foreman::version')}"
+    release: "1.el8"
+  foreman-libvirt:
+    ensure: "present"
+    version: "%{lookup('foreman::version')}"
+    release: "1.el8"
+  foreman-dynflow-sidekiq:
+    ensure: "present"
+    version: "%{lookup('foreman::version')}"
+    release: "1.el8"
+  foreman-service:
+    ensure: "present"
+    version: "%{lookup('foreman::version')}"
+    release: "1.el8"
+  foreman-postgresql:
+    ensure: "present"
+    version: "%{lookup('foreman::version')}"
+    release: "1.el8"
+  foreman-debug:
+    ensure: "present"
+    version: "%{lookup('foreman::version')}"
+    release: "1.el8"
+  foreman-cli:
+    ensure: "present"
+    version: "%{lookup('foreman::version')}"
+    release: "1.el8"
+  foreman-installer:
+    ensure: "present"
+    epoch: 1
+    version: "%{lookup('foreman::version')}"
+    release: "2.el8"
+  foreman-proxy:
+    ensure: "present"
+    version: "%{lookup('foreman::version')}"
+    release: "1.el8"
+  foreman-vmware:
+    ensure: "present"
+    version: "%{lookup('foreman::version')}"
+    release: "1.el8"

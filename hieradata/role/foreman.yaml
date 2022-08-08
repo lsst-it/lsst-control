@@ -245,6 +245,7 @@ profile::core::puppet_master::foreman_config:
   host_power_status: {value: false}
   idle_timeout: {value: 7200}  # session timeout in minutes
   matchers_inheritance: {value: false}
+  maximum_structured_facts: {value: 1000}
   update_hostgroup_from_facts: {value: false}
   template_sync_associate: {value: "always"}
   template_sync_branch: {value: "%{::site}"}

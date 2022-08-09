@@ -1,6 +1,8 @@
 ---
 network::interfaces_hash:
   ens160:  # fqdn
+    ensure: "absent"
+  ens36:  # fqdn
     onboot: "yes"
     bootproto: "none"
     type: "Ethernet"

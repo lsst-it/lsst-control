@@ -296,6 +296,16 @@ shared_examples 'puppet_master' do
   it { is_expected.to contain_foreman_proxy__plugin('discovery') }
 
   it { is_expected.to contain_class('foreman_proxy::plugin::dynflow') }
+
+  it do
+    is_expected.to contain_file('/var/lib/tftpboot/boot/udev_fact.zip').with(
+      ensure: 'file',
+      owner: 'foreman-proxy',
+      group: 'foreman-proxy',
+      mode: '0644',
+      source: 'puppet:///modules/profile/foreman/udev_fact.zip',
+    )
+  end
 end
 
 # 'spec_overrides' from sync.yml will appear below this line

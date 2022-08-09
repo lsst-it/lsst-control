@@ -182,4 +182,12 @@ class profile::core::puppet_master (
     gpgkey   => "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppet\n  file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppet-20250406",
     before   => Class['puppet'],
   }
+
+  file { '/var/lib/tftpboot/boot/udev_fact.zip':
+    ensure => file,
+    owner  => 'foreman-proxy',
+    group  => 'foreman-proxy',
+    mode   => '0644',
+    source => "puppet:///modules/${module_name}/foreman/udev_fact.zip",
+  }
 }

@@ -5,6 +5,7 @@ classes:
   - "network"
   - "profile::core::cmms"
   - "puppet_agent"
+  - "resolv_conf"
   - "ssh"
   - "sudo"
 

@@ -150,3 +150,5 @@ ccs_sal::rpms_private:
   OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"
 
 daq::daqsdk::purge: false
+
+hosts::stored_config: false

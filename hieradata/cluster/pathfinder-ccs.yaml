@@ -100,3 +100,5 @@ ccs_software::installations:
       #      - "pathfinder-prod"
 
 daq::daqsdk::purge: false
+
+hosts::stored_config: false

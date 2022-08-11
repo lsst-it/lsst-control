@@ -170,3 +170,5 @@ ccs_software::installations:
 
 profile::icinga::agent::host_template: "ComCamHostTemplate"
 daq::daqsdk::purge: false
+
+hosts::stored_config: false

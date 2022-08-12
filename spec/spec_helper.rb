@@ -139,6 +139,8 @@ shared_examples 'krb5.conf content' do |match|
 end
 
 shared_examples 'common' do |facts:, no_auth: false|
+  include_examples 'bash_completion', facts: facts
+
   unless no_auth
     include_examples 'krb5.conf content', %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}}
     include_examples 'krb5.conf content', %r{udp_preference_limit = 0}
@@ -594,6 +596,20 @@ shared_examples 'generic foreman' do
       path: '/payload',
       port: 8088,
     )
+  end
+end
+
+shared_examples 'bash_completion' do |facts:|
+  if facts[:os]['family'] == 'RedHat'
+    it { is_expected.to contain_package('bash-completion') }
+
+    if facts[:os]['release']['major'] == '7'
+      it { is_expected.to contain_package('bash-completion-extras') }
+    else
+      it { is_expected.not_to contain_package('bash-completion-extras') }
+    end
+  else
+    it { is_expected.not_to contain_package('bash-completion') }
   end
 end
 

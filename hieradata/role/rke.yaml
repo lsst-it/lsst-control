@@ -13,8 +13,6 @@ classes:
   - "profile::core::velero"
 packages:
   - "ack"
-  - "bash-completion"
-  - "bash-completion-extras"
   - "gdisk"
   - "git"
   - "vim"

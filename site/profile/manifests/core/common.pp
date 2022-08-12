@@ -72,6 +72,7 @@ class profile::core::common (
   include easy_ipa
   include hosts
   include network
+  include profile::core::bash_completion
   include profile::core::ca
   include profile::core::dielibwrapdie
   include profile::core::ifdown

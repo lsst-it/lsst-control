@@ -5,8 +5,6 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::libvirt"
 packages:
-  - "bash-completion"
-  - "bash-completion-extras"
   - "libguestfs"
   - "qemu-guest-agent"
   - "qemu-kvm-tools"

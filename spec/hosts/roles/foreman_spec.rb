@@ -8,6 +8,7 @@ TERMINI_VERSION = '6.19.1'
 
 shared_examples 'generic foreman' do
   include_examples 'debugutils'
+  include_examples 'puppet_master'
 
   it do
     is_expected.to contain_class('foreman').with(
@@ -20,16 +21,6 @@ shared_examples 'generic foreman' do
       repo: '3.2',
     )
   end
-
-  it { is_expected.to contain_foreman__plugin('puppet') }
-  it { is_expected.to contain_foreman__cli__plugin('foreman_puppet') }
-  it { is_expected.to contain_foreman__plugin('tasks') }
-  it { is_expected.to contain_foreman__cli__plugin('foreman_tasks') }
-  it { is_expected.to contain_foreman__plugin('remote_execution') }
-  it { is_expected.to contain_foreman__cli__plugin('foreman_remote_execution') }
-  it { is_expected.to contain_foreman__plugin('templates') }
-  it { is_expected.to contain_foreman__cli__plugin('foreman_templates') }
-  it { is_expected.to contain_foreman__plugin('column_view') }
 
   [
     "0:foreman-cli-#{FOREMAN_VERSION}-1.el7.noarch",
@@ -48,7 +39,6 @@ shared_examples 'generic foreman' do
     it { is_expected.to contain_yum__versionlock(pkg) }
   end
 
-  it { is_expected.to contain_class('foreman_proxy::plugin::dynflow') }
   it { is_expected.to contain_class('puppetdb::globals').with_version(TERMINI_VERSION) }
 
   it do
@@ -97,32 +87,33 @@ shared_examples 'generic foreman' do
     )
   end
 
-  it { is_expected.to contain_foreman_config_entry('host_details_ui').with_value(false) }
+  it { is_expected.to contain_class('dhcp').with_ntpservers(ntpservers) }
 
-  it { is_expected.to contain_foreman_global_parameter('bootloader-append').with_value('nofb') }
-  it { is_expected.to contain_foreman_global_parameter('disable-firewall').with_value(true) }
-  it { is_expected.to contain_foreman_global_parameter('enable-epel').with_value(true) }
-  it { is_expected.to contain_foreman_global_parameter('enable-puppetlabs-puppet6-repo').with_value(true) }
-  it { is_expected.to contain_foreman_global_parameter('host_registration_insights').with_value(false) }
-  it { is_expected.to contain_foreman_global_parameter('host_registration_remote_execution').with_value(true) }
+  {
+    'bootloader-append': 'nofb',
+    'disable-firewall': true,
+    'enable-epel': true,
+    'enable-puppetlabs-puppet6-repo': true,
+    fips_enabled: true,
+    host_registration_insights: false,
+    host_registration_remote_execution: true,
+    package_upgrade: true,
+    role: 'generic',
+    'selinux-mode': 'disabled',
+  }.each do |k, v|
+    it { is_expected.to contain_foreman_global_parameter(k).with_value(v) }
+  end
+
   it { is_expected.to contain_foreman_global_parameter('org').with_ensure('absent') }
-  it { is_expected.to contain_foreman_global_parameter('package_upgrade').with_value(true) }
-  it { is_expected.to contain_foreman_global_parameter('selinux-mode').with_value('disabled') }
-  it { is_expected.to contain_foreman_global_parameter('fips_enabled').with_value(true) }
-  it { is_expected.to contain_foreman_global_parameter('role').with_value('generic') }
+  it { is_expected.to contain_foreman_global_parameter('site').with_value(site) }
 
   it do
     is_expected.to contain_foreman_global_parameter('ntp-server')
       .with_value(ntpservers.join(','))
   end
 
-  it { is_expected.to contain_class('dhcp').with_ntpservers(ntpservers) }
-
-  it { is_expected.to contain_foreman_config_entry('template_sync_branch').with_value(site) }
-  it { is_expected.to contain_foreman_global_parameter('site').with_value(site) }
-  it { is_expected.to contain_foreman_hostgroup(site) }
-
   {
+    host_details_ui: false,
     template_sync_associate: 'always',
     template_sync_commit_msg: 'Templates export made by a Foreman user',
     template_sync_dirname: '/',
@@ -139,6 +130,8 @@ shared_examples 'generic foreman' do
   end
 
   it { is_expected.to contain_foreman_config_entry('template_sync_branch').with_value(site) }
+
+  it { is_expected.to contain_foreman_hostgroup(site) }
 end
 
 role = 'foreman'
@@ -172,9 +165,6 @@ describe "#{role} role" do
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'generic foreman'
-
-        it { is_expected.to contain_foreman_global_parameter('site').with_value('dev') }
-        it { is_expected.to contain_foreman_hostgroup('dev') }
       end # host
 
       describe 'foreman.tu.lsst.org', :site, :common do
@@ -190,9 +180,6 @@ describe "#{role} role" do
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'generic foreman'
-
-        it { is_expected.to contain_foreman_global_parameter('site').with_value('tu') }
-        it { is_expected.to contain_foreman_hostgroup('tu') }
       end # host
 
       describe 'foreman.ls.lsst.org', :site, :common do
@@ -209,9 +196,6 @@ describe "#{role} role" do
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'generic foreman'
-
-        it { is_expected.to contain_foreman_global_parameter('site').with_value('ls') }
-        it { is_expected.to contain_foreman_hostgroup('ls') }
       end # host
 
       describe 'foreman.cp.lsst.org', :site, :common do
@@ -228,9 +212,6 @@ describe "#{role} role" do
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'generic foreman'
-
-        it { is_expected.to contain_foreman_global_parameter('site').with_value('cp') }
-        it { is_expected.to contain_foreman_hostgroup('cp') }
       end # host
     end
   end

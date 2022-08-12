@@ -290,6 +290,8 @@ shared_examples 'puppet_master' do
   it { is_expected.to contain_foreman__plugin('templates') }
   it { is_expected.to contain_foreman__cli__plugin('foreman_templates') }
   it { is_expected.to contain_foreman__plugin('column_view') }
+
+  it { is_expected.to contain_class('foreman_proxy::plugin::dynflow') }
 end
 
 # 'spec_overrides' from sync.yml will appear below this line

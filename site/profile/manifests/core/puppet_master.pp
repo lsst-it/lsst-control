@@ -190,4 +190,7 @@ class profile::core::puppet_master (
     mode   => '0644',
     source => "puppet:///modules/${module_name}/foreman/udev_fact.zip",
   }
+
+  # for bmc management
+  ensure_packages(['ipmitool'])
 }

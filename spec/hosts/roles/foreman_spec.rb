@@ -22,6 +22,13 @@ shared_examples 'generic foreman' do
     )
   end
 
+  it do
+    is_expected.to contain_class('foreman_proxy').with(
+      bmc_default_provider: 'ipmitool',
+      bmc: true,
+    )
+  end
+
   [
     "0:foreman-cli-#{FOREMAN_VERSION}-1.el7.noarch",
     "0:foreman-debug-#{FOREMAN_VERSION}-1.el7.noarch",

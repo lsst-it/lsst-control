@@ -306,6 +306,8 @@ shared_examples 'puppet_master' do
       source: 'puppet:///modules/profile/foreman/udev_fact.zip',
     )
   end
+
+  it { is_expected.to contain_package('ipmitool') }
 end
 
 # 'spec_overrides' from sync.yml will appear below this line

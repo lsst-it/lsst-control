@@ -89,6 +89,8 @@ foreman::plugin::column_view::columns:
 foreman::plugin::tasks::automatic_cleanup: true
 foreman_proxy::base_url: "https://%{facts.fqdn}"
 foreman_proxy::bind_host: '*'
+foreman_proxy::bmc_default_provider: "ipmitool"
+foreman_proxy::bmc: true
 foreman_proxy::dhcp_listen_on: "https"
 foreman_proxy::dhcp_managed: false  # dhcp mod is used directly
 foreman_proxy::dhcp_ping_free_ip: false  # changing reservations is already a dumpster fire

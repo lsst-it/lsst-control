@@ -1,0 +1,4 @@
+---
+profile::core::bash_completion::packages:
+  - "bash-completion"
+  - "bash-completion-extras"

@@ -232,6 +232,7 @@ ssh::client_match_block:
       StrictHostKeyChecking: "no"  # el7 does not support "accept-new"
 
 profile::core::puppet_master::foreman_config:
+  bmc_credentials_accessible: {value: false}  # disable bmc pass in enc yaml
   default_pxe_item_global: {value: "discovery"}
   destroy_vm_on_host_delete: {value: false}
   entries_per_page: {value: 100}

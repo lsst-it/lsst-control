@@ -128,6 +128,7 @@ shared_examples 'generic foreman' do
   end
 
   {
+    bmc_credentials_accessible: false,
     default_pxe_item_global: 'discovery',
     host_details_ui: false,
     template_sync_associate: 'always',

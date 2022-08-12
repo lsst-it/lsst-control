@@ -1,6 +1,7 @@
 ---
 classes:
   - "clustershell"
+  - "kubectl"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::docker"
@@ -16,23 +17,11 @@ packages:
   - "bash-completion-extras"
   - "gdisk"
   - "git"
-  - "kubectl"
   - "vim"
 sysctl::values::args:
   net.bridge.bridge-nf-call-iptables:
     value: 1
     target: "/etc/sysctl.d/80-rke.conf"
-yum::managed_repos:
-  - "kubernetes"
-yum::repos:
-  "kubernetes":
-    ensure: "present"
-    descr: "Kubernetes"
-    enabled: true
-    baseurl: "https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64"
-    gpgcheck: true
-    gpgkey: "https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"
-    target: "/etc/yum.repos.d/kubernetes.repo"
 profile::core::helm::version: "3.5.4"
 profile::core::kernel::devel: true
 profile::core::kernel::debuginfo: true

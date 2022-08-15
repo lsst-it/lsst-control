@@ -1,4 +1,10 @@
 ---
+profile::core::yum::versionlock:
+  puppet-agent:
+    ensure: "present"
+    version: "7.18.0"
+    release: "1.el7"
+    before: "Package[puppet-agent]"
 profile::ts::opensplicedds::ensure: "6.10.4-6.el7"
 scl::repos:
   centos-sclo-sclo:

@@ -236,6 +236,7 @@ profile::core::puppet_master::foreman_config:
   default_pxe_item_global: {value: "discovery"}
   destroy_vm_on_host_delete: {value: false}
   discovery_fact_column: {value: "ipmi_ipaddress,ipmi_macaddress"}
+  discovery_hostname: {value: "ipmi_macaddress,discovery_bootif"}
   entries_per_page: {value: 100}
   # remove "docker*" from default excluded_facts
   # XXX using block scalar style results in the double quotes being preceeded

@@ -28,7 +28,6 @@ easy_ipa::ip_address: "%{facts.networking.ip}"
 # enable easy_ipa management of sssd packages on servers
 easy_ipa::install_sssd: true
 easy_ipa::install_sssdtools: true
-easy_ipa::sssdtools: true
 
 clustershell::groupmembers:
   ipa:

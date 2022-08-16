@@ -2,5 +2,4 @@
 classes:
   - "profile::ccs::common"
   - "profile::core::common"
-ccs_monit::hwraid: false
 ccs_monit::network: false

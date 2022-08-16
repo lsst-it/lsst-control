@@ -18,7 +18,6 @@ class profile::ccs::common (
 ) {
   include clustershell
   include profile::ccs::cfs
-  include profile::ccs::facts
   include profile::ccs::home
   include profile::ccs::monitoring
   include profile::ccs::postfix

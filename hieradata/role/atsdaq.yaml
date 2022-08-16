@@ -9,6 +9,5 @@ classes:
   - "profile::core::nfsserver"
   - "profile::daq::daq_interface"
 
-profile::ccs::facts::daq: true
 profile::ccs::krb5_token::user: "ccs-ipa"
 profile::ccs::krb5_token::uid: 72055

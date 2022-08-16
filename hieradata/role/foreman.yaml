@@ -89,6 +89,8 @@ foreman::plugin::column_view::columns:
 foreman::plugin::tasks::automatic_cleanup: true
 foreman_proxy::base_url: "https://%{facts.fqdn}"
 foreman_proxy::bind_host: '*'
+foreman_proxy::bmc_default_provider: "ipmitool"
+foreman_proxy::bmc: true
 foreman_proxy::dhcp_listen_on: "https"
 foreman_proxy::dhcp_managed: false  # dhcp mod is used directly
 foreman_proxy::dhcp_ping_free_ip: false  # changing reservations is already a dumpster fire
@@ -106,6 +108,9 @@ foreman_proxy::log_buffer: 2000
 foreman_proxy::log_buffer_errors: 1000
 foreman_proxy::log_level: "DEBUG"
 foreman_proxy::log: "/var/log/foreman-proxy/proxy.log"
+foreman_proxy::plugin::discovery::image_name: "fdi-image-4.99.99-6224850.tar"
+foreman_proxy::plugin::discovery::install_images: true
+foreman_proxy::plugin::discovery::source_url: "https://github.com/lsst-it/foreman-discovery-image/releases/download/lsst-4.99.99/"
 foreman_proxy::plugin::dynflow::console_auth: true
 foreman_proxy::plugin::dynflow::enabled: true
 foreman_proxy::plugin::dynflow::listen_on: "https"
@@ -227,7 +232,11 @@ ssh::client_match_block:
       StrictHostKeyChecking: "no"  # el7 does not support "accept-new"
 
 profile::core::puppet_master::foreman_config:
+  bmc_credentials_accessible: {value: false}  # disable bmc pass in enc yaml
+  default_pxe_item_global: {value: "discovery"}
   destroy_vm_on_host_delete: {value: false}
+  discovery_fact_column: {value: "ipmi_ipaddress,ipmi_macaddress"}
+  discovery_hostname: {value: "ipmi_macaddress,discovery_bootif"}
   entries_per_page: {value: 100}
   # remove "docker*" from default excluded_facts
   # XXX using block scalar style results in the double quotes being preceeded
@@ -241,6 +250,7 @@ profile::core::puppet_master::foreman_config:
   host_power_status: {value: false}
   idle_timeout: {value: 7200}  # session timeout in minutes
   matchers_inheritance: {value: false}
+  maximum_structured_facts: {value: 1000}
   update_hostgroup_from_facts: {value: false}
   template_sync_associate: {value: "always"}
   template_sync_branch: {value: "%{::site}"}

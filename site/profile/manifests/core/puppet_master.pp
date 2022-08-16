@@ -27,6 +27,7 @@ class profile::core::puppet_master (
   include cron
   include foreman
   include foreman::cli
+  include foreman::cli::discovery
   include foreman::cli::puppet
   include foreman::cli::remote_execution
   include foreman::cli::tasks
@@ -34,11 +35,13 @@ class profile::core::puppet_master (
   include foreman::compute::libvirt
   include foreman::compute::vmware
   include foreman::plugin::column_view
+  include foreman::plugin::discovery
   include foreman::plugin::puppet
   include foreman::plugin::remote_execution
   include foreman::plugin::tasks
   include foreman::plugin::templates
   include foreman_proxy
+  include foreman_proxy::plugin::discovery
   include foreman_proxy::plugin::dns::route53
   include foreman_proxy::plugin::dynflow
   include foreman_proxy::plugin::remote_execution::script
@@ -179,4 +182,15 @@ class profile::core::puppet_master (
     gpgkey   => "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppet\n  file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppet-20250406",
     before   => Class['puppet'],
   }
+
+  file { '/var/lib/tftpboot/boot/udev_fact.zip':
+    ensure => file,
+    owner  => 'foreman-proxy',
+    group  => 'foreman-proxy',
+    mode   => '0644',
+    source => "puppet:///modules/${module_name}/foreman/udev_fact.zip",
+  }
+
+  # for bmc management
+  ensure_packages(['ipmitool'])
 }

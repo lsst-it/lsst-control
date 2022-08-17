@@ -31,7 +31,7 @@ mod 'lsst/helm_binary', '1.0.0'
 # Fork of ghoneycutt/hosts that includes https://github.com/ghoneycutt/puppet-module-hosts/pull/63
 mod 'lsst/hosts', git: 'https://github.com/lsst-it/puppet-module-hosts', ref: '528475e'
 mod 'lsst/java_artisanal', '2.2.2'
-mod 'lsst/maven', '2.0.1'
+mod 'lsst/maven', '2.0.2'
 mod 'lsst/rke', '1.1.0'
 mod 'lsst/tuned', git: 'https://github.com/lsst-it/puppet-tuned', branch: 'production'  # https://github.com/CERIT-SC/puppet-tuned/pull/21
 mod 'puppet/alternatives', '4.0.0'

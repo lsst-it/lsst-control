@@ -417,6 +417,11 @@ shared_examples 'rke profile' do
     ).that_requires('Kmod::Load[br_netfilter]')
                                                                               .that_comes_before('Class[docker]')
   end
+
+  it do
+    is_expected.to contain_class('easy_ipa')
+      .that_comes_before('Class[profile::core::rke]')
+  end
 end
 
 shared_examples 'generic foreman' do

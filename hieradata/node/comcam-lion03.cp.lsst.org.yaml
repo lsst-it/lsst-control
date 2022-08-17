@@ -2,9 +2,8 @@
 ccs_software::services:
   prod:
     - "comcam-vacuum"
-# 202107 running-but-disabled.
-#  pathfinder-prod:
-#    - "pathfinder"
+    - "pathfinder"
+    - "hexvalves"
 
 network::interfaces_hash:
   enp0s31f6:  # fqdn

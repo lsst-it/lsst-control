@@ -59,8 +59,6 @@ nfs::client_mounts:
     server: "%{facts.fqdn}"
     atboot: true
 
-ccs_monit::hwraid: false
-
 ccs_software::services:
   ## FIXME this should be changed to prod, and a local systemctl override
   ## used to get the dev version.

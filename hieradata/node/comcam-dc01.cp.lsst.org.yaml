@@ -4,8 +4,6 @@ profile::daq::daq_interface::uuid: "faf763be-13a8-481b-9e3f-af5766581a41"
 profile::daq::daq_interface::was: "p3p1"
 profile::daq::daq_interface::mode: "dhcp-client"
 
-profile::ccs::facts::daq: false
-
 network::interfaces_hash:
   p1p1:  # fqdn
     bootproto: "dhcp"

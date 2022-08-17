@@ -6,5 +6,3 @@ classes:
   - "profile::core::common"
 
 profile::ccs::graphical::officeapps: true
-
-ccs_monit::hwraid: false

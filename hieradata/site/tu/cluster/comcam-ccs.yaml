@@ -7,7 +7,6 @@ ccs_software::service_email: "tucson-teststand-aler-aaaae4zsdubhmm3n7mowaugr2y@l
 ccs_monit::alert:
   ## tucson-teststand-alerts
   - "tucson-teststand-aler-aaaae4zsdubhmm3n7mowaugr2y@lsstc.slack.com"
-ccs_monit::hwraid: false
 
 clustershell::groupmembers:
   all: {group: "all", member: "comcam-dc01,comcam-fp01,comcam-mcm"}

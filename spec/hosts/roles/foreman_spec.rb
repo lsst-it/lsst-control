@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 FOREMAN_VERSION = '3.2.1'
-PUPPETSERVER_VERSION = '6.19.0'
-TERMINI_VERSION = '6.19.1'
+PUPPETSERVER_VERSION = '7.9.0'
+TERMINI_VERSION = '7.11.0'
 
 shared_examples 'generic foreman' do
   include_examples 'debugutils'

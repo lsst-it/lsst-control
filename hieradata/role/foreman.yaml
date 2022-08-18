@@ -176,7 +176,7 @@ puppet::server_jvm_max_heap_size: &jvm_heap "5G"  # (max-act-inst * 0.5G) + 1G
 puppet::server_jvm_min_heap_size: *jvm_heap
 puppet::server_jvm_extra_args: ["-XX:ReservedCodeCacheSize=1G", "-Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"]
 puppet::server::puppetdb::soft_write_failure: true
-puppet::server_puppetserver_version: &server_version "6.19.0"  # XXX does this do anything?
+puppet::server_puppetserver_version: &server_version "7.9.0"  # XXX does this do anything?
 puppet::server_reports: "foreman,puppetdb"
 puppet::server_storeconfigs: false
 puppet::server: true
@@ -184,12 +184,12 @@ puppet::server::puppetserver_metrics: false  # disabled for performance
 puppet::server::puppetserver_profiler: false  # disabled for performance
 puppet::server_version: *server_version  # XXX does this do anything?
 puppet::version: "%{lookup('puppet_agent::package_version')}"  # agent version
-puppetdb::globals::version: "6.19.1"
+puppetdb::globals::version: "7.11.0"
 profile::core::yum::versionlock:
-  0:puppetserver-6.19.0-1.el7.noarch:
+  0:puppetserver-7.9.0-1.el7.noarch:
     ensure: "present"
     before: "Package[puppetserver]"
-  0:puppetdb-termini-6.19.1-1.el7.noarch:
+  0:puppetdb-termini-7.11.0-1.el7.noarch:
     ensure: "present"
     before: "Package[puppetdb-termini]"
   0:foreman-3.2.1-1.el7.noarch:

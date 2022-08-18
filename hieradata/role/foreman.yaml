@@ -277,6 +277,9 @@ profile::core::puppet_master::foreman_global_parameter:
     value: true
   enable-puppetlabs-puppet6-repo:
     parameter_type: "boolean"
+    value: false
+  enable-official-puppet7-repo:
+    parameter_type: "boolean"
     value: true
   host_registration_insights:
     parameter_type: "boolean"

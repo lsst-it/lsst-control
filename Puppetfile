@@ -12,7 +12,7 @@ mod 'example42/network', git: 'https://github.com/lsst-it/puppet-network', ref: 
 mod 'fervid/snapd', '1.2.1' # 2021-05-31 hreinking: snapd for EAS Raspberry Pi
 mod 'herculesteam/augeasproviders_core', '3.1.0'
 mod 'herculesteam/augeasproviders_shellvar', '4.1.0'
-mod 'icinga/icinga2', '3.2.2'
+mod 'icinga/icinga2', '3.4.0'
 mod 'icinga/icinga', '2.7.0'
 mod 'icinga/icingaweb2', '3.3.0'
 mod 'jamtur01/httpauth', '0.0.6'

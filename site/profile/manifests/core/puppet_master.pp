@@ -175,7 +175,7 @@ class profile::core::puppet_master (
   # submit support to puppetlabs/puppet_agent for managing only the yumrepo.
   yumrepo { 'pc_repo':
     ensure   => 'present',
-    baseurl  => 'http://yum.puppet.com/puppet6/el/7/x86_64',
+    baseurl  => 'http://yum.puppet.com/puppet7/el/7/x86_64',
     descr    => 'Puppet Labs puppet6 Repository',
     enabled  => true,
     gpgcheck => '1',

@@ -164,6 +164,8 @@ shared_examples 'generic foreman' do
       ],
     )
   end
+
+  it { is_expected.to contain_package('oauth').with_provider('puppet_gem') }
 end
 
 role = 'foreman'

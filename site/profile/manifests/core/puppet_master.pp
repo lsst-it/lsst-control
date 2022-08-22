@@ -194,4 +194,9 @@ class profile::core::puppet_master (
 
   # for bmc management
   ensure_packages(['ipmitool'])
+
+  package { 'oauth':
+    ensure   => installed,
+    provider => 'puppet_gem',
+  }
 }

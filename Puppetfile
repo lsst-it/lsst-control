@@ -25,7 +25,7 @@ mod 'lsst/ccs_monit', '1.0.0'
 mod 'lsst/ccs_sal', '1.1.0'
 mod 'lsst/ccs_software', '1.1.3'
 mod 'lsst/cni', '2.2.0'
-mod 'lsst/daq', '1.1.0'
+mod 'lsst/daq', '1.2.0'
 mod 'lsst/dellperc', '1.1.0'
 mod 'lsst/helm_binary', '1.0.0'
 # Fork of ghoneycutt/hosts that includes https://github.com/ghoneycutt/puppet-module-hosts/pull/63

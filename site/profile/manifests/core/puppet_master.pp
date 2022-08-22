@@ -34,6 +34,7 @@ class profile::core::puppet_master (
   include foreman::cli::templates
   include foreman::compute::libvirt
   include foreman::compute::vmware
+  include foreman_envsync
   include foreman::plugin::column_view
   include foreman::plugin::discovery
   include foreman::plugin::puppet

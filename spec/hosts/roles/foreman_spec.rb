@@ -150,6 +150,8 @@ shared_examples 'generic foreman' do
   it { is_expected.to contain_foreman_config_entry('template_sync_branch').with_value(site) }
 
   it { is_expected.to contain_foreman_hostgroup(site) }
+
+  it { is_expected.to contain_class('foreman_envsync') }
 end
 
 role = 'foreman'

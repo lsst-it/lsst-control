@@ -164,7 +164,7 @@ describe "#{role} role" do
       end
       let(:node_params) do
         {
-          role: 'foreman',
+          role: role,
           site: site,
         }
       end

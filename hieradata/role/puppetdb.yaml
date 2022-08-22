@@ -16,9 +16,10 @@ postgresql::globals::server_package_name: "rh-postgresql12-postgresql-server-sys
 postgresql::globals::service_name: "postgresql"
 postgresql::globals::version: "12"
 profile::core::yum::versionlock:
-  0:puppetdb-7.11.0-1.el7.noarch:
+  puppetdb:
     ensure: "present"
-    before: "Package[puppetdb]"
+    version: "%{lookup('puppetdb::globals::version')}"
+    release: "1.el7"
 puppetdb::database_listen_address: "localhost"
 puppetdb::globals::version: "7.11.0"
 puppetdb::java_args:

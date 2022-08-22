@@ -40,21 +40,23 @@ clustershell::groupmembers:
       - "ipa1.dev.lsst.org"
 
 profile::core::yum::versionlock:
-  0:python2-ipaserver-4.6.8-5.el7.centos.6.noarch:
+  python2-ipaserver: &ipa_version
     ensure: "present"
-  0:ipa-client-common-4.6.8-5.el7.centos.6.noarch:
-    ensure: "present"
-  0:python2-ipaclient-4.6.8-5.el7.centos.6.noarch:
-    ensure: "present"
-  0:ipa-server-common-4.6.8-5.el7.centos.6.noarch:
-    ensure: "present"
-  0:ipa-common-4.6.8-5.el7.centos.6.noarch:
-    ensure: "present"
-  0:python2-ipalib-4.6.8-5.el7.centos.6.noarch:
-    ensure: "present"
-  0:ipa-client-4.6.8-5.el7.centos.6.x86_64:
-    ensure: "present"
-  0:ipa-server-4.6.8-5.el7.centos.6.x86_64:
-    ensure: "present"
+    version: "4.6.8"
+    release: "5.el7.centos.6"
+  ipa-client-common:
+    <<: *ipa_version
+  python2-ipaclient:
+    <<: *ipa_version
+  ipa-server-common:
+    <<: *ipa_version
+  ipa-common:
+    <<: *ipa_version
+  python2-ipalib:
+    <<: *ipa_version
+  ipa-client:
+    <<: *ipa_version
+  ipa-server:
+    <<: *ipa_version
 
 profile::core::ipa_pwd_reset::ldap_user: "ldap-passwd-reset"

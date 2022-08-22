@@ -18,55 +18,48 @@ class profile::core::kernel (
   include yum::plugin::versionlock
 
   if $version {
-    $k      = "kernel-${version}"
-    $kt     = "kernel-tools-${version}"
-    $ktlibs = "kernel-tools-libs-${version}"
-    $kdevel = "kernel-devel-${version}"
-    $kdebug = "kernel-debuginfo-${version}"
-
     yum::versionlock { [
-        "0:${k}",
-        "0:${kt}",
-        "0:${ktlibs}",
+        'kernel',
+        'kernel-tools',
+        'kernel-tools-libs',
       ]:
-        ensure => present,
+        ensure  => present,
+        version => $version,
     }
 
     if $devel {
-      $kdevel_vl = "0:${kdevel}"
-
-      yum::versionlock { $kdevel_vl:
-        ensure => present,
+      yum::versionlock { 'kernel-devel':
+        ensure  => present,
+        version => $version,
       }
 
       # reboot is not needed for -devel
       package { 'kernel-devel':
         ensure  => present,
-        name    => $kdevel,
-        require => Yum::Versionlock[$kdevel_vl],
+        name    => "kernel-devel-${version}",
+        require => Yum::Versionlock['kernel-devel'],
       }
     }
 
     if $debuginfo {
-      $kdebug_vl = "0:${kdebug}"
-
-      yum::versionlock { $kdebug_vl:
-        ensure => present,
+      yum::versionlock { 'kernel-debuginfo':
+        ensure  => present,
+        version => $version,
       }
 
       # reboot is not needed for -debuginfo
       package { 'kernel-debuginfo':
         ensure          => present,
-        name            => $kdebug,
+        name            => "kernel-debuginfo-${version}",
         install_options => ['--enablerepo', 'base-debuginfo'],
-        require         => Yum::Versionlock[$kdebug_vl],
+        require         => Yum::Versionlock['kernel-debuginfo'],
       }
     }
 
     # reboot if changing the kernel version
     package { 'kernel':
       ensure => present,
-      name   => $k,
+      name   => "kernel-${version}",
       notify => Reboot['kernel version'],
     }
 

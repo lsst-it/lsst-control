@@ -222,8 +222,10 @@ puppet_agent::collection: "puppet7"
 puppet_agent::config:
   - {section: "agent", setting: "environment", ensure: "absent"}
 profile::core::yum::versionlock:
-  0:puppet-agent-7.18.0-1.el7.x86_64:
+  puppet-agent:
     ensure: "present"
+    version: "7.18.0"
+    release: "1.el7"
     before: "Package[puppet-agent]"
 
 # Rsyslog configuration is based on the default rsyslog.conf shipping with CentOS 7.7
@@ -431,17 +433,29 @@ ccs_monit::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
 
 profile::core::docker::version: "20.10.12"
 profile::core::docker::versionlock:
-  0:containerd.io-1.4.12-3.1.el7.x86_64:
+  containerd.io:
     # puppetlabs/docker only specifies a package resource for containerd.io for uninstall
     ensure: "present"
-  0:docker-ce-rootless-extras-20.10.12-3.el7.x86_64:
+    version: "1.4.12"
+    release: "3.1.el7"
+  docker-ce:
     ensure: "present"
-  0:docker-scan-plugin-0.12.0-3.el7.x86_64:
-    ensure: "present"
-  1:docker-ce-cli-20.10.12-3.el7.x86_64:
-    ensure: "present"
-    before: "Package[docker-ce-cli]"
-  3:docker-ce-20.10.12-3.el7.x86_64:
-    ensure: "present"
+    epoch: 3
+    version: "%{lookup('profile::core::docker::version')}"
+    release: &docker_release "3.el7"
     # the puppet package resource name is `docker` with a seperate name param of `docker-ce`
     before: "Package[docker]"
+  docker-ce-cli:
+    ensure: "present"
+    epoch: 1
+    version: "%{lookup('profile::core::docker::version')}"
+    release: *docker_release
+    before: "Package[docker-ce-cli]"
+  docker-ce-rootless-extras:
+    ensure: "present"
+    version: "%{lookup('profile::core::docker::version')}"
+    release: *docker_release
+  docker-scan-plugin:
+    ensure: "present"
+    version: "0.12.0"
+    release: *docker_release

@@ -29,21 +29,31 @@ shared_examples 'generic foreman' do
     )
   end
 
-  [
-    "0:foreman-cli-#{FOREMAN_VERSION}-1.el7.noarch",
-    "0:foreman-debug-#{FOREMAN_VERSION}-1.el7.noarch",
-    "0:foreman-dynflow-sidekiq-#{FOREMAN_VERSION}-1.el7.noarch",
-    "0:foreman-#{FOREMAN_VERSION}-1.el7.noarch",
-    "0:foreman-libvirt-#{FOREMAN_VERSION}-1.el7.noarch",
-    "0:foreman-postgresql-#{FOREMAN_VERSION}-1.el7.noarch",
-    "0:foreman-service-#{FOREMAN_VERSION}-1.el7.noarch",
-    "0:puppetdb-termini-#{TERMINI_VERSION}-1.el7.noarch",
-    "0:puppetserver-#{PUPPETSERVER_VERSION}-1.el7.noarch",
-    "1:foreman-installer-#{FOREMAN_VERSION}-1.el7.noarch",
-    "0:foreman-proxy-#{FOREMAN_VERSION}-1.el7.noarch",
-    "0:foreman-vmware-#{FOREMAN_VERSION}-1.el7.noarch",
+  %w[
+    foreman
+    foreman-cli
+    foreman-debug
+    foreman-dynflow-sidekiq
+    foreman-installer
+    foreman-libvirt
+    foreman-postgresql
+    foreman-proxy
+    foreman-service
+    foreman-vmware
   ].each do |pkg|
-    it { is_expected.to contain_yum__versionlock(pkg) }
+    it { is_expected.to contain_yum__versionlock(pkg).with_version(FOREMAN_VERSION) }
+  end
+
+  it do
+    is_expected.to contain_yum__versionlock('puppetserver').with(
+      version: PUPPETSERVER_VERSION,
+    )
+  end
+
+  it do
+    is_expected.to contain_yum__versionlock('puppetdb-termini').with(
+      version: TERMINI_VERSION,
+    )
   end
 
   it do

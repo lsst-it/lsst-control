@@ -17,7 +17,6 @@ describe "#{role} role" do
         {
           role: role,
           site: site,
-          cluster: 'azar',
         }
       end
 
@@ -27,8 +26,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          it { is_expected.to contain_class('docker') }
-          it { is_expected.to contain_class('docker::networks') }
+          include_examples 'docker'
         end # host
       end # lsst_sites
     end # on os

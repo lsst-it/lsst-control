@@ -34,6 +34,7 @@ class profile::core::puppet_master (
   include foreman::cli::templates
   include foreman::compute::libvirt
   include foreman::compute::vmware
+  include foreman_envsync
   include foreman::plugin::column_view
   include foreman::plugin::discovery
   include foreman::plugin::puppet
@@ -175,7 +176,7 @@ class profile::core::puppet_master (
   # submit support to puppetlabs/puppet_agent for managing only the yumrepo.
   yumrepo { 'pc_repo':
     ensure   => 'present',
-    baseurl  => 'http://yum.puppet.com/puppet6/el/7/x86_64',
+    baseurl  => 'http://yum.puppet.com/puppet7/el/7/x86_64',
     descr    => 'Puppet Labs puppet6 Repository',
     enabled  => true,
     gpgcheck => '1',
@@ -193,4 +194,9 @@ class profile::core::puppet_master (
 
   # for bmc management
   ensure_packages(['ipmitool'])
+
+  package { 'oauth':
+    ensure   => installed,
+    provider => 'puppet_gem',
+  }
 }

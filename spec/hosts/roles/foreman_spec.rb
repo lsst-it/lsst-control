@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 FOREMAN_VERSION = '3.2.1'
-PUPPETSERVER_VERSION = '6.19.0'
-TERMINI_VERSION = '6.19.1'
+PUPPETSERVER_VERSION = '7.9.0'
+TERMINI_VERSION = '7.11.0'
 
 shared_examples 'generic foreman' do
   include_examples 'debugutils'
@@ -108,7 +108,8 @@ shared_examples 'generic foreman' do
     'bootloader-append': 'nofb',
     'disable-firewall': true,
     'enable-epel': true,
-    'enable-puppetlabs-puppet6-repo': true,
+    'enable-puppetlabs-puppet6-repo': false,
+    'enable-official-puppet7-repo': true,
     fips_enabled: true,
     host_registration_insights: false,
     host_registration_remote_execution: true,
@@ -149,6 +150,22 @@ shared_examples 'generic foreman' do
   it { is_expected.to contain_foreman_config_entry('template_sync_branch').with_value(site) }
 
   it { is_expected.to contain_foreman_hostgroup(site) }
+
+  it { is_expected.to contain_class('foreman_envsync') }
+
+  it do
+    is_expected.to contain_class('r10k').with_postrun(
+      [
+        'systemd-cat',
+        '-t',
+        'foreman_envsync',
+        '/bin/foreman_envsync',
+        '--verbose',
+      ],
+    )
+  end
+
+  it { is_expected.to contain_package('oauth').with_provider('puppet_gem') }
 end
 
 role = 'foreman'
@@ -163,7 +180,7 @@ describe "#{role} role" do
       end
       let(:node_params) do
         {
-          role: 'foreman',
+          role: role,
           site: site,
         }
       end

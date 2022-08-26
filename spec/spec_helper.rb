@@ -140,6 +140,7 @@ shared_examples 'common', :common do |opts = {}|
   end
 
   it { is_expected.to contain_class('yum::plugin::versionlock').with_clean(true) }
+  it { is_expected.to contain_yum__versionlock('puppet-agent').with_version('7.18.0') }
 end
 
 shared_examples 'lhn sysctls', :lhn_node do
@@ -308,6 +309,42 @@ shared_examples 'puppet_master' do
   end
 
   it { is_expected.to contain_package('ipmitool') }
+end
+
+shared_examples 'docker' do
+  docker_version = '20.10.12'
+
+  it do
+    is_expected.to contain_class('docker').with(
+      overlay2_override_kernel_check: true,
+      socket_group: 70_014,
+      socket_override: false,
+      storage_driver: 'overlay2',
+      version: docker_version,
+    )
+  end
+
+  it { is_expected.to contain_class('docker::networks') }
+
+  %w[
+    docker-ce
+    docker-ce-cli
+    docker-ce-rootless-extras
+  ].each do |pkg|
+    it { is_expected.to contain_yum__versionlock(pkg).with_version(docker_version) }
+  end
+
+  it do
+    is_expected.to contain_yum__versionlock('containerd.io').with(
+      version: '1.4.12',
+    )
+  end
+
+  it do
+    is_expected.to contain_yum__versionlock('docker-scan-plugin').with(
+      version: '0.12.0',
+    )
+  end
 end
 
 # 'spec_overrides' from sync.yml will appear below this line

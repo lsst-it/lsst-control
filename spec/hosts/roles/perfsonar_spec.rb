@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-role = 'auxtel-archiver'
+role = 'perfsonar'
 
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
@@ -26,11 +26,11 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'lhn sysctls'
-          include_examples 'archiver'
-          include_examples 'docker'
-
-          it { is_expected.to contain_file('/data/repo/LATISS') }
+          it do
+            is_expected.to contain_yum__versionlock('perfsonar-toolkit').with(
+              version: '4.4.0',
+            )
+          end
         end # host
       end # lsst_sites
     end # on os

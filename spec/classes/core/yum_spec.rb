@@ -19,8 +19,11 @@ describe 'profile::core::yum' do
         let(:params) do
           {
             versionlock: {
-              '0:foo-1-1.noarch': {
+              foo: {
                 ensure: 'present',
+                version: '1',
+                epoch: 1,
+                arch: 'noarch',
               },
             },
           }
@@ -30,7 +33,12 @@ describe 'profile::core::yum' do
         it { is_expected.to contain_class('yum::plugin::versionlock') }
 
         it do
-          is_expected.to contain_yum__versionlock('0:foo-1-1.noarch').with_ensure('present')
+          is_expected.to contain_yum__versionlock('foo').with(
+            ensure: 'present',
+            version: '1',
+            epoch: 1,
+            arch: 'noarch',
+          )
         end
       end
     end

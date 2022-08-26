@@ -28,6 +28,7 @@ describe "#{role} role" do
 
           include_examples 'lhn sysctls'
           include_examples 'archiver'
+          include_examples 'docker'
 
           it { is_expected.to contain_file('/data/repo/LSSTComCam') }
         end # host

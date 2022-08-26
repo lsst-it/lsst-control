@@ -72,5 +72,7 @@ perfsonar::lsregistrationdaemon_ensure: "stopped"
 perfsonar::lsregistrationdaemon_enable: false
 profile::core::yum::versionlock:
   # XXX do we need to versionlock all of the sub-packages as well?
-  0:perfsonar-toolkit-4.4.0-1.el7.noarch:
+  perfsonar-toolkit:
     ensure: "present"
+    version: "4.4.0"
+    release: "1.el7"

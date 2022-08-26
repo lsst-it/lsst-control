@@ -5,12 +5,7 @@ require 'spec_helper'
 PUPPETDB_VERSION = '7.11.0'
 
 shared_examples 'puppetdb' do
-  [
-    "0:puppetdb-#{PUPPETDB_VERSION}-1.el7.noarch",
-  ].each do |pkg|
-    it { is_expected.to contain_yum__versionlock(pkg) }
-  end
-
+  it { is_expected.to contain_yum__versionlock('puppetdb').with_version(PUPPETDB_VERSION) }
   it { is_expected.to contain_class('puppetdb::globals').with_version(PUPPETDB_VERSION) }
 end
 

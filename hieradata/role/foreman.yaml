@@ -187,32 +187,57 @@ puppet::server_version: *server_version  # XXX does this do anything?
 puppet::version: "%{lookup('puppet_agent::package_version')}"  # agent version
 puppetdb::globals::version: "7.11.0"
 profile::core::yum::versionlock:
-  0:puppetserver-7.9.0-1.el7.noarch:
+  puppetserver:
     ensure: "present"
+    version: "7.9.0"
+    release: "1.el7"
     before: "Package[puppetserver]"
-  0:puppetdb-termini-7.11.0-1.el7.noarch:
+  puppetdb-termini:
     ensure: "present"
+    version: "7.11.0"
+    release: "1.el7"
     before: "Package[puppetdb-termini]"
-  0:foreman-3.2.1-1.el7.noarch:
+  foreman:
     ensure: "present"
-  0:foreman-libvirt-3.2.1-1.el7.noarch:
+    version: "%{lookup('foreman::version')}"
+    release: "1.el7"
+  foreman-libvirt:
     ensure: "present"
-  0:foreman-dynflow-sidekiq-3.2.1-1.el7.noarch:
+    version: "%{lookup('foreman::version')}"
+    release: "1.el7"
+  foreman-dynflow-sidekiq:
     ensure: "present"
-  0:foreman-service-3.2.1-1.el7.noarch:
+    version: "%{lookup('foreman::version')}"
+    release: "1.el7"
+  foreman-service:
     ensure: "present"
-  0:foreman-postgresql-3.2.1-1.el7.noarch:
+    version: "%{lookup('foreman::version')}"
+    release: "1.el7"
+  foreman-postgresql:
     ensure: "present"
-  0:foreman-debug-3.2.1-1.el7.noarch:
+    version: "%{lookup('foreman::version')}"
+    release: "1.el7"
+  foreman-debug:
     ensure: "present"
-  0:foreman-cli-3.2.1-1.el7.noarch:
+    version: "%{lookup('foreman::version')}"
+    release: "1.el7"
+  foreman-cli:
     ensure: "present"
-  1:foreman-installer-3.2.1-1.el7.noarch:
+    version: "%{lookup('foreman::version')}"
+    release: "1.el7"
+  foreman-installer:
     ensure: "present"
-  0:foreman-proxy-3.2.1-1.el7.noarch:
+    epoch: 1
+    version: "%{lookup('foreman::version')}"
+    release: "2.el7"
+  foreman-proxy:
     ensure: "present"
-  0:foreman-vmware-3.2.1-1.el7.noarch:
+    version: "%{lookup('foreman::version')}"
+    release: "1.el7"
+  foreman-vmware:
     ensure: "present"
+    version: "%{lookup('foreman::version')}"
+    release: "1.el7"
 
 redis::globals::scl: "rh-redis5"
 

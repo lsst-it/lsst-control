@@ -26,6 +26,9 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
+          # XXX hexrot uses devicemapper, so the docker example group isn't included
+          it { is_expected.to contain_class('docker') }
+
           %w[
             profile::core::common
             profile::core::debugutils

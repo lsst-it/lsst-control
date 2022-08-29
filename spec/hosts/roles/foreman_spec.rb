@@ -9,6 +9,7 @@ TERMINI_VERSION = '7.11.0'
 shared_examples 'generic foreman' do
   include_examples 'debugutils'
   include_examples 'puppet_master'
+  include_examples 'docker'
 
   it do
     is_expected.to contain_class('foreman').with(

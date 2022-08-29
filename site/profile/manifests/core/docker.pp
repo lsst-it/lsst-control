@@ -23,6 +23,7 @@ class profile::core::docker (
 
   class { 'docker':
     overlay2_override_kernel_check => true,  # needed on el7
+    package_source                 => 'docker-ce',
     socket_group                   => $socket_group,
     socket_override                => false,
     storage_driver                 => $storage_driver,
@@ -35,8 +36,10 @@ class profile::core::docker (
     ensure_resources('yum::versionlock', $versionlock)
   }
 
-  # allow docker.socket activitation to proceed before sssd is running and the `docker` group
-  # can be resolved via IPA.  It is fine to allow the socket be created with a group of `root`  # as dockerd will chgrp the socket to the correct group when it starts up.
+  # allow docker.socket activitation to proceed before sssd is running and the
+  # `docker` group can be resolved via IPA.  It is fine to allow the socket be
+  # created with a group of `root`  # as dockerd will chgrp the socket to the
+  # correct group when it starts up.
   systemd::dropin_file { 'wait-for-docker-group.conf':
     unit    => 'docker.socket',
     # lint:ignore:strict_indent
@@ -60,6 +63,14 @@ class profile::core::docker (
       Requires=docker.socket containerd.service sssd.service
       | EOS
     # lint:endignore
+  }
+
+  # /etc/docker is normally created by dockerd the first time the service is
+  # started.  However, we would like daemon.json to be in place prior to the
+  # first startup.
+  file { '/etc/docker':
+    ensure => directory,
+    mode   => '0755',
   }
 
   file { '/etc/docker/daemon.json':

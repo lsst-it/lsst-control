@@ -9,19 +9,7 @@ describe 'profile::core::docker' do
 
       it { is_expected.to compile.with_all_deps }
 
-      it do
-        is_expected.to contain_class('docker').with(
-          overlay2_override_kernel_check: true,
-          socket_group: 70_014,
-          socket_override: false,
-          storage_driver: 'overlay2',
-          version: '19.03.15',
-        )
-      end
-
-      it { is_expected.to contain_class('yum::plugin::versionlock') }
-      it { is_expected.to have_yum__versionlock_resource_count(2) }
-      it { is_expected.to contain_class('docker::networks') }
+      include_examples 'docker'
 
       it do
         is_expected.to contain_systemd__dropin_file('wait-for-docker-group.conf').with(
@@ -35,7 +23,18 @@ describe 'profile::core::docker' do
       end
 
       it do
-        is_expected.to contain_file('/etc/docker/daemon.json').with_content(%r{"live-restore": true})
+        is_expected.to contain_file('/etc/docker').with(
+          ensure: 'directory',
+          mode: '0755',
+        ).that_comes_before('File[/etc/docker/daemon.json]')
+      end
+
+      it do
+        is_expected.to contain_file('/etc/docker/daemon.json').with(
+          ensure: 'file',
+          mode: '0644',
+          content: %r{"live-restore": true},
+        ).that_notifies('Service[docker]')
       end
     end
   end

@@ -6,6 +6,7 @@ describe 'profile::core::puppet_master' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) { facts }
+      let(:params) { { smee_url: 'https://foo.example.org' } }
 
       it { is_expected.to compile.with_all_deps }
 
@@ -13,13 +14,13 @@ describe 'profile::core::puppet_master' do
 
       context 'with foreman_hostgroup param' do
         let(:params) do
-          {
+          super().merge(
             foreman_hostgroup: {
               foo: {
                 description: 'bar',
               },
             },
-          }
+          )
         end
 
         it { is_expected.to contain_foreman_hostgroup('foo').with_description('bar') }
@@ -27,14 +28,14 @@ describe 'profile::core::puppet_master' do
 
       context 'with foreman_global_parameter param' do
         let(:params) do
-          {
+          super().merge(
             foreman_global_parameter: {
               foo: {
                 parameter_type: 'baz',
                 value: 'bar',
               },
             },
-          }
+          )
         end
 
         it do

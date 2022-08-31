@@ -177,6 +177,14 @@ shared_examples 'generic foreman' do
   end
 
   it { is_expected.to contain_package('oauth').with_provider('puppet_gem') }
+
+  it do
+    is_expected.to contain_class('smee').with(
+      url: smee_url,
+      path: '/payload',
+      port: 8088,
+    )
+  end
 end
 
 role = 'foreman'
@@ -195,6 +203,7 @@ describe "#{role} role" do
           site: site,
         }
       end
+      let(:smee_url) { 'https://smee.io/lpxrggGObEn5YTA' }
 
       describe 'foreman.dev.lsst.org', :site, :common do
         let(:site) { 'dev' }

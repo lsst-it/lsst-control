@@ -141,6 +141,8 @@ shared_examples 'common', :common do |opts = {}|
 
   it { is_expected.to contain_class('yum::plugin::versionlock').with_clean(true) }
   it { is_expected.to contain_yum__versionlock('puppet-agent').with_version('7.18.0') }
+  it { is_expected.to contain_class('yum').with_manage_os_default_repos(true) }
+  it { is_expected.to contain_resources('yumrepo').with_purge(true) }
 end
 
 shared_examples 'lhn sysctls', :lhn_node do

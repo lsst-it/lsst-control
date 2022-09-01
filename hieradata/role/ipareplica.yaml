@@ -28,7 +28,6 @@ easy_ipa::ip_address: "%{facts.networking.ip}"
 # enable easy_ipa management of sssd packages on servers
 easy_ipa::install_sssd: true
 easy_ipa::install_sssdtools: true
-easy_ipa::sssdtools: true
 
 clustershell::groupmembers:
   ipa:
@@ -43,7 +42,7 @@ profile::core::yum::versionlock:
   python2-ipaserver: &ipa_version
     ensure: "present"
     version: "4.6.8"
-    release: "5.el7.centos.6"
+    release: "5.el7.centos.7"
   ipa-client-common:
     <<: *ipa_version
   python2-ipaclient:

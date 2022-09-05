@@ -26,6 +26,7 @@ class profile::ts::rpi {
     'AMA1',
     'AMA2',
     'AMA3',
+    'AMA4',
   ]
   #  Remove default docker packages
   $docker_packages = [
@@ -168,6 +169,7 @@ class profile::ts::rpi {
     dtoverlay=uart2
     dtoverlay=uart3
     dtoverlay=uart4
+    dtoverlay=uart5
     gpio=11,17,18,23=op,dh
     gpio=7,24=ip
     gpio=3=op
@@ -181,6 +183,17 @@ class profile::ts::rpi {
     pu stopbits 1
     pu rtscts No
     | MINICOM
+
+  $gpio_rules = @(GPIO)
+    SUBSYSTEM=="bcm2835-gpiomem", GROUP="gpio", MODE="0660"
+    SUBSYSTEM=="gpio", GROUP="gpio", MODE="0660"
+    SUBSYSTEM=="gpio*", PROGRAM="/bin/sh -c '\
+            chown -R root:gpio /sys/class/gpio && chmod -R 770 /sys/class/gpio;\
+            chown -R root:gpio /sys/devices/virtual/gpio && chmod -R 770 /sys/devices/virtual/gpio;\
+            chown -R root:gpio /sys$devpath && chmod -R 770 /sys$devpath\
+    '"
+    KERNEL=="ttyS[0-9]*", NAME="tts/%n", SYMLINK+="%k", GROUP="70014", MODE="0660"
+    |GPIO
 
   #  Repo Array
   $repo_name = [
@@ -200,6 +213,7 @@ class profile::ts::rpi {
   file { $conda_dir:
     ensure => 'directory',
   }
+
   #  Change Serial I/O group membership to docker
   $io_interfaces.each |$io| {
     file { "/dev/tty${io}":
@@ -326,6 +340,11 @@ class profile::ts::rpi {
     ensure  => file,
     mode    => '0755',
     content => $minicom_config,
+  }
+  file { '/etc/udev/rules.d/99-gpio.rules':
+    ensure  => file,
+    mode    => '0644',
+    content => $gpio_rules,
   }
   #<------END GPIO and Minicom config-------->
 }

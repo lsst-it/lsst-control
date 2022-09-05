@@ -182,6 +182,17 @@ class profile::ts::rpi {
     pu rtscts No
     | MINICOM
 
+  $gpio_rules = @(GPIO)
+    SUBSYSTEM=="bcm2835-gpiomem", GROUP="gpio", MODE="0660"
+    SUBSYSTEM=="gpio", GROUP="gpio", MODE="0660"
+    SUBSYSTEM=="gpio*", PROGRAM="/bin/sh -c '\
+            chown -R root:gpio /sys/class/gpio && chmod -R 770 /sys/class/gpio;\
+            chown -R root:gpio /sys/devices/virtual/gpio && chmod -R 770 /sys/devices/virtual/gpio;\
+            chown -R root:gpio /sys$devpath && chmod -R 770 /sys$devpath\
+    '"
+    KERNEL=="ttyS[0-9]*", NAME="tts/%n", SYMLINK+="%k", GROUP="70014", MODE="0660"
+    |GPIO
+
   #  Repo Array
   $repo_name = [
     "libgphoto2,${libgphoto},test -f /usr/local/lib/pkgconfig/libgphoto2.pc,https://github.com/gphoto/libgphoto2/releases/download/v2.5.27/libgphoto2-2.5.27.tar.bz2,libgphoto2.tar.bz2,${libgphoto_version}",
@@ -200,6 +211,7 @@ class profile::ts::rpi {
   file { $conda_dir:
     ensure => 'directory',
   }
+
   #  Change Serial I/O group membership to docker
   $io_interfaces.each |$io| {
     file { "/dev/tty${io}":
@@ -326,6 +338,11 @@ class profile::ts::rpi {
     ensure  => file,
     mode    => '0755',
     content => $minicom_config,
+  }
+  file { '/etc/udev/rules.d/99-gpio.rules':
+    ensure  => file,
+    mode    => '0644',
+    content => $gpio_rules,
   }
   #<------END GPIO and Minicom config-------->
 }

@@ -168,6 +168,7 @@ class profile::ts::rpi {
     dtoverlay=uart2
     dtoverlay=uart3
     dtoverlay=uart4
+    dtoverlay=uart5
     gpio=11,17,18,23=op,dh
     gpio=7,24=ip
     gpio=3=op

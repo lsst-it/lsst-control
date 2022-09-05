@@ -26,6 +26,7 @@ class profile::ts::rpi {
     'AMA1',
     'AMA2',
     'AMA3',
+    'AMA4',
   ]
   #  Remove default docker packages
   $docker_packages = [

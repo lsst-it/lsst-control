@@ -114,6 +114,11 @@ class profile::core::ipam (
     enable  => true,
     require => Package[$mariadb_packages],
   }
+  service { 'httpd':
+    ensure  => 'running',
+    enable  => true,
+    require => Package[$packages],
+  }
 
   #  MySQL configuration file definition
   if $fqdn == 'ipam.cp.lsst.org' {
@@ -147,5 +152,17 @@ class profile::core::ipam (
     mode    => '0644',
     content => $httpd_conf,
     require => Package[$packages],
+    notify  => Service['httpd'],
+  }
+
+  #  PHP Timezone
+  exec { "sed -i 's,^;date.timezone.*$,date.timezone = America/Santiago,g' /etc/php.ini":
+    cwd      => '/var/tmp/',
+    path     => ['/sbin', '/usr/sbin', '/bin'],
+    provider => shell,
+    onlyif   => 'grep Santiago /etc/php.ini',
+    loglevel => debug,
+    require  => Package[$packages],
+    notify   => Service['httpd'],
   }
 }

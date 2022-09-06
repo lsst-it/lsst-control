@@ -1,10 +1,16 @@
 # @summary
-#   So far, just to generate signed ipam ssl certificate
-
+#   Provides Signed Certificate, Mysql Configuration, and PHP for phpIPAM
+#
+# @param password
+#   MySQL Backup Password
+#
+# @param database
+#   phpIPAM database name
+#
 class profile::core::ipam (
   String $password,
   String $database,
-){
+) {
   include profile::core::letsencrypt
 
   $mariadb_packages = [
@@ -144,10 +150,10 @@ class profile::core::ipam (
 
   #  Packages installation
   package { $mariadb_packages:
-    ensure => 'present'
+    ensure => 'present',
   }
   package { $packages:
-    ensure => 'present'
+    ensure => 'present',
   }
 
   #  HTTPD File definition

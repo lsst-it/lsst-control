@@ -27,6 +27,7 @@ class profile::core::ipam (
     'php-mysql',
     'php-mbstring',
     'git',
+    'mod_ssl',
   ]
 
   $fqdn = $facts[fqdn]

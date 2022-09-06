@@ -46,6 +46,9 @@
 # @param manage_irqbalance
 #   If `true`, manage irqbalance
 #
+# @param manage_resolv_conf
+#   If `true`, manage resolv.conf
+#
 class profile::core::common (
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
@@ -61,6 +64,7 @@ class profile::core::common (
   Boolean $manage_scl = true,
   Boolean $manage_repos = true,
   Boolean $manage_irqbalance = true,
+  Boolean $manage_resolv_conf = true,
 ) {
   include accounts
   include augeas
@@ -78,7 +82,6 @@ class profile::core::common (
   include profile::core::selinux
   include profile::core::systemd
   include profile::core::yum
-  include resolv_conf
   include rsyslog
   include rsyslog::config
   include selinux
@@ -159,6 +162,11 @@ class profile::core::common (
       include scl
     }
   }
+
+  if $manage_resolv_conf {
+    include resolv_conf
+  }
+
   class { 'lldpd':
     manage_repo => true,
   }

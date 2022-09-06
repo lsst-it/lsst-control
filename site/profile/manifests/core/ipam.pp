@@ -39,9 +39,11 @@ class profile::core::ipam (
     symbolic-links=0
     server-id = 1
     binlog-do-db = ${database}
+    replicate-do-db = ${database}
     relay-log = mysql-relay-bin
     relay-log-index = mysql-relay-bin.index
     log-bin = mysql-bin
+    auto-increment-offset = 1
 
     [mysqldump]
     user = backup 
@@ -59,10 +61,13 @@ class profile::core::ipam (
     datadir=/var/lib/mysql
     socket=/var/lib/mysql/mysql.sock
     symbolic-links=0
-    server-id = 2
+    server-id = 1
+    binlog-do-db = ${database}
     replicate-do-db = ${database}
     relay-log = mysql-relay-bin
+    relay-log-index = mysql-relay-bin.index
     log-bin = mysql-bin
+    auto-increment-offset = 2
 
     [mysqldump]
     user = backup 

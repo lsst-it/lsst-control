@@ -12,6 +12,10 @@ class profile::core::ipam (
     'mariadb-5.5.68-1.el7.x86_64',
   ]
 
+  package { $mariadb_packages:
+    ensure => 'present'
+  }
+
   $fqdn = $facts[fqdn]
   $le_root = "/etc/letsencrypt/live/${fqdn}"
   $my_cnf_master = @("MYCNF")
@@ -72,7 +76,6 @@ class profile::core::ipam (
       ensure  => file,
       mode    => '0644',
       content => $my_cnf_master,
-      require => Service['mariadb'],
       notify  => Service['mariadb'],
     }
   }
@@ -81,7 +84,6 @@ class profile::core::ipam (
       ensure  => file,
       mode    => '0644',
       content => $my_cnf_slave,
-      require => Service['mariadb'],
       notify  => Service['mariadb'],
     }
   }

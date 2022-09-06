@@ -3,6 +3,7 @@
 
 class profile::core::ipam (
   String $password,
+  String $database,
 ){
   include profile::core::letsencrypt
 
@@ -24,7 +25,7 @@ class profile::core::ipam (
     socket=/var/lib/mysql/mysql.sock
     symbolic-links=0
     server-id = 1
-    binlog-do-db=database
+    binlog-do-db = ${database}
     relay-log = mysql-relay-bin
     relay-log-index = mysql-relay-bin.index
     log-bin = mysql-bin
@@ -46,7 +47,7 @@ class profile::core::ipam (
     socket=/var/lib/mysql/mysql.sock
     symbolic-links=0
     server-id = 2
-    replicate-do-db=database
+    replicate-do-db = ${database}
     relay-log = mysql-relay-bin
     log-bin = mysql-bin
 

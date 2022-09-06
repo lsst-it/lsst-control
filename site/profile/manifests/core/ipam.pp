@@ -29,13 +29,6 @@ class profile::core::ipam (
     'git',
   ]
 
-  package { $mariadb_packages:
-    ensure => 'present'
-  }
-  package { $packages:
-    ensure => 'present'
-  }
-
   $fqdn = $facts[fqdn]
   $le_root = "/etc/letsencrypt/live/${fqdn}"
   $my_cnf_master = @("MYCNF")
@@ -80,6 +73,37 @@ class profile::core::ipam (
 
     !includedir /etc/my.cnf.d
     |MYCNF
+
+  $httpd_conf = @("HTTPCONF")
+    <VirtualHost *:80>
+        DocumentRoot "/var/www/html"
+        ServerName ${fqdn}
+        <Directory "/var/www/html">
+            Options Indexes FollowSymLinks
+            AllowOverride All
+            Require all granted
+        </Directory>
+        ErrorLog "/var/log/phpipam-error_log"
+        CustomLog "/var/log/phpipam-access_log" combined
+        Redirect permanent / https://${fqdn}/
+    </VirtualHost>
+
+    <VirtualHost *:443>    
+        DocumentRoot "/var/www/html"    
+        ServerName ${fqdn}    
+        <Directory "/var/www/html">        
+            Options Indexes FollowSymLinks        
+            AllowOverride All        
+            Require all granted    
+        </Directory>  
+        SSLEngine on  
+        SSLCertificateFile /etc/letsencrypt/live/${fqdn}/cert.pem 
+        SSLCertificateKeyFile /etc/letsencrypt/live/${fqdn}/privkey.pem 
+        ErrorLog "/var/log/phpipam-error_log"
+        CustomLog "/var/log/phpipam-access_log" combined
+    </VirtualHost>
+    |HTTPCONF
+
   #  Generate and sign certificate
   letsencrypt::certonly { $fqdn:
     plugin      => 'dns-route53',
@@ -91,6 +115,7 @@ class profile::core::ipam (
     require => Package[$mariadb_packages],
   }
 
+  #  MySQL configuration file definition
   if $fqdn == 'ipam.cp.lsst.org' {
     file { '/etc/my.cnf':
       ensure  => file,
@@ -106,5 +131,21 @@ class profile::core::ipam (
       content => $my_cnf_slave,
       notify  => Service['mariadb'],
     }
+  }
+
+  #  Packages installation
+  package { $mariadb_packages:
+    ensure => 'present'
+  }
+  package { $packages:
+    ensure => 'present'
+  }
+
+  #  HTTPD File definition
+  file { '/etc/httpd/conf.d/ipam.conf':
+    ensure  => file,
+    mode    => '0644',
+    content => $httpd_conf,
+    require => Package[$packages],
   }
 }

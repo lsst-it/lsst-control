@@ -13,7 +13,26 @@ class profile::core::ipam (
     'mariadb-5.5.68-1.el7.x86_64',
   ]
 
+  $packages = [
+    'httpd',
+    'php',
+    'php-cli',
+    'php-gd',
+    'php-common',
+    'php-ldap',
+    'php-pdo',
+    'php-pear',
+    'php-snmp',
+    'php-xml',
+    'php-mysql',
+    'php-mbstring',
+    'git',
+  ]
+
   package { $mariadb_packages:
+    ensure => 'present'
+  }
+  package { $packages:
     ensure => 'present'
   }
 

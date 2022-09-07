@@ -8,8 +8,8 @@
 #   phpIPAM database name
 #
 class profile::core::ipam (
-  String $password,
-  String $database,
+  String $database = 'null',
+  String $password = 'null',
 ) {
   include profile::core::letsencrypt
 

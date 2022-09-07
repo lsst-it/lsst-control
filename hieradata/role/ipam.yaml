@@ -2,3 +2,5 @@
 classes:
   - "profile::core::common"
   - "profile::core::ipam"
+
+profile::core::ipam::database: "phpipam"

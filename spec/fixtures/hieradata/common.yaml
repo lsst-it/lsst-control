@@ -1,4 +1,7 @@
 ---
+lookup_options:
+  '^profile::.+::keytab_base64$':
+    convert_to: "Sensitive"
 ccs_database::database: "comcamdbprod"
 ccs_database::password: "foo"
 easy_ipa::admin_password: "foofoofoofoo"  # ipa master only

@@ -11,9 +11,9 @@
 #   Version of rke utility to install
 #
 class profile::core::rke (
-  Boolean          $enable_dhcp   = false,
-  Optional[String] $keytab_base64 = undef,
-  String $version                 = '1.3.3',
+  Boolean                        $enable_dhcp   = false,
+  Optional[Sensitive[String[1]]] $keytab_base64 = undef,
+  String                         $version       = '1.3.3',
 ) {
   $user = 'rke'
   $uid  = 75500

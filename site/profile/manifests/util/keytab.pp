@@ -12,7 +12,7 @@
 #
 define profile::util::keytab (
   Integer $uid,
-  String  $keytab_base64,
+  Sensitive[String[1]] $keytab_base64,
 ) {
   $home_path = "/home/${name}"
   $keytab_path = "${home_path}/.keytab"
@@ -24,11 +24,12 @@ define profile::util::keytab (
       mode     => '0700',
   })
   file { $keytab_path:
-    ensure  => file,
-    owner   => $name,
-    group   => $name,
-    mode    => '0400',
-    content => base64('decode', $keytab_base64),
+    ensure    => file,
+    owner     => $name,
+    group     => $name,
+    mode      => '0400',
+    show_diff => false, # do not print keytab in logs
+    content   => base64('decode', $keytab_base64.unwrap),
   }
 
   cron { 'k5start_root':

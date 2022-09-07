@@ -18,10 +18,10 @@ describe 'profile::core::ipa_pwd_reset' do
       context 'with no params' do
         let(:params) do
           {
-            keytab_base64: 'foo',
-            secret_key: 'bar',
-            ldap_user: 'baz',
+            keytab_base64: sensitive('foo'),
             ldap_pwd: 'quix',
+            ldap_user: 'baz',
+            secret_key: 'bar',
           }
         end
 

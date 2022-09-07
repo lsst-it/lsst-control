@@ -7,7 +7,7 @@ describe 'profile::util::keytab' do
     context "on #{os}" do
       let(:facts) { facts }
       let(:title) { 'foo' }
-      let(:params) { { 'uid' => 123, 'keytab_base64' => 'YmFy' } }
+      let(:params) { { 'uid' => 123, 'keytab_base64' => sensitive('YmFy') } }
 
       it { is_expected.to compile.with_all_deps }
 
@@ -26,6 +26,7 @@ describe 'profile::util::keytab' do
           owner: 'foo',
           group: 'foo',
           mode: '0400',
+          show_diff: false,
           content: 'bar',
         )
       end

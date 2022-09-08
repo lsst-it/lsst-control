@@ -418,7 +418,7 @@ class profile::icinga::master (
   }
 
   ##IcingaWeb Incubator
-  archive { '/tmp/icinga-incubator':
+  archive { '/tmp/icinga-incubator.tar.gz':
     ensure       => present,
     extract      => true,
     extract_path => '/tmp',

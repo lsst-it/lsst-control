@@ -407,7 +407,7 @@ class profile::icinga::master (
   }
 
   ##IcingaWeb IPL
-  archive { '/tmp/icinga-ipl':
+  archive { '/tmp/icinga-ipl.tar.gz':
     ensure       => present,
     extract      => true,
     extract_path => '/tmp',

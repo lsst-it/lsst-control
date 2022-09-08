@@ -1,3 +1,4 @@
 ---
 # p::icinga::master and p::icinga::agent both try to define the `nagios-plugins-all` package
 profile::core::common::deploy_icinga_agent: false
+profile::icinga::master::ldap_server: "ipa1.ls.lsst.org"

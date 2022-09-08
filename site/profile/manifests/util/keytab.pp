@@ -33,7 +33,7 @@ define profile::util::keytab (
   }
 
   cron { 'k5start_root':
-    command => "/usr/bin/k5start -f ${keytab_path} -U -o ${uid} -k /tmp/krb5cc_${uid} -H 60 > /dev/null 2>&1",
+    command => "/usr/bin/k5start -f ${keytab_path} -U -o ${uid} -k /tmp/krb5cc_${uid} -H 60 -F > /dev/null 2>&1",
     user    => 'root',
     minute  => '*/1',
     require => File[$keytab_path],

@@ -33,7 +33,7 @@ describe 'profile::util::keytab' do
 
       it do
         is_expected.to contain_cron('k5start_root').with(
-          command: '/usr/bin/k5start -f /home/foo/.keytab -U -o 123 -k /tmp/krb5cc_123 -H 60 > /dev/null 2>&1',
+          command: '/usr/bin/k5start -f /home/foo/.keytab -U -o 123 -k /tmp/krb5cc_123 -H 60 -F > /dev/null 2>&1',
         )
       end
 

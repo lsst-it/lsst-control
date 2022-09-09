@@ -177,4 +177,7 @@ class profile::core::common (
   file { '/etc/sysconfig/network-scripts/ifcfg-':
     ensure => absent,
   }
+
+  # prevent ipa packages from being installed before versionlocks are set
+  Yum::Versionlock<| |> -> Class[easy_ipa]
 }

@@ -1,5 +1,5 @@
 ---
-easy_ipa::ipa_master_fqdn: "ipa1.ls.lsst.org"
+easy_ipa::ipa_master_fqdn: "ipa2.ls.lsst.org"
 # sssd ipa client setup -- do not use on ipa servers
 sssd::domains:
   "lsst.cloud":

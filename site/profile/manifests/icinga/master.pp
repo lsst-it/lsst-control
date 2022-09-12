@@ -62,19 +62,6 @@ class profile::icinga::master (
     tar zxvf pnp.tar.gz -C pnp --strip-components 1
     | PNP_INSTALL
 
-  #  incubator script
-  $incubator_script = @(INCUBATOR/L)
-    MODULE_NAME=incubator
-    MODULE_VERSION=v0.6.0
-    MODULES_PATH="/usr/share/icingaweb2/modules"
-    MODULE_PATH="${MODULES_PATH}/${MODULE_NAME}"
-    RELEASES="https://github.com/Icinga/icingaweb2-module-${MODULE_NAME}/archive"
-    mkdir "$MODULE_PATH" \
-    && wget -q $RELEASES/${MODULE_VERSION}.tar.gz -O - \
-    | tar xfz - -C "$MODULE_PATH" --strip-components 1
-    icingacli module enable "${MODULE_NAME}"
-    | INCUBATOR
-
   #  pnp4nagios webpage integration
   $pnp4nagios_conf = @(PNPNAGIOS/L)
     location /pnp4nagios {
@@ -382,21 +369,8 @@ class profile::icinga::master (
   }
 
   ##IcingaWeb Incubator
-  archive { '/tmp/icinga-incubator':
-    ensure       => present,
-    extract      => true,
-    extract_path => '/tmp',
-    source       => 'https://github.com/Icinga/icingaweb2-module-incubator/archive/refs/tags/v0.6.0.tar.gz',
-    creates      => '/usr/share/icinga-php/ipl',
-    cleanup      => true,
-    require      => Class['icingaweb2'],
-  }
-  -> exec { $incubator_script:
-    cwd      => '/tmp',
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    unless   => 'test -d /etc/icingaweb2/enabledModules/incubator/',
-    #loglevel => debug
+  class { 'icingaweb2::module::incubator':
+    git_revision => 'v0.18.0',
   }
 
   ##Nginx Resource Definition

@@ -39,6 +39,12 @@ describe 'profile::icinga::master' do
             git_revision: 'v1.9.1',
           )
         end
+
+        it do
+          is_expected.to contain_class('icingaweb2::module::incubator').with(
+            git_revision: 'v0.18.0',
+          )
+        end
       end
     end
   end

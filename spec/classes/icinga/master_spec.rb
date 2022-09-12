@@ -33,6 +33,12 @@ describe 'profile::icinga::master' do
 
       context 'with all required params' do
         it { is_expected.to compile.with_all_deps }
+
+        it do
+          is_expected.to contain_class('icingaweb2::module::director').with(
+            git_revision: 'v1.9.1',
+          )
+        end
       end
     end
   end

@@ -304,7 +304,7 @@ class profile::icinga::master (
 
   ##IcingaWeb Director
   class { 'icingaweb2::module::director':
-    git_revision  => 'v1.7.2',
+    git_revision  => 'v1.9.1',
     db_host       => $master_ip,
     db_name       => $mysql_director_db,
     db_username   => $mysql_director_user,

@@ -40,6 +40,14 @@ class profile::icinga::plugins (
   #
   #<---------------------------Plugins Creation and permissions adjustment------------------------------------>
 
+  # XXX we should not be compiling software on production systems. If a 3rd
+  # party package is not avaiable an rpm should be created and uploaded to nexus.
+  $nwc_build_packages = [
+    'autoconf',
+    'automake',
+  ]
+  ensure_packages($nwc_build_packages)
+
   vcsrepo { $nwc_dir:
     ensure   => present,
     provider => git,
@@ -53,12 +61,14 @@ class profile::icinga::plugins (
     onlyif   => "test ! -f ${$nwc_dir}/plugins-scripts/check_nwc_health",
     loglevel => debug,
   }
-  ->exec { "autoreconf;./configure ${conditions};make;make install;":
+  ->exec { 'autoreconf':
+    command  => "autoreconf;./configure ${conditions};make;make install;",
     cwd      => $nwc_dir,
     path     => ['/sbin', '/usr/sbin', '/bin'],
     provider => shell,
     onlyif   => "test ! -f ${base_dir}/check_nwc_health",
     loglevel => debug,
+    require  => Package[$nwc_build_packages],
   }
   ->file { "${base_dir}/check_nwc_health":
     ensure => 'file',

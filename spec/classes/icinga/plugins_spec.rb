@@ -20,6 +20,14 @@ describe 'profile::icinga::plugins' do
 
       context 'with all required params' do
         it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_package('autoconf') }
+        it { is_expected.to contain_package('automake') }
+
+        it do
+          is_expected.to contain_exec('autoreconf')
+            .that_requires('Package[autoconf]')
+            .that_requires('Package[automake]')
+        end
       end
     end
   end

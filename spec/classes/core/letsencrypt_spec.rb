@@ -13,6 +13,18 @@ describe 'profile::core::letsencrypt' do
         it { is_expected.to contain_class('letsencrypt') }
         it { is_expected.to contain_class('letsencrypt::plugin::dns_route53') }
 
+        it do
+          is_expected.to contain_yum__versionlock('python-s3transfer').with(
+            ensure: 'present',
+            version: '0.1.13',
+            release: '1.el7.0.1',
+            arch: 'noarch',
+          ).that_comes_before('Class[letsencrypt::plugin::dns_route53]')
+                                                                      .that_comes_before('Package[python-s3transfer]')
+        end
+
+        it { is_expected.to contain_package('python-s3transfer') }
+
         if facts[:os]['name'] == 'CentOS'
           it { is_expected.to contain_package('python2-futures.noarch') }
         end

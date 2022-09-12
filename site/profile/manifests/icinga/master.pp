@@ -62,31 +62,6 @@ class profile::icinga::master (
     tar zxvf pnp.tar.gz -C pnp --strip-components 1
     | PNP_INSTALL
 
-  #  Director Service
-  $director_service = @(SERVICE)
-    [Unit]
-    Description=Icinga Director - Monitoring Configuration
-    Documentation=https://icinga.com/docs/director/latest/
-    Wants=network.target
-
-    [Service]
-    EnvironmentFile=-/etc/default/icinga-director
-    EnvironmentFile=-/etc/sysconfig/icinga-director
-    ExecStart=/bin/icingacli director daemon run
-    ExecReload=/bin/kill -HUP ${MAINPID}
-    User=icingadirector
-    SyslogIdentifier=icingadirector
-    Type=notify
-
-    NotifyAccess=main
-    WatchdogSec=10
-    RestartSec=30
-    Restart=always
-
-    [Install]
-    WantedBy=multi-user.target
-    | SERVICE
-
   #  incubator script
   $incubator_script = @(INCUBATOR/L)
     MODULE_NAME=incubator
@@ -326,15 +301,9 @@ class profile::icinga::master (
     groups      => 'icinga-sqre,icinga-tssw,icinga-comcam',
     permissions => 'application/share/navigation,application/stacktraces,application/log,module/director,module/doc,module/incubator,module/ipl,module/monitoring,monitoring/*,module/pnp,module/reactbundle,module/setup,module/translation',
   }
+
   ##IcingaWeb Director
-  user { 'icingadirector':
-    ensure => 'present',
-    shell  => '/bin/false',
-    gid    => 'icingaweb2',
-    home   => '/var/lib/icingadirector',
-    system => true,
-  }
-  -> class { 'icingaweb2::module::director':
+  class { 'icingaweb2::module::director':
     git_revision  => 'v1.7.2',
     db_host       => $master_ip,
     db_name       => $mysql_director_db,
@@ -348,11 +317,6 @@ class profile::icinga::master (
     api_username  => $api_user,
     api_password  => $api_pwd,
     require       => Mysql::Db[$mysql_director_db],
-  }
-  -> systemd::unit_file { 'icinga-director.service':
-    content => $director_service,
-    enable  => true,
-    active  => true,
   }
 
   ##IcingaWeb PNP

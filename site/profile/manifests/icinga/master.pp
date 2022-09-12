@@ -45,6 +45,12 @@ class profile::icinga::master (
   include profile::core::letsencrypt
   include nginx
 
+  # XXX EL7 specific
+  service { 'rh-php73-php-fpm':
+    ensure => running,
+    enable => true,
+  }
+
   #<-------------Variables Definition---------------->
 
   #  Implicit usage of facts

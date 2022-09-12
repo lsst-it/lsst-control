@@ -45,6 +45,13 @@ describe 'profile::icinga::master' do
             git_revision: 'v0.18.0',
           )
         end
+
+        it do
+          is_expected.to contain_service('rh-php73-php-fpm').with(
+            ensure: 'running',
+            enable: true,
+          )
+        end
       end
     end
   end

@@ -49,6 +49,13 @@ describe 'profile::icinga::master' do
         end
 
         it do
+          is_expected.to contain_icingaweb2__module('pnp').with(
+            git_repository: 'https://github.com/Icinga/icingaweb2-module-pnp',
+            git_revision: '8f09274',
+          )
+        end
+
+        it do
           is_expected.to contain_service('rh-php73-php-fpm').with(
             ensure: 'running',
             enable: true,

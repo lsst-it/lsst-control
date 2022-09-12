@@ -72,14 +72,6 @@ class profile::icinga::master (
   #  Letsencrypt cert path
   $le_root = "/etc/letsencrypt/live/${master_fqdn}"
 
-  #  Director Service
-  $pnp_url = 'https://github.com/Icinga/icingaweb2-module-pnp/archive/refs/tags/v1.1.0.tar.gz'
-  $pnp_install = @("PNP_INSTALL")
-    mkdir /usr/share/icingaweb2/modules/pnp
-    wget -O pnp.tar.gz ${pnp_url}
-    tar zxvf pnp.tar.gz -C pnp --strip-components 1
-    | PNP_INSTALL
-
   #  pnp4nagios webpage integration
   $pnp4nagios_conf = @(PNPNAGIOS/L)
     location /pnp4nagios {
@@ -325,24 +317,11 @@ class profile::icinga::master (
   }
 
   ##IcingaWeb PNP
-  exec { $pnp_install :
-    cwd     => '/var/tmp/',
-    path    => ['/sbin', '/usr/sbin', '/bin'],
-    onlyif  => ['test ! -d /usr/share/icingaweb2/modules/pnp'],
-    require => Class['icingaweb2::module::director'],
-  }
-  exec { 'icingacli module enable pnp':
-    cwd     => '/var/tmp/',
-    path    => ['/sbin', '/usr/sbin', '/bin'],
-    onlyif  => ['test ! -d /etc/icingaweb2/enabledModules/pnp'],
-    require => Class['icingaweb2::module::director'],
-  }
-  -> file { '/etc/icingaweb2/modules/pnp':
-    ensure  => 'directory',
-    mode    => '0755',
-    owner   => 'apache',
-    group   => 'icingaweb2',
-    require => Class['icingaweb2'],
+  # XXX pnp4nagios is effectively dead and hasn't had a release since 2017. We
+  # need to migrate away.
+  icingaweb2::module { 'pnp':
+    git_repository => 'https://github.com/Icinga/icingaweb2-module-pnp',
+    git_revision   => '8f09274', # the v1.1.0 tag claims to be v1.0.1
   }
   -> file { '/etc/icingaweb2/modules/pnp/config.ini':
     ensure  => 'file',

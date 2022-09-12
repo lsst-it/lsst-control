@@ -286,7 +286,7 @@ class profile::icinga::master (
   }
   icingaweb2::config::role { 'Visitors':
     groups      => 'icinga-sqre,icinga-tssw,icinga-comcam',
-    permissions => 'application/share/navigation,application/stacktraces,application/log,module/director,module/doc,module/incubator,module/ipl,module/monitoring,monitoring/*,module/pnp,module/setup,module/translation',
+    permissions => 'application/share/navigation,application/stacktraces,application/log,module/director,module/doc,module/incubator,module/monitoring,monitoring/*,module/pnp,module/setup,module/translation',
   }
 
   ##IcingaWeb Director
@@ -345,17 +345,6 @@ class profile::icinga::master (
     ensure  => 'file',
     content => $pnp4nagios_conf,
     mode    => '0644',
-  }
-
-  ##IcingaWeb IPL
-  archive { '/tmp/icinga-ipl':
-    ensure       => present,
-    extract      => true,
-    extract_path => '/tmp',
-    source       => 'https://github.com/Icinga/icinga-php-library/archive/refs/tags/v0.6.1.tar.gz',
-    creates      => '/usr/share/icinga-php/ipl',
-    cleanup      => true,
-    require      => Class['icingaweb2'],
   }
 
   ##IcingaWeb Incubator

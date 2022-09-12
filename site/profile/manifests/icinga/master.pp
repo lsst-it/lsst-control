@@ -51,6 +51,18 @@ class profile::icinga::master (
     enable => true,
   }
 
+  # XXX icingaweb2 has dropped the `reactbundle` and `ipl` dependencies.
+  # However, incubator v0.18.0 and directory v1.9.1 depenend on them as
+  # libraries (not modules).  As these are dead packages, there is no reason not
+  # to use the existing official RPMs. See:
+  # * https://github.com/Icinga/icingaweb2-module-ipl
+  # * https://github.com/Icinga/icingaweb2-module-reactbundle
+  $deprecated_packages = [
+    'icinga-php-library',
+    'icinga-php-thirdparty',
+  ]
+  ensure_packages($deprecated_packages)
+
   #<-------------Variables Definition---------------->
 
   #  Implicit usage of facts

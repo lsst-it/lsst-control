@@ -42,6 +42,8 @@ describe 'profile::icinga::master' do
           )
         end
 
+        it { is_expected.to contain_class('icingaweb2::module::director::service') }
+
         it do
           is_expected.to contain_class('icingaweb2::module::incubator').with(
             git_revision: 'v0.18.0',

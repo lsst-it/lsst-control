@@ -42,8 +42,8 @@ class profile::icinga::master (
   String $api_pwd,
   String $ca_salt,
 ) {
-  include profile::core::letsencrypt
   include nginx
+  include profile::core::letsencrypt
 
   # XXX EL7 specific
   service { 'rh-php73-php-fpm':
@@ -316,6 +316,8 @@ class profile::icinga::master (
     api_password  => $api_pwd,
     require       => Mysql::Db[$mysql_director_db],
   }
+  # declared instead of included to avoid parse order problems
+  class { 'icingaweb2::module::director::service': }
 
   ##IcingaWeb PNP
   # XXX pnp4nagios is effectively dead and hasn't had a release since 2017. We

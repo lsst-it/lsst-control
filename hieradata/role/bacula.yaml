@@ -2,3 +2,10 @@
 classes:
   - "profile::core::bacula"
   - "profile::core::common"
+  - "yum"
+
+profile::core::yum::versionlock:
+  python-s3transfer:
+    ensure: "present"
+    version: "0.1.13"
+    release: "1.el7.0.1"

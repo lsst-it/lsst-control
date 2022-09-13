@@ -1,12 +1,20 @@
 # @summary
 #   Provides Signed Certificate and manages HTTPD for Bacula
 #
+# @param id
+#   Bacula customer Identification string
+#
 
 class profile::core::bacula (
+  String $id = 'null',
 ) {
   include profile::core::letsencrypt
   include cron
+  include yum
+
+  $bacula_version = '14.0.4'
   $packages = [
+    'httpd',
     'mod_ssl',
     'vim',
   ]
@@ -50,20 +58,34 @@ class profile::core::bacula (
     manage_cron => true,
   }
 
-  #  Bacula HTTPD File definition
-  file { "${bacula_root}/ssl_config":
-    ensure  => file,
-    mode    => '0644',
-    owner   => 'bacula',
-    content => $ssl_config,
-    notify  => Service['httpd'],
+  file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA':
+    ensure => file,
+    source => "https://www.baculasystems.com/dl/${id}/BaculaSystems-Public-Signature-08-2017.asc",
   }
 
-  #  Enable SSL in Bacula
-  exec { "cat ${bacula_root}/ssl_config >> ${bacula_web}/httpd.conf":
-    cwd    => '/var/tmp/',
-    path   => ['/sbin', '/usr/sbin', '/bin'],
-    unless => ["grep 'fullchain.pem' ${bacula_web}/httpd.conf"],
-    notify => Service['httpd'],
+  yumrepo { 'bacula':
+    ensure   => 'present',
+    baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/bin/${bacula_version}/rhel7-64/",
+    descr    => 'Bacula Enterprise Repository',
+    enabled  => true,
+    gpgcheck => '1',
+    gpgkey   => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA',
+    require  => File['/etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA'],
   }
+  # #  Bacula HTTPD File definition
+  # file { "${bacula_root}/ssl_config":
+  #   ensure  => file,
+  #   mode    => '0644',
+  #   owner   => 'bacula',
+  #   content => $ssl_config,
+  #   notify  => Service['httpd'],
+  # }
+
+  # #  Enable SSL in Bacula
+  # exec { "cat ${bacula_root}/ssl_config >> ${bacula_web}/httpd.conf":
+  #   cwd    => '/var/tmp/',
+  #   path   => ['/sbin', '/usr/sbin', '/bin'],
+  #   unless => ["grep 'fullchain.pem' ${bacula_web}/httpd.conf"],
+  #   notify => Service['httpd'],
+  # }
 }

@@ -32,6 +32,7 @@ cron::job:
     weekday: "*"
     user: "root"
     description: "restart foreman to control memory bloat"
+foreman_envsync::image_tag: "v1.4.1"
 r10k::mcollective: false
 r10k::cachedir: "/var/cache/r10k"
 r10k::sources:

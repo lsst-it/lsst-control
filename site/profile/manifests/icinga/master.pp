@@ -94,6 +94,7 @@ class profile::icinga::master (
     | PNPNAGIOS
 
   #  PNP plugin configuration
+  # XXX should icinga-master.ls.lsst.org be hardcoded into the pnp config?
   $pnp_conf = @(PNP/)
     [pnp4nagios]
     config_dir = "/etc/pnp4nagios"

@@ -1,0 +1,4 @@
+---
+classes:
+  - "profile::core::bacula"
+  - "profile::core::common"

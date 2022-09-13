@@ -35,6 +35,7 @@ describe 'profile::icinga::master' do
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_package('icinga-php-library') }
         it { is_expected.to contain_package('icinga-php-thirdparty') }
+        it { is_expected.to contain_package('rh-php73-php-process') }
 
         it do
           is_expected.to contain_class('icingaweb2::module::director').with(

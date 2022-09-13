@@ -51,6 +51,10 @@ class profile::icinga::master (
     enable => true,
   }
 
+  # XXX EL7 specific
+  # needed by icinga-director daemon
+  ensure_packages(['rh-php73-php-process'])
+
   # XXX icingaweb2 has dropped the `reactbundle` and `ipl` dependencies.
   # However, incubator v0.18.0 and directory v1.9.1 depenend on them as
   # libraries (not modules).  As these are dead packages, there is no reason not

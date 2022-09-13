@@ -8,8 +8,9 @@
 class profile::core::bacula (
   String $id = 'null',
 ) {
-  include profile::core::letsencrypt
   include cron
+  include postgresql::server
+  include profile::core::letsencrypt
   include yum
 
   $bacula_version = '14.0.4'

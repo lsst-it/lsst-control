@@ -9,6 +9,8 @@ easy_ipa::ipa_role: "client"
 easy_ipa::ipa_master_fqdn: "foo.example.org"
 easy_ipa::install_sssd: false
 
+letsencrypt::email: "foo@example.com"
+
 resolv_conf::nameservers:
   - "1.1.1.1"
 

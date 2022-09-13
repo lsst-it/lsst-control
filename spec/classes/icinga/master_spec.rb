@@ -1,0 +1,39 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+
+describe 'profile::icinga::master' do
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) { facts }
+
+      let(:params) do
+        {
+          api_name: 'foo',
+          api_pwd: 'foo',
+          api_user: 'foo',
+          ca_salt: 'foo',
+          ldap_group_base: 'foo',
+          ldap_group_filter: 'foo',
+          ldap_pwd: 'foo',
+          ldap_resource: 'foo',
+          ldap_root: 'foo',
+          ldap_server: '192.168.1.1',
+          ldap_user_filter: 'foo',
+          ldap_user: 'foo',
+          mysql_director_db: 'bar',
+          mysql_director_pwd: 'bar',
+          mysql_director_user: 'bar',
+          mysql_icingaweb_db: 'baz',
+          mysql_icingaweb_pwd: 'baz',
+          mysql_icingaweb_user: 'baz',
+          mysql_root: 'foo',
+        }
+      end
+
+      context 'with all required params' do
+        it { is_expected.to compile.with_all_deps }
+      end
+    end
+  end
+end

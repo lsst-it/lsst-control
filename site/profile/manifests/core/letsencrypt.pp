@@ -34,6 +34,20 @@ class profile::core::letsencrypt (
   include letsencrypt
   include letsencrypt::plugin::dns_route53
 
+  # XXX EL7 specific
+  # See https://bugzilla.redhat.com/show_bug.cgi?id=2072990
+  yum::versionlock { 'python-s3transfer':
+    ensure  => present,
+    version => '0.1.13',
+    release => '1.el7.0.1',
+    arch    => 'noarch',
+    before  => [
+      Class['letsencrypt::plugin::dns_route53'],
+      Package['python-s3transfer'],
+    ],
+  }
+  ensure_packages(['python-s3transfer'])
+
   # XXX https://github.com/voxpupuli/puppet-letsencrypt/issues/230
   if $facts['os']['name'] == 'CentOS' {
     ensure_packages(['python2-futures.noarch'])

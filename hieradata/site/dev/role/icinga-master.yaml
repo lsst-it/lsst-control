@@ -1,3 +1,8 @@
 ---
-# p::icinga::master and p::icinga::agent both try to define the `nagios-plugins-all` package
+#Disable icinga-agent on master
 profile::core::common::deploy_icinga_agent: false
+#Set the Site
+profile::icinga::master::ldap_server: "139.229.135.6"
+profile::icinga::network::site: "base"
+profile::icinga::resources::site: "base"
+profile::icinga::opsgenie::site: "base"

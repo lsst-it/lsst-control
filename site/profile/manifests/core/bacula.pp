@@ -21,6 +21,7 @@ class profile::core::bacula (
     sudo -H -u postgres bash -c '/opt/bacula/scripts/grant_postgresql_privileges'
     |BACULAINIT
   $bacula_package = 'bacula-enterprise-postgresql'
+  $bacula_port = '9180'
   $bacula_root = '/opt/bacula'
   $bacula_version = '14.0.4'
   $bacula_web = 'bacula-enterprise-bweb'
@@ -29,56 +30,30 @@ class profile::core::bacula (
   $bacula_crt  = "${bacula_root}/etc/conf.d/ssl/certs/"
   $httpd_conf = @("HTTPCONF")
     <VirtualHost *:80> 
-      DocumentRoot "/var/www/html"    
-      ServerName ${fqdn}  
-      <Directory /opt/bweb/cgi>
-          Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-          AllowOverride None
-      </Directory>
-      ScriptAlias /cgi-bin/bweb /opt/bweb/cgi
-      Alias /bweb/fv /opt/bweb/spool
-      <Directory "/var/spool/bweb">
-          Options None
-          AllowOverride AuthConfig
-          Order allow,deny
-          Allow from all
-      </Directory>
-      Alias /bweb /opt/bweb/html
-      <Directory "/opt/bweb/html">
-          Options None
-          AllowOverride AuthConfig
-          Require all granted
-      </Directory>
-      ErrorLog "/var/log/httpd/${fqdn}-error_log"
-      CustomLog "/var/log/httpd/${fqdn}-access_log" combined
-    </VirtualHost>
-    <VirtualHost *:443> 
-      DocumentRoot "/var/www/html"    
-      ServerName ${fqdn}  
-      <Directory /opt/bweb/cgi>
-          Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-          AllowOverride None
-      </Directory>
-      ScriptAlias /cgi-bin/bweb /opt/bweb/cgi
-      Alias /bweb/fv /opt/bweb/spool
-      <Directory "/var/spool/bweb">
-          Options None
-          AllowOverride AuthConfig
-          Order allow,deny
-          Allow from all
-      </Directory>
-      Alias /bweb /opt/bweb/html
-      <Directory "/opt/bweb/html">
-          Options None
-          AllowOverride AuthConfig
-          Require all granted
-      </Directory>
-      SSLEngine on  
-      SSLCertificateFile /etc/letsencrypt/live/${fqdn}/cert.pem 
-      SSLCertificateKeyFile /etc/letsencrypt/live/${fqdn}/privkey.pem
-      ErrorLog "/var/log/httpd/${fqdn}-error_log"
-      CustomLog "/var/log/httpd/${fqdn}-access_log" combined
-     </VirtualHost>
+    DocumentRoot "/opt/bweb/html/"
+    ServerName ${fqdn}
+    <Directory /opt/bweb/cgi>
+        Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+        AllowOverride None
+    </Directory>
+    ScriptAlias /cgi-bin/bweb /opt/bweb/cgi
+    Alias /bweb/fv /opt/bweb/spool
+    <Directory "/var/spool/bweb">
+        Options None
+        AllowOverride AuthConfig
+        Order allow,deny
+        Allow from all
+    </Directory>
+    Alias /bweb /opt/bweb/html
+    <Directory "/opt/bweb/html">
+        Options None
+        AllowOverride AuthConfig
+        Require all granted
+    </Directory>
+    ErrorLog "/var/log/httpd/${fqdn}-error_log"
+    CustomLog "/var/log/httpd/${fqdn}-access_log" combined
+    RewriteRule "/(.*)" https://${fqdn}":9180/cgi-bin/bweb/bweb.pl/\$1" [P]
+    </VirtualHost> 
     |HTTPCONF
   $packages = [
     'httpd',

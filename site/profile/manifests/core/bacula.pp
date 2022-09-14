@@ -20,9 +20,10 @@ class profile::core::bacula (
     sudo -H -u postgres bash -c '/opt/bacula/scripts/grant_postgresql_privileges'
     |BACULAINIT
   $bacula_package = 'bacula-enterprise-postgresql'
-  #$bacula_root = '/opt/bacula'
+  $bacula_root = '/opt/bacula'
   $bacula_version = '14.0.4'
-  #$bacula_web = '/opt/bweb/etc'
+  $bacula_web = 'bacula-enterprise-bweb'
+  $bacula_web_path = '/opt/bweb/etc'
   $fqdn = $facts[fqdn]
   $le_root = "/etc/letsencrypt/live/${fqdn}"
   $packages = [
@@ -87,7 +88,7 @@ class profile::core::bacula (
     baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/bweb/${bacula_version}/rhel7-64/",
     descr    => 'Bacula Web Repository',
     enabled  => true,
-    gpgcheck => '1',
+    gpgcheck => '0',
   }
 
   #  Bacula DAG Repository
@@ -103,6 +104,12 @@ class profile::core::bacula (
   package { $bacula_package:
     ensure  => 'present',
     require => Yumrepo['bacula'],
+  }
+
+  #  Install Bacula BWeb
+  package { $bacula_web:
+    ensure  => 'present',
+    require => Yumrepo['bacula-bweb'],
   }
 
   exec { $bacula_init:
@@ -129,20 +136,25 @@ class profile::core::bacula (
     require => Package[$bacula_package],
   }
 
-  # #  Bacula HTTPD File definition
-  # file { "${bacula_root}/ssl_config":
-  #   ensure  => file,
-  #   mode    => '0644',
-  #   owner   => 'bacula',
-  #   content => $ssl_config,
-  #   notify  => Service['httpd'],
+  # exec { '':
+  #   cwd      => '/var/tmp/',
+  #   path     => ['/sbin', '/usr/sbin', '/bin'],
+  #   urequire => Package[$bacula_web],
   # }
+  #  Bacula HTTPD File definition
+  file { "${bacula_root}/ssl_config":
+    ensure  => file,
+    mode    => '0644',
+    owner   => 'bacula',
+    content => $ssl_config,
+    notify  => Service['httpd'],
+  }
 
-  # #  Enable SSL in Bacula
-  # exec { "cat ${bacula_root}/ssl_config >> ${bacula_web}/httpd.conf":
-  #   cwd    => '/var/tmp/',
-  #   path   => ['/sbin', '/usr/sbin', '/bin'],
-  #   unless => ["grep 'fullchain.pem' ${bacula_web}/httpd.conf"],
-  #   notify => Service['httpd'],
-  # }
+  #  Enable SSL in Bacula
+  exec { "cat ${bacula_root}/ssl_config >> ${bacula_web_path}/httpd.conf":
+    cwd    => '/var/tmp/',
+    path   => ['/sbin', '/usr/sbin', '/bin'],
+    unless => ["grep 'fullchain.pem' ${bacula_web_path}/httpd.conf"],
+    notify => Service['httpd'],
+  }
 }

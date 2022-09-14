@@ -136,11 +136,13 @@ class profile::core::bacula (
     require => Package[$bacula_package],
   }
 
-  # exec { '':
-  #   cwd      => '/var/tmp/',
-  #   path     => ['/sbin', '/usr/sbin', '/bin'],
-  #   urequire => Package[$bacula_web],
-  # }
+  exec { 'bash /opt/bweb/bin/install_bweb.sh':
+    cwd     => '/var/tmp/',
+    path    => ['/sbin', '/usr/sbin', '/bin'],
+    require => Package[$bacula_web],
+    unless  => 'sudo -H -u postgres bash -c \'psql -U postgres -d bacula -E -c "\dt"\' | grep bweb',
+  }
+
   #  Bacula HTTPD File definition
   file { "${bacula_root}/ssl_config":
     ensure  => file,

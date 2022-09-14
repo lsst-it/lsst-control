@@ -13,16 +13,17 @@ class profile::core::bacula (
   include profile::core::letsencrypt
   include yum
 
+  $bacula_crt = "${bacula_root}/etc/conf.d/ssl/certs"
+  $bacula_root = '/opt/bacula'
+  $bacula_package = 'bacula-enterprise-postgresql'
   $bacula_version = '14.0.4'
+  $bacula_web = '/opt/bweb/etc'
   $packages = [
     'httpd',
     'mod_ssl',
     'vim',
   ]
   $fqdn = $facts[fqdn]
-  $bacula_root = '/opt/bacula'
-  $bacula_web = '/opt/bweb/etc'
-  $bacula_crt = "${bacula_root}/etc/conf.d/ssl/certs"
   $le_root = "/etc/letsencrypt/live/${fqdn}"
 
   $ssl_config = @("SSLCONF"/$)
@@ -72,6 +73,11 @@ class profile::core::bacula (
     gpgcheck => '1',
     gpgkey   => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA',
     require  => File['/etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA'],
+  }
+
+  package { $bacula_package:
+    ensure  => 'present',
+    require => Yumrepo['bacula'],
   }
   # #  Bacula HTTPD File definition
   # file { "${bacula_root}/ssl_config":

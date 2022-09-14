@@ -136,6 +136,14 @@ class profile::core::bacula (
     require => Package[$bacula_package],
   }
 
+  #  Run and Enable BWeb
+  service { 'bweb':
+    ensure  => 'running',
+    enable  => true,
+    require => Package[$bacula_web],
+  }
+
+  #  Provision bweb tables to psql
   exec { 'bash /opt/bweb/bin/install_bweb.sh':
     cwd     => '/var/tmp/',
     path    => ['/sbin', '/usr/sbin', '/bin'],

@@ -93,6 +93,24 @@ class profile::core::bacula (
     unless  => "sudo -H -u postgres bash -c 'psql -l' | grep bacula",
     require => Package[$bacula_package],
   }
+
+  #  Run and enable Bacula Daemons
+  service { 'bacula-fd':
+    ensure  => 'running',
+    enable  => true,
+    require => Package[$bacula_package],
+  }
+  service { 'bacula-sd':
+    ensure  => 'running',
+    enable  => true,
+    require => Package[$bacula_package],
+  }
+  service { 'bacula-dir':
+    ensure  => 'running',
+    enable  => true,
+    require => Package[$bacula_package],
+  }
+
   # #  Bacula HTTPD File definition
   # file { "${bacula_root}/ssl_config":
   #   ensure  => file,

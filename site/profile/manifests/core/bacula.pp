@@ -13,7 +13,8 @@ class profile::core::bacula (
   include profile::core::letsencrypt
   include yum
 
-  $bacula_crt = "${bacula_root}/etc/conf.d/ssl/certs"
+  $fqdn = $facts[fqdn]
+  $le_root = "/etc/letsencrypt/live/${fqdn}"
   $bacula_init = @(BACULAINIT)
     sudo -H -u postgres bash -c '/opt/bacula/scripts/create_postgresql_database'
     sudo -H -u postgres bash -c '/opt/bacula/scripts/make_postgresql_tables'
@@ -24,7 +25,8 @@ class profile::core::bacula (
   $bacula_version = '14.0.4'
   $bacula_web = 'bacula-enterprise-bweb'
   $bacula_web_path = '/opt/bweb/etc'
-  $fqdn = $facts[fqdn]
+  $cert_name = 'baculacert.pem'
+  $bacula_crt  = "${bacula_root}/etc/conf.d/ssl/certs/"
   $httpd_conf = @("HTTPCONF")
     <VirtualHost *:80> 
       DocumentRoot "/var/www/html"    
@@ -78,7 +80,6 @@ class profile::core::bacula (
       CustomLog "/var/log/httpd/${fqdn}-access_log" combined
      </VirtualHost>
     |HTTPCONF
-  $le_root = "/etc/letsencrypt/live/${fqdn}"
   $packages = [
     'httpd',
     'mod_ssl',
@@ -86,21 +87,8 @@ class profile::core::bacula (
   ]
   $ssl_config = @("SSLCONF"/$)
     server.modules += ("mod_openssl")
-    \$SERVER["socket"] == "0.0.0.0:443" {
-        ssl.engine = "enable" 
-        ssl.privkey= "${le_root}/privkey.pem" 
-        ssl.pemfile= "${le_root}/fullchain.pem"
-    }
-    \$SERVER["socket"] == "0.0.0.0:9143" {
-        ssl.engine = "enable" 
-        ssl.privkey= "${le_root}/privkey.pem" 
-        ssl.pemfile= "${le_root}/fullchain.pem" 
-    }
-    \$SERVER["socket"] == "0.0.0.0:9180" {
-        ssl.engine = "enable" 
-        ssl.privkey= "${le_root}/privkey.pem" 
-        ssl.pemfile= "${le_root}/fullchain.pem" 
-    }
+    ssl.engine = "enable" 
+    ssl.pemfile= "${bacula_crt}/${cert_name}"
     |SSLCONF
 
   #  Ensure Packages installation
@@ -225,12 +213,26 @@ class profile::core::bacula (
     notify  => Service['httpd'],
   }
 
+  #  Change PrivateKey mode
+  cron::job { 'baculacert':
+    ensure      => present,
+    minute      => '0',
+    hour        => '0',
+    date        => '*/1',
+    month       => '*',
+    weekday     => '*',
+    command     => "cat ${le_root}/privkey.pem <(echo) ${le_root}/cert.pem > ${bacula_crt}/${cert_name}",
+    description => 'Combined Cert for Bacula Web',
+    require     => Package[$bacula_web],
+    notify      => Service['bweb'],
+  }
+
   #  Enable SSL in Bacula
   exec { "cat ${bacula_root}/ssl_config >> ${bacula_web_path}/httpd.conf":
     cwd     => '/var/tmp/',
     notify  => Service['httpd'],
     path    => ['/sbin', '/usr/sbin', '/bin'],
     require => Package[$bacula_web],
-    unless  => ["grep 'fullchain.pem' ${bacula_web_path}/httpd.conf"],
+    unless  => ["grep '${cert_name}' ${bacula_web_path}/httpd.conf"],
   }
 }

@@ -25,6 +25,59 @@ class profile::core::bacula (
   $bacula_web = 'bacula-enterprise-bweb'
   $bacula_web_path = '/opt/bweb/etc'
   $fqdn = $facts[fqdn]
+  $httpd_conf = @("HTTPCONF")
+    <VirtualHost *:80> 
+      DocumentRoot "/var/www/html"    
+      ServerName ${fqdn}  
+      <Directory /opt/bweb/cgi>
+          Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+          AllowOverride None
+      </Directory>
+      ScriptAlias /cgi-bin/bweb /opt/bweb/cgi
+      Alias /bweb/fv /opt/bweb/spool
+      <Directory "/var/spool/bweb">
+          Options None
+          AllowOverride AuthConfig
+          Order allow,deny
+          Allow from all
+      </Directory>
+      Alias /bweb /opt/bweb/html
+      <Directory "/opt/bweb/html">
+          Options None
+          AllowOverride AuthConfig
+          Require all granted
+      </Directory>
+      ErrorLog "/var/log/httpd/${fqdn}-error_log"
+      CustomLog "/var/log/httpd/${fqdn}-access_log" combined
+    </VirtualHost>
+    <VirtualHost *:443> 
+      DocumentRoot "/var/www/html"    
+      ServerName ${fqdn}  
+      <Directory /opt/bweb/cgi>
+          Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+          AllowOverride None
+      </Directory>
+      ScriptAlias /cgi-bin/bweb /opt/bweb/cgi
+      Alias /bweb/fv /opt/bweb/spool
+      <Directory "/var/spool/bweb">
+          Options None
+          AllowOverride AuthConfig
+          Order allow,deny
+          Allow from all
+      </Directory>
+      Alias /bweb /opt/bweb/html
+      <Directory "/opt/bweb/html">
+          Options None
+          AllowOverride AuthConfig
+          Require all granted
+      </Directory>
+      SSLEngine on  
+      SSLCertificateFile /etc/letsencrypt/live/${fqdn}/cert.pem 
+      SSLCertificateKeyFile /etc/letsencrypt/live/${fqdn}/privkey.pem
+      ErrorLog "/var/log/httpd/${fqdn}-error_log"
+      CustomLog "/var/log/httpd/${fqdn}-access_log" combined
+     </VirtualHost>
+    |HTTPCONF
   $le_root = "/etc/letsencrypt/live/${fqdn}"
   $packages = [
     'httpd',
@@ -35,16 +88,19 @@ class profile::core::bacula (
     server.modules += ("mod_openssl")
     \$SERVER["socket"] == "0.0.0.0:443" {
         ssl.engine = "enable" 
-        ssl.privkey= "${fqdn}/privkey.pem" 
-        ssl.pemfile= "${fqdn}/fullchain.pem" 
+        ssl.privkey= "${le_root}/privkey.pem" 
+        ssl.pemfile= "${le_root}/fullchain.pem"
+    }
     \$SERVER["socket"] == "0.0.0.0:9143" {
         ssl.engine = "enable" 
-        ssl.privkey= "${fqdn}/privkey.pem" 
-        ssl.pemfile= "${fqdn}/fullchain.pem" 
+        ssl.privkey= "${le_root}/privkey.pem" 
+        ssl.pemfile= "${le_root}/fullchain.pem" 
+    }
     \$SERVER["socket"] == "0.0.0.0:9180" {
         ssl.engine = "enable" 
-        ssl.privkey= "${fqdn}/privkey.pem" 
-        ssl.pemfile= "${fqdn}/fullchain.pem" 
+        ssl.privkey= "${le_root}/privkey.pem" 
+        ssl.pemfile= "${le_root}/fullchain.pem" 
+    }
     |SSLCONF
 
   #  Ensure Packages installation
@@ -159,6 +215,14 @@ class profile::core::bacula (
     mode    => '0644',
     notify  => Service['httpd'],
     require => Package[$bacula_web],
+  }
+
+  #  HTTPD File definition
+  file { '/etc/httpd/conf.d/bweb.conf':
+    ensure  => file,
+    mode    => '0644',
+    content => $httpd_conf,
+    notify  => Service['httpd'],
   }
 
   #  Enable SSL in Bacula

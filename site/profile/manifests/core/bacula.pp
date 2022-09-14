@@ -144,17 +144,19 @@ class profile::core::bacula (
   #  Bacula HTTPD File definition
   file { "${bacula_root}/ssl_config":
     ensure  => file,
-    mode    => '0644',
-    owner   => 'bacula',
     content => $ssl_config,
+    owner   => 'bacula',
+    mode    => '0644',
     notify  => Service['httpd'],
+    require => Package[$bacula_web],
   }
 
   #  Enable SSL in Bacula
   exec { "cat ${bacula_root}/ssl_config >> ${bacula_web_path}/httpd.conf":
-    cwd    => '/var/tmp/',
-    path   => ['/sbin', '/usr/sbin', '/bin'],
-    unless => ["grep 'fullchain.pem' ${bacula_web_path}/httpd.conf"],
-    notify => Service['httpd'],
+    cwd     => '/var/tmp/',
+    notify  => Service['httpd'],
+    path    => ['/sbin', '/usr/sbin', '/bin'],
+    require => Package[$bacula_web],
+    unless  => ["grep 'fullchain.pem' ${bacula_web_path}/httpd.conf"],
   }
 }

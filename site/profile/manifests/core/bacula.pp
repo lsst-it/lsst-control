@@ -14,18 +14,22 @@ class profile::core::bacula (
   include yum
 
   $bacula_crt = "${bacula_root}/etc/conf.d/ssl/certs"
-  $bacula_root = '/opt/bacula'
+  $bacula_init = @(BACULAINIT)
+    sudo -H -u postgres bash -c '/opt/bacula/scripts/create_postgresql_database'
+    sudo -H -u postgres bash -c '/opt/bacula/scripts/make_postgresql_tables'
+    sudo -H -u postgres bash -c '/opt/bacula/scripts/grant_postgresql_privileges'
+    |BACULAINIT
   $bacula_package = 'bacula-enterprise-postgresql'
+  $bacula_root = '/opt/bacula'
   $bacula_version = '14.0.4'
   $bacula_web = '/opt/bweb/etc'
+  $fqdn = $facts[fqdn]
+  $le_root = "/etc/letsencrypt/live/${fqdn}"
   $packages = [
     'httpd',
     'mod_ssl',
     'vim',
   ]
-  $fqdn = $facts[fqdn]
-  $le_root = "/etc/letsencrypt/live/${fqdn}"
-
   $ssl_config = @("SSLCONF"/$)
     server.modules += ("mod_openssl")
     \$SERVER["socket"] == "0.0.0.0:443" {
@@ -60,11 +64,13 @@ class profile::core::bacula (
     manage_cron => true,
   }
 
+  #  Import Licenced GPG Bacula Key
   file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA':
     ensure => file,
     source => "https://www.baculasystems.com/dl/${id}/BaculaSystems-Public-Signature-08-2017.asc",
   }
 
+  #  Bacula Enterprise Repository
   yumrepo { 'bacula':
     ensure   => 'present',
     baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/bin/${bacula_version}/rhel7-64/",
@@ -75,9 +81,14 @@ class profile::core::bacula (
     require  => File['/etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA'],
   }
 
+  #  Install Bacula Enterprise
   package { $bacula_package:
     ensure  => 'present',
     require => Yumrepo['bacula'],
+  }
+  -> exec { $bacula_init:
+    cwd  => $bacula_root,
+    path => ['/sbin', '/usr/sbin', '/bin'],
   }
   # #  Bacula HTTPD File definition
   # file { "${bacula_root}/ssl_config":

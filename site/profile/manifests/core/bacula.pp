@@ -20,9 +20,9 @@ class profile::core::bacula (
     sudo -H -u postgres bash -c '/opt/bacula/scripts/grant_postgresql_privileges'
     |BACULAINIT
   $bacula_package = 'bacula-enterprise-postgresql'
-  $bacula_root = '/opt/bacula'
+  #$bacula_root = '/opt/bacula'
   $bacula_version = '14.0.4'
-  $bacula_web = '/opt/bweb/etc'
+  #$bacula_web = '/opt/bweb/etc'
   $fqdn = $facts[fqdn]
   $le_root = "/etc/letsencrypt/live/${fqdn}"
   $packages = [
@@ -79,6 +79,24 @@ class profile::core::bacula (
     gpgcheck => '1',
     gpgkey   => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA',
     require  => File['/etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA'],
+  }
+
+  #  BWeb Repository
+  yumrepo { 'bacula-bweb':
+    ensure   => 'present',
+    baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/bweb/${bacula_version}/rhel7-64/",
+    descr    => 'Bacula Web Repository',
+    enabled  => true,
+    gpgcheck => '1',
+  }
+
+  #  Bacula DAG Repository
+  yumrepo { 'bacula-dag':
+    ensure   => 'present',
+    baseurl  => 'https://www.baculasystems.com/dl/DAG/rhel7-64/',
+    descr    => 'Bacula DAG Repository',
+    enabled  => true,
+    gpgcheck => '0',
   }
 
   #  Install Bacula Enterprise

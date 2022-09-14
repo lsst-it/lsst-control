@@ -67,7 +67,7 @@ describe 'profile::core::rke' do
         context 'when 42' do
           let(:params) do
             {
-              keytab_base64: '42',
+              keytab_base64: sensitive('42'),
             }
           end
 
@@ -76,7 +76,7 @@ describe 'profile::core::rke' do
           it do
             is_expected.to contain_profile__util__keytab('rke').with(
               uid: 75_500,
-              keytab_base64: '42',
+              keytab_base64: sensitive('42'),
             )
           end
         end

@@ -86,9 +86,12 @@ class profile::core::bacula (
     ensure  => 'present',
     require => Yumrepo['bacula'],
   }
-  -> exec { $bacula_init:
-    cwd  => $bacula_root,
-    path => ['/sbin', '/usr/sbin', '/bin'],
+
+  exec { $bacula_init:
+    cwd     => $bacula_root,
+    path    => ['/sbin', '/usr/sbin', '/bin'],
+    unless  => "sudo -H -u postgres bash -c 'psql -l' | grep bacula",
+    require => Package[$bacula_package],
   }
   # #  Bacula HTTPD File definition
   # file { "${bacula_root}/ssl_config":

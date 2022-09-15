@@ -60,6 +60,11 @@ class profile::core::bacula (
     'mod_ssl',
     'vim',
   ]
+  $pip_packages = [
+    'pypsexec',
+    'pywinrm',
+    'pypsrp',
+  ]
   $ssl_config = @("SSLCONF"/$)
     server.modules += ("mod_openssl")
     ssl.engine = "enable" 
@@ -69,6 +74,12 @@ class profile::core::bacula (
   #  Ensure Packages installation
   package { $packages:
     ensure => 'present',
+  }
+
+  #  Ensure Bacula's Python3 required packages
+  package { $pip_packages:
+    ensure   => 'present',
+    provider => 'pip3',
   }
 
   #  Manage HTTPD Service

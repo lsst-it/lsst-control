@@ -24,6 +24,7 @@ class profile::core::bacula (
   $bacula_port = '9180'
   $bacula_root = '/opt/bacula'
   $bacula_version = '14.0.4'
+  $bacula_vsphere_plugin = 'bacula-enterprise-vsphere'
   $bacula_web = 'bacula-enterprise-bweb'
   $bacula_web_path = '/opt/bweb/etc'
   $cert_name = 'baculacert.pem'
@@ -130,6 +131,15 @@ class profile::core::bacula (
     gpgcheck => '0',
   }
 
+  #  Bacula vSphere Plugin Repository
+  yumrepo { 'bacula-vsphere':
+    ensure   => 'present',
+    baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/vsphere/${bacula_version}/rhel7-64/",
+    descr    => 'Bacula DAG Repository',
+    enabled  => true,
+    gpgcheck => '0',
+  }
+
   #  Install Bacula Enterprise
   package { $bacula_package:
     ensure  => 'present',
@@ -142,6 +152,13 @@ class profile::core::bacula (
     require => Yumrepo['bacula-bweb'],
   }
 
+  #  Install Bacula vSphere Plugin
+  package { $bacula_vsphere_plugin:
+    ensure  => 'present',
+    require => Yumrepo['bacula-vsphere'],
+  }
+
+  #  Initialize Postgres Bacula DB
   exec { $bacula_init:
     cwd     => $bacula_root,
     path    => ['/sbin', '/usr/sbin', '/bin'],

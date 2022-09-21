@@ -159,6 +159,7 @@ class profile::core::bacula (
           'default_limit' => '100'
         };
     |BWEBCONF
+
   #  Ensure Packages installation
   package { $packages:
     ensure => 'present',

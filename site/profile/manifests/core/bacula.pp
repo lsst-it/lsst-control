@@ -4,9 +4,17 @@
 # @param id
 #   Bacula customer Identification string
 #
+# @param user
+#   Bacula Service Account User
+#
+# @param passwd
+#   Bacula Service Account Password for LDAP Binding
+#
 
 class profile::core::bacula (
   String $id = 'null',
+  String $user = 'null',
+  String $passwd = 'null',
 ) {
   include cron
   include postgresql::server
@@ -67,9 +75,45 @@ class profile::core::bacula (
     'pypsrp',
   ]
   $ssl_config = @("SSLCONF"/$)
-    server.modules += ("mod_openssl")
+    server.port = 9180
+    var.basedir = env.BWEBBASE
+    var.logdir = env.BWEBLOG
+    server.modules = ("mod_auth", "mod_cgi", "mod_alias", "mod_setenv", "mod_accesslog", "mod_openssl", "mod_authn_ldap")
+    server.document-root = basedir + "/html/" 
+    server.breakagelog = logdir + "/bweb-error.log"
+    server.pid-file = logdir + "/bweb.pid" 
+    cgi.assign = ( ".pl" => "/usr/bin/perl" )
+    alias.url = ( "/cgi-bin/bweb/" => basedir + "/cgi/", "/bweb/fv/" => "/opt/bweb/spool/","/bweb" => basedir + "/html/", )
+    setenv.add-environment = (
+      "PATH" => env.PATH,
+      "PERLLIB" => basedir + "/lib/",
+      "BWEBCONF" => basedir + "/bweb.conf",
+      "BWEBSESSION" => logdir + "/bweb/"
+    )
+    index-file.names = ( "index.html" )
+    mimetype.assign = (
+    ".html" => "text/html",
+    ".gif" => "image/gif",
+    ".jpeg" => "image/jpeg",
+    ".jpg" => "image/jpeg",
+    ".png" => "image/png",
+    ".ico" => "image/x-icon",
+    ".css" => "text/css",
+    ".json" => "text/plain",
+    ".js" => "application/javascript",
+    ".svg" => "image/svg+xml",
+    )
+    server.username  = "bacula"
+    server.groupname = "bacula"
     ssl.engine = "enable" 
     ssl.pemfile= "${bacula_crt}/${cert_name}"
+    auth.backend = "ldap"
+    auth.backend.ldap.hostname = "ipa.lsst.org"
+    auth.backend.ldap.base-dn = "cn=users,cn=accounts,dc=lsst,dc=cloud"
+    auth.backend.ldap.filter = "(uid=$)"
+    auth.backend.ldap.bind-dn = "uid=${user},cn=users,cn=accounts,dc=lsst,dc=cloud"
+    auth.backend.ldap.bind-pw = "${passwd}"
+    auth.backend.ldap.allow-empty-pw = "disable"
     |SSLCONF
 
   #  Ensure Packages installation
@@ -230,12 +274,12 @@ class profile::core::bacula (
     notify      => Service['bweb'],
   }
 
-  #  Enable SSL in Bacula
-  exec { "cat ${bacula_root}/ssl_config >> ${bacula_web_path}/httpd.conf":
-    cwd     => '/var/tmp/',
-    notify  => Service['httpd'],
-    path    => ['/sbin', '/usr/sbin', '/bin'],
+  #  Manage Bacula Web httpd.conf
+  file { "${bacula_web_path}/httpd.conf":
+    ensure  => file,
+    mode    => '0644',
+    notify  => Service['bweb'],
     require => Package[$bacula_web],
-    unless  => ["grep '${cert_name}' ${bacula_web_path}/httpd.conf"],
+    content => $ssl_config,
   }
 }

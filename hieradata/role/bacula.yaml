@@ -3,3 +3,5 @@ classes:
   - "profile::core::bacula"
   - "profile::core::common"
   - "yum"
+
+profile::core::bacula::user: 'svc_bacula'

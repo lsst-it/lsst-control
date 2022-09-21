@@ -4,21 +4,25 @@
 # @param id
 #   Bacula customer Identification string
 #
-# @param user
-#   Bacula Service Account User
+# @param ipa_server
+#   IPA Server to bind
+#
+# @param email
+#   Email support
 #
 # @param passwd
 #   Bacula Service Account Password for LDAP Binding
 #
-# @param ipa_server
-#   IPA Server to bind
+# @param user
+#   Bacula Service Account User
 #
 
 class profile::core::bacula (
   String $id = 'null',
-  String $user = 'null',
-  String $passwd = 'null',
   String $ipa_server = 'null',
+  String $email = 'null',
+  String $passwd = 'null',
+  String $user = 'null',
 ) {
   include cron
   include postgresql::server
@@ -27,38 +31,39 @@ class profile::core::bacula (
 
   $fqdn = $facts[fqdn]
   $le_root = "/etc/letsencrypt/live/${fqdn}"
-  $bacula_init = @(BACULAINIT)
-    sudo -H -u postgres bash -c '/opt/bacula/scripts/create_postgresql_database'
-    sudo -H -u postgres bash -c '/opt/bacula/scripts/make_postgresql_tables'
-    sudo -H -u postgres bash -c '/opt/bacula/scripts/grant_postgresql_privileges'
+  $bacula_root = '/opt/bacula'
+  $bacula_init = @("BACULAINIT")
+    sudo -H -u postgres bash -c '${bacula_root}/scripts/create_postgresql_database'
+    sudo -H -u postgres bash -c '${bacula_root}/scripts/make_postgresql_tables'
+    sudo -H -u postgres bash -c '${bacula_root}/scripts/grant_postgresql_privileges'
     |BACULAINIT
   $bacula_package = 'bacula-enterprise-postgresql'
   $bacula_port = '9180'
-  $bacula_root = '/opt/bacula'
   $bacula_version = '14.0.4'
   $bacula_vsphere_plugin = 'bacula-enterprise-vsphere'
   $bacula_web = 'bacula-enterprise-bweb'
-  $bacula_web_path = '/opt/bweb/etc'
+  $bacula_web_root = '/opt/bweb'
+  $bacula_web_etc = "${bacula_web_root}/etc"
   $cert_name = 'baculacert.pem'
   $bacula_crt  = "${bacula_root}/etc/conf.d/ssl/certs/"
   $httpd_conf = @("HTTPCONF")
     <VirtualHost *:80> 
-    DocumentRoot "/opt/bweb/html/"
+    DocumentRoot "${bacula_web_root}/html/"
     ServerName ${fqdn}
-    <Directory /opt/bweb/cgi>
+    <Directory ${bacula_web_root}/cgi>
         Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
         AllowOverride None
     </Directory>
-    ScriptAlias /cgi-bin/bweb /opt/bweb/cgi
-    Alias /bweb/fv /opt/bweb/spool
+    ScriptAlias /cgi-bin/bweb ${bacula_web_root}/cgi
+    Alias /bweb/fv ${bacula_web_root}/spool
     <Directory "/var/spool/bweb">
         Options None
         AllowOverride AuthConfig
         Order allow,deny
         Allow from all
     </Directory>
-    Alias /bweb /opt/bweb/html
-    <Directory "/opt/bweb/html">
+    Alias /bweb ${bacula_web_root}/html
+    <Directory "${bacula_web_root}/html">
         Options None
         AllowOverride AuthConfig
         Require all granted
@@ -87,7 +92,7 @@ class profile::core::bacula (
     server.breakagelog = logdir + "/bweb-error.log"
     server.pid-file = logdir + "/bweb.pid" 
     cgi.assign = ( ".pl" => "/usr/bin/perl" )
-    alias.url = ( "/cgi-bin/bweb/" => basedir + "/cgi/", "/bweb/fv/" => "/opt/bweb/spool/","/bweb" => basedir + "/html/", )
+    alias.url = ( "/cgi-bin/bweb/" => basedir + "/cgi/", "/bweb/fv/" => "${bacula_web_root}/spool/","/bweb" => basedir + "/html/", )
     setenv.add-environment = (
       "PATH" => env.PATH,
       "PERLLIB" => basedir + "/lib/",
@@ -120,6 +125,40 @@ class profile::core::bacula (
     auth.backend.ldap.allow-empty-pw = "disable"
     |SSLCONF
 
+  $bweb_conf = @("BWEBCONF"/$)
+    \$VAR1 = {
+          'enable_security' => 0,
+          'nb_grouping_separator' => 'on',
+          'size_unit' => 'Bi',
+          'enable_web_bconsole' => 0,
+          'enable_system_auth' => 0,
+          'subconf' => {},
+          'enable_self_user_restore' => 0,
+          'password' => '',
+          'customer_id' => '',
+          'dbi' => 'DBI:Pg:database=bacula',
+          'workset_dir' => '${bacula_root}/working/conf.d',
+          'debug' => 0,
+          'user' => 'bacula',
+          'config_dir' => '${bacula_root}/etc/conf.d',
+          'html_dir' => '${bacula_web_root}/html',
+          'stat_job_table' => 'JobHisto',
+          'display_log_time' => 'on',
+          'lang' => 'en',
+          'wiki_url' => '',
+          'rows_per_page' => '20',
+          'description' => undef,
+          'bconsole' => '${bacula_root}/bin/bconsole -n -c ${bacula_root}/etc/bconsole.conf',
+          'hide_bconfig_menu_item' => 0,
+          'fv_write_path' => '${bacula_web_root}/spool',
+          'template_dir' => '${bacula_web_root}/tpl',
+          'enable_security_acl' => 0,
+          'email_media' => '${email}',
+          'default_age' => '7d',
+          'ssl_dir' => '${bacula_root}/etc/conf.d/ssl',
+          'default_limit' => '100'
+        };
+    |BWEBCONF
   #  Ensure Packages installation
   package { $packages:
     ensure => 'present',
@@ -239,7 +278,7 @@ class profile::core::bacula (
   }
 
   #  Provision bweb tables to psql
-  exec { 'bash /opt/bweb/bin/install_bweb.sh':
+  exec { "bash ${bacula_web_root}/bin/install_bweb.sh":
     cwd     => '/var/tmp/',
     path    => ['/sbin', '/usr/sbin', '/bin'],
     require => Package[$bacula_web],
@@ -279,11 +318,22 @@ class profile::core::bacula (
   }
 
   #  Manage Bacula Web httpd.conf
-  file { "${bacula_web_path}/httpd.conf":
+  file { "${bacula_web_etc}/httpd.conf":
     ensure  => file,
     mode    => '0644',
     notify  => Service['bweb'],
     require => Package[$bacula_web],
     content => $ssl_config,
+  }
+
+  #  Manage Bacula Web bweb.conf
+  file { "${bacula_web_etc}/bweb.conf":
+    ensure  => file,
+    mode    => '0640',
+    owner   => 'bacula',
+    group   => 'bacula',
+    notify  => Service['bweb'],
+    require => Package[$bacula_web],
+    content => $bweb_conf,
   }
 }

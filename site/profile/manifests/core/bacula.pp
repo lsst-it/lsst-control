@@ -10,11 +10,15 @@
 # @param passwd
 #   Bacula Service Account Password for LDAP Binding
 #
+# @param ipa_server
+#   IPA Server to bind
+#
 
 class profile::core::bacula (
   String $id = 'null',
   String $user = 'null',
   String $passwd = 'null',
+  String $ipa_server = 'null',
 ) {
   include cron
   include postgresql::server
@@ -108,7 +112,7 @@ class profile::core::bacula (
     ssl.engine = "enable" 
     ssl.pemfile= "${bacula_crt}/${cert_name}"
     auth.backend = "ldap"
-    auth.backend.ldap.hostname = "ipa.lsst.org"
+    auth.backend.ldap.hostname = "${ipa_server}"
     auth.backend.ldap.base-dn = "cn=users,cn=accounts,dc=lsst,dc=cloud"
     auth.backend.ldap.filter = "(uid=$)"
     auth.backend.ldap.bind-dn = "uid=${user},cn=users,cn=accounts,dc=lsst,dc=cloud"

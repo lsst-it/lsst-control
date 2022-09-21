@@ -4,4 +4,5 @@ classes:
   - "profile::core::common"
   - "yum"
 
-profile::core::bacula::user: 'svc_bacula'
+profile::core::bacula::ipa_server: "ipa1.ls.lsst.org"
+profile::core::bacula::user: "svc_bacula"

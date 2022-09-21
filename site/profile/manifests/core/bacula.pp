@@ -131,7 +131,7 @@ class profile::core::bacula (
           'nb_grouping_separator' => 'on',
           'size_unit' => 'Bi',
           'enable_web_bconsole' => 0,
-          'enable_system_auth' => 0,
+          'enable_system_auth' => 'on',
           'subconf' => {},
           'enable_self_user_restore' => 0,
           'password' => '',

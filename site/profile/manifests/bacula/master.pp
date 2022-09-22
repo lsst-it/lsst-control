@@ -17,7 +17,7 @@
 #   Bacula Service Account User
 #
 
-class profile::core::bacula (
+class profile::bacula::master (
   String $id = 'null',
   String $ipa_server = 'null',
   String $email = 'null',

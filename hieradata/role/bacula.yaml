@@ -1,12 +1,12 @@
 ---
 classes:
-  - "profile::core::bacula"
+  - "profile::bacula::master"
   - "profile::core::common"
   - "yum"
 
-profile::core::bacula::ipa_server: "ipa.lsst.org"
-profile::core::bacula::email: "ruubinobs-it-las@lsst.org"
-profile::core::bacula::user: "svc_bacula"
+profile::bacula::master::ipa_server: "ipa.lsst.org"
+profile::bacula::master::email: "ruubinobs-it-las@lsst.org"
+profile::bacula::master::user: "svc_bacula"
 
 postgresql::server::config_entries:
   log_checkpoints: "on"

@@ -89,8 +89,6 @@ dhcp::pools:
     range: "10.50.3.1 10.50.3.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
 
-
-
 profile::core::puppet_master::foreman_hostgroup:
   ls:
     description: "ls site"

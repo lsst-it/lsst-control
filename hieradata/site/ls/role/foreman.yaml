@@ -80,7 +80,7 @@ dhcp::pools:
     network: "139.229.159.128"
     mask: "255.255.255.128"
     gateway: "139.229.159.254"
-    range: "139.229.159.129 139.229.150.230"  # ~ /101
+    range: "139.229.159.129 139.229.159.230"  # ~ /101
     search_domains: "%{alias('dhcp::dnsdomain')}"
   BDC-BMC:  # https://jira.lsstcorp.org/browse/IT-1679
     network: "10.50.3.0"

@@ -1,3 +1,4 @@
+---
 network::interfaces_hash:
   ens33:  # fqdn
     onboot: "yes"

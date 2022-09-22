@@ -49,6 +49,9 @@
 # @param manage_resolv_conf
 #   If `true`, manage resolv.conf
 #
+# @param bacula_client
+#   If `true`, installs BIM
+#
 class profile::core::common (
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
@@ -65,6 +68,7 @@ class profile::core::common (
   Boolean $manage_repos = true,
   Boolean $manage_irqbalance = true,
   Boolean $manage_resolv_conf = true,
+  Boolean $bacula_client = false,
 ) {
   include auditd
   include accounts
@@ -134,6 +138,10 @@ class profile::core::common (
 
   if $install_telegraf {
     include profile::core::monitoring
+  }
+
+  if $bacula_client {
+    include profile::bacula::client
   }
 
   if $manage_firewall {

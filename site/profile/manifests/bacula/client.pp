@@ -33,6 +33,5 @@ class profile::bacula::client (
   archive { '/opt/bee_installation_manager':
     ensure => present,
     source => 'https://www.baculasystems.com/ml/bee_installation_manager',
-    mode   => '0755',
   }
 }

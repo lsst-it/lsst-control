@@ -34,6 +34,12 @@ dhcp::pools:
     gateway: "139.229.140.1"
     range: "139.229.140.24 139.229.140.30"  # ~ /30
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  TS-Kueyen:  # https://jira.lsstcorp.org/browse/IT-2128
+    network: "139.229.144.0"
+    mask: "255.255.255.128"
+    gateway: "139.229.144.126"
+    range: "139.229.144.100 139.229.144.125"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   bdc-teststand-dds:  # vlan2301
     network: "139.229.145.0"
     mask: "255.255.255.0"
@@ -70,18 +76,19 @@ dhcp::pools:
     gateway: "139.229.150.126"
     range: "139.229.150.112 139.229.150.125"  # ~ /28
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  rubinobs-wifi-guest:
+    network: "139.229.159.128"
+    mask: "255.255.255.128"
+    gateway: "139.229.159.254"
+    range: "139.229.159.129 139.229.150.230"  # ~ /101
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   BDC-BMC:  # https://jira.lsstcorp.org/browse/IT-1679
     network: "10.50.3.0"
     mask: "255.255.255.0"
     gateway: "10.50.3.254"
     range: "10.50.3.1 10.50.3.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  TS-Kueyen:  # https://jira.lsstcorp.org/browse/IT-2128
-    network: "139.229.144.0"
-    mask: "255.255.255.128"
-    gateway: "139.229.144.126"
-    range: "139.229.144.100 139.229.144.125"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
+
 
 
 profile::core::puppet_master::foreman_hostgroup:

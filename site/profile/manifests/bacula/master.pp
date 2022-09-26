@@ -280,7 +280,7 @@ class profile::bacula::master (
   }
 
   #  Provision bweb tables to psql
-  exec { "bash ${bacula_web_root}/bin/install_bweb.sh":
+  exec { "sudo bash ${bacula_web_root}/bin/install_bweb.sh":
     cwd     => '/var/tmp/',
     path    => ['/sbin', '/usr/sbin', '/bin'],
     require => Package[$bacula_web],

@@ -77,6 +77,7 @@ class profile::bacula::master (
     'httpd',
     'mod_ssl',
     'vim',
+    'openldap-clients',
   ]
   $pip_packages = [
     'pypsexec',

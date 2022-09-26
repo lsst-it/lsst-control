@@ -296,13 +296,13 @@ class profile::bacula::master (
     require => Package[$bacula_web],
   }
 
-  #  HTTPD File definition
-  file { '/etc/httpd/conf.d/bweb.conf':
-    ensure  => file,
-    mode    => '0644',
-    content => $httpd_conf,
-    notify  => Service['httpd'],
-  }
+  # #  HTTPD File definition
+  # file { '/etc/httpd/conf.d/bweb.conf':
+  #   ensure  => file,
+  #   mode    => '0644',
+  #   content => $httpd_conf,
+  #   notify  => Service['httpd'],
+  # }
 
   #  Change PrivateKey mode
   cron::job { 'baculacert':

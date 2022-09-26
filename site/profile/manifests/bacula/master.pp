@@ -46,6 +46,8 @@ class profile::bacula::master (
   $bacula_web_etc = "${bacula_web_root}/etc"
   $cert_name = 'baculacert.pem'
   $bacula_crt  = "${bacula_root}/etc/conf.d/ssl/certs/"
+  $base_dn = 'dc=lsst,dc=cloud'
+  $subfilter_dn = "cn=users,cn=accounts,${base_dn}"
   $httpd_conf = @("HTTPCONF")
     <VirtualHost *:80> 
     DocumentRoot "${bacula_web_root}/html/"
@@ -119,13 +121,12 @@ class profile::bacula::master (
     ssl.pemfile= "${bacula_crt}/${cert_name}"
     auth.backend = "ldap"
     auth.backend.ldap.hostname = "${ipa_server}"
-    auth.backend.ldap.base-dn = "cn=users,cn=accounts,dc=lsst,dc=cloud"
+    auth.backend.ldap.base-dn = "${subfilter_dn}"
     auth.backend.ldap.filter = "(uid=$)"
-    auth.backend.ldap.bind-dn = "uid=${user},cn=users,cn=accounts,dc=lsst,dc=cloud"
+    auth.backend.ldap.bind-dn = "uid=${user},${subfilter_dn}"
     auth.backend.ldap.bind-pw = "${passwd}"
     auth.backend.ldap.allow-empty-pw = "disable"
     |SSLCONF
-
   $bweb_conf = @("BWEBCONF"/$)
     \$VAR1 = {
           'enable_security' => 0,
@@ -160,6 +161,26 @@ class profile::bacula::master (
           'default_limit' => '100'
         };
     |BWEBCONF
+
+  $admin_search = "$(ldapsearch -H \"ldap://${ipa_server}\" -b \"${base_dn}\" -D \"uid=${user},${subfilter_dn}\" -w \"${passwd}\" \"(&(objectClass=inetOrgPerson)(memberOf=cn=admins,cn=groups,cn=accounts,${base_dn}))\" | grep 'dn: uid' | awk '{print substr(\$2,5)}' | sed 's/,${subfilter_dn}//g')"
+  $process_admin = @("PROCESS"/$)
+    #!/usr/bin/env bash
+    readarray -t admins < <(${admin_search})
+    lenght=\$((\${#admins[@]}-1))
+    echo "" > /opt/admins
+    i=1
+    until [ \$i -gt \${lenght} ]
+    do
+      echo "insert into bweb_user(userid,username,use_acl,enabled,comment,passwd,tpl) values ('\${i}','\${admins[\$i]}','f','t',' ','systemauth','en');" >> /opt/admins
+      ((i++))
+    done;
+    |PROCESS
+
+  file { '/opt/get_admins.sh':
+    ensure  => file,
+    mode    => '0755',
+    content => $process_admin,
+  }
 
   #  Ensure Packages installation
   package { $packages:

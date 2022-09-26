@@ -252,7 +252,6 @@ class profile::bacula::master (
     path    => ['/sbin', '/usr/sbin', '/bin'],
     unless  => "sudo -H -u postgres bash -c 'psql -l' | grep bacula",
     require => Package[$bacula_package],
-    before  => Exec["bash ${bacula_web_root}/bin/install_bweb.sh"],
   }
 
   #  Run and enable Bacula Daemons

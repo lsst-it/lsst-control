@@ -337,4 +337,12 @@ class profile::bacula::master (
     require => Package[$bacula_web],
     content => $bweb_conf,
   }
+
+  #  BSys_report Generation
+  archive { '/opt/bsys_report.tar.gz':
+    source       => 'http://www.baculasystems.com/ml/bsys_report/bsys_report.tar.gz',
+    extract      => true,
+    extract_path => '/opt',
+    creates      => '/opt/bsys_report'
+  }
 }

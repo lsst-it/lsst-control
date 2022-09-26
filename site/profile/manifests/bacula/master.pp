@@ -339,10 +339,13 @@ class profile::bacula::master (
   }
 
   #  BSys_report Generation
-  archive { '/opt/bsys_report.tar.gz':
+  archive { '/var/tmp/bsys_report.tar.gz':
     source       => 'http://www.baculasystems.com/ml/bsys_report/bsys_report.tar.gz',
     extract      => true,
     extract_path => '/opt',
-    creates      => '/opt/bsys_report'
+    creates      => '/opt/bsys_report',
+    user         => 'root',
+    group        => 'root',
+    mode         => '0755',
   }
 }

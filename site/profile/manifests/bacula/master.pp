@@ -343,7 +343,6 @@ class profile::bacula::master (
     source       => 'http://www.baculasystems.com/ml/bsys_report/bsys_report.tar.gz',
     extract      => true,
     extract_path => '/opt',
-    creates      => '/opt/bsys_report.pl',
     user         => 'root',
     group        => 'root',
   }

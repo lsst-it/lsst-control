@@ -162,18 +162,22 @@ class profile::bacula::master (
         };
     |BWEBCONF
 
-  $admin_search = "$(ldapsearch -H \"ldap://${ipa_server}\" -b \"${base_dn}\" -D \"uid=${user},${subfilter_dn}\" -w \"${passwd}\" \"(&(objectClass=inetOrgPerson)(memberOf=cn=admins,cn=groups,cn=accounts,${base_dn}))\" | grep 'dn: uid' | awk '{print substr(\$2,5)}' | sed 's/,${subfilter_dn}//g')"
+  $admin_search = "(ldapsearch -H \"ldap://${ipa_server}\" -b \"${base_dn}\" -D \"uid=${user},${subfilter_dn}\" -w \"${passwd}\" \"(&(objectClass=inetOrgPerson)(memberOf=cn=admins,cn=groups,cn=accounts,${base_dn}))\" | grep 'dn: uid' | awk '{print substr(\$2,5)}' | sed 's/,${subfilter_dn}//g')"
   $process_admin = @("PROCESS"/$)
     #!/usr/bin/env bash
-    readarray -t admins < <(${admin_search})
+    readarray -t admins < <${admin_search}
     lenght=\$((\${#admins[@]}-1))
     echo "" > /opt/admins
-    i=1
+    i=0
     until [ \$i -gt \${lenght} ]
     do
-      echo "insert into bweb_user(userid,username,use_acl,enabled,comment,passwd,tpl) values ('\${i}','\${admins[\$i]}','f','t',' ','systemauth','en');" >> /opt/admins
+      echo "insert into bweb_user(userid,username,use_acl,enabled,comment,passwd,tpl) values ('\$((\${i}+1))','\${admins[\$i]}','f','t','IT,'systemauth','en');" >> /opt/admins
+      for j in {1..24}
+      do
+         echo "insert into bweb_role_member values (\${j},\$((\${i}+1)));" >> /opt/admins
+      done
       ((i++))
-    done;
+    done
     |PROCESS
 
   file { '/opt/get_admins.sh':

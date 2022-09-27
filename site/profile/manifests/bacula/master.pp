@@ -247,8 +247,17 @@ class profile::bacula::master (
     mode    => '0755',
     content => $process_admin,
   }
+  #  Create root directories for sshkey
+  file { ["${bacula_web_etc}/conf.d",
+          "${bacula_web_etc}/conf.d/ssl",
+          "${bacula_web_etc}/conf.d/ssl/ssh/", ]:
+    ensure => directory,
+    owner  => 'bacula',
+    group  => 'bacula',
+    mode   => '0700',
+  }
   #  Create User's private sshkey file
-  file { "${bacula_web_etc}}/conf.d/ssl/ssh/${user}_key":
+  -> file { "${bacula_web_etc}/conf.d/ssl/ssh/${user}_key":
     ensure  => file,
     owner   => 'bacula',
     group   => 'bacula',
@@ -257,11 +266,11 @@ class profile::bacula::master (
     require => Exec["${scripts_dir}/cert_gen.sh"],
   }
   #  Create User's public sshkey file
-  file { "${bacula_web_etc}/conf.d/ssl/ssh/${user}_key_pub.pem":
+  -> file { "${bacula_web_etc}/conf.d/ssl/ssh/${user}_key_pub.pem":
     ensure  => file,
     owner   => 'bacula',
     group   => 'bacula',
-    mode    => '0644',
+    mode    => '0640',
     content => $ssh_pub_key,
     require => Exec["${scripts_dir}/cert_gen.sh"],
   }
@@ -281,7 +290,7 @@ class profile::bacula::master (
   exec { "${scripts_dir}/cert_gen.sh":
     cwd     => '/var/tmp/',
     path    => ['/sbin', '/usr/sbin', '/bin'],
-    onlyif  => "test -f ${bacula_root}/etc/conf.d/ssl/certs/baculacert.pem",
+    unless  => "test -f ${bacula_root}/etc/conf.d/ssl/certs/baculacert.pem",
     require => File["${scripts_dir}/cert_gen.sh"],
   }
   #  Initialize Postgres Bacula DB

@@ -16,13 +16,19 @@
 # @param user
 #   Bacula Service Account User
 #
-
+# @param ssh_pub_key
+#   User's ssh private key
+#
+# @param ssh_priv_key
+#   User's ssh public key
 class profile::bacula::master (
   String $id = 'null',
   String $ipa_server = 'null',
   String $email = 'null',
   String $passwd = 'null',
   String $user = 'null',
+  String $ssh_priv_key = 'null',
+  String $ssh_pub_key = 'null',
 ) {
   include cron
   include postgresql::server
@@ -378,5 +384,30 @@ class profile::bacula::master (
     extract_path => $opt,
     user         => 'root',
     group        => 'root',
+  }
+
+  file { $bacula_root:
+    ensure => directory,
+    owner  => 'bacula',
+    group  => 'bacula',
+    mode   => '0644',
+  }
+
+  file { "${bacula_web_etc}}/conf.d/ssl/ssh/svc_bacula_key":
+    ensure  => file,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0600',
+    content => $ssh_priv_key,
+    require => File[$bacula_root],
+  }
+
+  file { "${bacula_web_etc}/conf.d/ssl/ssh/svc_bacula_key_pub.pem":
+    ensure  => file,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0644',
+    content => $ssh_pub_key,
+    require => File[$bacula_root],
   }
 }

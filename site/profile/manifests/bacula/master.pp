@@ -35,16 +35,15 @@ class profile::bacula::master (
   include profile::core::letsencrypt
   include yum
 
+  ##########################
+  #  Variables and heredocs
+  ##########################
   $fqdn = $facts[fqdn]
   $le_root = "/etc/letsencrypt/live/${fqdn}"
   $opt = '/opt'
-  $admin_script = "${opt}/get_admins.sh"
+  $scripts_dir = "${opt}/scripts"
   $bacula_root = "${opt}/bacula"
-  $bacula_init = @("BACULAINIT")
-    sudo -H -u postgres bash -c '${bacula_root}/scripts/create_postgresql_database'
-    sudo -H -u postgres bash -c '${bacula_root}/scripts/make_postgresql_tables'
-    sudo -H -u postgres bash -c '${bacula_root}/scripts/grant_postgresql_privileges'
-    |BACULAINIT
+  $admin_script = "${admin_script}/get_admins.sh"
   $bacula_package = 'bacula-enterprise-postgresql'
   $bacula_port = '9180'
   $bacula_version = '14.0.4'
@@ -56,6 +55,12 @@ class profile::bacula::master (
   $bacula_crt  = "${bacula_root}/etc/conf.d/ssl/certs"
   $base_dn = 'dc=lsst,dc=cloud'
   $subfilter_dn = "cn=users,cn=accounts,${base_dn}"
+  $admin_search = "(ldapsearch -H \"ldap://${ipa_server}\" -b \"${base_dn}\" -D \"uid=${user},${subfilter_dn}\" -w \"${passwd}\" \"(&(objectClass=inetOrgPerson)(memberOf=cn=admins,cn=groups,cn=accounts,${base_dn}))\" | grep 'dn: uid' | awk '{print substr(\$2,5)}' | sed 's/,${subfilter_dn}//g')"
+  $bacula_init = @("BACULAINIT")
+    sudo -H -u postgres bash -c '${bacula_root}/scripts/create_postgresql_database'
+    sudo -H -u postgres bash -c '${bacula_root}/scripts/make_postgresql_tables'
+    sudo -H -u postgres bash -c '${bacula_root}/scripts/grant_postgresql_privileges'
+    |BACULAINIT
   $httpd_conf = @("HTTPCONF")
     <VirtualHost *:80> 
     DocumentRoot "${bacula_web_root}/html/"
@@ -94,6 +99,10 @@ class profile::bacula::master (
     'pywinrm',
     'pypsrp',
   ]
+  $create_cert = @("CERT")
+    #!/usr/bin/bash
+    cat ${le_root}/privkey.pem <(echo) ${le_root}/cert.pem > ${bacula_crt}/${cert_name}
+    |CERT
   $ssl_config = @("SSLCONF"/$)
     server.port = 9180
     var.basedir = env.BWEBBASE
@@ -169,7 +178,6 @@ class profile::bacula::master (
           'default_limit' => '100'
         };
     |BWEBCONF
-  $admin_search = "(ldapsearch -H \"ldap://${ipa_server}\" -b \"${base_dn}\" -D \"uid=${user},${subfilter_dn}\" -w \"${passwd}\" \"(&(objectClass=inetOrgPerson)(memberOf=cn=admins,cn=groups,cn=accounts,${base_dn}))\" | grep 'dn: uid' | awk '{print substr(\$2,5)}' | sed 's/,${subfilter_dn}//g')"
   $process_admin = @("PROCESS"/$)
     #!/usr/bin/env bash
     readarray -t admins < <${admin_search}
@@ -186,24 +194,117 @@ class profile::bacula::master (
     done
     |PROCESS
 
+  ##########################
+  #  Files definition
+  ##########################
+  #  Create root directories
+  file { [ "${bacula_root}/etc/conf.d/ssl", "${bacula_root}/etc/conf.d/ssl/certs", ]:
+    ensure  => directory,
+    recurse => true,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0644',
+  }
+  #  Create scripts directory
+  file { $scripts_dir:
+    ensure => directory,
+  }
+  #  Manage Bacula Web bweb.conf
+  file { "${bacula_web_etc}/bweb.conf":
+    ensure  => file,
+    mode    => '0640',
+    owner   => 'bacula',
+    group   => 'bacula',
+    notify  => Service['bweb'],
+    require => Package[$bacula_web],
+    content => $bweb_conf,
+  }
+  #  Manage Bacula Web httpd.conf
+  file { "${bacula_web_etc}/httpd.conf":
+    ensure  => file,
+    mode    => '0644',
+    notify  => Service['bweb'],
+    require => Package[$bacula_web],
+    content => $ssl_config,
+  }
+  #  Bacula HTTPD File definition
+  file { "${bacula_root}/ssl_config":
+    ensure  => file,
+    content => $ssl_config,
+    owner   => 'bacula',
+    mode    => '0644',
+    notify  => Service['httpd'],
+    require => Package[$bacula_web],
+  }
+  #  Import Licenced GPG Bacula Key
+  file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA':
+    ensure => file,
+    source => "https://www.baculasystems.com/dl/${id}/BaculaSystems-Public-Signature-08-2017.asc",
+  }
+  #  Creates IPA Bacula users population script
   file { $admin_script:
     ensure  => file,
     mode    => '0755',
     content => $process_admin,
   }
-
+  #  Create User's private sshkey file
+  file { "${bacula_web_etc}}/conf.d/ssl/ssh/${user}_key":
+    ensure  => file,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0600',
+    content => $ssh_priv_key,
+    require => Exec["${scripts_dir}/cert_gen.sh"],
+  }
+  #  Create User's public sshkey file
+  file { "${bacula_web_etc}/conf.d/ssl/ssh/${user}_key_pub.pem":
+    ensure  => file,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0644',
+    content => $ssh_pub_key,
+    require => Exec["${scripts_dir}/cert_gen.sh"],
+  }
+  #  Create Bacula Cert generator script
+  file { "${scripts_dir}/cert_gen.sh":
+    ensure  => file,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0755',
+    content => $create_cert,
+    require => File[$scripts_dir],
+  }
+  ##########################
+  #  Manual Execusions
+  ##########################
+  #  Run the first run to get the certificated
+  exec { "${scripts_dir}/cert_gen.sh":
+    cwd     => '/var/tmp/',
+    path    => ['/sbin', '/usr/sbin', '/bin'],
+    onlyif  => "test -f ${bacula_root}/etc/conf.d/ssl/certs/baculacert.pem",
+    require => File["${scripts_dir}/cert_gen.sh"],
+  }
+  #  Initialize Postgres Bacula DB
+  exec { $bacula_init:
+    cwd     => $bacula_root,
+    path    => ['/sbin', '/usr/sbin', '/bin'],
+    unless  => "sudo -H -u postgres bash -c 'psql -l' | grep bacula",
+    require => Package[$bacula_package],
+  }
+  #  Provision bweb tables to psql
+  exec { "sudo bash ${bacula_web_root}/bin/install_bweb.sh":
+    cwd     => '/var/tmp/',
+    path    => ['/sbin', '/usr/sbin', '/bin'],
+    require => Package[$bacula_web],
+    unless  => 'sudo -H -u postgres bash -c \'psql -U postgres -d bacula -E -c "\dt"\' | grep bweb',
+  }
   #  Populate BWeb with Admin IPA Users
-  exec { "sudo -H -u postgres bash -c ${opt}/get_admins.sh":
+  exec { "sudo -H -u postgres bash -c ${scripts_dir}/get_admins.sh":
     cwd     => '/var/tmp/',
     path    => ['/sbin', '/usr/sbin', '/bin'],
     unless  => "sudo -H -u postgres bash -c 'psql -U postgres -d bacula -E -c \"select * from bweb_user\"' | grep ${user}",
     require => File[$admin_script],
   }
-  #  Ensure Packages installation
-  package { $packages:
-    ensure => 'present',
-  }
-
   #  Ensure Bacula's Python3 required packages
   exec { 'python3 -m pip install --upgrade pip==21.3.1':
     cwd     => '/var/tmp/',
@@ -211,31 +312,17 @@ class profile::bacula::master (
     unless  => 'pip3 --version | grep 21.3.1',
     require => File[$admin_script],
   }
-  ->package { $pip_packages:
-    ensure   => 'present',
-    provider => 'pip3',
-  }
-
-  #  Manage HTTPD Service
-  service { 'httpd':
-    ensure  => 'running',
-    enable  => true,
-    require => Package[$packages],
-  }
-
-  #  Generate and sign certificate
-  letsencrypt::certonly { $fqdn:
-    plugin      => 'dns-route53',
-    manage_cron => true,
-  }
-
-  #  Import Licenced GPG Bacula Key
-  file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA':
-    ensure => file,
-    source => "https://www.baculasystems.com/dl/${id}/BaculaSystems-Public-Signature-08-2017.asc",
-  }
-
-  #  Bacula Enterprise Repository
+  # #  HTTPD File definition
+  # file { '/etc/httpd/conf.d/bweb.conf':
+  #   ensure  => file,
+  #   mode    => '0644',
+  #   content => $httpd_conf,
+  #   notify  => Service['httpd'],
+  # }
+  ##########################
+  #  Packages installation
+  ##########################
+    #  Bacula Enterprise Repository
   yumrepo { 'bacula':
     ensure   => 'present',
     baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/bin/${bacula_version}/rhel7-64/",
@@ -245,7 +332,6 @@ class profile::bacula::master (
     gpgkey   => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA',
     require  => File['/etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA'],
   }
-
   #  BWeb Repository
   yumrepo { 'bacula-bweb':
     ensure   => 'present',
@@ -254,7 +340,6 @@ class profile::bacula::master (
     enabled  => true,
     gpgcheck => '0',
   }
-
   #  Bacula DAG Repository
   yumrepo { 'bacula-dag':
     ensure   => 'present',
@@ -263,7 +348,6 @@ class profile::bacula::master (
     enabled  => true,
     gpgcheck => '0',
   }
-
   #  Bacula vSphere Plugin Repository
   yumrepo { 'bacula-vsphere':
     ensure   => 'present',
@@ -272,33 +356,33 @@ class profile::bacula::master (
     enabled  => true,
     gpgcheck => '0',
   }
-
+  package { $pip_packages:
+    ensure   => 'present',
+    provider => 'pip3',
+    require  => Exec['python3 -m pip install --upgrade pip==21.3.1'],
+  }
+  #  Ensure Packages installation
+  package { $packages:
+    ensure => 'present',
+  }
   #  Install Bacula Enterprise
   package { $bacula_package:
     ensure  => 'present',
     require => Yumrepo['bacula'],
   }
-
   #  Install Bacula BWeb
   package { $bacula_web:
     ensure  => 'present',
     require => Yumrepo['bacula-bweb'],
   }
-
   #  Install Bacula vSphere Plugin
   package { $bacula_vsphere_plugin:
     ensure  => 'present',
     require => Yumrepo['bacula-vsphere'],
   }
-
-  #  Initialize Postgres Bacula DB
-  exec { $bacula_init:
-    cwd     => $bacula_root,
-    path    => ['/sbin', '/usr/sbin', '/bin'],
-    unless  => "sudo -H -u postgres bash -c 'psql -l' | grep bacula",
-    require => Package[$bacula_package],
-  }
-
+  ##########################
+  #  Services definition
+  ##########################
   #  Run and enable Bacula Daemons
   service { 'bacula-fd':
     ensure  => 'running',
@@ -315,60 +399,26 @@ class profile::bacula::master (
     enable  => true,
     require => Package[$bacula_package],
   }
-
   #  Run and Enable BWeb
   service { 'bweb':
     ensure  => 'running',
     enable  => true,
     require => Package[$bacula_web],
   }
-
-  #  Provision bweb tables to psql
-  exec { "sudo bash ${bacula_web_root}/bin/install_bweb.sh":
-    cwd     => '/var/tmp/',
-    path    => ['/sbin', '/usr/sbin', '/bin'],
-    require => Package[$bacula_web],
-    unless  => 'sudo -H -u postgres bash -c \'psql -U postgres -d bacula -E -c "\dt"\' | grep bweb',
+  #  Manage HTTPD Service
+  service { 'httpd':
+    ensure  => 'running',
+    enable  => true,
+    require => Package[$packages],
   }
-
-  #  Bacula HTTPD File definition
-  file { "${bacula_root}/ssl_config":
-    ensure  => file,
-    content => $ssl_config,
-    owner   => 'bacula',
-    mode    => '0644',
-    notify  => Service['httpd'],
-    require => Package[$bacula_web],
+  ##########################
+  #  Other tasks
+  ##########################
+  #  Generate and sign certificate
+  letsencrypt::certonly { $fqdn:
+    plugin      => 'dns-route53',
+    manage_cron => true,
   }
-
-  # #  HTTPD File definition
-  # file { '/etc/httpd/conf.d/bweb.conf':
-  #   ensure  => file,
-  #   mode    => '0644',
-  #   content => $httpd_conf,
-  #   notify  => Service['httpd'],
-  # }
-
-  #  Manage Bacula Web httpd.conf
-  file { "${bacula_web_etc}/httpd.conf":
-    ensure  => file,
-    mode    => '0644',
-    notify  => Service['bweb'],
-    require => Package[$bacula_web],
-    content => $ssl_config,
-  }
-
-  #  Manage Bacula Web bweb.conf
-  file { "${bacula_web_etc}/bweb.conf":
-    ensure  => file,
-    mode    => '0640',
-    owner   => 'bacula',
-    group   => 'bacula',
-    notify  => Service['bweb'],
-    require => Package[$bacula_web],
-    content => $bweb_conf,
-  }
-
   #  BSys_report Generation
   archive { '/var/tmp/bsys_report.tar.gz':
     source       => 'http://www.baculasystems.com/ml/bsys_report/bsys_report.tar.gz',
@@ -377,46 +427,17 @@ class profile::bacula::master (
     user         => 'root',
     group        => 'root',
   }
-
-  file { [ "${bacula_root}/etc/conf.d/ssl", "${bacula_root}/etc/conf.d/ssl/certs", ]:
-    ensure  => directory,
-    recurse => true,
-    owner   => 'bacula',
-    group   => 'bacula',
-    mode    => '0644',
-  }
-  #  Run the first run to get the certificated
-  -> exec { "cat ${le_root}/privkey.pem <(echo) ${le_root}/cert.pem > ${bacula_crt}/${cert_name}":
-    cwd    => '/var/tmp/',
-    path   => ['/sbin', '/usr/sbin', '/bin'],
-    onlyif => "test -f ${bacula_root}/etc/conf.d/ssl/certs/baculacert.pem",
-  }
   #  Change PrivateKey mode every month
-  -> cron::job { 'baculacert':
+  cron::job { 'baculacert':
     ensure      => present,
     minute      => '0',
     hour        => '0',
     date        => '*/1',
     month       => '*',
     weekday     => '*',
-    command     => "cat ${le_root}/privkey.pem <(echo) ${le_root}/cert.pem > ${bacula_crt}/${cert_name}",
+    command     => "sh ${scripts_dir}/cert_gen.sh",
     description => 'Combined Cert for Bacula Web',
     require     => Package[$bacula_web],
     notify      => Service['bweb'],
   }
-  -> file { "${bacula_web_etc}}/conf.d/ssl/ssh/svc_bacula_key":
-    ensure  => file,
-    owner   => 'bacula',
-    group   => 'bacula',
-    mode    => '0600',
-    content => $ssh_priv_key,
-  }
-  ->  file { "${bacula_web_etc}/conf.d/ssl/ssh/svc_bacula_key_pub.pem":
-    ensure  => file,
-    owner   => 'bacula',
-    group   => 'bacula',
-    mode    => '0644',
-    content => $ssh_pub_key,
-  }
-
 }

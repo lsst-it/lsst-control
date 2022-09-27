@@ -31,7 +31,9 @@ class profile::bacula::master (
 
   $fqdn = $facts[fqdn]
   $le_root = "/etc/letsencrypt/live/${fqdn}"
-  $bacula_root = '/opt/bacula'
+  $opt = '/opt'
+  $admin_script = "${opt}/get_admins.sh"
+  $bacula_root = "${opt}/bacula"
   $bacula_init = @("BACULAINIT")
     sudo -H -u postgres bash -c '${bacula_root}/scripts/create_postgresql_database'
     sudo -H -u postgres bash -c '${bacula_root}/scripts/make_postgresql_tables'
@@ -42,7 +44,7 @@ class profile::bacula::master (
   $bacula_version = '14.0.4'
   $bacula_vsphere_plugin = 'bacula-enterprise-vsphere'
   $bacula_web = 'bacula-enterprise-bweb'
-  $bacula_web_root = '/opt/bweb'
+  $bacula_web_root = "${opt}/bweb"
   $bacula_web_etc = "${bacula_web_root}/etc"
   $cert_name = 'baculacert.pem'
   $bacula_crt  = "${bacula_root}/etc/conf.d/ssl/certs/"
@@ -161,31 +163,36 @@ class profile::bacula::master (
           'default_limit' => '100'
         };
     |BWEBCONF
-
   $admin_search = "(ldapsearch -H \"ldap://${ipa_server}\" -b \"${base_dn}\" -D \"uid=${user},${subfilter_dn}\" -w \"${passwd}\" \"(&(objectClass=inetOrgPerson)(memberOf=cn=admins,cn=groups,cn=accounts,${base_dn}))\" | grep 'dn: uid' | awk '{print substr(\$2,5)}' | sed 's/,${subfilter_dn}//g')"
   $process_admin = @("PROCESS"/$)
     #!/usr/bin/env bash
     readarray -t admins < <${admin_search}
     lenght=\$((\${#admins[@]}-1))
-    echo "" > /opt/admins
     i=0
     until [ \$i -gt \${lenght} ]
     do
-      echo "insert into bweb_user(userid,username,use_acl,enabled,comment,passwd,tpl) values ('\$((\${i}+1))','\${admins[\$i]}','f','t','IT,'systemauth','en');" >> /opt/admins
+      psql -U postgres -d bacula -c "insert into bweb_user(userid,username,use_acl,enabled,comment,passwd,tpl) values ('\$((\${i}+1))','\${admins[\$i]}','f','t','IT','systemauth','en');"
       for j in {1..24}
       do
-         echo "insert into bweb_role_member values (\${j},\$((\${i}+1)));" >> /opt/admins
+         psql -U postgres -d bacula -c "insert into bweb_role_member values (\${j},\$((\${i}+1)));"
       done
       ((i++))
     done
     |PROCESS
 
-  file { '/opt/get_admins.sh':
+  file { $admin_script:
     ensure  => file,
     mode    => '0755',
     content => $process_admin,
   }
 
+  #  Populate BWeb with Admin IPA Users
+  exec { "sudo -H -u postgres bash -c ${opt}/get_admins.sh":
+    cwd     => '/var/tmp/',
+    path    => ['/sbin', '/usr/sbin', '/bin'],
+    unless  => "sudo -H -u postgres bash -c 'psql -U postgres -d bacula -E -c \"select * from bweb_user\"' | grep ${user}",
+    require => File[$admin_script],
+  }
   #  Ensure Packages installation
   package { $packages:
     ensure => 'present',
@@ -368,7 +375,7 @@ class profile::bacula::master (
   archive { '/var/tmp/bsys_report.tar.gz':
     source       => 'http://www.baculasystems.com/ml/bsys_report/bsys_report.tar.gz',
     extract      => true,
-    extract_path => '/opt',
+    extract_path => $opt,
     user         => 'root',
     group        => 'root',
   }

@@ -53,7 +53,7 @@ class profile::bacula::master (
   $bacula_web_root = "${opt}/bweb"
   $bacula_web_etc = "${bacula_web_root}/etc"
   $cert_name = 'baculacert.pem'
-  $bacula_crt  = "${bacula_root}/etc/conf.d/ssl/certs/"
+  $bacula_crt  = "${bacula_root}/etc/conf.d/ssl/certs"
   $base_dn = 'dc=lsst,dc=cloud'
   $subfilter_dn = "cn=users,cn=accounts,${base_dn}"
   $httpd_conf = @("HTTPCONF")
@@ -205,7 +205,13 @@ class profile::bacula::master (
   }
 
   #  Ensure Bacula's Python3 required packages
-  package { $pip_packages:
+  exec { 'python3 -m pip install --upgrade pip==21.3.1':
+    cwd     => '/var/tmp/',
+    path    => ['/sbin', '/usr/sbin', '/bin'],
+    unless  => 'pip3 --version | grep 21.3.1',
+    require => File[$admin_script],
+  }
+  ->package { $pip_packages:
     ensure   => 'present',
     provider => 'pip3',
   }
@@ -343,20 +349,6 @@ class profile::bacula::master (
   #   notify  => Service['httpd'],
   # }
 
-  #  Change PrivateKey mode
-  cron::job { 'baculacert':
-    ensure      => present,
-    minute      => '0',
-    hour        => '0',
-    date        => '*/1',
-    month       => '*',
-    weekday     => '*',
-    command     => "cat ${le_root}/privkey.pem <(echo) ${le_root}/cert.pem > ${bacula_crt}/${cert_name}",
-    description => 'Combined Cert for Bacula Web',
-    require     => Package[$bacula_web],
-    notify      => Service['bweb'],
-  }
-
   #  Manage Bacula Web httpd.conf
   file { "${bacula_web_etc}/httpd.conf":
     ensure  => file,
@@ -386,28 +378,45 @@ class profile::bacula::master (
     group        => 'root',
   }
 
-  file { $bacula_root:
-    ensure => directory,
-    owner  => 'bacula',
-    group  => 'bacula',
-    mode   => '0644',
+  file { [ "${bacula_root}/etc/conf.d/ssl", "${bacula_root}/etc/conf.d/ssl/certs", ]:
+    ensure  => directory,
+    recurse => true,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0644',
   }
-
-  file { "${bacula_web_etc}}/conf.d/ssl/ssh/svc_bacula_key":
+  #  Run the first run to get the certificated
+  -> exec { "cat ${le_root}/privkey.pem <(echo) ${le_root}/cert.pem > ${bacula_crt}/${cert_name}":
+    cwd    => '/var/tmp/',
+    path   => ['/sbin', '/usr/sbin', '/bin'],
+    onlyif => "test -f ${bacula_root}/etc/conf.d/ssl/certs/baculacert.pem",
+  }
+  #  Change PrivateKey mode every month
+  -> cron::job { 'baculacert':
+    ensure      => present,
+    minute      => '0',
+    hour        => '0',
+    date        => '*/1',
+    month       => '*',
+    weekday     => '*',
+    command     => "cat ${le_root}/privkey.pem <(echo) ${le_root}/cert.pem > ${bacula_crt}/${cert_name}",
+    description => 'Combined Cert for Bacula Web',
+    require     => Package[$bacula_web],
+    notify      => Service['bweb'],
+  }
+  -> file { "${bacula_web_etc}}/conf.d/ssl/ssh/svc_bacula_key":
     ensure  => file,
     owner   => 'bacula',
     group   => 'bacula',
     mode    => '0600',
     content => $ssh_priv_key,
-    require => File[$bacula_root],
   }
-
-  file { "${bacula_web_etc}/conf.d/ssl/ssh/svc_bacula_key_pub.pem":
+  ->  file { "${bacula_web_etc}/conf.d/ssl/ssh/svc_bacula_key_pub.pem":
     ensure  => file,
     owner   => 'bacula',
     group   => 'bacula',
     mode    => '0644',
     content => $ssh_pub_key,
-    require => File[$bacula_root],
   }
+
 }

@@ -48,6 +48,10 @@ class profile::bacula::master (
   $bacula_port = '9180'
   $bacula_version = '14.0.4'
   $bacula_vsphere_plugin = 'bacula-enterprise-vsphere'
+  $bacula_cloud_plugin = [
+    'bacula-enterprise-cloud-storage-common',
+    'bacula-enterprise-cloud-storage-s3',
+    ]
   $bacula_web = 'bacula-enterprise-bweb'
   $bacula_web_root = "${opt}/bweb"
   $bacula_web_etc = "${bacula_web_root}/etc"
@@ -361,9 +365,19 @@ class profile::bacula::master (
   yumrepo { 'bacula-vsphere':
     ensure   => 'present',
     baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/vsphere/${bacula_version}/rhel7-64/",
-    descr    => 'Bacula DAG Repository',
+    descr    => 'Bacula vSphere-Plugin Repository',
+    gpgkey   => 'https://www.baculasystems.com/dl/keys/BaculaSystems-Public-Signature-08-2017.asc',
     enabled  => true,
     gpgcheck => '0',
+  }
+    #  Bacula vSphere Plugin Repository
+  yumrepo { 'bacula-cloud':
+    ensure   => 'present',
+    baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/cloud-s3/${bacula_version}/rhel7-64/",
+    descr    => 'Bacula S3-Cloud-Plugin Repository',
+    gpgkey   => 'https://www.baculasystems.com/dl/keys/BaculaSystems-Public-Signature-08-2017.asc',
+    enabled  => true,
+    gpgcheck => '1',
   }
   package { $pip_packages:
     ensure   => 'present',
@@ -388,6 +402,11 @@ class profile::bacula::master (
   package { $bacula_vsphere_plugin:
     ensure  => 'present',
     require => Yumrepo['bacula-vsphere'],
+  }
+  #  Install Bacula Cloud S3 Plugin
+  package { $bacula_cloud_plugin:
+    ensure  => 'present',
+    require => Yumrepo['bacula-cloud'],
   }
   ##########################
   #  Services definition

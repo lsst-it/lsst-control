@@ -43,7 +43,7 @@ class profile::bacula::master (
   $opt = '/opt'
   $scripts_dir = "${opt}/scripts"
   $bacula_root = "${opt}/bacula"
-  $admin_script = "${admin_script}/get_admins.sh"
+  $admin_script = "${scripts_dir}/get_admins.sh"
   $bacula_package = 'bacula-enterprise-postgresql'
   $bacula_port = '9180'
   $bacula_version = '14.0.4'
@@ -51,7 +51,7 @@ class profile::bacula::master (
   $bacula_cloud_plugin = [
     'bacula-enterprise-cloud-storage-common',
     'bacula-enterprise-cloud-storage-s3',
-    ]
+  ]
   $bacula_web = 'bacula-enterprise-bweb'
   $bacula_web_root = "${opt}/bweb"
   $bacula_web_etc = "${bacula_web_root}/etc"
@@ -202,12 +202,13 @@ class profile::bacula::master (
   #  Files definition
   ##########################
   #  Create root directories
-  file { [ "${bacula_root}/etc/conf.d/ssl", "${bacula_root}/etc/conf.d/ssl/certs", ]:
-    ensure  => directory,
-    recurse => true,
-    owner   => 'bacula',
-    group   => 'bacula',
-    mode    => '0644',
+  file { ["${bacula_root}/etc/conf.d/ssl",
+    "${bacula_root}/etc/conf.d/ssl/certs",]:
+      ensure  => directory,
+      recurse => true,
+      owner   => 'bacula',
+      group   => 'bacula',
+      mode    => '0644',
   }
   #  Create scripts directory
   file { $scripts_dir:
@@ -253,12 +254,12 @@ class profile::bacula::master (
   }
   #  Create root directories for sshkey
   file { ["${bacula_web_etc}/conf.d",
-          "${bacula_web_etc}/conf.d/ssl",
-          "${bacula_web_etc}/conf.d/ssl/ssh/", ]:
-    ensure => directory,
-    owner  => 'bacula',
-    group  => 'bacula',
-    mode   => '0700',
+      "${bacula_web_etc}/conf.d/ssl",
+    "${bacula_web_etc}/conf.d/ssl/ssh/",]:
+      ensure => directory,
+      owner  => 'bacula',
+      group  => 'bacula',
+      mode   => '0700',
   }
   #  Create User's private sshkey file
   -> file { "${bacula_web_etc}/conf.d/ssl/ssh/${user}_key":
@@ -335,7 +336,7 @@ class profile::bacula::master (
   ##########################
   #  Packages installation
   ##########################
-    #  Bacula Enterprise Repository
+  #  Bacula Enterprise Repository
   yumrepo { 'bacula':
     ensure   => 'present',
     baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/bin/${bacula_version}/rhel7-64/",
@@ -370,7 +371,7 @@ class profile::bacula::master (
     enabled  => true,
     gpgcheck => '0',
   }
-    #  Bacula vSphere Plugin Repository
+  #  Bacula vSphere Plugin Repository
   yumrepo { 'bacula-cloud':
     ensure   => 'present',
     baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/cloud-s3/${bacula_version}/rhel7-64/",

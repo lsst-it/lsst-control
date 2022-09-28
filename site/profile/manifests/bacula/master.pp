@@ -33,8 +33,6 @@
 #
 # @param aws_bucket
 #   S3 Bucket Name
-
-
 class profile::bacula::master (
   String $id = 'null',
   String $ipa_server = 'null',
@@ -230,7 +228,7 @@ class profile::bacula::master (
     }
     |CLOUD
   $s3_conf = @(S3CONF)
-    '@|"/opt/bweb/bin/workset_list.pl \"/opt/bacula/etc/conf.d/Storage/it-bacula-sd\" \"/opt/bacula/working/conf.d/Storage/it-bacula-sd\""',
+    @|"/opt/bweb/bin/workset_list.pl \"/opt/bacula/etc/conf.d/Storage/it-backup-s3\" \"/opt/bacula/working/conf.d/Storage/it-backup-s3\""
     |S3CONF
   ##########################
   #  Files definition
@@ -330,16 +328,25 @@ class profile::bacula::master (
     content => $create_cert,
     require => File[$scripts_dir],
   }
-  file{ ["${bacula_root}/working",
-      "${bacula_root}/working/conf.d",
-      "${bacula_root}/working/conf.d/Storage",
+  #  Create Cloud Tree Structure
+  file { ["${bacula_root}/working",
+    "${bacula_root}/working/conf.d",]:
+      ensure => directory,
+      owner  => 'bacula',
+      group  => 'bacula',
+      mode   => '0644',
+  }
+  -> file { ["${bacula_root}/working/conf.d/Storage",
       "${bacula_root}/working/conf.d/Storage/it-backup-s3",
-      "${bacula_root}/working/conf.d/Storage/it-backup-s3/Cloud",]:
-      ensure  => directory,
-      recurse => true,
-      owner   => 'bacula',
-      group   => 'bacula',
-      mode    => '0644',
+      "${bacula_root}/working/conf.d/Storage/it-backup-s3/Cloud",
+      "${bacula_root}/working/conf.d/Storage/it-backup-s3/Device",
+      "${bacula_root}/working/conf.d/Storage/it-backup-s3/Director",
+      "${bacula_root}/working/conf.d/Storage/it-backup-s3/Messages",
+    "${bacula_root}/working/conf.d/Storage/it-backup-s3/Storage",]:
+      ensure => directory,
+      owner  => 'bacula',
+      group  => 'bacula',
+      mode   => '0750',
   }
   #  Create S3 management Cloud file
   -> file { "${bacula_root}/working/conf.d/Storage/it-backup-s3/Cloud/IT-LS-S3.cfg":

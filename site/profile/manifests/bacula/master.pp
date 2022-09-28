@@ -102,6 +102,7 @@ class profile::bacula::master (
     'pypsexec',
     'pywinrm',
     'pypsrp',
+    'awscli',
   ]
   $create_cert = @("CERT")
     #!/usr/bin/bash
@@ -239,7 +240,6 @@ class profile::bacula::master (
       owner   => 'bacula',
       group   => 'bacula',
       mode    => '0644',
-
   }
   #  Bacula HTTPD File definition
   file { "${bacula_root}/ssl_config":

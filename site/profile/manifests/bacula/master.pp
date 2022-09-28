@@ -232,6 +232,15 @@ class profile::bacula::master (
     require => Package[$bacula_web],
     content => $ssl_config,
   }
+  file { ["${bacula_root}/archive",
+    "${bacula_root}/archive/s3",]:
+      ensure  => directory,
+      recurse => true,
+      owner   => 'bacula',
+      group   => 'bacula',
+      mode    => '0644',
+
+  }
   #  Bacula HTTPD File definition
   file { "${bacula_root}/ssl_config":
     ensure  => file,

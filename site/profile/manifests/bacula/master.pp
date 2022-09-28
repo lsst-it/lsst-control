@@ -21,6 +21,20 @@
 #
 # @param ssh_priv_key
 #   User's ssh public key
+#
+# @param aws_hostname
+#   S3 hostname
+#
+# @param aws_access_key
+#   S3 Access Key
+#
+# @param aws_secret_key
+#   S3 Secret Key
+#
+# @param aws_bucket
+#   S3 Bucket Name
+
+
 class profile::bacula::master (
   String $id = 'null',
   String $ipa_server = 'null',
@@ -29,6 +43,10 @@ class profile::bacula::master (
   String $user = 'null',
   String $ssh_priv_key = 'null',
   String $ssh_pub_key = 'null',
+  String $aws_hostname = 'null',
+  String $aws_access_key = 'null',
+  String $aws_secret_key = 'null',
+  String $aws_bucket = 'null',
 ) {
   include cron
   include postgresql::server
@@ -198,7 +216,22 @@ class profile::bacula::master (
       ((i++))
     done
     |PROCESS
-
+  $s3_cloud = @("CLOUD")
+    Cloud {
+      Name = "IT-LS-S3"
+      AccessKey = "${aws_access_key}"
+      BucketName = "${aws_bucket}"
+      Driver = "S3"
+      HostName = "${aws_hostname}"
+      SecretKey = "${aws_secret_key}"
+      TruncateCache = AtEndOfJob
+      Upload = AtEndOfJob
+      UriStyle = Path
+    }
+    |CLOUD
+  $s3_conf = @(S3CONF)
+    '@|"/opt/bweb/bin/workset_list.pl \"/opt/bacula/etc/conf.d/Storage/it-bacula-sd\" \"/opt/bacula/working/conf.d/Storage/it-bacula-sd\""',
+    |S3CONF
   ##########################
   #  Files definition
   ##########################
@@ -296,6 +329,32 @@ class profile::bacula::master (
     mode    => '0755',
     content => $create_cert,
     require => File[$scripts_dir],
+  }
+  file{ ["${bacula_root}/working",
+      "${bacula_root}/working/conf.d",
+      "${bacula_root}/working/conf.d/Storage",
+      "${bacula_root}/working/conf.d/Storage/it-backup-s3",
+      "${bacula_root}/working/conf.d/Storage/it-backup-s3/Cloud",]:
+      ensure  => directory,
+      recurse => true,
+      owner   => 'bacula',
+      group   => 'bacula',
+      mode    => '0644',
+  }
+  #  Create S3 management Cloud file
+  -> file { "${bacula_root}/working/conf.d/Storage/it-backup-s3/Cloud/IT-LS-S3.cfg":
+    ensure  => file,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0640',
+    content => $s3_cloud,
+  }
+  -> file { "${bacula_root}/working/conf.d/Storage/it-backup-s3/Storage.conf":
+    ensure  => file,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0640',
+    content => $s3_conf,
   }
   ##########################
   #  Manual Execusions

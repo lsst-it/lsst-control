@@ -407,3 +407,4 @@ ccs_hcu::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
 ccs_monit::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
 
 profile::bacula::client::version: "14.0.4"
+profile::bacula::client::bacula_dir: "it-bacula"

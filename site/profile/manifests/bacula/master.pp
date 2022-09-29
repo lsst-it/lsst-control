@@ -72,7 +72,8 @@ class profile::bacula::master (
   $bacula_web_root = "${opt}/bweb"
   $bacula_web_etc = "${bacula_web_root}/etc"
   $cert_name = 'baculacert.pem'
-  $bacula_crt  = "${bacula_root}/etc/conf.d/ssl/certs"
+  $bacula_ssl  = "${bacula_root}/etc/conf.d/ssl"
+  $bacula_crt  = "${bacula_ssl}/certs"
   $base_dn = 'dc=lsst,dc=cloud'
   $subfilter_dn = "cn=users,cn=accounts,${base_dn}"
   $admin_search = "(ldapsearch -H \"ldap://${ipa_server}\" -b \"${base_dn}\" -D \"uid=${user},${subfilter_dn}\" -w \"${passwd}\" \"(&(objectClass=inetOrgPerson)(memberOf=cn=admins,cn=groups,cn=accounts,${base_dn}))\" | grep 'dn: uid' | awk '{print substr(\$2,5)}' | sed 's/,${subfilter_dn}//g')"
@@ -175,7 +176,7 @@ class profile::bacula::master (
           'subconf' => {},
           'enable_self_user_restore' => 0,
           'password' => '',
-          'customer_id' => '',
+          'customer_id' => '${id}',
           'dbi' => 'DBI:Pg:database=bacula',
           'workset_dir' => '${bacula_root}/working/conf.d',
           'debug' => 0,
@@ -195,7 +196,7 @@ class profile::bacula::master (
           'enable_security_acl' => 0,
           'email_media' => '${email}',
           'default_age' => '7d',
-          'ssl_dir' => '${bacula_root}/etc/conf.d/ssl',
+          'ssl_dir' => '${bacula_ssl}',
           'default_limit' => '100'
         };
     |BWEBCONF
@@ -234,13 +235,31 @@ class profile::bacula::master (
   #  Files definition
   ##########################
   #  Create root directories
-  file { ["${bacula_root}/etc/conf.d/ssl",
-    "${bacula_root}/etc/conf.d/ssl/certs",]:
+  file { [$bacula_ssl,
+    "${bacula_ssl}/certs",]:
       ensure  => directory,
       recurse => true,
       owner   => 'bacula',
       group   => 'bacula',
       mode    => '0644',
+  }
+  #  Create User's private sshkey file
+  -> file { "${bacula_ssl}/ssh/${user}_key":
+    ensure  => file,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0600',
+    content => $ssh_priv_key,
+    require => Exec["${scripts_dir}/cert_gen.sh"],
+  }
+  #  Create User's public sshkey file
+  -> file { "${bacula_ssl}/ssh/${user}_key.pub":
+    ensure  => file,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0640',
+    content => $ssh_pub_key,
+    require => Exec["${scripts_dir}/cert_gen.sh"],
   }
   #  Create scripts directory
   file { $scripts_dir:
@@ -301,24 +320,6 @@ class profile::bacula::master (
       group  => 'bacula',
       mode   => '0700',
   }
-  #  Create User's private sshkey file
-  -> file { "${bacula_web_etc}/conf.d/ssl/ssh/${user}_key":
-    ensure  => file,
-    owner   => 'bacula',
-    group   => 'bacula',
-    mode    => '0600',
-    content => $ssh_priv_key,
-    require => Exec["${scripts_dir}/cert_gen.sh"],
-  }
-  #  Create User's public sshkey file
-  -> file { "${bacula_web_etc}/conf.d/ssl/ssh/${user}_key_pub.pem":
-    ensure  => file,
-    owner   => 'bacula',
-    group   => 'bacula',
-    mode    => '0640',
-    content => $ssh_pub_key,
-    require => Exec["${scripts_dir}/cert_gen.sh"],
-  }
   #  Create Bacula Cert generator script
   file { "${scripts_dir}/cert_gen.sh":
     ensure  => file,
@@ -346,7 +347,7 @@ class profile::bacula::master (
       ensure => directory,
       owner  => 'bacula',
       group  => 'bacula',
-      mode   => '0750',
+      mode   => '0755',
   }
   #  Create S3 management Cloud file
   -> file { "${bacula_root}/working/conf.d/Storage/it-backup-s3/Cloud/IT-LS-S3.cfg":

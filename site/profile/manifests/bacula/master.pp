@@ -1,5 +1,5 @@
 # @summary
-#   Provides Signed Certificate and manages HTTPD for Bacula
+#   Deploy Bacula Director, and required elements
 #
 # @param id
 #   Bacula customer Identification string
@@ -35,7 +35,10 @@
 #   S3 Bucket Name
 #
 # @param bacula_pwd
-#   Bacula Enrolment Passwords
+#   Bacula Enrollment Password
+#
+# @param version
+#   Bacula Version
 
 class profile::bacula::master (
   String $id = 'null',
@@ -50,6 +53,7 @@ class profile::bacula::master (
   String $aws_secret_key = 'null',
   String $aws_bucket = 'null',
   String $bacula_pwd = 'null',
+  String $version = 'null',
 ) {
   include cron
   include postgresql::server
@@ -67,7 +71,6 @@ class profile::bacula::master (
   $admin_script = "${scripts_dir}/get_admins.sh"
   $bacula_package = 'bacula-enterprise-postgresql'
   $bacula_port = '9180'
-  $bacula_version = '14.0.4'
   $bacula_vsphere_plugin = 'bacula-enterprise-vsphere'
   $bacula_cloud_plugin = [
     'bacula-enterprise-cloud-storage-common',
@@ -533,7 +536,7 @@ class profile::bacula::master (
   #  Bacula Enterprise Repository
   yumrepo { 'bacula':
     ensure   => 'present',
-    baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/bin/${bacula_version}/rhel7-64/",
+    baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/bin/${version}/rhel7-64/",
     descr    => 'Bacula Enterprise Repository',
     enabled  => true,
     gpgcheck => '1',
@@ -543,7 +546,7 @@ class profile::bacula::master (
   #  BWeb Repository
   yumrepo { 'bacula-bweb':
     ensure   => 'present',
-    baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/bweb/${bacula_version}/rhel7-64/",
+    baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/bweb/${version}/rhel7-64/",
     descr    => 'Bacula Web Repository',
     enabled  => true,
     gpgcheck => '0',
@@ -559,7 +562,7 @@ class profile::bacula::master (
   #  Bacula vSphere Plugin Repository
   yumrepo { 'bacula-vsphere':
     ensure   => 'present',
-    baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/vsphere/${bacula_version}/rhel7-64/",
+    baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/vsphere/${version}/rhel7-64/",
     descr    => 'Bacula vSphere-Plugin Repository',
     gpgkey   => 'https://www.baculasystems.com/dl/keys/BaculaSystems-Public-Signature-08-2017.asc',
     enabled  => true,
@@ -568,7 +571,7 @@ class profile::bacula::master (
   #  Bacula vSphere Plugin Repository
   yumrepo { 'bacula-cloud':
     ensure   => 'present',
-    baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/cloud-s3/${bacula_version}/rhel7-64/",
+    baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/cloud-s3/${version}/rhel7-64/",
     descr    => 'Bacula S3-Cloud-Plugin Repository',
     gpgkey   => 'https://www.baculasystems.com/dl/keys/BaculaSystems-Public-Signature-08-2017.asc',
     enabled  => true,

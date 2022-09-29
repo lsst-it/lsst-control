@@ -33,6 +33,10 @@
 #
 # @param aws_bucket
 #   S3 Bucket Name
+#
+# @param bacula_pwd
+#   Bacula Enrolment Passwords
+
 class profile::bacula::master (
   String $id = 'null',
   String $ipa_server = 'null',
@@ -45,6 +49,7 @@ class profile::bacula::master (
   String $aws_access_key = 'null',
   String $aws_secret_key = 'null',
   String $aws_bucket = 'null',
+  String $bacula_pwd = 'null',
 ) {
   include cron
   include postgresql::server
@@ -72,7 +77,8 @@ class profile::bacula::master (
   $bacula_web_root = "${opt}/bweb"
   $bacula_web_etc = "${bacula_web_root}/etc"
   $cert_name = 'baculacert.pem'
-  $bacula_ssl  = "${bacula_root}/etc/conf.d/ssl"
+  $bacula_etc = "${bacula_root}/etc"
+  $bacula_ssl  = "${bacula_etc}/conf.d/ssl"
   $bacula_crt  = "${bacula_ssl}/certs"
   $base_dn = 'dc=lsst,dc=cloud'
   $subfilter_dn = "cn=users,cn=accounts,${base_dn}"
@@ -181,7 +187,7 @@ class profile::bacula::master (
           'workset_dir' => '${bacula_root}/working/conf.d',
           'debug' => 0,
           'user' => 'bacula',
-          'config_dir' => '${bacula_root}/etc/conf.d',
+          'config_dir' => '${bacula_etc}/conf.d',
           'html_dir' => '${bacula_web_root}/html',
           'stat_job_table' => 'JobHisto',
           'display_log_time' => 'on',
@@ -189,7 +195,7 @@ class profile::bacula::master (
           'wiki_url' => '',
           'rows_per_page' => '20',
           'description' => undef,
-          'bconsole' => '${bacula_root}/bin/bconsole -n -c ${bacula_root}/etc/bconsole.conf',
+          'bconsole' => '${bacula_root}/bin/bconsole -n -c ${bacula_etc}/bconsole.conf',
           'hide_bconfig_menu_item' => 0,
           'fv_write_path' => '${bacula_web_root}/spool',
           'template_dir' => '${bacula_web_root}/tpl',
@@ -228,9 +234,113 @@ class profile::bacula::master (
       UriStyle = Path
     }
     |CLOUD
-  $s3_conf = @(S3CONF)
-    @|"/opt/bweb/bin/workset_list.pl \"/opt/bacula/etc/conf.d/Storage/it-backup-s3\" \"/opt/bacula/working/conf.d/Storage/it-backup-s3\""
+  $s3_conf = @("S3CONF")
+    @|"/opt/bweb/bin/workset_list.pl \"${bacula_root}/etc/conf.d/Storage/it-backup-s3\" \"${bacula_root}/working/conf.d/Storage/it-backup-s3\""
     |S3CONF
+  $bacula_sd_conf = @("STORAGE")
+    Autochanger {
+      Name = "DiskAutochanger"
+      ChangerCommand = ""
+      ChangerDevice = "/dev/null"
+      Device = "DiskAutochanger_Dev0","DiskAutochanger_Dev1","DiskAutochanger_Dev2"
+    }
+    Device {
+      Name = "DiskAutochanger_Dev0"
+      AlwaysOpen = no
+      ArchiveDevice = "${bacula_root}/archive"
+      AutomaticMount = yes
+      DeviceType = File
+      DriveIndex = 0
+      LabelMedia = yes
+      MaximumConcurrentJobs = 5
+      MediaType = "DiskVolume"
+      RandomAccess = yes
+      RemovableMedia = no
+    }
+    Device {
+      Name = "DiskAutochanger_Dev1"
+      AlwaysOpen = no
+      ArchiveDevice = "${bacula_root}/archive"
+      AutomaticMount = yes
+      DeviceType = File
+      DriveIndex = 1
+      LabelMedia = yes
+      MaximumConcurrentJobs = 5
+      MediaType = "DiskVolume"
+      RandomAccess = yes
+      RemovableMedia = no
+    }
+    Device {
+      Name = "DiskAutochanger_Dev2"
+      AlwaysOpen = no
+      ArchiveDevice = "${bacula_root}/archive"
+      AutoSelect = no
+      AutomaticMount = yes
+      DeviceType = File
+      DriveIndex = 2
+      LabelMedia = yes
+      MaximumConcurrentJobs = 5
+      MediaType = "DiskVolume"
+      RandomAccess = yes
+      RemovableMedia = no
+    }
+    Device {
+      Name = "DiskCatalogDevice"
+      AlwaysOpen = no
+      ArchiveDevice = "${bacula_root}/archive"
+      AutomaticMount = yes
+      DeviceType = File
+      LabelMedia = yes
+      MaximumConcurrentJobs = 1
+      MediaType = "CatalogVolume"
+      RandomAccess = yes
+      RemovableMedia = no
+    }
+    Director {
+      Name = "it-bacula-dir"
+      Password = "${bacula_pwd}"
+    }
+    Messages {
+      Name = "Default"
+      Append  = "${bacula_root}/log/it-bacula-sd.log" = All,!Skipped
+      Director  = "it-bacula-dir" = All
+    }
+    Storage {
+      Name = "it-bacula-sd"
+      MaximumConcurrentJobs = 20
+      PidDirectory = "${bacula_root}/working"
+      PluginDirectory = "${bacula_root}/plugins"
+      WorkingDirectory = "${bacula_root}/working"
+    }    
+    Cloud {
+      Name = "IT-LS-S3"
+      AccessKey = "${aws_access_key}"
+      BucketName = "it-backup"
+      Driver = "S3"
+      HostName = "${aws_hostname}"
+      SecretKey = "${aws_secret_key}"
+      TruncateCache = AtEndOfJob
+      Upload = AtEndOfJob
+      UriStyle = Path
+    }
+    Device {
+      Name = "IT-LS-S3"
+      AlwaysOpen = yes
+      ArchiveDevice = "${bacula_root}/archive/s3"
+      Autochanger = yes
+      AutomaticMount = yes
+      Cloud = "IT-LS-S3"
+      DeviceType = Cloud
+      LabelMedia = yes
+      MaximumConcurrentJobs = 10
+      MaximumFileSize = 53687091200
+      MaximumPartSize = 5368709120
+      MaximumVolumeSize = 536870912000
+      MediaType = "it-ls-s3"
+      RandomAccess = yes
+      RemovableMedia = no
+    }
+    |STORAGE
   ##########################
   #  Files definition
   ##########################
@@ -364,6 +474,14 @@ class profile::bacula::master (
     mode    => '0640',
     content => $s3_conf,
   }
+  file { "${bacula_etc}/bacula-sd.conf":
+    ensure  => file,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0640',
+    content => $bacula_sd_conf,
+    notify  => Service['bacula-sd'],
+  }
   ##########################
   #  Manual Execusions
   ##########################
@@ -371,7 +489,7 @@ class profile::bacula::master (
   exec { "${scripts_dir}/cert_gen.sh":
     cwd     => '/var/tmp/',
     path    => ['/sbin', '/usr/sbin', '/bin'],
-    unless  => "test -f ${bacula_root}/etc/conf.d/ssl/certs/baculacert.pem",
+    unless  => "test -f ${bacula_etc}/conf.d/ssl/certs/baculacert.pem",
     require => File["${scripts_dir}/cert_gen.sh"],
   }
   #  Initialize Postgres Bacula DB

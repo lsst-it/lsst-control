@@ -7,10 +7,14 @@
 
 class profile::bacula::client (
   String $id = 'null',
+  String $version = 'null',
 ) {
   include yum
 
-  $bacula_version = '14.0.4'
+  $bacula_packages = [
+    "bacula-enterprise-libs-${version}-22060319.el7.x86_64",
+    "bacula-enterprise-client-${version}-22060319.el7.x86_64",
+  ]
 
   #  Import Licenced GPG Bacula Key
   file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA':
@@ -21,7 +25,7 @@ class profile::bacula::client (
   #  Bacula Enterprise Repository
   yumrepo { 'bacula':
     ensure   => 'present',
-    baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/bin/${bacula_version}/rhel7-64/",
+    baseurl  => "https://www.baculasystems.com/dl/${id}/rpms/bin/${version}/rhel7-64/",
     descr    => 'Bacula Enterprise Repository',
     enabled  => true,
     gpgcheck => '1',
@@ -29,9 +33,7 @@ class profile::bacula::client (
     require  => File['/etc/pki/rpm-gpg/RPM-GPG-KEY-BACULA'],
   }
 
-  #  Fetch BIM - Bacula Installation Manager
-  archive { '/opt/bee_installation_manager':
-    ensure => present,
-    source => 'https://www.baculasystems.com/ml/bee_installation_manager',
+  package { $bacula_packages:
+    ensure => 'present',
   }
 }

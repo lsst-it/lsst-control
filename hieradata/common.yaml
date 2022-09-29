@@ -405,3 +405,5 @@ nfs::nfs_v4_idmap_domain: "%{::domain}"
 profile::ccs::common::pkgurl: "https://repo-nexus.lsst.org/nexus/repository/ccs_private"
 ccs_hcu::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
 ccs_monit::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
+
+profile::bacula::client::version: "14.0.4"

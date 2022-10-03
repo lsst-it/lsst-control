@@ -69,4 +69,17 @@ class profile::bacula::client (
     path   => ['/sbin', '/usr/sbin', '/bin'],
     unless => "test -d ${bacula_root}",
   }
+  #  Manage enrollment file
+  -> file { "${bacula_root}/etc/bacula-fd.conf":
+    ensure  => file,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0640',
+    content => $bacula_fd_conf,
+    notify  => Service['bacula-fd'],
+  }
+  -> service { 'bacula-fd':
+    ensure => 'running',
+    enable => true,
+  }
 }

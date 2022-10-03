@@ -2,8 +2,11 @@
 classes:
   - "profile::bacula::master"
   - "profile::core::common"
+  - "python"
   - "yum"
 
+python::version: "python27"
+python::pip: "present"
 profile::bacula::master::ipa_server: "ipa.lsst.org"
 profile::bacula::master::email: "ruubinobs-it-las@lsst.org"
 profile::bacula::master::user: "svc_bacula"

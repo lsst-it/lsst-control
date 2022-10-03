@@ -124,11 +124,10 @@ class profile::bacula::master (
     'vim',
     'openldap-clients',
   ]
-  $pip_packages = [
+  $pip3_packages = [
     'pypsexec',
     'pywinrm',
     'pypsrp',
-    'awscli',
   ]
   $create_cert = @("CERT")
     #!/usr/bin/bash
@@ -232,11 +231,22 @@ class profile::bacula::master (
       Driver = "S3"
       HostName = "${aws_hostname}"
       SecretKey = "${aws_secret_key}"
-      TruncateCache = AtEndOfJob
       Upload = AtEndOfJob
+      TruncateCache = AfterUpload
       UriStyle = Path
     }
     |CLOUD
+  $s3_storage = @("S3STORE")
+    Storage {
+      Name = "IT-LS-S3"
+      Address = it-bacula
+      Device = "IT-LS-S3"
+      MaximumConcurrentJobs = 50
+      MediaType = "it-ls-media"
+      Password = "${bacula_pwd}"
+      SdPort = 9103
+    }
+    |S3STORE
   $s3_conf = @("S3CONF")
     @|"/opt/bweb/bin/workset_list.pl \"${bacula_root}/etc/conf.d/Storage/it-backup-s3\" \"${bacula_root}/working/conf.d/Storage/it-backup-s3\""
     |S3CONF
@@ -322,15 +332,14 @@ class profile::bacula::master (
       Driver = "S3"
       HostName = "${aws_hostname}"
       SecretKey = "${aws_secret_key}"
-      TruncateCache = AtEndOfJob
       Upload = AtEndOfJob
+      TruncateCache = AfterUpload
       UriStyle = Path
     }
     Device {
       Name = "IT-LS-S3"
       AlwaysOpen = yes
       ArchiveDevice = "${bacula_root}/archive/s3"
-      Autochanger = yes
       AutomaticMount = yes
       Cloud = "IT-LS-S3"
       DeviceType = Cloud
@@ -339,7 +348,7 @@ class profile::bacula::master (
       MaximumFileSize = 53687091200
       MaximumPartSize = 5368709120
       MaximumVolumeSize = 536870912000
-      MediaType = "it-ls-s3"
+      MediaType = "it-ls-media"
       RandomAccess = yes
       RemovableMedia = no
     }
@@ -396,13 +405,21 @@ class profile::bacula::master (
     require => Package[$bacula_web],
     content => $ssl_config,
   }
+  #  S3 directories creation
   file { ["${bacula_root}/archive",
     "${bacula_root}/archive/s3",]:
-      ensure  => directory,
-      recurse => true,
-      owner   => 'bacula',
-      group   => 'bacula',
-      mode    => '0644',
+      ensure => directory,
+      owner  => 'bacula',
+      group  => 'bacula',
+      mode   => '0644',
+  }
+  file { "${bacula_etc}/conf.d/Director/it-bacula-dir/Storage/IT-LS-S3.cfg":
+    ensure  => file,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0640',
+    content => $s3_storage,
+    notify  => Service['bacula-sd'],
   }
   #  Bacula HTTPD File definition
   file { "${bacula_root}/ssl_config":
@@ -577,7 +594,8 @@ class profile::bacula::master (
     enabled  => true,
     gpgcheck => '1',
   }
-  package { $pip_packages:
+  #  Install pip3 packages
+  package { $pip3_packages:
     ensure   => 'present',
     provider => 'pip3',
     require  => Exec['python3 -m pip install --upgrade pip==21.3.1'],

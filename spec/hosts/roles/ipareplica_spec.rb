@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 IPA_SERVER_VERSION = '4.6.8'
-IPA_SERVER_RELEASE = '5.el7.centos.7'
+IPA_SERVER_RELEASE = '5.EL.centos.7'
 
 role = 'ipareplica'
 
@@ -42,9 +42,11 @@ describe "#{role} role" do
             ipa-server
           ].each do |pkg|
             it do
+              el_release = "el#{facts[:os]['release']['major']}"
+
               is_expected.to contain_yum__versionlock(pkg).with(
                 version: IPA_SERVER_VERSION,
-                release: IPA_SERVER_RELEASE,
+                release: IPA_SERVER_RELEASE.gsub('EL', el_release),
               )
             end
           end

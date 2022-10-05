@@ -70,9 +70,3 @@ perfsonar::pscheduler_agent_config:
 perfsonar::manage_lsregistrationdaemon: true
 perfsonar::lsregistrationdaemon_ensure: "stopped"
 perfsonar::lsregistrationdaemon_enable: false
-profile::core::yum::versionlock:
-  # XXX do we need to versionlock all of the sub-packages as well?
-  perfsonar-toolkit:
-    ensure: "present"
-    version: "4.4.0"
-    release: "1.el7"

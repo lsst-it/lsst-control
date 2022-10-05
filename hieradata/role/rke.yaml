@@ -18,10 +18,6 @@ packages:
   - "gdisk"
   - "git"
   - "vim"
-sysctl::values::args:
-  net.bridge.bridge-nf-call-iptables:
-    value: 1
-    target: "/etc/sysctl.d/80-rke.conf"
 profile::core::helm::version: "3.5.4"
 profile::core::kernel::devel: true
 profile::core::kernel::debuginfo: true

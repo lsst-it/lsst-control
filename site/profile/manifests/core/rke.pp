@@ -15,6 +15,8 @@ class profile::core::rke (
   Optional[Sensitive[String[1]]] $keytab_base64 = undef,
   String                         $version       = '1.3.3',
 ) {
+  include kmod
+
   $user = 'rke'
   $uid  = 75500
 
@@ -54,4 +56,11 @@ class profile::core::rke (
     version  => $version,
     checksum => $rke_checksum,
   }
+
+  kmod::load { 'br_netfilter': }
+  -> sysctl::value { 'net.bridge.bridge-nf-call-iptables':
+    value  => 1,
+    target => '/etc/sysctl.d/80-rke.conf',
+  }
+  -> Class['docker']
 }

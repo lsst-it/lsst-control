@@ -5,6 +5,7 @@ require 'spec_helper'
 shared_examples 'generic rke' do
   include_examples 'debugutils'
   include_examples 'docker'
+  include_examples 'rke profile'
 
   it { is_expected.to contain_class('kubectl') }
   it { is_expected.to contain_class('profile::core::rke') }

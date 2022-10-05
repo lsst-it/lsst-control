@@ -169,6 +169,15 @@ shared_examples 'common' do |facts:, no_auth: false|
       it { is_expected.not_to contain_class('yum').with_managed_repos(['extras']) }
       it { is_expected.not_to contain_class('scl') }
     end
+
+    if facts[:os]['release']['major'] == '8'
+      it do
+        is_expected.to contain_package('NetworkManager-initscripts-updown')
+          .that_comes_before('Class[network]')
+      end
+    else
+      it { is_expected.not_to contain_package('NetworkManager-initscripts-updown') }
+    end
   else
     it { is_expected.not_to contain_class('epel') }
     it { is_expected.not_to contain_class('yum::plugin::versionlock') }

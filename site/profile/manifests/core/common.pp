@@ -103,13 +103,22 @@ class profile::core::common (
     }
 
     # on EL7 only
-    if fact('os.release.major') == '7' {
-      if fact('os.architecture') == 'x86_64' {
-        # no scl repos for aarch64
-        if $manage_scl {
-          include scl
+    case fact('os.release.major') {
+      '7': {
+        if fact('os.architecture') == 'x86_64' {
+          # no scl repos for aarch64
+          if $manage_scl {
+            include scl
+          }
         }
       }
+      '8': {
+        # On EL8, the NetworkManager-initscripts-updown package provides the
+        # ifup/ifdown scripts which are needed by example42/network.
+        ensure_packages(['NetworkManager-initscripts-updown'])
+        Package['NetworkManager-initscripts-updown'] -> Class['network']
+      }
+      default: {}
     }
   }
 

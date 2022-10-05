@@ -5,7 +5,7 @@ defaults:
 hierarchy:
   - name: "private hiera"
     datadir: "/etc/puppetlabs/code/hieradata/private/%{environment}"
-    paths:
+    paths: &paths
       - "node/%{fqdn}.yaml"
       - "site/%{site}/cluster/%{cluster}/role/%{role}.yaml"
       - "site/%{site}/cluster/%{cluster}.yaml"
@@ -14,16 +14,8 @@ hierarchy:
       - "site/%{site}/role/%{role}.yaml"
       - "site/%{site}.yaml"
       - "role/%{role}.yaml"
+      - "common/osfamily/%{os.family}/major/%{os.release.major}.yaml"
       - "common.yaml"
   - name: "public hiera"
     datadir: "/etc/puppetlabs/code/environments/%{environment}/hieradata"
-    paths:
-      - "node/%{fqdn}.yaml"
-      - "site/%{site}/cluster/%{cluster}/role/%{role}.yaml"
-      - "site/%{site}/cluster/%{cluster}.yaml"
-      - "cluster/%{cluster}/role/%{role}.yaml"
-      - "cluster/%{cluster}.yaml"
-      - "site/%{site}/role/%{role}.yaml"
-      - "site/%{site}.yaml"
-      - "role/%{role}.yaml"
-      - "common.yaml"
+    paths: *paths

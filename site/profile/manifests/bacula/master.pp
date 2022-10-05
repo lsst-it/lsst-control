@@ -39,6 +39,18 @@
 #
 # @param version
 #   Bacula Version
+#
+# @param vcenter_fqdn
+#   vCenter FQDN
+#
+# @param vcenter_user
+#   vCenter Admin user
+#
+# @param vcenter_pwd
+#   vCenter Admin user password
+#
+# @param vcenter_thumbprint
+#   vCenter Thumbprint
 
 class profile::bacula::master (
   String $id = 'null',
@@ -54,6 +66,10 @@ class profile::bacula::master (
   String $aws_bucket = 'null',
   String $bacula_pwd = 'null',
   String $version = 'null',
+  String $vcenter_fqdn = 'null',
+  String $vcenter_user = 'null',
+  String $vcenter_pwd = 'null',
+  String $vcenter_thumbprint = 'null',
 ) {
   include cron
   include postgresql::server
@@ -356,6 +372,15 @@ class profile::bacula::master (
       RemovableMedia = no
     }
     |STORAGE
+    $vsphere_conf = @("VSPHERE")
+      [vsphere]
+      username = ${vcenter_user}
+      password = ${vcenter_pwd}
+      server = ${vcenter_fqdn}
+      url = https://${vcenter_fqdn}/sdk
+      thumbprint = ${vcenter_thumbprint}
+      root_directory = ${bacula_root}/working/vmware/vcenter
+      |VSPHERE
   ##########################
   #  Files definition
   ##########################
@@ -464,7 +489,9 @@ class profile::bacula::master (
   }
   #  Create Cloud Tree Structure
   file { ["${bacula_root}/working",
-    "${bacula_root}/working/conf.d",]:
+    "${bacula_root}/working/conf.d",
+    "${bacula_root}/working/vmware",
+    "${bacula_root}/working/vmware/vcenter",]:
       ensure => directory,
       owner  => 'bacula',
       group  => 'bacula',
@@ -490,6 +517,7 @@ class profile::bacula::master (
     mode    => '0640',
     content => $s3_cloud,
   }
+  #  Add tu current config the Cloud settings
   -> file { "${bacula_root}/working/conf.d/Storage/it-backup-s3/Storage.conf":
     ensure  => file,
     owner   => 'bacula',
@@ -497,6 +525,15 @@ class profile::bacula::master (
     mode    => '0640',
     content => $s3_conf,
   }
+  #  Manage vCenter Plugin Configuration
+  -> file { "${bacula_etc}/vsphere_global.conf":
+    ensure  => file,
+    owner   => 'bacula',
+    group   => 'bacula',
+    mode    => '0640',
+    content => $vsphere_conf,
+  }
+  #  Manage Storage Daemon configuration file
   file { "${bacula_etc}/bacula-sd.conf":
     ensure  => file,
     owner   => 'bacula',

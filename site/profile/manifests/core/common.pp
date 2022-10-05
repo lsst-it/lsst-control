@@ -94,10 +94,20 @@ class profile::core::common (
   include timezone
   include tuned
 
-  if $facts['os']['family'] == 'RedHat' {
+  if fact('os.family') == 'RedHat' {
     if $manage_repos {
       resources { 'yumrepo':
         purge => true,
+      }
+    }
+
+    # on EL7 only
+    if fact('os.release.major') == '7' {
+      if fact('os.architecture') == 'x86_64' {
+        # no scl repos for aarch64
+        if $manage_scl {
+          include scl
+        }
       }
     }
   }
@@ -156,13 +166,6 @@ class profile::core::common (
 
   if $manage_powertop {
     include profile::core::powertop
-  }
-
-  if $facts['os']['architecture'] == 'x86_64' {
-    # no scl repos for aarch64
-    if $manage_scl {
-      include scl
-    }
   }
 
   if $manage_resolv_conf {

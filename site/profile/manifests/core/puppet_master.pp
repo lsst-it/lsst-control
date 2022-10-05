@@ -51,7 +51,6 @@ class profile::core::puppet_master (
   include r10k
   include r10k::webhook
   include r10k::webhook::config
-  include scl
 
   if $enable_puppetdb {
     include puppet::server::puppetdb
@@ -129,7 +128,10 @@ class profile::core::puppet_master (
     require => Class['foreman'],
   }
 
-  Class['scl'] -> Class['foreman']
+  if fact('os.family') == 'RedHat' and fact('os.release.major') == '7' {
+    include scl
+    Class['scl'] -> Class['foreman']
+  }
 
   # XXX theforeman/puppet does not manage the yumrepo.  puppetlabs/puppet_agent is hardwired
   # to manage the puppet package and conflicts with theforeman/puppet.  We should try to

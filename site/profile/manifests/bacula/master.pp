@@ -51,7 +51,13 @@
 #
 # @param vcenter_thumbprint
 #   vCenter Thumbprint
-
+#
+# @param vsphere_lb
+#   vSphere LoadBalancer
+#
+# @param vsphere_ds
+#   vSphere DataStore
+#
 class profile::bacula::master (
   String $id = 'null',
   String $ipa_server = 'null',
@@ -70,6 +76,8 @@ class profile::bacula::master (
   String $vcenter_user = 'null',
   String $vcenter_pwd = 'null',
   String $vcenter_thumbprint = 'null',
+  String $vsphere_lb = 'null',
+  String $vsphere_ds = 'null',
 ) {
   include cron
   include postgresql::server
@@ -110,33 +118,6 @@ class profile::bacula::master (
     sudo -H -u postgres bash -c '${bacula_root}/scripts/make_postgresql_tables'
     sudo -H -u postgres bash -c '${bacula_root}/scripts/grant_postgresql_privileges'
     |BACULAINIT
-  $httpd_conf = @("HTTPCONF")
-    <VirtualHost *:80> 
-    DocumentRoot "${bacula_web_root}/html/"
-    ServerName ${fqdn}
-    <Directory ${bacula_web_root}/cgi>
-        Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-        AllowOverride None
-    </Directory>
-    ScriptAlias /cgi-bin/bweb ${bacula_web_root}/cgi
-    Alias /bweb/fv ${bacula_web_root}/spool
-    <Directory "/var/spool/bweb">
-        Options None
-        AllowOverride AuthConfig
-        Order allow,deny
-        Allow from all
-    </Directory>
-    Alias /bweb ${bacula_web_root}/html
-    <Directory "${bacula_web_root}/html">
-        Options None
-        AllowOverride AuthConfig
-        Require all granted
-    </Directory>
-    ErrorLog "/var/log/httpd/${fqdn}-error_log"
-    CustomLog "/var/log/httpd/${fqdn}-access_log" combined
-    RewriteRule "/(.*)" https://${fqdn}":9180/cgi-bin/bweb/bweb.pl/\$1" [P]
-    </VirtualHost> 
-    |HTTPCONF
   $packages = [
     'httpd',
     'mod_ssl',
@@ -372,15 +353,17 @@ class profile::bacula::master (
       RemovableMedia = no
     }
     |STORAGE
-    $vsphere_conf = @("VSPHERE")
-      [vsphere]
-      username = ${vcenter_user}
-      password = ${vcenter_pwd}
-      server = ${vcenter_fqdn}
-      url = https://${vcenter_fqdn}/sdk
-      thumbprint = ${vcenter_thumbprint}
-      root_directory = ${bacula_root}/working/vmware/vcenter
-      |VSPHERE
+  $vsphere_conf = @("VSPHERE")
+    [vsphere]
+    username = ${vcenter_user}
+    password = ${vcenter_pwd}
+    server = ${vcenter_fqdn}
+    url = https://${vcenter_fqdn}/sdk
+    thumbprint = ${vcenter_thumbprint}
+    root_directory = ${bacula_root}/working/vmware/vcenter
+    default_restore_host = ${vsphere_lb}
+    default_datastore = ${vsphere_ds}
+    |VSPHERE
   ##########################
   #  Files definition
   ##########################
@@ -489,8 +472,8 @@ class profile::bacula::master (
   }
   #  Create Cloud Tree Structure
   file { ["${bacula_root}/working",
-    "${bacula_root}/working/conf.d",
-    "${bacula_root}/working/vmware",
+      "${bacula_root}/working/conf.d",
+      "${bacula_root}/working/vmware",
     "${bacula_root}/working/vmware/vcenter",]:
       ensure => directory,
       owner  => 'bacula',
@@ -580,13 +563,6 @@ class profile::bacula::master (
     unless  => 'pip3 --version | grep 21.3.1',
     require => File[$admin_script],
   }
-  # #  HTTPD File definition
-  # file { '/etc/httpd/conf.d/bweb.conf':
-  #   ensure  => file,
-  #   mode    => '0644',
-  #   content => $httpd_conf,
-  #   notify  => Service['httpd'],
-  # }
   ##########################
   #  Packages installation
   ##########################

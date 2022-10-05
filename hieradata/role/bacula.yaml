@@ -15,8 +15,8 @@ profile::bacula::master::aws_hostname: "it-s3.ls.lsst.org"
 profile::bacula::master::version: "14.0.4"
 profile::bacula::master::vcenter_fqdn: "vcenter.cp.lsst.org"
 profile::bacula::master::vcenter_user: "administrator@vsphere.local"
-profile::bacula::master::vsphere_fqdn: "vsphere01.cp.lsst.org"
-profile::bacula::master::vsphere_user: "root"
+profile::bacula::master::vsphere_lb: "vsphere-ls.lsst.org"
+profile::bacula::master::vsphere_ds: "BDC-vSAN"
 postgresql::server::config_entries:
   log_checkpoints: "on"
   checkpoint_timeout: 1200

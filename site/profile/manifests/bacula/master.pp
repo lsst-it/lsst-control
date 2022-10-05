@@ -346,7 +346,7 @@ class profile::bacula::master (
       LabelMedia = yes
       MaximumConcurrentJobs = 10
       MaximumFileSize = 53687091200
-      MaximumPartSize = 5368709120
+      MaximumPartSize = 1000000000
       MaximumVolumeSize = 536870912000
       MediaType = "it-ls-media"
       RandomAccess = yes

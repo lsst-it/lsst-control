@@ -71,7 +71,10 @@ class profile::bacula::master (
   $admin_script = "${scripts_dir}/get_admins.sh"
   $bacula_package = 'bacula-enterprise-postgresql'
   $bacula_port = '9180'
-  $bacula_vsphere_plugin = 'bacula-enterprise-vsphere'
+  $bacula_vsphere_plugin = [
+    'bacula-enterprise-vsphere',
+    'bacula-enterprise-vsphere-vixdisk',
+  ]
   $bacula_cloud_plugin = [
     'bacula-enterprise-cloud-storage-common',
     'bacula-enterprise-cloud-storage-s3',

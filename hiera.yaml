@@ -10,6 +10,7 @@ hierarchy:
       - "site/%{site}/cluster/%{cluster}/role/%{role}.yaml"
       - "site/%{site}/cluster/%{cluster}.yaml"
       - "cluster/%{cluster}/role/%{role}.yaml"
+      - "cluster/%{cluster}/osfamily/%{os.family}/major/%{os.release.major}.yaml"
       - "cluster/%{cluster}.yaml"
       - "site/%{site}/role/%{role}.yaml"
       - "site/%{site}.yaml"

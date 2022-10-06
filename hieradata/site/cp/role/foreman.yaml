@@ -179,6 +179,13 @@ dhcp::pools:
     range:
       - "10.18.3.150 10.18.3.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  rubin_power:
+    network: "10.18.7.0"
+    mask: "255.255.255.0"
+    gateway: "10.18.7.254"
+    range:
+      - "10.18.7.150 10.18.7.253"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
 dhcp::hosts:
   M207-gs-plotter-01.cp.cl.lsst.org:
     comment: "Plotter configuration: https://jira.lsstcorp.org/browse/IHS-1600"

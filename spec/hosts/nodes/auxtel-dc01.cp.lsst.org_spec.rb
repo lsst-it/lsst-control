@@ -28,7 +28,7 @@ describe 'auxtel-dc01.cp.lsst.org', :site do
           atboot: true,
         )
       end
-    
+
       it do
         is_expected.to contain_nfs__client__mount('/repo').with(
           share: 'repo',

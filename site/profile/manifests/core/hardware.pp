@@ -23,5 +23,12 @@ class profile::core::hardware {
       }
     }
   }
+
+  # On SM H12SSL-NT dmi.product.name == "Super Server", which isn't very helpful
+  case fact('dmi.board.product') {
+    /H12SSL-NT/: {
+      include ipmi
+    }
+  }
   # lint:endignore
 }

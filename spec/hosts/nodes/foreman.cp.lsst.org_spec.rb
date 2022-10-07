@@ -170,7 +170,6 @@ describe 'foreman.cp.lsst.org', :site do
           it { is_expected.to be_enabled }
         end
       end
-      end
     end # on os
   end # on_supported_os
 end # role

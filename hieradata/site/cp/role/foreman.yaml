@@ -6,30 +6,6 @@ dhcp::authoritative: true
 dhcp::pxeserver: "139.229.160.5"  # foreman
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:
-  aura_ls:
-    network: "139.229.158.192"
-    mask: "255.255.255.192"
-    gateway: "139.229.158.254"
-    range: "139.229.158.193 139.229.158.253"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
-  guests_ls:
-    network: "139.229.159.128"
-    mask: "255.255.255.128"
-    gateway: "139.229.159.254"
-    range: "139.229.159.129 139.229.159.253"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
-  tcontractors_ls:
-    network: "139.229.158.128"
-    mask: "255.255.255.192"
-    gateway: "139.229.158.190"
-    range: "139.229.158.129 139.229.158.189"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
-  ucontractors_ls:
-    network: "139.229.159.0"
-    mask: "255.255.255.128"
-    gateway: "139.229.159.126"
-    range: "139.229.159.1 139.229.159.125"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
   it_gss:
     network: "139.229.160.0"
     mask: "255.255.255.0"

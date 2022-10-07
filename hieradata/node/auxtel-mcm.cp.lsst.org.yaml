@@ -48,3 +48,15 @@ ccs_software::services:
     - "cluster-monitor"
     - "localdb"
     - "rest-server"
+
+nfs::client_enabled: true
+
+nfs::client_mounts:
+  /data:
+    share: "data"
+    server: "auxtel-fp01.cp.lsst.org"
+    atboot: true
+  /repo:
+    share: "repo"
+    server: "auxtel-archiver.cp.lsst.org"
+    atboot: true

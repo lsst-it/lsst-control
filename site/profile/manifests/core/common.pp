@@ -66,6 +66,7 @@ class profile::core::common (
   Boolean $manage_irqbalance = true,
   Boolean $manage_resolv_conf = true,
 ) {
+  include auditd
   include accounts
   include augeas
   include easy_ipa

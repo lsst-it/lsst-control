@@ -42,14 +42,14 @@ dhcp::pools:
     gateway: "139.229.164.254"
     range: "139.229.164.1 139.229.164.200"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  cds-arch:
+  cds_arch:
     network: "139.229.165.0"
     mask: "255.255.255.0"
     gateway: "139.229.165.254"
     range:
       - "139.229.165.200 139.229.165.253"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  cds-arch-dds:
+  cds_arch_dds:
     network: "139.229.166.0"
     mask: "255.255.255.0"
     gateway: "139.229.166.254"

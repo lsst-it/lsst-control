@@ -40,27 +40,28 @@ dhcp::pools:
     network: "139.229.164.0"
     mask: "255.255.255.0"
     gateway: "139.229.164.254"
-    range: "139.229.164.1 139.229.164.200"
+    range:
+      - "139.229.164.1 139.229.164.200"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   cds_arch:
     network: "139.229.165.0"
     mask: "255.255.255.0"
     gateway: "139.229.165.254"
     range:
-      - "139.229.165.200 139.229.165.253"
+      - "139.229.165.200 139.229.165.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   cds_arch_dds:
     network: "139.229.166.0"
     mask: "255.255.255.0"
     gateway: "139.229.166.254"
     range:
-      - "139.229.166.200 139.229.166.253"
+      - "139.229.166.200 139.229.166.249"
   ocs_app:
     network: "139.229.167.0"
     mask: "255.255.255.0"
     gateway: "139.229.167.254"
     range:
-      - "139.229.167.241 139.229.167.253"
+      - "139.229.167.241 139.229.167.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   ess_sensors:
     network: "139.229.168.0"
@@ -81,7 +82,7 @@ dhcp::pools:
     mask: "255.255.255.192"
     gateway: "139.229.168.254"
     range:
-      - "139.229.168.243 139.229.168.253"
+      - "139.229.168.243 139.229.168.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   dds_auxtel:
     network: "139.229.170.0"
@@ -95,7 +96,7 @@ dhcp::pools:
     mask: "255.255.255.0"
     gateway: "139.229.174.254"
     range:
-      - "139.229.174.200 139.229.174.254"
+      - "139.229.174.200 139.229.174.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   ccs_comcam:
     network: "139.229.175.0"
@@ -116,7 +117,7 @@ dhcp::pools:
     mask: "255.255.255.128"
     gateway: "139.229.175.254"
     range:
-      - "139.229.175.241 139.229.175.253"
+      - "139.229.175.241 139.229.175.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   tcs_app:
     network: "139.229.178.0"
@@ -125,7 +126,7 @@ dhcp::pools:
     range:
       # We allocate 139.229.178.0/26 for DHCP, minus .178.1 as that
       # host is statically allocated.
-      - "139.229.178.2 139.229.178.62"
+      - "139.229.178.2 139.229.178.58"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   contractors_cp:
     network: "139.229.191.0"
@@ -139,7 +140,8 @@ dhcp::pools:
     network: "139.229.191.128"
     mask: "255.255.255.128"
     gateway: "139.229.191.254"
-    range: "139.229.191.129 139.229.191.239"
+    range:
+      - "139.229.191.129 139.229.191.239"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   it_cctv:
     network: "10.17.7.0"
@@ -153,14 +155,14 @@ dhcp::pools:
     mask: "255.255.255.0"
     gateway: "10.18.3.254"
     range:
-      - "10.18.3.150 10.18.3.253"
+      - "10.18.3.150 10.18.3.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   rubin_power:
     network: "10.18.7.0"
     mask: "255.255.255.0"
     gateway: "10.18.7.254"
     range:
-      - "10.18.7.150 10.18.7.253"
+      - "10.18.7.150 10.18.7.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
 dhcp::hosts:
   M207-gs-plotter-01.cp.cl.lsst.org:

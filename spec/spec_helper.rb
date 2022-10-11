@@ -143,6 +143,16 @@ shared_examples 'common', :common do |opts = {}|
   it { is_expected.to contain_yum__versionlock('puppet-agent').with_version('7.18.0') }
   it { is_expected.to contain_class('yum').with_manage_os_default_repos(true) }
   it { is_expected.to contain_resources('yumrepo').with_purge(true) }
+
+  it do
+    is_expected.to contain_rsyslog__component__input('auditd').with(
+      type: 'imfile',
+      config: {
+        'file' => '/var/log/audit/audit.log',
+        'Tag' => 'auditd',
+      },
+    )
+  end
 end
 
 shared_examples 'lhn sysctls', :lhn_node do

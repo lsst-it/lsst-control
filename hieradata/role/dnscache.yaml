@@ -8,7 +8,7 @@ dns::sysconfig_startup_options: "-4"
 dns::additional_directives:
   - "logging {"
   - "    channel queries_syslog {"
-  - "        severity info;"
+  - "        severity notice;"
   - "        print-category yes;"
   - "        syslog local6;"
   - "    };"

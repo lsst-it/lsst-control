@@ -35,6 +35,10 @@ describe "#{role} role" do
               ],
             )
           end
+
+          it do
+            expect(catalogue.resource('class', 'dns')[:additional_directives]).to include(match(%r{^\s+severity notice;$}))
+          end
         end # host
       end # lsst_sites
     end # on os

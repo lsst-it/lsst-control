@@ -14,19 +14,28 @@ define profile::util::keytab (
   Integer $uid,
   Sensitive[String[1]] $keytab_base64,
 ) {
+  $keytab_dir = '/var/lib/keytab'
+  $keytab_path = "${keytab_dir}/${name}"
   $home_path = "/home/${name}"
-  $keytab_path = "${home_path}/.keytab"
+  $old_keytab_path = "${home_path}/.keytab"
 
-  ensure_resource('file', $home_path, {
+  # delete old keytab path in user's home dir
+  file { $old_keytab_path:
+    ensure => absent,
+  }
+
+  ensure_resource('file', $keytab_dir, {
       'ensure' => 'directory',
-      owner    => $name,
-      group    => $name,
+      owner    => 'root',
+      group    => 'root',
       mode     => '0700',
+      purge    => true,
+      recurse  => true,
   })
   file { $keytab_path:
     ensure    => file,
-    owner     => $name,
-    group     => $name,
+    owner     => 'root',
+    group     => 'root',
     mode      => '0400',
     show_diff => false, # do not print keytab in logs
     content   => base64('decode', $keytab_base64.unwrap),

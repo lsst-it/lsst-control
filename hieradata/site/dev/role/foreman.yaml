@@ -6,11 +6,12 @@ dhcp::authoritative: true
 dhcp::pxeserver: "139.229.134.5"  # foreman.dev.lsst.org
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:
-  IT-Services:
+  IT-Dev:
     network: "139.229.134.0"
     mask: "255.255.255.0"
     gateway: "139.229.134.254"
-    range: "139.229.134.120 139.229.134.149"
+    range:
+      - "139.229.134.120 139.229.134.149"
     search_domains: "%{alias('dhcp::dnsdomain')}"
 
 profile::core::puppet_master::foreman_hostgroup:

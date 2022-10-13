@@ -2,191 +2,6 @@
 
 require 'spec_helper'
 
-FOREMAN_VERSION = '3.2.1'
-PUPPETSERVER_VERSION = '7.9.0'
-TERMINI_VERSION = '7.11.0'
-
-shared_examples 'generic foreman' do
-  include_examples 'debugutils'
-  include_examples 'puppet_master'
-  include_examples 'docker'
-
-  it do
-    is_expected.to contain_class('foreman').with(
-      version: FOREMAN_VERSION,
-    )
-  end
-
-  it do
-    is_expected.to contain_class('foreman::repo').with(
-      repo: '3.2',
-    )
-  end
-
-  it do
-    is_expected.to contain_class('foreman_proxy').with(
-      bmc_default_provider: 'ipmitool',
-      bmc: true,
-    )
-  end
-
-  %w[
-    foreman
-    foreman-cli
-    foreman-debug
-    foreman-dynflow-sidekiq
-    foreman-installer
-    foreman-libvirt
-    foreman-postgresql
-    foreman-proxy
-    foreman-service
-    foreman-vmware
-  ].each do |pkg|
-    it { is_expected.to contain_yum__versionlock(pkg).with_version(FOREMAN_VERSION) }
-  end
-
-  it do
-    is_expected.to contain_yum__versionlock('puppetserver').with(
-      version: PUPPETSERVER_VERSION,
-    )
-  end
-
-  it do
-    is_expected.to contain_yum__versionlock('puppetdb-termini').with(
-      version: TERMINI_VERSION,
-    )
-  end
-
-  it do
-    is_expected.to contain_class('foreman_proxy::plugin::discovery').with(
-      image_name: 'fdi-image-4.99.99-6224850.tar',
-      install_images: true,
-      source_url: 'https://github.com/lsst-it/foreman-discovery-image/releases/download/lsst-4.99.99/',
-    )
-  end
-
-  it { is_expected.to contain_class('puppetdb::globals').with_version(TERMINI_VERSION) }
-
-  it do
-    is_expected.to contain_class('puppet').with(
-      server_puppetserver_version: PUPPETSERVER_VERSION,
-      server_version: PUPPETSERVER_VERSION,
-    )
-  end
-
-  it 'has global ProxyCommand knocked out with --' do
-    expect(catalogue.resource('class', 'ssh')[:client_options]).to include(
-      'ProxyCommand' => '',
-    )
-  end
-
-  it 'has foreman & foreman-proxy user exempt from ProxyCommand' do
-    expect(catalogue.resource('class', 'ssh')[:client_match_block]).to include(
-      'foreman,foreman-proxy' => {
-        'type' => '!localuser',
-        'options' => {
-          'ProxyCommand' => '/usr/bin/sss_ssh_knownhostsproxy -p %p %h',
-        },
-      },
-    )
-  end
-
-  it 'disables StrictHostKeyChecking for github.com' do
-    expect(catalogue.resource('class', 'ssh')[:client_match_block]).to include(
-      'github.com' => {
-        'type' => 'host',
-        'options' => {
-          'StrictHostKeyChecking' => 'no',
-        },
-      },
-    )
-  end
-
-  it 'disables StrictHostKeyChecking for foreman user' do
-    expect(catalogue.resource('class', 'ssh')[:client_match_block]).to include(
-      'foreman' => {
-        'type' => 'localuser',
-        'options' => {
-          'StrictHostKeyChecking' => 'no',
-        },
-      },
-    )
-  end
-
-  it { is_expected.to contain_class('dhcp').with_ntpservers(ntpservers) }
-
-  {
-    'bootloader-append': 'nofb',
-    'disable-firewall': true,
-    'enable-epel': true,
-    'enable-puppetlabs-puppet6-repo': false,
-    'enable-official-puppet7-repo': true,
-    fips_enabled: true,
-    host_registration_insights: false,
-    host_registration_remote_execution: true,
-    package_upgrade: true,
-    role: 'generic',
-    'selinux-mode': 'disabled',
-  }.each do |k, v|
-    it { is_expected.to contain_foreman_global_parameter(k).with_value(v) }
-  end
-
-  it { is_expected.to contain_foreman_global_parameter('org').with_ensure('absent') }
-  it { is_expected.to contain_foreman_global_parameter('site').with_value(site) }
-
-  it do
-    is_expected.to contain_foreman_global_parameter('ntp-server')
-      .with_value(ntpservers.join(','))
-  end
-
-  {
-    bmc_credentials_accessible: false,
-    default_pxe_item_global: 'discovery',
-    host_details_ui: false,
-    template_sync_associate: 'always',
-    template_sync_commit_msg: 'Templates export made by a Foreman user',
-    template_sync_dirname: '/',
-    template_sync_filter: '',
-    template_sync_force: true,
-    template_sync_lock: 'unlock',
-    template_sync_metadata_export_mode: 'refresh',
-    template_sync_negate: false,
-    template_sync_prefix: '',
-    template_sync_repo: 'ssh://git@github.com/lsst-it/foreman_templates',
-    template_sync_verbose: true,
-  }.each do |k, v|
-    it { is_expected.to contain_foreman_config_entry(k).with_value(v) }
-  end
-
-  it { is_expected.to contain_foreman_config_entry('template_sync_branch').with_value(site) }
-
-  it { is_expected.to contain_foreman_hostgroup(site) }
-
-  it { is_expected.to contain_class('foreman_envsync') }
-
-  it do
-    is_expected.to contain_class('r10k').with_postrun(
-      [
-        'systemd-cat',
-        '-t',
-        'foreman_envsync',
-        '/bin/foreman_envsync',
-        '--verbose',
-      ],
-    )
-  end
-
-  it { is_expected.to contain_package('oauth').with_provider('puppet_gem') }
-
-  it do
-    is_expected.to contain_class('smee').with(
-      url: smee_url,
-      path: '/payload',
-      port: 8088,
-    )
-  end
-end
-
 role = 'foreman'
 
 describe "#{role} role" do
@@ -216,12 +31,21 @@ describe "#{role} role" do
           ]
         end
 
+        it do
+          is_expected.to contain_dhcp__pool('IT-Dev').with(
+            network: '139.229.134.0',
+            mask: '255.255.255.0',
+            range: ['139.229.134.120 139.229.134.149'],
+            gateway: '139.229.134.254',
+          )
+        end
+
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'generic foreman'
       end # host
 
-      describe 'foreman.tu.lsst.org', :site, :common do
+      describe 'foreman.tuc.lsst.cloud', :site, :common do
         let(:site) { 'tu' }
         let(:ntpservers) do
           %w[
@@ -229,6 +53,96 @@ describe "#{role} role" do
             140.252.1.141
             140.252.1.142
           ]
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('vlan3030').with(
+            network: '140.252.146.32',
+            mask: '255.255.255.224',
+            range: ['140.252.146.60 140.252.146.62'],
+            gateway: '140.252.146.33',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('vlan3040').with(
+            network: '140.252.146.64',
+            mask: '255.255.255.224',
+            range: ['140.252.146.90 140.252.146.94'],
+            gateway: '140.252.146.65',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('vlan3050').with(
+            network: '140.252.146.128',
+            mask: '255.255.255.192',
+            range: ['140.252.146.181 140.252.146.190'],
+            gateway: '140.252.146.129',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('vlan3060').with(
+            network: '140.252.147.0',
+            mask: '255.255.255.240',
+            range: ['140.252.147.11 140.252.147.14'],
+            gateway: '140.252.147.1',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('vlan3065').with(
+            network: '140.252.147.16',
+            mask: '255.255.255.240',
+            range: ['140.252.147.24 140.252.147.30'],
+            gateway: '140.252.147.17',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('vlan3070').with(
+            network: '140.252.147.32',
+            mask: '255.255.255.240',
+            range: ['140.252.147.44 140.252.147.46'],
+            gateway: '140.252.147.33',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('vlan3075').with(
+            network: '140.252.147.48',
+            mask: '255.255.255.240',
+            range: ['140.252.147.56 140.252.147.62'],
+            gateway: '140.252.147.49',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('vlan3080').with(
+            network: '140.252.147.64',
+            mask: '255.255.255.224',
+            range: ['140.252.147.69 140.252.147.78'],
+            gateway: '140.252.147.65',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('vlan3090').with(
+            network: '140.252.147.96',
+            mask: '255.255.255.224',
+            range: ['140.252.147.122 140.252.147.126'],
+            gateway: '140.252.147.97',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('vlan3085').with(
+            network: '140.252.147.128',
+            mask: '255.255.255.224',
+            range: ['140.252.147.132 140.252.147.158'],
+            gateway: '140.252.147.129',
+          )
         end
 
         it { is_expected.to compile.with_all_deps }
@@ -247,6 +161,124 @@ describe "#{role} role" do
           ]
         end
 
+        it do
+          is_expected.to contain_dhcp__pool('IT-Services').with(
+            network: '139.229.135.0',
+            mask: '255.255.255.0',
+            range: ['139.229.135.192 139.229.135.249'],
+            gateway: '139.229.135.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('RubinObs-LHN').with(
+            network: '139.229.137.0',
+            mask: '255.255.255.0',
+            range: ['139.229.137.1 139.229.137.200'],
+            gateway: '139.229.137.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('Rubin-DMZ').with(
+            network: '139.229.138.0',
+            mask: '255.255.255.0',
+            range: ['139.229.138.200 139.229.138.250'],
+            gateway: '139.229.138.254',
+            nameservers: ['1.0.0.1', '1.1.1.1', '8.8.8.8'],
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('Archive-LHN').with(
+            network: '139.229.140.0',
+            mask: '255.255.255.224',
+            range: ['139.229.140.24 139.229.140.30'],
+            gateway: '139.229.140.1',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('TS-Kueyen').with(
+            network: '139.229.144.0',
+            mask: '255.255.255.128',
+            range: ['139.229.144.100 139.229.144.125'],
+            gateway: '139.229.144.126',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('BDC-Teststand-DDS').with(
+            network: '139.229.145.0',
+            mask: '255.255.255.0',
+            range: ['139.229.145.225 139.229.145.249'],
+            gateway: '139.229.145.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('Commissioning-Cluster').with(
+            network: '139.229.146.0',
+            mask: '255.255.255.0',
+            range: ['139.229.146.225 139.229.146.249'],
+            gateway: '139.229.146.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('DDS-Base').with(
+            network: '139.229.147.0',
+            mask: '255.255.255.0',
+            range: ['139.229.147.225 139.229.147.249'],
+            gateway: '139.229.147.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('CDS-NAS').with(
+            network: '139.229.148.0',
+            mask: '255.255.255.0',
+            range: ['139.229.148.225 139.229.148.249'],
+            gateway: '139.229.148.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('Base-Archive').with(
+            network: '139.229.149.0',
+            mask: '255.255.255.0',
+            range: ['139.229.149.225 139.229.149.249'],
+            gateway: '139.229.149.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('Comcam-CCS').with(
+            network: '139.229.150.0',
+            mask: '255.255.255.128',
+            range: ['139.229.150.112 139.229.150.125'],
+            gateway: '139.229.150.126',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('RubinObs-WiFi-Guest').with(
+            network: '139.229.159.128',
+            mask: '255.255.255.128',
+            range: ['139.229.159.129 139.229.159.230'],
+            gateway: '139.229.159.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('BDC-BMC').with(
+            network: '10.50.3.0',
+            mask: '255.255.255.0',
+            range: ['10.50.3.1 10.50.3.249'],
+            gateway: '10.50.3.254',
+          )
+        end
+
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'generic foreman'
@@ -261,6 +293,204 @@ describe "#{role} role" do
             1.cl.pool.ntp.org
             1.south-america.pool.ntp.org
           ]
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-GSS').with(
+            network: '139.229.160.0',
+            mask: '255.255.255.0',
+            range: ['139.229.160.1 139.229.160.99'],
+            gateway: '139.229.160.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-GS').with(
+            network: '139.229.161.0',
+            mask: '255.255.255.0',
+            range: ['139.229.161.200 139.229.161.249'],
+            gateway: '139.229.161.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-Legacy').with(
+            network: '139.229.162.0',
+            mask: '255.255.255.128',
+            range: ['139.229.162.28 139.229.162.37'],
+            gateway: '139.229.162.126',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('Summit-Wireless').with(
+            network: '139.229.163.0',
+            mask: '255.255.255.0',
+            range: ['139.229.163.1 139.229.163.239'],
+            gateway: '139.229.163.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('RubinObs-LHN').with(
+            network: '139.229.164.0',
+            mask: '255.255.255.0',
+            range: ['139.229.164.1 139.229.164.200'],
+            gateway: '139.229.164.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('CDS-ARCH').with(
+            network: '139.229.165.0',
+            mask: '255.255.255.0',
+            range: ['139.229.165.200 139.229.165.249'],
+            gateway: '139.229.165.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('CDS-ARCH-DDS').with(
+            network: '139.229.166.0',
+            mask: '255.255.255.0',
+            range: ['139.229.166.200 139.229.166.249'],
+            gateway: '139.229.166.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('OCS-APP').with(
+            network: '139.229.167.0',
+            mask: '255.255.255.0',
+            range: ['139.229.167.241 139.229.167.249'],
+            gateway: '139.229.167.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('ESS-Sensors').with(
+            network: '139.229.168.0',
+            mask: '255.255.255.128',
+            range: ['139.229.168.100 139.229.168.125'],
+            gateway: '139.229.168.126',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('Dome-Calibrations').with(
+            network: '139.229.168.128',
+            mask: '255.255.255.192',
+            range: ['139.229.168.180 139.229.168.189'],
+            gateway: '139.229.168.190',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('MTDome-Hardware').with(
+            network: '139.229.168.192',
+            mask: '255.255.255.192',
+            range: ['139.229.168.243 139.229.168.249'],
+            gateway: '139.229.168.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('DDS-Auxtel').with(
+            network: '139.229.170.0',
+            mask: '255.255.255.0',
+            range: ['139.229.170.64 139.229.170.191'],
+            gateway: '139.229.170.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('CCS-Pathfinder').with(
+            network: '139.229.174.0',
+            mask: '255.255.255.0',
+            range: ['139.229.174.200 139.229.174.249'],
+            gateway: '139.229.174.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('CCS-ComCam').with(
+            network: '139.229.175.0',
+            mask: '255.255.255.192',
+            range: ['139.229.175.1 139.229.175.61'],
+            gateway: '139.229.175.62',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('CCS-LSSTCam').with(
+            network: '139.229.175.64',
+            mask: '255.255.255.192',
+            range: ['139.229.175.65 139.229.175.125'],
+            gateway: '139.229.175.126',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('CCS-Test-APP').with(
+            network: '139.229.175.128',
+            mask: '255.255.255.128',
+            range: ['139.229.175.241 139.229.175.249'],
+            gateway: '139.229.175.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('TCS-APP').with(
+            network: '139.229.178.0',
+            mask: '255.255.255.0',
+            range: ['139.229.178.2 139.229.178.58'],
+            gateway: '139.229.178.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-Contractors').with(
+            network: '139.229.191.0',
+            mask: '255.255.255.128',
+            range: ['139.229.191.1 139.229.191.64', '139.229.191.66 139.229.191.100'],
+            gateway: '139.229.191.126',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-Guess').with(
+            network: '139.229.191.128',
+            mask: '255.255.255.128',
+            range: ['139.229.191.129 139.229.191.239'],
+            gateway: '139.229.191.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-CCTV').with(
+            network: '10.17.7.0',
+            mask: '255.255.255.0',
+            range: ['10.17.7.200 10.17.7.250'],
+            gateway: '10.17.7.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-IPMI-BMC').with(
+            network: '10.18.3.0',
+            mask: '255.255.255.0',
+            range: ['10.18.3.150 10.18.3.249'],
+            gateway: '10.18.3.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('Rubin-Power').with(
+            network: '10.18.7.0',
+            mask: '255.255.255.0',
+            range: ['10.18.7.150 10.18.7.249'],
+            gateway: '10.18.7.254',
+          )
         end
 
         it { is_expected.to compile.with_all_deps }

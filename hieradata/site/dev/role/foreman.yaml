@@ -4,6 +4,8 @@ dhcp::interfaces:
 
 dhcp::authoritative: true
 dhcp::pxeserver: "139.229.134.5"  # foreman.dev.lsst.org
+dhcp::options:
+  - "voip-tftp-server code 150 = { ip-address }"
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:
   IT-Dev:
@@ -20,7 +22,7 @@ dhcp::pools:
     range:
       - "10.49.3.1 10.49.3.249"
     options:
-      - "vendor-encapsulated-options f104.8be5.8664"
+      - "vendor-encapsulated-options f1:04:8b:e5:86:64"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   BDC-VoIP:
     network: "10.49.1.0"
@@ -29,7 +31,7 @@ dhcp::pools:
     range:
       - "10.49.1.1 10.49.1.249"
     options:
-      - "voip-tftp-server code 150 = { 139.229.134.102 }"      
+      - "voip-tftp-server 139.229.134.102"      
     search_domains: "%{alias('dhcp::dnsdomain')}"
   BDC-PDU:
     network: "10.50.1.0"

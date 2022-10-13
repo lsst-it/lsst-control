@@ -32,7 +32,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('IT_Services').with(
+          is_expected.to contain_dhcp__pool('IT-Dev').with(
             network: '139.229.134.0',
             mask: '255.255.255.0',
             range: ['139.229.134.120 139.229.134.149'],
@@ -162,7 +162,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('IT_Services').with(
+          is_expected.to contain_dhcp__pool('IT-Services').with(
             network: '139.229.135.0',
             mask: '255.255.255.0',
             range: ['139.229.135.192 139.229.135.249'],
@@ -171,7 +171,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('Rubin_LHN').with(
+          is_expected.to contain_dhcp__pool('RubinObs-LHN').with(
             network: '139.229.137.0',
             mask: '255.255.255.0',
             range: ['139.229.137.1 139.229.137.200'],
@@ -180,7 +180,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('Rubin_DMZ01').with(
+          is_expected.to contain_dhcp__pool('Rubin-DMZ').with(
             network: '139.229.138.0',
             mask: '255.255.255.0',
             range: ['139.229.138.200 139.229.138.250'],
@@ -190,7 +190,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('archive_lhn').with(
+          is_expected.to contain_dhcp__pool('Archive-LHN').with(
             network: '139.229.140.0',
             mask: '255.255.255.224',
             range: ['139.229.140.24 139.229.140.30'],
@@ -199,7 +199,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('TS_Kueyen').with(
+          is_expected.to contain_dhcp__pool('TS-Kueyen').with(
             network: '139.229.144.0',
             mask: '255.255.255.128',
             range: ['139.229.144.100 139.229.144.125'],
@@ -208,7 +208,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('bdc_teststand_dds').with(
+          is_expected.to contain_dhcp__pool('BDC-Teststand-DDS').with(
             network: '139.229.145.0',
             mask: '255.255.255.0',
             range: ['139.229.145.225 139.229.145.249'],
@@ -217,7 +217,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('commissioning_cluster').with(
+          is_expected.to contain_dhcp__pool('Commissioning-Cluster').with(
             network: '139.229.146.0',
             mask: '255.255.255.0',
             range: ['139.229.146.225 139.229.146.249'],
@@ -226,7 +226,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('dds_base').with(
+          is_expected.to contain_dhcp__pool('DDS-Base').with(
             network: '139.229.147.0',
             mask: '255.255.255.0',
             range: ['139.229.147.225 139.229.147.249'],
@@ -235,7 +235,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('cds_nas').with(
+          is_expected.to contain_dhcp__pool('CDS-NAS').with(
             network: '139.229.148.0',
             mask: '255.255.255.0',
             range: ['139.229.148.225 139.229.148.249'],
@@ -244,7 +244,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('base_archive').with(
+          is_expected.to contain_dhcp__pool('Base-Archive').with(
             network: '139.229.149.0',
             mask: '255.255.255.0',
             range: ['139.229.149.225 139.229.149.249'],
@@ -253,7 +253,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('comcam_ccs').with(
+          is_expected.to contain_dhcp__pool('Comcam-CCS').with(
             network: '139.229.150.0',
             mask: '255.255.255.128',
             range: ['139.229.150.112 139.229.150.125'],
@@ -262,7 +262,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('rubinobs_wifi_guest').with(
+          is_expected.to contain_dhcp__pool('RubinObs-WiFi-Guest').with(
             network: '139.229.159.128',
             mask: '255.255.255.128',
             range: ['139.229.159.129 139.229.159.230'],
@@ -271,7 +271,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('BDC_BMC').with(
+          is_expected.to contain_dhcp__pool('BDC-BMC').with(
             network: '10.50.3.0',
             mask: '255.255.255.0',
             range: ['10.50.3.1 10.50.3.249'],
@@ -296,7 +296,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('it_gss').with(
+          is_expected.to contain_dhcp__pool('IT-GSS').with(
             network: '139.229.160.0',
             mask: '255.255.255.0',
             range: ['139.229.160.1 139.229.160.99'],
@@ -305,7 +305,16 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('users').with(
+          is_expected.to contain_dhcp__pool('IT-GS').with(
+            network: '139.229.161.0',
+            mask: '255.255.255.0',
+            range: ['139.229.161.200 139.229.161.249'],
+            gateway: '139.229.161.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-Legacy').with(
             network: '139.229.162.0',
             mask: '255.255.255.128',
             range: ['139.229.162.28 139.229.162.37'],
@@ -314,7 +323,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('users_163').with(
+          is_expected.to contain_dhcp__pool('Summit-Wireless').with(
             network: '139.229.163.0',
             mask: '255.255.255.0',
             range: ['139.229.163.1 139.229.163.239'],
@@ -323,7 +332,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('Rubin_LHN').with(
+          is_expected.to contain_dhcp__pool('RubinObs-LHN').with(
             network: '139.229.164.0',
             mask: '255.255.255.0',
             range: ['139.229.164.1 139.229.164.200'],
@@ -332,7 +341,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('cds_arch').with(
+          is_expected.to contain_dhcp__pool('CDS-ARCH').with(
             network: '139.229.165.0',
             mask: '255.255.255.0',
             range: ['139.229.165.200 139.229.165.249'],
@@ -341,7 +350,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('cds_arch_dds').with(
+          is_expected.to contain_dhcp__pool('CDS-ARCH-DDS').with(
             network: '139.229.166.0',
             mask: '255.255.255.0',
             range: ['139.229.166.200 139.229.166.249'],
@@ -350,7 +359,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('ocs_app').with(
+          is_expected.to contain_dhcp__pool('OCS-APP').with(
             network: '139.229.167.0',
             mask: '255.255.255.0',
             range: ['139.229.167.241 139.229.167.249'],
@@ -359,7 +368,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('ess_sensors').with(
+          is_expected.to contain_dhcp__pool('ESS-Sensors').with(
             network: '139.229.168.0',
             mask: '255.255.255.128',
             range: ['139.229.168.100 139.229.168.125'],
@@ -368,7 +377,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('dome_calibration').with(
+          is_expected.to contain_dhcp__pool('Dome-Calibrations').with(
             network: '139.229.168.128',
             mask: '255.255.255.192',
             range: ['139.229.168.180 139.229.168.189'],
@@ -377,7 +386,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('mtdome_hardware').with(
+          is_expected.to contain_dhcp__pool('MTDome-Hardware').with(
             network: '139.229.168.192',
             mask: '255.255.255.192',
             range: ['139.229.168.243 139.229.168.249'],
@@ -386,7 +395,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('dds_auxtel').with(
+          is_expected.to contain_dhcp__pool('DDS-Auxtel').with(
             network: '139.229.170.0',
             mask: '255.255.255.0',
             range: ['139.229.170.64 139.229.170.191'],
@@ -395,7 +404,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('ccs_pathfinder').with(
+          is_expected.to contain_dhcp__pool('CCS-Pathfinder').with(
             network: '139.229.174.0',
             mask: '255.255.255.0',
             range: ['139.229.174.200 139.229.174.249'],
@@ -404,7 +413,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('ccs_comcam').with(
+          is_expected.to contain_dhcp__pool('CCS-ComCam').with(
             network: '139.229.175.0',
             mask: '255.255.255.192',
             range: ['139.229.175.1 139.229.175.61'],
@@ -413,7 +422,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('ccs_lsstcam').with(
+          is_expected.to contain_dhcp__pool('CCS-LSSTCam').with(
             network: '139.229.175.64',
             mask: '255.255.255.192',
             range: ['139.229.175.65 139.229.175.125'],
@@ -422,7 +431,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('ccs_test_app').with(
+          is_expected.to contain_dhcp__pool('CCS-Test-APP').with(
             network: '139.229.175.128',
             mask: '255.255.255.128',
             range: ['139.229.175.241 139.229.175.249'],
@@ -431,7 +440,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('tcs_app').with(
+          is_expected.to contain_dhcp__pool('TCS-APP').with(
             network: '139.229.178.0',
             mask: '255.255.255.0',
             range: ['139.229.178.2 139.229.178.58'],
@@ -440,7 +449,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('contractors_cp').with(
+          is_expected.to contain_dhcp__pool('IT-Contractors').with(
             network: '139.229.191.0',
             mask: '255.255.255.128',
             range: ['139.229.191.1 139.229.191.64', '139.229.191.66 139.229.191.100'],
@@ -449,7 +458,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('guests_cp').with(
+          is_expected.to contain_dhcp__pool('IT-Guess').with(
             network: '139.229.191.128',
             mask: '255.255.255.128',
             range: ['139.229.191.129 139.229.191.239'],
@@ -458,7 +467,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('it_cctv').with(
+          is_expected.to contain_dhcp__pool('IT-CCTV').with(
             network: '10.17.7.0',
             mask: '255.255.255.0',
             range: ['10.17.7.200 10.17.7.250'],
@@ -467,7 +476,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('it_ipmi_srv').with(
+          is_expected.to contain_dhcp__pool('IT-IPMI-BMC').with(
             network: '10.18.3.0',
             mask: '255.255.255.0',
             range: ['10.18.3.150 10.18.3.249'],
@@ -476,7 +485,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('rubin_power').with(
+          is_expected.to contain_dhcp__pool('Rubin-Power').with(
             network: '10.18.7.0',
             mask: '255.255.255.0',
             range: ['10.18.7.150 10.18.7.249'],

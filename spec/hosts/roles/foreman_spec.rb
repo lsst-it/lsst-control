@@ -281,6 +281,44 @@ describe "#{role} role" do
           )
         end
 
+        it do
+          is_expected.to contain_dhcp__pool('BDC-APS').with(
+            network: '10.49.3.0',
+            mask: '255.255.255.0',
+            range: ['10.49.3.1 10.49.3.249'],
+            gateway: '10.49.3.254',
+            options: ['vendor-encapsulated-options f1:04:8b:e5:86:64'],
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('BDC-VoIP').with(
+            network: '10.49.1.0',
+            mask: '255.255.255.0',
+            range: ['10.49.1.1 10.49.1.249'],
+            gateway: '10.49.1.254',
+            options: ['voip-tftp-server 139.229.134.102'],
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('BDC-PDU').with(
+            network: '10.50.1.0',
+            mask: '255.255.255.0',
+            range: ['10.50.1.200 10.50.1.249'],
+            gateway: '10.50.1.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('BDC-CCTV').with(
+            network: '10.49.7.0',
+            mask: '255.255.255.0',
+            range: ['10.49.7.1 10.49.7.249'],
+            gateway: '10.49.7.254',
+          )
+        end
+
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'common', facts: facts

@@ -106,7 +106,7 @@ dhcp::pools:
   BDC-APS:
     network: "10.49.3.0"
     mask: "255.255.255.0"
-    gateway: "10.48.3.254"
+    gateway: "10.49.3.254"
     range:
       - "10.49.3.1 10.49.3.249"
     options:

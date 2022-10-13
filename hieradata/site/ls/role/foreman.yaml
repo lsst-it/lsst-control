@@ -6,9 +6,6 @@ dhcp::authoritative: true
 dhcp::pxeserver: "139.229.135.5"  # foreman.ls.lsst.org
 dhcp::options:
   - "voip-tftp-server code 150 = { ip-address }"
-  - "space cisco"
-  - "cisco.wlc code 241 = array of ip-address"
-  - "local-encapsulation code 43 = encapsulate cisco"
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:
   IT-Services:  # https://jira.lsstcorp.org/browse/IT-1676
@@ -109,11 +106,11 @@ dhcp::pools:
   BDC-APS:
     network: "10.49.3.0"
     mask: "255.255.255.0"
-    gateway: "10.49.3.254"
+    gateway: "10.48.3.254"
     range:
       - "10.49.3.1 10.49.3.249"
     options:
-      - "cisco.wlc 139.229.134.100"
+      - "vendor-encapsulated-options f1:04:8b:e5:86:64"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   BDC-VoIP:
     network: "10.49.1.0"

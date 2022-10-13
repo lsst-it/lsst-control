@@ -1,0 +1,4 @@
+---
+network::interfaces_hash:
+  "%{networking.primary}":  # fqdn
+    ipaddress: "139.229.134.53"

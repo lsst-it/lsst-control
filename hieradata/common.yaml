@@ -288,6 +288,12 @@ rsyslog::config::actions:
     facility: "local7.*"
     config:
       file: "-/var/log/boot.log"
+rsyslog::config::inputs:
+  auditd:
+    type: "imfile"
+    config:
+      file: "/var/log/audit/audit.log"
+      Tag: "auditd"
 
 yum::plugin::versionlock::clean: true  # trigger `yum clean all`
 yum::manage_os_default_repos: true

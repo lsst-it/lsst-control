@@ -287,7 +287,7 @@ describe "#{role} role" do
             mask: '255.255.255.0',
             range: ['10.49.3.1 10.49.3.249'],
             gateway: '10.49.3.254',
-            options: ['cisco.wlc 139.229.134.100'],
+            options: ['vendor-encapsulated-options f1:04:8b:e5:86:64'],
           )
         end
 

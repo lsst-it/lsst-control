@@ -1,4 +1,4 @@
 ---
 network::interfaces_hash:
-  eth0:  # fqdn
+  "%{networking.primary}":  # fqdn
     ipaddress: "140.252.146.71"

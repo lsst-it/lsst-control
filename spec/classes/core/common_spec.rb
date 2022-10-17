@@ -9,6 +9,7 @@ describe 'profile::core::common' do
 
       context 'with no params' do
         it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_class('auditd') }
         it { is_expected.to contain_class('hosts') }
         it { is_expected.to contain_class('network') }
         it { is_expected.to contain_class('resolv_conf') }

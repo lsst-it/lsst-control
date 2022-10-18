@@ -20,7 +20,7 @@ describe "#{role} role" do
       end
       let(:smee_url) { 'https://smee.io/lpxrggGObEn5YTA' }
 
-      describe 'foreman.dev.lsst.org', :site, :common do
+      describe 'foreman.dev.lsst.org', :site do
         let(:site) { 'dev' }
         let(:ntpservers) do
           %w[
@@ -42,10 +42,11 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
+        include_examples 'common', facts: facts
         include_examples 'generic foreman'
       end # host
 
-      describe 'foreman.tuc.lsst.cloud', :site, :common do
+      describe 'foreman.tuc.lsst.cloud', :site do
         let(:site) { 'tu' }
         let(:ntpservers) do
           %w[
@@ -147,10 +148,11 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
+        include_examples 'common', facts: facts
         include_examples 'generic foreman'
       end # host
 
-      describe 'foreman.ls.lsst.org', :site, :common do
+      describe 'foreman.ls.lsst.org', :site do
         let(:site) { 'ls' }
         let(:ntpservers) do
           %w[
@@ -281,10 +283,11 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
+        include_examples 'common', facts: facts
         include_examples 'generic foreman'
       end # host
 
-      describe 'foreman.cp.lsst.org', :site, :common do
+      describe 'foreman.cp.lsst.org', :site do
         let(:site) { 'cp' }
         let(:ntpservers) do
           %w[
@@ -495,6 +498,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
+        include_examples 'common', facts: facts
         include_examples 'generic foreman'
       end # host
     end

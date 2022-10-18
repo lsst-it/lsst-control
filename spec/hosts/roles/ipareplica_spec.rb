@@ -29,7 +29,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', no_auth: true
+          include_examples 'common', facts: facts, no_auth: true
 
           %w[
             python2-ipaserver

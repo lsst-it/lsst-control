@@ -33,10 +33,12 @@ roles_without_spec.each do |role|
         # important that a role is better tested, it should have its own spec
         # file.
         site = lsst_sites.sample
-        describe "#{role}.#{site}.lsst.org", :site, :common do
+        describe "#{role}.#{site}.lsst.org", :site do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }
+
+          include_examples 'common', facts: facts
         end # host
       end # on os
     end # on_supported_os

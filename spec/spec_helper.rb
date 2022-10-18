@@ -138,16 +138,23 @@ shared_examples 'krb5.conf content' do |match|
   end
 end
 
-shared_examples 'common', :common do |opts = {}|
-  if opts[:no_auth].nil?
+shared_examples 'common' do |facts:, no_auth: false|
+  unless no_auth
     include_examples 'krb5.conf content', %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}}
     include_examples 'krb5.conf content', %r{udp_preference_limit = 0}
   end
 
-  it { is_expected.to contain_class('yum::plugin::versionlock').with_clean(true) }
-  it { is_expected.to contain_yum__versionlock('puppet-agent').with_version('7.18.0') }
-  it { is_expected.to contain_class('yum').with_manage_os_default_repos(true) }
-  it { is_expected.to contain_resources('yumrepo').with_purge(true) }
+  if facts[:os]['family'] == 'RedHat'
+    it { is_expected.to contain_class('yum::plugin::versionlock').with_clean(true) }
+    it { is_expected.to contain_yum__versionlock('puppet-agent').with_version('7.18.0') }
+    it { is_expected.to contain_class('yum').with_manage_os_default_repos(true) }
+    it { is_expected.to contain_resources('yumrepo').with_purge(true) }
+  else
+    it { is_expected.not_to contain_class('yum::plugin::versionlock') }
+    it { is_expected.to contain_yum__versionlock('puppet-agent') }
+    it { is_expected.not_to contain_class('yum') }
+    it { is_expected.not_to contain_resources('yumrepo').with_purge(true) }
+  end
 
   it do
     is_expected.to contain_rsyslog__component__input('auditd').with(

@@ -121,11 +121,12 @@ describe "#{role} role" do
         }
       end
 
-      describe 'auxtel-daq-mgt.cp.lsst.org', :site, :common do
+      describe 'auxtel-daq-mgt.cp.lsst.org', :site do
         let(:site) { 'cp' }
 
         it { is_expected.to compile.with_all_deps }
 
+        include_examples 'common', facts: facts
         include_examples 'generic daq manager'
 
         it { is_expected.to contain_network__interface('p3p1').with_ensure('absent') }
@@ -153,9 +154,10 @@ describe "#{role} role" do
         end
       end
 
-      describe 'daq-mgt.tu.lsst.org', :site, :common do
+      describe 'daq-mgt.tu.lsst.org', :site do
         let(:site) { 'tu' }
 
+        include_examples 'common', facts: facts
         include_examples 'generic daq manager'
 
         it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }
@@ -183,9 +185,10 @@ describe "#{role} role" do
         end
       end
 
-      describe 'comcam-daq-mgt.cp.lsst.org', :site, :common do
+      describe 'comcam-daq-mgt.cp.lsst.org', :site do
         let(:site) { 'cp' }
 
+        include_examples 'common', facts: facts
         include_examples 'generic daq manager'
 
         it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }

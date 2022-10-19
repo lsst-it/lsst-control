@@ -7,7 +7,7 @@ dns::allow_recursion:
 dns::zones: ~
 
 network::interfaces_hash:
-  eth0:  # fqdn
+  "%{networking.primary}":  # fqdn
     bootproto: "none"
     defroute: "yes"
     dns1: "%{lookup('dhcp::nameservers.0')}"

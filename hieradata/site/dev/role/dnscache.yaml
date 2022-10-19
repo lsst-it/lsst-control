@@ -6,7 +6,7 @@ network::interfaces_hash:
     dns1: "%{lookup('dhcp::nameservers.0')}"
     dns2: "%{lookup('dhcp::nameservers.1')}"
     domain: "%{lookup('dhcp::dnsdomain.0')}"
-    gateway: "139.229.135.254"
+    gateway: "139.229.134.254"
     netmask: "255.255.255.0"
     nozeroconf: "yes"
     onboot: "yes"

@@ -7,6 +7,9 @@ dhcp::pxeserver: "139.229.160.5"  # foreman
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::options:
   - "voip-tftp-server code 150 = { ip-address }"
+  - "space cisco"
+  - "cisco.wlc code 241 = array of ip-address"
+  - "local-encapsulation code 43 = encapsulate cisco"
 dhcp::pools:
   IT-GSS:
     network: "139.229.160.0"
@@ -181,7 +184,7 @@ dhcp::pools:
     range:
       - "10.17.3.1 10.17.3.249"
     options:
-      - "vendor-encapsulated-options f1:04:8b:e5:a0:64"
+      - "cisco.wlc 139.229.160.100"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   IT-VOIP:
     network: "10.17.1.0"
@@ -198,20 +201,6 @@ dhcp::pools:
     gateway: "10.18.1.254"
     range:
       - "10.18.1.200 10.18.1.249"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
-  IT-CCTV:
-    network: "10.17.7.0"
-    mask: "255.255.255.0"
-    gateway: "10.17.7.254"
-    range:
-      - "10.17.7.1 10.17.7.249"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
-  IT-IPMI-BMC:
-    network: "10.18.3.0"
-    mask: "255.255.255.0"
-    gateway: "10.18.3.254"
-    range:
-      - "10.18.3.200 10.18.3.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   IT-MISC:
     network: "10.17.5.0"

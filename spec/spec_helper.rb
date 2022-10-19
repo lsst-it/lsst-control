@@ -12,6 +12,7 @@ TERMINI_VERSION = '7.11.0'
 add_stdlib_facts
 # voxpupuli-test 5.4.1 does not include puppetlabs/stdlib package_provider fact
 add_custom_fact :package_provider, 'yum', confine: 'centos-7-x86_64' # puppet/yum
+add_custom_fact :package_provider, 'dnf', confine: 'almalinux-8-x86_64' # puppet/yum
 
 def root_path
   File.expand_path(File.join(__FILE__, '..', '..'))

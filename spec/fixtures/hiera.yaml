@@ -3,6 +3,10 @@ version: 5
 defaults:
   data_hash: "yaml_data"
 hierarchy:
+  - name: "private hiera"
+    datadir: "./hieradata"
+    paths:
+      - "common.yaml"
   - name: "public hiera"
     datadir: "../../hieradata"
     paths:
@@ -13,9 +17,7 @@ hierarchy:
       - "cluster/%{cluster}.yaml"
       - "site/%{site}/role/%{role}.yaml"
       - "site/%{site}.yaml"
+      - "role/%{role}/osfamily/%{os.family}/major/%{os.release.major}.yaml"
       - "role/%{role}.yaml"
-      - "common.yaml"
-  - name: "private hiera"
-    datadir: "./hieradata"
-    paths:
+      - "common/osfamily/%{os.family}/major/%{os.release.major}.yaml"
       - "common.yaml"

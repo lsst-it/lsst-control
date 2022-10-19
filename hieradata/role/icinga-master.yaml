@@ -7,8 +7,6 @@ classes:
   - "profile::icinga::plugins"
   - "profile::icinga::resources"
 packages:
-  - "bash-completion"
-  - "bash-completion-extras"
   - "vim"
 
 #LDAP Values

@@ -221,12 +221,6 @@ puppet_agent::package_version: "7.18.0"
 puppet_agent::collection: "puppet7"
 puppet_agent::config:
   - {section: "agent", setting: "environment", ensure: "absent"}
-profile::core::yum::versionlock:
-  puppet-agent:
-    ensure: "present"
-    version: "7.18.0"
-    release: "1.el7"
-    before: "Package[puppet-agent]"
 
 # Rsyslog configuration is based on the default rsyslog.conf shipping with CentOS 7.7
 rsyslog::config::global_config:
@@ -397,37 +391,6 @@ resolv_conf::options:
   - "rotate"
   - "timeout:2"
   - "retries:1"
-scl::repos:
-  centos-sclo-sclo:
-    baseurl: "http://mirror.centos.org/centos/%{facts.os.release.major}/sclo/$basearch/sclo/"
-    descr: "CentOS-%{facts.os.release.major} - SCLo sclo"
-    enabled: true
-    ensure: "present"
-    gpgcheck: true
-    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo"
-  centos-sclo-sclo-debuginfo:
-    baseurl: "http://debuginfo.centos.org/centos/%{facts.os.release.major}/sclo/$basearch/"
-    descr: "CentOS-%{facts.os.release.major} - SCLo sclo Debuginfo"
-    enabled: false
-    ensure: "present"
-    gpgcheck: true
-    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo"
-  centos-sclo-rh:
-    baseurl: "http://mirror.centos.org/centos/%{facts.os.release.major}/sclo/$basearch/rh/"
-    descr: "CentOS-%{facts.os.release.major} - SCLo rh"
-    enabled: true
-    ensure: "present"
-    gpgcheck: true
-    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo"
-  centos-sclo-rh-debuginfo:
-    baseurl: "http://debuginfo.centos.org/centos/%{facts.os.release.major}/sclo/$basearch/"
-    descr: "CentOS-%{facts.os.release.major} - SCLo rh Debuginfo"
-    enabled: false
-    ensure: "present"
-    gpgcheck: true
-    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo"
-
-profile::ts::opensplicedds::ensure: "6.10.4-6.el7"
 
 # Use NFSv4 on NFS enabled hosts.
 nfs::nfs_v4: true

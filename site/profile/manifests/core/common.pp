@@ -70,9 +70,9 @@ class profile::core::common (
   include accounts
   include augeas
   include easy_ipa
-  include epel
   include hosts
   include network
+  include profile::core::bash_completion
   include profile::core::ca
   include profile::core::dielibwrapdie
   include profile::core::ifdown
@@ -83,7 +83,6 @@ class profile::core::common (
   include profile::core::nm_dispatch
   include profile::core::selinux
   include profile::core::systemd
-  include profile::core::yum
   include rsyslog
   include rsyslog::config
   include selinux
@@ -94,11 +93,33 @@ class profile::core::common (
   include timezone
   include tuned
 
-  if $facts['os']['family'] == 'RedHat' {
+  if fact('os.family') == 'RedHat' {
+    include epel
+    include profile::core::yum
+
     if $manage_repos {
       resources { 'yumrepo':
         purge => true,
       }
+    }
+
+    # on EL7 only
+    case fact('os.release.major') {
+      '7': {
+        if fact('os.architecture') == 'x86_64' {
+          # no scl repos for aarch64
+          if $manage_scl {
+            include scl
+          }
+        }
+      }
+      '8': {
+        # On EL8, the NetworkManager-initscripts-updown package provides the
+        # ifup/ifdown scripts which are needed by example42/network.
+        ensure_packages(['NetworkManager-initscripts-updown'])
+        Package['NetworkManager-initscripts-updown'] -> Class['network']
+      }
+      default: {}
     }
   }
 
@@ -156,13 +177,6 @@ class profile::core::common (
 
   if $manage_powertop {
     include profile::core::powertop
-  }
-
-  if $facts['os']['architecture'] == 'x86_64' {
-    # no scl repos for aarch64
-    if $manage_scl {
-      include scl
-    }
   }
 
   if $manage_resolv_conf {

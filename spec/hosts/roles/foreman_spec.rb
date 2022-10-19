@@ -544,6 +544,71 @@ describe "#{role} role" do
           )
         end
 
+        it do
+          is_expected.to contain_dhcp__pool('IT-AP').with(
+            network: '10.17.3.0',
+            mask: '255.255.255.0',
+            range: ['10.17.3.1 10.17.3.249'],
+            gateway: '10.17.3.254',
+            options: ['vendor-encapsulated-options f1:04:8b:e5:a0:64'],
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-VOIP').with(
+            network: '10.17.1.0',
+            mask: '255.255.255.0',
+            range: ['10.17.1.1 10.17.1.249'],
+            gateway: '10.17.1.254',
+            options: ['voip-tftp-server 139.229.160.102'],
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-IPMI-PDU').with(
+            network: '10.18.1.0',
+            mask: '255.255.255.0',
+            range: ['10.18.1.200 10.18.1.249'],
+            gateway: '10.18.1.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-CCTV').with(
+            network: '10.17.7.0',
+            mask: '255.255.255.0',
+            range: ['10.17.7.1 10.17.7.249'],
+            gateway: '10.17.7.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-IPMI-BMC').with(
+            network: '10.18.3.0',
+            mask: '255.255.255.0',
+            range: ['10.18.3.200 10.18.3.249'],
+            gateway: '10.18.3.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-MISC').with(
+            network: '10.17.5.0',
+            mask: '255.255.255.0',
+            range: ['10.17.5.200 10.17.5.249'],
+            gateway: '10.17.5.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-IPMI-PXE').with(
+            network: '10.18.5.0',
+            mask: '255.255.255.0',
+            range: ['10.18.5.200 10.18.5.249'],
+            gateway: '10.18.5.254',
+          )
+        end
+
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'common', facts: facts

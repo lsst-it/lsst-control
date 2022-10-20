@@ -6,6 +6,7 @@ hierarchy:
   - name: "private hiera"
     datadir: "./hieradata"
     paths:
+      - "role-only.yaml"
       - "common.yaml"
   - name: "public hiera"
     datadir: "../../hieradata"

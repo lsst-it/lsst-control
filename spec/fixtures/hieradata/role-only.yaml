@@ -1,0 +1,2 @@
+---
+profile::core::rke::keytab_base64: "foo"

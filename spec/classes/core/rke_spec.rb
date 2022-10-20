@@ -9,6 +9,7 @@ describe 'profile::core::rke' do
       let(:pre_condition) do
         <<~PP
           include docker
+          include sssd
         PP
       end
 

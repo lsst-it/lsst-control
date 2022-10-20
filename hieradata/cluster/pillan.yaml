@@ -9,18 +9,6 @@ profile::core::ospl::enable_rundir: true
 profile::core::rke::enable_dhcp: true
 
 network::interfaces_hash:
-  eno1: &bond0   # fqdn 1/4
-    bootproto: "none"
-    master: "bond0"
-    onboot: "yes"
-    slave: "yes"
-    type: "Ethernet"
-  eno2d1:  # fqdn 2/4
-    <<: *bond0
-  enp129s0f0:  # fqdn 3/4
-    <<: *bond0
-  enp129s0f1:  # fqdn 3/4
-    <<: *bond0
   bond0:
     bonding_master: "yes"
     bonding_opts: "mode=4 miimon=100"

@@ -48,7 +48,7 @@ dhcp::pools:
     mask: "255.255.255.128"
     gateway: "139.229.144.126"
     range:
-      - "139.229.144.100 139.229.144.125"
+      - "139.229.144.100 139.229.144.120"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   BDC-Teststand-DDS:  # vlan2301
     network: "139.229.145.0"

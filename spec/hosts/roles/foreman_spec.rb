@@ -204,7 +204,7 @@ describe "#{role} role" do
           is_expected.to contain_dhcp__pool('TS-Kueyen').with(
             network: '139.229.144.0',
             mask: '255.255.255.128',
-            range: ['139.229.144.100 139.229.144.125'],
+            range: ['139.229.144.100 139.229.144.120'],
             gateway: '139.229.144.126',
           )
         end

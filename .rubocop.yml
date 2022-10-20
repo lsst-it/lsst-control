@@ -126,3 +126,5 @@ RSpec/ImplicitSubject:
   Enabled: false
 Style/CommentedKeyword:
   Enabled: false
+Naming/FileName:
+  Enabled: false

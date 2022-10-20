@@ -13,7 +13,7 @@
 class profile::ccs::krb5_token (
   String $user,
   Integer $uid,
-  String $keytab_base64,
+  Sensitive[String[1]] $keytab_base64,
 ) {
   profile::util::keytab { $user:
     uid           => $uid,

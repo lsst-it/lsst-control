@@ -21,10 +21,12 @@ describe "#{role} role" do
       end
 
       lsst_sites.each do |site|
-        describe "#{role}.#{site}.lsst.org", :site, :common do
+        describe "#{role}.#{site}.lsst.org", :site do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }
+
+          include_examples 'common', facts: facts
           it { is_expected.to contain_class('profile::core::common') }
           it { is_expected.to contain_class('profile::core::debugutils') }
           it { is_expected.to contain_class('profile::core::ni_packages') }

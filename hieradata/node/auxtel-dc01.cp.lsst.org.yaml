@@ -29,3 +29,15 @@ network::mroutes_hash:
       "139.229.167.0/24": "139.229.170.254"
       #"139.229.170.0/24": "139.229.170.254"
       "139.229.178.0/24": "139.229.170.254"
+
+nfs::client_enabled: true
+
+nfs::client_mounts:
+  /data:
+    share: "data"
+    server: "auxtel-fp01.cp.lsst.org"
+    atboot: true
+  /repo:
+    share: "repo"
+    server: "auxtel-archiver.cp.lsst.org"
+    atboot: true

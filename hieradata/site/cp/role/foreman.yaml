@@ -6,52 +6,28 @@ dhcp::authoritative: true
 dhcp::pxeserver: "139.229.160.5"  # foreman
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:
-  aura_ls:
-    network: "139.229.158.192"
-    mask: "255.255.255.192"
-    gateway: "139.229.158.254"
-    range: "139.229.158.193 139.229.158.253"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
-  guests_ls:
-    network: "139.229.159.128"
-    mask: "255.255.255.128"
-    gateway: "139.229.159.254"
-    range: "139.229.159.129 139.229.159.253"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
-  tcontractors_ls:
-    network: "139.229.158.128"
-    mask: "255.255.255.192"
-    gateway: "139.229.158.190"
-    range: "139.229.158.129 139.229.158.189"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
-  ucontractors_ls:
-    network: "139.229.159.0"
-    mask: "255.255.255.128"
-    gateway: "139.229.159.126"
-    range: "139.229.159.1 139.229.159.125"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
-  it_gss:
+  IT-GSS:
     network: "139.229.160.0"
     mask: "255.255.255.0"
     gateway: "139.229.160.254"
     range:
       - "139.229.160.1 139.229.160.99"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  it_gs:
+  IT-GS:
     network: "139.229.161.0"
     mask: "255.255.255.0"
     gateway: "139.229.161.254"
     range:
-      - "139.229.161.1 139.229.161.99"
+      - "139.229.161.200 139.229.161.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  users:
+  IT-Legacy:
     network: "139.229.162.0"
     mask: "255.255.255.128"
     gateway: "139.229.162.126"
     range:
       - "139.229.162.28 139.229.162.37"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  users_163:
+  Summit-Wireless:
     network: "139.229.163.0"
     mask: "255.255.255.0"
     gateway: "139.229.163.254"
@@ -60,98 +36,99 @@ dhcp::pools:
       # 139.229.163.240/28 is reserved for the network gateway and static
       # IP addresses.
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  Rubin_LHN:
+  RubinObs-LHN:
     network: "139.229.164.0"
     mask: "255.255.255.0"
     gateway: "139.229.164.254"
-    range: "139.229.164.1 139.229.164.200"
+    range:
+      - "139.229.164.1 139.229.164.200"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  cds-arch:
+  CDS-ARCH:
     network: "139.229.165.0"
     mask: "255.255.255.0"
     gateway: "139.229.165.254"
     range:
-      - "139.229.165.200 139.229.165.253"
+      - "139.229.165.200 139.229.165.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  cds-arch-dds:
+  CDS-ARCH-DDS:
     network: "139.229.166.0"
     mask: "255.255.255.0"
     gateway: "139.229.166.254"
     range:
-      - "139.229.166.200 139.229.166.253"
-  ocs_app:
+      - "139.229.166.200 139.229.166.249"
+  OCS-APP:
     network: "139.229.167.0"
     mask: "255.255.255.0"
     gateway: "139.229.167.254"
     range:
-      - "139.229.167.241 139.229.167.253"
+      - "139.229.167.241 139.229.167.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  ess_sensors:
+  ESS-Sensors:
     network: "139.229.168.0"
     mask: "255.255.255.128"
     gateway: "139.229.168.126"
     range:
       - "139.229.168.100 139.229.168.125"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  dome_calibration:
+  Dome-Calibrations:
     network: "139.229.168.128"
     mask: "255.255.255.192"
     gateway: "139.229.168.190"
     range:
       - "139.229.168.180 139.229.168.189"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  mtdome_hardware:
+  MTDome-Hardware:
     network: "139.229.168.192"
     mask: "255.255.255.192"
     gateway: "139.229.168.254"
     range:
-      - "139.229.168.243 139.229.168.253"
+      - "139.229.168.243 139.229.168.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  dds_auxtel:
+  DDS-Auxtel:
     network: "139.229.170.0"
     mask: "255.255.255.0"
     gateway: "139.229.170.254"
     range:
       - "139.229.170.64 139.229.170.191"  # ~/25
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  ccs_pathfinder:
+  CCS-Pathfinder:
     network: "139.229.174.0"
     mask: "255.255.255.0"
     gateway: "139.229.174.254"
     range:
-      - "139.229.174.200 139.229.174.254"
+      - "139.229.174.200 139.229.174.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  ccs_comcam:
+  CCS-ComCam:
     network: "139.229.175.0"
     mask: "255.255.255.192"
     gateway: "139.229.175.62"
     range:
       - "139.229.175.1 139.229.175.61"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  ccs_lsstcam:
+  CCS-LSSTCam:
     network: "139.229.175.64"
     mask: "255.255.255.192"
     gateway: "139.229.175.126"
     range:
       - "139.229.175.65 139.229.175.125"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  ccs_test_app:
+  CCS-Test-APP:
     network: "139.229.175.128"
     mask: "255.255.255.128"
     gateway: "139.229.175.254"
     range:
-      - "139.229.175.241 139.229.175.253"
+      - "139.229.175.241 139.229.175.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  tcs_app:
+  TCS-APP:
     network: "139.229.178.0"
     mask: "255.255.255.0"
     gateway: "139.229.178.254"
     range:
       # We allocate 139.229.178.0/26 for DHCP, minus .178.1 as that
       # host is statically allocated.
-      - "139.229.178.2 139.229.178.62"
+      - "139.229.178.2 139.229.178.58"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  contractors_cp:
+  IT-Contractors:
     network: "139.229.191.0"
     mask: "255.255.255.128"
     gateway: "139.229.191.126"
@@ -159,25 +136,33 @@ dhcp::pools:
       - "139.229.191.1 139.229.191.64"  # .65: dimm-laptop
       - "139.229.191.66 139.229.191.100"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  guests_cp:
+  IT-Guess:
     network: "139.229.191.128"
     mask: "255.255.255.128"
     gateway: "139.229.191.254"
-    range: "139.229.191.129 139.229.191.239"
+    range:
+      - "139.229.191.129 139.229.191.239"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  it_cctv:
+  IT-CCTV:
     network: "10.17.7.0"
     mask: "255.255.255.0"
     gateway: "10.17.7.254"
     range:
       - "10.17.7.200 10.17.7.250"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  it_ipmi_srv:
+  IT-IPMI-BMC:
     network: "10.18.3.0"
     mask: "255.255.255.0"
     gateway: "10.18.3.254"
     range:
-      - "10.18.3.150 10.18.3.253"
+      - "10.18.3.150 10.18.3.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  Rubin-Power:
+    network: "10.18.7.0"
+    mask: "255.255.255.0"
+    gateway: "10.18.7.254"
+    range:
+      - "10.18.7.150 10.18.7.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
 dhcp::hosts:
   M207-gs-plotter-01.cp.cl.lsst.org:

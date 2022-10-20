@@ -15,7 +15,7 @@
 #
 
 class profile::core::ipa_pwd_reset (
-  String $keytab_base64,
+  Sensitive[String[1]] $keytab_base64,
   String $secret_key,
   String $ldap_user,
   String $ldap_pwd,
@@ -103,7 +103,7 @@ class profile::core::ipa_pwd_reset (
   #  Create Keytab
   file { "${keytab_path}/${ldap_user}.keytab":
     ensure  => file,
-    content => base64('decode', $keytab_base64),
+    content => base64('decode', $keytab_base64.unwrap),
     mode    => '0600',
     owner   => $ldap_user,
     group   => $ldap_user,

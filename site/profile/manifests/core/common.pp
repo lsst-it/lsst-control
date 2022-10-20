@@ -46,6 +46,9 @@
 # @param manage_irqbalance
 #   If `true`, manage irqbalance
 #
+# @param manage_resolv_conf
+#   If `true`, manage resolv.conf
+#
 class profile::core::common (
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
@@ -61,24 +64,25 @@ class profile::core::common (
   Boolean $manage_scl = true,
   Boolean $manage_repos = true,
   Boolean $manage_irqbalance = true,
+  Boolean $manage_resolv_conf = true,
 ) {
+  include auditd
   include accounts
   include augeas
   include easy_ipa
-  include epel
   include hosts
   include network
+  include profile::core::bash_completion
   include profile::core::ca
   include profile::core::dielibwrapdie
   include profile::core::ifdown
   include profile::core::ipa
   include profile::core::k5login
   include profile::core::kernel
+  include profile::core::keytab
   include profile::core::nm_dispatch
   include profile::core::selinux
   include profile::core::systemd
-  include profile::core::yum
-  include resolv_conf
   include rsyslog
   include rsyslog::config
   include selinux
@@ -89,11 +93,33 @@ class profile::core::common (
   include timezone
   include tuned
 
-  if $facts['os']['family'] == 'RedHat' {
+  if fact('os.family') == 'RedHat' {
+    include epel
+    include profile::core::yum
+
     if $manage_repos {
       resources { 'yumrepo':
         purge => true,
       }
+    }
+
+    # on EL7 only
+    case fact('os.release.major') {
+      '7': {
+        if fact('os.architecture') == 'x86_64' {
+          # no scl repos for aarch64
+          if $manage_scl {
+            include scl
+          }
+        }
+      }
+      '8': {
+        # On EL8, the NetworkManager-initscripts-updown package provides the
+        # ifup/ifdown scripts which are needed by example42/network.
+        ensure_packages(['NetworkManager-initscripts-updown'])
+        Package['NetworkManager-initscripts-updown'] -> Class['network']
+      }
+      default: {}
     }
   }
 
@@ -153,12 +179,10 @@ class profile::core::common (
     include profile::core::powertop
   }
 
-  if $facts['os']['architecture'] == 'x86_64' {
-    # no scl repos for aarch64
-    if $manage_scl {
-      include scl
-    }
+  if $manage_resolv_conf {
+    include resolv_conf
   }
+
   class { 'lldpd':
     manage_repo => true,
   }

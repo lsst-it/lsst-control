@@ -6,14 +6,20 @@ describe 'profile::core::rke' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) { facts }
+      let(:pre_condition) do
+        <<~PP
+          include docker
+        PP
+      end
 
       context 'with no params' do
         it { is_expected.to compile.with_all_deps }
 
+        include_examples 'rke profile'
+
         it { is_expected.not_to contain_class('cni::plugins') }
         it { is_expected.not_to contain_class('cni::plugins::dhcp') }
         it { is_expected.not_to contain_profile__util__keytab('rke') }
-        it { is_expected.to contain_vcsrepo('/home/rke/k8s-cookbook') }
 
         it do
           is_expected.to contain_class('rke').with(
@@ -33,6 +39,8 @@ describe 'profile::core::rke' do
 
           it { is_expected.to compile.with_all_deps }
 
+          include_examples 'rke profile'
+
           it { is_expected.not_to contain_class('cni::plugins') }
           it { is_expected.not_to contain_class('cni::plugins::dhcp') }
         end
@@ -45,6 +53,8 @@ describe 'profile::core::rke' do
           end
 
           it { is_expected.to compile.with_all_deps }
+
+          include_examples 'rke profile'
 
           it { is_expected.to contain_class('cni::plugins') }
           it { is_expected.to contain_class('cni::plugins::dhcp') }
@@ -61,22 +71,26 @@ describe 'profile::core::rke' do
 
           it { is_expected.to compile.with_all_deps }
 
+          include_examples 'rke profile'
+
           it { is_expected.not_to contain_profile__util__keytab('rke') }
         end
 
         context 'when 42' do
           let(:params) do
             {
-              keytab_base64: '42',
+              keytab_base64: sensitive('42'),
             }
           end
 
           it { is_expected.to compile.with_all_deps }
 
+          include_examples 'rke profile'
+
           it do
             is_expected.to contain_profile__util__keytab('rke').with(
               uid: 75_500,
-              keytab_base64: '42',
+              keytab_base64: sensitive('42'),
             )
           end
         end
@@ -91,6 +105,8 @@ describe 'profile::core::rke' do
           end
 
           it { is_expected.to compile.with_all_deps }
+
+          include_examples 'rke profile'
 
           it do
             is_expected.to contain_class('rke').with(
@@ -108,6 +124,8 @@ describe 'profile::core::rke' do
           end
 
           it { is_expected.to compile.with_all_deps }
+
+          include_examples 'rke profile'
 
           it do
             is_expected.to contain_class('rke').with(

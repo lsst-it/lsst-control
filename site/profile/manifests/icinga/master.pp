@@ -42,8 +42,30 @@ class profile::icinga::master (
   String $api_pwd,
   String $ca_salt,
 ) {
-  include profile::core::letsencrypt
   include nginx
+  include profile::core::letsencrypt
+
+  # XXX EL7 specific
+  service { 'rh-php73-php-fpm':
+    ensure => running,
+    enable => true,
+  }
+
+  # XXX EL7 specific
+  # needed by icinga-director daemon
+  ensure_packages(['rh-php73-php-process'])
+
+  # XXX icingaweb2 has dropped the `reactbundle` and `ipl` dependencies.
+  # However, incubator v0.18.0 and directory v1.9.1 depenend on them as
+  # libraries (not modules).  As these are dead packages, there is no reason not
+  # to use the existing official RPMs. See:
+  # * https://github.com/Icinga/icingaweb2-module-ipl
+  # * https://github.com/Icinga/icingaweb2-module-reactbundle
+  $deprecated_packages = [
+    'icinga-php-library',
+    'icinga-php-thirdparty',
+  ]
+  ensure_packages($deprecated_packages)
 
   #<-------------Variables Definition---------------->
 
@@ -53,52 +75,6 @@ class profile::icinga::master (
 
   #  Letsencrypt cert path
   $le_root = "/etc/letsencrypt/live/${master_fqdn}"
-
-  #  Director Service
-  $pnp_url = 'https://github.com/Icinga/icingaweb2-module-pnp/archive/refs/tags/v1.1.0.tar.gz'
-  $pnp_install = @("PNP_INSTALL")
-    mkdir /usr/share/icingaweb2/modules/pnp
-    wget -O pnp.tar.gz ${pnp_url}
-    tar zxvf pnp.tar.gz -C pnp --strip-components 1
-    | PNP_INSTALL
-
-  #  Director Service
-  $director_service = @(SERVICE)
-    [Unit]
-    Description=Icinga Director - Monitoring Configuration
-    Documentation=https://icinga.com/docs/director/latest/
-    Wants=network.target
-
-    [Service]
-    EnvironmentFile=-/etc/default/icinga-director
-    EnvironmentFile=-/etc/sysconfig/icinga-director
-    ExecStart=/bin/icingacli director daemon run
-    ExecReload=/bin/kill -HUP ${MAINPID}
-    User=icingadirector
-    SyslogIdentifier=icingadirector
-    Type=notify
-
-    NotifyAccess=main
-    WatchdogSec=10
-    RestartSec=30
-    Restart=always
-
-    [Install]
-    WantedBy=multi-user.target
-    | SERVICE
-
-  #  incubator script
-  $incubator_script = @(INCUBATOR/L)
-    MODULE_NAME=incubator
-    MODULE_VERSION=v0.6.0
-    MODULES_PATH="/usr/share/icingaweb2/modules"
-    MODULE_PATH="${MODULES_PATH}/${MODULE_NAME}"
-    RELEASES="https://github.com/Icinga/icingaweb2-module-${MODULE_NAME}/archive"
-    mkdir "$MODULE_PATH" \
-    && wget -q $RELEASES/${MODULE_VERSION}.tar.gz -O - \
-    | tar xfz - -C "$MODULE_PATH" --strip-components 1
-    icingacli module enable "${MODULE_NAME}"
-    | INCUBATOR
 
   #  pnp4nagios webpage integration
   $pnp4nagios_conf = @(PNPNAGIOS/L)
@@ -122,6 +98,7 @@ class profile::icinga::master (
     | PNPNAGIOS
 
   #  PNP plugin configuration
+  # XXX should icinga-master.ls.lsst.org be hardcoded into the pnp config?
   $pnp_conf = @(PNP/)
     [pnp4nagios]
     config_dir = "/etc/pnp4nagios"
@@ -324,18 +301,12 @@ class profile::icinga::master (
   }
   icingaweb2::config::role { 'Visitors':
     groups      => 'icinga-sqre,icinga-tssw,icinga-comcam',
-    permissions => 'application/share/navigation,application/stacktraces,application/log,module/director,module/doc,module/incubator,module/ipl,module/monitoring,monitoring/*,module/pnp,module/reactbundle,module/setup,module/translation',
+    permissions => 'application/share/navigation,application/stacktraces,application/log,module/director,module/doc,module/incubator,module/monitoring,monitoring/*,module/pnp,module/setup,module/translation',
   }
+
   ##IcingaWeb Director
-  user { 'icingadirector':
-    ensure => 'present',
-    shell  => '/bin/false',
-    gid    => 'icingaweb2',
-    home   => '/var/lib/icingadirector',
-    system => true,
-  }
-  -> class { 'icingaweb2::module::director':
-    git_revision  => 'v1.7.2',
+  class { 'icingaweb2::module::director':
+    git_revision  => 'v1.9.1',
     db_host       => $master_ip,
     db_name       => $mysql_director_db,
     db_username   => $mysql_director_user,
@@ -349,31 +320,15 @@ class profile::icinga::master (
     api_password  => $api_pwd,
     require       => Mysql::Db[$mysql_director_db],
   }
-  -> systemd::unit_file { 'icinga-director.service':
-    content => $director_service,
-    enable  => true,
-    active  => true,
-  }
+  # declared instead of included to avoid parse order problems
+  class { 'icingaweb2::module::director::service': }
 
   ##IcingaWeb PNP
-  exec { $pnp_install :
-    cwd     => '/var/tmp/',
-    path    => ['/sbin', '/usr/sbin', '/bin'],
-    onlyif  => ['test ! -d /usr/share/icingaweb2/modules/pnp'],
-    require => Class['icingaweb2::module::director'],
-  }
-  exec { 'icingacli module enable pnp':
-    cwd     => '/var/tmp/',
-    path    => ['/sbin', '/usr/sbin', '/bin'],
-    onlyif  => ['test ! -d /etc/icingaweb2/enabledModules/pnp'],
-    require => Class['icingaweb2::module::director'],
-  }
-  -> file { '/etc/icingaweb2/modules/pnp':
-    ensure  => 'directory',
-    mode    => '0755',
-    owner   => 'apache',
-    group   => 'icingaweb2',
-    require => Class['icingaweb2'],
+  # XXX pnp4nagios is effectively dead and hasn't had a release since 2017. We
+  # need to migrate away.
+  icingaweb2::module { 'pnp':
+    git_repository => 'https://github.com/Icinga/icingaweb2-module-pnp',
+    git_revision   => '8f09274', # the v1.1.0 tag claims to be v1.0.1
   }
   -> file { '/etc/icingaweb2/modules/pnp/config.ini':
     ensure  => 'file',
@@ -395,44 +350,10 @@ class profile::icinga::master (
     content => $pnp4nagios_conf,
     mode    => '0644',
   }
-  ##IcingaWeb PHP
-  archive { '/tmp/icinga-php':
-    ensure       => present,
-    extract      => true,
-    extract_path => '/tmp',
-    source       => 'https://github.com/Icinga/icinga-php-thirdparty/archive/refs/tags/v0.10.0.tar.gz',
-    creates      => '/usr/share/icinga-php/vendor',
-    cleanup      => true,
-    require      => Class['icingaweb2'],
-  }
-
-  ##IcingaWeb IPL
-  archive { '/tmp/icinga-ipl':
-    ensure       => present,
-    extract      => true,
-    extract_path => '/tmp',
-    source       => 'https://github.com/Icinga/icinga-php-library/archive/refs/tags/v0.6.1.tar.gz',
-    creates      => '/usr/share/icinga-php/ipl',
-    cleanup      => true,
-    require      => Class['icingaweb2'],
-  }
 
   ##IcingaWeb Incubator
-  archive { '/tmp/icinga-incubator':
-    ensure       => present,
-    extract      => true,
-    extract_path => '/tmp',
-    source       => 'https://github.com/Icinga/icingaweb2-module-incubator/archive/refs/tags/v0.6.0.tar.gz',
-    creates      => '/usr/share/icinga-php/ipl',
-    cleanup      => true,
-    require      => Class['icingaweb2'],
-  }
-  -> exec { $incubator_script:
-    cwd      => '/tmp',
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    unless   => 'test -d /etc/icingaweb2/enabledModules/incubator/',
-    #loglevel => debug
+  class { 'icingaweb2::module::incubator':
+    git_revision => 'v0.18.0',
   }
 
   ##Nginx Resource Definition

@@ -1,6 +1,0 @@
----
-nfs::client_mounts:
-  /data:
-    share: "data"
-    server: "auxtel-fp01.cp.lsst.org"
-    atboot: true

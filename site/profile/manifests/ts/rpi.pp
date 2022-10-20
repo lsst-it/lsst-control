@@ -80,8 +80,6 @@ class profile::ts::rpi {
     'xterm',
     'xorg-x11-fonts-misc',
     'vim',
-    'bash-completion',
-    'bash-completion-extras',
     'wget',
     'libjpeg-turbo-devel',
     'libusb-devel',

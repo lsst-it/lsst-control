@@ -87,6 +87,7 @@ nfs::nfs_exports_global:
       139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.170.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.128/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
   /data/allsky:
     clients: >-
       %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)

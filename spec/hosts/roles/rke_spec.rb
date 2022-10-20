@@ -5,6 +5,7 @@ require 'spec_helper'
 shared_examples 'generic rke' do
   include_examples 'debugutils'
   include_examples 'docker'
+  include_examples 'rke profile'
 
   it { is_expected.to contain_class('kubectl') }
   it { is_expected.to contain_class('profile::core::rke') }
@@ -35,17 +36,19 @@ describe "#{role} role" do
       end
 
       lsst_sites.each do |site|
-        describe "#{role}.#{site}.lsst.org", :site, :common do
+        describe "#{role}.#{site}.lsst.org", :site do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }
+
+          include_examples 'common', facts: facts
 
           include_examples 'generic rke'
         end # host
       end # lsst_sites
 
       context 'with antu cluster' do
-        describe 'antu01.ls.lsst.org', :lhn_node, :site, :common do
+        describe 'antu01.ls.lsst.org', :lhn_node, :site do
           let(:site) { 'ls' }
           let(:node_params) do
             super().merge(
@@ -57,6 +60,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
+          include_examples 'common', facts: facts
           include_examples 'generic rke'
         end
       end

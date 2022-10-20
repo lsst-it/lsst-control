@@ -51,21 +51,3 @@ network::interfaces_hash:
     <<: *bridge_int
   br3085:
     <<: *bridge_int
-  em1:
-    ensure: "absent"
-  em2:
-    ensure: "absent"
-  em2.700:
-    ensure: "absent"
-  enp129s0f0.3065:
-    ensure: "absent"
-  enp129s0f0.3075:
-    ensure: "absent"
-  enp129s0f0.3085:
-    ensure: "absent"
-  enp129s0f1.3065:
-    ensure: "absent"
-  enp129s0f1.3075:
-    ensure: "absent"
-  enp129s0f1.3085:
-    ensure: "absent"

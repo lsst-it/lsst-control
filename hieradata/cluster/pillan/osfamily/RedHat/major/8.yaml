@@ -1,5 +1,7 @@
 ---
 network::interfaces_hash:
+  bond0:
+    macaddr: "%{facts.networking.interfaces.eno1np0.mac}"
   # EL8+ "stable" interface names
   eno1np0: &bond0  # fqdn 1/4
     bootproto: "none"

@@ -1,6 +1,6 @@
 ---
 clustershell::groupmembers:
-  pillan: {group: "pillan", member: "pillan[01-06]"}
+  pillan: {group: "pillan", member: "pillan[01-09]"}
 cni::plugins::checksum: "962100bbc4baeaaa5748cdbfce941f756b1531c2eadb290129401498bfac21e7"
 cni::plugins::enable: ["macvlan"]
 cni::plugins::version: "0.9.1"
@@ -9,18 +9,6 @@ profile::core::ospl::enable_rundir: true
 profile::core::rke::enable_dhcp: true
 
 network::interfaces_hash:
-  eno1: &bond0   # fqdn 1/4
-    bootproto: "none"
-    master: "bond0"
-    onboot: "yes"
-    slave: "yes"
-    type: "Ethernet"
-  eno2d1:  # fqdn 2/4
-    <<: *bond0
-  enp129s0f0:  # fqdn 3/4
-    <<: *bond0
-  enp129s0f1:  # fqdn 3/4
-    <<: *bond0
   bond0:
     bonding_master: "yes"
     bonding_opts: "mode=4 miimon=100"
@@ -51,21 +39,3 @@ network::interfaces_hash:
     <<: *bridge_int
   br3085:
     <<: *bridge_int
-  em1:
-    ensure: "absent"
-  em2:
-    ensure: "absent"
-  em2.700:
-    ensure: "absent"
-  enp129s0f0.3065:
-    ensure: "absent"
-  enp129s0f0.3075:
-    ensure: "absent"
-  enp129s0f0.3085:
-    ensure: "absent"
-  enp129s0f1.3065:
-    ensure: "absent"
-  enp129s0f1.3075:
-    ensure: "absent"
-  enp129s0f1.3085:
-    ensure: "absent"

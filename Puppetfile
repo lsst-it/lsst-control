@@ -5,7 +5,7 @@ mod 'bodgit/sssd', git: 'https://github.com/lsst-it/puppet-sssd.git', branch: 'p
 mod 'camptocamp/augeas', '1.9.0'
 mod 'ccin2p3/etc_services', '2.0.3'
 mod 'ccin2p3/mit_krb5', '1.4.0'
-mod 'ceritsc/tuned', git: 'https://github.com/lsst-it/puppet-tuned', branch: 'e28e21fc92f676e855a4a1fb15a6ef0399494274' # https://github.com/CERIT-SC/puppet-tuned/pull/21
+mod 'ceritsc/tuned', git: 'https://github.com/lsst-it/puppet-tuned', branch: 'a5966b2' # https://github.com/CERIT-SC/puppet-tuned/pull/21 https://github.com/CERIT-SC/puppet-tuned/pull/24
 mod 'cirrax/libvirt', '4.3.3'
 mod 'derdanne/nfs', '2.1.8'
 mod 'duritong/sysctl', git: 'https://github.com/duritong/puppet-sysctl', ref: '847ec1c'  # migrate to herculesteam/augeasproviders_sysctl; https://github.com/duritong/puppet-sysctl/pull/48

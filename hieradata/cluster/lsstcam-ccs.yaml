@@ -54,8 +54,7 @@ clustershell::groupmembers:
   dc: {group: "dc", member: "lsstcam-dc[01-10]"}
   all: {group: "all", member: "@dc,@misc"}
 
-# FIXME
-ccs_database::database: "lsstcamdbprod"
+ccs_database::database: "ccsdbprod"
 
 ccs_sal::ospl_home: "/opt/OpenSpliceDDS/V6.10.4/HDE/x86_64.linux"
 ccs_sal::rpms:

@@ -66,7 +66,7 @@ mod 'puppetlabs/mysql', '12.0.1'
 mod 'puppetlabs/ntp', '9.1.0'
 mod 'puppetlabs/postgresql', '8.2.1'
 mod 'puppetlabs/puppet_agent', '4.12.1'
-mod 'puppetlabs/puppetdb', '7.10.0'
+mod 'puppetlabs/puppetdb', git: 'https://github.com/puppetlabs/puppetlabs-puppetdb', ref: '84684ae'  # postgresql 8 compat
 mod 'puppetlabs/puppetserver_gem', '1.1.1'
 mod 'puppetlabs/reboot', '4.1.0'
 mod 'puppetlabs/selinux_core', '1.2.0'

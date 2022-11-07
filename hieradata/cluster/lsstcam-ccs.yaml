@@ -1,0 +1,123 @@
+---
+packages:
+  - "attr"
+  - "bison"
+  - "blas"
+  - "bzip2"
+  - "cmake"
+  - "devtoolset-8"
+  - "emacs"
+  - "epel-release"
+  - "flex"
+  - "gcc"
+  - "gcc-c++"
+  - "gcc-gfortran"
+  - "git"
+  - "maven"
+  - "nano"
+  - "parallel"
+  - "rh-git218"
+  - "rsync"
+  - "screen"
+  - "tcl"
+  - "tcl-devel"
+
+postfix::manage_root_alias: false
+postfix::inet_protocols: "ipv4"
+postfix::inet_interfaces: "localhost"
+postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"
+postfix::relayhost: "[mail.lsst.org]:submission"
+postfix::mta: true
+postfix::configs:
+  smtp_sasl_auth_enable:
+    value: "yes"
+  smtp_tls_security_level:
+    value: "encrypt"
+  smtp_sasl_tls_security_options:
+    value: "noanonymous"
+  smtp_sasl_password_maps:
+    value: "hash:/etc/postfix/sasl_passwd"
+  smtp_sasl_mechanism_filter:
+    value: "plain, login"
+sudo::purge: false  # FIXME
+sudo::configs:
+  lsstcam_ccs_cmd:
+    content: "%lsstcam-ccs-cmd ALL=(ccs) NOPASSWD: ALL"
+
+ccs_software::jdk8::rpm: "jdk-8u202-linux-x64.rpm"
+ccs_software::jdk8::package: "jdk1.8"
+ccs_software::jdk8::dir: "jdk1.8.0_202-amd64"
+ccs_software::jdk8::version: "2000:1.8.0_202-fcs"
+
+clustershell::groupmembers:
+  misc: {group: "misc", member: "lsstcam-mcm,lsstcam-vs01"}
+  dc: {group: "dc", member: "lsstcam-dc[01-10]"}
+  all: {group: "all", member: "@dc,@misc"}
+
+# FIXME
+ccs_database::database: "lsstcamdbprod"
+
+ccs_sal::ospl_home: "/opt/OpenSpliceDDS/V6.10.4/HDE/x86_64.linux"
+ccs_sal::rpms:
+  ts_sal_utils: "ts_sal_utils-7.0.0-1.x86_64.rpm"
+ccs_sal::rpms_private:
+  OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"
+
+## Used in lookups:
+ccs_site: "summit"
+ccs_instrument: "lsstcam"
+
+ccs_sal::dds_domain: "%{lookup('ccs_site')}"
+ccs_sal::dds_interface: "lsstcam-mcm-dds"
+ccs_sal::instrument: "%{lookup('ccs_instrument')}"
+
+ccs_software::global_properties:
+  - "org.lsst.ccs.subsystem.agent.property.instrument=%{lookup('ccs_instrument')}"
+  - "org.lsst.ccs.subsystem.agent.property.cluster=%{lookup('ccs_instrument')}"
+  - "org.lsst.ccs.subsystem.agent.property.site=%{lookup('ccs_site')}"
+
+## lsstcam-alerts
+ccs_software::service_email: "lsstcam-alerts-aaaah4qfu4lhjnjpl4wmbjyx2y@lsstc.slack.com"
+
+ccs_monit::mailhost: "mail.lsst.org"
+ccs_monit::alert:
+  ## lsstcam-alerts
+  - "lsstcam-alerts-aaaah4qfu4lhjnjpl4wmbjyx2y@lsstc.slack.com"
+
+java_artisanal::package: "jdk1.8"
+java_artisanal::dir: "jdk1.8.0_202-amd64"
+
+accounts::group_list:
+  lsstadm:
+    gid: 24000  # XXX reserve GID
+
+accounts::user_list:
+  ccs:
+    uid: 23000  # XXX 62000
+    gid: 23000
+    groups:
+      - "dialout"
+      - "lsstadm"
+    comment: "CCS Operator Account"
+  ccsadm:
+    uid: 23010  # XXX 62001
+    gid: 23010
+    groups:
+      - "lsstadm"
+    comment: "CCS Administrative Account"
+
+# XXX should all hosts be a desktop?
+ccs_software::desktop: true
+# FIXME
+ccs_software::env: "LSSTCam"
+# FIXME
+#ccs_software::installations:
+#  lsstcam-software-1.0.0:
+#    aliases:
+#      - "puppet-1.0.0"
+
+# FIXME
+#profile::icinga::agent::host_template: "LSSTCamHostTemplate"
+daq::daqsdk::purge: false
+
+hosts::stored_config: false

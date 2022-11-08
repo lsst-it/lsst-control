@@ -428,13 +428,11 @@ shared_examples 'rke profile' do
     is_expected.to contain_sysctl__value('net.bridge.bridge-nf-call-iptables').with(
       value: 1,
       target: '/etc/sysctl.d/80-rke.conf',
-    ).that_requires('Kmod::Load[br_netfilter]')
-                                                                              .that_comes_before('Class[docker]')
+    ).that_requires('Kmod::Load[br_netfilter]').that_comes_before('Class[docker]')
   end
 
   it do
-    is_expected.to contain_class('easy_ipa')
-      .that_comes_before('Class[profile::core::rke]')
+    is_expected.to contain_vcsrepo('/home/rke/k8s-cookbook').that_requires('Class[easy_ipa]')
   end
 end
 

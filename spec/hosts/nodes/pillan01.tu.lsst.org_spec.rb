@@ -26,9 +26,9 @@ describe 'pillan01.tu.lsst.org', :site do
       end
 
       let(:facts) do
-        facts.merge(
-          fqdn: 'pillan01.tu.lsst.org',
-        )
+        override_facts(facts,
+                       networking: { interfaces: { int1 => { mac: '11:22:33:44:55:66' } } },
+                       fqdn: 'pillan01.tu.lsst.org')
       end
 
       let(:node_params) do
@@ -40,6 +40,31 @@ describe 'pillan01.tu.lsst.org', :site do
       end
 
       it { is_expected.to compile.with_all_deps }
+
+      it do
+        is_expected.to contain_network__interface('bond0').with(
+          bonding_master: 'yes',
+          bonding_opts: 'mode=4 miimon=100',
+          bootproto: 'dhcp',
+          defroute: 'yes',
+          nozeroconf: 'yes',
+          onboot: 'yes',
+          type: 'Bond',
+        )
+      end
+
+      if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
+        # explicitly setting the bond mac address on EL7 might have no effect?
+        # We aren't changing the behavior for EL7 to avoid a network restart
+        # for legacy nodes.
+        it { is_expected.to contain_network__interface('bond0').without_macaddr }
+      else
+        it do
+          is_expected.to contain_network__interface('bond0').with(
+            macaddr: '11:22:33:44:55:66',
+          )
+        end
+      end
 
       it do
         is_expected.to contain_network__interface(int1).with(

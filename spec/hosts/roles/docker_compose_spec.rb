@@ -28,6 +28,8 @@ describe "#{role} role" do
 
           include_examples 'common', facts: facts
           include_examples 'docker'
+
+          it { is_expected.to contain_package('docker-compose-plugin') }
         end # host
       end # lsst_sites
     end # on os

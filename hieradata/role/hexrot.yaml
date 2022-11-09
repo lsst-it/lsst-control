@@ -3,11 +3,11 @@ classes:
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::docker"
+  - "profile::core::docker::compose"
   - "profile::core::docker::prune"
   - "profile::core::ni_packages"
   - "profile::core::x2go_agent"
   - "profile::ts::nexusctio"
-  - "python"
 files:
   /rubin:
     ensure: "directory"
@@ -21,21 +21,6 @@ files:
 # / on hexrot.cp was formated with xfs fstype=0 (long, long, long ago) and is
 # not compatible with overlayfs[2]
 profile::core::docker::storage_driver: "devicemapper"
-# install docker-compose at system level
-python::version: "python36"
-python::pip: "present"
-python::dev: "present"
-python::venv: "present"
-python::python_pips:
-  # docker-compose is python3 only
-  "docker-compose":
-    virtualenv: "system"
-    ensure: "1.25.0"
-    pip_provider: "pip3"
-  "cryptography":
-    virtualenv: "system"
-    ensure: "3.3"
-    pip_provider: "pip3"
 accounts::group_list:
   # this is duplicating the ipa gid as a local group
   &docker_name docker-%{facts.hostname}:

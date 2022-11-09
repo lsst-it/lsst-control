@@ -38,10 +38,11 @@ describe "#{role} role" do
             profile::core::docker::prune
             profile::core::ni_packages
             profile::core::x2go_agent
-            python
           ].each do |c|
             it { is_expected.to contain_class(c) }
           end
+
+          it { is_expected.to contain_package('docker-compose-plugin') }
         end # host
       end # lsst_sites
     end # on os

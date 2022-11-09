@@ -28,8 +28,9 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'common', facts: facts
-
           include_examples 'docker'
+
+          it { is_expected.to contain_package('docker-compose-plugin') }
         end # host
       end # lsst_sites
     end # on os

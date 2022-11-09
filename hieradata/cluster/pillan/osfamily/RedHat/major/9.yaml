@@ -1,0 +1,17 @@
+---
+network::interfaces_hash:
+  bond0:
+    macaddr: "%{facts.networking.interfaces.eno1np0.mac}"
+  # EL8+ "stable" interface names
+  eno1np0: &bond0  # fqdn 1/4
+    bootproto: "none"
+    master: "bond0"
+    onboot: "yes"
+    slave: "yes"
+    type: "Ethernet"
+  eno2np1:  # fqdn 2/4
+    <<: *bond0
+  enp129s0f0:  # fqdn 3/4
+    <<: *bond0
+  enp129s0f1:  # fqdn 3/4
+    <<: *bond0

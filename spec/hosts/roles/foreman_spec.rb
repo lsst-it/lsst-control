@@ -398,6 +398,16 @@ describe "#{role} role" do
         end
 
         it do
+          is_expected.to contain_dhcp__pool('Startracker').with(
+            network: '139.229.169.0',
+            mask: '255.255.255.0',
+            range: ['139.229.169.200 139.229.169.249'],
+            gateway: '139.229.169.254',
+            mtu: 9000,
+          )
+        end
+
+        it do
           is_expected.to contain_dhcp__pool('DDS-Auxtel').with(
             network: '139.229.170.0',
             mask: '255.255.255.0',

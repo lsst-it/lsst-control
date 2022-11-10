@@ -84,6 +84,14 @@ dhcp::pools:
     range:
       - "139.229.168.243 139.229.168.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  Startracker:
+    network: "139.229.169.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.169.254"
+    range:
+      - "139.229.169.200 139.229.169.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+    mtu: 9000
   DDS-Auxtel:
     network: "139.229.170.0"
     mask: "255.255.255.0"

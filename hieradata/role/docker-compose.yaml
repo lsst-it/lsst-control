@@ -2,20 +2,5 @@
 classes:
   - "profile::core::common"
   - "profile::core::docker"
+  - "profile::core::docker::compose"
   - "profile::core::docker::prune"
-  - "python"
-# install docker-compose at system level
-python::version: "python36"
-python::pip: "present"
-python::dev: "present"
-python::venv: "present"
-# docker-compose is python3 only
-python::python_pips:
-  "docker-compose":
-    virtualenv: "system"
-    ensure: "1.25.0"
-    pip_provider: "pip3"
-  "cryptography":
-    virtualenv: "system"
-    ensure: "3.3"
-    pip_provider: "pip3"

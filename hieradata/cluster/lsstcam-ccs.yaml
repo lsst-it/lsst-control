@@ -107,13 +107,11 @@ accounts::user_list:
 
 # XXX should all hosts be a desktop?
 ccs_software::desktop: true
-# FIXME
-ccs_software::env: "LSSTCam"
-# FIXME
-#ccs_software::installations:
-#  lsstcam-software-1.0.0:
-#    aliases:
-#      - "puppet-1.0.0"
+ccs_software::env: "MainCamera"
+ccs_software::installations:
+  lsstcam-software-1.0.0:
+    aliases:
+      - "puppet-1.0.0"
 
 # FIXME
 #profile::icinga::agent::host_template: "LSSTCamHostTemplate"

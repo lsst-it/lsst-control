@@ -74,6 +74,7 @@ class profile::core::common (
   include network
   include profile::core::bash_completion
   include profile::core::ca
+  include profile::core::convenience
   include profile::core::dielibwrapdie
   include profile::core::ifdown
   include profile::core::ipa

@@ -1,0 +1,7 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::docker"
+  - "profile::core::docker::compose"
+  - "profile::core::docker::prune"
+  - "profile::ts::dco"

@@ -198,6 +198,13 @@ shared_examples 'common' do |facts:, no_auth: false|
       },
     )
   end
+
+  it do
+    is_expected.to contain_class('chrony').with(
+      leapsecmode: 'system',
+      leapsectz: 'right/UTC',
+    )
+  end
 end
 
 shared_examples 'lhn sysctls', :lhn_node do

@@ -2,9 +2,6 @@
 #  NI LabView 2018 requirement packages
 
 class profile::core::ni_packages {
-  $pre_packages = [
-    'libstdc++',
-  ]
   $hexrot_packages = [
     'runHexEui',
     'runRotEui',
@@ -30,13 +27,7 @@ class profile::core::ni_packages {
     ensure          => present,
     install_options => ['--enablerepo','nexus-ctio'];
   }
-  package { $pre_packages:
-    ensure => 'present',
-  }
-  package { $packages:
-    ensure  => 'present',
-    require => Package[$pre_packages],
-  }
+  ensure_packages($packages)
   host { 'cagvm3.ctio.noao.edu':
     ip => '139.229.3.76',
   }

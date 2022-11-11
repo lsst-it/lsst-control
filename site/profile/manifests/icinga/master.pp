@@ -158,9 +158,8 @@ class profile::icinga::master (
     manage_cron => true,
   }
   ##Ensure packages
-  package { $packages:
-    ensure => 'present',
-  }
+  ensure_packages($packages)
+
   ##MySQL definition
   class { 'mysql::server':
     root_password           => $mysql_root,

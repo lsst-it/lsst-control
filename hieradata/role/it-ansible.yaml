@@ -4,7 +4,6 @@ classes:
   - "profile::core::it_ansible"
 
 packages:
-  - "git"
   - "rh-python38"
   - "rh-python38-python-pip"
   - "rh-python38-python-pip-wheel"

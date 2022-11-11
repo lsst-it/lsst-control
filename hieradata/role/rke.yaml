@@ -12,10 +12,7 @@ classes:
   - "profile::core::rke"
   - "profile::core::velero"
 packages:
-  - "ack"
   - "gdisk"
-  - "git"
-  - "vim"
 profile::core::helm::version: "3.5.4"
 profile::core::kernel::devel: true
 profile::core::kernel::debuginfo: true

@@ -50,7 +50,7 @@ ccs_software::jdk8::dir: "jdk1.8.0_202-amd64"
 ccs_software::jdk8::version: "2000:1.8.0_202-fcs"
 
 clustershell::groupmembers:
-  misc: {group: "misc", member: "lsstcam-mcm,lsstcam-vs01"}
+  misc: {group: "misc", member: "lsstcam-db01,lsstcam-mcm,lsstcam-vs01"}
   dc: {group: "dc", member: "lsstcam-dc[01-10]"}
   all: {group: "all", member: "@dc,@misc"}
 

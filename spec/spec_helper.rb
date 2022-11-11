@@ -645,4 +645,18 @@ shared_examples 'convenience' do
   end
 end
 
+shared_examples 'dco' do
+  it do
+    is_expected.to contain_vcsrepo('/home/dco/docker-compose-ops').with(
+      ensure: 'present',
+      provider: 'git',
+      source: 'https://github.com/lsst-it/docker-compose-ops.git',
+      keep_local_changes: true,
+      user: 'dco',
+      owner: 'dco',
+      group: 'dco',
+    )
+  end
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

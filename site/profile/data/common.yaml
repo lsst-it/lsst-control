@@ -1,4 +1,10 @@
 ---
+profile::core::convenience::packages:
+  - "ack"
+  - "git"
+  - "neovim"
+  - "tree"
+  - "vim"
 profile::core::debugutils::packages:
   - "ack"
   - "bridge-utils"

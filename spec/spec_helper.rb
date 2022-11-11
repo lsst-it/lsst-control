@@ -632,4 +632,16 @@ shared_examples 'bash_completion' do |facts:|
   end
 end
 
+shared_examples 'convenience' do
+  %w[
+    ack
+    git
+    neovim
+    tree
+    vim
+  ].each do |pkg|
+    it { is_expected.to contain_package(pkg) }
+  end
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

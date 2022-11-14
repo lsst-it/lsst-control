@@ -8,7 +8,6 @@ packages:
   - "libguestfs"
   - "qemu-guest-agent"
   - "qemu-kvm-tools"
-  - "vim"
   - "virt-install"
   - "virt-manager"
   - "virt-top"

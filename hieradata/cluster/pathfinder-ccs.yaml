@@ -5,7 +5,6 @@ packages:
   - "emacs"
   - "epel-release"
   - "gcc"
-  - "git"
   - "maven"
   - "nano"
   - "parallel"

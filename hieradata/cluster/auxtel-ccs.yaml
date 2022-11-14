@@ -12,7 +12,6 @@ packages:
   - "gcc"
   - "gcc-c++"
   - "gcc-gfortran"
-  - "git"
   - "maven"
   - "nano"
   - "parallel"

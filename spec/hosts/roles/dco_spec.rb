@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-role = 'amor'
+role = 'dco'
 
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
@@ -17,7 +17,6 @@ describe "#{role} role" do
         {
           role: role,
           site: site,
-          cluster: role,
         }
       end
 

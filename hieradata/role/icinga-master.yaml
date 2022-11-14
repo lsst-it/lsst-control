@@ -6,9 +6,6 @@ classes:
   - "profile::icinga::opsgenie"
   - "profile::icinga::plugins"
   - "profile::icinga::resources"
-packages:
-  - "vim"
-
 #LDAP Values
 profile::icinga::master::ldap_root: "cn=accounts,dc=lsst,dc=cloud"
 profile::icinga::master::ldap_resource: "rubinobs"

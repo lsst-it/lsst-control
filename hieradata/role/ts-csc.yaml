@@ -5,5 +5,3 @@ classes:
   - "profile::core::docker::compose"
   - "profile::core::docker::prune"
   - "profile::nfs::client::csc"
-packages:
-  - "git"

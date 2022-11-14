@@ -1,9 +1,7 @@
 ---
 classes:
   - "profile::core::common"
-  - "profile::core::debugutils"
   - "profile::core::docker"
   - "profile::core::docker::compose"
   - "profile::core::docker::prune"
-  - "profile::core::nfsclient"
   - "profile::ts::dco"

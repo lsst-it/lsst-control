@@ -244,14 +244,12 @@ class profile::ts::rpi {
   #
   #<-------- Packages Installation---------->
   #  Remove preinstalled docker packages
-  package { $docker_packages:
-    ensure => 'absent',
-  }
+  ensure_packages($docker_packages)
+
   #  Install yum packages
-  package { $yum_packages:
-    ensure  => 'present',
-    require => Package[$docker_packages],
-  }
+  ensure_packages($yum_packages)
+  Package[$yum_packages] -> Package[$docker_packages]
+
   # The required snap packages are in the edge channel, and provider option from package does not allow it.
   exec { "snap install --edge ${snap_packages}":
     path     => ['/sbin', '/usr/sbin', '/bin'],

@@ -141,6 +141,7 @@ end
 
 shared_examples 'common' do |facts:, no_auth: false|
   include_examples 'bash_completion', facts: facts
+  include_examples 'convenience'
 
   unless no_auth
     include_examples 'krb5.conf content', %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}}
@@ -629,6 +630,44 @@ shared_examples 'bash_completion' do |facts:|
     end
   else
     it { is_expected.not_to contain_package('bash-completion') }
+  end
+end
+
+shared_examples 'convenience' do
+  %w[
+    ack
+    git
+    neovim
+    tree
+    vim
+  ].each do |pkg|
+    it { is_expected.to contain_package(pkg) }
+  end
+end
+
+shared_examples 'dco' do
+  it do
+    is_expected.to contain_vcsrepo('/home/dco/docker-compose-ops').with(
+      ensure: 'present',
+      provider: 'git',
+      source: 'https://github.com/lsst-it/docker-compose-ops.git',
+      keep_local_changes: true,
+      user: 'dco',
+      owner: 'dco',
+      group: 'dco',
+    )
+  end
+
+  it do
+    is_expected.to contain_vcsrepo('/home/dco/ts_ddsconfig').with(
+      ensure: 'present',
+      provider: 'git',
+      source: 'https://github.com/lsst-ts/ts_ddsconfig.git',
+      keep_local_changes: true,
+      user: 'dco',
+      owner: 'dco',
+      group: 'dco',
+    )
   end
 end
 

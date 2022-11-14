@@ -68,6 +68,7 @@ lookup_options:
 
 hosts::purge_hosts: true
 timezone::timezone: "UTC"
+chrony::leapsecmode: "system"
 chrony::leapsectz: "right/UTC"
 ssh::storeconfigs_enabled: false
 ssh::server_options:

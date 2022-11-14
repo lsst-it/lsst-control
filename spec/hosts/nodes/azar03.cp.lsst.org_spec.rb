@@ -16,7 +16,7 @@ describe 'azar03.cp.lsst.org', :site do
 
       let(:node_params) do
         {
-          role: 'docker-compose',
+          role: 'dco',
           site: 'cp',
         }
       end
@@ -78,6 +78,22 @@ describe 'azar03.cp.lsst.org', :site do
           ipaddress: '139.229.169.1',
           netmask: '255.255.255.0',
           mtu: '9000',
+        )
+      end
+
+      it do
+        is_expected.to contain_nfs__client__mount('/net/project').with(
+          share: 'project',
+          server: 'nfs1.cp.lsst.org',
+          atboot: true,
+        )
+      end
+
+      it do
+        is_expected.to contain_nfs__client__mount('/net/scratch').with(
+          share: 'scratch',
+          server: 'nfs1.cp.lsst.org',
+          atboot: true,
         )
       end
     end # on os

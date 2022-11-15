@@ -17,6 +17,7 @@ nfs::nfs_v4_export_root_clients: >-
   139.229.170.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.175.0/26(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.175.128/25(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  azar03.cp.lsst.org(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.191.0/25(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
 nfs::nfs_exports_global:
   /data/home:
@@ -54,6 +55,7 @@ nfs::nfs_exports_global:
       139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/scratch:
     clients: >-
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
@@ -63,6 +65,7 @@ nfs::nfs_exports_global:
       139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/dimm:
     clients: >-
       %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)

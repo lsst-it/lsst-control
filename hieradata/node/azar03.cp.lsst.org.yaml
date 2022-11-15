@@ -36,3 +36,16 @@ network::interfaces_hash:
     ipaddress: "139.229.169.1"
     netmask: "255.255.255.0"
     mtu: "9000"
+
+# These NFS mounts are suppose to be temporary until Rubin TV switches to
+# pulling data from S3/LFA.
+nfs::client_enabled: true
+nfs::client_mounts:
+  /net/project:
+    share: "project"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /net/scratch:
+    share: "scratch"
+    server: "nfs1.cp.lsst.org"
+    atboot: true

@@ -244,7 +244,9 @@ class profile::ts::rpi {
   #
   #<-------- Packages Installation---------->
   #  Remove preinstalled docker packages
-  ensure_packages($docker_packages)
+  package { $docker_packages:
+    ensure => 'absent',
+  }
 
   #  Install yum packages
   ensure_packages($yum_packages)

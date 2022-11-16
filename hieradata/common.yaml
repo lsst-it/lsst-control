@@ -71,6 +71,7 @@ timezone::timezone: "UTC"
 chrony::cmdport: 0
 chrony::leapsecmode: "system"
 chrony::leapsectz: "right/UTC"
+chrony::logchange: 0.005
 chrony::port: 0
 ssh::storeconfigs_enabled: false
 ssh::server_options:

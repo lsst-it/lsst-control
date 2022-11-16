@@ -9,7 +9,6 @@ shared_examples 'generic daq manager' do
   include_examples 'daq common'
   include_examples 'daq nfs exports'
 
-  it { is_expected.to contain_class('profile::core::common') }
   it { is_expected.to contain_class('hosts') }
   it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V3.2') }
   it { is_expected.to contain_class('daq::rptsdk').with_version('V3.5.3') }
@@ -126,7 +125,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'common', facts: facts
+        include_examples 'common', facts: facts, chrony: false
         include_examples 'generic daq manager'
 
         it { is_expected.to contain_network__interface('p3p1').with_ensure('absent') }
@@ -157,7 +156,7 @@ describe "#{role} role" do
       describe 'daq-mgt.tu.lsst.org', :site do
         let(:site) { 'tu' }
 
-        include_examples 'common', facts: facts
+        include_examples 'common', facts: facts, chrony: false
         include_examples 'generic daq manager'
 
         it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }
@@ -188,7 +187,7 @@ describe "#{role} role" do
       describe 'comcam-daq-mgt.cp.lsst.org', :site do
         let(:site) { 'cp' }
 
-        include_examples 'common', facts: facts
+        include_examples 'common', facts: facts, chrony: false
         include_examples 'generic daq manager'
 
         it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }

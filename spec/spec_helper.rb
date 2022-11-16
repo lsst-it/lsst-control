@@ -139,7 +139,7 @@ shared_examples 'krb5.conf content' do |match|
   end
 end
 
-shared_examples 'common' do |facts:, no_auth: false|
+shared_examples 'common' do |facts:, no_auth: false, chrony: true|
   include_examples 'bash_completion', facts: facts
   include_examples 'convenience'
 
@@ -200,12 +200,15 @@ shared_examples 'common' do |facts:, no_auth: false|
     )
   end
 
-  it do
-    is_expected.to contain_class('chrony').with(
-      cmdport: 0,
-      leapsecmode: 'system',
-      leapsectz: 'right/UTC',
-    )
+  if chrony
+    it do
+      is_expected.to contain_class('chrony').with(
+        cmdport: 0,
+        leapsecmode: 'system',
+        leapsectz: 'right/UTC',
+        port: 0,
+      )
+    end
   end
 end
 

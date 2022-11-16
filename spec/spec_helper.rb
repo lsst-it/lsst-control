@@ -206,6 +206,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
         cmdport: 0,
         leapsecmode: 'system',
         leapsectz: 'right/UTC',
+        local_stratum: false,
         logchange: 0.005,
         port: 0,
       )

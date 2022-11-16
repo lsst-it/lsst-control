@@ -202,6 +202,7 @@ shared_examples 'common' do |facts:, no_auth: false|
 
   it do
     is_expected.to contain_class('chrony').with(
+      cmdport: 0,
       leapsecmode: 'system',
       leapsectz: 'right/UTC',
     )

@@ -118,6 +118,8 @@ network::mroutes_hash:
       "198.32.252.232/31": *via
       "198.32.252.234/31": *via
       "199.36.153.8/30": *via
+      "134.79.235.226/32": *via # SLAC IT-3892
+      "134.79.235.242/32": *via # SLAC IT-3892
   p2p2.370:
     #table: 120
     routes:
@@ -138,3 +140,5 @@ network::mroutes_hash:
       "198.17.196.0/24": *via  # approximated
       "198.32.252.194/31": *via  # miami latency
       "199.36.153.8/30": *via
+      "134.79.235.226/32": *via # SLAC IT-3892
+      "134.79.235.242/32": *via # SLAC IT-3892

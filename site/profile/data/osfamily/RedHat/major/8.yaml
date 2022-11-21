@@ -27,5 +27,5 @@ profile::core::docker::versionlock:
     release: *docker_release
   docker-scan-plugin:
     ensure: "present"
-    version: "0.12.0"
+    version: "0.21.0"
     release: *docker_release

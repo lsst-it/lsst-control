@@ -1,3 +1,31 @@
 ---
 profile::core::bash_completion::packages:
   - "bash-completion"
+
+profile::core::docker::versionlock:
+  containerd.io:
+    # puppetlabs/docker only specifies a package resource for containerd.io for uninstall
+    ensure: "present"
+    version: "1.6.9"
+    release: "3.1.el9"
+  docker-ce:
+    ensure: "present"
+    epoch: 3
+    version: "%{lookup('profile::core::docker::version')}"
+    release: &docker_release "3.el9"
+    # the puppet package resource name is `docker` with a seperate name param of `docker-ce`
+    before: "Package[docker]"
+  docker-ce-cli:
+    ensure: "present"
+    epoch: 1
+    version: "%{lookup('profile::core::docker::version')}"
+    release: *docker_release
+    before: "Package[docker-ce-cli]"
+  docker-ce-rootless-extras:
+    ensure: "present"
+    version: "%{lookup('profile::core::docker::version')}"
+    release: *docker_release
+  docker-scan-plugin:
+    ensure: "present"
+    version: "0.21.0"
+    release: *docker_release

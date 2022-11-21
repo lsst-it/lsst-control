@@ -383,7 +383,7 @@ shared_examples 'puppet_master' do
 end
 
 shared_examples 'docker' do
-  docker_version = '20.10.12'
+  docker_version = '20.10.21'
 
   it do
     is_expected.to contain_class('docker').with(

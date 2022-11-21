@@ -6,7 +6,7 @@ profile::core::docker::versionlock:
   containerd.io:
     # puppetlabs/docker only specifies a package resource for containerd.io for uninstall
     ensure: "present"
-    version: "1.4.12"
+    version: "1.6.10"
     release: "3.1.el8"
   docker-ce:
     ensure: "present"

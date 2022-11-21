@@ -71,6 +71,7 @@ class profile::core::common (
   include augeas
   include easy_ipa
   include hosts
+  include lldpd
   include network
   include profile::core::bash_completion
   include profile::core::ca
@@ -184,9 +185,6 @@ class profile::core::common (
     include resolv_conf
   }
 
-  class { 'lldpd':
-    manage_repo => true,
-  }
   unless $facts['is_virtual'] {
     include profile::core::hardware
   }

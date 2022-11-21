@@ -383,7 +383,7 @@ shared_examples 'puppet_master' do
 end
 
 shared_examples 'docker' do
-  docker_version = '20.10.12'
+  docker_version = '20.10.21'
 
   it do
     is_expected.to contain_class('docker').with(
@@ -408,13 +408,13 @@ shared_examples 'docker' do
 
   it do
     is_expected.to contain_yum__versionlock('containerd.io').with(
-      version: '1.4.12',
+      version: '1.6.10',
     )
   end
 
   it do
     is_expected.to contain_yum__versionlock('docker-scan-plugin').with(
-      version: '0.12.0',
+      version: '0.21.0',
     )
   end
 end

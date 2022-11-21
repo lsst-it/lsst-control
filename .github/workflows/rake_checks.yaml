@@ -7,7 +7,9 @@ name: rake checks
 
 jobs:
   rake_checks:
-    runs-on: ubuntu-latest
+    runs-on:
+      group: Default Larger Runners
+      labels: ubuntu-latest-16-cores
     steps:
       - uses: actions/checkout@v2
 

@@ -28,7 +28,10 @@ end
 role = 'rke'
 
 describe "#{role} role" do
-  on_supported_os.each do |os, facts|
+  alma9 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '9' }).first
+  # rubocop:disable Naming/VariableNumber
+  on_supported_os.merge('almalinux-9-x86_64': alma9).each do |os, facts|
+    # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
       let(:facts) do
         facts.merge(

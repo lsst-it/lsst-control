@@ -299,7 +299,7 @@ yum::manage_os_default_repos: true
 
 letsencrypt::email: "rubinobs-it-las@lsst.org"
 profile::icinga::agent::host_template: "GeneralHostTemplate"
-profile::core::common::deploy_icinga_agent: false
+profile::core::common::deploy_icinga_agent: true
 
 profile::core::ipset::set:
   # lsst/aura "internal" prefixes

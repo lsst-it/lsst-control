@@ -27,7 +27,6 @@ profile::core::debugutils::packages:
   - "tcpdump"
   - "traceroute"
   - "tree"
-  - "tuned-utils-systemtap"
   - "usbutils"
 profile::ccs::postfix::packages:
   # required for postfix sasl auth

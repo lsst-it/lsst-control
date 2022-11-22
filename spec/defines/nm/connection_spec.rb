@@ -24,6 +24,28 @@ describe 'profile::nm::connection' do
           content: 'bar',
         ).that_notifies('Exec[nmcli conn reload]')
       end
+
+      context 'with ensure =>' do
+        context 'with absent' do
+          let(:params) { { content: 'bar', ensure: 'absent' } }
+
+          it do
+            is_expected.to contain_file('/etc/NetworkManager/system-connections/foo.nmconnection').with(
+              ensure: 'absent',
+            )
+          end
+        end
+
+        context 'with present' do
+          let(:params) { { content: 'bar', ensure: 'present' } }
+
+          it do
+            is_expected.to contain_file('/etc/NetworkManager/system-connections/foo.nmconnection').with(
+              ensure: 'file',
+            )
+          end
+        end
+      end
     end
   end
 end

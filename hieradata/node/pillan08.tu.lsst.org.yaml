@@ -19,3 +19,31 @@ network::interfaces_hash:
     <<: *bond0
   enp197s0f1:  # fqdn 3/4
     <<: *bond0
+
+profile::nm::connections:
+  enp129s0f0:
+    ensure: "absent"
+  enp129s0f1:
+    ensure: "absent"
+  enp197s0f0:
+    content: |
+      [connection]
+      id=enp197s0f0
+      uuid=e763b198-0702-4d5e-a8ba-f241e091190a
+      type=ethernet
+      interface-name=enp197s0f0
+      master=bond0
+      slave-type=bond
+
+      [ethernet]
+  enp197s0f1:
+    content: |
+      [connection]
+      id=enp197s0f1
+      uuid=fe36011b-a7a6-4606-b06d-2a2b51ba9420
+      type=ethernet
+      interface-name=enp197s0f1
+      master=bond0
+      slave-type=bond
+
+      [ethernet]

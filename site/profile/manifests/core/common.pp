@@ -49,6 +49,9 @@
 # @param manage_resolv_conf
 #   If `true`, manage resolv.conf
 #
+# @param manage_network
+#   If `true`, manage /etc/sysconfig/network-scripts
+#
 class profile::core::common (
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
@@ -65,6 +68,7 @@ class profile::core::common (
   Boolean $manage_repos = true,
   Boolean $manage_irqbalance = true,
   Boolean $manage_resolv_conf = true,
+  Boolean $manage_network = true,
 ) {
   include auditd
   include accounts
@@ -72,7 +76,6 @@ class profile::core::common (
   include easy_ipa
   include hosts
   include lldpd
-  include network
   include profile::core::bash_completion
   include profile::core::ca
   include profile::core::convenience
@@ -119,7 +122,9 @@ class profile::core::common (
         # On EL8+, the NetworkManager-initscripts-updown package provides the
         # ifup/ifdown scripts which are needed by example42/network.
         ensure_packages(['NetworkManager-initscripts-updown'])
-        Package['NetworkManager-initscripts-updown'] -> Class['network']
+        if $manage_network {
+          Package['NetworkManager-initscripts-updown'] -> Class['network']
+        }
       }
     }
   }
@@ -182,6 +187,10 @@ class profile::core::common (
 
   if $manage_resolv_conf {
     include resolv_conf
+  }
+
+  if $manage_network {
+    include network
   }
 
   unless $facts['is_virtual'] {

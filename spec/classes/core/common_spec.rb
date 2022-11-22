@@ -47,6 +47,28 @@ describe 'profile::core::common' do
           it { is_expected.to contain_class('resolv_conf') }
         end
       end
+
+      context 'with manage_network param' do
+        context 'when false' do
+          let(:params) do
+            {
+              manage_network: false,
+            }
+          end
+
+          it { is_expected.not_to contain_class('network') }
+        end
+
+        context 'when true' do
+          let(:params) do
+            {
+              manage_network: true,
+            }
+          end
+
+          it { is_expected.to contain_class('network') }
+        end
+      end
     end
   end
 end

@@ -19,8 +19,10 @@ shared_examples 'generic rke' do |facts:|
   if facts[:os]['family'] == 'RedHat'
     if facts[:os]['release']['major'] == '9'
       it { is_expected.not_to contain_class('clustershell') }
+      it { is_expected.not_to contain_class('network') }
     else
       it { is_expected.to contain_class('clustershell') }
+      it { is_expected.to contain_class('network') }
     end
   end
 end

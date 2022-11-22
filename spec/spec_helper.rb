@@ -174,6 +174,10 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
     else # every EL version except 7
       it { is_expected.not_to contain_class('yum').with_managed_repos(['extras']) }
       it { is_expected.not_to contain_class('scl') }
+    end
+
+    if facts[:os]['release']['major'] == '8'
+      it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
 
       it do
         is_expected.to contain_package('NetworkManager-initscripts-updown')
@@ -181,12 +185,10 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
       end
     end
 
-    if facts[:os]['release']['major'] == '8'
-      it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
-    end
-
     if facts[:os]['release']['major'] == '9'
       it { is_expected.to contain_class('lldpd').with_manage_repo(false) }
+
+      it { is_expected.to contain_package('NetworkManager-initscripts-updown') }
     end
   else # not osfamily RedHat
     it { is_expected.not_to contain_class('epel') }

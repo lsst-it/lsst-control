@@ -162,6 +162,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
     end
 
     if facts[:os]['release']['major'] == '7'
+      it { is_expected.not_to contain_package('NetworkManager-initscripts-updown') }
       it { is_expected.to contain_class('yum').with_managed_repos(['extras']) }
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
 
@@ -170,31 +171,29 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
       else
         it { is_expected.not_to contain_class('scl') }
       end
-    else
+    else # every EL version except 7
       it { is_expected.not_to contain_class('yum').with_managed_repos(['extras']) }
       it { is_expected.not_to contain_class('scl') }
-    end
 
-    if facts[:os]['release']['major'] == '8'
       it do
         is_expected.to contain_package('NetworkManager-initscripts-updown')
           .that_comes_before('Class[network]')
       end
-
-      it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
-    else
-      it { is_expected.not_to contain_package('NetworkManager-initscripts-updown') }
     end
-  else
+
+    if facts[:os]['release']['major'] == '8'
+      it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
+    end
+
+    if facts[:os]['release']['major'] == '9'
+      it { is_expected.to contain_class('lldpd').with_manage_repo(false) }
+    end
+  else # not osfamily RedHat
     it { is_expected.not_to contain_class('epel') }
     it { is_expected.not_to contain_class('yum::plugin::versionlock') }
     it { is_expected.to contain_yum__versionlock('puppet-agent') }
     it { is_expected.not_to contain_class('yum') }
     it { is_expected.not_to contain_resources('yumrepo').with_purge(true) }
-  end
-
-  if facts[:os]['release']['major'] == '9'
-    it { is_expected.to contain_class('lldpd').with_manage_repo(false) }
   end
 
   it do

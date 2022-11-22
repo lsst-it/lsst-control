@@ -5,7 +5,7 @@
 #   Enable CNI dhcp plugin
 #
 # @param keytab_base64
-#   base64 encoded krb5 keytab for the iip user
+#   base64 encoded krb5 keytab
 #
 # @param version
 #   Version of rke utility to install
@@ -15,8 +15,6 @@ class profile::core::rke (
   Optional[Sensitive[String[1]]] $keytab_base64 = undef,
   String                         $version       = '1.3.3',
 ) {
-  # ipa must be setup to use the rke user
-  require easy_ipa
   include kmod
 
   $user = 'rke'
@@ -31,6 +29,7 @@ class profile::core::rke (
     profile::util::keytab { $user:
       uid           => $uid,
       keytab_base64 => $keytab_base64,
+      require       => Class[easy_ipa], # ipa must be setup to use the rke user
     }
   }
 
@@ -42,6 +41,7 @@ class profile::core::rke (
     user               => $user,
     owner              => $user,
     group              => $user,
+    require            => Class[easy_ipa], # ipa must be setup to use the rke user
   }
 
   $rke_checksum = $version ? {

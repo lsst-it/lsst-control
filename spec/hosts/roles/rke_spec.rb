@@ -19,8 +19,12 @@ shared_examples 'generic rke' do |facts:|
   if facts[:os]['family'] == 'RedHat'
     if facts[:os]['release']['major'] == '9'
       it { is_expected.not_to contain_class('clustershell') }
+      it { is_expected.not_to contain_class('network') }
+      it { is_expected.to contain_class('profile::nm') }
     else
       it { is_expected.to contain_class('clustershell') }
+      it { is_expected.to contain_class('network') }
+      it { is_expected.not_to contain_class('profile::nm') }
     end
   end
 end
@@ -28,7 +32,10 @@ end
 role = 'rke'
 
 describe "#{role} role" do
-  on_supported_os.each do |os, facts|
+  alma9 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '9' }).first
+  # rubocop:disable Naming/VariableNumber
+  on_supported_os.merge('almalinux-9-x86_64': alma9).each do |os, facts|
+    # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
       let(:facts) do
         facts.merge(

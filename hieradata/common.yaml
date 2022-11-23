@@ -65,6 +65,10 @@ lookup_options:
   profile::core::puppet_master::foreman_global_parameter:
     merge:
       strategy: "deep"
+  profile::nm::connections:
+    merge:
+      strategy: "deep"
+      knockout_prefix: "--"
 
 hosts::purge_hosts: true
 timezone::timezone: "UTC"

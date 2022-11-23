@@ -6,6 +6,11 @@ describe 'profile::core::nm_dispatch' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) { facts }
+      let(:pre_condition) do
+        <<~PP
+          include network
+        PP
+      end
 
       context 'with no params' do
         it { is_expected.to have_file_resource_count(0) }

@@ -12,11 +12,12 @@ class profile::core::nm_dispatch (
 ) {
   if ($interfaces) {
     $interfaces.each |String $dev, Array $cmds| {
-      include network
-
       # if restart is configured to be only per interface... needs some experimentation
       #$network_notify = "Exec[network_restart_${dev}]"
-      $network_notify = 'Class[network]'
+      $network_notify = fact('os.release.major') ? {
+        '9'     => undef,
+        default => 'Class[network]',
+      }
 
       $data = {
         dev  => $dev,

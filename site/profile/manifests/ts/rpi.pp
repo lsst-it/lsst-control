@@ -197,7 +197,7 @@ class profile::ts::rpi {
   $repo_name = [
     "libgphoto2,${libgphoto},test -f /usr/local/lib/pkgconfig/libgphoto2.pc,https://github.com/gphoto/libgphoto2/releases/download/v2.5.27/libgphoto2-2.5.27.tar.bz2,libgphoto2.tar.bz2,${libgphoto_version}",
     "gphoto2,${gphoto},test -f /usr/local/bin/gphoto2,https://github.com/gphoto/gphoto2/releases/download/v2.5.27/gphoto2-2.5.27.tar.bz2,gphoto2-2.5.27.tar.bz2,${gphoto_version}",
-    "python-gphoto2,${python_gphoto},test -f /opt/conda/miniforge/lib/python3.8/site-packages/gphoto2-2.2.4-py3.8.egg-info,https://github.com/jim-easterbrook/python-gphoto2/archive/v2.2.4.tar.gz,python-gphoto2.tar.gz,${python_gphoto_version}",
+    "python-gphoto2,${python_gphoto},test -d /opt/conda/miniforge/lib/python3.8/site-packages/gphoto2-2.2.4-py3.8-linux-aarch64.egg,https://github.com/jim-easterbrook/python-gphoto2/archive/v2.2.4.tar.gz,python-gphoto2.tar.gz,${python_gphoto_version}",
   ]
 
   #<----------- END Variables ------------->

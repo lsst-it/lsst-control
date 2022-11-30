@@ -50,6 +50,19 @@ describe "#{role} role" do
               )
             end
           end
+          %w[
+            389-ds-base
+            389-ds-base-libs
+          ].each do |pkg|
+            it do
+              el_release = "el#{facts[:os]['release']['major']}"
+
+              is_expected.to contain_yum__versionlock(pkg).with(
+                version: '1.3.10.2',
+                release: '17.el7_9'.gsub('EL', el_release),
+              )
+            end
+          end
         end # host
       end # lsst_sites
     end # on os

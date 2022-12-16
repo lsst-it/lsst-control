@@ -204,7 +204,7 @@ describe "#{role} role" do
           is_expected.to contain_dhcp__pool('TS-Kueyen').with(
             network: '139.229.144.0',
             mask: '255.255.255.128',
-            range: ['139.229.144.100 139.229.144.125'],
+            range: ['139.229.144.100 139.229.144.120'],
             gateway: '139.229.144.126',
           )
         end
@@ -264,6 +264,15 @@ describe "#{role} role" do
         end
 
         it do
+          is_expected.to contain_dhcp__pool('BTS').with(
+            network: '139.229.151.0',
+            mask: '255.255.255.0',
+            range: ['139.229.151.201 139.229.151.249'],
+            gateway: '139.229.151.254',
+          )
+        end
+
+        it do
           is_expected.to contain_dhcp__pool('RubinObs-WiFi-Guest').with(
             network: '139.229.159.128',
             mask: '255.255.255.128',
@@ -278,6 +287,44 @@ describe "#{role} role" do
             mask: '255.255.255.0',
             range: ['10.50.3.1 10.50.3.249'],
             gateway: '10.50.3.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('BDC-APS').with(
+            network: '10.49.3.0',
+            mask: '255.255.255.0',
+            range: ['10.49.3.1 10.49.3.249'],
+            gateway: '10.49.3.254',
+            options: ['cisco.wlc 139.229.134.100'],
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('BDC-VoIP').with(
+            network: '10.49.1.0',
+            mask: '255.255.255.0',
+            range: ['10.49.1.1 10.49.1.249'],
+            gateway: '10.49.1.254',
+            options: ['voip-tftp-server 139.229.134.102'],
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('BDC-PDU').with(
+            network: '10.50.1.0',
+            mask: '255.255.255.0',
+            range: ['10.50.1.200 10.50.1.249'],
+            gateway: '10.50.1.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('BDC-CCTV').with(
+            network: '10.49.7.0',
+            mask: '255.255.255.0',
+            range: ['10.49.7.1 10.49.7.249'],
+            gateway: '10.49.7.254',
           )
         end
 
@@ -480,15 +527,6 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('IT-CCTV').with(
-            network: '10.17.7.0',
-            mask: '255.255.255.0',
-            range: ['10.17.7.200 10.17.7.250'],
-            gateway: '10.17.7.254',
-          )
-        end
-
-        it do
           is_expected.to contain_dhcp__pool('IT-IPMI-BMC').with(
             network: '10.18.3.0',
             mask: '255.255.255.0',
@@ -503,6 +541,62 @@ describe "#{role} role" do
             mask: '255.255.255.0',
             range: ['10.18.7.150 10.18.7.249'],
             gateway: '10.18.7.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-AP').with(
+            network: '10.17.3.0',
+            mask: '255.255.255.0',
+            range: ['10.17.3.1 10.17.3.249'],
+            gateway: '10.17.3.254',
+            options: ['cisco.wlc 139.229.160.100'],
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-VOIP').with(
+            network: '10.17.1.0',
+            mask: '255.255.255.0',
+            range: ['10.17.1.1 10.17.1.249'],
+            gateway: '10.17.1.254',
+            options: ['voip-tftp-server 139.229.160.102'],
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-IPMI-PDU').with(
+            network: '10.18.1.0',
+            mask: '255.255.255.0',
+            range: ['10.18.1.200 10.18.1.249'],
+            gateway: '10.18.1.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-CCTV').with(
+            network: '10.17.7.0',
+            mask: '255.255.255.0',
+            range: ['10.17.7.1 10.17.7.249'],
+            gateway: '10.17.7.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-MISC').with(
+            network: '10.17.5.0',
+            mask: '255.255.255.0',
+            range: ['10.17.5.200 10.17.5.249'],
+            gateway: '10.17.5.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-IPMI-PXE').with(
+            network: '10.18.5.0',
+            mask: '255.255.255.0',
+            range: ['10.18.5.200 10.18.5.249'],
+            gateway: '10.18.5.254',
           )
         end
 

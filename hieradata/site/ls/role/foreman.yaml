@@ -5,6 +5,11 @@ dhcp::interfaces:
 dhcp::authoritative: true
 dhcp::pxeserver: "139.229.135.5"  # foreman.ls.lsst.org
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
+dhcp::options:
+  - "voip-tftp-server code 150 = { ip-address }"
+  - "space cisco"
+  - "cisco.wlc code 241 = array of ip-address"
+  - "local-encapsulation code 43 = encapsulate cisco"
 dhcp::pools:
   IT-Services:  # https://jira.lsstcorp.org/browse/IT-1676
     network: "139.229.135.0"
@@ -43,7 +48,7 @@ dhcp::pools:
     mask: "255.255.255.128"
     gateway: "139.229.144.126"
     range:
-      - "139.229.144.100 139.229.144.125"
+      - "139.229.144.100 139.229.144.120"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   BDC-Teststand-DDS:  # vlan2301
     network: "139.229.145.0"
@@ -106,6 +111,38 @@ dhcp::pools:
     gateway: "10.50.3.254"
     range:
       - "10.50.3.1 10.50.3.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-APS:
+    network: "10.49.3.0"
+    mask: "255.255.255.0"
+    gateway: "10.49.3.254"
+    range:
+      - "10.49.3.1 10.49.3.249"
+    options:
+      - "cisco.wlc 139.229.134.100"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-VoIP:
+    network: "10.49.1.0"
+    mask: "255.255.255.0"
+    gateway: "10.49.1.254"
+    range:
+      - "10.49.1.1 10.49.1.249"
+    options:
+      - "voip-tftp-server 139.229.134.102"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-PDU:
+    network: "10.50.1.0"
+    mask: "255.255.255.0"
+    gateway: "10.50.1.254"
+    range:
+      - "10.50.1.200 10.50.1.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-CCTV:
+    network: "10.49.7.0"
+    mask: "255.255.255.0"
+    gateway: "10.49.7.254"
+    range:
+      - "10.49.7.1 10.49.7.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
 
 profile::core::puppet_master::foreman_hostgroup:

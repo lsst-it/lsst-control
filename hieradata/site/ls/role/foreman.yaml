@@ -87,6 +87,12 @@ dhcp::pools:
     range:
       - "139.229.150.112 139.229.150.125"  # ~ /28
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  BTS:
+    network: "139.229.151.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.151.254"
+    range:
+      - "139.229.151.201 139.229.151.249"  # ~ /27
   RubinObs-WiFi-Guest:
     network: "139.229.159.128"
     mask: "255.255.255.128"

@@ -281,6 +281,15 @@ describe "#{role} role" do
           )
         end
 
+        it do
+          is_expected.to contain_dhcp__pool('BTS').with(
+            network: '139.229.151.0',
+            mask: '255.255.255.0',
+            range: ['139.229.151.201 139.229.151.249'],
+            gateway: '139.229.151.254',
+          )
+        end
+
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'common', facts: facts

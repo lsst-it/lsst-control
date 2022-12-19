@@ -1,0 +1,29 @@
+---
+cni::plugins::checksum: "962100bbc4baeaaa5748cdbfce941f756b1531c2eadb290129401498bfac21e7"
+cni::plugins::enable: ["macvlan"]
+cni::plugins::version: "0.9.1"
+profile::core::rke::enable_dhcp: true
+profile::core::ospl::enable_rundir: true
+profile::nm::connections:
+  enp129s0f0:
+    content: |
+      [connection]
+      id=enp129s0f0
+      uuid=bcbc933f-bf6f-4000-9dc6-7d39712f8c48
+      type=ethernet
+      autoconnect=true
+      interface-name=enp129s0f0
+
+      [ethernet]
+
+      [ipv4]
+      method=auto
+  enp129s0f1:
+    content: |
+      [connection]
+      id=enp129s0f1
+      uuid=1b088f39-bc59-4dcc-9a85-f962c935eaeb
+      type=ethernet
+      interface-name=enp129s0f1
+
+      [ethernet]

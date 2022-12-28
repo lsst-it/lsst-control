@@ -95,37 +95,85 @@ class profile::icinga::network (
   }
   elsif $site == 'summit' {
     $host_list  = [
-      'comp-cr01.cp.lsst.org,10.16.1.1',
-      'comp-cr02.cp.lsst.org,10.16.1.2',
-      'main1-as01.cp.lsst.org,10.17.0.1',
-      'villa-as01.cp.lsst.org,10.17.0.100',
-      'casino-as01.cp.lsst.org,10.17.0.101',
-      'penon-as01.cp.lsst.org,10.17.0.102',
-      'eie-as01.cp.lsst.org,10.17.0.103',
-      'mill-as01.cp.lsst.org,10.17.0.104',
-      'aux-as01.cp.lsst.org,10.17.0.13',
-      'wst-as01.cp.lsst.org,10.17.0.14',
-      'dimm-as01.cp.lsst.org,10.17.0.15',
-      'sky-as01.cp.lsst.org,10.17.0.16',
-      'gen-as01.cp.lsst.org,10.17.0.17',
-      'cam-as01.cp.lsst.org,10.17.0.2',
-      'comp-ds01.cp.lsst.org,10.17.0.254',
+      'sdc-sp01.cp.lsst.org,10.17.0.1',
+      'sdc-sp02.cp.lsst.org,10.17.0.2',
+      'main1-as01.cp.lsst.org,10.17.0.11',
+      'comp-as01.cp.lsst.org,10.17.0.21',
+      'comp-as02.cp.lsst.org,10.17.0.22',
       'comp-prep01.cp.lsst.org,10.17.0.23',
-      'comp-is01.cp.lsst.org,10.17.0.32',
-      'comp-is02.cp.lsst.org,10.17.0.33',
-      'comp-is03.cp.lsst.org,10.17.0.34',
-      'comp-is04.cp.lsst.org,10.17.0.35',
-      'comp-is05.cp.lsst.org,10.17.0.36',
-      'comp-is06.cp.lsst.org,10.17.0.37',
-      'comp-is07.cp.lsst.org,10.17.0.38',
-      'comp-is08.cp.lsst.org,10.17.0.39',
+      'cam-as01.cp.lsst.org,10.17.0.31',
+      'coat-as01.cp.lsst.org,10.17.0.32',
+      'main3-as01.cp.lsst.org,10.17.0.33',
+      'main3-as02.cp.lsst.org,10.17.0.34',
+      'main3-as03.cp.lsst.org,10.17.0.35',
       'rot-as01.cp.lsst.org,10.17.0.40',
-      'comp-as01.cp.lsst.org,10.17.0.51',
-      'comp-as02.cp.lsst.org,10.17.0.52',
-      'coat-as01.cp.lsst.org,10.17.0.53',
-      'main5-as01.cp.lsst.org,10.17.0.54',
+      'main5-as01.cp.lsst.org,10.17.0.51',
+      'main5-as02.cp.lsst.org,10.17.0.52',
+      'dynalene-as01.cp.lsst.org,10.17.0.53',
+      'main6-as01.cp.lsst.org,10.17.0.61',
+      'dome-as01.cp.lsst.org,10.17.0.62',
+      'main6-as02.cp.lsst.org,10.17.0.63',
       'main7-as01.cp.lsst.org,10.17.0.71',
-      'm1m3-as01.cp.lsst.org,10.17.0.6',
+      'main7-as02.cp.lsst.org,10.17.0.72',
+      'tea-as01.cp.lsst.org,10.17.0.81',
+      'tma-as01.cp.lsst.org,10.17.0.82',
+      'tma-as02.cp.lsst.org,10.17.0.83',
+      'tma-as03.cp.lsst.org,10.17.0.84',
+      'm1m3-as01.cp.lsst.org,10.17.0.85',
+      'm1m3-as02.cp.lsst.org,10.17.0.86',
+      'aux-as01.cp.lsst.org,10.17.0.91',
+      'wst-as01.cp.lsst.org,10.17.0.92',
+      'dimm-as01.cp.lsst.org,10.17.0.93',
+      'sky-as01.cp.lsst.org,10.17.0.94',
+      'comp-lf01.cp.lsst.org,10.17.0.101',
+      'comp-lf02.cp.lsst.org,10.17.0.102',
+      'comp-lf03.cp.lsst.org,10.17.0.103',
+      'comp-lf04.cp.lsst.org,10.17.0.104',
+      'comp-lf05.cp.lsst.org,10.17.0.105',
+      'comp-lf06.cp.lsst.org,10.17.0.106',
+      'comp-lf07.cp.lsst.org,10.17.0.107',
+      'comp-lf08.cp.lsst.org,10.17.0.108',
+      'comp-lf09.cp.lsst.org,10.17.0.109',
+      'comp-lf10.cp.lsst.org,10.17.0.110',
+      'comp-lf11.cp.lsst.org,10.17.0.111',
+      'comp-lf12.cp.lsst.org,10.17.0.112',
+      'comp-lf13.cp.lsst.org,10.17.0.113',
+      'comp-lf14.cp.lsst.org,10.17.0.114',
+      'comp-lf15.cp.lsst.org,10.17.0.115',
+      'comp-lf16.cp.lsst.org,10.17.0.116',
+      'comp-lf17.cp.lsst.org,10.17.0.117',
+      'comp-lf18.cp.lsst.org,10.17.0.118',
+      'comp-lf19.cp.lsst.org,10.17.0.119',
+      'comp-lf20.cp.lsst.org,10.17.0.120',
+      'comp-lf21.cp.lsst.org,10.17.0.121',
+      'comp-lf22.cp.lsst.org,10.17.0.122',
+      'comp-lf23.cp.lsst.org,10.17.0.123',
+      'comp-lf24.cp.lsst.org,10.17.0.124',
+      'comp-lf25.cp.lsst.org,10.17.0.125',
+      'comp-lf26.cp.lsst.org,10.17.0.126',
+      'comp-lf27.cp.lsst.org,10.17.0.127',
+      'comp-lf28.cp.lsst.org,10.17.0.128',
+      'gen-as01.cp.lsst.org,10.17.0.181',
+      'penon-as01.cp.lsst.org,10.17.0.182',
+      'patio3-as01.cp.lsst.org,10.17.0.183',
+      'besalco-as01.cp.lsst.org,10.17.0.184',
+      'casino-as01.cp.lsst.org,10.17.0.185',
+      'eie-as01.cp.lsst.org,10.17.0.186',
+      'mill-as01.cp.lsst.org,10.17.0.187',
+      'comp-is01.cp.lsst.org,10.17.0.201',
+      'comp-is02.cp.lsst.org,10.17.0.202',
+      'comp-is03.cp.lsst.org,10.17.0.203',
+      'comp-is04.cp.lsst.org,10.17.0.204',
+      'comp-is05.cp.lsst.org,10.17.0.205',
+      'comp-is06.cp.lsst.org,10.17.0.206',
+      'comp-is07.cp.lsst.org,10.17.0.207',
+      'comp-is08.cp.lsst.org,10.17.0.208',
+      'comp-is09.cp.lsst.org,10.17.0.209',
+      'comp-is10.cp.lsst.org,10.17.0.210',
+      'comp-is11.cp.lsst.org,10.17.0.211',
+      'comp-is12.cp.lsst.org,10.17.0.212',
+      'comp-is13.cp.lsst.org,10.17.0.213',
+      'comp-is14.cp.lsst.org,10.17.0.214',
     ]
     $gw_list  = [
       'Vlan1090_k3s-testing,198.19.128.126',
@@ -236,12 +284,12 @@ class profile::icinga::network (
       # lint:ignore:strict_indent
       content => @("HOST_CONTENT"/L),
         {
-        "address": "${value[1]}",
-        "display_name": "${value[0]}",
+        "address": "${value[1] }",
+        "display_name": "${value[0] }",
         "imports": [
           "${network_host_template_name}"
         ],
-        "object_name":"${value[0]}",
+        "object_name":"${value[0] }",
         "object_type": "object",
         "vars": {
             "safed_profile": "3"
@@ -271,12 +319,12 @@ class profile::icinga::network (
       # lint:ignore:strict_indent
       content => @("HOST_CONTENT"/L),
         {
-        "address": "${value[1]}",
-        "display_name": "${value[0]}",
+        "address": "${value[1] }",
+        "display_name": "${value[0] }",
         "imports": [
           "${gateway_host_template_name}"
         ],
-        "object_name":"${value[0]}",
+        "object_name":"${value[0] }",
         "object_type": "object",
         "vars": {
             "safed_profile": "3"
@@ -307,11 +355,11 @@ class profile::icinga::network (
       content => @("SVC_TEMPLATE_CONTENT"/L),
         {
         "check_command": "${nwc_name}",
-        "object_name": "${value[0]}",
+        "object_name": "${value[0] }",
         "object_type": "template",
         "vars": {
           "nwc_health_community": "${community}",
-          "nwc_health_mode": "${value[1]}",
+          "nwc_health_mode": "${value[1] }",
           "nwc_health_statefilesdir": "/tmp/"
         },
         "use_agent": false,
@@ -344,7 +392,7 @@ class profile::icinga::network (
         "imports": [
           "${$value[0]}"
         ],
-        "object_name": "${value[1]}",
+        "object_name": "${value[1] }",
         "object_type": "object"
         }
         | SVC
@@ -371,9 +419,9 @@ class profile::icinga::network (
       # lint:ignore:strict_indent
       content => @("HOSTGROUP"/L),
         {
-        "assign_filter": "${value[0]}",
-        "display_name": "${value[1]}",
-        "object_name": "${value[2]}",
+        "assign_filter": "${value[0] }",
+        "display_name": "${value[1] }",
+        "object_name": "${value[2] }",
         "object_type": "object"
         }
         | HOSTGROUP

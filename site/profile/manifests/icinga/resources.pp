@@ -319,7 +319,7 @@ class profile::icinga::resources (
         "vars": {
             "http_certificate": "30"
         },
-        "object_name": "${value[0]}",
+        "object_name": "${value[0] }",
         "object_type": "template"
         }
         | TLS
@@ -332,7 +332,7 @@ class profile::icinga::resources (
         "has_agent": true,
         "master_should_connect": true,
         "max_check_attempts": "5",
-        "object_name": "${value[0]}",
+        "object_name": "${value[0] }",
         "object_type": "template"
         }
         | HOST_TEMPLATE
@@ -362,8 +362,8 @@ class profile::icinga::resources (
     if ($value[2]=='0') {
       $content = @("TEMPLATE"/L)
         {
-        "check_command": "${value[0]}",
-        "object_name": "${value[1]}",
+        "check_command": "${value[0] }",
+        "object_name": "${value[1] }",
         "object_type": "template",
         "use_agent": true,
         "zone": "master"
@@ -373,12 +373,12 @@ class profile::icinga::resources (
     elsif ($value[2]=='1') {
       $content = @("TEMPLATE1"/L)
         {
-        "check_command": "${value[0]}",
-        "object_name": "${value[1]}",
+        "check_command": "${value[0] }",
+        "object_name": "${value[1] }",
         "object_type": "template",
         "use_agent": true,
         "vars": {
-          "${value[3]}": "${value[4]}"
+          "${value[3] }": "${value[4] }"
         },
         "zone": "master"
         }
@@ -387,8 +387,8 @@ class profile::icinga::resources (
     elsif ($value[2]=='2') {
       $content = @("TEMPLATE2"/L)
         {
-        "check_command": "${value[0]}",
-        "object_name": "${value[1]}",
+        "check_command": "${value[0] }",
+        "object_name": "${value[1] }",
         "object_type": "template",
         "use_agent": true,
         "vars": {
@@ -402,13 +402,13 @@ class profile::icinga::resources (
     elsif ($value[2]=='3') {
       $content = @("TEMPLATE3"/L)
         {
-        "check_command": "${value[0]}",
-        "object_name": "${value[1]}",
+        "check_command": "${value[0] }",
+        "object_name": "${value[1] }",
         "object_type": "template",
         "use_agent": true,
         "vars": {
-            "${value[3]}": "${value[4]}",
-            "${value[5]}": "${value[6]}"
+            "${value[3] }": "${value[4] }",
+            "${value[5] }": "${value[6] }"
         },
         "zone": "master"
         }
@@ -417,14 +417,14 @@ class profile::icinga::resources (
     elsif ($value[2]=='4') {
       $content = @("TEMPLATE4"/L)
         {
-        "check_command": "${value[0]}",
-        "object_name": "${value[1]}",
+        "check_command": "${value[0] }",
+        "object_name": "${value[1] }",
         "object_type": "template",
         "use_agent": true,
         "vars": {
-            "${value[3]}": "${value[4]}",
-            "${value[5]}": "${value[6]}",
-            "${value[7]}": "${value[8]}"
+            "${value[3] }": "${value[4] }",
+            "${value[5] }": "${value[6] }",
+            "${value[7] }": "${value[8] }"
         },
         "zone": "master"
         }
@@ -433,16 +433,16 @@ class profile::icinga::resources (
     elsif ($value[2]=='5') {
       $content = @("TEMPLATE5"/L)
         {
-        "check_command": "${value[0]}",
-        "object_name": "${value[1]}",
+        "check_command": "${value[0] }",
+        "object_name": "${value[1] }",
         "object_type": "template",
         "use_agent": true,
         "vars": {
-            "${value[3]}": "${value[4]}",
-            "${value[5]}": "${value[6]}",
-            "${value[7]}": "${value[8]}",
-            "${value[9]}": "${value[10]}",
-            "${value[11]}": ["${value[12]}","${value[13]}","${value[14]}","${value[15]}","${value[16]}","${value[17]}","${value[18]}"]
+            "${value[3] }": "${value[4] }",
+            "${value[5] }": "${value[6] }",
+            "${value[7] }": "${value[8] }",
+            "${value[9] }": "${value[10] }",
+            "${value[11] }": ["${value[12] }","${value[13] }","${value[14] }","${value[15] }","${value[16] }","${value[17] }","${value[18] }"]
         },
         "zone": "master"
         }
@@ -479,11 +479,11 @@ class profile::icinga::resources (
       # lint:ignore:strict_indent
       content => @("CONTENT"/L),
         {
-        "host": "${value[0]}",
+        "host": "${value[0] }",
         "imports": [
-            "${$value[1]}"
+            "${$value[1] }"
         ],
-        "object_name": "${value[2]}",
+        "object_name": "${value[2] }",
         "object_type": "object"
         }
         | CONTENT
@@ -539,9 +539,9 @@ class profile::icinga::resources (
       # lint:ignore:strict_indent
       content => @("CLUSTER"/L),
         {
-        "assign_filter": "${value[3]}",
-        "display_name": "${value[1]}",
-        "object_name": "${value[2]}",
+        "assign_filter": "${value[3] }",
+        "display_name": "${value[1] }",
+        "object_name": "${value[2] }",
         "object_type": "object"
         }
         | CLUSTER
@@ -570,9 +570,9 @@ class profile::icinga::resources (
       # lint:ignore:strict_indent
       content => @("GROUP"/L),
         {
-        "assign_filter": "service.name=%22%2A${value[0]}%22",
-        "display_name": "${value[1]}",
-        "object_name": "${value[1]}",
+        "assign_filter": "service.name=%22%2A${value[0] }%22",
+        "display_name": "${value[1] }",
+        "object_name": "${value[1] }",
         "object_type": "object"
 
         }
@@ -639,12 +639,12 @@ class profile::icinga::resources (
       # lint:ignore:strict_indent
       content => @("HOST_CONTENT"/L),
         {
-        "address": "${value[1]}",
-        "display_name": "${value[0]}",
+        "address": "${value[1] }",
+        "display_name": "${value[0] }",
         "imports": [
           "${stayalive_template}"
         ],
-        "object_name":"${value[0]}",
+        "object_name":"${value[0] }",
         "object_type": "object",
         "vars": {
             "safed_profile": "3"

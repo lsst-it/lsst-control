@@ -50,7 +50,7 @@
 #   If `true`, manage resolv.conf
 #
 # @param manage_network
-#   If `true`, manage /etc/sysconfig/network-scripts
+#   If `true`, manage network configuration
 #
 class profile::core::common (
   Boolean $deploy_icinga_agent = false,
@@ -130,6 +130,9 @@ class profile::core::common (
           include network
           Package['NetworkManager-initscripts-updown'] -> Class['network']
         }
+      }
+      default: { # EL9+
+        include profile::nm
       }
     }
   }

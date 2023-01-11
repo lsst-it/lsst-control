@@ -29,6 +29,19 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'common', facts: facts
+
+          %w[
+            libguestfs
+            qemu-guest-agent
+            qemu-kvm-tools
+            virt-install
+            virt-manager
+            virt-top
+            virt-viewer
+            virt-what
+          ].each do |pkg|
+            it { is_expected.to contain_package(pkg) }
+          end
         end # host
       end # lsst_sites
     end

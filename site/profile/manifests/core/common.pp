@@ -118,7 +118,7 @@ class profile::core::common (
           }
         }
       }
-      default: {
+      '8': {
         # On EL8+, the NetworkManager-initscripts-updown package provides the
         # ifup/ifdown scripts which are needed by example42/network.
         ensure_packages(['NetworkManager-initscripts-updown'])

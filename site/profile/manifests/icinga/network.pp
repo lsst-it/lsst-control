@@ -235,7 +235,7 @@ class profile::icinga::network (
   $format        = 'Accept: application/json'
   $curl          = 'curl -s -k -H'
   $icinga_path   = '/opt/icinga'
-  $lt            = '| grep Failed'
+  $lt            = '| grep error'
 
   #<-----------------------End Variables Definition----------------------->
   #

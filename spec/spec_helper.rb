@@ -165,6 +165,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
       it { is_expected.not_to contain_package('NetworkManager-initscripts-updown') }
       it { is_expected.to contain_class('yum').with_managed_repos(['extras']) }
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
+      it { is_expected.to contain_class('network') }
 
       if facts[:os]['architecture'] == 'x86_64'
         it { is_expected.to contain_class('scl') }
@@ -178,6 +179,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
 
     if facts[:os]['release']['major'] == '8'
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
+      it { is_expected.to contain_class('network') }
 
       it do
         is_expected.to contain_package('NetworkManager-initscripts-updown')
@@ -187,6 +189,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
 
     if facts[:os]['release']['major'] == '9'
       it { is_expected.to contain_class('lldpd').with_manage_repo(false) }
+      it { is_expected.not_to contain_class('network') }
       it { is_expected.not_to contain_package('NetworkManager-initscripts-updown') }
     end
   else # not osfamily RedHat

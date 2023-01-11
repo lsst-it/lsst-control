@@ -117,12 +117,17 @@ class profile::core::common (
             include scl
           }
         }
+
+        if $manage_network {
+          include network
+        }
       }
       '8': {
         # On EL8+, the NetworkManager-initscripts-updown package provides the
         # ifup/ifdown scripts which are needed by example42/network.
         ensure_packages(['NetworkManager-initscripts-updown'])
         if $manage_network {
+          include network
           Package['NetworkManager-initscripts-updown'] -> Class['network']
         }
       }
@@ -187,10 +192,6 @@ class profile::core::common (
 
   if $manage_resolv_conf {
     include resolv_conf
-  }
-
-  if $manage_network {
-    include network
   }
 
   unless $facts['is_virtual'] {

@@ -39,6 +39,7 @@ describe "#{role} role" do
             virt-top
             virt-viewer
             virt-what
+            xauth
           ].each do |pkg|
             it { is_expected.to contain_package(pkg) }
           end

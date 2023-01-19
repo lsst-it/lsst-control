@@ -1,4 +1,0 @@
----
-classes:
-  - "profile::nm"
-profile::core::common::manage_network: false

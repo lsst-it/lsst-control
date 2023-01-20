@@ -18,6 +18,9 @@ profile::nm::connections:
 
       [ipv4]
       method=auto
+
+      [ipv6]
+      method=disabled
   enp129s0f1:
     content: |
       [connection]
@@ -29,4 +32,7 @@ profile::nm::connections:
       [ethernet]
 
       [ipv4]
+      method=disabled
+
+      [ipv6]
       method=disabled

@@ -1,0 +1,9 @@
+---
+clustershell::groupmembers:
+  manke: {group: "manke", member: "manke[01-10]"}
+cni::plugins::checksum: "962100bbc4baeaaa5748cdbfce941f756b1531c2eadb290129401498bfac21e7"
+cni::plugins::enable: ["macvlan"]
+cni::plugins::version: "0.9.1"
+profile::core::common::manage_powertop: true
+profile::core::ospl::enable_rundir: true
+profile::core::rke::enable_dhcp: true

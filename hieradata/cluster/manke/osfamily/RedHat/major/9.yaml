@@ -1,9 +1,4 @@
 ---
-cni::plugins::checksum: "962100bbc4baeaaa5748cdbfce941f756b1531c2eadb290129401498bfac21e7"
-cni::plugins::enable: ["macvlan"]
-cni::plugins::version: "0.9.1"
-profile::core::rke::enable_dhcp: true
-profile::core::ospl::enable_rundir: true
 profile::nm::connections:
   enp129s0f0:
     content: |

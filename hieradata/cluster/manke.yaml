@@ -7,3 +7,4 @@ cni::plugins::version: "0.9.1"
 profile::core::common::manage_powertop: true
 profile::core::ospl::enable_rundir: true
 profile::core::rke::enable_dhcp: true
+profile::core::rke::version: "1.4.1"

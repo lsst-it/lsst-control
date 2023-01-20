@@ -27,3 +27,6 @@ profile::nm::connections:
       interface-name=enp129s0f1
 
       [ethernet]
+
+      [ipv4]
+      method=disabled

@@ -264,11 +264,47 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('BTS').with(
+          is_expected.to contain_dhcp__pool('BTS_MANKE').with(
             network: '139.229.151.0',
             mask: '255.255.255.0',
             range: ['139.229.151.201 139.229.151.249'],
             gateway: '139.229.151.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('BTS_LSSTCAM').with(
+            network: '139.229.152.0',
+            mask: '255.255.255.128',
+            range: ['139.229.152.70 139.229.152.120'],
+            gateway: '139.229.152.126',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('BTS_AUXTEL').with(
+            network: '139.229.152.128',
+            mask: '255.255.255.192',
+            range: ['139.229.152.150 139.229.152.180'],
+            gateway: '139.229.152.190',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('BTS_MISC').with(
+            network: '139.229.152.192',
+            mask: '255.255.255.192',
+            range: ['139.229.152.210 139.229.152.250'],
+            gateway: '139.229.152.254',
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('BTS_LHN').with(
+            network: '139.229.153.0',
+            mask: '255.255.255.0',
+            range: ['139.229.153.201 139.229.153.249'],
+            gateway: '139.229.153.254',
           )
         end
 

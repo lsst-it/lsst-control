@@ -85,7 +85,7 @@ mod 'puppet/openldap', '5.0.1'
 mod 'puppet/php', '8.0.3'
 mod 'puppet/postfix',  '3.0.0'
 mod 'puppet/python', '6.3.0'
-mod 'puppet/r10k', '10.1.1'
+mod 'puppet/r10k', '10.3.0'
 mod 'puppet/redis', '8.8.0'
 mod 'puppet/rsyslog', '6.0.0'
 mod 'puppet/scl', git: 'https://github.com/lsst-it/puppet-scl', ref: 'production'  # https://github.com/bodgit/puppet-scl/pull/2

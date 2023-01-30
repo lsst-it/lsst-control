@@ -270,7 +270,7 @@ class profile::icinga::agent (
     $icinga_agent_bmc_ip = "${icinga_path}/${icinga_agent_bmc_fqdn}.sh"
     $bmc_path = "${icinga_path}/${icinga_agent_bmc_fqdn}.json"
     $bmc_cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @${bmc_path}"
-    $bmc_cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_agent_bmc_fqdn}' | grep Failed"
+    $bmc_cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_agent_bmc_fqdn}' | grep error"
     file { $icinga_agent_bmc_ip:
       ensure  => 'file',
       mode    => '0755',

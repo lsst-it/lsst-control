@@ -45,7 +45,7 @@ class profile::icinga::opsgenie (
   $format      = 'Accept: application/json'
   $curl        = 'curl -s -k -H'
   $icinga_path = '/opt/icinga'
-  $lt          = '| grep Failed'
+  $lt          = '| grep error'
 
   #  Notification Template Array
   $notification_template = [

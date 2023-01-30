@@ -17,7 +17,7 @@ class profile::icinga::plugins (
   $format        = 'Accept: application/json'
   $curl          = 'curl -s -k -H'
   $icinga_path   = '/opt/icinga'
-  $lt            = '| grep Failed'
+  $lt            = '| grep error'
 
   #Command Names
   $cpu_command_name = 'cpu'

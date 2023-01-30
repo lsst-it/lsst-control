@@ -2,7 +2,7 @@
 network::interfaces_hash:
   ens192:  # fqdn
     bootproto: "none"
-    defroute: "no"
+    defroute: "yes"
     ipaddress: "139.229.160.54"
     netmask: "255.255.255.0"
     gateway: "139.229.160.254"
@@ -13,7 +13,7 @@ network::interfaces_hash:
     domain: "cp.lsst.org lsst.cloud lsst.org"
   ens32:  # CTIO backup
     bootproto: "none"
-    defroute: "yes"
+    defroute: "no"
     ipaddress: "192.168.251.241"
     netmask: "255.255.255.0"
     gateway: "192.168.251.1"

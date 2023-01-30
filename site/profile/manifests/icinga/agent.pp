@@ -13,6 +13,9 @@
 # @param host_template
 #   Icinga template to import
 #
+# @param bmc_template
+#   Icinga template for BMCs
+#
 # @param site
 #   `summit` or not. XXX This does not conform to the standard two letter tu/ls/cp site codes.
 #
@@ -23,12 +26,13 @@
 #   Port upon which sshd is listening.
 #
 class profile::icinga::agent (
-  String $icinga_master_fqdn,
-  String $icinga_master_ip,
-  String $credentials_hash,
-  String $site,
-  String $host_template,
-  String $ca_salt,
+  String $icinga_master_fqdn = 'null',
+  String $icinga_master_ip = 'null',
+  String $credentials_hash = 'null',
+  String $site = 'null',
+  String $host_template = 'null',
+  String $bmc_template = 'null',
+  String $ca_salt = 'null',
   String $ssh_port = '22',
 ) {
   #<-----------------------Variables-Definition--------------------------->
@@ -40,7 +44,7 @@ class profile::icinga::agent (
   $path = "${icinga_path}/${icinga_agent_fqdn}.json"
   $url = "https://${icinga_master_fqdn}/director/host"
   $cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @${path}"
-  $cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_agent_fqdn}' | grep Failed"
+  $cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_agent_bmc_fqdn}' | grep Failed"
   #<-------------------End-Variables-Definition--------------------------->
   #
   #
@@ -258,4 +262,38 @@ class profile::icinga::agent (
     ensure => 'present',
   }
   #<------------------End-Add-Host-to-Icinga-Master----------------------->
+  #
+  #
+  #<-----------------------Add-BMC-to-Icinga-Master----------------------->
+  unless $facts['is_virtual'] {
+    $icinga_agent_bmc_fqdn = "${trusted['hostname']}-bmc.${trusted['domain']}"
+    $bmc_path = "${icinga_path}/${icinga_agent_bmc_fqdn}.json"
+    $bmc_cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @${bmc_path}"
+    $bmc_cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_agent_bmc_fqdn}' | grep Failed"
+    file { "${icinga_path}/${icinga_agent_bmc_fqdn}.sh":
+      ensure  => 'file',
+      mode    => '0755',
+      # lint:ignore:strict_indent
+      content => @("CONTENT"/$),
+        #/usr/bin/env bash
+        cat > ${bmc_path} <<END
+        {
+        "address": "$(ipmitool lan print 1 | grep 'IP Address' | grep -v Source | awk '{print \$4}')",
+        "display_name": "${icinga_agent_bmc_fqdn}",
+        "imports": [
+          "${bmc_template}"
+        ],
+        "object_name":"${icinga_agent_bmc_fqdn}",
+        "object_type": "object",
+        "vars": {
+          "safed_profile": "3",
+          "ssh_port": "${ssh_port}"
+        }
+        }
+        END
+        | CONTENT
+      # lint:endignore
+    }
+  }
+  #<---------------------END-Add-BMC-to-Icinga-Master--------------------->
 }

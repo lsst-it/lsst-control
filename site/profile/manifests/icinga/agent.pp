@@ -287,16 +287,21 @@ class profile::icinga::agent (
         "object_name":"${icinga_agent_bmc_fqdn}",
         "object_type": "object",
         "vars": {
-          "safed_profile": "3",
-          "ssh_port": "${ssh_port}"
+          "safed_profile": "3"
         }
         }
         END
-        ${bmc_cmd}
         | CONTENT
       # lint:endignore
     }
     -> exec { $icinga_agent_bmc_ip:
+      cwd      => $icinga_path,
+      path     => ['/sbin', '/usr/sbin', '/bin'],
+      provider => shell,
+      unless   => "test -f ${bmc_path}",
+      loglevel => debug,
+    }
+    -> exec { $bmc_cmd:
       cwd      => $icinga_path,
       path     => ['/sbin', '/usr/sbin', '/bin'],
       provider => shell,

@@ -28,7 +28,7 @@ mod 'lsst/ccs_software', '1.2.0'
 mod 'lsst/cni', '2.4.0'
 mod 'lsst/daq', '1.3.0'
 mod 'lsst/dellperc', '1.3.0'
-mod 'lsst/foreman_envsync', '1.0.0'
+mod 'lsst/foreman_envsync', '1.1.0'
 mod 'lsst/helm_binary', '1.1.0'
 mod 'lsst/hosts', git: 'https://github.com/lsst-it/puppet-module-hosts', ref: '528475e' # Fork of ghoneycutt/hosts that includes https://github.com/ghoneycutt/puppet-module-hosts/pull/63
 mod 'lsst/java_artisanal', '2.4.0'

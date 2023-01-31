@@ -563,6 +563,21 @@ describe "#{role} role" do
         end
 
         it do
+          is_expected.to contain_dhcp__pool('yagan-lhn').with(
+            network: '139.229.180.0',
+            mask: '255.255.255.0',
+            range: ['139.229.180.1 139.229.180.62'],
+            gateway: '139.229.180.254',
+            static_routes: [
+              { 'network' => '134.79.20', 'mask' => '23', 'gateway' => '139.229.180.254' },
+              { 'network' => '134.79.23', 'mask' => '24', 'gateway' => '139.229.180.254' },
+              { 'network' => '134.79.235.224', 'mask' => '28', 'gateway' => '139.229.180.254' },
+              { 'network' => '134.79.235.240', 'mask' => '28', 'gateway' => '139.229.180.254' },
+            ],
+          )
+        end
+
+        it do
           is_expected.to contain_dhcp__pool('IT-Contractors').with(
             network: '139.229.191.0',
             mask: '255.255.255.128',

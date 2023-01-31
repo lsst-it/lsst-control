@@ -141,6 +141,18 @@ dhcp::pools:
       # host is statically allocated.
       - "139.229.178.2 139.229.178.58"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  yagan-lhn:
+    network: "139.229.180.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.180.254"
+    range:
+      - "139.229.180.1 139.229.180.62"  # ~/26
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+    static_routes:
+      - {network: "134.79.20", mask: "23", gateway: "139.229.180.254"}
+      - {network: "134.79.23", mask: "24", gateway: "139.229.180.254"}
+      - {network: "134.79.235.224", mask: "28", gateway: "139.229.180.254"}
+      - {network: "134.79.235.240", mask: "28", gateway: "139.229.180.254"}
   IT-Contractors:
     network: "139.229.191.0"
     mask: "255.255.255.128"

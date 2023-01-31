@@ -199,6 +199,7 @@ class profile::core::common (
 
   unless $facts['is_virtual'] {
     include profile::core::hardware
+    ipmi::network { 'dhcp': }
   }
 
   ensure_resource('service', 'NetworkManager', {

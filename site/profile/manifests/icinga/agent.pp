@@ -266,47 +266,49 @@ class profile::icinga::agent (
   #
   #<-----------------------Add-BMC-to-Icinga-Master----------------------->
   unless $facts['is_virtual'] {
-    $icinga_agent_bmc_fqdn = "${trusted['hostname']}-bmc.${trusted['domain']}"
-    $icinga_agent_bmc_ip = "${icinga_path}/${icinga_agent_bmc_fqdn}.sh"
-    $bmc_path = "${icinga_path}/${icinga_agent_bmc_fqdn}.json"
-    $bmc_cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @${bmc_path}"
-    $bmc_cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_agent_bmc_fqdn}' | grep error"
-    file { $icinga_agent_bmc_ip:
-      ensure  => 'file',
-      mode    => '0755',
-      # lint:ignore:strict_indent
-      content => @("CONTENT"/$),
-        #/usr/bin/env bash
-        cat > ${bmc_path} <<END
-        {
-        "address": "$(ipmitool lan print 1 | grep 'IP Address' | grep -v Source | awk '{print \$4}')",
-        "display_name": "${icinga_agent_bmc_fqdn}",
-        "imports": [
-          "${bmc_template}"
-        ],
-        "object_name":"${icinga_agent_bmc_fqdn}",
-        "object_type": "object",
-        "vars": {
-          "safed_profile": "3"
-        }
-        }
-        END
-        | CONTENT
-      # lint:endignore
-    }
-    -> exec { $icinga_agent_bmc_ip:
-      cwd      => $icinga_path,
-      path     => ['/sbin', '/usr/sbin', '/bin'],
-      provider => shell,
-      unless   => "test -f ${bmc_path}",
-      loglevel => debug,
-    }
-    -> exec { $bmc_cmd:
-      cwd      => $icinga_path,
-      path     => ['/sbin', '/usr/sbin', '/bin'],
-      provider => shell,
-      onlyif   => $bmc_cond,
-      loglevel => debug,
+    if has_key($facts['ipmitool_mc_info'], 'Device Available') {
+      $icinga_agent_bmc_fqdn = "${trusted['hostname']}-bmc.${trusted['domain']}"
+      $icinga_agent_bmc_ip = "${icinga_path}/${icinga_agent_bmc_fqdn}.sh"
+      $bmc_path = "${icinga_path}/${icinga_agent_bmc_fqdn}.json"
+      $bmc_cmd = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X POST '${url}' -d @${bmc_path}"
+      $bmc_cond = "curl -s -k -H '${credentials}' -H 'Accept: application/json' -X GET '${url}/host?name=${icinga_agent_bmc_fqdn}' | grep error"
+      file { $icinga_agent_bmc_ip:
+        ensure  => 'file',
+        mode    => '0755',
+        # lint:ignore:strict_indent
+        content => @("CONTENT"/$),
+          #/usr/bin/env bash
+          cat > ${bmc_path} <<END
+          {
+          "address": "$(ipmitool lan print 1 | grep 'IP Address' | grep -v Source | awk '{print \$4}')",
+          "display_name": "${icinga_agent_bmc_fqdn}",
+          "imports": [
+            "${bmc_template}"
+          ],
+          "object_name":"${icinga_agent_bmc_fqdn}",
+          "object_type": "object",
+          "vars": {
+            "safed_profile": "3"
+          }
+          }
+          END
+          | CONTENT
+        # lint:endignore
+      }
+      -> exec { $icinga_agent_bmc_ip:
+        cwd      => $icinga_path,
+        path     => ['/sbin', '/usr/sbin', '/bin'],
+        provider => shell,
+        unless   => "test -f ${bmc_path}",
+        loglevel => debug,
+      }
+      -> exec { $bmc_cmd:
+        cwd      => $icinga_path,
+        path     => ['/sbin', '/usr/sbin', '/bin'],
+        provider => shell,
+        onlyif   => $bmc_cond,
+        loglevel => debug,
+      }
     }
   }
   #<---------------------END-Add-BMC-to-Icinga-Master--------------------->

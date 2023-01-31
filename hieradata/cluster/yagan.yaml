@@ -1,9 +1,10 @@
 ---
 clustershell::groupmembers:
   yagan: {group: "yagan", member: "yagan[01-10]"}
-cni::plugins::checksum: "962100bbc4baeaaa5748cdbfce941f756b1531c2eadb290129401498bfac21e7"
+cni::plugins::checksum: "f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37"
 cni::plugins::enable: ["macvlan"]
-cni::plugins::version: "0.9.1"
+cni::plugins::version: "1.2.0"
+profile::core::common::manage_powertop: true
 profile::core::rke::enable_dhcp: true
 profile::core::ospl::enable_rundir: true
 network::interfaces_hash:
@@ -29,10 +30,34 @@ network::interfaces_hash:
     onboot: "yes"
     type: "none"
     vlan: "yes"
-  eno1:
-    ensure: "absent"
-  eno2d1:
-    ensure: "absent"
-  eno2d1.1201:
-    ensure: "absent"
-profile::core::common::manage_powertop: true
+  enp1s0f1.1800:
+    bootproto: "none"
+    defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
+    bridge: "br1800"
+  br1800:
+    bootproto: "none"
+    onboot: "yes"
+    type: "Bridge"
+  lhnrouting:  # dummy interface to kludge around EL7 NM
+    bootproto: "none"
+    nm_controlled: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+network::rules_hash:
+  lhnrouting:
+    iprule:
+      - "priority 100 from 139.229.180.0/26 lookup 1800"
+network::tables_hash:
+  lhn:
+    table_id: 1800
+network::mroutes_hash:
+  lhnrouting:
+    table: 1800
+    routes:
+      "139.229.180.0/24": "br1800"
+      "default": &via "139.229.180.254"

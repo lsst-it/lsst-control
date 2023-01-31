@@ -96,7 +96,7 @@ mod 'puppet/yum', '6.1.0'
 mod 'qtechnologies/sysstat', '1.2.4'
 mod 'richardc/datacat', '0.6.2'
 mod 'saz/resolv_conf', '5.0.0'
-mod 'saz/ssh', git: 'https://github.com/lsst-it/saz-puppet-ssh', ref: '7f1a892'  # ssh::client::match_block
+mod 'saz/ssh', git: 'https://github.com/lsst-it/saz-puppet-ssh', ref: '6fad31a'  # https://github.com/saz/puppet-ssh/pull/344
 mod 'saz/sudo', '7.0.2'
 mod 'saz/timezone', '6.2.0'
 mod 'simp/auditd', git: 'https://github.com/lsst-it/pupmod-simp-auditd', ref: '022b80c'  # https://github.com/simp/pupmod-simp-auditd/pull/160 https://github.com/simp/pupmod-simp-auditd/pull/161 https://github.com/simp/pupmod-simp-auditd/pull/164 https://github.com/simp/pupmod-simp-auditd/pull/165

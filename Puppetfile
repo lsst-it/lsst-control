@@ -106,7 +106,7 @@ mod 'simp/mate', '1.3.0'
 mod 'simp/polkit', '6.4.0'
 mod 'simp/simplib', '4.10.2'
 mod 'stm/debconf', '4.1.0'
-mod 'theforeman/dhcp', '8.1.0'
+mod 'theforeman/dhcp', '8.2.0'
 mod 'theforeman/dns', '9.2.0'
 mod 'theforeman/foreman', '20.2.0'
 mod 'theforeman/foreman_proxy', git: 'https://github.com/lsst-it/puppet-foreman_proxy', ref: 'c3a92be'  # https://github.com/theforeman/puppet-foreman_proxy/pull/772

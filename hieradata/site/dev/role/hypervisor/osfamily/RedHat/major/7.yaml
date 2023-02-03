@@ -1,0 +1,28 @@
+---
+# This is specific to hardware configuration of the Dell R440 ruka nodes in
+# dev.  This should be refactored if other hardware configurations need to be
+# supported as a dev hypervisor.
+network::interfaces_hash:
+  em1: &off_int  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  em2:  # not connected
+    <<: *off_int
+  em3:  # not connected
+    <<: *off_int
+  em4:  # not connected
+    <<: *off_int
+  p1p1:  # fqdn
+    bootproto: "none"
+    bridge: "br2101"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  p1p2:  # not connected
+    <<: *off_int
+  br2101: &bridge_int
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "bridge"

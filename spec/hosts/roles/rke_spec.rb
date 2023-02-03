@@ -9,6 +9,7 @@ shared_examples 'generic rke' do |facts:|
 
   it { is_expected.to contain_class('kubectl') }
   it { is_expected.to contain_class('profile::core::rke') }
+  it { is_expected.to contain_class('clustershell') }
 
   it do
     is_expected.to contain_file('/home/rke/.bashrc.d/kubectl.sh')
@@ -18,7 +19,6 @@ shared_examples 'generic rke' do |facts:|
 
   if facts[:os]['family'] == 'RedHat'
     if facts[:os]['release']['major'] == '9'
-      it { is_expected.not_to contain_class('clustershell') }
       it { is_expected.not_to contain_class('network') }
       it { is_expected.to contain_class('profile::nm') }
     else

@@ -45,7 +45,7 @@ class profile::icinga::opsgenie (
   $format      = 'Accept: application/json'
   $curl        = 'curl -s -k -H'
   $icinga_path = '/opt/icinga'
-  $lt          = '| grep Failed'
+  $lt          = '| grep error'
 
   #  Notification Template Array
   $notification_template = [
@@ -497,9 +497,9 @@ class profile::icinga::opsgenie (
       # lint:ignore:strict_indent
       content => @("HOST_NOTIFICATION_TEMPLATE"),
         {
-        "command": "${value[0]}",
+        "command": "${value[0] }",
         "notification_interval": "60",
-        "object_name": "${value[1]}",
+        "object_name": "${value[1] }",
         "object_type": "template",
         "users": [
             "${pager_user}"
@@ -531,12 +531,12 @@ class profile::icinga::opsgenie (
       # lint:ignore:strict_indent
       content => @("HOST_NOTIFICATION"),
         {
-        "apply_to": "${value[2]}",
-        "assign_filter": "${value[2]}=true",
+        "apply_to": "${value[2] }",
+        "assign_filter": "${value[2] }=true",
         "imports": [
-            "${value[0]}"
+            "${value[0] }"
         ],
-        "object_name": "${value[1]}",
+        "object_name": "${value[1] }",
         "object_type": "apply",
         "users": [
             "${pager_user}"

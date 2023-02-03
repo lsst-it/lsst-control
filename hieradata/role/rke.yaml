@@ -1,5 +1,6 @@
 ---
 classes:
+  - "clustershell"
   - "kubectl"
   - "profile::core::common"
   - "profile::core::debugutils"

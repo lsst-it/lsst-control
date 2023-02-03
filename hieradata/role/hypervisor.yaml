@@ -13,7 +13,7 @@ packages:
   - "virt-top"
   - "virt-viewer"
   - "virt-what"
-  - "virt-who"
+  - "xauth"
 libvirt::libvirtd_conf:
   access_drivers: '[ "polkit" ]'
 files:

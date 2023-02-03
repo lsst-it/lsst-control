@@ -138,7 +138,7 @@ class profile::ccs::tomcat (
     proxy                 => 'http://tomcat',
     proxy_redirect        => 'default',
     proxy_connect_timeout => '150',
-    proxy_set_header      => [ 'Host $host', 'X-Real-IP $remote_addr', 'X-Forwarded-For $proxy_add_x_forwarded_for', 'X-Forwarded-Host $host', 'X-Forwarded-Proto $scheme', 'Proxy ""', 'Connection ""', ],
+    proxy_set_header      => ['Host $host', 'X-Real-IP $remote_addr', 'X-Forwarded-For $proxy_add_x_forwarded_for', 'X-Forwarded-Host $host', 'X-Forwarded-Proto $scheme', 'Proxy ""', 'Connection ""',],
     proxy_http_version    => '1.1',
     proxy_buffering       => 'off',
   }

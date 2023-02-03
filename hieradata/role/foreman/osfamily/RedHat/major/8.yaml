@@ -51,3 +51,5 @@ profile::core::yum::versionlock:
     ensure: "present"
     version: "%{lookup('foreman::version')}"
     release: "1.el8"
+postgresql::globals::manage_dnf_module: true
+postgresql::globals::version: "12"

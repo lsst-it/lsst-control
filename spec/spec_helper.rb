@@ -5,7 +5,7 @@ include RspecPuppetFacts
 
 # foreman, puppetserver and termini versions
 FOREMAN_VERSION = '3.2.1'
-PUPPETSERVER_VERSION = '7.9.0'
+PUPPETSERVER_VERSION = '7.9.3'
 TERMINI_VERSION = '7.11.0'
 
 # facterdb does not include puppetlabs/stdlib facts

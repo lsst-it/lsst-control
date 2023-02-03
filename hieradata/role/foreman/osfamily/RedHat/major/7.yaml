@@ -10,7 +10,7 @@ postgresql::globals::version: "12"
 profile::core::yum::versionlock:
   puppetserver:
     ensure: "present"
-    version: "7.9.0"
+    version: "%{lookup('puppet::server_puppetserver_version')}"
     release: "1.el7"
     before: "Package[puppetserver]"
   puppetdb-termini:

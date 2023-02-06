@@ -151,7 +151,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
   if facts[:os]['family'] == 'RedHat'
     it { is_expected.to contain_class('epel') }
     it { is_expected.to contain_class('yum::plugin::versionlock').with_clean(true) }
-    it { is_expected.to contain_yum__versionlock('puppet-agent').with_version('7.18.0') }
+    it { is_expected.to contain_yum__versionlock('puppet-agent').with_version('7.21.0') }
     it { is_expected.to contain_class('yum').with_manage_os_default_repos(true) }
     it { is_expected.to contain_resources('yumrepo').with_purge(true) }
     it { is_expected.to contain_class('profile::core::yum') }

@@ -2,6 +2,6 @@
 profile::core::yum::versionlock:
   puppet-agent:
     ensure: "present"
-    version: "7.18.0"
+    version: "%{lookup('puppet_agent::package_version')}"
     release: "1.el8"
     before: "Package[puppet-agent]"

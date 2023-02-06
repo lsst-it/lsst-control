@@ -126,7 +126,7 @@ describe "#{role} role" do
         include_examples 'common', facts: facts, chrony: false
         include_examples 'generic daq manager'
 
-        it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V3.2') }
+        it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V5.0') }
         it { is_expected.to contain_class('daq::rptsdk').with_version('V3.5.3') }
         it { is_expected.to contain_network__interface('p3p1').with_ensure('absent') }
 

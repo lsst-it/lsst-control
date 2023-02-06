@@ -5,7 +5,7 @@ include RspecPuppetFacts
 
 # foreman, puppetserver and termini versions
 FOREMAN_VERSION = '3.2.1'
-PUPPETSERVER_VERSION = '7.9.0'
+PUPPETSERVER_VERSION = '7.9.3'
 TERMINI_VERSION = '7.11.0'
 
 # facterdb does not include puppetlabs/stdlib facts
@@ -151,7 +151,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
   if facts[:os]['family'] == 'RedHat'
     it { is_expected.to contain_class('epel') }
     it { is_expected.to contain_class('yum::plugin::versionlock').with_clean(true) }
-    it { is_expected.to contain_yum__versionlock('puppet-agent').with_version('7.18.0') }
+    it { is_expected.to contain_yum__versionlock('puppet-agent').with_version('7.21.0') }
     it { is_expected.to contain_class('yum').with_manage_os_default_repos(true) }
     it { is_expected.to contain_resources('yumrepo').with_purge(true) }
     it { is_expected.to contain_class('profile::core::yum') }

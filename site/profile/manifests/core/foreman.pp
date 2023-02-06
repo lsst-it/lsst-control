@@ -166,4 +166,13 @@ class profile::core::foreman (
     mode    => '0500',
     require => Class['puppet'],  # ensure puppet user/group exist
   }
+
+  # On EL8, foreman >= 3.2 needs the ruby 2.7 appstream enabled (default is
+  # ruby2.5).
+  package { 'ruby':
+    ensure      => '2.7',
+    enable_only => true,
+    provider    => 'dnfmodule',
+  }
+  -> Class['foreman']
 }

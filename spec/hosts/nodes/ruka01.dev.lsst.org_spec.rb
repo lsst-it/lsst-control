@@ -25,6 +25,10 @@ describe 'ruka01.dev.lsst.org', :site do
       it { is_expected.to contain_class('profile::core::ifdown').with_interface('em1') }
 
       it do
+        is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
+      end
+
+      it do
         is_expected.to contain_class('clustershell').with(
           groupmembers: {
             'ruka' => {

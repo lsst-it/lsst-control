@@ -14,11 +14,12 @@ class profile::core::sysctl::rp_filter (
     default => 0
   }
 
-  $facts['networking']['interfaces'].each |String $dev, Hash $conf| {
+  $interfaces = ['all', 'default'] + fact('networking.interfaces').keys
+  $interfaces.each |String $i| {
     # E.g., p2p1.360 -> p2p1/360
-    $_dev = regsubst($dev, /\./, '/', 'G')
+    $sysctl_dev = regsubst($i, /\./, '/', 'G')
 
-    sysctl::value { "net.ipv4.conf.${_dev}.rp_filter":
+    sysctl::value { "net.ipv4.conf.${sysctl_dev}.rp_filter":
       target => $file,
       value  => $v,
     }

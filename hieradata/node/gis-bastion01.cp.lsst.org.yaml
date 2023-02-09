@@ -1,0 +1,15 @@
+---
+network::interfaces_hash:
+  enp1s0f0:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  enp1s0f1:  # GIS Private Network
+    bootproto: "none"
+    ipaddress: "192.168.180.40"
+    netmask: "255.255.255.0"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"

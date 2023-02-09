@@ -545,6 +545,15 @@ describe "#{role} role" do
         end
 
         it do
+          is_expected.to contain_dhcp__pool('YAGAN_LHN').with(
+            network: '139.229.180.0',
+            mask: '255.255.255.0',
+            range: ['139.229.180.201 139.229.180.249'],
+            gateway: '139.229.180.254',
+          )
+        end
+
+        it do
           is_expected.to contain_dhcp__pool('IT-Contractors').with(
             network: '139.229.191.0',
             mask: '255.255.255.128',

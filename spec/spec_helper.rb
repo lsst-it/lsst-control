@@ -556,7 +556,12 @@ shared_examples 'generic foreman' do
     )
   end
 
-  it { is_expected.to contain_class('dhcp').with_ntpservers(ntpservers) }
+  it do
+    is_expected.to contain_class('dhcp').with(
+      ntpservers: ntpservers,
+      option_static_route: true,
+    )
+  end
 
   {
     'bootloader-append': 'nofb',

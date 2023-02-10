@@ -21,3 +21,4 @@ network::interfaces_hash:
     onboot: "yes"
     type: "none"
     vlan: "yes"
+    bridge: "br2505"

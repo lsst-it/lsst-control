@@ -6,16 +6,21 @@ cni::plugins::version: "0.9.1"
 cni::plugins::enable: ["macvlan"]
 profile::core::rke::enable_dhcp: true
 profile::core::rke::version: "1.3.12"
+network::interfaces_hash:
+  br2505:
+    bootproto: "none"
+    onboot: "yes"
+    type: "Bridge"
 network::rules_hash:
-  p2p1.2505:
+  br2505:
     iprule:
       - "priority 100 from 139.229.153.0/25 lookup 2505"
 network::tables_hash:
   lhn:
     table_id: 2505
 network::mroutes_hash:
-  p2p1.2505:
+  br2505:
     table: 2505
     routes:
-      "139.229.153.0/24": "p2p1.2505"
+      "139.229.153.0/24": "br2505"
       "default": &via "139.229.153.251"

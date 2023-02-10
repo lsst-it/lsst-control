@@ -72,11 +72,12 @@ describe 'ruka01.dev.lsst.org', :site do
           onboot: 'yes',
           type: 'none',
           vlan: 'yes',
+          bridge: "br#{vlan_id}",
         )
       end
 
       it do
-        is_expected.to contain_network__rule("p2p1.#{vlan_id}").with(
+        is_expected.to contain_network__rule("br#{vlan_id}").with(
           iprule: ["priority 100 from 139.229.153.0/25 lookup #{rt_id}"],
         )
       end
@@ -88,10 +89,10 @@ describe 'ruka01.dev.lsst.org', :site do
       end
 
       it do
-        is_expected.to contain_network__mroute("p2p1.#{vlan_id}").with(
+        is_expected.to contain_network__mroute("br#{vlan_id}").with(
           table: rt_id,
           routes: [
-            '139.229.153.0/24' => "p2p1.#{vlan_id}",
+            '139.229.153.0/24' => "br#{vlan_id}",
             'default' => '139.229.153.251',
           ],
         )

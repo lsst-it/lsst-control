@@ -124,8 +124,8 @@ dhcp::pools:
       - "139.229.153.201 139.229.153.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
     static_routes:
-      - {network: "134.79.20.0", mask: "23", gateway: "139.229.153.254"}
-      - {network: "134.79.23.0", mask: "24", gateway: "139.229.153.254"}
+      - {network: "134.79.20", mask: "23", gateway: "139.229.153.254"}
+      - {network: "134.79.23", mask: "24", gateway: "139.229.153.254"}
       - {network: "134.79.235.224", mask: "28", gateway: "139.229.153.254"}
       - {network: "134.79.235.240", mask: "28", gateway: "139.229.153.254"}
   RubinObs-WiFi-Guest:

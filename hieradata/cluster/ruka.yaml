@@ -1,6 +1,6 @@
 ---
 clustershell::groupmembers:
-  ruka: {group: "ruka", member: "ruka[01-06]"}
+  ruka: {group: "ruka", member: "ruka[01-05]"}
 cni::plugins::checksum: "962100bbc4baeaaa5748cdbfce941f756b1531c2eadb290129401498bfac21e7"
 cni::plugins::version: "0.9.1"
 cni::plugins::enable: ["macvlan"]

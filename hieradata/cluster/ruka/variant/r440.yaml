@@ -1,0 +1,16 @@
+---
+profile::core::ifdown::interface: "em1"
+network::interfaces_hash:
+  em1:  # only for PXE
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
+  p2p2:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  p2p1:
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"

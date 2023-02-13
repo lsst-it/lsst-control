@@ -1,0 +1,55 @@
+---
+network::interfaces_hash:
+  enp129s0f0:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  enp129s0f1:  # DDS
+    bootproto: "none"
+    bridge: "dds"
+    defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  dds:
+    bootproto: "dhcp"
+    defroute: "yes"
+    onboot: "yes"
+    bootproto: "none"
+    type: "bridge"
+
+nfs::server_enabled: true
+nfs::nfs_v4_export_root_clients: >-
+  %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.151.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.152.192/26(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+nfs::nfs_exports_global:
+  /data/lsstdata:
+    clients: >-
+      %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.151.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+      139.229.152.192/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
+  /data/repo:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.151.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+      139.229.152.192/26(ro,nohide,insecure,no_subtree_check,async,root_squash)
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /net/self/data/lsstdata:
+    share: "auxtel-oods"
+    server: "%{facts.fqdn}"
+    atboot: true
+  /repo:
+    share: "auxtel-butler"
+    server: "%{facts.fqdn}"
+    atboot: true
+
+profile::core::k5login::k5login:
+  "/home/saluser/.k5login":
+    ensure: "present"
+    principals:
+      - "iip/forwarders.ls.lsst.org@LSST.CLOUD"
+      - "ccs-ipa/auxtel-fp01.ls.lsst.org@LSST.CLOUD"

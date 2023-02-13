@@ -11,15 +11,21 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "yes"
     type: "Bridge"
+  lhnrouting:  # dummy interface to kludge around EL7 NM
+    bootproto: "none"
+    nm_controlled: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
 network::rules_hash:
-  br2505:
+  lhnrouting:
     iprule:
       - "priority 100 from 139.229.153.0/25 lookup 2505"
 network::tables_hash:
   lhn:
     table_id: 2505
 network::mroutes_hash:
-  br2505:
+  lhnrouting:
     table: 2505
     routes:
       "139.229.153.0/24": "br2505"

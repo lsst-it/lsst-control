@@ -99,7 +99,17 @@ describe 'ruka01.dev.lsst.org', :site do
       end
 
       it do
-        is_expected.to contain_network__rule("br#{vlan_id}").with(
+        is_expected.to contain_network__interface('lhnrouting').with(
+          bootproto: 'none',
+          nm_controlled: 'no',
+          nozeroconf: 'yes',
+          onboot: 'yes',
+          type: 'Ethernet',
+        )
+      end
+
+      it do
+        is_expected.to contain_network__rule('lhnrouting').with(
           iprule: ["priority 100 from 139.229.153.0/25 lookup #{rt_id}"],
         )
       end
@@ -111,7 +121,7 @@ describe 'ruka01.dev.lsst.org', :site do
       end
 
       it do
-        is_expected.to contain_network__mroute("br#{vlan_id}").with(
+        is_expected.to contain_network__mroute('lhnrouting').with(
           table: rt_id,
           routes: [
             '139.229.153.0/24' => "br#{vlan_id}",

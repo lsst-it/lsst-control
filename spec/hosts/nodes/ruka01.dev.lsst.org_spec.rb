@@ -23,6 +23,13 @@ describe 'ruka01.dev.lsst.org', :site do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('profile::core::ifdown').with_interface('em1') }
+      it { is_expected.to contain_kmod__load('dummy') }
+
+      it do
+        is_expected.to contain_kmod__install('dummy').with(
+          command: '"/sbin/modprobe --ignore-install dummy; /sbin/ip link set name lhnrouting dev dummy0"',
+        )
+      end
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)

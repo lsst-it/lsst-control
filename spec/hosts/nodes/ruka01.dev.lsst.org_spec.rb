@@ -55,8 +55,8 @@ describe 'ruka01.dev.lsst.org', :site do
 
       it do
         is_expected.to contain_class('cni::plugins').with(
-          checksum: '962100bbc4baeaaa5748cdbfce941f756b1531c2eadb290129401498bfac21e7',
-          version: '0.9.1',
+          version: '1.2.0',
+          checksum: 'f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37',
           enable: ['macvlan'],
         )
       end

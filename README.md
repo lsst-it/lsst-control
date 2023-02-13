@@ -17,6 +17,8 @@ to `role` layers.
 | node/%{fqdn}.yaml                                                       | no                      |
 | site/%{site}/cluster/%{cluster}/role/%{role}.yaml                       | yes                     |
 | site/%{site}/cluster/%{cluster}.yaml                                    | no                      |
+| cluster/%{cluster}/variant/%{variant}/%{os.family}/major/%{os.release.major}.yaml | no            |
+| cluster/%{cluster}/variant/%{variant}.yaml                              | no                      |
 | cluster/%{cluster}/role/%{role}.yaml                                    | yes                     |
 | cluster/%{cluster}/osfamily/%{os.family}/major/%{os.release.major}.yaml | no                      |
 | cluster/%{cluster}.yaml                                                 | no                      |

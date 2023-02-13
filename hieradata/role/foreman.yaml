@@ -7,11 +7,12 @@ classes:
   - "profile::core::docker::prune"
   - "profile::core::puppet_master"
 
-dhcp::default_lease_time: &lease_time 900
-dhcp::max_lease_time: *lease_time
-dhcp::ddns_update_style: "none"
-dhcp::logfacility: "daemon"
 dhcp::bootp: true
+dhcp::ddns_update_style: "none"
+dhcp::default_lease_time: &lease_time 900
+dhcp::logfacility: "daemon"
+dhcp::max_lease_time: *lease_time
+dhcp::option_static_route: true
 
 cron::job:
   r10k:

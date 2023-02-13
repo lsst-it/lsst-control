@@ -23,6 +23,10 @@ describe 'manke01.ls.lsst.org', :site do
       it { is_expected.to compile.with_all_deps }
 
       it do
+        is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
+      end
+
+      it do
         is_expected.to contain_class('clustershell').with(
           groupmembers: {
             'manke' => {

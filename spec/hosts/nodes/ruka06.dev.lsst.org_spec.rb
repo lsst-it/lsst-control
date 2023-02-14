@@ -1,22 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'iniparse'
-
-shared_examples 'named interface' do
-  it { expect(ini['connection']['id']).to eq(interface) }
-  it { expect(ini['connection']['interface-name']).to eq(interface) }
-end
-
-shared_examples 'disabled interface' do
-  it_behaves_like 'named interface'
-  it { expect(ini['connection']['id']).to eq(interface) }
-  it { expect(ini['connection']['interface-name']).to eq(interface) }
-  it { expect(ini['connection']['type']).to eq('ethernet') }
-  it { expect(ini['connection']['autoconnect']).to be false }
-  it { expect(ini['ipv4']['method']).to eq('ignore') }
-  it { expect(ini['ipv6']['method']).to eq('ignore') }
-end
 
 #
 # Testing network interfaces from the site/dev/role/hypervisor/major/** layers.
@@ -27,19 +11,15 @@ describe 'ruka06.dev.lsst.org', :site do
   { 'almalinux-9-x86_64': alma9 }.each do |os, facts|
     # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
-      let(:facts) do
-        override_facts(facts, fqdn: 'ruka06.dev.lsst.org')
-      end
-      let(:ini) do
-        IniParse.parse(catalogue.resource('profile::nm::connection', interface)[:content])
-      end
-
+      let(:facts) { override_facts(facts, fqdn: 'ruka06.dev.lsst.org') }
       let(:node_params) do
         {
           role: 'hypervisor',
           site: 'dev',
         }
       end
+
+      include_context 'with nm interface'
 
       it { is_expected.to compile.with_all_deps }
 
@@ -55,29 +35,29 @@ describe 'ruka06.dev.lsst.org', :site do
         context "with #{name}" do
           let(:interface) { i }
 
-          it_behaves_like 'disabled interface'
+          it_behaves_like 'nm disabled interface'
         end
       end
 
       context 'with enp10s0f0' do
         let(:interface) { 'enp10s0f0' }
 
-        it_behaves_like 'named interface'
-        it { expect(ini['connection']['type']).to eq('ethernet') }
-        it { expect(ini['connection']['autoconnect']).to be_nil }
-        it { expect(ini['connection']['master']).to eq('br2101') }
-        it { expect(ini['connection']['slave-type']).to eq('bridge') }
+        it_behaves_like 'nm named interface'
+        it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
+        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+        it { expect(nm_keyfile['connection']['master']).to eq('br2101') }
+        it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
       end
 
       context 'with br2101' do
         let(:interface) { 'br2101' }
 
-        it_behaves_like 'named interface'
-        it { expect(ini['connection']['type']).to eq('bridge') }
-        it { expect(ini['connection']['autoconnect']).to be_nil }
-        it { expect(ini['bridge']['stp']).to be false }
-        it { expect(ini['ipv4']['method']).to eq('auto') }
-        it { expect(ini['ipv6']['method']).to eq('disabled') }
+        it_behaves_like 'nm named interface'
+        it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
+        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+        it { expect(nm_keyfile['bridge']['stp']).to be false }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('auto') }
+        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
     end # on os
   end # on_supported_os

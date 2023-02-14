@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'voxpupuli/test/spec_helper'
+require 'iniparse'
 include RspecPuppetFacts
 
 # foreman, puppetserver and termini versions
@@ -691,6 +692,32 @@ shared_examples 'dco' do
       group: 'dco',
     )
   end
+end
+
+shared_context 'with nm interface' do
+  let(:nm_keyfile) do
+    IniParse.parse(catalogue.resource('profile::nm::connection', interface)[:content])
+  end
+end
+
+shared_examples 'nm named interface' do
+  it { expect(nm_keyfile['connection']['id']).to eq(interface) }
+  it { expect(nm_keyfile['connection']['interface-name']).to eq(interface) }
+end
+
+shared_examples 'nm disabled interface' do
+  it_behaves_like 'nm named interface'
+  it { expect(nm_keyfile['connection']['id']).to eq(interface) }
+  it { expect(nm_keyfile['connection']['interface-name']).to eq(interface) }
+  it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
+  it { expect(nm_keyfile['connection']['autoconnect']).to be false }
+  it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
+  it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+end
+
+shared_examples 'nm dhcp interface' do
+  it { expect(nm_keyfile['ipv4']['method']).to eq('auto') }
+  it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
 end
 
 # 'spec_overrides' from sync.yml will appear below this line

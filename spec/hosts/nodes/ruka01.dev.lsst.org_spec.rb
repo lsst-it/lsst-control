@@ -110,7 +110,7 @@ describe 'ruka01.dev.lsst.org', :site do
 
       it do
         is_expected.to contain_network__rule('lhnrouting').with(
-          iprule: ["priority 100 from 139.229.153.0/25 lookup #{rt_id}"],
+          iprule: ["priority 100 from 139.229.153.0/26 lookup #{rt_id}"],
         )
       end
 

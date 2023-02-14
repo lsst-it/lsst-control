@@ -1,25 +1,4 @@
 ---
-network::interfaces_hash:
-  # EL8+ "stable" interface names
-  eno1np0: &bond0  # fqdn 1/4
-    bootproto: "none"
-    master: "bond0"
-    onboot: "yes"
-    slave: "yes"
-    type: "Ethernet"
-  eno2np1:  # fqdn 2/4
-    <<: *bond0
-  # XXX the intel x550t interfaces have a different name than on other pillan
-  # nodes.
-  enp129s0f0:
-    ensure: "absent"
-  enp129s0f1:
-    ensure: "absent"
-  enp197s0f0:  # fqdn 3/4
-    <<: *bond0
-  enp197s0f1:  # fqdn 3/4
-    <<: *bond0
-
 profile::nm::connections:
   enp129s0f0:
     ensure: "absent"

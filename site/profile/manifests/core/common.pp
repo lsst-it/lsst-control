@@ -129,6 +129,7 @@ class profile::core::common (
         if $manage_network {
           include network
           Package['NetworkManager-initscripts-updown'] -> Class['network']
+          include profile::nm
         }
       }
       default: { # EL9+

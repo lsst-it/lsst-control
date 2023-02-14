@@ -182,7 +182,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
     if facts[:os]['release']['major'] == '8'
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
       it { is_expected.to contain_class('network') }
-      it { is_expected.not_to contain_class('profile::nm') }
+      it { is_expected.to contain_class('profile::nm') }
 
       it do
         is_expected.to contain_package('NetworkManager-initscripts-updown')

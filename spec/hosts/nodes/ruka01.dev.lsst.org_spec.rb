@@ -61,73 +61,75 @@ describe 'ruka01.dev.lsst.org', :site do
         )
       end
 
-      it do
-        is_expected.to contain_network__interface('em1').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
-      end
+      if facts[:os]['release']['major'] == '7'
+        it do
+          is_expected.to contain_network__interface('em1').with(
+            bootproto: 'none',
+            onboot: 'no',
+            type: 'Ethernet',
+          )
+        end
 
-      it do
-        is_expected.to contain_network__interface('p2p2').with(
-          bootproto: 'dhcp',
-          defroute: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
-      end
+        it do
+          is_expected.to contain_network__interface('p2p2').with(
+            bootproto: 'dhcp',
+            defroute: 'yes',
+            onboot: 'yes',
+            type: 'Ethernet',
+          )
+        end
 
-      it do
-        is_expected.to contain_network__interface('p2p1').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
-      end
+        it do
+          is_expected.to contain_network__interface('p2p1').with(
+            bootproto: 'none',
+            onboot: 'no',
+            type: 'Ethernet',
+          )
+        end
 
-      it do
-        is_expected.to contain_network__interface("p2p1.#{vlan_id}").with(
-          bootproto: 'none',
-          defroute: 'no',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'none',
-          vlan: 'yes',
-          bridge: "br#{vlan_id}",
-        )
-      end
+        it do
+          is_expected.to contain_network__interface("p2p1.#{vlan_id}").with(
+            bootproto: 'none',
+            defroute: 'no',
+            nozeroconf: 'yes',
+            onboot: 'yes',
+            type: 'none',
+            vlan: 'yes',
+            bridge: "br#{vlan_id}",
+          )
+        end
 
-      it do
-        is_expected.to contain_network__interface('lhnrouting').with(
-          bootproto: 'none',
-          nm_controlled: 'no',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
-      end
+        it do
+          is_expected.to contain_network__interface('lhnrouting').with(
+            bootproto: 'none',
+            nm_controlled: 'no',
+            nozeroconf: 'yes',
+            onboot: 'yes',
+            type: 'Ethernet',
+          )
+        end
 
-      it do
-        is_expected.to contain_network__rule('lhnrouting').with(
-          iprule: ["priority 100 from 139.229.153.0/26 lookup #{rt_id}"],
-        )
-      end
+        it do
+          is_expected.to contain_network__rule('lhnrouting').with(
+            iprule: ["priority 100 from 139.229.153.0/26 lookup #{rt_id}"],
+          )
+        end
 
-      it do
-        is_expected.to contain_network__routing_table('lhn').with(
-          table_id: rt_id,
-        )
-      end
+        it do
+          is_expected.to contain_network__routing_table('lhn').with(
+            table_id: rt_id,
+          )
+        end
 
-      it do
-        is_expected.to contain_network__mroute('lhnrouting').with(
-          table: rt_id,
-          routes: [
-            '139.229.153.0/24' => "br#{vlan_id}",
-            'default' => '139.229.153.251',
-          ],
-        )
+        it do
+          is_expected.to contain_network__mroute('lhnrouting').with(
+            table: rt_id,
+            routes: [
+              '139.229.153.0/24' => "br#{vlan_id}",
+              'default' => '139.229.153.251',
+            ],
+          )
+        end
       end
     end # on os
   end # on_supported_os

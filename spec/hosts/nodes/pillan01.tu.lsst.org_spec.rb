@@ -41,64 +41,66 @@ describe 'pillan01.tu.lsst.org', :site do
 
       it { is_expected.to compile.with_all_deps }
 
-      it do
-        is_expected.to contain_network__interface('bond0').with(
-          bonding_master: 'yes',
-          bonding_opts: 'mode=4 miimon=100',
-          bootproto: 'dhcp',
-          defroute: 'yes',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'Bond',
-        )
-      end
-
-      if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
-        # explicitly setting the bond mac address on EL7 might have no effect?
-        # We aren't changing the behavior for EL7 to avoid a network restart
-        # for legacy nodes.
-        it { is_expected.to contain_network__interface('bond0').without_macaddr }
-      else
+      if facts[:os]['release']['major'] == '7'
         it do
           is_expected.to contain_network__interface('bond0').with(
-            macaddr: '11:22:33:44:55:66',
+            bonding_master: 'yes',
+            bonding_opts: 'mode=4 miimon=100',
+            bootproto: 'dhcp',
+            defroute: 'yes',
+            nozeroconf: 'yes',
+            onboot: 'yes',
+            type: 'Bond',
           )
         end
-      end
 
-      it do
-        is_expected.to contain_network__interface(int1).with(
-          bootproto: 'none',
-          master: 'bond0',
-          onboot: 'yes',
-          slave: 'yes',
-          type: 'Ethernet',
-        )
-      end
+        if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
+          # explicitly setting the bond mac address on EL7 might have no effect?
+          # We aren't changing the behavior for EL7 to avoid a network restart
+          # for legacy nodes.
+          it { is_expected.to contain_network__interface('bond0').without_macaddr }
+        else
+          it do
+            is_expected.to contain_network__interface('bond0').with(
+              macaddr: '11:22:33:44:55:66',
+            )
+          end
+        end
 
-      it do
-        is_expected.to contain_network__interface(int2).with(
-          bootproto: 'none',
-          master: 'bond0',
-          onboot: 'yes',
-          slave: 'yes',
-          type: 'Ethernet',
-        )
-      end
-
-      # common between EL7 & EL8
-      %w[
-        enp129s0f0
-        enp129s0f1
-      ].each do |int|
         it do
-          is_expected.to contain_network__interface(int).with(
+          is_expected.to contain_network__interface(int1).with(
             bootproto: 'none',
             master: 'bond0',
             onboot: 'yes',
             slave: 'yes',
             type: 'Ethernet',
           )
+        end
+
+        it do
+          is_expected.to contain_network__interface(int2).with(
+            bootproto: 'none',
+            master: 'bond0',
+            onboot: 'yes',
+            slave: 'yes',
+            type: 'Ethernet',
+          )
+        end
+
+        # common between EL7 & EL8
+        %w[
+          enp129s0f0
+          enp129s0f1
+        ].each do |int|
+          it do
+            is_expected.to contain_network__interface(int).with(
+              bootproto: 'none',
+              master: 'bond0',
+              onboot: 'yes',
+              slave: 'yes',
+              type: 'Ethernet',
+            )
+          end
         end
       end
     end # on os

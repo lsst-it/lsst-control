@@ -140,7 +140,9 @@ shared_examples 'krb5.conf content' do |match|
   end
 end
 
-shared_examples 'common' do |facts:, no_auth: false, chrony: true|
+# XXX The network param is a kludge until the el8 dnscache nodes are converted
+# to NM.
+shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true|
   include_examples 'bash_completion', facts: facts
   include_examples 'convenience'
 
@@ -166,7 +168,8 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
       it { is_expected.not_to contain_package('NetworkManager-initscripts-updown') }
       it { is_expected.to contain_class('yum').with_managed_repos(['extras']) }
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
-      it { is_expected.to contain_class('network') }
+
+      network and it { is_expected.to contain_class('network') }
       it { is_expected.not_to contain_class('profile::nm') }
 
       if facts[:os]['architecture'] == 'x86_64'
@@ -181,20 +184,18 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
 
     if facts[:os]['release']['major'] == '8'
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
-      it { is_expected.to contain_class('network') }
-      it { is_expected.to contain_class('profile::nm') }
 
-      it do
-        is_expected.to contain_package('NetworkManager-initscripts-updown')
-          .that_comes_before('Class[network]')
-      end
+      network and it { is_expected.not_to contain_class('network') }
+      it { is_expected.to contain_class('profile::nm') }
+      it { is_expected.to contain_package('NetworkManager-initscripts-updown') }
     end
 
     if facts[:os]['release']['major'] == '9'
       it { is_expected.to contain_class('lldpd').with_manage_repo(false) }
-      it { is_expected.not_to contain_class('network') }
-      it { is_expected.not_to contain_package('NetworkManager-initscripts-updown') }
+
+      network and it { is_expected.not_to contain_class('network') }
       it { is_expected.to contain_class('profile::nm') }
+      it { is_expected.to contain_package('NetworkManager-initscripts-updown') }
     end
   else # not osfamily RedHat
     it { is_expected.not_to contain_class('epel') }

@@ -11,11 +11,16 @@ describe 'profile::core::common' do
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('auditd') }
         it { is_expected.to contain_class('hosts') }
-        it { is_expected.to contain_class('network') }
         it { is_expected.to contain_class('resolv_conf') }
         it { is_expected.to contain_class('profile::core::keytab') }
         it { is_expected.to contain_class('profile::core::nm_dispatch') }
         it { is_expected.to contain_package('ca-certificates').with_ensure('latest') }
+
+        if facts[:os]['release']['major'] == '7'
+          it { is_expected.to contain_class('network') }
+        else
+          it { is_expected.not_to contain_class('network') }
+        end
 
         it do
           is_expected.to contain_service('NetworkManager').with(ensure: 'running', enable: true)
@@ -45,28 +50,6 @@ describe 'profile::core::common' do
           end
 
           it { is_expected.to contain_class('resolv_conf') }
-        end
-      end
-
-      context 'with manage_network param' do
-        context 'when false' do
-          let(:params) do
-            {
-              manage_network: false,
-            }
-          end
-
-          it { is_expected.not_to contain_class('network') }
-        end
-
-        context 'when true' do
-          let(:params) do
-            {
-              manage_network: true,
-            }
-          end
-
-          it { is_expected.to contain_class('network') }
         end
       end
     end

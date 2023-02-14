@@ -60,24 +60,6 @@ describe "#{role} role" do
           include_examples 'generic rke', facts: facts
         end # host
       end # lsst_sites
-
-      context 'with antu cluster' do
-        describe 'antu01.ls.lsst.org', :lhn_node, :site do
-          let(:site) { 'ls' }
-          let(:node_params) do
-            super().merge(
-              site: site,
-              role: 'rke',
-              cluster: 'antu',
-            )
-          end
-
-          it { is_expected.to compile.with_all_deps }
-
-          include_examples 'common', facts: facts
-          include_examples 'generic rke', facts: facts
-        end
-      end
     end # on os
   end # on_supported_os
 end # role

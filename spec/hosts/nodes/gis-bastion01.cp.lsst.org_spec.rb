@@ -37,7 +37,7 @@ describe 'gis-bastion01.cp.lsst.org', :site do
         it do
           is_expected.to contain_network__interface('enp1s0f1').with(
             bootproto: 'none',
-            ipaddress: '192.168.180.40',
+            ipaddress: '192.168.180.230',
             netmask: '255.255.255.0',
             nozeroconf: 'yes',
             onboot: 'yes',

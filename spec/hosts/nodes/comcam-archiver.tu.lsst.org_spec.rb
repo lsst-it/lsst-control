@@ -2,62 +2,28 @@
 
 require 'spec_helper'
 
-describe 'auxtel-archiver.cp.lsst.org', :site do
+describe 'comcam-archiver.tu.lsst.org', :site do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts.merge(
-          fqdn: 'auxtel-archiver.cp.lsst.org',
+          fqdn: 'comcam-archiver.tu.lsst.org',
         )
       end
 
       let(:node_params) do
         {
-          role: 'auxtel-archiver',
-          site: 'cp',
-          cluster: 'auxtel-archiver',
+          role: 'comcam-archiver',
+          site: 'tu',
+          cluster: 'comcam-archiver',
         }
       end
 
       it do
-        is_expected.to contain_network__interface('em1').with(
+        is_expected.to contain_network__interface('p2p1').with(
           bootproto: 'dhcp',
           defroute: 'yes',
-          nozeroconf: 'yes',
           onboot: 'yes',
-          type: 'Ethernet',
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('em2').with(
-          bootproto: 'none',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('em3').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('em4').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('p2p1').with(
-          bootproto: 'none',
-          onboot: 'no',
           type: 'Ethernet',
         )
       end
@@ -65,21 +31,37 @@ describe 'auxtel-archiver.cp.lsst.org', :site do
       it do
         is_expected.to contain_network__interface('p2p2').with(
           bootproto: 'none',
+          bridge: 'dds',
+          defroute: 'no',
           nozeroconf: 'yes',
+          onboot: 'yes',
+          type: 'Ethernet',
+        )
+      end
+
+      it do
+        is_expected.to contain_network__interface('dds').with(
+          bootproto: 'none',
+          ipaddress: '140.252.147.136',
+          netmask: '255.255.255.224',
+          onboot: 'yes',
+          type: 'bridge',
+        )
+      end
+
+      it do
+        is_expected.to contain_network__interface('em1').with(
+          bootproto: 'none',
           onboot: 'no',
           type: 'Ethernet',
         )
       end
 
       it do
-        is_expected.to contain_network__interface('em2.1201').with(
+        is_expected.to contain_network__interface('em2').with(
           bootproto: 'none',
-          ipaddress: '139.229.166.10',
-          netmask: '255.255.255.0',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'none',
-          vlan: 'yes',
+          onboot: 'no',
+          type: 'Ethernet',
         )
       end
 
@@ -89,12 +71,11 @@ describe 'auxtel-archiver.cp.lsst.org', :site do
       it { is_expected.to contain_nfs__server__export('/data/lsstdata') }
       it { is_expected.to contain_nfs__server__export('/data/repo') }
       it { is_expected.to contain_nfs__server__export('/data/staging') }
-      it { is_expected.to contain_nfs__server__export('/data/allsky') }
 
       it do
         is_expected.to contain_nfs__client__mount('/net/self/data/lsstdata').with(
           share: 'lsstdata',
-          server: 'auxtel-archiver.cp.lsst.org',
+          server: 'comcam-archiver.tu.lsst.org',
           atboot: true,
         )
       end
@@ -102,7 +83,7 @@ describe 'auxtel-archiver.cp.lsst.org', :site do
       it do
         is_expected.to contain_nfs__client__mount('/repo').with(
           share: 'repo',
-          server: 'auxtel-archiver.cp.lsst.org',
+          server: 'comcam-archiver.tu.lsst.org',
           atboot: true,
         )
       end
@@ -110,15 +91,7 @@ describe 'auxtel-archiver.cp.lsst.org', :site do
       it do
         is_expected.to contain_nfs__client__mount('/staging').with(
           share: 'staging',
-          server: 'auxtel-archiver.cp.lsst.org',
-          atboot: true,
-        )
-      end
-
-      it do
-        is_expected.to contain_nfs__client__mount('/net/dimm').with(
-          share: 'dimm',
-          server: 'nfs1.cp.lsst.org',
+          server: 'comcam-archiver.tu.lsst.org',
           atboot: true,
         )
       end

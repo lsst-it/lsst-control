@@ -12,6 +12,8 @@ define profile::nm::connection (
   Optional[String[1]] $content = undef,
   Enum['present', 'absent'] $ensure = 'present',
 ) {
+  include profile::nm
+
   $_real_ensure = $ensure ? {
     'absent' => 'absent',
     default  => 'file',

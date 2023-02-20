@@ -294,13 +294,20 @@ shared_examples 'lsst-daq sysctls' do
   end
 end
 
-shared_examples 'lsst-daq client' do
+shared_examples 'lsst-daq client' do |facts:|
   include_examples 'lsst-daq sysctls'
 
-  it do
-    is_expected.to contain_network__interface('lsst-daq').with(
-      bootproto: 'dhcp',
-    )
+  if facts[:os]['release']['major'] == '7'
+    it do
+      is_expected.to contain_network__interface('lsst-daq').with(
+        bootproto: 'dhcp',
+      )
+    end
+  else
+    let(:interface) { 'lsst-daq' }
+    include_context 'with nm interface'
+    include_examples 'nm named interface'
+    include_examples 'nm dhcp interface'
   end
 end
 

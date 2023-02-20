@@ -30,4 +30,4 @@ network::mroutes_hash:
     table: 2505
     routes:
       "139.229.153.0/24": "br2505"
-      "default": &via "139.229.153.251"
+      "default": &via "139.229.153.254"

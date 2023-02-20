@@ -126,7 +126,7 @@ describe 'ruka01.dev.lsst.org', :site do
             table: rt_id,
             routes: [
               '139.229.153.0/24' => "br#{vlan_id}",
-              'default' => '139.229.153.251',
+              'default' => '139.229.153.254',
             ],
           )
         end

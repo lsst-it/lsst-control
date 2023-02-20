@@ -82,7 +82,7 @@ nfs::nfs_exports_global:
       139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
-  /data/staging:
+  /data:
     clients: >-
       %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
@@ -99,10 +99,6 @@ nfs::client_mounts:
     atboot: true
   /repo:
     share: "repo"
-    server: "%{facts.fqdn}"
-    atboot: true
-  /staging:
-    share: "staging"
     server: "%{facts.fqdn}"
     atboot: true
 

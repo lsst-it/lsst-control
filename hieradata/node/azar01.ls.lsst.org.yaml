@@ -1,0 +1,32 @@
+---
+docker::networks::networks:
+  dds-network:
+    ensure: "present"
+    driver: "macvlan"
+    subnet: "139.229.152.0/25"
+    gateway: "139.229.152.126"
+    options: ["parent=dds"]
+
+network::interfaces_hash:
+  enp129s0f0:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  enp129s0f1:
+    bootproto: "none"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  enp129s0f1.2502:
+    bootproto: "none"
+    bridge: "dds"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
+  dds:
+    bootproto: "dhcp"
+    type: "bridge"
+    onboot: "yes"

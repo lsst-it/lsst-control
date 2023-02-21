@@ -62,6 +62,7 @@ describe 'auxtel-archiver.ls.lsst.org', :site do
       it { is_expected.to contain_class('nfs::server').with_nfs_v4(true) }
       it { is_expected.to contain_nfs__server__export('/data/lsstdata') }
       it { is_expected.to contain_nfs__server__export('/data/repo') }
+      it { is_expected.to contain_nfs__server__export('/data') }
 
       it do
         is_expected.to contain_nfs__client__mount('/net/self/data/lsstdata').with(

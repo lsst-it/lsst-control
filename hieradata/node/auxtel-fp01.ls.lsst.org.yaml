@@ -1,0 +1,55 @@
+---
+network::interfaces_hash:
+  enp129s0f0:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  enp129s0f1:
+    bootproto: "none"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  enp129s0f1.2502:
+    bootproto: "none"
+    bridge: "dds"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "none"
+    vlan: "yes"
+  dds:
+    bootproto: "dhcp"
+    type: "bridge"
+    onboot: "yes"
+
+# Server configuration
+nfs::server_enabled: true
+nfs::nfs_v4_export_root_clients: >-
+  %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.151.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.152.0/25(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.152.192/26(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+
+nfs::nfs_exports_global:
+  /data:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.151.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+      139.229.152.0/25(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+      139.229.152.192/26(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /net/self/data:
+    share: "data"
+    server: "%{facts.fqdn}"
+    atboot: true
+
+ccs_software::services:
+  ## FIXME this should be changed to prod, and a local systemctl override
+  ## used to get the dev version.
+  dev:
+    - "ats-daq-monitor"
+    - "ats-fp"
+    - "ats-ih"

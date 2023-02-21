@@ -32,12 +32,14 @@ class profile::archive::common (
     ensure_packages($packages)
   }
 
-  class { 'python':
-    version     => 'python36',
-    pip         => 'present',
-    dev         => 'present',
-    venv        => 'present',
-    python_pips => $python_pips,
+  if ((fact('os.release.major') == '7' and fact('os.architecture') == 'x86_64')) {
+    class { 'python':
+      version     => 'python36',
+      pip         => 'present',
+      dev         => 'present',
+      venv        => 'present',
+      python_pips => $python_pips,
+    }
   }
 
   if $user_list {

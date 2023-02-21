@@ -43,11 +43,11 @@ nfs::nfs_exports_global:
 nfs::client_enabled: true
 nfs::client_mounts:
   /net/self/data/lsstdata:
-    share: "auxtel-oods"
+    share: "lsstdata"
     server: "%{facts.fqdn}"
     atboot: true
   /repo:
-    share: "auxtel-butler"
+    share: "repo"
     server: "%{facts.fqdn}"
     atboot: true
 

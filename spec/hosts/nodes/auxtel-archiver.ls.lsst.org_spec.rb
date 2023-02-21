@@ -65,7 +65,7 @@ describe 'auxtel-archiver.ls.lsst.org', :site do
 
       it do
         is_expected.to contain_nfs__client__mount('/net/self/data/lsstdata').with(
-          share: '"auxtel-oods',
+          share: 'lsstdata',
           server: 'auxtel-archiver.ls.lsst.org',
           atboot: true,
         )
@@ -73,7 +73,7 @@ describe 'auxtel-archiver.ls.lsst.org', :site do
 
       it do
         is_expected.to contain_nfs__client__mount('/repo').with(
-          share: 'auxtel-butler',
+          share: 'repo',
           server: 'auxtel-archiver.ls.lsst.org',
           atboot: true,
         )

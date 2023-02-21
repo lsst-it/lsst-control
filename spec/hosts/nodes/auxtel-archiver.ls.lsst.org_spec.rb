@@ -19,6 +19,44 @@ describe 'auxtel-archiver.ls.lsst.org', :site do
         }
       end
 
+      it do
+        is_expected.to contain_network__interface('enp129s0f0').with(
+          bootproto: 'dhcp',
+          defroute: 'yes',
+          nozeroconf: 'yes',
+          onboot: 'yes',
+          type: 'Ethernet',
+        )
+      end
+
+      it do
+        is_expected.to contain_network__interface('enp129s0f1').with(
+          bootproto: 'none',
+          nozeroconf: 'yes',
+          onboot: 'yes',
+          type: 'Ethernet',
+        )
+      end
+
+      it do
+        is_expected.to contain_network__interface('enp129s0f1.2502').with(
+          bootproto: 'none',
+          bridge: 'dds',
+          nozeroconf: 'yes',
+          onboot: 'yes',
+          type: 'none',
+          vlan: 'yes',
+        )
+      end
+
+      it do
+        is_expected.to contain_network__interface('dds').with(
+          bootproto: 'dhcp',
+          onboot: 'yes',
+          type: 'bridge',
+        )
+      end
+
       it { is_expected.to compile.with_all_deps }
 
       it { is_expected.to contain_class('nfs::server').with_nfs_v4(true) }

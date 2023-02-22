@@ -31,7 +31,7 @@ describe "#{role} role" do
 
           case site
           when 'tu', 'cp'
-            include_examples 'lsst-daq client'
+            include_examples 'lsst-daq client', facts: facts
           end
         end # host
       end # lsst_sites

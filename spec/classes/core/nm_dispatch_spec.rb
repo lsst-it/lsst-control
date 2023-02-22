@@ -8,12 +8,12 @@ describe 'profile::core::nm_dispatch' do
       let(:facts) { facts }
       let(:pre_condition) do
         <<~PP
-          include network
+          if fact('os.release.major') == '7' {
+            include network
+          } else {
+            include profile::nm
+          }
         PP
-      end
-
-      context 'with no params' do
-        it { is_expected.to have_file_resource_count(0) }
       end
 
       context 'with interfaces param' do
@@ -31,16 +31,22 @@ describe 'profile::core::nm_dispatch' do
           }
         end
 
-        it { is_expected.to have_file_resource_count(2) }
+        let(:net_class) do
+          if facts[:os]['release']['major'] == '7'
+            'Class[network]'
+          else
+            'Class[profile::nm]'
+          end
+        end
 
         it do
           is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/50-eth0')
-            .that_notifies('Class[network]')
+            .that_notifies(net_class)
         end
 
         it do
           is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/50-eth1')
-            .that_notifies('Class[network]')
+            .that_notifies(net_class)
         end
       end
     end

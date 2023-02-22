@@ -49,9 +49,6 @@
 # @param manage_resolv_conf
 #   If `true`, manage resolv.conf
 #
-# @param manage_network
-#   If `true`, manage network configuration
-#
 class profile::core::common (
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
@@ -68,7 +65,6 @@ class profile::core::common (
   Boolean $manage_repos = true,
   Boolean $manage_irqbalance = true,
   Boolean $manage_resolv_conf = true,
-  Boolean $manage_network = true,
 ) {
   include auditd
   include accounts
@@ -118,20 +114,10 @@ class profile::core::common (
           }
         }
 
-        if $manage_network {
-          include network
-        }
-      }
-      '8': {
-        # On EL8+, the NetworkManager-initscripts-updown package provides the
-        # ifup/ifdown scripts which are needed by example42/network.
-        ensure_packages(['NetworkManager-initscripts-updown'])
-        if $manage_network {
-          include network
-          Package['NetworkManager-initscripts-updown'] -> Class['network']
-        }
+        include network
       }
       default: { # EL9+
+        ensure_packages(['NetworkManager-initscripts-updown'])
         include profile::nm
       }
     }

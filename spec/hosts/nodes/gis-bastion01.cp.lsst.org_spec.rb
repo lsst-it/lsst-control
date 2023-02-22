@@ -23,25 +23,27 @@ describe 'gis-bastion01.cp.lsst.org', :site do
 
       it { is_expected.to compile.with_all_deps }
 
-      it do
-        is_expected.to contain_network__interface('enp1s0f0').with(
-          bootproto: 'dhcp',
-          defroute: 'yes',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
-      end
+      if facts[:os]['release']['major'] == '7'
+        it do
+          is_expected.to contain_network__interface('enp1s0f0').with(
+            bootproto: 'dhcp',
+            defroute: 'yes',
+            nozeroconf: 'yes',
+            onboot: 'yes',
+            type: 'Ethernet',
+          )
+        end
 
-      it do
-        is_expected.to contain_network__interface('enp1s0f1').with(
-          bootproto: 'none',
-          ipaddress: '192.168.180.40',
-          netmask: '255.255.255.0',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
+        it do
+          is_expected.to contain_network__interface('enp1s0f1').with(
+            bootproto: 'none',
+            ipaddress: '192.168.180.40',
+            netmask: '255.255.255.0',
+            nozeroconf: 'yes',
+            onboot: 'yes',
+            type: 'Ethernet',
+          )
+        end
       end
     end # on os
   end # on_supported_os

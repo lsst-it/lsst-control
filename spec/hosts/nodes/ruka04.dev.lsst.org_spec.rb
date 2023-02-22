@@ -24,41 +24,43 @@ describe 'ruka04.dev.lsst.org', :site do
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('profile::core::ifdown').with_interface('em1') }
 
-      it do
-        is_expected.to contain_network__interface('em1').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
-      end
+      if facts[:os]['release']['major'] == '7'
+        it do
+          is_expected.to contain_network__interface('em1').with(
+            bootproto: 'none',
+            onboot: 'no',
+            type: 'Ethernet',
+          )
+        end
 
-      it do
-        is_expected.to contain_network__interface('p1p1').with(
-          bootproto: 'dhcp',
-          defroute: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
-      end
+        it do
+          is_expected.to contain_network__interface('p1p1').with(
+            bootproto: 'dhcp',
+            defroute: 'yes',
+            onboot: 'yes',
+            type: 'Ethernet',
+          )
+        end
 
-      it do
-        is_expected.to contain_network__interface('p1p2').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
-      end
+        it do
+          is_expected.to contain_network__interface('p1p2').with(
+            bootproto: 'none',
+            onboot: 'no',
+            type: 'Ethernet',
+          )
+        end
 
-      it do
-        is_expected.to contain_network__interface("p1p2.#{vlan_id}").with(
-          bootproto: 'none',
-          defroute: 'no',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'none',
-          vlan: 'yes',
-          bridge: "br#{vlan_id}",
-        )
+        it do
+          is_expected.to contain_network__interface("p1p2.#{vlan_id}").with(
+            bootproto: 'none',
+            defroute: 'no',
+            nozeroconf: 'yes',
+            onboot: 'yes',
+            type: 'none',
+            vlan: 'yes',
+            bridge: "br#{vlan_id}",
+          )
+        end
       end
     end # on os
   end # on_supported_os

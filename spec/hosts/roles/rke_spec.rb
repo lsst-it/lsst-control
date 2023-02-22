@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-shared_examples 'generic rke' do |facts:|
+shared_examples 'generic rke' do
   include_examples 'debugutils'
   include_examples 'docker'
   include_examples 'rke profile'
@@ -15,17 +15,6 @@ shared_examples 'generic rke' do |facts:|
     is_expected.to contain_file('/home/rke/.bashrc.d/kubectl.sh')
       .with_content(%r{^alias k='kubectl'$})
       .with_content(%r{^complete -o default -F __start_kubectl k$})
-  end
-
-  if facts[:os]['family'] == 'RedHat'
-    if facts[:os]['release']['major'] == '9'
-      it { is_expected.not_to contain_class('network') }
-      it { is_expected.to contain_class('profile::nm') }
-    else
-      it { is_expected.to contain_class('clustershell') }
-      it { is_expected.to contain_class('network') }
-      it { is_expected.not_to contain_class('profile::nm') }
-    end
   end
 end
 
@@ -57,27 +46,9 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'common', facts: facts
-          include_examples 'generic rke', facts: facts
+          include_examples 'generic rke'
         end # host
       end # lsst_sites
-
-      context 'with antu cluster' do
-        describe 'antu01.ls.lsst.org', :lhn_node, :site do
-          let(:site) { 'ls' }
-          let(:node_params) do
-            super().merge(
-              site: site,
-              role: 'rke',
-              cluster: 'antu',
-            )
-          end
-
-          it { is_expected.to compile.with_all_deps }
-
-          include_examples 'common', facts: facts
-          include_examples 'generic rke', facts: facts
-        end
-      end
     end # on os
   end # on_supported_os
 end # role

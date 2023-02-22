@@ -36,6 +36,16 @@ describe 'profile::nm::connection' do
           end
         end
 
+        context 'with absent and without content' do
+          let(:params) { { ensure: 'absent' } }
+
+          it do
+            is_expected.to contain_file('/etc/NetworkManager/system-connections/foo.nmconnection').with(
+              ensure: 'absent',
+            )
+          end
+        end
+
         context 'with present' do
           let(:params) { { content: 'bar', ensure: 'present' } }
 

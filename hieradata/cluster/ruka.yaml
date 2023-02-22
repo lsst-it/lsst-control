@@ -21,7 +21,7 @@ network::interfaces_hash:
 network::rules_hash:
   lhnrouting:
     iprule:
-      - "priority 100 from 139.229.153.0/25 lookup 2505"
+      - "priority 100 from 139.229.153.0/26 lookup 2505"
 network::tables_hash:
   lhn:
     table_id: 2505
@@ -30,4 +30,4 @@ network::mroutes_hash:
     table: 2505
     routes:
       "139.229.153.0/24": "br2505"
-      "default": &via "139.229.153.251"
+      "default": &via "139.229.153.254"

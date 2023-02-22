@@ -9,9 +9,11 @@
 #   If connection file should be present or absent.
 #
 define profile::nm::connection (
-  String[1] $content,
+  Optional[String[1]] $content = undef,
   Enum['present', 'absent'] $ensure = 'present',
 ) {
+  include profile::nm
+
   $_real_ensure = $ensure ? {
     'absent' => 'absent',
     default  => 'file',

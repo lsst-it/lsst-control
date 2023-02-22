@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'voxpupuli/test/spec_helper'
+require 'iniparse'
 include RspecPuppetFacts
 
 # foreman, puppetserver and termini versions
@@ -139,7 +140,9 @@ shared_examples 'krb5.conf content' do |match|
   end
 end
 
-shared_examples 'common' do |facts:, no_auth: false, chrony: true|
+# XXX The network param is a kludge until the el8 dnscache nodes are converted
+# to NM.
+shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true|
   include_examples 'bash_completion', facts: facts
   include_examples 'convenience'
 
@@ -165,7 +168,8 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
       it { is_expected.not_to contain_package('NetworkManager-initscripts-updown') }
       it { is_expected.to contain_class('yum').with_managed_repos(['extras']) }
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
-      it { is_expected.to contain_class('network') }
+
+      network and it { is_expected.to contain_class('network') }
       it { is_expected.not_to contain_class('profile::nm') }
 
       if facts[:os]['architecture'] == 'x86_64'
@@ -180,20 +184,18 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true|
 
     if facts[:os]['release']['major'] == '8'
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
-      it { is_expected.to contain_class('network') }
-      it { is_expected.not_to contain_class('profile::nm') }
 
-      it do
-        is_expected.to contain_package('NetworkManager-initscripts-updown')
-          .that_comes_before('Class[network]')
-      end
+      network and it { is_expected.not_to contain_class('network') }
+      it { is_expected.to contain_class('profile::nm') }
+      it { is_expected.to contain_package('NetworkManager-initscripts-updown') }
     end
 
     if facts[:os]['release']['major'] == '9'
       it { is_expected.to contain_class('lldpd').with_manage_repo(false) }
-      it { is_expected.not_to contain_class('network') }
-      it { is_expected.not_to contain_package('NetworkManager-initscripts-updown') }
+
+      network and it { is_expected.not_to contain_class('network') }
       it { is_expected.to contain_class('profile::nm') }
+      it { is_expected.to contain_package('NetworkManager-initscripts-updown') }
     end
   else # not osfamily RedHat
     it { is_expected.not_to contain_class('epel') }
@@ -292,13 +294,20 @@ shared_examples 'lsst-daq sysctls' do
   end
 end
 
-shared_examples 'lsst-daq client' do
+shared_examples 'lsst-daq client' do |facts:|
   include_examples 'lsst-daq sysctls'
 
-  it do
-    is_expected.to contain_network__interface('lsst-daq').with(
-      bootproto: 'dhcp',
-    )
+  if facts[:os]['release']['major'] == '7'
+    it do
+      is_expected.to contain_network__interface('lsst-daq').with(
+        bootproto: 'dhcp',
+      )
+    end
+  else
+    let(:interface) { 'lsst-daq' }
+    include_context 'with nm interface'
+    include_examples 'nm named interface'
+    include_examples 'nm dhcp interface'
   end
 end
 
@@ -691,6 +700,32 @@ shared_examples 'dco' do
       group: 'dco',
     )
   end
+end
+
+shared_context 'with nm interface' do
+  let(:nm_keyfile) do
+    IniParse.parse(catalogue.resource('profile::nm::connection', interface)[:content])
+  end
+end
+
+shared_examples 'nm named interface' do
+  it { expect(nm_keyfile['connection']['id']).to eq(interface) }
+  it { expect(nm_keyfile['connection']['interface-name']).to eq(interface) }
+end
+
+shared_examples 'nm disabled interface' do
+  it_behaves_like 'nm named interface'
+  it { expect(nm_keyfile['connection']['id']).to eq(interface) }
+  it { expect(nm_keyfile['connection']['interface-name']).to eq(interface) }
+  it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
+  it { expect(nm_keyfile['connection']['autoconnect']).to be false }
+  it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
+  it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+end
+
+shared_examples 'nm dhcp interface' do
+  it { expect(nm_keyfile['ipv4']['method']).to eq('auto') }
+  it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
 end
 
 # 'spec_overrides' from sync.yml will appear below this line

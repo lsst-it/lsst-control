@@ -15,8 +15,8 @@ class profile::core::nm_dispatch (
       # if restart is configured to be only per interface... needs some experimentation
       #$network_notify = "Exec[network_restart_${dev}]"
       $network_notify = fact('os.release.major') ? {
-        '9'     => undef,
-        default => 'Class[network]',
+        '7'     => 'Class[network]',
+        default => 'Class[profile::nm]',
       }
 
       $data = {

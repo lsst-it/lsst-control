@@ -26,7 +26,9 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', facts: facts
+          include_examples 'common', facts: facts, network: false
+
+          it { is_expected.to contain_class('network') }
 
           it do
             is_expected.to contain_class('dns').with(

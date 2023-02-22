@@ -6,30 +6,12 @@ require 'spec_helper'
 # pillan08 is "special" and has different PCI bus addresses for the X550T NIC.
 #
 describe 'pillan08.tu.lsst.org', :site do
-  on_supported_os.each do |os, facts|
+  alma9 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '9' }).first
+  # rubocop:disable Naming/VariableNumber
+  { 'almalinux-9-x86_64': alma9 }.each do |os, facts|
+    # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
-      let(:int1) do
-        if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
-          'eno1'
-        else
-          'eno1np0'
-        end
-      end
-
-      let(:int2) do
-        if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
-          'eno2d1'
-        else
-          'eno2np1'
-        end
-      end
-
-      let(:facts) do
-        facts.merge(
-          fqdn: 'pillan08.tu.lsst.org',
-        )
-      end
-
+      let(:facts) { override_facts(facts, fqdn: 'pillan08.tu.lsst.org') }
       let(:node_params) do
         {
           role: 'rke',
@@ -38,50 +20,76 @@ describe 'pillan08.tu.lsst.org', :site do
         }
       end
 
+      include_context 'with nm interface'
+
       it { is_expected.to compile.with_all_deps }
 
-      it do
-        is_expected.to contain_network__interface(int1).with(
-          bootproto: 'none',
-          master: 'bond0',
-          onboot: 'yes',
-          slave: 'yes',
-          type: 'Ethernet',
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface(int2).with(
-          bootproto: 'none',
-          master: 'bond0',
-          onboot: 'yes',
-          slave: 'yes',
-          type: 'Ethernet',
-        )
-      end
+      # 2 extra instances in the catalog for the rename interfaces
+      it { is_expected.to have_profile__nm__connection_resource_count(12 + 2) }
 
       %w[
-        enp197s0f0
-        enp197s0f1
-      ].each do |int|
-        it do
-          is_expected.to contain_network__interface(int).with(
-            bootproto: 'none',
-            master: 'bond0',
-            onboot: 'yes',
-            slave: 'yes',
-            type: 'Ethernet',
-          )
+        enp4s0f3u2u2c2
+      ].each do |i|
+        context "with #{name}" do
+          let(:interface) { i }
+
+          it_behaves_like 'nm disabled interface'
         end
       end
 
       %w[
-        enp129s0f0
-        enp129s0f1
-      ].each do |int|
-        it do
-          is_expected.to contain_network__interface(int)
-            .with_ensure('absent')
+        eno1np0
+        eno2np1
+        enp197s0f0
+        enp197s0f1
+      ].each do |i|
+        context "with #{name}" do
+          let(:interface) { i }
+
+          it_behaves_like 'nm named interface'
+          it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
+          it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+          it { expect(nm_keyfile['connection']['master']).to eq('bond0') }
+          it { expect(nm_keyfile['connection']['slave-type']).to eq('bond') }
+        end
+      end
+
+      context 'with bond0' do
+        let(:interface) { 'bond0' }
+
+        it_behaves_like 'nm named interface'
+        it { expect(nm_keyfile['bond']['mode']).to eq('802.3ad') }
+        # XXX add more tests
+      end
+
+      %w[
+        bond0.3065
+        bond0.3065
+        bond0.3085
+      ].each do |i|
+        context "with #{i}" do
+          let(:interface) { i }
+
+          it_behaves_like 'nm named interface'
+          it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
+          # XXX add more tests
+        end
+      end
+
+      %w[
+        br3065
+        br3065
+        br3085
+      ].each do |i|
+        context "with #{i}" do
+          let(:interface) { i }
+
+          it_behaves_like 'nm named interface'
+          it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
+          it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+          it { expect(nm_keyfile['bridge']['stp']).to be false }
+          it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
+          it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
         end
       end
     end # on os

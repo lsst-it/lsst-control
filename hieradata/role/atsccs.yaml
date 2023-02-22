@@ -1,7 +1,6 @@
 # XXX rename to auxtel-mcm
 ---
 classes:
-  - "ccs_sal"
   - "profile::ccs::common"
   - "profile::core::common"
   - "profile::core::debugutils"

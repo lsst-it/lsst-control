@@ -52,7 +52,6 @@ describe 'lsstcam-mcm.ls.lsst.org', :site do
       end
 
       it { is_expected.to compile.with_all_deps }
-
     end # on os
   end # on_supported_os
 end # role

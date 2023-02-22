@@ -106,7 +106,11 @@ class profile::core::common (
 
     # on EL7 only
     case fact('os.release.major') {
-      '7': {
+      '9': { # EL9+
+        ensure_packages(['NetworkManager-initscripts-updown'])
+        include profile::nm
+      }
+      default: {
         if fact('os.architecture') == 'x86_64' {
           # no scl repos for aarch64
           if $manage_scl {
@@ -115,10 +119,6 @@ class profile::core::common (
         }
 
         include network
-      }
-      default: { # EL9+
-        ensure_packages(['NetworkManager-initscripts-updown'])
-        include profile::nm
       }
     }
   }

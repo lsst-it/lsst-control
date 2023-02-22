@@ -5,7 +5,6 @@ packages:
   - "blas"
   - "bzip2"
   - "cmake"
-  - "devtoolset-8"
   - "emacs"
   - "epel-release"
   - "flex"
@@ -15,7 +14,6 @@ packages:
   - "maven"
   - "nano"
   - "parallel"
-  - "rh-git218"
   - "rsync"
   - "screen"
   - "tcl"
@@ -42,16 +40,6 @@ sudo::purge: false  # FIXME
 sudo::configs:
   lsstcam_ccs_cmd:
     content: "%lsstcam-ccs-cmd ALL=(ccs) NOPASSWD: ALL"
-
-ccs_software::jdk8::rpm: "jdk-8u202-linux-x64.rpm"
-ccs_software::jdk8::package: "jdk1.8"
-ccs_software::jdk8::dir: "jdk1.8.0_202-amd64"
-ccs_software::jdk8::version: "2000:1.8.0_202-fcs"
-
-clustershell::groupmembers:
-  misc: {group: "misc", member: "lsstcam-db01,lsstcam-mcm,lsstcam-vs01"}
-  dc: {group: "dc", member: "lsstcam-dc[01-10]"}
-  all: {group: "all", member: "@dc,@misc"}
 
 ccs_database::database: "ccsdbprod"
 
@@ -82,9 +70,6 @@ ccs_monit::alert:
   ## lsstcam-alerts
   - "lsstcam-alerts-aaaah4qfu4lhjnjpl4wmbjyx2y@lsstc.slack.com"
 
-java_artisanal::package: "jdk1.8"
-java_artisanal::dir: "jdk1.8.0_202-amd64"
-
 accounts::group_list:
   lsstadm:
     gid: 24000  # XXX reserve GID
@@ -103,17 +88,3 @@ accounts::user_list:
     groups:
       - "lsstadm"
     comment: "CCS Administrative Account"
-
-# XXX should all hosts be a desktop?
-ccs_software::desktop: true
-ccs_software::env: "MainCamera"
-ccs_software::installations:
-  lsstcam-software-1.0.0:
-    aliases:
-      - "puppet-1.0.0"
-
-# FIXME
-#profile::icinga::agent::host_template: "LSSTCamHostTemplate"
-daq::daqsdk::purge: false
-
-hosts::stored_config: false

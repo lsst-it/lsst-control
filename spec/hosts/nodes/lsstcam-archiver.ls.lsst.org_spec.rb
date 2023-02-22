@@ -2,22 +2,24 @@
 
 require 'spec_helper'
 
-describe 'auxtel-fp01.ls.lsst.org', :site do
+describe 'lsstcam-archiver.ls.lsst.org', :site do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts.merge(
-          fqdn: 'auxtel-fp01.ls.lsst.org',
+          fqdn: 'lsstcam-archiver.ls.lsst.org',
         )
       end
 
       let(:node_params) do
         {
-          role: 'atsdaq',
-          site: 'cp',
-          cluster: 'auxtel-ccs',
+          role: 'generic',
+          site: 'ls',
+          cluster: 'lsstcam-ccs',
         }
       end
+
+      it { is_expected.to compile.with_all_deps }
 
       it do
         is_expected.to contain_network__interface('enp129s0f0').with(
@@ -48,19 +50,6 @@ describe 'auxtel-fp01.ls.lsst.org', :site do
           defroute: 'yes',
           name: 'dds',
           onboot: 'yes',
-        )
-      end
-
-      it { is_expected.to compile.with_all_deps }
-
-      it { is_expected.to contain_class('nfs::server').with_nfs_v4(true) }
-      it { is_expected.to contain_nfs__server__export('/data') }
-
-      it do
-        is_expected.to contain_nfs__client__mount('/net/self/data').with(
-          share: 'data',
-          server: 'auxtel-fp01.ls.lsst.org',
-          atboot: true,
         )
       end
     end # on os

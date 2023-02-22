@@ -49,6 +49,9 @@
 # @param manage_resolv_conf
 #   If `true`, manage resolv.conf
 #
+# @param manage_network
+#   If `true`, manage network
+#
 class profile::core::common (
   Boolean $deploy_icinga_agent = false,
   Boolean $manage_puppet_agent = true,
@@ -65,6 +68,7 @@ class profile::core::common (
   Boolean $manage_repos = true,
   Boolean $manage_irqbalance = true,
   Boolean $manage_resolv_conf = true,
+  Boolean $manage_network = false,
 ) {
   include auditd
   include accounts
@@ -105,21 +109,18 @@ class profile::core::common (
     }
 
     # on EL7 only
-    case fact('os.release.major') {
-      '9': { # EL9+
-        ensure_packages(['NetworkManager-initscripts-updown'])
-        include profile::nm
-      }
-      default: {
-        if fact('os.architecture') == 'x86_64' {
-          # no scl repos for aarch64
-          if $manage_scl {
-            include scl
-          }
+    if $manage_network == true or (fact('os.release.major') == '7') {
+      if fact('os.architecture') == 'x86_64' {
+        # no scl repos for aarch64
+        if $manage_scl {
+          include scl
         }
-
-        include network
       }
+      include network
+    }
+    else { # EL9+
+      ensure_packages(['NetworkManager-initscripts-updown'])
+      include profile::nm
     }
   }
 

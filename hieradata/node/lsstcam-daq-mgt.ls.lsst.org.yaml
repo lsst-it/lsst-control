@@ -13,12 +13,3 @@ network::interfaces_hash:
     nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
-  dds:
-    vlan: "yes"
-    type: "Vlan"
-    physdev: "enp129s0f1"
-    vlan_id: "2502"
-    bootproto: "dhcp"
-    defroute: "yes"
-    name: "dds"
-    onboot: "yes"

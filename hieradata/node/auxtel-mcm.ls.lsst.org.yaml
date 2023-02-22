@@ -1,4 +1,6 @@
 ---
+profile::core::common::manage_network: true
+
 network::interfaces_hash:
   enp129s0f0:  # fqdn
     bootproto: "dhcp"

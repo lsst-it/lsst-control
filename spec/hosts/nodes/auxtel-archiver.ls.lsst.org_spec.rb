@@ -39,21 +39,15 @@ describe 'auxtel-archiver.ls.lsst.org', :site do
       end
 
       it do
-        is_expected.to contain_network__interface('enp129s0f1.2502').with(
-          bootproto: 'none',
-          bridge: 'dds',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'none',
+        is_expected.to contain_network__interface('lhn').with(
           vlan: 'yes',
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('dds').with(
+          type: 'Vlan',
+          physdev: 'enp129s0f1',
+          vlan_id: '2505',
           bootproto: 'dhcp',
+          defroute: 'yes',
+          name: 'dds',
           onboot: 'yes',
-          type: 'bridge',
         )
       end
 

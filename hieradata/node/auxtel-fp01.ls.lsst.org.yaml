@@ -11,16 +11,14 @@ network::interfaces_hash:
     nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
-  enp129s0f1.2502:
-    bootproto: "none"
-    bridge: "dds"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "none"
-    vlan: "yes"
   dds:
+    vlan: "yes"
+    type: "Vlan"
+    physdev: "enp129s0f1"
+    vlan_id: "2502"
     bootproto: "dhcp"
-    type: "bridge"
+    defroute: "yes"
+    name: "dds"
     onboot: "yes"
 
 # Server configuration

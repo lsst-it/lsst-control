@@ -2,39 +2,21 @@
 
 require 'spec_helper'
 
-#
-# note that this hosts has interfaces with an mtu of 9000
-#
-describe 'azar01.ls.lsst.org', :site do
+describe 'lsstcam-mcm.ls.lsst.org', :site do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts.merge(
-          fqdn: 'azar01.ls.lsst.org',
+          fqdn: 'lsstcam-mcm.ls.lsst.org',
         )
       end
 
       let(:node_params) do
         {
-          role: 'dco',
+          role: 'ccs-mcm',
           site: 'ls',
+          cluster: 'lsstcam-ccs',
         }
-      end
-
-      it { is_expected.to compile.with_all_deps }
-
-      it do
-        is_expected.to contain_class('docker::networks').with(
-          'networks' => {
-            'dds-network' => {
-              'ensure' => 'present',
-              'driver' => 'macvlan',
-              'subnet' => '139.229.152.0/25',
-              'gateway' => '139.229.152.126',
-              'options' => ['parent=dds'],
-            },
-          },
-        )
       end
 
       it do
@@ -68,6 +50,9 @@ describe 'azar01.ls.lsst.org', :site do
           onboot: 'yes',
         )
       end
+
+      it { is_expected.to compile.with_all_deps }
+
     end # on os
   end # on_supported_os
-end
+end # role

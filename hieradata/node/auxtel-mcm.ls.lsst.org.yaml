@@ -1,0 +1,45 @@
+---
+network::interfaces_hash:
+  enp129s0f0:  # fqdn
+    bootproto: "dhcp"
+    defroute: "yes"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  enp129s0f1:
+    bootproto: "none"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  dds:
+    vlan: "yes"
+    type: "Vlan"
+    physdev: "enp129s0f1"
+    vlan_id: "2502"
+    bootproto: "dhcp"
+    defroute: "yes"
+    name: "dds"
+    onboot: "yes"
+
+ccs_software::global_properties:
+  - "org.hibernate.engine.internal.level=WARNING"
+  - ".level=WARNING"
+
+ccs_software::services:
+  prod:
+    - "mmm"
+    - "cluster-monitor"
+    - "localdb"
+    - "rest-server"
+
+nfs::client_enabled: true
+
+nfs::client_mounts:
+  /data:
+    share: "data"
+    server: "auxtel-fp01.ls.lsst.org"
+    atboot: true
+  /repo:
+    share: "repo"
+    server: "auxtel-archiver.ls.lsst.org"
+    atboot: true

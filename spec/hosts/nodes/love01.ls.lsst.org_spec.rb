@@ -39,21 +39,15 @@ describe 'love01.ls.lsst.org', :site do
       end
 
       it do
-        is_expected.to contain_network__interface('enp129s0f1.2502').with(
-          bootproto: 'none',
-          bridge: 'dds',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'none',
-          vlan: 'yes',
-        )
-      end
-
-      it do
         is_expected.to contain_network__interface('dds').with(
+          vlan: 'yes',
+          type: 'Vlan',
+          physdev: 'enp129s0f1',
+          vlan_id: '2502',
           bootproto: 'dhcp',
+          defroute: 'yes',
+          name: 'dds',
           onboot: 'yes',
-          type: 'bridge',
         )
       end
 

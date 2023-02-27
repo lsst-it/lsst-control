@@ -98,6 +98,10 @@ describe "#{role} role" do
             mask: '255.255.255.240',
             range: ['140.252.147.24 140.252.147.30'],
             gateway: '140.252.147.17',
+            static_routes: [
+              { 'network' => '140.252.147.48', 'mask' => '28', 'gateway' => '140.252.147.17' },
+              { 'network' => '140.252.147.128', 'mask' => '27', 'gateway' => '140.252.147.17' },
+            ],
           )
         end
 
@@ -116,6 +120,10 @@ describe "#{role} role" do
             mask: '255.255.255.240',
             range: ['140.252.147.56 140.252.147.62'],
             gateway: '140.252.147.49',
+            static_routes: [
+              { 'network' => '140.252.147.16', 'mask' => '28', 'gateway' => '140.252.147.49' },
+              { 'network' => '140.252.147.128', 'mask' => '27', 'gateway' => '140.252.147.49' },
+            ],
           )
         end
 
@@ -129,20 +137,24 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('vlan3090').with(
-            network: '140.252.147.96',
-            mask: '255.255.255.224',
-            range: ['140.252.147.122 140.252.147.126'],
-            gateway: '140.252.147.97',
-          )
-        end
-
-        it do
           is_expected.to contain_dhcp__pool('vlan3085').with(
             network: '140.252.147.128',
             mask: '255.255.255.224',
             range: ['140.252.147.132 140.252.147.158'],
             gateway: '140.252.147.129',
+            static_routes: [
+              { 'network' => '140.252.147.16', 'mask' => '28', 'gateway' => '140.252.147.129' },
+              { 'network' => '140.252.147.48', 'mask' => '28', 'gateway' => '140.252.147.129' },
+            ],
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('vlan3090').with(
+            network: '140.252.147.96',
+            mask: '255.255.255.224',
+            range: ['140.252.147.122 140.252.147.126'],
+            gateway: '140.252.147.97',
           )
         end
 

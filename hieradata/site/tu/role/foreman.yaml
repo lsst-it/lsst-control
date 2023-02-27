@@ -46,6 +46,9 @@ dhcp::pools:
     range:
       - "140.252.147.24 140.252.147.30"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+    static_routes:
+      - {network: "140.252.147.48", mask: "28", gateway: "140.252.147.17"}
+      - {network: "140.252.147.128", mask: "27", gateway: "140.252.147.17"}
   vlan3070:  # comcam
     network: "140.252.147.32"
     mask: "255.255.255.240"
@@ -60,6 +63,9 @@ dhcp::pools:
     range:
       - "140.252.147.56 140.252.147.62"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+    static_routes:
+      - {network: "140.252.147.16", mask: "28", gateway: "140.252.147.49"}
+      - {network: "140.252.147.128", mask: "27", gateway: "140.252.147.49"}
   vlan3080:  # misc
     network: "140.252.147.64"
     mask: "255.255.255.224"
@@ -81,6 +87,9 @@ dhcp::pools:
     range:
       - "140.252.147.132 140.252.147.158"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+    static_routes:
+      - {network: "140.252.147.16", mask: "28", gateway: "140.252.147.129"}
+      - {network: "140.252.147.48", mask: "28", gateway: "140.252.147.129"}
 sysctl::values::args:
   net.ipv4.conf.all.arp_filter:
     value: 1

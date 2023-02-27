@@ -13,3 +13,15 @@ network::interfaces_hash:
     nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
+
+nfs::server_enabled: true
+nfs::server::nfs_v4: false  # XXX disable v4 style exports because of the DAQ
+nfs::nfs_exports_global:
+  /srv/nfs/dsl:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,crossmnt,no_subtree_check,all_squash,anongid=2660,insecure)
+      192.168.100.0/24(rw,nohide,crossmnt,no_subtree_check,all_squash,anongid=2660,insecure)
+  /srv/nfs/lsst-daq:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,crossmnt,no_subtree_check,all_squash,anongid=2660,insecure)
+      192.168.100.0/24(rw,nohide,crossmnt,no_subtree_check,all_squash,anongid=2660,insecure)

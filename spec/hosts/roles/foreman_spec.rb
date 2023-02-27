@@ -273,7 +273,7 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('BTS_LSSTCAM').with(
+          is_expected.to contain_dhcp__pool('DDS-BTS').with(
             network: '139.229.152.0',
             mask: '255.255.255.128',
             range: ['139.229.152.70 139.229.152.120'],

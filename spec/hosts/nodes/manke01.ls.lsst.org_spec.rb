@@ -54,7 +54,7 @@ describe 'manke01.ls.lsst.org', :site do
       end
 
       it { is_expected.to have_network__interface_resource_count(0) }
-      it { is_expected.to have_profile__nm__connection_resource_count(7) }
+      it { is_expected.to have_profile__nm__connection_resource_count(9) }
 
       %w[
         eno1np0
@@ -76,6 +76,27 @@ describe 'manke01.ls.lsst.org', :site do
         it_behaves_like 'nm dhcp interface'
         it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
         it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+      end
+
+      context 'with enp129s0f1.2502' do
+        let(:interface) { 'enp129s0f1.2502' }
+
+        it_behaves_like 'nm named interface'
+        it { expect(nm_keyfile['connection']['type']).to eq('vlan') }
+        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+        it { expect(nm_keyfile['connection']['master']).to eq('br2502') }
+        it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
+      end
+
+      context 'with br2502' do
+        let(:interface) { 'br2502' }
+
+        it_behaves_like 'nm named interface'
+        it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
+        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+        it { expect(nm_keyfile['bridge']['stp']).to be false }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
+        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
 
       context 'with enp129s0f1.2505' do

@@ -41,6 +41,14 @@ describe 'pillan01.tu.lsst.org', :site do
 
       it { is_expected.to compile.with_all_deps }
 
+      it do
+        is_expected.to contain_class('cni::plugins').with(
+          version: '1.2.0',
+          checksum: 'f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37',
+          enable: ['macvlan'],
+        )
+      end
+
       if facts[:os]['release']['major'] == '7'
         it do
           is_expected.to contain_network__interface('bond0').with(

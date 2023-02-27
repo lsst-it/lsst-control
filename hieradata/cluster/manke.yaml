@@ -88,6 +88,24 @@ profile::nm::connections:
 
       [ipv6]
       method=disabled
+  enp129s0f1.2502:
+    content: |
+      [connection]
+      id=enp129s0f1.2502
+      uuid=e74daaad-4d73-4015-bb26-83c460ddf572
+      type=vlan
+      interface-name=enp129s0f1.2502
+      master=br2502
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=2502
+      parent=enp129s0f1
+
+      [bridge-port]
   enp129s0f1.2505:
     content: |
       [connection]
@@ -106,6 +124,24 @@ profile::nm::connections:
       parent=enp129s0f1
 
       [bridge-port]
+  br2502:
+    content: |
+      [connection]
+      id=br2502
+      uuid=7dd05d98-a9c3-4569-a7c3-00316b13c0eb
+      type=bridge
+      interface-name=br2502
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
   br2505:
     content: |
       [connection]

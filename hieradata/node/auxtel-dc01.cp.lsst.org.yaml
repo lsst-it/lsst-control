@@ -1,43 +1,43 @@
+---
 network::interfaces_hash:
-  enp129s0f0:  # fqdn
+  em1:  # dds
+    bootproto: "dhcp"
+    defroute: "no"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+  em2:  # fqdn *and* ccs-auxtel
     bootproto: "dhcp"
     defroute: "yes"
     nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
-  enp129s0f1:
+  em3:  # not connected
     bootproto: "none"
-    nozeroconf: "yes"
-    onboot: "yes"
+    onboot: "no"
     type: "Ethernet"
-  lhn:
-    vlan: "yes"
-    type: "Vlan"
-    physdev: "enp129s0f1"
-    vlan_id: "2505"
-    bootproto: "dhcp"
-    defroute: "yes"
-    name: "lhn"
-    onboot: "yes"
+  em4:  # not connected
+    bootproto: "none"
+    onboot: "no"
+    type: "Ethernet"
 
 network::mroutes_hash:
-  lhn:
+  em1:
     routes:
-      "134.79.20.0/23": "139.229.153.254"
-      "134.79.20.60/32": "139.229.153.254"
-      "134.79.23.0/24": "139.229.153.254"
-      "134.79.235.224/28": "139.229.153.254"
-      "134.79.235.226/32": "139.229.153.254"
-      "134.79.235.240/28": "139.229.153.254"
+      "139.229.147.0/24": "139.229.170.254"
+      "139.229.166.0/24": "139.229.170.254"
+      "139.229.167.0/24": "139.229.170.254"
+      #"139.229.170.0/24": "139.229.170.254"
+      "139.229.178.0/24": "139.229.170.254"
 
 nfs::client_enabled: true
 
 nfs::client_mounts:
   /data:
     share: "data"
-    server: "auxtel-fp01.ls.lsst.org"
+    server: "auxtel-fp01.cp.lsst.org"
     atboot: true
   /repo:
     share: "repo"
-    server: "auxtel-archiver.ls.lsst.org"
+    server: "auxtel-archiver.cp.lsst.org"
     atboot: true

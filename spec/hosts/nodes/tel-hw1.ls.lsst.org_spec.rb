@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'auxtel-mcm.ls.lsst.org', :site do
+describe 'tel-hw1.ls.lsst.org', :site do
   alma8 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '8' }).first
   # rubocop:disable Naming/VariableNumber
   { 'almalinux-8-x86_64': alma8 }.each do |os, facts|
@@ -10,15 +10,14 @@ describe 'auxtel-mcm.ls.lsst.org', :site do
     context "on #{os}" do
       let(:facts) do
         facts.merge(
-          fqdn: 'auxtel-mcm.ls.lsst.org',
+          fqdn: 'tel-hw1.ls.lsst.org',
         )
       end
 
       let(:node_params) do
         {
-          role: 'atsccs',
+          role: 'amor',
           site: 'ls',
-          cluster: 'auxtel-ccs',
         }
       end
 
@@ -71,22 +70,6 @@ describe 'auxtel-mcm.ls.lsst.org', :site do
       end
 
       it { is_expected.to compile.with_all_deps }
-
-      it do
-        is_expected.to contain_nfs__client__mount('/data').with(
-          share: 'data',
-          server: 'auxtel-fp01.ls.lsst.org',
-          atboot: true,
-        )
-      end
-
-      it do
-        is_expected.to contain_nfs__client__mount('/repo').with(
-          share: 'repo',
-          server: 'auxtel-archiver.ls.lsst.org',
-          atboot: true,
-        )
-      end
     end # on os
   end # on_supported_os
 end # role

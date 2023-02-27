@@ -1,4 +1,5 @@
 ---
 classes:
+  - "ccs_database"
   - "profile::ccs::common"
   - "profile::core::common"

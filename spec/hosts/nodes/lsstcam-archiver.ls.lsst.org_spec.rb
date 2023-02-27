@@ -2,8 +2,14 @@
 
 require 'spec_helper'
 
+#
+# note that this hosts has interfaces with an mtu of 9000
+#
 describe 'lsstcam-archiver.ls.lsst.org', :site do
-  on_supported_os.each do |os, facts|
+  alma8 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '8' }).first
+  # rubocop:disable Naming/VariableNumber
+  { 'almalinux-8-x86_64': alma8 }.each do |os, facts|
+    # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
       let(:facts) do
         facts.merge(
@@ -21,37 +27,32 @@ describe 'lsstcam-archiver.ls.lsst.org', :site do
 
       it { is_expected.to compile.with_all_deps }
 
-      it do
-        is_expected.to contain_network__interface('enp129s0f0').with(
-          bootproto: 'dhcp',
-          defroute: 'yes',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
+      include_context 'with nm interface'
+
+      it { is_expected.to have_network__interface_resource_count(0) }
+      it { is_expected.to have_profile__nm__connection_resource_count(5) }
+
+      %w[
+        eno1np0
+        eno2np1
+        enp4s0f3u2u2c2
+        enp129s0f1
+      ].each do |i|
+        context "with #{name}" do
+          let(:interface) { i }
+
+          it_behaves_like 'nm disabled interface'
+        end
       end
 
-      it do
-        is_expected.to contain_network__interface('enp129s0f1').with(
-          bootproto: 'none',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
-      end
+      context 'with enp129s0f0' do
+        let(:interface) { 'enp129s0f0' }
 
-      it do
-        is_expected.to contain_network__interface('lhn').with(
-          vlan: 'yes',
-          type: 'Vlan',
-          physdev: 'enp129s0f1',
-          vlan_id: '2505',
-          bootproto: 'dhcp',
-          defroute: 'yes',
-          name: 'dds',
-          onboot: 'yes',
-        )
+        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm dhcp interface'
+        it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
+        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
       end
     end # on os
   end # on_supported_os
-end # role
+end

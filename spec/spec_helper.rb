@@ -276,7 +276,6 @@ shared_examples 'archiver', :archiver do
     profile::core::nfsclient
     profile::core::nfsserver
     profile::core::sysctl::lhn
-    python
   ].each do |c|
     it { is_expected.to contain_class(c) }
   end

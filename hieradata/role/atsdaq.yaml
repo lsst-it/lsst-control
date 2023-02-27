@@ -1,6 +1,7 @@
 # XXX rename to auxtel-fp
 ---
 classes:
+  - "profile::ccs::common"
   - "profile::ccs::krb5_token"
   - "profile::core::common"
   - "profile::core::debugutils"

@@ -30,12 +30,10 @@ class profile::ccs::common (
   include ccs_software
   include maven
 
-  if ((fact('os.release.major') == '7' and fact('os.architecture') == 'x86_64')) {
-    include java_artisanal
-    include java_artisanal::java17
-    Class['java_artisanal']
-    -> Class['ccs_software']
-  }
+  include java_artisanal
+  include java_artisanal::java17
+  Class['java_artisanal']
+  -> Class['ccs_software']
 
   ssh::server::match_block { 'ccs':
     type    => 'User',

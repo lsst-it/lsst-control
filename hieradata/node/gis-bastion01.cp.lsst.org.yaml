@@ -8,7 +8,7 @@ network::interfaces_hash:
     type: "Ethernet"
   enp1s0f1:  # GIS Private Network
     bootproto: "none"
-    ipaddress: "192.168.180.40"
+    ipaddress: "192.168.180.230"
     netmask: "255.255.255.0"
     nozeroconf: "yes"
     onboot: "yes"

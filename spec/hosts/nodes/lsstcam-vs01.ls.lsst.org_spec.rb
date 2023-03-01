@@ -21,7 +21,6 @@ describe 'lsstcam-vs01.ls.lsst.org', :site do
         {
           role: 'ccs-generic',
           site: 'ls',
-          cluster: 'lsstcam-ccs',
         }
       end
 

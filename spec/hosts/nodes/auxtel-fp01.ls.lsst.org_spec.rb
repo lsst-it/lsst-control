@@ -87,7 +87,7 @@ describe 'auxtel-fp01.ls.lsst.org', :site do
         it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
         it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
         it { expect(nm_keyfile['bridge']['stp']).to be false }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('auto') }
         it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
 

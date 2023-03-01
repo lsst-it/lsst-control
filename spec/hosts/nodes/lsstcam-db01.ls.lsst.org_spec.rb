@@ -21,7 +21,6 @@ describe 'lsstcam-db01.ls.lsst.org', :site do
         {
           role: 'ccs-database',
           site: 'ls',
-          cluster: 'lsstcam-ccs',
         }
       end
 

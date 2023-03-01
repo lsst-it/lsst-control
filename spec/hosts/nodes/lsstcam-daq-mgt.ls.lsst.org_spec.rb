@@ -21,7 +21,6 @@ describe 'lsstcam-daq-mgt.ls.lsst.org', :site do
         {
           role: 'daq-mgt',
           site: 'ls',
-          cluster: 'lsstcam-ccs',
         }
       end
 

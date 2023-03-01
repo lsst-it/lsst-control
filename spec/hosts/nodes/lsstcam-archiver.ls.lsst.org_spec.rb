@@ -21,7 +21,6 @@ describe 'lsstcam-archiver.ls.lsst.org', :site do
         {
           role: 'generic',
           site: 'ls',
-          cluster: 'lsstcam-ccs',
         }
       end
 

@@ -24,7 +24,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :site do
       it { is_expected.to compile.with_all_deps }
 
       it { is_expected.to have_network__interface_resource_count(0) }
-      it { is_expected.to have_profile__nm__connection_resource_count(9) }
+      it { is_expected.to have_profile__nm__connection_resource_count(7) }
 
       %w[
         eno1np0
@@ -60,27 +60,6 @@ describe 'lsstcam-dc01.ls.lsst.org', :site do
 
       context 'with br2505' do
         let(:interface) { 'br2505' }
-
-        it_behaves_like 'nm named interface'
-        it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-        it { expect(nm_keyfile['bridge']['stp']).to be false }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
-      end
-
-      context 'with enp129s0f1.2502' do
-        let(:interface) { 'enp129s0f1.2502' }
-
-        it_behaves_like 'nm named interface'
-        it { expect(nm_keyfile['connection']['type']).to eq('vlan') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-        it { expect(nm_keyfile['connection']['master']).to eq('dds') }
-        it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
-      end
-
-      context 'with dds' do
-        let(:interface) { 'dds' }
 
         it_behaves_like 'nm named interface'
         it { expect(nm_keyfile['connection']['type']).to eq('bridge') }

@@ -4,6 +4,13 @@
 class profile::ts::dco {
   $user = 'dco'
 
+  file { "/home/${user}/docker_tmp":
+    ensure => directory,
+    mode   => '0777',
+    owner  => $user,
+    group  => $user,
+  }
+
   vcsrepo { "/home/${user}/docker-compose-ops":
     ensure             => present,
     provider           => git,

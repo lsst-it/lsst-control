@@ -11,6 +11,16 @@ class profile::ts::dco {
     group  => $user,
   }
 
+  vcsrepo { "/home/${user}/docker-compose-admin":
+    ensure             => present,
+    provider           => git,
+    source             => 'https://github.com/lsst-ts/docker-compose-admin.git',
+    keep_local_changes => true,
+    user               => $user,
+    owner              => $user,
+    group              => $user,
+  }
+
   vcsrepo { "/home/${user}/docker-compose-ops":
     ensure             => present,
     provider           => git,

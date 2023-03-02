@@ -153,7 +153,7 @@ describe "#{role} role" do
           is_expected.to contain_dhcp__pool('vlan3090').with(
             network: '140.252.147.96',
             mask: '255.255.255.224',
-            range: ['140.252.147.122 140.252.147.126'],
+            range: ['140.252.147.124 140.252.147.126'],
             gateway: '140.252.147.97',
           )
         end

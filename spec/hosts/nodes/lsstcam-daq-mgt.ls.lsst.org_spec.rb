@@ -51,6 +51,10 @@ describe 'lsstcam-daq-mgt.ls.lsst.org', :site do
         it_behaves_like 'nm dhcp interface'
         it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
         it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+
+        it { is_expected.to contain_class('nfs::server').with_nfs_v4(false) }
+        it { is_expected.to contain_nfs__server__export('/srv/nfs/dsl') }
+        it { is_expected.to contain_nfs__server__export('/srv/nfs/lsst-daq') }
       end
     end # on os
   end # on_supported_os

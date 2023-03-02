@@ -2,28 +2,25 @@
 
 require 'spec_helper'
 
-describe 'tel-hw1.ls.lsst.org', :site do
+describe 'lsstcam-mcm.ls.lsst.org', :site do
   alma8 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '8' }).first
   # rubocop:disable Naming/VariableNumber
   { 'almalinux-8-x86_64': alma8 }.each do |os, facts|
     # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
-      let(:facts) do
-        facts.merge(
-          fqdn: 'tel-hw1.ls.lsst.org',
-        )
-      end
-
+      let(:facts) { override_facts(facts, fqdn: 'lsstcam-mcm.ls.lsst.org') }
       let(:node_params) do
         {
-          role: 'amor',
+          role: 'ccs-dc',
           site: 'ls',
         }
       end
-
-      it { is_expected.to compile.with_all_deps }
+      let(:vlan_id) { 2505 }
+      let(:rt_id) { vlan_id }
 
       include_context 'with nm interface'
+
+      it { is_expected.to compile.with_all_deps }
 
       it { is_expected.to have_network__interface_resource_count(0) }
       it { is_expected.to have_profile__nm__connection_resource_count(7) }
@@ -72,4 +69,4 @@ describe 'tel-hw1.ls.lsst.org', :site do
       end
     end # on os
   end # on_supported_os
-end # role
+end

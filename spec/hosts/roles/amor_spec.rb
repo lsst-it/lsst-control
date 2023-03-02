@@ -31,6 +31,18 @@ describe "#{role} role" do
           include_examples 'docker'
           include_examples 'dco'
 
+          it do
+            is_expected.to contain_vcsrepo('/home/dco/love-integration-tools').with(
+              ensure: 'present',
+              provider: 'git',
+              source: 'https://github.com/lsst-ts/LOVE-integration-tools.git',
+              keep_local_changes: true,
+              user: 'dco',
+              owner: 'dco',
+              group: 'dco',
+            )
+          end
+
           it { is_expected.to contain_package('docker-compose-plugin') }
         end # host
       end # lsst_sites

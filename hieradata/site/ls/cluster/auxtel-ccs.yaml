@@ -1,0 +1,15 @@
+---
+ccs_site: "base"
+ccs_sal::dds_interface: "auxtel-mcm-dds.ls.lsst.org"
+
+## base-teststand-alerts
+ccs_software::service_email: "base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com"
+
+ccs_monit::alert:
+  - "base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com"
+
+clustershell::groupmembers:
+  misc: {group: "misc", member: "auxtel-mcm,auxtel-dc01,auxtel-fp01"}
+  #hcu: {group: "hcu", member: "auxtel-hcu01"}
+  #all: {group: "all", member: "@misc,@hcu"}
+  all: {group: "all", member: "@misc"}

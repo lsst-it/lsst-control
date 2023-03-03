@@ -38,7 +38,7 @@ r10k::mcollective: false
 r10k::cachedir: "/var/cache/r10k"
 r10k::sources:
   control:
-    remote: "https://github.com/lsst-it/lsst-itconf"
+    remote: "https://github.com/lsst-it/lsst-control"
     basedir: "/etc/puppetlabs/code/environments"
     invalid_branches: "correct"
     ignore_branch_prefixes: &ignore_branch

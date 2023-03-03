@@ -633,6 +633,23 @@ shared_examples 'generic foreman' do
     )
   end
 
+  it do
+    is_expected.to contain_class('r10k').with_sources(
+      'control' => {
+        'remote' => 'https://github.com/lsst-it/lsst-control',
+        'basedir' => '/etc/puppetlabs/code/environments',
+        'invalid_branches' => 'correct',
+        'ignore_branch_prefixes' => ignore_branch_prefixes,
+      },
+      'lsst_hiera_private' => {
+        'remote' => 'git@github.com:lsst-it/lsst-puppet-hiera-private.git',
+        'basedir' => '/etc/puppetlabs/code/hieradata/private',
+        'invalid_branches' => 'correct',
+        'ignore_branch_prefixes' => ignore_branch_prefixes,
+      },
+    )
+  end
+
   it { is_expected.to contain_package('oauth').with_provider('puppet_gem') }
 
   it do

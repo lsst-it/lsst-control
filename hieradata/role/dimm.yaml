@@ -1,6 +1,6 @@
 # The temporary DIMM server running on ESXi
 ---
-# See lsst-itconf/site/profile/manifests/core/common.pp
+# See site/profile/manifests/core/common.pp
 classes:
 #  - chrony    # skipped: not strictly necessary right now, dimm has ntp configured
 #  - ssh       # skipped: too intrusive

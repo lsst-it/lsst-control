@@ -30,6 +30,17 @@ describe "#{role} role" do
             1.south-america.pool.ntp.org
           ]
         end
+        let(:ignore_branch_prefixes) do
+          %w[
+            master
+            ncsa_production
+            disable
+            core
+            cp
+            ls
+            tu
+          ]
+        end
 
         it do
           is_expected.to contain_dhcp__pool('IT-Dev').with(
@@ -53,6 +64,17 @@ describe "#{role} role" do
             140.252.1.140
             140.252.1.141
             140.252.1.142
+          ]
+        end
+        let(:ignore_branch_prefixes) do
+          %w[
+            master
+            ncsa_production
+            disable
+            core
+            cp
+            dev
+            ls
           ]
         end
 
@@ -172,6 +194,17 @@ describe "#{role} role" do
             ntp.cp.lsst.org
             1.cl.pool.ntp.org
             1.south-america.pool.ntp.org
+          ]
+        end
+        let(:ignore_branch_prefixes) do
+          %w[
+            master
+            ncsa_production
+            disable
+            core
+            cp
+            dev
+            tu
           ]
         end
 
@@ -395,6 +428,17 @@ describe "#{role} role" do
             ntp.shoa.cl
             1.cl.pool.ntp.org
             1.south-america.pool.ntp.org
+          ]
+        end
+        let(:ignore_branch_prefixes) do
+          %w[
+            master
+            ncsa_production
+            disable
+            core
+            dev
+            ls
+            tu
           ]
         end
 

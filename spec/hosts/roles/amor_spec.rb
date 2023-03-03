@@ -32,7 +32,7 @@ describe "#{role} role" do
           include_examples 'dco'
 
           it do
-            is_expected.to contain_vcsrepo('/home/dco/love-integration-tools').with(
+            is_expected.to contain_vcsrepo('/home/dco/LOVE-integration-tools').with(
               ensure: 'present',
               provider: 'git',
               source: 'https://github.com/lsst-ts/LOVE-integration-tools.git',

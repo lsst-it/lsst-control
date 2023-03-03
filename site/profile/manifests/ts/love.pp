@@ -3,7 +3,7 @@
 #
 class profile::ts::love {
   $user = 'dco'
-  vcsrepo { "/home/${user}/love-integration-tools":
+  vcsrepo { "/home/${user}/LOVE-integration-tools":
     ensure             => present,
     provider           => git,
     source             => 'https://github.com/lsst-ts/LOVE-integration-tools.git',

@@ -10,7 +10,7 @@ describe 'profile::ts::love' do
       it { is_expected.to compile.with_all_deps }
 
       it do
-        is_expected.to contain_vcsrepo('/home/dco/love-integration-tools').with(
+        is_expected.to contain_vcsrepo('/home/dco/LOVE-integration-tools').with(
           ensure: 'present',
           provider: 'git',
           source: 'https://github.com/lsst-ts/LOVE-integration-tools.git',

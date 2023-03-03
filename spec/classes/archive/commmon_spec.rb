@@ -33,17 +33,13 @@ describe 'profile::archive::common' do
         git
         cmake
         gcc-c++
+        docker-compose-plugin
       ].each do |p|
         it { is_expected.to contain_package(p) }
       end
 
-      %w[
-        docker-compose-plugin
-        cryptography
-      ].each do |p|
-        if facts[:os]['release']['major'] == '7' && (fact[:os]['architecture'] == 'x86_64')
-          it { is_expected.to contain_python__pip(p) }
-        end
+      if facts[:os]['release']['major'] == '7' && (facts[:os]['architecture'] == 'x86_64')
+        it { is_expected.to contain_python__pip('cryptography') }
       end
 
       it { is_expected.to contain_accounts__user('arc').with_uid('61000') }

@@ -192,12 +192,6 @@ profile::archive::common::packages:
   - "git"
   - "docker-compose-plugin"
 
-profile::archive::common::python_pips:
-  "cryptography":
-    virtualenv: "system"
-    ensure: "3.3"
-    pip_provider: "pip3"
-
 profile::archive::common::group_list:
   # this is duplicating the ipa gid as a local group
   &docker_name docker-%{facts.hostname}:

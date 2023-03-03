@@ -39,6 +39,12 @@ class profile::ccs::graphical (
         timeout => 900,
       }
     }
+    else {
+      yum::group { 'Server with GUI':
+        ensure  => present,
+        timeout => 900,
+      }
+    }
 
     package { 'gnome-initial-setup':
       ensure => purged,

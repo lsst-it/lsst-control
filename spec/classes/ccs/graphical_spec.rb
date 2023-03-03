@@ -18,6 +18,13 @@ describe 'profile::ccs::graphical' do
             timeout: '900',
           )
         end
+      else
+        it do
+          is_expected.to contain_yum__group('Server with GUI').with(
+            ensure: 'present',
+            timeout: '900',
+          )
+        end
       end
     end
   end

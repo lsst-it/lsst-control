@@ -38,10 +38,6 @@ describe 'profile::archive::common' do
         it { is_expected.to contain_package(p) }
       end
 
-      if facts[:os]['release']['major'] == '7' && (facts[:os]['architecture'] == 'x86_64')
-        it { is_expected.to contain_python__pip('cryptography') }
-      end
-
       it { is_expected.to contain_accounts__user('arc').with_uid('61000') }
       it { is_expected.to contain_accounts__user('atadbot').with_uid('61002') }
       it { is_expected.to contain_group('docker-foo').with_gid('70014') }

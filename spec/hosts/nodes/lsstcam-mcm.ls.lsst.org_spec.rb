@@ -15,8 +15,6 @@ describe 'lsstcam-mcm.ls.lsst.org', :site do
           site: 'ls',
         }
       end
-      let(:vlan_id) { 2505 }
-      let(:rt_id) { vlan_id }
 
       include_context 'with nm interface'
 

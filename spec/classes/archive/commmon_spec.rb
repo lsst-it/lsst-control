@@ -6,6 +6,24 @@ describe 'profile::archive::common' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) { facts }
+      let(:manifest) do
+        <<-PP
+        if fact('os.architecture') == 'x86_64' {
+          if fact('os.release.major') >= '8' {
+            package { 'python3': }
+            -> alternatives { 'python':
+              path => '/usr/bin/python3',
+            }
+          }
+          if fact('os.release.major') >= '9' {
+            alternative_entry { '/usr/bin/python3':
+              ensure  => present,
+              altlink => '/usr/bin/python',
+            }
+          }
+        }
+        PP
+      end
 
       it { is_expected.to compile.with_all_deps }
 
@@ -20,7 +38,7 @@ describe 'profile::archive::common' do
       end
 
       %w[
-        docker-compose
+        docker-compose-plugin
         cryptography
       ].each do |p|
         if facts[:os]['release']['major'] == '7' && (fact[:os]['architecture'] == 'x86_64')

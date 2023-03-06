@@ -1,0 +1,19 @@
+---
+verify_signatures: false
+CommitMsg:
+  TextWidth:
+    enabled: true
+    max_subject_width: 72
+  CapitalizedSubject:
+    enabled: false
+PreCommit:
+  RuboCop:
+    enabled: true
+    on_warn: "fail"
+    problem_on_unmodified_line: "ignore"
+  YamlLint:
+    enabled: true
+  PuppetLint:
+    enabled: true
+    description: 'Runs puppet-lint on modified files only'
+    command: ['bundle', 'exec', 'puppet-lint']

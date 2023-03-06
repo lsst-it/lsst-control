@@ -37,6 +37,7 @@ describe "#{role} role" do
             disable
             core
             cp
+            dev
             ls
             tu
           ]
@@ -75,6 +76,7 @@ describe "#{role} role" do
             cp
             dev
             ls
+            tu
           ]
         end
 
@@ -204,6 +206,7 @@ describe "#{role} role" do
             core
             cp
             dev
+            ls
             tu
           ]
         end

@@ -187,6 +187,7 @@ r10k::sources:
       - "core"
       - "cp"
       - "dev"
+      - "ls"
       - "tu"
   lsst_hiera_private:
     ignore_branch_prefixes: *ignore_branch

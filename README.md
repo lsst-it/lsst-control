@@ -1,10 +1,14 @@
-lsst-itconf
+lsst-control
 ===
 
-* ![markdownlint](https://github.com/lsst-it/lsst-itconf/actions/workflows/markdownlint.yaml/badge.svg)
-* ![rake checks](https://github.com/lsst-it/lsst-itconf/actions/workflows/rake_checks.yaml/badge.svg)
-* ![shellcheck](https://github.com/lsst-it/lsst-itconf/actions/workflows/shellcheck.yaml/badge.svg)
-* ![yamllint](https://github.com/lsst-it/lsst-itconf/actions/workflows/yamllint.yaml/badge.svg)
+* ![markdownlint](https://github.com/lsst-it/lsst-control/actions/workflows/markdownlint.yaml/badge.svg)
+* ![rake checks](https://github.com/lsst-it/lsst-control/actions/workflows/rake_checks.yaml/badge.svg)
+* ![shellcheck](https://github.com/lsst-it/lsst-control/actions/workflows/shellcheck.yaml/badge.svg)
+* ![yamllint](https://github.com/lsst-it/lsst-control/actions/workflows/yamllint.yaml/badge.svg)
+
+This is the primary Rubin Observatory [puppet control
+repo](https://github.com/puppetlabs/control-repo) for the Summit, Base Data
+Center, and Tucson Teststand.
 
 Hiera Layers
 ------------

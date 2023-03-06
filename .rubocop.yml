@@ -128,3 +128,5 @@ Style/CommentedKeyword:
   Enabled: false
 Naming/FileName:
   Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false

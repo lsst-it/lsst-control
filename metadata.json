@@ -1,10 +1,10 @@
 {
-  "name": "lsst-itconf",
+  "name": "lsst-control",
   "version": "0.1.0",
   "author": "AURA/LSST/Rubin Observatory",
   "summary": "LSST/Rubin control repo",
   "license": "Apache-2.0",
-  "source": "https://github.com/lsst-it/lsst-itconf",
+  "source": "https://github.com/lsst-it/lsst-control",
   "dependencies": [],
   "operatingsystem_support": [
     {

@@ -28,9 +28,22 @@ class profile::ccs::graphical (
     ## Although people sometimes want to eg use vnc,
     ## so it does end up being needed on servers too.
     ## "Server with GUI" instead? Not much smaller.
-    yum::group { 'GNOME Desktop':
-      ensure  => present,
-      timeout => 1800,
+    # Packages not present on EL8 or EL9
+    if fact('os.release.major') == '7' {
+      yum::group { 'GNOME Desktop':
+        ensure  => present,
+        timeout => 1800,
+      }
+      yum::group { 'MATE Desktop':
+        ensure  => present,
+        timeout => 900,
+      }
+    }
+    else {
+      yum::group { 'Server with GUI':
+        ensure  => present,
+        timeout => 900,
+      }
     }
 
     package { 'gnome-initial-setup':
@@ -40,11 +53,6 @@ class profile::ccs::graphical (
     ensure_packages(['x2goclient', 'x2goserver', 'x2godesktopsharing'])
 
     ensure_packages(['icewm'])
-
-    yum::group { 'MATE Desktop':
-      ensure  => present,
-      timeout => 900,
-    }
   }
 
   if $officeapps {

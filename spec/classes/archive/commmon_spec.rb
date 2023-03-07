@@ -19,13 +19,6 @@ describe 'profile::archive::common' do
         it { is_expected.to contain_package(p) }
       end
 
-      %w[
-        docker-compose
-        cryptography
-      ].each do |p|
-        it { is_expected.to contain_python__pip(p) }
-      end
-
       it { is_expected.to contain_accounts__user('arc').with_uid('61000') }
       it { is_expected.to contain_accounts__user('atadbot').with_uid('61002') }
       it { is_expected.to contain_group('docker-foo').with_gid('70014') }

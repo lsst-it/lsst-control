@@ -15,6 +15,7 @@ describe 'profile::archive::common' do
         git
         cmake
         gcc-c++
+        docker-compose-plugin
       ].each do |p|
         it { is_expected.to contain_package(p) }
       end

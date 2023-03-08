@@ -30,6 +30,15 @@ describe "#{role} role" do
           include_examples 'docker'
           include_examples 'dco'
 
+          it do
+            is_expected.to contain_file('/home/dco/docker_tmp').with(
+              ensure: 'directory',
+              owner: 'dco',
+              group: 'dco',
+              mode: '0777',
+            )
+          end
+
           it { is_expected.to contain_package('docker-compose-plugin') }
         end # host
       end # lsst_sites

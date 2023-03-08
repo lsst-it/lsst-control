@@ -190,17 +190,7 @@ profile::archive::common::packages:
   - "cmake"
   - "gcc-c++"
   - "git"
-
-profile::archive::common::python_pips:
-  # install docker-compose at system level - "docker"
-  "docker-compose":
-    virtualenv: "system"
-    ensure: "1.25.0"
-    pip_provider: "pip3"
-  "cryptography":
-    virtualenv: "system"
-    ensure: "3.3"
-    pip_provider: "pip3"
+  - "docker-compose-plugin"
 
 profile::archive::common::group_list:
   # this is duplicating the ipa gid as a local group

@@ -32,14 +32,6 @@ class profile::archive::common (
     ensure_packages($packages)
   }
 
-  class { 'python':
-    version     => 'python36',
-    pip         => 'present',
-    dev         => 'present',
-    venv        => 'present',
-    python_pips => $python_pips,
-  }
-
   if $user_list {
     ensure_resources('accounts::user', $user_list)
   }

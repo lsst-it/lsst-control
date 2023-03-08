@@ -276,7 +276,6 @@ shared_examples 'archiver', :archiver do
     profile::core::nfsclient
     profile::core::nfsserver
     profile::core::sysctl::lhn
-    python
   ].each do |c|
     it { is_expected.to contain_class(c) }
   end
@@ -711,6 +710,18 @@ shared_examples 'dco' do
       ensure: 'present',
       provider: 'git',
       source: 'https://github.com/lsst-ts/ts_ddsconfig.git',
+      keep_local_changes: true,
+      user: 'dco',
+      owner: 'dco',
+      group: 'dco',
+    )
+  end
+
+  it do
+    is_expected.to contain_vcsrepo('/home/dco/docker-compose-admin').with(
+      ensure: 'present',
+      provider: 'git',
+      source: 'https://github.com/lsst-ts/docker-compose-admin.git',
       keep_local_changes: true,
       user: 'dco',
       owner: 'dco',

@@ -67,7 +67,7 @@ class profile::daq::daq_interface (
             id=lsst-daq
             uuid=${uuid}
             type=ethernet
-            interface-name=lsst-daq
+            interface-name=${was}
 
             [ethernet]
             mac-address=${hwaddr}
@@ -80,7 +80,7 @@ class profile::daq::daq_interface (
 
             [ipv6]
             method=disabled
-          |NM
+            |NM
           # lint:endignore
         }
       } else {
@@ -91,7 +91,7 @@ class profile::daq::daq_interface (
             id=lsst-daq
             uuid=${uuid}
             type=ethernet
-            interface-name=lsst-daq
+            interface-name=${was}
 
             [ethernet]
             mac-address=${hwaddr}
@@ -101,7 +101,7 @@ class profile::daq::daq_interface (
 
             [ipv6]
             method=disabled
-          |NM
+            |NM
           # lint:endignore
         }
       }

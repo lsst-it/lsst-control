@@ -46,8 +46,9 @@ describe 'profile::daq::daq_interface' do
             # el8+
             let(:interface) { 'lsst-daq' }
             include_context 'with nm interface'
-            include_examples 'nm named interface'
             include_examples 'nm dhcp interface'
+            it { expect(nm_keyfile['connection']['id']).to eq(interface) }
+            it { expect(nm_keyfile['connection']['interface-name']).to eq(params[:was]) }
             it { expect(nm_keyfile['connection']['uuid']).to eq(params[:uuid]) }
             it { expect(nm_keyfile['ethernet']['mac-address']).to eq(params[:hwaddr]) }
 
@@ -93,7 +94,8 @@ describe 'profile::daq::daq_interface' do
             # el8+
             let(:interface) { 'lsst-daq' }
             include_context 'with nm interface'
-            include_examples 'nm named interface'
+            it { expect(nm_keyfile['connection']['id']).to eq(interface) }
+            it { expect(nm_keyfile['connection']['interface-name']).to eq(params[:was]) }
             it { expect(nm_keyfile['connection']['uuid']).to eq(params[:uuid]) }
             it { expect(nm_keyfile['ethernet']['mac-address']).to eq(params[:hwaddr]) }
             it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }

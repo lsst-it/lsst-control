@@ -2,13 +2,13 @@
 
 require 'spec_helper'
 
-describe 'lsstcam-dc01.ls.lsst.org', :site do
+describe 'lsstcam-dc05.ls.lsst.org', :site do
   alma8 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '8' }).first
   # rubocop:disable Naming/VariableNumber
   { 'almalinux-8-x86_64': alma8 }.each do |os, facts|
     # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
-      let(:facts) { override_facts(facts, fqdn: 'lsstcam-dc01.ls.lsst.org') }
+      let(:facts) { override_facts(facts, fqdn: 'lsstcam-dc05.ls.lsst.org') }
       let(:node_params) do
         {
           role: 'ccs-dc',

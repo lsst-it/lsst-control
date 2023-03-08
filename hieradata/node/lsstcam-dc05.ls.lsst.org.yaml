@@ -1,0 +1,5 @@
+---
+profile::daq::daq_interface::hwaddr: "3c:fd:fe:a8:11:74"
+profile::daq::daq_interface::uuid: "757b897b-0721-44b6-86fc-be1d86d144cd"
+profile::daq::daq_interface::was: "enp197s0f0"
+profile::daq::daq_interface::mode: "dhcp-client"

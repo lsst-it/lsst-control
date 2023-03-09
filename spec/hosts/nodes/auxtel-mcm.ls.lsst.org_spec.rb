@@ -70,6 +70,15 @@ describe 'auxtel-mcm.ls.lsst.org', :site do
         it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
 
+      it { is_expected.to contain_file('/etc/ccs/ccsGlobal.properties').with_content(%r{^org.hibernate.engine.internal.level=WARNING}) }
+      it { is_expected.to contain_file('/etc/ccs/ccsGlobal.properties').with_content(%r{^.level=WARNING}) }
+
+      it { is_expected.to contain_class('Ccs_software::Service') }
+      it { is_expected.to contain_service('mmm') }
+      it { is_expected.to contain_service('cluster-monitor') }
+      it { is_expected.to contain_service('localdb') }
+      it { is_expected.to contain_service('rest-server') }
+
       it { is_expected.to compile.with_all_deps }
 
       it do

@@ -327,7 +327,8 @@ shared_examples 'lsst-daq client' do |facts:|
   else
     let(:interface) { 'lsst-daq' }
     include_context 'with nm interface'
-    include_examples 'nm named interface'
+    it { expect(nm_keyfile['connection']['id']).to eq(interface) }
+
     include_examples 'nm dhcp interface'
   end
 end

@@ -110,6 +110,9 @@ ccs_software::installations:
   lsstcam-software-1.0.0:
     aliases:
       - "puppet-1.0.0"
+  lsstcam-software-1.0.1:
+    aliases:
+      - "puppet-1.0.1"
 
 # FIXME
 #profile::icinga::agent::host_template: "LSSTCamHostTemplate"

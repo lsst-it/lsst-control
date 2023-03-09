@@ -27,7 +27,7 @@ describe 'auxtel-dc01.ls.lsst.org', :site do
       include_context 'with nm interface'
 
       it { is_expected.to have_network__interface_resource_count(0) }
-      it { is_expected.to have_profile__nm__connection_resource_count(7) }
+      it { is_expected.to have_profile__nm__connection_resource_count(9) }
 
       %w[
         eno1np0

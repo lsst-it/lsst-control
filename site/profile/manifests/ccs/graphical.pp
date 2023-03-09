@@ -44,6 +44,7 @@ class profile::ccs::graphical (
         ensure  => present,
         timeout => 900,
       }
+      ensure_packages(['mate-desktop'])
     }
 
     package { 'gnome-initial-setup':

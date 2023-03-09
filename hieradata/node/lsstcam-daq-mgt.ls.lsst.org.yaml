@@ -1,8 +1,8 @@
 ---
-profile::daq::daq_interface::hwaddr: "b4:96:91:c8:ef:b5"
+profile::daq::daq_interface::hwaddr: "3c:fd:fe:a8:17:f4"
 profile::daq::daq_interface::uuid: "757b897b-0721-44b6-86fc-be1d86d144cd"
-profile::daq::daq_interface::was: "enp129s0f1"
-profile::daq::daq_interface::mode: "dhcp-client"
+profile::daq::daq_interface::was: "enp197s0f0"
+profile::daq::daq_interface::mode: "dhcp-server"
 
 profile::nm::connections:
   eno1np0:
@@ -65,6 +65,24 @@ profile::nm::connections:
 
       [ipv4]
       method=auto
+
+      [ipv6]
+      method=disabled
+  enp129s0f1:
+    content: |
+      [connection]
+      id=enp129s0f1
+      uuid=46d19ce1-bcab-7e77-6fc7-b730b26c54b1
+      type=ethernet
+      interface-name=enp129s0f1
+
+      [ethernet]
+
+      [ipv4]
+      address1=192.168.101.1/24
+      ignore-auto-dns=true
+      method=manual
+      never-default=true
 
       [ipv6]
       method=disabled

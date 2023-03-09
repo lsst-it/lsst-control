@@ -32,7 +32,6 @@ describe 'lsstcam-daq-mgt.ls.lsst.org', :site do
         eno1np0
         eno2np1
         enp4s0f3u2u2c2
-        enp129s0f1
       ].each do |i|
         context "with #{name}" do
           let(:interface) { i }

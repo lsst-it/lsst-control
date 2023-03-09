@@ -73,6 +73,12 @@ describe 'auxtel-mcm.ls.lsst.org', :site do
       it { is_expected.to contain_file('/etc/ccs/ccsGlobal.properties').with_content(%r{^org.hibernate.engine.internal.level=WARNING}) }
       it { is_expected.to contain_file('/etc/ccs/ccsGlobal.properties').with_content(%r{^.level=WARNING}) }
 
+      it { is_expected.to contain_file('/etc/ccs/systemd-email').with_content(%r{^EMAIL=base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com}) }
+
+      it { is_expected.to contain_file('/etc/monit.d/alert').with_content(%r{^set alert base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com}) }
+
+      it { is_expected.to contain_file('/etc/ccs/setup-sal5').with_content(%r{^export LSST_DDS_INTERFACE=auxtel-mcm-dds.ls.lsst.org}) }
+
       it { is_expected.to contain_class('Ccs_software::Service') }
       it { is_expected.to contain_service('mmm') }
       it { is_expected.to contain_service('cluster-monitor') }

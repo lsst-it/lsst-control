@@ -11,7 +11,7 @@ describe 'profile::daq::daq_interface' do
         it { is_expected.to compile.with_all_deps }
         it { is_expected.not_to contain_network__interface('lsst-daq') }
         it { is_expected.not_to contain_network__interface('eth1') }
-        it { is_expected.not_to contain_reboot('lsst-daq') }
+        # it { is_expected.not_to contain_reboot('lsst-daq') }
         it { is_expected.not_to contain_file('/etc/NetworkManager/dispatcher.d/30-ethtool') }
       end
 
@@ -89,7 +89,7 @@ describe 'profile::daq::daq_interface' do
             end
 
             it { is_expected.to contain_network__interface('eth1').with_ensure('absent') }
-            it { is_expected.to contain_reboot('lsst-daq') }
+            # it { is_expected.to contain_reboot('lsst-daq') }
           else
             # el8+
             let(:interface) { 'lsst-daq' }

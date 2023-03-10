@@ -116,17 +116,17 @@ class profile::daq::daq_interface (
 
     # restarting the network service isn't sufficient to rename an existing
     # interface.  The host has to be rebooted.
-    unless ($facts['networking']['interfaces'][$interface]) {
-      notify { "${interface} network interface is missing":
-        notify => Reboot['lsst-daq'],
-      }
-    }
+    # unless ($facts['networking']['interfaces'][$interface]) {
+    #   notify { "${interface} network interface is missing":
+    #     notify => Reboot['lsst-daq'],
+    #   }
+    # }
 
-    reboot { $interface:
-      apply   => finished,
-      message => "setup ${interface} network interface",
-      when    => refreshed,
-    }
+    # reboot { $interface:
+    #   apply   => finished,
+    #   message => "setup ${interface} network interface",
+    #   when    => refreshed,
+    # }
 
     # NM apears to ignore ETHTOOL_OPTS and requires a dispatch script to be used
     # to set device parameters

@@ -1,9 +1,4 @@
 ---
-profile::daq::daq_interface::hwaddr: "3c:fd:fe:a8:17:f4"
-profile::daq::daq_interface::uuid: "757b897b-0721-44b6-86fc-be1d86d144cd"
-profile::daq::daq_interface::was: "enp197s0f0"
-profile::daq::daq_interface::mode: "dhcp-server"
-
 profile::nm::connections:
   eno1np0:
     content: |
@@ -83,6 +78,54 @@ profile::nm::connections:
       ignore-auto-dns=true
       method=manual
       never-default=true
+
+      [ipv6]
+      method=disabled
+  enp197s0f0:
+    content: |
+      [connection]
+      id=enp197s0f0
+      uuid=d5642f16-53c6-6053-7d4d-8c6ef5ae8a38
+      type=ethernet
+      interface-name=enp197s0f0
+      master=lsst-daq
+      slave-type=bridge
+
+      [ethernet]
+
+      [bridge-port]
+  enp197s0f1:
+    content: |
+      [connection]
+      id=enp197s0f1
+      uuid=61800cc2-7bf7-4463-de5a-8c6ef5ae8a38
+      type=ethernet
+      interface-name=enp197s0f1
+      
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  lsst-daq:
+    content: |
+      [connection]
+      id=lsst-daq
+      uuid=d5642f16-7bf7-7d4d-de5a-25e7d7c355a4
+      type=bridge
+      interface-name=lsst-daq
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      address1=192.168.100.1/24
+      ignore-auto-dns=true
+      method=manual
 
       [ipv6]
       method=disabled

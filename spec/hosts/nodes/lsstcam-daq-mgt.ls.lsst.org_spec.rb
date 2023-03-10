@@ -32,6 +32,7 @@ describe 'lsstcam-daq-mgt.ls.lsst.org', :site do
         eno1np0
         eno2np1
         enp4s0f3u2u2c2
+        enp197s0f1
       ].each do |i|
         context "with #{name}" do
           let(:interface) { i }
@@ -48,10 +49,32 @@ describe 'lsstcam-daq-mgt.ls.lsst.org', :site do
         it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
         it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
 
-        it { is_expected.to contain_class('nfs::server').with_nfs_v4(false) }
-        it { is_expected.to contain_nfs__server__export('/srv/nfs/dsl') }
-        it { is_expected.to contain_nfs__server__export('/srv/nfs/lsst-daq') }
       end
+
+      context 'with enp197s0f0' do
+        let(:interface) { 'enp197s0f0' }
+
+        it_behaves_like 'nm named interface'
+        it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
+        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+        it { expect(nm_keyfile['connection']['master']).to eq('lsst-daq') }
+        it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
+      end
+
+      context 'with lsst-daq' do
+        let(:interface) { 'lsst-daq' }
+
+        it_behaves_like 'nm named interface'
+        it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
+        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+        it { expect(nm_keyfile['bridge']['stp']).to be false }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
+        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+      end
+
+      it { is_expected.to contain_class('nfs::server').with_nfs_v4(false) }
+      it { is_expected.to contain_nfs__server__export('/srv/nfs/dsl') }
+      it { is_expected.to contain_nfs__server__export('/srv/nfs/lsst-daq') }
     end # on os
   end # on_supported_os
 end

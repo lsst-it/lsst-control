@@ -71,6 +71,8 @@ ccs_sal::dds_interface: "comcam-mcm-dds"
 ccs_sal::instrument: "%{lookup('ccs_instrument')}"
 
 ccs_software::global_properties:
+  - "org.lsst.ccs.lockservice=remote"
+  - "org.lsst.ccs.config.publish.config.info=false"
   - "org.lsst.ccs.subsystem.agent.property.instrument=%{lookup('ccs_instrument')}"
   - "org.lsst.ccs.subsystem.agent.property.cluster=%{lookup('ccs_instrument')}"
   - "org.lsst.ccs.subsystem.agent.property.site=%{lookup('ccs_site')}"
@@ -164,6 +166,26 @@ ccs_software::installations:
   comcam-software-2.3.4:
     aliases:
       - "puppet-2.3.4"
+
+  comcam-software-2.3.5:
+    aliases:
+      - "puppet-2.3.5"
+
+  comcam-software-2.3.6:
+    aliases:
+      - "puppet-2.3.6"
+
+  comcam-software-2.3.7:
+    aliases:
+      - "puppet-2.3.7"
+
+  comcam-software-2.3.8:
+    aliases:
+      - "puppet-2.3.8"
+
+  comcam-software-2.3.9:
+    aliases:
+      - "puppet-2.3.9"
 
 profile::icinga::agent::host_template: "ComCamHostTemplate"
 daq::daqsdk::purge: false

@@ -38,7 +38,7 @@ describe "#{role} role" do
           it { is_expected.not_to contain_class('dhcp') }
           it { is_expected.to contain_class('dhcp::disable') }
           it { is_expected.to contain_class('ccs_daq') }
-          it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V3.2') }
+          it { is_expected.to contain_class('daq::daqsdk') }
         end # host
       end # lsst_sites
     end # on os

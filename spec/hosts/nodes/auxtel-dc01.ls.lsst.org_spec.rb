@@ -27,13 +27,14 @@ describe 'auxtel-dc01.ls.lsst.org', :site do
       include_context 'with nm interface'
 
       it { is_expected.to have_network__interface_resource_count(0) }
-      it { is_expected.to have_profile__nm__connection_resource_count(9) }
+      it { is_expected.to have_profile__nm__connection_resource_count(10) }
 
       %w[
         eno1np0
         eno2np1
         enp4s0f3u2u2c2
         enp129s0f1
+        enp197s0f1
       ].each do |i|
         context "with #{name}" do
           let(:interface) { i }
@@ -78,6 +79,27 @@ describe 'auxtel-dc01.ls.lsst.org', :site do
         it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
         it { expect(nm_keyfile['bridge']['stp']).to be false }
         it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
+        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+      end
+
+      context 'with enp197s0f0' do
+        let(:interface) { 'enp197s0f0' }
+
+        it_behaves_like 'nm named interface'
+        it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
+        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+        it { expect(nm_keyfile['connection']['master']).to eq('lsst-daq') }
+        it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
+      end
+
+      context 'with lsst-daq' do
+        let(:interface) { 'lsst-daq' }
+
+        it_behaves_like 'nm named interface'
+        it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
+        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+        it { expect(nm_keyfile['bridge']['stp']).to be false }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
         it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
 

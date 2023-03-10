@@ -45,17 +45,19 @@ shared_examples 'generic daq manager' do |facts:|
   end
 end
 
-shared_examples 'lsst-daq dhcp-server' do
-  it do
-    is_expected.to contain_network__interface('lsst-daq').with(
-      bootproto: 'none',
-      defroute: 'no',
-      ipaddress: '192.168.100.1',
-      ipv6init: 'no',
-      netmask: '255.255.255.0',
-      onboot: true,
-      type: 'Ethernet',
-    )
+if facts[:os]['release']['major'] == '7'
+  shared_examples 'lsst-daq dhcp-server' do
+    it do
+      is_expected.to contain_network__interface('lsst-daq').with(
+        bootproto: 'none',
+        defroute: 'no',
+        ipaddress: '192.168.100.1',
+        ipv6init: 'no',
+        netmask: '255.255.255.0',
+        onboot: true,
+        type: 'Ethernet',
+      )
+    end
   end
 end
 

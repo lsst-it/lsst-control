@@ -79,6 +79,8 @@ describe 'auxtel-mcm.ls.lsst.org', :site do
 
       it { is_expected.to contain_file('/etc/ccs/setup-sal5').with_content(%r{^export LSST_DDS_INTERFACE=auxtel-mcm-dds.ls.lsst.org}) }
 
+      it { is_expected.to contain_file('/etc/ccs/setup-sal5').with_content(%r{^export LSST_DDS_PARTITION_PREFIX=base}) }
+
       it { is_expected.to contain_class('Ccs_software::Service') }
       it { is_expected.to contain_service('mmm') }
       it { is_expected.to contain_service('cluster-monitor') }

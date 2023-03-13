@@ -85,6 +85,21 @@ describe 'auxtel-mcm.ls.lsst.org', :site do
       it { is_expected.to contain_service('localdb') }
       it { is_expected.to contain_service('rest-server') }
 
+      it do
+        is_expected.to contain_class('clustershell').with(
+          groupmembers: {
+            'misc' => {
+              'group' => 'misc',
+              'member' => 'auxtel-mcm,auxtel-dc01,auxtel-fp01',
+            },
+            'all' => {
+              'group' => 'all',
+              'member' => '@misc',
+            },
+          },
+        )
+      end
+
       it { is_expected.to compile.with_all_deps }
 
       it do

@@ -5,4 +5,3 @@ classes:
   - "profile::ccs::graphical"
   - "profile::core::common"
   - "profile::core::nfsclient"
-  - "profile::daq::daq_interface"

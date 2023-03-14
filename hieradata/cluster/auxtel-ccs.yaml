@@ -86,26 +86,6 @@ accounts::user_list:
 ccs_software::desktop: true
 ccs_software::env: "AuxTel"
 ccs_software::installations:
-  ats-software-2.0.0:
-    aliases:
-      - "puppet-2.0.0"
-
-  ats-software-2.1.0:
-    aliases:
-      - "puppet-2.1.0"
-
-  ats-software-2.1.1:
-    aliases:
-      - "puppet-2.1.1"
-
-  ats-software-2.2.0:
-    aliases:
-      - "puppet-2.2.0"
-
-  ats-software-2.2.1:
-    aliases:
-      - "puppet-2.2.1"
-
   ats-software-2.2.3:
     aliases:
       - "puppet-2.2.3"

@@ -2,10 +2,11 @@
 
 require 'spec_helper'
 
-shared_examples 'generic daq manager' do
+shared_examples 'generic daq manager' do |facts:|
+  include_examples 'common', facts: facts, chrony: false
   include_examples 'lsst-daq dhcp-server'
   include_examples 'lsst-daq sysctls'
-  include_examples 'nfsv2 enabled'
+  include_examples 'nfsv2 enabled', facts: facts
   include_examples 'daq common'
   include_examples 'daq nfs exports'
 
@@ -40,12 +41,6 @@ shared_examples 'generic daq manager' do
       uid: '62003',
       gid: '62003',
       shell: '/sbin/nologin',
-    )
-  end
-
-  it 'enables NFS V2' do
-    is_expected.to contain_augeas('RPCNFSDARGS="-V 2"').with(
-      changes: 'set RPCNFSDARGS \'"-V 2"\'',
     )
   end
 end
@@ -126,8 +121,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'common', facts: facts, chrony: false
-        include_examples 'generic daq manager'
+        include_examples 'generic daq manager', facts: facts
 
         it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V5.0') }
         it { is_expected.to contain_class('daq::rptsdk').with_version('V3.5.3') }
@@ -159,8 +153,7 @@ describe "#{role} role" do
       describe 'daq-mgt.tu.lsst.org', :site do
         let(:site) { 'tu' }
 
-        include_examples 'common', facts: facts, chrony: false
-        include_examples 'generic daq manager'
+        include_examples 'generic daq manager', facts: facts
 
         it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V5.0') }
         it { is_expected.to contain_class('daq::rptsdk').with_version('V3.5.3') }
@@ -192,8 +185,7 @@ describe "#{role} role" do
       describe 'comcam-daq-mgt.cp.lsst.org', :site do
         let(:site) { 'cp' }
 
-        include_examples 'common', facts: facts, chrony: false
-        include_examples 'generic daq manager'
+        include_examples 'generic daq manager', facts: facts
 
         it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V5.0') }
         it { is_expected.to contain_class('daq::rptsdk').with_version('V3.5.3') }

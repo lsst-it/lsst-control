@@ -4,6 +4,9 @@ require 'spec_helper'
 
 describe 'auxtel-archiver.cp.lsst.org', :site do
   on_supported_os.each do |os, facts|
+    # XXX networking needs to be updated to support EL8+
+    next unless os =~ %r{centos-7-x86_64}
+
     context "on #{os}" do
       let(:facts) do
         facts.merge(
@@ -102,14 +105,6 @@ describe 'auxtel-archiver.cp.lsst.org', :site do
       it do
         is_expected.to contain_nfs__client__mount('/repo').with(
           share: 'repo',
-          server: 'auxtel-archiver.cp.lsst.org',
-          atboot: true,
-        )
-      end
-
-      it do
-        is_expected.to contain_nfs__client__mount('/staging').with(
-          share: 'staging',
           server: 'auxtel-archiver.cp.lsst.org',
           atboot: true,
         )

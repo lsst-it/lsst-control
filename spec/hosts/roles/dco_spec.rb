@@ -39,6 +39,16 @@ describe "#{role} role" do
             )
           end
 
+          if site == 'cp'
+            it do
+              is_expected.to contain_nfs__client__mount('/net/obs-env').with(
+                share: 'obs-env',
+                server: 'nfs-obsenv.cp.lsst.org',
+                atboot: true,
+              )
+            end
+          end
+
           it { is_expected.to contain_package('docker-compose-plugin') }
         end # host
       end # lsst_sites

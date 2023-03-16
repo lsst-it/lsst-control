@@ -7,7 +7,7 @@ describe 'profile::nfs::v2' do
     context "on #{os}" do
       let(:facts) { facts }
 
-      include_examples 'nfsv2 enabled'
+      include_examples 'nfsv2 enabled', facts: facts
     end
   end
 end

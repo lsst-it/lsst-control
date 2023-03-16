@@ -310,11 +310,26 @@ shared_examples 'lsst-daq client' do |facts:|
   end
 end
 
-shared_examples 'nfsv2 enabled' do
-  it 'enables NFS V2' do
-    is_expected.to contain_augeas('RPCNFSDARGS="-V 2"').with(
-      changes: 'set RPCNFSDARGS \'"-V 2"\'',
-    )
+shared_examples 'nfsv2 enabled' do |facts:|
+  if facts[:os]['release']['major'] == '7'
+    it 'enables NFS V2 exports via /etc/sysconfig/nfs' do
+      is_expected.to contain_augeas('enable nfs v2 exports').with(
+        context: '/files/etc/sysconfig/nfs',
+        changes: 'set RPCNFSDARGS \'"-V 2"\'',
+      )
+    end
+  else
+    it 'enables NFS V2 exports via /etc/nfs.conf' do
+      is_expected.to contain_augeas('enable nfs v2 exports').with(
+        context: '/files/etc/nfs.conf/nfsd',
+        lens: 'Puppet.lns',
+        incl: '/etc/nfs.conf',
+        changes: [
+          'set vers2 yes',
+          'set UDP yes',
+        ],
+      )
+    end
   end
 end
 

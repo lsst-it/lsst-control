@@ -29,6 +29,17 @@ describe "#{role} role" do
 
           include_examples 'common', facts: facts
 
+          %w[
+            ccs_daq
+            profile::ccs::common
+            profile::ccs::graphical
+            profile::core::common
+            profile::core::nfsclient
+            profile::daq::daq_interface
+          ].each do |cls|
+            it { is_expected.to contain_class(cls) }
+          end
+
           case site
           when 'tu', 'cp'
             include_examples 'lsst-daq client', facts: facts

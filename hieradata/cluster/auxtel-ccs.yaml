@@ -126,6 +126,8 @@ ccs_software::installations:
 ccs_site: "summit"
 ccs_instrument: "ats"
 
+ccs_daq::instrument: "%{lookup('ccs_instrument')}"
+
 ccs_sal::dds_domain: "%{lookup('ccs_site')}"
 ccs_sal::dds_interface: "auxtel-mcm-dds.cp.lsst.org"
 ccs_sal::instrument: "%{lookup('ccs_instrument')}"

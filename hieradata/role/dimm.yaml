@@ -1,46 +1,7 @@
-# The temporary DIMM server running on ESXi
 ---
-# See site/profile/manifests/core/common.pp
 classes:
-#  - chrony    # skipped: not strictly necessary right now, dimm has ntp configured
-#  - ssh       # skipped: too intrusive
-#  - sudo      # skipped: too intrusive, there's about 15 manual sudo entries for the DIMM user
-  - "accounts"
-  - "easy_ipa"
-  - "puppet_agent"
-  - "timezone"
+  - "profile::core::common"
+  - "profile::core::yum::lsst_ts_private"
 
-easy_ipa::install_sssd: true
-# attachmentgenie/ufw github repo is archived; mod needs updates. Not worth it
-# for a host which is supposed to be replaced.
-#ufw::allow:
-#  "dimm-webserver-16200":
-#    direction: "IN"
-#    from: "139.229.164.0/19"
-#    ip: "any"
-#    port: "16200"
-#  "dimm-webserver-16300":
-#    direction: "IN"
-#    from: "139.229.164.0/19"
-#    ip: "any"
-#    port: "16300"
-#  "dimm-webserver-16301":
-#    direction: "IN"
-#    from: "139.229.164.0/19"
-#    ip: "any"
-#    port: "16301"
-#  "dimm-webserver-16302":
-#    direction: "IN"
-#    from: "139.229.164.0/19"
-#    ip: "any"
-#    port: "16302"
-#  "dimm-webserver-16400":
-#    direction: "IN"
-#    from: "139.229.164.0/19"
-#    ip: "any"
-#    port: "16400"
-#  "dimm-webserver-16500":
-#    direction: "IN"
-#    from: "139.229.164.0/19"
-#    ip: "any"
-#    port: "16500"
+packages:
+  - 'ts_dimm_app-2.0-1.el8.x86_64'

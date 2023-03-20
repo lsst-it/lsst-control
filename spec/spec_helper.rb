@@ -634,7 +634,7 @@ shared_examples 'generic foreman' do
   it { is_expected.to contain_foreman_hostgroup(site) }
 
   it do
-    is_expected.to contain_class('foreman_envsync').with_image_tag('v1.5.1')
+    is_expected.to contain_class('foreman_envsync').with_image_tag('1.5.1')
   end
 
   it do

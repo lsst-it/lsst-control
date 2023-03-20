@@ -1,5 +1,6 @@
 ---
 classes:
+  - "ccs_daq"
   - "profile::ccs::common"
   - "profile::ccs::graphical"
   - "profile::core::common"

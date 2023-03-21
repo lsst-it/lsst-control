@@ -1,4 +1,9 @@
 ---
+ccs_software::services:
+  prod:
+    - "rest-server"
+    - "localdb"
+
 profile::nm::connections:
   eno1np0:
     content: |

@@ -35,3 +35,10 @@ profile::core::k5login::k5login:
     ensure: "present"
     principals:
       - "saluser/tel-lt1.tu.lsst.org@LSST.CLOUD"
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /net/obs-env:
+    share: "obs-env"
+    server: "nfs-obsenv.tu.lsst.org"
+    atboot: true

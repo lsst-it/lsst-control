@@ -4,12 +4,19 @@ extends: "default"
 rules:
   # 80 chars should be enough, but don't fail if a line is longer
   line-length: false
-  indentation: {spaces: 2, indent-sequences: true}
+  indentation:
+    level: "error"
+    spaces: 2
+    indent-sequences: true
   # do not obsess over comment formatting
   comments-indentation: false
   comments:
+    level: "error"
     require-starting-space: false
-  quoted-strings: {quote-type: "any"}
+  quoted-strings:
+    quote-type: "any"
+  document-start:
+    level: "error"
 
 ignore: |
   .rubocop.yml

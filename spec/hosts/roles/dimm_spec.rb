@@ -21,11 +21,13 @@ describe "#{role} role" do
       end
 
       lsst_sites.each do |site|
-        # NOTE: that this role does not include profile::core::common
         describe "#{role}.#{site}.lsst.org", :site do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }
+          it { is_expected.to contain_class('profile::core::common') }
+          it { is_expected.to contain_class('profile::core::yum::lsst_ts_private') }
+          it { is_expected.to contain_package('ts_dimm_app-2.0-1.el8.x86_64') }
         end # host
       end # lsst_sites
     end # on os

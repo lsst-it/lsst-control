@@ -22,6 +22,13 @@ describe 'auxtel-mcm.ls.lsst.org', :site do
         }
       end
 
+      let(:alert_email) do
+        'base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com'
+      end
+
+      it { is_expected.to compile.with_all_deps }
+
+      include_examples 'ccs alerts'
       include_context 'with nm interface'
 
       it { is_expected.to have_network__interface_resource_count(0) }
@@ -73,10 +80,6 @@ describe 'auxtel-mcm.ls.lsst.org', :site do
       it { is_expected.to contain_file('/etc/ccs/ccsGlobal.properties').with_content(%r{^org.hibernate.engine.internal.level=WARNING}) }
       it { is_expected.to contain_file('/etc/ccs/ccsGlobal.properties').with_content(%r{^.level=WARNING}) }
 
-      it { is_expected.to contain_file('/etc/ccs/systemd-email').with_content(%r{^EMAIL=base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com}) }
-
-      it { is_expected.to contain_file('/etc/monit.d/alert').with_content(%r{^set alert base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com}) }
-
       it { is_expected.to contain_file('/etc/ccs/setup-sal5').with_content(%r{^export LSST_DDS_INTERFACE=auxtel-mcm-dds.ls.lsst.org}) }
 
       it { is_expected.to contain_file('/etc/ccs/setup-sal5').with_content(%r{^export LSST_DDS_PARTITION_PREFIX=base}) }
@@ -101,8 +104,6 @@ describe 'auxtel-mcm.ls.lsst.org', :site do
           },
         )
       end
-
-      it { is_expected.to compile.with_all_deps }
 
       it do
         is_expected.to contain_nfs__client__mount('/data').with(

@@ -22,12 +22,13 @@ describe 'lsstcam-db01.ls.lsst.org', :site do
         }
       end
 
-      it { is_expected.to contain_file('/etc/ccs/systemd-email').with_content(%r{^EMAIL=base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com}) }
-
-      it { is_expected.to contain_file('/etc/monit.d/alert').with_content(%r{^set alert base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com}) }
+      let(:alert_email) do
+        'base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com'
+      end
 
       it { is_expected.to compile.with_all_deps }
 
+      include_examples 'ccs alerts'
       include_context 'with nm interface'
 
       it { is_expected.to have_network__interface_resource_count(0) }

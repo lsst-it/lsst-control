@@ -2,9 +2,6 @@
 
 require 'spec_helper'
 
-#
-# note that this hosts has interfaces with an mtu of 9000
-#
 describe 'gis-bastion01.cp.lsst.org', :site do
   on_supported_os.each do |os, facts|
     context "on #{os}" do

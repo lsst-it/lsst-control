@@ -2,9 +2,6 @@
 
 require 'spec_helper'
 
-#
-# note that this hosts has interfaces with an mtu of 9000
-#
 describe 'lsstcam-db01.ls.lsst.org', :site do
   alma8 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '8' }).first
   # rubocop:disable Naming/VariableNumber

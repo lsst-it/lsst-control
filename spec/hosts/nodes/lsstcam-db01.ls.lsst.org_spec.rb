@@ -29,6 +29,18 @@ describe 'lsstcam-db01.ls.lsst.org', :site do
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'ccs alerts'
+
+      it do
+        is_expected.to contain_class('ccs_software').with(
+          services: {
+            'prod' => %w[
+              rest-server
+              localdb
+            ],
+          },
+        )
+      end
+
       include_context 'with nm interface'
 
       it { is_expected.to have_network__interface_resource_count(0) }

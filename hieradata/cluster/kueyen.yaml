@@ -1,29 +1,111 @@
 ---
 clustershell::groupmembers:
-  kueyen: {group: "kueyen", member: "kueyen[02-04]"}
-profile::core::rke::enable_dhcp: true
-profile::core::ifdown::interface: "em1"
+  kueyen: {group: "kueyen", member: "kueyen[01-03]"}
+cni::plugins::checksum: "f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37"
+cni::plugins::enable: ["macvlan"]
+cni::plugins::version: "1.2.0"
+profile::core::common::manage_powertop: true
 profile::core::ospl::enable_rundir: true
-network::interfaces_hash:
-  em1:  # only for PXE
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  p2p2:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  p2p1:
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  p2p1.2301:  # 139.229.145.0/24
-    bootproto: "dhcp"
-    defroute: "no"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "none"
-    vlan: "yes"
-  p2p1.2400:  # 139.229.147.0/24
-    ensure: "absent"
+profile::core::rke::enable_dhcp: true
+profile::core::rke::version: "1.3.12"
+profile::nm::connections:
+  em1: #PXE Boot
+    content: |
+      [connection]
+      id=em1
+      uuid=f330f829-20cc-b829-67b0-18086a5fe6fa
+      type=ethernet
+      autoconnect=false
+      interface-name=em1
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  em2: #embedded 2 no use.
+    content: |
+      [connection]
+      id=em2
+      uuid=f330f829-20cc-b829-67b0-18086a5fe6fa
+      type=ethernet
+      autoconnect=false
+      interface-name=em2
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  ens2f1: #fqdn
+    content: |
+      [connection]
+      id=ens2f1
+      uuid=de9904c8-9577-1a17-36b1-34b94132f06a
+      type=ethernet
+      autoconnect=true
+      interface-name=ens2f1
+
+      [ethernet]
+
+      [ipv4]
+      method=auto
+
+      [ipv6]
+      method=disabled
+  ens2f0:
+    content: |
+      [connection]
+      id=ens2f0
+      uuid=46d19ce1-bcab-7e77-6fc7-b730b26c54b1
+      type=ethernet
+      autoconnect=false
+      interface-name=ens2f0
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  ens2f0.2301:
+    content: |
+      [connection]
+      id=ens2f0.2301
+      uuid=e74daaad-4d73-4015-bb26-83c460ddf572
+      type=vlan
+      interface-name=ens2f0.2301
+      master=br2301
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=2301
+      parent=ens2f0
+
+      [bridge-port]
+  br2301:
+    content: |
+      [connection]
+      id=br2301
+      uuid=7dd05d98-a9c3-4569-a7c3-00316b13c0eb
+      type=bridge
+      interface-name=br2301
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=auto
+
+      [ipv6]
+      method=disabled

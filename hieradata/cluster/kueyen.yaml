@@ -9,7 +9,7 @@ profile::core::ospl::enable_rundir: true
 profile::core::rke::enable_dhcp: true
 profile::core::rke::version: "1.3.12"
 profile::nm::connections:
-  em1: #PXE Boot
+  em1:  #PXE Boot
     content: |
       [connection]
       id=em1
@@ -25,7 +25,7 @@ profile::nm::connections:
 
       [ipv6]
       method=disabled
-  em2: #embedded 2 no use.
+  em2:  #embedded 2 no use.
     content: |
       [connection]
       id=em2
@@ -41,7 +41,7 @@ profile::nm::connections:
 
       [ipv6]
       method=disabled
-  ens2f1: #fqdn
+  ens2f1:  #fqdn
     content: |
       [connection]
       id=ens2f1

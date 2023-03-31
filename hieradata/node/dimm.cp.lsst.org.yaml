@@ -1,3 +1,4 @@
+---
 profile::nm::connections:
   eno1:
     content: |

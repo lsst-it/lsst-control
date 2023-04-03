@@ -773,4 +773,18 @@ shared_examples 'nm dhcp interface' do
   it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
 end
 
+shared_examples 'ccs alerts' do
+  it do
+    is_expected.to contain_file('/etc/ccs/systemd-email').with(
+      content: %r{^EMAIL=#{alert_email}},
+    )
+  end
+
+  it do
+    is_expected.to contain_file('/etc/monit.d/alert').with(
+      content: %r{^set alert #{alert_email}},
+    )
+  end
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

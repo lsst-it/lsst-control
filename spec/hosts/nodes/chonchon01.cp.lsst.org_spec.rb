@@ -66,7 +66,7 @@ describe 'chonchon01.cp.lsst.org', :site do
       end
 
       it do
-        is_expected.to contain_network__interface("eno2.#{lhn_vlan_id}").with(
+        is_expected.to contain_network__interface("em2.#{lhn_vlan_id}").with(
           bootproto: 'none',
           defroute: 'no',
           nozeroconf: 'yes',

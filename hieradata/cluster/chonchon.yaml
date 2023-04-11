@@ -7,11 +7,11 @@ cni::plugins::version: "1.2.0"
 profile::core::common::manage_powertop: true
 profile::core::rke::enable_dhcp: true
 network::interfaces_hash:
-  eno2:  # trunk
+  em2:  # trunk
     bootproto: "none"
     onboot: "yes"
     type: "Ethernet"
-  eno2.1800:
+  em2.1800:
     bootproto: "none"
     defroute: "no"
     nozeroconf: "yes"

@@ -28,6 +28,15 @@ describe "#{role} role" do
           it { is_expected.to contain_class('profile::core::common') }
           it { is_expected.to contain_class('profile::core::yum::lsst_ts_private') }
           it { is_expected.to contain_package('ts_dimm_app-2.0-1.el8.x86_64') }
+          it { is_expected.to contain_package('telnet') }
+
+          it do
+            is_expected.to contain_nfs__client__mount('/dimm').with(
+              share: 'dimm',
+              server: 'nfs1.cp.lsst.org',
+              atboot: true,
+            )
+          end
         end # host
       end # lsst_sites
     end # on os

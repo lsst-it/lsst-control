@@ -235,6 +235,20 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
       purge_ssh_keys: true,
     )
   end
+
+  it do
+    is_expected.to contain_user('hreinking_b').with(
+      ensure: 'absent',
+    )
+  end
+
+  it do
+    is_expected.to contain_file('/home/hreinking_b').with(
+      ensure: 'absent',
+      recurse: true,
+      force: true,
+    )
+  end
 end
 
 shared_examples 'lhn sysctls', :lhn_node do

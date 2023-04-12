@@ -227,6 +227,14 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
       )
     end
   end
+
+  it do
+    is_expected.to contain_user('csilva_b').with(
+      ensure: 'present',
+      groups: ['wheel_b'],
+      purge_ssh_keys: true,
+    )
+  end
 end
 
 shared_examples 'lhn sysctls', :lhn_node do

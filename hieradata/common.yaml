@@ -210,6 +210,12 @@ accounts::user_list:
     purge_sshkeys: true
     sshkeys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6Iv2NrQicUm7IHkglP1LM8aetFx68efqeNbLVnxCvoPZf9kx+EDiqpReFHjxLMJ9LvH/z4+9uYDTumdO9kzKwJwFFQ9vIt3nhekZ50fS3Wv8/21nZBPwzupdmFdJLiuiU7fjaHcSPIK2er53MISGq1Zgo50zk3EpzyGfDqWDhNsGLHehBeCADCK4euSUcXbGuQTbKcucaZKD/RMUzcM+7C5gi7290ie+K3ksO4vYeRPYIQtcXXZsP8fnIH4IJ+ZKvBVqceJJGifsyM4NqF8bGXZPPIqehbJFUUdnRy071HpvO7VQo3O0QVq6ewKje3EVBQYFcBzc9ZswDnstINNnL cbarria@foreman.dev.lsst.org"
+  csilva_b:  # backup access in case LDAP fails
+    groups:
+      - "wheel_b"
+    purge_sshkeys: true
+    sshkeys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8sKqmS0H7irkQ54l8+aBicM3cmJUxo6Zo3pJt+XgjB5eiB4fvBfwkRm+QSqlR9E9jgFmoo3A+zPd1vZEqjTLuAZ4GEglB4sa9uVxPWOrqW0M6Z0Tiw8lsbXVVFCLOIDl4En7KqTA9B3rg98pSoj2P4ooDywCYn0hSMZEU62O4EnnuJbGWk6azelWicyydszpsHuwjjp0o+K0wuYlPnKioTNyYMzkAx70Uft4+qRMI9mFx7wGySNVFCBS5BcskdM/bmzmKzhz+rOmD8c1K00uKTe/qEAJiQQAZR5N+JW3kky1LllUrpmUySC41eMONA2lkNpmcup9pQ1JrsNjlQUbD cristiansilva@gmail.com"
   lssttech: &rm_user
     ensure: "absent"
     managehome: true

@@ -77,6 +77,8 @@ describe 'auxtel-mcm.ls.lsst.org', :site do
         it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
 
+      it { is_expected.to contain_package('OpenSpliceDDS') }
+
       it { is_expected.to contain_file('/etc/ccs/ccsGlobal.properties').with_content(%r{^org.hibernate.engine.internal.level=WARNING}) }
       it { is_expected.to contain_file('/etc/ccs/ccsGlobal.properties').with_content(%r{^.level=WARNING}) }
 

@@ -182,9 +182,7 @@ nfs::client_mounts:
     atboot: true
 
 ccs_software::services:
-  ## FIXME this should be changed to prod, and a local systemctl override
-  ## used to get the dev version.
-  dev:
+  prod:
     - "ats-daq-monitor"
     - "ats-fp"
     - "ats-ih"

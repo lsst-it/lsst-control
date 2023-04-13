@@ -63,6 +63,7 @@ class profile::core::docker (
       Requires=docker.socket containerd.service sssd.service
       | EOS
     # lint:endignore
+    notify  => Service['docker'],
   }
 
   # /etc/docker is normally created by dockerd the first time the service is

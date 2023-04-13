@@ -19,7 +19,9 @@ describe 'profile::core::docker' do
       end
 
       it do
-        is_expected.to contain_file('/etc/systemd/system/docker.service.d/wait-for-docker-group.conf').with_content(%r{Requires=docker.socket containerd.service sssd.service})
+        is_expected.to contain_file('/etc/systemd/system/docker.service.d/wait-for-docker-group.conf')
+          .with_content(%r{Requires=docker.socket containerd.service sssd.service})
+          .that_notifies('Service[docker]')
       end
 
       it do

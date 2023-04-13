@@ -46,7 +46,7 @@ class profile::core::docker (
     content => @(EOS),
       [Socket]
       SocketGroup=root
-    | EOS
+      | EOS
     # lint:endignore
   }
 

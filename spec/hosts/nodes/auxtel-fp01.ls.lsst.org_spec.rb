@@ -93,6 +93,11 @@ describe 'auxtel-fp01.ls.lsst.org', :site do
 
       it { is_expected.to compile.with_all_deps }
 
+      it { is_expected.to contain_service('ats-daq-monitor') }
+      it { is_expected.to contain_service('ats-fp') }
+      it { is_expected.to contain_service('ats-ih') }
+      it { is_expected.to contain_service('h2db') }
+
       it { is_expected.to contain_class('nfs::server').with_nfs_v4(true) }
       it { is_expected.to contain_nfs__server__export('/data') }
 

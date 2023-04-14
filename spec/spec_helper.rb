@@ -777,12 +777,11 @@ end
 
 shared_examples 'nm disabled interface' do
   it_behaves_like 'nm named interface'
+  it_behaves_like 'nm no-ip interface'
   it { expect(nm_keyfile['connection']['id']).to eq(interface) }
   it { expect(nm_keyfile['connection']['interface-name']).to eq(interface) }
   it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
   it { expect(nm_keyfile['connection']['autoconnect']).to be false }
-  it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
-  it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
 end
 
 shared_examples 'nm dhcp interface' do
@@ -794,6 +793,11 @@ shared_examples 'nm bridge interface' do
   it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
   it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
   it { expect(nm_keyfile['bridge']['stp']).to be false }
+end
+
+shared_examples 'nm no-ip interface' do
+  it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
+  it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
 end
 
 shared_examples 'ccs alerts' do

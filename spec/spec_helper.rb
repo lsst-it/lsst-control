@@ -324,11 +324,6 @@ shared_examples 'lsst-daq client' do |facts:|
         bootproto: 'dhcp',
       )
     end
-  else
-    let(:interface) { 'lsst-daq' }
-    include_context 'with nm interface'
-    include_examples 'nm named interface'
-    include_examples 'nm dhcp interface'
   end
 end
 

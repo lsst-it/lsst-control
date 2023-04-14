@@ -75,8 +75,7 @@ describe 'auxtel-dc01.ls.lsst.org', :site do
 
         it_behaves_like 'nm named interface'
         it_behaves_like 'nm bridge interface'
-        it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+        it_behaves_like 'nm no-ip interface'
       end
 
       it do

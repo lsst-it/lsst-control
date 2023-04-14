@@ -72,8 +72,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :site do
 
         it_behaves_like 'nm named interface'
         it_behaves_like 'nm bridge interface'
-        it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+        it_behaves_like 'nm no-ip interface'
         it { expect(nm_keyfile['ipv4']['route1']).to eq('139.229.153.0/24') }
         it { expect(nm_keyfile['ipv4']['route1_options']).to eq('table=2505') }
         it { expect(nm_keyfile['ipv4']['route2']).to eq('0.0.0.0/0,139.229.153.254') }

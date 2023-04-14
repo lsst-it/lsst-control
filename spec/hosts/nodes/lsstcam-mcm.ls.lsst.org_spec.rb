@@ -59,11 +59,8 @@ describe 'lsstcam-mcm.ls.lsst.org', :site do
         let(:interface) { 'dds' }
 
         it_behaves_like 'nm named interface'
-        it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-        it { expect(nm_keyfile['bridge']['stp']).to be false }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('auto') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm bridge interface'
       end
     end # on os
   end # on_supported_os

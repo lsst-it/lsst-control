@@ -85,9 +85,7 @@ describe 'pillan08.tu.lsst.org', :site do
           let(:interface) { i }
 
           it_behaves_like 'nm named interface'
-          it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
-          it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-          it { expect(nm_keyfile['bridge']['stp']).to be false }
+          it_behaves_like 'nm bridge interface'
           it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
           it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
         end

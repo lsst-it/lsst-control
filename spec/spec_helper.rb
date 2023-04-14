@@ -790,6 +790,12 @@ shared_examples 'nm dhcp interface' do
   it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
 end
 
+shared_examples 'nm bridge interface' do
+  it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
+  it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+  it { expect(nm_keyfile['bridge']['stp']).to be false }
+end
+
 shared_examples 'ccs alerts' do
   it do
     is_expected.to contain_file('/etc/ccs/systemd-email').with(

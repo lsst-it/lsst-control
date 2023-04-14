@@ -186,3 +186,4 @@ ccs_software::services:
     - "ats-daq-monitor"
     - "ats-fp"
     - "ats-ih"
+    - "h2db"

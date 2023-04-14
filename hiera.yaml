@@ -7,6 +7,8 @@ hierarchy:
     datadir: "/etc/puppetlabs/code/hieradata/private/%{environment}"
     paths: &paths
       - "node/%{fqdn}.yaml"
+      - "site/%{site}/cluster/%{cluster}/variant/%{variant}/%{os.family}/major/%{os.release.major}.yaml"
+      - "site/%{site}/cluster/%{cluster}/variant/%{variant}.yaml"
       - "site/%{site}/cluster/%{cluster}/role/%{role}.yaml"
       - "site/%{site}/cluster/%{cluster}.yaml"
       - "cluster/%{cluster}/variant/%{variant}/%{os.family}/major/%{os.release.major}.yaml"

@@ -28,20 +28,12 @@ describe 'dimm.cp.lsst.org', :site do
 
         it_behaves_like 'nm named interface'
         it_behaves_like 'nm dhcp interface'
-        it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be(true) }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('auto') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
 
       context 'with enp2s0' do
         let(:interface) { 'enp2s0' }
 
-        it_behaves_like 'nm named interface'
-        it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be(false) }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+        it_behaves_like 'nm disabled interface'
       end
     end # on os
   end # on_supported_os

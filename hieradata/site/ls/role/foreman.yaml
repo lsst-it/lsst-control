@@ -127,6 +127,12 @@ dhcp::pools:
       - {network: "134.79.23", mask: "24", gateway: "139.229.153.254"}
       - {network: "134.79.235.224", mask: "28", gateway: "139.229.153.254"}
       - {network: "134.79.235.240", mask: "28", gateway: "139.229.153.254"}
+  BTS_LSSTCAM:  # vlan2507
+    network: "139.229.154.0"
+    mask: "255.255.255.192"
+    gateway: "139.229.154.62"
+    range:
+      - "139.229.154.49 139.229.154.58"
   RubinObs-WiFi-Guest:
     network: "139.229.159.128"
     mask: "255.255.255.128"

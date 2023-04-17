@@ -362,6 +362,15 @@ describe "#{role} role" do
         end
 
         it do
+          is_expected.to contain_dhcp__pool('BTS_LSSTCAM').with(
+            network: '139.229.154.0',
+            mask: '255.255.255.192',
+            range: ['139.229.154.49 139.229.154.58'],
+            gateway: '139.229.154.62',
+          )
+        end
+
+        it do
           is_expected.to contain_dhcp__pool('RubinObs-WiFi-Guest').with(
             network: '139.229.159.128',
             mask: '255.255.255.128',

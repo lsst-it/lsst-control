@@ -98,6 +98,8 @@ describe 'auxtel-fp01.ls.lsst.org', :site do
       it { is_expected.to contain_service('ats-ih') }
       it { is_expected.to contain_service('h2db') }
 
+      it { is_expected.to contain_systemd__unit_file('ats-ih.service').with_content(%r{^User=ccs-ipa}) }
+
       it { is_expected.to contain_class('nfs::server').with_nfs_v4(true) }
       it { is_expected.to contain_nfs__server__export('/data') }
 

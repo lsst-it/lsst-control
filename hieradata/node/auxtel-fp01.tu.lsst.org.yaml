@@ -25,5 +25,5 @@ ccs_software::services:
   prod:
     - "ats-daq-monitor"
     - "ats-fp"
-    - "ats-ih"
+    - {name: "ats-ih", user: "ccs-ipa", group: "ccs-ipa", workdir: "/home/ccs-ipa", env: "PATH=/usr/lib/jvm/zulu-17/bin:/usr/sbin:/usr/bin"}
     - "h2db"

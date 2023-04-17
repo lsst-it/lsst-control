@@ -67,7 +67,7 @@ ccs_software::services:
   prod:
     - "comcam-daq-monitor"
     - "comcam-fp"
-    - "comcam-ih"
+    - {name: "comcam-ih", user: "ccs-ipa", group: "ccs-ipa", workdir: "/home/ccs-ipa", env: "PATH=/usr/lib/jvm/zulu-17/bin:/usr/sbin:/usr/bin"}
     # XXX
     # - "cantaloupe"
     # - "dsid"

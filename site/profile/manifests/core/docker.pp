@@ -46,7 +46,7 @@ class profile::core::docker (
     content => @(EOS),
       [Socket]
       SocketGroup=root
-    | EOS
+      | EOS
     # lint:endignore
   }
 
@@ -63,6 +63,25 @@ class profile::core::docker (
       Requires=docker.socket containerd.service sssd.service
       | EOS
     # lint:endignore
+    notify  => Service['docker'],
+  }
+
+  # XXX it might be better to use the systemd_version fact but it
+  # isn't stubbed out by facterdb for testing.
+  if fact('os.release.major') == '9' {
+    systemd::dropin_file { 'ceph.conf':
+      unit    => 'containerd.service',
+      # lint:ignore:strict_indent
+      content => @(EOS),
+        # fix for ceph mons crashing
+        # See: https://github.com/rook/rook/issues/10110#issuecomment-1464898937
+        [Service]
+        LimitNOFILE=1048576
+        LimitNPROC=1048576
+        LimitCORE=1048576
+        | EOS
+      # lint:endignore
+    }
   }
 
   # /etc/docker is normally created by dockerd the first time the service is

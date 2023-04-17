@@ -19,7 +19,26 @@ describe 'profile::core::docker' do
       end
 
       it do
-        is_expected.to contain_file('/etc/systemd/system/docker.service.d/wait-for-docker-group.conf').with_content(%r{Requires=docker.socket containerd.service sssd.service})
+        is_expected.to contain_file('/etc/systemd/system/docker.service.d/wait-for-docker-group.conf')
+          .with_content(%r{Requires=docker.socket containerd.service sssd.service})
+          .that_notifies('Service[docker]')
+      end
+
+      if facts[:os]['release']['major'] == '9'
+        it do
+          is_expected.to contain_systemd__dropin_file('ceph.conf').with(
+            unit: 'containerd.service',
+            content: <<~CONTENT,
+              # fix for ceph mons crashing
+              # See: https://github.com/rook/rook/issues/10110#issuecomment-1464898937
+              [Service]
+              [Service]
+              LimitNOFILE=1048576
+              LimitNPROC=1048576
+              LimitCORE=1048576
+            CONTENT
+          )
+        end
       end
 
       it do

@@ -332,7 +332,7 @@ describe "#{role} role" do
           is_expected.to contain_dhcp__pool('BTS_AUXTEL').with(
             network: '139.229.152.128',
             mask: '255.255.255.192',
-            range: ['139.229.152.150 139.229.152.180'],
+            range: ['139.229.152.171 139.229.152.180'],
             gateway: '139.229.152.190',
           )
         end

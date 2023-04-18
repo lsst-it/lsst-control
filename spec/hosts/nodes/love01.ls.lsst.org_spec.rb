@@ -8,22 +8,21 @@ describe 'love01.ls.lsst.org', :site do
   { 'almalinux-8-x86_64': alma8 }.each do |os, facts|
     # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
-      let(:facts) do
-        facts.merge(
-          fqdn: 'love01.ls.lsst.org',
-        )
-      end
+      let(:facts) { facts.merge(fqdn: 'love01.ls.lsst.org') }
 
       let(:node_params) do
         {
           role: 'amor',
           site: 'ls',
           cluster: 'amor',
+          variant: '1114s',
+          subvariant: 'dds',
         }
       end
 
-      include_context 'with nm interface'
+      it { is_expected.to compile.with_all_deps }
 
+      include_context 'with nm interface'
       it { is_expected.to have_network__interface_resource_count(0) }
       it { is_expected.to have_profile__nm__connection_resource_count(7) }
 
@@ -66,8 +65,6 @@ describe 'love01.ls.lsst.org', :site do
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm bridge interface'
       end
-
-      it { is_expected.to compile.with_all_deps }
     end # on os
   end # on_supported_os
 end # role

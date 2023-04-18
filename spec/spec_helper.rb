@@ -809,4 +809,33 @@ shared_examples 'ccs alerts' do
   end
 end
 
+shared_examples 'generic perfsonar' do
+  it do
+    is_expected.to contain_letsencrypt__certonly(fqdn).with(
+      plugin: 'dns-route53',
+      manage_cron: true,
+    )
+  end
+
+  it do
+    is_expected.to contain_class('perfsonar').with(
+      manage_apache: true,
+      remove_root_prompt: true,
+      manage_epel: false,
+      ssl_cert: "#{le_root}/cert.pem",
+      ssl_chain_file: "#{le_root}/fullchain.pem",
+      ssl_key: "#{le_root}/privkey.pem",
+    )
+                                             .that_requires('Class[epel]')
+                                             .that_requires("Letsencrypt::Certonly[#{fqdn}]")
+  end
+
+  it do
+    is_expected.to contain_service('yum-cron').with(
+      ensure: 'stopped',
+      enable: false,
+    )
+  end
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

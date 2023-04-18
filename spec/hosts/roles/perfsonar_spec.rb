@@ -23,10 +23,13 @@ describe "#{role} role" do
       lsst_sites.each do |site|
         describe "#{role}.#{site}.lsst.org", :site do
           let(:site) { site }
+          let(:fqdn) { facts[:fqdn] }
+          let(:le_root) { "/etc/letsencrypt/live/#{fqdn}" }
 
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'common', facts: facts
+          include_examples 'generic perfsonar', facts: facts
 
           it do
             is_expected.to contain_yum__versionlock('perfsonar-toolkit').with(

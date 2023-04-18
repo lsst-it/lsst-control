@@ -332,7 +332,7 @@ describe "#{role} role" do
           is_expected.to contain_dhcp__pool('BTS_AUXTEL').with(
             network: '139.229.152.128',
             mask: '255.255.255.192',
-            range: ['139.229.152.150 139.229.152.180'],
+            range: ['139.229.152.171 139.229.152.180'],
             gateway: '139.229.152.190',
           )
         end
@@ -358,6 +358,15 @@ describe "#{role} role" do
               { 'network' => '134.79.235.224', 'mask' => '28', 'gateway' => '139.229.153.254' },
               { 'network' => '134.79.235.240', 'mask' => '28', 'gateway' => '139.229.153.254' },
             ],
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('BTS_LSSTCAM').with(
+            network: '139.229.154.0',
+            mask: '255.255.255.192',
+            range: ['139.229.154.49 139.229.154.58'],
+            gateway: '139.229.154.62',
           )
         end
 

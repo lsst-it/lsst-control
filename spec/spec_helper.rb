@@ -809,4 +809,46 @@ shared_examples 'ccs alerts' do
   end
 end
 
+shared_examples 'generic perfsonar' do
+  it do
+    is_expected.to contain_letsencrypt__certonly(fqdn).with(
+      plugin: 'dns-route53',
+      manage_cron: true,
+    )
+  end
+
+  it do
+    is_expected.to contain_yumrepo('perfSONAR').with(
+      descr: 'perfSONAR RPM Repository - software.internet2.edu - main',
+      baseurl: "http://software.internet2.edu/rpms/el7/x86_64/#{perfsonar_version}/",
+      enabled: '1',
+      protect: '0',
+      gpgkey: 'http://software.internet2.edu/rpms/RPM-GPG-KEY-perfSONAR',
+      gpgcheck: '1',
+    )
+  end
+
+  it do
+    is_expected.to contain_class('perfsonar').with(
+      manage_apache: true,
+      remove_root_prompt: true,
+      manage_epel: false,
+      manage_repo: false,
+      ssl_cert: "#{le_root}/cert.pem",
+      ssl_chain_file: "#{le_root}/fullchain.pem",
+      ssl_key: "#{le_root}/privkey.pem",
+    )
+                                             .that_requires('Yumrepo[perfSONAR]')
+                                             .that_requires('Class[epel]')
+                                             .that_requires("Letsencrypt::Certonly[#{fqdn}]")
+  end
+
+  it do
+    is_expected.to contain_service('yum-cron').with(
+      ensure: 'stopped',
+      enable: false,
+    )
+  end
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

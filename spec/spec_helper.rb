@@ -825,6 +825,7 @@ shared_examples 'generic perfsonar' do
       protect: '0',
       gpgkey: 'http://software.internet2.edu/rpms/RPM-GPG-KEY-perfSONAR',
       gpgcheck: '1',
+      mirrorlist: 'absent',
     )
   end
 

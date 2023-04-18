@@ -15,12 +15,13 @@ class profile::core::perfsonar (
   $le_root = "/etc/letsencrypt/live/${fqdn}"
 
   yumrepo { 'perfSONAR':
-    descr    => 'perfSONAR RPM Repository - software.internet2.edu - main',
-    baseurl  => "http://software.internet2.edu/rpms/el7/x86_64/${version}/",
-    enabled  => '1',
-    protect  => '0',
-    gpgkey   => 'http://software.internet2.edu/rpms/RPM-GPG-KEY-perfSONAR',
-    gpgcheck => '1',
+    descr      => 'perfSONAR RPM Repository - software.internet2.edu - main',
+    baseurl    => "http://software.internet2.edu/rpms/el7/x86_64/${version}/",
+    enabled    => '1',
+    protect    => '0',
+    gpgkey     => 'http://software.internet2.edu/rpms/RPM-GPG-KEY-perfSONAR',
+    gpgcheck   => '1',
+    mirrorlist => 'absent',
   }
 
   letsencrypt::certonly { $fqdn:

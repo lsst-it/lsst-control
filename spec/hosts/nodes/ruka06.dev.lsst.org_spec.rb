@@ -32,7 +32,7 @@ describe 'ruka06.dev.lsst.org', :site do
         eno4
         enp10s0f1
       ].each do |i|
-        context "with #{name}" do
+        context "with #{i}" do
           let(:interface) { i }
 
           it_behaves_like 'nm disabled interface'

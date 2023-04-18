@@ -30,7 +30,7 @@ describe 'pillan08.tu.lsst.org', :site do
       %w[
         enp4s0f3u2u2c2
       ].each do |i|
-        context "with #{name}" do
+        context "with #{i}" do
           let(:interface) { i }
 
           it_behaves_like 'nm disabled interface'
@@ -43,7 +43,7 @@ describe 'pillan08.tu.lsst.org', :site do
         enp197s0f0
         enp197s0f1
       ].each do |i|
-        context "with #{name}" do
+        context "with #{i}" do
           let(:interface) { i }
 
           it_behaves_like 'nm named interface'

@@ -60,7 +60,7 @@ describe 'kueyen01.ls.lsst.org', :site do
         em1
         em2
       ].each do |i|
-        context "with #{name}" do
+        context "with #{i}" do
           let(:interface) { i }
 
           it_behaves_like 'nm disabled interface'

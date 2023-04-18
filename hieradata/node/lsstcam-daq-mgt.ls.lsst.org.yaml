@@ -1,4 +1,67 @@
 ---
+profile::nm::connections:
+  enp197s0f0:  # daq
+    content: |
+      [connection]
+      id=enp197s0f0
+      uuid=d5642f16-53c6-6053-7d4d-8c6ef5ae8a38
+      type=ethernet
+      autoconnect=false
+      interface-name=enp197s0f0
+      master=lsst-daq
+      slave-type=bridge
+
+      [ethernet]
+
+      [ethtool]
+      ring-rx=4096
+      ring-tx=4096
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+      [bridge-port]
+  enp197s0f1:  # unused
+    content: |
+      [connection]
+      id=enp197s0f1
+      uuid=61800cc2-7bf7-4463-de5a-8c6ef5ae8a38
+      type=ethernet
+      autoconnect=false
+      interface-name=enp197s0f1
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  lsst-daq:
+    content: |
+      [connection]
+      id=lsst-daq
+      uuid=d5642f16-7bf7-7d4d-de5a-25e7d7c355a4
+      type=bridge
+      interface-name=lsst-daq
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      address1=192.168.100.1/24
+      ignore-auto-dns=true
+      method=manual
+
+      [ipv6]
+      method=disabled
+
+      [proxy]
 nfs::server_enabled: true
 nfs::server::nfs_v4: false  # XXX disable v4 style exports because of the DAQ
 nfs::nfs_exports_global:

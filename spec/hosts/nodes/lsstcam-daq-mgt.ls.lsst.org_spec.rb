@@ -22,13 +22,14 @@ describe 'lsstcam-daq-mgt.ls.lsst.org', :site do
 
       include_context 'with nm interface'
       it { is_expected.to have_network__interface_resource_count(0) }
-      it { is_expected.to have_profile__nm__connection_resource_count(5) }
+      it { is_expected.to have_profile__nm__connection_resource_count(8) }
 
       %w[
         eno1np0
         eno2np1
         enp4s0f3u2u2c2
         enp129s0f1
+        enp197s0f1
       ].each do |i|
         context "with #{i}" do
           let(:interface) { i }
@@ -44,6 +45,24 @@ describe 'lsstcam-daq-mgt.ls.lsst.org', :site do
         it_behaves_like 'nm dhcp interface'
         it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
         it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+      end
+
+      context 'with enp197s0f0' do
+        let(:interface) { 'enp197s0f0' }
+
+        it_behaves_like 'nm named interface'
+        it { expect(nm_keyfile['ethtool']['ring-rx']).to eq(4096) }
+        it { expect(nm_keyfile['ethtool']['ring-tx']).to eq(4096) }
+      end
+
+      context 'with lsst-daq' do
+        let(:interface) { 'lsst-daq' }
+
+        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm bridge interface'
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('192.168.100.1/24') }
+        it { expect(nm_keyfile['ipv4']['ignore-auto-dns']).to be true }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
       end
 
       it { is_expected.to contain_class('nfs::server').with_nfs_v4(false) }

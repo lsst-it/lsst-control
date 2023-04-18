@@ -8,17 +8,14 @@ describe 'lsstcam-db01.ls.lsst.org', :site do
   { 'almalinux-8-x86_64': alma8 }.each do |os, facts|
     # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
-      let(:facts) do
-        facts.merge(
-          fqdn: 'lsstcam-db01.ls.lsst.org',
-        )
-      end
+      let(:facts) { facts.merge(fqdn: 'lsstcam-db01.ls.lsst.org') }
 
       let(:node_params) do
         {
           role: 'ccs-database',
           site: 'ls',
           cluster: 'lsstcam-ccs',
+          variant: '1114s',
         }
       end
 

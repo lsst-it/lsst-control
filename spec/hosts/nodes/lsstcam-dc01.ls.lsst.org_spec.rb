@@ -14,37 +14,28 @@ describe 'lsstcam-dc01.ls.lsst.org', :site do
           role: 'ccs-dc',
           site: 'ls',
           cluster: 'lsstcam-ccs',
+          variant: '1114s',
+          subvariant: 'daq-lhn',
         }
       end
-      let(:vlan_id) { 2505 }
-      let(:rt_id) { vlan_id }
-
-      include_context 'with nm interface'
 
       it { is_expected.to compile.with_all_deps }
 
+      include_context 'with nm interface'
       it { is_expected.to have_network__interface_resource_count(0) }
-      it { is_expected.to have_profile__nm__connection_resource_count(7) }
+      it { is_expected.to have_profile__nm__connection_resource_count(10) }
 
       %w[
         eno1np0
         eno2np1
         enp4s0f3u2u2c2
         enp129s0f1
+        enp197s0f1
       ].each do |i|
         context "with #{i}" do
           let(:interface) { i }
 
           it_behaves_like 'nm disabled interface'
-        end
-      end
-
-      %w[
-        devtoolset-8
-        rh-git218
-      ].each do |pkg|
-        if facts[:os]['release']['major'] == '7'
-          it { is_expected.to contain_package(pkg) }
         end
       end
 
@@ -63,21 +54,38 @@ describe 'lsstcam-dc01.ls.lsst.org', :site do
         it_behaves_like 'nm named interface'
         it { expect(nm_keyfile['connection']['type']).to eq('vlan') }
         it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-        it { expect(nm_keyfile['connection']['master']).to eq('br2505') }
+        it { expect(nm_keyfile['connection']['master']).to eq('lhn') }
         it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
       end
 
-      context 'with br2505' do
-        let(:interface) { 'br2505' }
+      context 'with enp197s0f0' do
+        let(:interface) { 'enp197s0f0' }
+
+        it_behaves_like 'nm named interface'
+        it { expect(nm_keyfile['ethtool']['ring-rx']).to eq(4096) }
+        it { expect(nm_keyfile['ethtool']['ring-tx']).to eq(4096) }
+      end
+
+      context 'with lhn' do
+        let(:interface) { 'lhn' }
 
         it_behaves_like 'nm named interface'
         it_behaves_like 'nm bridge interface'
-        it_behaves_like 'nm no-ip interface'
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm no default route'
         it { expect(nm_keyfile['ipv4']['route1']).to eq('139.229.153.0/24') }
         it { expect(nm_keyfile['ipv4']['route1_options']).to eq('table=2505') }
         it { expect(nm_keyfile['ipv4']['route2']).to eq('0.0.0.0/0,139.229.153.254') }
         it { expect(nm_keyfile['ipv4']['route2_options']).to eq('table=2505') }
         it { expect(nm_keyfile['ipv4']['routing-rule1']).to eq('priority 100 from 139.229.153.64/26 table 2505') }
+      end
+
+      context 'with lsst-daq' do
+        let(:interface) { 'lsst-daq' }
+
+        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm bridge interface'
       end
     end # on os
   end # on_supported_os

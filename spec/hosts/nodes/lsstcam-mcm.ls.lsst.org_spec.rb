@@ -13,13 +13,15 @@ describe 'lsstcam-mcm.ls.lsst.org', :site do
         {
           role: 'ccs-dc',
           site: 'ls',
+          cluster: 'lsstcam-ccs',
+          variant: '1114s',
+          subvariant: 'dds',
         }
       end
 
-      include_context 'with nm interface'
-
       it { is_expected.to compile.with_all_deps }
 
+      include_context 'with nm interface'
       it { is_expected.to have_network__interface_resource_count(0) }
       it { is_expected.to have_profile__nm__connection_resource_count(7) }
 
@@ -60,6 +62,7 @@ describe 'lsstcam-mcm.ls.lsst.org', :site do
 
         it_behaves_like 'nm named interface'
         it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm no default route'
         it_behaves_like 'nm bridge interface'
       end
     end # on os

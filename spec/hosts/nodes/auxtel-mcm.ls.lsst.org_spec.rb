@@ -19,6 +19,8 @@ describe 'auxtel-mcm.ls.lsst.org', :site do
           role: 'atsccs',
           site: 'ls',
           cluster: 'auxtel-ccs',
+          variant: '1114s',
+          subvariant: 'dds',
         }
       end
 
@@ -71,6 +73,7 @@ describe 'auxtel-mcm.ls.lsst.org', :site do
 
         it_behaves_like 'nm named interface'
         it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm no default route'
         it_behaves_like 'nm bridge interface'
       end
 

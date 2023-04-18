@@ -800,6 +800,10 @@ shared_examples 'nm no-ip interface' do
   it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
 end
 
+shared_examples 'nm no default route' do
+  it { expect(nm_keyfile['ipv4']['never-default']).to be true }
+end
+
 shared_examples 'ccs alerts' do
   it do
     is_expected.to contain_file('/etc/ccs/systemd-email').with(

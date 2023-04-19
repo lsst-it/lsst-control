@@ -86,8 +86,8 @@ describe 'kueyen01.ls.lsst.org', :site do
         let(:interface) { 'ens2f0.2301' }
 
         it_behaves_like 'nm named interface'
+        it_behaves_like 'nm vlan interface', id: 2301, parent: 'ens2f0'
         it_behaves_like 'nm bridge slave interface', master: 'br2301'
-        it { expect(nm_keyfile['connection']['type']).to eq('vlan') }
       end
 
       context 'with br2301' do

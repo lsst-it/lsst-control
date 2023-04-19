@@ -812,6 +812,13 @@ shared_examples 'nm bridge slave interface' do |master:|
   it { expect(nm_keyfile_raw).to match(%r{^\[bridge-port\]$}) }
 end
 
+shared_examples 'nm vlan interface' do |id:, parent:|
+  it { expect(nm_keyfile['connection']['type']).to eq('vlan') }
+  it { expect(nm_keyfile['vlan']['flags']).to eq(1) }
+  it { expect(nm_keyfile['vlan']['id']).to eq(id) }
+  it { expect(nm_keyfile['vlan']['parent']).to eq(parent) }
+end
+
 shared_examples 'nm no-ip interface' do
   it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
   it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }

@@ -46,9 +46,8 @@ describe 'pillan08.tu.lsst.org', :site do
         context "with #{i}" do
           let(:interface) { i }
 
-          it_behaves_like 'nm named interface'
+          it_behaves_like 'nm enabled interface'
           it_behaves_like 'nm ethernet interface'
-          it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
           it { expect(nm_keyfile['connection']['master']).to eq('bond0') }
           it { expect(nm_keyfile['connection']['slave-type']).to eq('bond') }
         end
@@ -57,7 +56,7 @@ describe 'pillan08.tu.lsst.org', :site do
       context 'with bond0' do
         let(:interface) { 'bond0' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it { expect(nm_keyfile['bond']['mode']).to eq('802.3ad') }
         # XXX add more tests
       end
@@ -70,7 +69,7 @@ describe 'pillan08.tu.lsst.org', :site do
         context "with #{slave}" do
           let(:interface) { slave }
 
-          it_behaves_like 'nm named interface'
+          it_behaves_like 'nm enabled interface'
           it_behaves_like 'nm bridge slave interface', master: master
         end
       end
@@ -83,7 +82,7 @@ describe 'pillan08.tu.lsst.org', :site do
         context "with #{i}" do
           let(:interface) { i }
 
-          it_behaves_like 'nm named interface'
+          it_behaves_like 'nm enabled interface'
           it_behaves_like 'nm bridge interface'
           it_behaves_like 'nm no-ip interface'
         end

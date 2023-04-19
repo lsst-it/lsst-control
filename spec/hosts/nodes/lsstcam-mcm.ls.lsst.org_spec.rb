@@ -41,16 +41,15 @@ describe 'lsstcam-mcm.ls.lsst.org', :site do
       context 'with enp129s0f0' do
         let(:interface) { 'enp129s0f0' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
       end
 
       context 'with enp129s0f1.2502' do
         let(:interface) { 'enp129s0f1.2502' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm vlan interface', id: 2502, parent: 'enp129s0f1'
         it_behaves_like 'nm bridge slave interface', master: 'dds'
       end
@@ -58,7 +57,7 @@ describe 'lsstcam-mcm.ls.lsst.org', :site do
       context 'with dds' do
         let(:interface) { 'dds' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm no default route'
         it_behaves_like 'nm bridge interface'

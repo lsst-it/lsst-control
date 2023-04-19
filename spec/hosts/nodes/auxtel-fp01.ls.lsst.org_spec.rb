@@ -41,16 +41,15 @@ describe 'auxtel-fp01.ls.lsst.org', :site do
       context 'with enp129s0f0' do
         let(:interface) { 'enp129s0f0' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
       end
 
       context 'with enp129s0f1.2505' do
         let(:interface) { 'enp129s0f1.2505' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm vlan interface', id: 2505, parent: 'enp129s0f1'
         it_behaves_like 'nm bridge slave interface', master: 'lhn'
       end
@@ -58,8 +57,9 @@ describe 'auxtel-fp01.ls.lsst.org', :site do
       context 'with enp197s0f0' do
         let(:interface) { 'enp197s0f0' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
+        it_behaves_like 'nm bridge slave interface', master: 'lsst-daq'
         it { expect(nm_keyfile['ethtool']['ring-rx']).to eq(4096) }
         it { expect(nm_keyfile['ethtool']['ring-tx']).to eq(4096) }
       end
@@ -67,7 +67,7 @@ describe 'auxtel-fp01.ls.lsst.org', :site do
       context 'with lhn' do
         let(:interface) { 'lhn' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm bridge interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm no default route'
@@ -81,7 +81,7 @@ describe 'auxtel-fp01.ls.lsst.org', :site do
       context 'with lsst-daq' do
         let(:interface) { 'lsst-daq' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm bridge interface'
       end

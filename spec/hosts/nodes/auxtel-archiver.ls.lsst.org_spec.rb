@@ -41,10 +41,9 @@ describe 'auxtel-archiver.ls.lsst.org', :site do
       context 'with enp129s0f0' do
         let(:interface) { 'enp129s0f0' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
       end
 
       it { is_expected.to contain_class('nfs::server').with_nfs_v4(true) }

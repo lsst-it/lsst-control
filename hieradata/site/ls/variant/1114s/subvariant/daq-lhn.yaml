@@ -16,12 +16,6 @@ profile::nm::connections:
       ring-rx=4096
       ring-tx=4096
 
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
-
       [bridge-port]
   enp197s0f1:  # unused
     content: |

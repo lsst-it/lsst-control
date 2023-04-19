@@ -16,17 +16,16 @@ describe 'dimm.cp.lsst.org', :site do
         }
       end
 
-      include_context 'with nm interface'
-
       it { is_expected.to compile.with_all_deps }
 
+      include_context 'with nm interface'
       it { is_expected.to have_network__interface_resource_count(0) }
       it { is_expected.to have_profile__nm__connection_resource_count(2) }
 
       context 'with eno1' do
         let(:interface) { 'eno1' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
       end

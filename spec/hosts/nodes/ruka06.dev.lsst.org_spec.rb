@@ -42,7 +42,7 @@ describe 'ruka06.dev.lsst.org', :site do
       context 'with enp10s0f0' do
         let(:interface) { 'enp10s0f0' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
         it_behaves_like 'nm bridge slave interface', master: 'br2101'
       end
@@ -50,7 +50,7 @@ describe 'ruka06.dev.lsst.org', :site do
       context 'with br2101' do
         let(:interface) { 'br2101' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm bridge interface'
       end

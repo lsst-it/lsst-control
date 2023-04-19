@@ -57,10 +57,9 @@ describe 'namkueyen01.dev.lsst.org', :site do
       context 'with eno1' do
         let(:interface) { 'eno1' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['connection']['autoconnect']).to be true }
       end
     end # on os
   end # on_supported_os

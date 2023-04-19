@@ -57,6 +57,7 @@ describe 'kueyen01.ls.lsst.org', :site do
       %w[
         em1
         em2
+        ens2f0
       ].each do |i|
         context "with #{i}" do
           let(:interface) { i }
@@ -68,24 +69,15 @@ describe 'kueyen01.ls.lsst.org', :site do
       context 'with ens2f1' do
         let(:interface) { 'ens2f1' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['connection']['autoconnect']).to be true }
-      end
-
-      context 'with ens2f0' do
-        let(:interface) { 'ens2f0' }
-
-        it_behaves_like 'nm named interface'
-        it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['connection']['autoconnect']).to be false }
       end
 
       context 'with ens2f0.2301' do
         let(:interface) { 'ens2f0.2301' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm vlan interface', id: 2301, parent: 'ens2f0'
         it_behaves_like 'nm bridge slave interface', master: 'br2301'
       end
@@ -93,7 +85,7 @@ describe 'kueyen01.ls.lsst.org', :site do
       context 'with br2301' do
         let(:interface) { 'br2301' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm bridge interface'
       end

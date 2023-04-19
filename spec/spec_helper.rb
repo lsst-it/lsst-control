@@ -779,6 +779,11 @@ shared_examples 'nm named interface' do
   it { expect(nm_keyfile['connection']['interface-name']).to eq(interface) }
 end
 
+shared_examples 'nm enabled interface' do
+  it_behaves_like 'nm named interface'
+  it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+end
+
 shared_examples 'nm disabled interface' do
   it_behaves_like 'nm named interface'
   it_behaves_like 'nm no-ip interface'
@@ -810,6 +815,8 @@ shared_examples 'nm bridge slave interface' do |master:|
   it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
   it { expect(nm_keyfile_raw).to match(%r{^\[ethernet\]$}) }
   it { expect(nm_keyfile_raw).to match(%r{^\[bridge-port\]$}) }
+  it { expect(nm_keyfile_raw).not_to match(%r{^\[ipv4\]$}) }
+  it { expect(nm_keyfile_raw).not_to match(%r{^\[ipv6\]$}) }
 end
 
 shared_examples 'nm vlan interface' do |id:, parent:|

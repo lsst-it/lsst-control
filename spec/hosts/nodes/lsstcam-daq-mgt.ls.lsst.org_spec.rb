@@ -51,17 +51,17 @@ describe 'lsstcam-daq-mgt.ls.lsst.org', :site do
       context 'with enp129s0f0' do
         let(:interface) { 'enp129s0f0' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
       end
 
       context 'with enp197s0f0' do
         let(:interface) { 'enp197s0f0' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
+        it_behaves_like 'nm bridge slave interface', master: 'lsst-daq'
         it { expect(nm_keyfile['ethtool']['ring-rx']).to eq(4096) }
         it { expect(nm_keyfile['ethtool']['ring-tx']).to eq(4096) }
       end
@@ -69,7 +69,7 @@ describe 'lsstcam-daq-mgt.ls.lsst.org', :site do
       context 'with lsst-daq' do
         let(:interface) { 'lsst-daq' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm bridge interface'
         it { expect(nm_keyfile['ipv4']['address1']).to eq('192.168.100.1/24') }
         it { expect(nm_keyfile['ipv4']['ignore-auto-dns']).to be true }

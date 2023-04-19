@@ -47,7 +47,7 @@ describe 'pillan08.tu.lsst.org', :site do
           let(:interface) { i }
 
           it_behaves_like 'nm named interface'
-          it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
+          it_behaves_like 'nm ethernet interface'
           it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
           it { expect(nm_keyfile['connection']['master']).to eq('bond0') }
           it { expect(nm_keyfile['connection']['slave-type']).to eq('bond') }

@@ -28,6 +28,7 @@ describe 'dimm.cp.lsst.org', :site do
 
         it_behaves_like 'nm named interface'
         it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm ethernet interface'
       end
 
       context 'with enp2s0' do

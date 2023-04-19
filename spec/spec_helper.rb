@@ -782,10 +782,13 @@ end
 shared_examples 'nm disabled interface' do
   it_behaves_like 'nm named interface'
   it_behaves_like 'nm no-ip interface'
-  it { expect(nm_keyfile['connection']['id']).to eq(interface) }
-  it { expect(nm_keyfile['connection']['interface-name']).to eq(interface) }
-  it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
+  it_behaves_like 'nm ethernet interface'
   it { expect(nm_keyfile['connection']['autoconnect']).to be false }
+end
+
+shared_examples 'nm ethernet interface' do
+  it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
+  it { expect(nm_keyfile_raw).to match(%r{^\[ethernet\]$}) }
 end
 
 shared_examples 'nm dhcp interface' do

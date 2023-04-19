@@ -44,7 +44,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :site do
 
         it_behaves_like 'nm named interface'
         it_behaves_like 'nm dhcp interface'
-        it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
+        it_behaves_like 'nm ethernet interface'
         it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
       end
 
@@ -60,6 +60,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :site do
         let(:interface) { 'enp197s0f0' }
 
         it_behaves_like 'nm named interface'
+        it_behaves_like 'nm ethernet interface'
         it_behaves_like 'nm bridge slave interface', master: 'lsst-daq'
         it { expect(nm_keyfile['ethtool']['ring-rx']).to eq(4096) }
         it { expect(nm_keyfile['ethtool']['ring-tx']).to eq(4096) }

@@ -59,7 +59,7 @@ describe 'namkueyen01.dev.lsst.org', :site do
 
         it_behaves_like 'nm named interface'
         it_behaves_like 'nm dhcp interface'
-        it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
+        it_behaves_like 'nm ethernet interface'
         it { expect(nm_keyfile['connection']['autoconnect']).to be true }
       end
     end # on os

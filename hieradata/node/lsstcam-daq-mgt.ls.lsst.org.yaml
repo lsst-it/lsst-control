@@ -1,5 +1,22 @@
 ---
 profile::nm::connections:
+  enp129s0f1:  # mgt shelf
+    content: |
+      [connection]
+      id=enp129s0f1
+      uuid=46d19ce1-bcab-7e77-6fc7-b730b26c54b1
+      type=ethernet
+      interface-name=enp129s0f1
+
+      [ethernet]
+
+      [ipv4]
+      address1=192.168.100.1/24
+      ignore-auto-dns=true
+      method=manual
+
+      [ipv6]
+      method=disabled
   enp197s0f0:  # daq
     content: |
       [connection]

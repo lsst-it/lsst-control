@@ -39,7 +39,7 @@ describe 'azar03.cp.lsst.org', :site do
         end
 
         it do
-          is_expected.to contain_network__interface('em1').with(
+          is_expected.to contain_network__interface('enp1s0f0').with(
             bootproto: 'none',
             bridge: 'dds',
             defroute: 'no',
@@ -50,7 +50,7 @@ describe 'azar03.cp.lsst.org', :site do
         end
 
         it do
-          is_expected.to contain_network__interface('em2').with(
+          is_expected.to contain_network__interface('enp1s0f1').with(
             bootproto: 'none',
             bridge: 'startracker',
             defroute: 'no',

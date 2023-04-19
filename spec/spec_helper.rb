@@ -801,6 +801,14 @@ shared_examples 'nm bridge interface' do
   it { expect(nm_keyfile_raw).to match(%r{^\[proxy\]$}) }
 end
 
+shared_examples 'nm bridge slave interface' do |master:|
+  it { expect(nm_keyfile['connection']['master']).to eq(master) }
+  it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
+  it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+  it { expect(nm_keyfile_raw).to match(%r{^\[ethernet\]$}) }
+  it { expect(nm_keyfile_raw).to match(%r{^\[bridge-port\]$}) }
+end
+
 shared_examples 'nm no-ip interface' do
   it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
   it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }

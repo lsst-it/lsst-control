@@ -83,6 +83,8 @@ profile::nm::connections:
       slave-type=bridge
 
       [ethernet]
+
+      [bridge-port]
   enp10s0f1:
     content: |
       [connection]

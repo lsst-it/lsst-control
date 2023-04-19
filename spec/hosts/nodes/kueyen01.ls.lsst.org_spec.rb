@@ -16,12 +16,10 @@ describe 'kueyen01.ls.lsst.org', :site do
           cluster: 'kueyen',
         }
       end
-      let(:vlan_id) { 2301 }
-      let(:rt_id) { vlan_id }
-
-      include_context 'with nm interface'
 
       it { is_expected.to compile.with_all_deps }
+
+      include_context 'with nm interface'
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
@@ -88,10 +86,8 @@ describe 'kueyen01.ls.lsst.org', :site do
         let(:interface) { 'ens2f0.2301' }
 
         it_behaves_like 'nm named interface'
+        it_behaves_like 'nm bridge slave interface', master: 'br2301'
         it { expect(nm_keyfile['connection']['type']).to eq('vlan') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-        it { expect(nm_keyfile['connection']['master']).to eq('br2301') }
-        it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
       end
 
       context 'with br2301' do

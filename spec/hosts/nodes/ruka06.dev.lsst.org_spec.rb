@@ -43,10 +43,8 @@ describe 'ruka06.dev.lsst.org', :site do
         let(:interface) { 'enp10s0f0' }
 
         it_behaves_like 'nm named interface'
+        it_behaves_like 'nm bridge slave interface', master: 'br2101'
         it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-        it { expect(nm_keyfile['connection']['master']).to eq('br2101') }
-        it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
       end
 
       context 'with br2101' do

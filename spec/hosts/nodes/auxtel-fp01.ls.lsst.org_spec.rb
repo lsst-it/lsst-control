@@ -51,10 +51,8 @@ describe 'auxtel-fp01.ls.lsst.org', :site do
         let(:interface) { 'enp129s0f1.2505' }
 
         it_behaves_like 'nm named interface'
+        it_behaves_like 'nm bridge slave interface', master: 'lhn'
         it { expect(nm_keyfile['connection']['type']).to eq('vlan') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-        it { expect(nm_keyfile['connection']['master']).to eq('lhn') }
-        it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
       end
 
       context 'with enp197s0f0' do

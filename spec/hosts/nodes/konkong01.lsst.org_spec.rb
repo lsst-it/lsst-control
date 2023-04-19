@@ -16,8 +16,6 @@ describe 'konkong01.ls.lsst.org', :site do
           cluster: 'konkong',
         }
       end
-      let(:vlan_id) { 2505 }
-      let(:rt_id) { vlan_id }
 
       include_context 'with nm interface'
 
@@ -82,10 +80,8 @@ describe 'konkong01.ls.lsst.org', :site do
         let(:interface) { 'enp129s0f1.2505' }
 
         it_behaves_like 'nm named interface'
+        it_behaves_like 'nm bridge slave interface', master: 'br2505'
         it { expect(nm_keyfile['connection']['type']).to eq('vlan') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-        it { expect(nm_keyfile['connection']['master']).to eq('br2505') }
-        it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
       end
 
       context 'with br2505' do

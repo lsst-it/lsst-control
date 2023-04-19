@@ -16,12 +16,10 @@ describe 'manke01.ls.lsst.org', :site do
           cluster: 'manke',
         }
       end
-      let(:vlan_id) { 2505 }
-      let(:rt_id) { vlan_id }
-
-      include_context 'with nm interface'
 
       it { is_expected.to compile.with_all_deps }
+
+      include_context 'with nm interface'
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
@@ -82,10 +80,8 @@ describe 'manke01.ls.lsst.org', :site do
         let(:interface) { 'enp129s0f1.2502' }
 
         it_behaves_like 'nm named interface'
+        it_behaves_like 'nm bridge slave interface', master: 'br2502'
         it { expect(nm_keyfile['connection']['type']).to eq('vlan') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-        it { expect(nm_keyfile['connection']['master']).to eq('br2502') }
-        it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
       end
 
       context 'with br2502' do
@@ -100,10 +96,8 @@ describe 'manke01.ls.lsst.org', :site do
         let(:interface) { 'enp129s0f1.2505' }
 
         it_behaves_like 'nm named interface'
+        it_behaves_like 'nm bridge slave interface', master: 'br2505'
         it { expect(nm_keyfile['connection']['type']).to eq('vlan') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-        it { expect(nm_keyfile['connection']['master']).to eq('br2505') }
-        it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
       end
 
       context 'with br2505' do

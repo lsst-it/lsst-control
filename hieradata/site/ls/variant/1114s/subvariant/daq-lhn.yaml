@@ -6,7 +6,6 @@ profile::nm::connections:
       id=enp197s0f0
       uuid=d5642f16-53c6-6053-7d4d-8c6ef5ae8a38
       type=ethernet
-      autoconnect=false
       interface-name=enp197s0f0
       master=lsst-daq
       slave-type=bridge

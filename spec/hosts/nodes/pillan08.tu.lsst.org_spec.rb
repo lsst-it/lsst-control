@@ -62,17 +62,16 @@ describe 'pillan08.tu.lsst.org', :site do
         # XXX add more tests
       end
 
-      %w[
-        bond0.3065
-        bond0.3065
-        bond0.3085
-      ].each do |i|
-        context "with #{i}" do
-          let(:interface) { i }
+      Hash[*%w[
+        bond0.3065 br3065
+        bond0.3075 br3075
+        bond0.3085 br3085
+      ]].each do |slave, master|
+        context "with #{slave}" do
+          let(:interface) { slave }
 
           it_behaves_like 'nm named interface'
-          it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
-          # XXX add more tests
+          it_behaves_like 'nm bridge slave interface', master: master
         end
       end
 

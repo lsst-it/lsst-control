@@ -765,8 +765,12 @@ shared_examples 'dco' do
 end
 
 shared_context 'with nm interface' do
+  let(:nm_keyfile_raw) do
+    catalogue.resource('profile::nm::connection', interface)[:content]
+  end
+
   let(:nm_keyfile) do
-    IniParse.parse(catalogue.resource('profile::nm::connection', interface)[:content])
+    IniParse.parse(nm_keyfile_raw)
   end
 end
 
@@ -793,6 +797,8 @@ shared_examples 'nm bridge interface' do
   it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
   it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
   it { expect(nm_keyfile['bridge']['stp']).to be false }
+  it { expect(nm_keyfile_raw).to match(%r{^\[ethernet\]$}) }
+  it { expect(nm_keyfile_raw).to match(%r{^\[proxy\]$}) }
 end
 
 shared_examples 'nm no-ip interface' do

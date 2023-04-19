@@ -142,6 +142,8 @@ profile::nm::connections:
 
       [ipv6]
       method=disabled
+
+      [proxy]
   br2505:
     content: |
       [connection]
@@ -165,3 +167,5 @@ profile::nm::connections:
 
       [ipv6]
       method=disabled
+
+      [proxy]

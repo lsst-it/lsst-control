@@ -109,3 +109,5 @@ profile::nm::connections:
 
       [ipv6]
       method=disabled
+
+      [proxy]

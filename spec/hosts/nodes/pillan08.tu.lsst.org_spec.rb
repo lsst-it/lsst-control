@@ -57,8 +57,8 @@ describe 'pillan08.tu.lsst.org', :site do
         let(:interface) { 'bond0' }
 
         it_behaves_like 'nm enabled interface'
-        it { expect(nm_keyfile['bond']['mode']).to eq('802.3ad') }
-        # XXX add more tests
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm bond interface'
       end
 
       Hash[*%w[

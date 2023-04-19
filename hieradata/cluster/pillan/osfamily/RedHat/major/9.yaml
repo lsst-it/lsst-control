@@ -79,7 +79,7 @@ profile::nm::connections:
       method=auto
 
       [ipv6]
-      method=ignore
+      method=disabled
 
       [proxy]
   bond0.3065:

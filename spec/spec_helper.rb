@@ -826,6 +826,13 @@ shared_examples 'nm vlan interface' do |id:, parent:|
   it { expect(nm_keyfile['vlan']['parent']).to eq(parent) }
 end
 
+shared_examples 'nm bond interface' do
+  it { expect(nm_keyfile['connection']['type']).to eq('bond') }
+  it { expect(nm_keyfile['bond']['miimon']).to eq(100) }
+  it { expect(nm_keyfile['bond']['mode']).to eq('802.3ad') }
+  it { expect(nm_keyfile_raw).to match(%r{^\[proxy\]$}) }
+end
+
 shared_examples 'nm no-ip interface' do
   it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
   it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }

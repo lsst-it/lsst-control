@@ -830,7 +830,16 @@ shared_examples 'nm bond interface' do
   it { expect(nm_keyfile['connection']['type']).to eq('bond') }
   it { expect(nm_keyfile['bond']['miimon']).to eq(100) }
   it { expect(nm_keyfile['bond']['mode']).to eq('802.3ad') }
+  it { expect(nm_keyfile_raw).to match(%r{^\[ethernet\]$}) }
   it { expect(nm_keyfile_raw).to match(%r{^\[proxy\]$}) }
+end
+
+shared_examples 'nm bond slave interface' do |master:|
+  it { expect(nm_keyfile['connection']['master']).to eq(master) }
+  it { expect(nm_keyfile['connection']['slave-type']).to eq('bond') }
+  it { expect(nm_keyfile_raw).to match(%r{^\[ethernet\]$}) }
+  it { expect(nm_keyfile_raw).not_to match(%r{^\[ipv4\]$}) }
+  it { expect(nm_keyfile_raw).not_to match(%r{^\[ipv6\]$}) }
 end
 
 shared_examples 'nm no-ip interface' do

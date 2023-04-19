@@ -11,7 +11,7 @@ profile::nm::connections:
       [ethernet]
 
       [ipv4]
-      address1=192.168.100.1/24
+      address1=192.168.101.1/24
       ignore-auto-dns=true
       method=manual
 

@@ -48,8 +48,7 @@ describe 'pillan08.tu.lsst.org', :site do
 
           it_behaves_like 'nm enabled interface'
           it_behaves_like 'nm ethernet interface'
-          it { expect(nm_keyfile['connection']['master']).to eq('bond0') }
-          it { expect(nm_keyfile['connection']['slave-type']).to eq('bond') }
+          it_behaves_like 'nm bond slave interface', master: 'bond0'
         end
       end
 

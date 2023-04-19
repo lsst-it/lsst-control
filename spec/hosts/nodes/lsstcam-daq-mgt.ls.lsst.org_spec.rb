@@ -42,7 +42,7 @@ describe 'lsstcam-daq-mgt.ls.lsst.org', :site do
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['ipv4']['address1']).to eq('192.168.100.1/24') }
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('192.168.101.1/24') }
         it { expect(nm_keyfile['ipv4']['ignore-auto-dns']).to be true }
         it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
         it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }

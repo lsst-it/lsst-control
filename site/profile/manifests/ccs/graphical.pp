@@ -23,6 +23,11 @@ class profile::ccs::graphical (
       unless  => 'sh -c "systemctl get-default | grep -qF graphical.target"',
     }
 
+    $unwanted_gnome_pkgs = [
+      'gnome-initial-setup',
+      'libvirt-daemon',  # rm unused virbr0[-nic] interfaces
+    ]
+
     ## Slow. Maybe better done separately?
     ## Don't want this on servers.
     ## Although people sometimes want to eg use vnc,
@@ -33,6 +38,7 @@ class profile::ccs::graphical (
       yum::group { 'GNOME Desktop':
         ensure  => present,
         timeout => 1800,
+        notify  => Package[$unwanted_gnome_pkgs],
       }
       yum::group { 'MATE Desktop':
         ensure  => present,
@@ -43,11 +49,12 @@ class profile::ccs::graphical (
       yum::group { 'Server with GUI':
         ensure  => present,
         timeout => 900,
+        notify  => Package[$unwanted_gnome_pkgs],
       }
       ensure_packages(['mate-desktop'])
     }
 
-    package { 'gnome-initial-setup':
+    package { $unwanted_gnome_pkgs:
       ensure => purged,
     }
 

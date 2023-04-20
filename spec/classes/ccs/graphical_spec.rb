@@ -13,6 +13,11 @@ describe 'profile::ccs::graphical' do
             ensure: 'present',
             timeout: '1800',
           )
+                                                            .that_notifies('Package[gnome-initial-setup]')
+                                                            .that_notifies('Package[libvirt-daemon]')
+        end
+
+        it do
           is_expected.to contain_yum__group('MATE Desktop').with(
             ensure: 'present',
             timeout: '900',
@@ -24,8 +29,13 @@ describe 'profile::ccs::graphical' do
             ensure: 'present',
             timeout: '900',
           )
+                                                              .that_notifies('Package[gnome-initial-setup]')
+                                                              .that_notifies('Package[libvirt-daemon]')
         end
       end
+
+      it { is_expected.to contain_package('gnome-initial-setup').with_ensure('purged') }
+      it { is_expected.to contain_package('libvirt-daemon').with_ensure('purged') }
     end
   end
 end

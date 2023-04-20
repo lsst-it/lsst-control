@@ -34,6 +34,7 @@ describe "#{role} role" do
             profile::ccs::common
             profile::ccs::graphical
             profile::core::common
+            profile::core::debugutils
             profile::core::nfsclient
             profile::daq::daq_interface
           ].each do |cls|

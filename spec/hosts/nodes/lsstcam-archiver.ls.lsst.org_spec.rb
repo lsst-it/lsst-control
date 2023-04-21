@@ -8,23 +8,19 @@ describe 'lsstcam-archiver.ls.lsst.org', :site do
   { 'almalinux-8-x86_64': alma8 }.each do |os, facts|
     # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
-      let(:facts) do
-        facts.merge(
-          fqdn: 'lsstcam-archiver.ls.lsst.org',
-        )
-      end
+      let(:facts) { facts.merge(fqdn: 'lsstcam-archiver.ls.lsst.org') }
 
       let(:node_params) do
         {
           role: 'generic',
           site: 'ls',
+          variant: '1114s',
         }
       end
 
       it { is_expected.to compile.with_all_deps }
 
       include_context 'with nm interface'
-
       it { is_expected.to have_network__interface_resource_count(0) }
       it { is_expected.to have_profile__nm__connection_resource_count(5) }
 
@@ -34,7 +30,7 @@ describe 'lsstcam-archiver.ls.lsst.org', :site do
         enp4s0f3u2u2c2
         enp129s0f1
       ].each do |i|
-        context "with #{name}" do
+        context "with #{i}" do
           let(:interface) { i }
 
           it_behaves_like 'nm disabled interface'
@@ -44,10 +40,9 @@ describe 'lsstcam-archiver.ls.lsst.org', :site do
       context 'with enp129s0f0' do
         let(:interface) { 'enp129s0f0' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
-        it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+        it_behaves_like 'nm ethernet interface'
       end
     end # on os
   end # on_supported_os

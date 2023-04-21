@@ -47,7 +47,6 @@ profile::nm::connections:
       id=ens2f1
       uuid=de9904c8-9577-1a17-36b1-34b94132f06a
       type=ethernet
-      autoconnect=true
       interface-name=ens2f1
 
       [ethernet]
@@ -109,3 +108,5 @@ profile::nm::connections:
 
       [ipv6]
       method=disabled
+
+      [proxy]

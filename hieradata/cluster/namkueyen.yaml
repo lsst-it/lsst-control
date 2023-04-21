@@ -15,7 +15,6 @@ profile::nm::connections:
       id=eno1
       uuid=de9904c8-9577-1a17-36b1-34b94132f06a
       type=ethernet
-      autoconnect=true
       interface-name=eno1
 
       [ethernet]

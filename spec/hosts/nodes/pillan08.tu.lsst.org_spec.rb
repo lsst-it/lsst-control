@@ -30,7 +30,7 @@ describe 'pillan08.tu.lsst.org', :site do
       %w[
         enp4s0f3u2u2c2
       ].each do |i|
-        context "with #{name}" do
+        context "with #{i}" do
           let(:interface) { i }
 
           it_behaves_like 'nm disabled interface'
@@ -43,36 +43,33 @@ describe 'pillan08.tu.lsst.org', :site do
         enp197s0f0
         enp197s0f1
       ].each do |i|
-        context "with #{name}" do
+        context "with #{i}" do
           let(:interface) { i }
 
-          it_behaves_like 'nm named interface'
-          it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
-          it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-          it { expect(nm_keyfile['connection']['master']).to eq('bond0') }
-          it { expect(nm_keyfile['connection']['slave-type']).to eq('bond') }
+          it_behaves_like 'nm enabled interface'
+          it_behaves_like 'nm ethernet interface'
+          it_behaves_like 'nm bond slave interface', master: 'bond0'
         end
       end
 
       context 'with bond0' do
         let(:interface) { 'bond0' }
 
-        it_behaves_like 'nm named interface'
-        it { expect(nm_keyfile['bond']['mode']).to eq('802.3ad') }
-        # XXX add more tests
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm bond interface'
       end
 
-      %w[
-        bond0.3065
-        bond0.3065
-        bond0.3085
-      ].each do |i|
-        context "with #{i}" do
-          let(:interface) { i }
+      Hash[*%w[
+        bond0.3065 br3065
+        bond0.3075 br3075
+        bond0.3085 br3085
+      ]].each do |slave, master|
+        context "with #{slave}" do
+          let(:interface) { slave }
 
-          it_behaves_like 'nm named interface'
-          it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
-          # XXX add more tests
+          it_behaves_like 'nm enabled interface'
+          it_behaves_like 'nm bridge slave interface', master: master
         end
       end
 
@@ -84,12 +81,9 @@ describe 'pillan08.tu.lsst.org', :site do
         context "with #{i}" do
           let(:interface) { i }
 
-          it_behaves_like 'nm named interface'
-          it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
-          it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-          it { expect(nm_keyfile['bridge']['stp']).to be false }
-          it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
-          it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+          it_behaves_like 'nm enabled interface'
+          it_behaves_like 'nm bridge interface'
+          it_behaves_like 'nm no-ip interface'
         end
       end
     end # on os

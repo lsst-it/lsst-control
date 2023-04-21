@@ -16,12 +16,10 @@ describe 'kueyen01.ls.lsst.org', :site do
           cluster: 'kueyen',
         }
       end
-      let(:vlan_id) { 2301 }
-      let(:rt_id) { vlan_id }
-
-      include_context 'with nm interface'
 
       it { is_expected.to compile.with_all_deps }
+
+      include_context 'with nm interface'
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
@@ -59,8 +57,9 @@ describe 'kueyen01.ls.lsst.org', :site do
       %w[
         em1
         em2
+        ens2f0
       ].each do |i|
-        context "with #{name}" do
+        context "with #{i}" do
           let(:interface) { i }
 
           it_behaves_like 'nm disabled interface'
@@ -70,39 +69,25 @@ describe 'kueyen01.ls.lsst.org', :site do
       context 'with ens2f1' do
         let(:interface) { 'ens2f1' }
 
-        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
-        it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be true }
-      end
-
-      context 'with ens2f0' do
-        let(:interface) { 'ens2f0' }
-
-        it_behaves_like 'nm named interface'
-        it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be false }
+        it_behaves_like 'nm ethernet interface'
       end
 
       context 'with ens2f0.2301' do
         let(:interface) { 'ens2f0.2301' }
 
-        it_behaves_like 'nm named interface'
-        it { expect(nm_keyfile['connection']['type']).to eq('vlan') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-        it { expect(nm_keyfile['connection']['master']).to eq('br2301') }
-        it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm vlan interface', id: 2301, parent: 'ens2f0'
+        it_behaves_like 'nm bridge slave interface', master: 'br2301'
       end
 
       context 'with br2301' do
         let(:interface) { 'br2301' }
 
-        it_behaves_like 'nm named interface'
-        it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-        it { expect(nm_keyfile['bridge']['stp']).to be false }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('auto') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm bridge interface'
       end
     end # on os
   end # on_supported_os

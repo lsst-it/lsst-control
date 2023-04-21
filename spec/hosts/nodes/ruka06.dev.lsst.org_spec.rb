@@ -32,7 +32,7 @@ describe 'ruka06.dev.lsst.org', :site do
         eno4
         enp10s0f1
       ].each do |i|
-        context "with #{name}" do
+        context "with #{i}" do
           let(:interface) { i }
 
           it_behaves_like 'nm disabled interface'
@@ -42,22 +42,17 @@ describe 'ruka06.dev.lsst.org', :site do
       context 'with enp10s0f0' do
         let(:interface) { 'enp10s0f0' }
 
-        it_behaves_like 'nm named interface'
-        it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-        it { expect(nm_keyfile['connection']['master']).to eq('br2101') }
-        it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm ethernet interface'
+        it_behaves_like 'nm bridge slave interface', master: 'br2101'
       end
 
       context 'with br2101' do
         let(:interface) { 'br2101' }
 
-        it_behaves_like 'nm named interface'
-        it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
-        it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
-        it { expect(nm_keyfile['bridge']['stp']).to be false }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('auto') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm bridge interface'
       end
     end # on os
   end # on_supported_os

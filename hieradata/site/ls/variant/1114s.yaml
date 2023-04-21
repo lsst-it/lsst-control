@@ -48,7 +48,7 @@ profile::nm::connections:
 
       [ipv6]
       method=disabled
-  enp129s0f0:
+  enp129s0f0:  # fqdn
     content: |
       [connection]
       id=enp129s0f0
@@ -63,7 +63,7 @@ profile::nm::connections:
 
       [ipv6]
       method=disabled
-  enp129s0f1:
+  enp129s0f1:  # trunk
     content: |
       [connection]
       id=enp129s0f1
@@ -76,42 +76,6 @@ profile::nm::connections:
 
       [ipv4]
       method=disabled
-
-      [ipv6]
-      method=disabled
-  enp129s0f1.2502:
-    content: |
-      [connection]
-      id=enp129s0f1.2502
-      uuid=d5642f16-53c6-6053-7d4d-8c6ef5ae8a38
-      type=vlan
-      interface-name=enp129s0f1.2502
-      master=dds
-      slave-type=bridge
-
-      [ethernet]
-
-      [vlan]
-      flags=1
-      id=2502
-      parent=enp129s0f1
-
-      [bridge-port]
-  dds:
-    content: |
-      [connection]
-      id=dds
-      uuid=d5642f16-7bf7-7d4d-de5a-25e7d7c355a4
-      type=bridge
-      interface-name=dds
-
-      [ethernet]
-
-      [bridge]
-      stp=false
-
-      [ipv4]
-      method=auto
 
       [ipv6]
       method=disabled

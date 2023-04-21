@@ -765,8 +765,12 @@ shared_examples 'dco' do
 end
 
 shared_context 'with nm interface' do
+  let(:nm_keyfile_raw) do
+    catalogue.resource('profile::nm::connection', interface)[:content]
+  end
+
   let(:nm_keyfile) do
-    IniParse.parse(catalogue.resource('profile::nm::connection', interface)[:content])
+    IniParse.parse(nm_keyfile_raw)
   end
 end
 
@@ -775,19 +779,76 @@ shared_examples 'nm named interface' do
   it { expect(nm_keyfile['connection']['interface-name']).to eq(interface) }
 end
 
+shared_examples 'nm enabled interface' do
+  it_behaves_like 'nm named interface'
+  it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+end
+
 shared_examples 'nm disabled interface' do
   it_behaves_like 'nm named interface'
-  it { expect(nm_keyfile['connection']['id']).to eq(interface) }
-  it { expect(nm_keyfile['connection']['interface-name']).to eq(interface) }
-  it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
+  it_behaves_like 'nm no-ip interface'
+  it_behaves_like 'nm ethernet interface'
   it { expect(nm_keyfile['connection']['autoconnect']).to be false }
-  it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
-  it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+end
+
+shared_examples 'nm ethernet interface' do
+  it { expect(nm_keyfile['connection']['type']).to eq('ethernet') }
+  it { expect(nm_keyfile_raw).to match(%r{^\[ethernet\]$}) }
 end
 
 shared_examples 'nm dhcp interface' do
   it { expect(nm_keyfile['ipv4']['method']).to eq('auto') }
   it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+end
+
+shared_examples 'nm bridge interface' do
+  it { expect(nm_keyfile['connection']['type']).to eq('bridge') }
+  it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+  it { expect(nm_keyfile['bridge']['stp']).to be false }
+  it { expect(nm_keyfile_raw).to match(%r{^\[ethernet\]$}) }
+  it { expect(nm_keyfile_raw).to match(%r{^\[proxy\]$}) }
+end
+
+shared_examples 'nm bridge slave interface' do |master:|
+  it { expect(nm_keyfile['connection']['master']).to eq(master) }
+  it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
+  it { expect(nm_keyfile['connection']['autoconnect']).to be_nil }
+  it { expect(nm_keyfile_raw).to match(%r{^\[ethernet\]$}) }
+  it { expect(nm_keyfile_raw).to match(%r{^\[bridge-port\]$}) }
+  it { expect(nm_keyfile_raw).not_to match(%r{^\[ipv4\]$}) }
+  it { expect(nm_keyfile_raw).not_to match(%r{^\[ipv6\]$}) }
+end
+
+shared_examples 'nm vlan interface' do |id:, parent:|
+  it { expect(nm_keyfile['connection']['type']).to eq('vlan') }
+  it { expect(nm_keyfile['vlan']['flags']).to eq(1) }
+  it { expect(nm_keyfile['vlan']['id']).to eq(id) }
+  it { expect(nm_keyfile['vlan']['parent']).to eq(parent) }
+end
+
+shared_examples 'nm bond interface' do
+  it { expect(nm_keyfile['connection']['type']).to eq('bond') }
+  it { expect(nm_keyfile['bond']['miimon']).to eq(100) }
+  it { expect(nm_keyfile['bond']['mode']).to eq('802.3ad') }
+  it { expect(nm_keyfile_raw).to match(%r{^\[ethernet\]$}) }
+  it { expect(nm_keyfile_raw).to match(%r{^\[proxy\]$}) }
+end
+
+shared_examples 'nm bond slave interface' do |master:|
+  it { expect(nm_keyfile['connection']['master']).to eq(master) }
+  it { expect(nm_keyfile['connection']['slave-type']).to eq('bond') }
+  it { expect(nm_keyfile_raw).to match(%r{^\[ethernet\]$}) }
+  it { expect(nm_keyfile_raw).not_to match(%r{^\[ipv4\]$}) }
+  it { expect(nm_keyfile_raw).not_to match(%r{^\[ipv6\]$}) }
+end
+
+shared_examples 'nm no-ip interface' do
+  it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
+  it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+end
+
+shared_examples 'nm no default route' do
+  it { expect(nm_keyfile['ipv4']['never-default']).to be true }
 end
 
 shared_examples 'ccs alerts' do

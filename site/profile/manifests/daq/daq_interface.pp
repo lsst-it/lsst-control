@@ -31,88 +31,36 @@ class profile::daq::daq_interface (
 
     $interface = 'lsst-daq'
 
-    if fact('os.release.major') == '7' {
-      $netconf = $mode ? {
-        'dhcp-client'  => {
-          bootproto => 'dhcp',
-        },
-        'dhcp-server'  => {
-          bootproto => 'none',
-          ipaddress => '192.168.100.1',
-          netmask   => '255.255.255.0',
-        },
-      }
-
-      network::interface { $interface:
-        defroute => 'no',  # this was yes on comcam-fp01
-        hwaddr   => $hwaddr,
-        ipv6init => 'no',
-        onboot   => true,
-        type     => 'Ethernet',
-        uuid     => $uuid,
-        *        => $netconf,
-      }
-
-      network::interface { $was:
-        ensure => absent,
-      }
-
-      Class['network'] -> Reboot[$interface]
-    } else {
-      if $mode == 'dhcp-server' {
-        profile::nm::connection { $interface:
-          # lint:ignore:strict_indent
-          content => @("NM"),
-            [connection]
-            id=lsst-daq
-            uuid=${uuid}
-            type=ethernet
-            interface-name=lsst-daq
-
-            [ethernet]
-            mac-address=${hwaddr}
-
-            [ipv4]
-            address1=192.168.100.1/24
-            ignore-auto-dns=true
-            method=manual
-            never-default=true
-
-            [ipv6]
-            method=disabled
-          |NM
-          # lint:endignore
-        }
-      } else {
-        profile::nm::connection { $interface:
-          # lint:ignore:strict_indent
-          content => @("NM"),
-            [connection]
-            id=lsst-daq
-            uuid=${uuid}
-            type=ethernet
-            interface-name=lsst-daq
-
-            [ethernet]
-            mac-address=${hwaddr}
-
-            [ipv4]
-            method=auto
-
-            [ipv6]
-            method=disabled
-          |NM
-          # lint:endignore
-        }
-      }
-
-      # Explicitly removing the interface isn't strictly required as unmanaged
-      # interfaces should be purged. The reason to declare this is as a guard to
-      # make sure it isn't being declared elsewhere.
-      profile::nm::connection { $was:
-        ensure => absent,
-      }
+    unless fact('os.release.major') == '7' {
+      fail('unsupported on EL8+')
     }
+
+    $netconf = $mode ? {
+      'dhcp-client'  => {
+        bootproto => 'dhcp',
+      },
+      'dhcp-server'  => {
+        bootproto => 'none',
+        ipaddress => '192.168.100.1',
+        netmask   => '255.255.255.0',
+      },
+    }
+
+    network::interface { $interface:
+      defroute => 'no',  # this was yes on comcam-fp01
+      hwaddr   => $hwaddr,
+      ipv6init => 'no',
+      onboot   => true,
+      type     => 'Ethernet',
+      uuid     => $uuid,
+      *        => $netconf,
+    }
+
+    network::interface { $was:
+      ensure => absent,
+    }
+
+    Class['network'] -> Reboot[$interface]
 
     # restarting the network service isn't sufficient to rename an existing
     # interface.  The host has to be rebooted.

@@ -29,9 +29,9 @@ describe 'profile::daq::daq_interface' do
             )
           end
 
-          it { is_expected.to compile.with_all_deps }
-
           if facts[:os]['release']['major'] == '7'
+            it { is_expected.to compile.with_all_deps }
+
             it do
               is_expected.to contain_network__interface('lsst-daq').with(
                 hwaddr: 'aa:bb:cc:dd:ee:ff',
@@ -42,21 +42,11 @@ describe 'profile::daq::daq_interface' do
 
             it { is_expected.to contain_network__interface('eth1').with_ensure('absent') }
             it { is_expected.to contain_reboot('lsst-daq') }
+            it { is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/30-ethtool') }
           else
             # el8+
-            let(:interface) { 'lsst-daq' }
-            include_context 'with nm interface'
-            include_examples 'nm named interface'
-            include_examples 'nm dhcp interface'
-            it { expect(nm_keyfile['connection']['uuid']).to eq(params[:uuid]) }
-            it { expect(nm_keyfile['ethernet']['mac-address']).to eq(params[:hwaddr]) }
-
-            it do
-              is_expected.to contain_profile__nm__connection('eth1').with_ensure('absent')
-            end
+            it { is_expected.to compile.and_raise_error(%r{unsupported on EL8+}) }
           end
-
-          it { is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/30-ethtool') }
         end
       end
 
@@ -74,9 +64,9 @@ describe 'profile::daq::daq_interface' do
             )
           end
 
-          it { is_expected.to compile.with_all_deps }
-
           if facts[:os]['release']['major'] == '7'
+            it { is_expected.to compile.with_all_deps }
+
             it do
               is_expected.to contain_network__interface('lsst-daq').with(
                 hwaddr: 'aa:bb:cc:dd:ee:ff',
@@ -89,23 +79,11 @@ describe 'profile::daq::daq_interface' do
 
             it { is_expected.to contain_network__interface('eth1').with_ensure('absent') }
             it { is_expected.to contain_reboot('lsst-daq') }
+            it { is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/30-ethtool') }
           else
             # el8+
-            let(:interface) { 'lsst-daq' }
-            include_context 'with nm interface'
-            include_examples 'nm named interface'
-            it { expect(nm_keyfile['connection']['uuid']).to eq(params[:uuid]) }
-            it { expect(nm_keyfile['ethernet']['mac-address']).to eq(params[:hwaddr]) }
-            it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
-            it { expect(nm_keyfile['ipv4']['address1']).to eq('192.168.100.1/24') }
-            it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
-
-            it do
-              is_expected.to contain_profile__nm__connection('eth1').with_ensure('absent')
-            end
+            it { is_expected.to compile.and_raise_error(%r{unsupported on EL8+}) }
           end
-
-          it { is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/30-ethtool') }
         end
       end
     end

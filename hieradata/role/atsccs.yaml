@@ -7,7 +7,6 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
-  - "profile::daq::daq_interface"
 
 profile::core::systemd::tmpfile:
   docker_tmp.conf:  # XXX short term kludge

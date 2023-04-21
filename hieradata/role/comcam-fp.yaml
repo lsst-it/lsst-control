@@ -9,7 +9,6 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
-  - "profile::daq::daq_interface"
 
 profile::ccs::krb5_token::user: "ccs-ipa"
 profile::ccs::krb5_token::uid: 72055

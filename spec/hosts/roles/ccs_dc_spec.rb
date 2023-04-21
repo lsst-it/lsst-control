@@ -36,7 +36,6 @@ describe "#{role} role" do
             profile::core::common
             profile::core::debugutils
             profile::core::nfsclient
-            profile::daq::daq_interface
           ].each do |cls|
             it { is_expected.to contain_class(cls) }
           end

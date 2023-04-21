@@ -433,6 +433,8 @@ shared_examples 'puppet_master' do
   end
 
   it { is_expected.to contain_package('ipmitool') }
+  it { is_expected.to contain_package('toml-rb').with_provider('puppetserver_gem') }
+  it { is_expected.to contain_package('hiera-eyaml').with_provider('puppetserver_gem') }
 end
 
 shared_examples 'docker' do

@@ -168,4 +168,12 @@ class profile::core::puppet_master (
     ensure   => installed,
     provider => 'puppet_gem',
   }
+
+  file { '/etc/puppetlabs/puppet/eyaml':
+    ensure  => directory,
+    owner   => 'puppet',
+    group   => 'puppet',
+    mode    => '0500',
+    require => Class['puppet'],  # ensure puppet user/group exist
+  }
 }

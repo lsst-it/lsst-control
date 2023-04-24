@@ -8,14 +8,14 @@ docker::networks::networks:
     options: ["parent=dds"]
 
 network::interfaces_hash:
-  em1:  # vlan1600|139.229.178.0/24
+  enp1s0f0:  # vlan1600|139.229.178.0/24
     bootproto: "none"
     bridge: "dds"
     defroute: "no"
     nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
-  em2:  # vlan1601|139.229.169.0/24
+  enp1s0f1:  # vlan1601|139.229.169.0/24
     bootproto: "none"
     bridge: "startracker"
     defroute: "no"

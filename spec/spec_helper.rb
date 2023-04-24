@@ -433,6 +433,17 @@ shared_examples 'puppet_master' do
   end
 
   it { is_expected.to contain_package('ipmitool') }
+  it { is_expected.to contain_package('toml-rb').with_provider('puppetserver_gem') }
+  it { is_expected.to contain_package('hiera-eyaml').with_provider('puppetserver_gem') }
+
+  it do
+    is_expected.to contain_file('/etc/puppetlabs/puppet/eyaml').with(
+      ensure: 'directory',
+      owner: 'puppet',
+      group: 'puppet',
+      mode: '0500',
+    ).that_requires('Class[puppet]')
+  end
 end
 
 shared_examples 'docker' do

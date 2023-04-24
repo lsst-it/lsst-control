@@ -3,7 +3,7 @@ version: 5
 defaults:
   data_hash: "yaml_data"
 hierarchy:
-  - name: "private hiera"
+  - name: "private hiera yaml"
     datadir: "/etc/puppetlabs/code/hieradata/private/%{environment}"
     paths: &paths
       - "node/%{fqdn}.yaml"
@@ -31,6 +31,38 @@ hierarchy:
       - "role/%{role}.yaml"
       - "common/osfamily/%{os.family}/major/%{os.release.major}.yaml"
       - "common.yaml"
+  - name: "private hiera eyaml"
+    lookup_key: "eyaml_lookup_key"  # eyaml backend
+    datadir: "/etc/puppetlabs/code/hieradata/private/%{environment}"
+    paths:
+      - "node/%{fqdn}.eyaml"
+      - "site/%{site}/cluster/%{cluster}/site/%{site}/variant/%{variant}/subvariant/%{subvariant}/%{os.family}/major/%{os.release.major}.eyaml"
+      - "site/%{site}/cluster/%{cluster}/site/%{site}/variant/%{variant}/subvariant/%{subvariant}.eyaml"
+      - "site/%{site}/cluster/%{cluster}/variant/%{variant}/%{os.family}/major/%{os.release.major}.eyaml"
+      - "site/%{site}/cluster/%{cluster}/variant/%{variant}.eyaml"
+      - "site/%{site}/cluster/%{cluster}/role/%{role}.eyaml"
+      - "site/%{site}/cluster/%{cluster}.eyaml"
+      - "cluster/%{cluster}/site/%{site}/variant/%{variant}/subvariant/%{subvariant}/%{os.family}/major/%{os.release.major}.eyaml"
+      - "cluster/%{cluster}/site/%{site}/variant/%{variant}/subvariant/%{subvariant}.eyaml"
+      - "cluster/%{cluster}/variant/%{variant}/%{os.family}/major/%{os.release.major}.eyaml"
+      - "cluster/%{cluster}/variant/%{variant}.eyaml"
+      - "cluster/%{cluster}/role/%{role}.eyaml"
+      - "cluster/%{cluster}/osfamily/%{os.family}/major/%{os.release.major}.eyaml"
+      - "cluster/%{cluster}.eyaml"
+      - "site/%{site}/variant/%{variant}/subvariant/%{subvariant}/%{os.family}/major/%{os.release.major}.eyaml"
+      - "site/%{site}/variant/%{variant}/subvariant/%{subvariant}.eyaml"
+      - "site/%{site}/variant/%{variant}/%{os.family}/major/%{os.release.major}.eyaml"
+      - "site/%{site}/variant/%{variant}.eyaml"
+      - "site/%{site}/role/%{role}/osfamily/%{os.family}/major/%{os.release.major}.eyaml"
+      - "site/%{site}/role/%{role}.eyaml"
+      - "site/%{site}.eyaml"
+      - "role/%{role}/osfamily/%{os.family}/major/%{os.release.major}.eyaml"
+      - "role/%{role}.eyaml"
+      - "common/osfamily/%{os.family}/major/%{os.release.major}.eyaml"
+      - "common.eyaml"
+    options:
+      pkcs7_private_key: "/etc/puppetlabs/puppet/eyaml/private_key.pkcs7.pem"
+      pkcs7_public_key: "/etc/puppetlabs/puppet/eyaml/public_key.pkcs7.pem"
   - name: "public hiera"
     datadir: "/etc/puppetlabs/code/environments/%{environment}/hieradata"
     paths: *paths

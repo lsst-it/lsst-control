@@ -114,6 +114,10 @@ class profile::core::puppet_master (
     provider => 'puppetserver_gem',
   }
 
+  package { 'hiera-eyaml':
+    provider => 'puppetserver_gem',
+  }
+
   # The foreman-selinux package is not managed by theforeman/foreman when selinux is disabled.  # This is to cleanup old installs.
   unless $facts['os']['selinux']['enabled'] {
     package { 'foreman-selinux':
@@ -163,5 +167,13 @@ class profile::core::puppet_master (
   package { 'oauth':
     ensure   => installed,
     provider => 'puppet_gem',
+  }
+
+  file { '/etc/puppetlabs/puppet/eyaml':
+    ensure  => directory,
+    owner   => 'puppet',
+    group   => 'puppet',
+    mode    => '0500',
+    require => Class['puppet'],  # ensure puppet user/group exist
   }
 }

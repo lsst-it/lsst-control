@@ -48,6 +48,21 @@ describe "#{role} role" do
               ],
             )
           end
+
+          %w[
+            /opt/dimm
+            /opt/Vimba_2_1
+            /opt/astelos
+            /mnt/dimm
+          ].each do |d|
+            it do
+              is_expected.to contain_file(d).with(
+                owner: 79_518,
+                group: 'users',
+                recurse: true,
+              )
+            end
+          end
         end # host
       end # lsst_sites
     end # on os

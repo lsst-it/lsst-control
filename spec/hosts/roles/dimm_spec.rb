@@ -38,6 +38,16 @@ describe "#{role} role" do
               atboot: true,
             )
           end
+
+          it do
+            is_expected.to contain_systemd__udev__rule('dimm_usb_devices.rules').with(
+              rules: [
+                'SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", GROUP="users"',
+                'SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6015", GROUP="users"',
+                'SUBSYSTEM=="tty", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", GROUP="users"',
+              ],
+            )
+          end
         end # host
       end # lsst_sites
     end # on os

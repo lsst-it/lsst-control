@@ -69,6 +69,9 @@ lookup_options:
     merge:
       strategy: "deep"
       knockout_prefix: "--"
+  systemd::udev_rules:
+    merge:
+      strategy: "deep"
 
 hosts::purge_hosts: true
 timezone::timezone: "UTC"
@@ -412,3 +415,5 @@ nfs::nfs_v4_idmap_domain: "%{::domain}"
 profile::ccs::common::pkgurl: "https://repo-nexus.lsst.org/nexus/repository/ccs_private"
 ccs_hcu::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
 ccs_monit::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
+
+systemd::manage_udevd: true

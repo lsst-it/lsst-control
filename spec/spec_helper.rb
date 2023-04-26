@@ -249,6 +249,8 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
       force: true,
     )
   end
+
+  it { is_expected.to contain_class('systemd').with_manage_udevd(true) }
 end
 
 shared_examples 'lhn sysctls', :lhn_node do

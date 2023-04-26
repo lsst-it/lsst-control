@@ -8,7 +8,6 @@ profile::core::nm_dispatch::interfaces:
     - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
 
 network::interfaces_hash:
-  ## Fiber Interfaces
   p2p1:
     bootproto: "none"
     onboot: "yes"
@@ -19,8 +18,7 @@ network::interfaces_hash:
     onboot: "yes"
     type: "Ethernet"
     mtu: "9000"
-  # lhn owamp
-  p2p1.360:
+  p2p1.360:  # lhn owamp
     bootproto: "none"
     onboot: "yes"
     vlan: "yes"
@@ -29,9 +27,6 @@ network::interfaces_hash:
     netmask: "255.255.255.254"
     nozeroconf: "yes"
     mtu: "9000"
-    #iprule:
-    #  - "priority 200 from 139.229.140.135 lookup 110"
-  # VLAN tags interface p2p1
   p2p1.726:
     bootproto: "none"
     onboot: "yes"
@@ -41,7 +36,6 @@ network::interfaces_hash:
     netmask: "255.255.255.0"
     nozeroconf: "yes"
     mtu: "9000"
-  # VLAN tags Summit p2p1
   p2p1.728:
     bootproto: "none"
     onboot: "yes"
@@ -51,8 +45,7 @@ network::interfaces_hash:
     netmask: "255.255.255.0"
     nozeroconf: "yes"
     mtu: "9000"
-  # lhn perf
-  p2p2.370:
+  p2p2.370:  # lhn perf
     bootproto: "none"
     onboot: "yes"
     vlan: "yes"
@@ -61,9 +54,6 @@ network::interfaces_hash:
     netmask: "255.255.255.254"
     nozeroconf: "yes"
     mtu: "9000"
-    iprule:
-      - "priority 200 from 139.229.140.137 lookup 120"
-  ## VLAN tags interface p2p2
   p2p2.727:
     bootproto: "none"
     onboot: "yes"
@@ -73,7 +63,6 @@ network::interfaces_hash:
     netmask: "255.255.255.0"
     nozeroconf: "yes"
     mtu: "9000"
-  # VLAN tags Summit p2p2
   p2p2.729:
     bootproto: "none"
     onboot: "yes"
@@ -85,27 +74,12 @@ network::interfaces_hash:
     mtu: "9000"
 
 network::hostname: "%{facts.fqdn}"
-network::tables_hash:
-  #lhn1:
-  #  table_id: 110
-  #lhn2:
-  #  table_id: 120
 network::mroutes_hash:
   p2p1.360:
-    #table: 110
     routes:
       "139.229.140.134/31": "p2p1.360"
       "139.229.140.0/22": &via "139.229.140.134"
       "139.229.144.248/32": *via
-      "141.142.129.86/31": *via  # ncsa throughput
-      "141.142.141.64/26": *via
-      "141.142.176.0/24": *via
-      "141.142.180.0/24": *via
-      "141.142.181.0/24": *via
-      "141.142.191.1/32": *via  # throughtput?
-      "141.142.237.0/24": *via
-      "141.142.238.0/23": *via
-      # non-routable
       "10.128.0.0/20": *via
       "10.125.0.0/20": *via
       "198.17.196.0/24": *via  # approximated
@@ -121,20 +95,10 @@ network::mroutes_hash:
       "134.79.235.226/32": *via  # SLAC IT-3892
       "134.79.235.242/32": *via  # SLAC IT-3892
   p2p2.370:
-    #table: 120
     routes:
       "139.229.140.136/31": "p2p2.370"
       "139.229.140.0/22": &via "139.229.140.136"
       "139.229.144.248/32": *via
-      "141.142.129.84/31": *via  # ncsa latency
-      "141.142.141.64/26": *via
-      "141.142.176.0/24": *via
-      "141.142.180.0/24": *via
-      "141.142.181.0/24": *via
-      "141.142.191.2/32": *via  # latency?
-      "141.142.237.0/24": *via
-      "141.142.238.0/23": *via
-      # non-routable
       "10.128.0.0/20": *via
       "10.125.0.0/20": *via
       "198.17.196.0/24": *via  # approximated

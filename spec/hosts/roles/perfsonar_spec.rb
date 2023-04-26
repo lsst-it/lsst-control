@@ -25,7 +25,7 @@ describe "#{role} role" do
           let(:site) { site }
           let(:fqdn) { facts[:fqdn] }
           let(:le_root) { "/etc/letsencrypt/live/#{fqdn}" }
-          let(:perfsonar_version) { '4.4.0' }
+          let(:perfsonar_version) { '4.4.6' }
 
           it { is_expected.to compile.with_all_deps }
 

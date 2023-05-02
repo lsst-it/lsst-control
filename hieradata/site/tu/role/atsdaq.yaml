@@ -1,5 +1,0 @@
----
-classes:
-  # XXX this should migrate up to the top level role but it is first being
-  # tested in the TTS
-  - "ccs_daq"

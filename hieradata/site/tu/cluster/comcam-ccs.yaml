@@ -11,4 +11,4 @@ ccs_monit::alert:
 clustershell::groupmembers:
   all: {group: "all", member: "comcam-dc01,comcam-fp01,comcam-mcm"}
 
-daq::daqsdk::version: "R5-V5.0"
+daq::daqsdk::version: "R5-V6.1"

@@ -47,3 +47,7 @@ nfs::client_mounts:
     share: "ccs-data"
     server: "auxtel-fp01.tu.lsst.org"
     atboot: true
+
+ccs_software::services:
+  prod:
+    - "lockmanager"

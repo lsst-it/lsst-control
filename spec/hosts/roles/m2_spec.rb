@@ -27,10 +27,11 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'common', facts: facts
+          include_examples 'x2go packages', facts: facts
+          it { is_expected.to contain_class('mate') }
           it { is_expected.to contain_class('profile::core::common') }
           it { is_expected.to contain_class('profile::core::debugutils') }
           it { is_expected.to contain_class('profile::core::ni_packages') }
-          it { is_expected.to contain_class('profile::core::x2go_agent') }
           it { is_expected.to contain_class('profile::ts::opensplicedds') }
           it { is_expected.to contain_yumrepo('lsst-ts-private') }
 

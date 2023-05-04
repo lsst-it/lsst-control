@@ -1,8 +1,9 @@
 ---
 classes:
+  - "mate"
   - "profile::core::common"
   - "profile::core::debugutils"
-  - "profile::core::x2go_agent"
+  - "profile::core::x2go"
 
 packages:
   - "catch-devel"

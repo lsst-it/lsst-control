@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-role = 'hvac'
+role = 'sal-dx'
 
 describe "#{role} role" do
   on_supported_os.each do |os, facts|

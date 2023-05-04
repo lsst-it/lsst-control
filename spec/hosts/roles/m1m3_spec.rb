@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-role = 'hvac'
+role = 'm1m3'
 
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
@@ -29,6 +29,15 @@ describe "#{role} role" do
           include_examples 'common', facts: facts
           include_examples 'x2go packages'
           it { is_expected.to contain_class('mate') }
+
+          %w[
+            catch-devel
+            yaml-cpp-devel
+          ].each do |pkg|
+            it do
+              is_expected.to contain_package(pkg)
+            end
+          end
         end # host
       end # lsst_sites
     end # on os

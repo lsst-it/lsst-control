@@ -1,12 +1,13 @@
 ---
 classes:
+  - "mate"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::docker"
   - "profile::core::docker::compose"
   - "profile::core::docker::prune"
   - "profile::core::ni_packages"
-  - "profile::core::x2go_agent"
+  - "profile::core::x2go"
   - "profile::ts::nexusctio"
 files:
   /rubin:

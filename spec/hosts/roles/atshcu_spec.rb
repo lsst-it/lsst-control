@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-role = 'hvac'
+role = 'atshcu'
 
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
@@ -28,7 +28,7 @@ describe "#{role} role" do
 
           include_examples 'common', facts: facts
           include_examples 'x2go packages'
-          it { is_expected.to contain_class('mate') }
+          it { is_expected.to contain_class('ccs_hcu') }
         end # host
       end # lsst_sites
     end # on os

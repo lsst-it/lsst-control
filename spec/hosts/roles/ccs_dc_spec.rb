@@ -28,11 +28,11 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'common', facts: facts
+          include_examples 'x2go packages'
 
           %w[
             ccs_daq
             profile::ccs::common
-            profile::ccs::graphical
             profile::core::common
             profile::core::debugutils
             profile::core::nfsclient

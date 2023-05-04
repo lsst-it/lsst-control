@@ -921,4 +921,18 @@ shared_examples 'generic perfsonar' do
   end
 end
 
+shared_examples 'x2go packages' do
+  it { is_expected.to contain_class('mate') }
+
+  %w[
+    x2goserver
+    x2goclient
+    x2goserver-common
+    x2goserver-xsession
+    x2goagent
+  ].each do |pkg|
+    it { is_expected.to contain_package(pkg) }
+  end
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

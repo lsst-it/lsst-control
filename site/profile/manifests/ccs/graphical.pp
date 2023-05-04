@@ -26,6 +26,13 @@ class profile::ccs::graphical (
     $unwanted_gnome_pkgs = [
       'gnome-initial-setup',
       'libvirt-daemon',  # rm unused virbr0[-nic] interfaces
+      'cockpit',
+      'cockpit-bridge',
+      'cockpit-storaged',
+      'cockpit-ws',
+      'cockpit-packagekit',
+      'cockpit-podman',  # does not exist on el7
+      'cockpit-system',
     ]
 
     ## Slow. Maybe better done separately?

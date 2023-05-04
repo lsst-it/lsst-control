@@ -11,6 +11,8 @@ class profile::ccs::graphical (
   Boolean $officeapps = false,
 ) {
   if $install {
+    include profile::core::x2go
+
     ensure_packages(['gdm'])
 
     service { 'gdm':
@@ -64,8 +66,6 @@ class profile::ccs::graphical (
     package { $unwanted_gnome_pkgs:
       ensure => purged,
     }
-
-    ensure_packages(['x2goclient', 'x2goserver', 'x2godesktopsharing'])
 
     ensure_packages(['icewm'])
   }

@@ -33,6 +33,7 @@ describe "#{role} role" do
               it { is_expected.to compile.with_all_deps }
 
               include_examples 'common', facts: facts
+              include_examples 'x2go packages'
             end # host
           end # lsst_sites
         end # cluster

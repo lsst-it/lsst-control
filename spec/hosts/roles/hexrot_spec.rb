@@ -27,6 +27,7 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'common', facts: facts
+          include_examples 'x2go packages'
 
           # XXX hexrot uses devicemapper, so the docker example group isn't included
           it { is_expected.to contain_class('docker') }
@@ -37,7 +38,6 @@ describe "#{role} role" do
             profile::core::docker
             profile::core::docker::prune
             profile::core::ni_packages
-            profile::core::x2go_agent
           ].each do |c|
             it { is_expected.to contain_class(c) }
           end

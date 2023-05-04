@@ -923,11 +923,12 @@ end
 
 shared_examples 'x2go packages' do
   %w[
-    x2goserver
+    x2goagent
     x2goclient
+    x2godesktopsharing
+    x2goserver
     x2goserver-common
     x2goserver-xsession
-    x2goagent
   ].each do |pkg|
     it { is_expected.to contain_package(pkg) }
   end

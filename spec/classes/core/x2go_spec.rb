@@ -8,11 +8,22 @@ describe 'profile::core::x2go' do
       let(:facts) do
         facts
       end
+      let(:pre_condition) do
+        <<~PP
+        sudo::conf { 'bogus':
+          content => '%foo ALL=(bar) NOPASSWD: ALL',
+        }
+        PP
+      end
 
       context 'with no parameters' do
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'x2go packages'
+        it do
+          is_expected.to contain_file('/etc/sudoers.d/x2goserver')
+            .that_comes_before('Sudo::Conf[bogus]')
+        end
       end
     end
   end

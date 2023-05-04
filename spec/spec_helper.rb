@@ -931,6 +931,15 @@ shared_examples 'x2go packages' do
   ].each do |pkg|
     it { is_expected.to contain_package(pkg) }
   end
+
+  it do
+    is_expected.to contain_file('/etc/sudoers.d/x2goserver').with(
+      ensure: 'file',
+      owner: 'root',
+      group: 'root',
+      mode: '0440',
+    ).that_requires('Package[x2goserver]')
+  end
 end
 
 # 'spec_overrides' from sync.yml will appear below this line

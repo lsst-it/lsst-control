@@ -4,5 +4,5 @@ classes:
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::ni_packages"
-  - "profile::core::x2go_agent"
+  - "profile::core::x2go"
   - "profile::ts::opensplicedds"

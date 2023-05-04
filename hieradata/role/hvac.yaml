@@ -2,4 +2,4 @@
 classes:
   - "mate"
   - "profile::core::common"
-  - "profile::core::x2go_agent"
+  - "profile::core::x2go"

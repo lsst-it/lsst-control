@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'profile::core::x2go_agent' do
+describe 'profile::core::x2go' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do

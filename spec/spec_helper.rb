@@ -922,8 +922,6 @@ shared_examples 'generic perfsonar' do
 end
 
 shared_examples 'x2go packages' do
-  it { is_expected.to contain_class('mate') }
-
   %w[
     x2goserver
     x2goclient

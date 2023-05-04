@@ -28,6 +28,7 @@ describe "#{role} role" do
 
           include_examples 'common', facts: facts
           include_examples 'x2go packages'
+          it { is_expected.to contain_class('mate') }
 
           # XXX hexrot uses devicemapper, so the docker example group isn't included
           it { is_expected.to contain_class('docker') }

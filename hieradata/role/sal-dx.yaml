@@ -1,5 +1,6 @@
 ---
 classes:
+  - "mate"
   - "profile::ccs::sal_dx"
   - "profile::core::common"
   - "profile::core::net_dx"

@@ -28,6 +28,7 @@ describe "#{role} role" do
 
           include_examples 'common', facts: facts
           include_examples 'x2go packages', facts: facts
+          it { is_expected.to contain_class('mate') }
           it { is_expected.to contain_class('profile::core::common') }
           it { is_expected.to contain_class('profile::core::debugutils') }
           it { is_expected.to contain_class('profile::core::ni_packages') }

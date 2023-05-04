@@ -1,5 +1,6 @@
 ---
 classes:
+  - "mate"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::docker"

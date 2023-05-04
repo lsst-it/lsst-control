@@ -2,6 +2,7 @@
 # point to otherwise isolated networks.
 ---
 classes:
+  - "mate"
   - "profile::core::common"
   - "profile::core::x2go_agent"
 packages:

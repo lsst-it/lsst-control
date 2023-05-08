@@ -47,6 +47,7 @@ ccs_software::services:
     - "mmm"
     - "cluster-monitor"
     - "localdb"
+    - "lockmanager"
     - "rest-server"
 
 nfs::client_enabled: true

@@ -1,5 +1,2 @@
 ---
-ccs_software::global_properties:
-  - "org.lsst.ccs.lockservice=remote"
-
 daq::daqsdk::version: "R5-V6.1"

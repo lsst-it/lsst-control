@@ -103,22 +103,6 @@ describe 'auxtel-mcm.ls.lsst.org', :site do
           },
         )
       end
-
-      it do
-        is_expected.to contain_nfs__client__mount('/data').with(
-          share: 'data',
-          server: 'auxtel-fp01.ls.lsst.org',
-          atboot: true,
-        )
-      end
-
-      it do
-        is_expected.to contain_nfs__client__mount('/repo').with(
-          share: 'repo',
-          server: 'auxtel-archiver.ls.lsst.org',
-          atboot: true,
-        )
-      end
     end # on os
   end # on_supported_os
 end # role

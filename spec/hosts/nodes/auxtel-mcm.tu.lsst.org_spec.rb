@@ -11,7 +11,7 @@ describe 'auxtel-mcm.tu.lsst.org', :site do
       let(:facts) { facts.merge(fqdn: 'auxtel-mcm.tu.lsst.org') }
       let(:node_params) do
         {
-          role: 'atsccs',
+          role: 'ccs-mcm',
           site: 'tu',
           cluster: 'auxtel-ccs',
         }

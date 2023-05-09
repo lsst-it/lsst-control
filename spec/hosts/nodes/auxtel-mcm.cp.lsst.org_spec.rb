@@ -13,7 +13,7 @@ describe 'auxtel-mcm.cp.lsst.org', :site do
 
       let(:node_params) do
         {
-          role: 'atsccs',
+          role: 'ccs-mcm',
           site: 'cp',
           cluster: 'auxtel-ccs',
         }

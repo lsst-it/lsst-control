@@ -1,24 +1,23 @@
 ---
-# Server configuration
 nfs::server_enabled: true
 nfs::nfs_v4_export_root_clients: >-
   %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.151.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.152.0/25(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.152.192/26(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-
+  auxtel-dc01.ls.lsst.org(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  auxtel-fp01.ls.lsst.org(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  auxtel-mcm.ls.lsst.org(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
 nfs::nfs_exports_global:
-  /data:
+  /ccs-data:
     clients: >-
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.151.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-      139.229.152.0/25(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-      139.229.152.192/26(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+      auxtel-dc01.ls.lsst.org(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      auxtel-fp01.ls.lsst.org(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      auxtel-mcm.ls.lsst.org(ro,nohide,insecure,no_subtree_check,async,root_squash)
 
 nfs::client_enabled: true
 nfs::client_mounts:
-  /net/self/data:
-    share: "data"
+  /net/self/ccs-data:
+    share: "ccs-data"
     server: "%{facts.fqdn}"
     atboot: true
 

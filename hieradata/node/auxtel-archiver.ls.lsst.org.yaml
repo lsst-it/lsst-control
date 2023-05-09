@@ -3,23 +3,21 @@ nfs::server_enabled: true
 nfs::nfs_v4_export_root_clients: >-
   %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
   139.229.151.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.152.192/26(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  auxtel-dc01.ls.lsst.org(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
 nfs::nfs_exports_global:
   /data/lsstdata:
     clients: >-
       %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.151.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-      139.229.152.192/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.151.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/repo:
     clients: >-
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.151.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-      139.229.152.192/26(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.151.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      auxtel-dc01.ls.lsst.org(ro,nohide,insecure,no_subtree_check,async,root_squash)
   /data:
     clients: >-
       %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.151.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-      139.229.152.192/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.151.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
 
 nfs::client_enabled: true
 nfs::client_mounts:
@@ -29,5 +27,9 @@ nfs::client_mounts:
     atboot: true
   /repo:
     share: "repo"
+    server: "%{facts.fqdn}"
+    atboot: true
+  /net/self/data/root:  # don't mount "data" at root of other exports
+    share: "data"
     server: "%{facts.fqdn}"
     atboot: true

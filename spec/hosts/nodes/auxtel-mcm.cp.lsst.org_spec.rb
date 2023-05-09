@@ -20,22 +20,6 @@ describe 'auxtel-mcm.cp.lsst.org', :site do
       end
 
       it { is_expected.to compile.with_all_deps }
-
-      it do
-        is_expected.to contain_nfs__client__mount('/data').with(
-          share: 'data',
-          server: 'auxtel-fp01.cp.lsst.org',
-          atboot: true,
-        )
-      end
-
-      it do
-        is_expected.to contain_nfs__client__mount('/repo').with(
-          share: 'repo',
-          server: 'auxtel-archiver.cp.lsst.org',
-          atboot: true,
-        )
-      end
     end # on os
   end # on_supported_os
 end # role

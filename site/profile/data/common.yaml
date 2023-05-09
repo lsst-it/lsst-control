@@ -173,6 +173,11 @@ profile::archive::data::auxtel::files:
     mode: "1777"
     owner: &saluser 73006
     group: *saluser
+  /data/allsky:
+    ensure: "directory"
+    mode: "0755"
+    owner: 1000  # XXX unreserved
+    group: 983  # XXX unreserved
 
 profile::archive::data::comcam::files:
   /data/repo/LSSTComCam:

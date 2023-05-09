@@ -106,6 +106,22 @@ describe 'auxtel-archiver.tu.lsst.org', :site do
           atboot: true,
         )
       end
+
+      it do
+        is_expected.to contain_nfs__client__mount('/net/self/data/root').with(
+          share: 'data',
+          server: 'auxtel-archiver.tu.lsst.org',
+          atboot: true,
+        )
+      end
+
+      it do
+        is_expected.to contain_nfs__client__mount('/net/self/data/allsky').with(
+          share: 'allsky',
+          server: 'auxtel-archiver.tu.lsst.org',
+          atboot: true,
+        )
+      end
     end # on os
   end # on_supported_os
 end # role

@@ -30,6 +30,7 @@ describe "#{role} role" do
           include_examples 'lhn sysctls'
           include_examples 'archiver'
           include_examples 'docker'
+          include_examples 'archive data auxtel'
 
           it { is_expected.to contain_file('/data/repo/LATISS') }
         end # host

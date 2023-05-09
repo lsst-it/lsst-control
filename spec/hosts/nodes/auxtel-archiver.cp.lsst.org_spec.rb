@@ -111,6 +111,22 @@ describe 'auxtel-archiver.cp.lsst.org', :site do
       end
 
       it do
+        is_expected.to contain_nfs__client__mount('/net/self/data/root').with(
+          share: 'data',
+          server: 'auxtel-archiver.cp.lsst.org',
+          atboot: true,
+        )
+      end
+
+      it do
+        is_expected.to contain_nfs__client__mount('/net/self/data/allsky').with(
+          share: 'allsky',
+          server: 'auxtel-archiver.cp.lsst.org',
+          atboot: true,
+        )
+      end
+
+      it do
         is_expected.to contain_nfs__client__mount('/net/dimm').with(
           share: 'dimm',
           server: 'nfs1.cp.lsst.org',

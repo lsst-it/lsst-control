@@ -117,6 +117,14 @@ nfs::client_mounts:
     share: "repo"
     server: "%{facts.fqdn}"
     atboot: true
+  /net/self/data/root:  # don't mount "data" at root of other exports
+    share: "data"
+    server: "%{facts.fqdn}"
+    atboot: true
+  /net/self/data/allsky:
+    share: "allsky"
+    server: "%{facts.fqdn}"
+    atboot: true
   # remote mounts
   /net/dimm:
     share: "dimm"

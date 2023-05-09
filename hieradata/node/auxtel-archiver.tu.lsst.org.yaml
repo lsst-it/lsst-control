@@ -61,11 +61,6 @@ nfs::nfs_exports_global:
       %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
       140.252.147.64/27(rw,nohide,insecure,no_subtree_check,async,root_squash)
       140.252.146.32/27(rw,nohide,insecure,no_subtree_check,async,root_squash)
-  /data/allsky:
-    clients: >-
-      %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      140.252.147.64/27(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      140.252.146.32/27(rw,nohide,insecure,no_subtree_check,async,root_squash)
 
 nfs::client_enabled: true
 nfs::client_mounts:
@@ -79,10 +74,6 @@ nfs::client_mounts:
     atboot: true
   /net/self/data/root:  # don't mount "data" at root of other exports
     share: "data"
-    server: "%{facts.fqdn}"
-    atboot: true
-  /net/self/data/allsky:
-    share: "allsky"
     server: "%{facts.fqdn}"
     atboot: true
 

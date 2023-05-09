@@ -35,6 +35,7 @@ describe "#{role} role" do
               include_examples 'common', facts: facts
               include_examples 'ccs common', facts: facts
               include_examples 'x2go packages'
+              include_examples 'debugutils'
             end # host
           end # lsst_sites
         end # cluster

@@ -2,8 +2,8 @@
 nfs::client_enabled: true
 
 nfs::client_mounts:
-  /data:
-    share: "data"
+  /ccs-data:
+    share: "ccs-data"
     server: "auxtel-fp01.ls.lsst.org"
     atboot: true
   /repo:

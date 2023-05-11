@@ -2,7 +2,6 @@
 classes:
   - "accounts"
   - "easy_ipa"
-  - "network"
   - "puppet_agent"
   - "ssh"
   - "sudo"

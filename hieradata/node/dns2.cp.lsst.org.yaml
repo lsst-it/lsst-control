@@ -1,32 +1,22 @@
 ---
-network::interfaces_hash:
-  ens192:  # fqdn
-    bootproto: "none"
-    defroute: "yes"
-    ipaddress: "139.229.160.54"
-    netmask: "255.255.255.0"
-    gateway: "139.229.160.254"
-    type: "Ethernet"
-    onboot: "yes"
-    dns1: "139.229.160.54"
-    dns2: "1.0.0.1"
-    domain: "cp.lsst.org lsst.cloud lsst.org"
-  ens32:  # CTIO backup
-    bootproto: "none"
-    defroute: "no"
-    ipaddress: "192.168.251.241"
-    netmask: "255.255.255.0"
-    gateway: "192.168.251.1"
-    dns1: "139.229.160.54"
-    dns2: "1.0.0.1"
-    onboot: "yes"
-network::mroutes_hash:
+profile::nm::connections:
   ens192:
-    routes:
-      "139.229.128.0/19": "139.229.160.254"
-      "139.229.160.0/19": "139.229.160.254"
-      "198.19.2.0/24": "139.229.160.254"
-      "198.19.100.0/24": "139.229.160.254"
-      "10.16.0.0/16": "139.229.160.254"
-      "10.17.0.0/16": "139.229.160.254"
-      "10.18.0.0/16": "139.229.160.254"
+    content: |
+      [connection]
+      id=ens192
+      uuid=21d47e65-8523-1a06-af22-6f121086f085
+      type=ethernet
+      interface-name=ens192
+
+      [ethernet]
+
+      [ipv4]
+      address1=139.229.160.54/24,139.229.160.254
+      dns=139.229.160.53;139.229.160.54;139.229.160.55;
+      dns-search=cp.lsst.org;
+      method=manual
+
+      [ipv6]
+      method=ignore
+
+      [proxy]

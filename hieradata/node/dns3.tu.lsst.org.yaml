@@ -1,5 +1,22 @@
 ---
-network::interfaces_hash:
-  "%{networking.primary}":  # fqdn
-    ipaddress: "140.252.146.73"
-    domain: "tu.lsst.org"
+profile::nm::connections:
+  ens3:
+    content: |
+      [connection]
+      id=ens3
+      uuid=21d47e65-8523-1a06-af22-6f121086f085
+      type=ethernet
+      interface-name=ens3
+
+      [ethernet]
+
+      [ipv4]
+      address1=140.252.146.73/27,140.252.146.65
+      dns=140.252.146.71;140.252.146.72;140.252.146.73;
+      dns-search=tu.lsst.org;
+      method=manual
+
+      [ipv6]
+      method=ignore
+
+      [proxy]

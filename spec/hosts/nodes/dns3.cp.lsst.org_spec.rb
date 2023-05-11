@@ -4,22 +4,10 @@ require 'spec_helper'
 
 describe 'dns3.cp.lsst.org', :site do
   on_supported_os.each do |os, facts|
+    next if os =~ %r{centos-7-x86_64}
+
     context "on #{os}" do
-      let(:primary) do
-        if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
-          'eth0'
-        else
-          'ens192'
-        end
-      end
-
-      let(:facts) do
-        facts[:networking]['primary'] = primary
-        facts.merge(
-          fqdn: 'dns3.cp.lsst.org',
-        )
-      end
-
+      let(:facts) { facts.merge(fqdn: 'dns3.cp.lsst.org') }
       let(:node_params) do
         {
           role: 'dnscache',
@@ -29,12 +17,19 @@ describe 'dns3.cp.lsst.org', :site do
 
       it { is_expected.to compile.with_all_deps }
 
-      it do
-        is_expected.to contain_network__interface(primary).with(
-          ipaddress: '139.229.160.55',
-          gateway: '139.229.160.254',
-          netmask: '255.255.255.0',
-        )
+      include_context 'with nm interface'
+      it { is_expected.to have_network__interface_resource_count(0) }
+      it { is_expected.to have_profile__nm__connection_resource_count(1) }
+
+      context 'with ens3' do
+        let(:interface) { 'ens3' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.160.55/24,139.229.160.254') }
+        it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.160.53;139.229.160.54;139.229.160.55;') }
+        it { expect(nm_keyfile['ipv4']['dns-search']).to eq('cp.lsst.org;') }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
       end
     end # on os
   end # on_supported_os

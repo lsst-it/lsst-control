@@ -12,8 +12,8 @@ hierarchy:
     datadir: "../../hieradata"
     paths:
       - "node/%{fqdn}.yaml"
-      - "site/%{site}/cluster/%{cluster}/site/%{site}/variant/%{variant}/subvariant/%{subvariant}/%{os.family}/major/%{os.release.major}.yaml"
-      - "site/%{site}/cluster/%{cluster}/site/%{site}/variant/%{variant}/subvariant/%{subvariant}.yaml"
+      - "site/%{site}/cluster/%{cluster}/variant/%{variant}/subvariant/%{subvariant}/%{os.family}/major/%{os.release.major}.yaml"
+      - "site/%{site}/cluster/%{cluster}/variant/%{variant}/subvariant/%{subvariant}.yaml"
       - "site/%{site}/cluster/%{cluster}/variant/%{variant}/%{os.family}/major/%{os.release.major}.yaml"
       - "site/%{site}/cluster/%{cluster}/variant/%{variant}.yaml"
       - "site/%{site}/cluster/%{cluster}/role/%{role}.yaml"

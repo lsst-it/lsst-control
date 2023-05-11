@@ -23,6 +23,7 @@ to `role` layers.
 | site/%{site}/cluster/%{cluster}/variant/%{variant}/subvariant/%{subvariant}.yaml                                        | no                      |
 | site/%{site}/cluster/%{cluster}/variant/%{variant}/%{os.family}/major/%{os.release.major}.yaml                          | no                      |
 | site/%{site}/cluster/%{cluster}/variant/%{variant}.yaml                                                                 | no                      |
+| site/%{site}/cluster/%{cluster}/role/%{role}/osfamily/%{os.family}/major/%{os.release.major}.yaml                       | yes                     |
 | site/%{site}/cluster/%{cluster}/role/%{role}.yaml                                                                       | yes                     |
 | site/%{site}/cluster/%{cluster}.yaml                                                                                    | no                      |
 | cluster/%{cluster}/variant/%{variant}/subvariant/%{subvariant}/%{os.family}/major/%{os.release.major}.yaml              | no                      |

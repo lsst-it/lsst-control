@@ -16,9 +16,9 @@ hierarchy:
       - "site/%{site}/cluster/%{cluster}/variant/%{variant}/subvariant/%{subvariant}.yaml"
       - "site/%{site}/cluster/%{cluster}/variant/%{variant}/%{os.family}/major/%{os.release.major}.yaml"
       - "site/%{site}/cluster/%{cluster}/variant/%{variant}.yaml"
+      - "site/%{site}/cluster/%{cluster}/role/%{role}/osfamily/%{os.family}/major/%{os.release.major}.yaml"
       - "site/%{site}/cluster/%{cluster}/role/%{role}.yaml"
       - "site/%{site}/cluster/%{cluster}.yaml"
-
       - "cluster/%{cluster}/site/%{site}/variant/%{variant}/subvariant/%{subvariant}/%{os.family}/major/%{os.release.major}.yaml"
       - "cluster/%{cluster}/site/%{site}/variant/%{variant}/subvariant/%{subvariant}.yaml"
       - "cluster/%{cluster}/variant/%{variant}/%{os.family}/major/%{os.release.major}.yaml"

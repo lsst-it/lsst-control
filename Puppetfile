@@ -102,7 +102,6 @@ mod 'saz/sudo', '7.0.2'
 mod 'saz/timezone', '6.2.0'
 mod 'simp/auditd', git: 'https://github.com/lsst-it/pupmod-simp-auditd', ref: '72666e8'  # https://github.com/simp/pupmod-simp-auditd/pull/160 https://github.com/simp/pupmod-simp-auditd/pull/161 https://github.com/simp/pupmod-simp-auditd/pull/164 https://github.com/simp/pupmod-simp-auditd/pull/165 https://github.com/simp/pupmod-simp-auditd/pull/176
 mod 'simp/dconf', git: 'https://github.com/lsst-it/pupmod-simp-dconf', ref: 'c196d2c'  # https://github.com/simp/pupmod-simp-dconf/pull/45
-mod 'simp/gnome', '9.1.0'
 mod 'simp/mate', '1.3.0'
 mod 'simp/polkit', '6.4.0'
 mod 'simp/simplib', '4.10.2'

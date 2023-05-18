@@ -195,7 +195,6 @@ profile::archive::common::packages:
   - "cmake"
   - "gcc-c++"
   - "git"
-  - "docker-compose-plugin"
 
 profile::archive::common::group_list:
   # this is duplicating the ipa gid as a local group

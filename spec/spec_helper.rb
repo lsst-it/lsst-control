@@ -464,6 +464,15 @@ shared_examples 'docker' do
 
   it { is_expected.to contain_class('docker::networks') }
 
+  # the puppet resource to install the `docker-ce` package is named `docker`
+  %w[
+    docker
+    docker-ce-cli
+    docker-compose-plugin
+  ].each do |pkg|
+    it { is_expected.to contain_package(pkg) }
+  end
+
   %w[
     docker-ce
     docker-ce-cli
@@ -481,6 +490,12 @@ shared_examples 'docker' do
   it do
     is_expected.to contain_yum__versionlock('docker-scan-plugin').with(
       version: '0.23.0',
+    )
+  end
+
+  it do
+    is_expected.to contain_yum__versionlock('docker-compose-plugin').with(
+      version: '2.17.3',
     )
   end
 end

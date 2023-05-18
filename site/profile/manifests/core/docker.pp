@@ -104,4 +104,6 @@ class profile::core::docker (
     # lint:endignore
     notify  => Service['docker'],
   }
+
+  ensure_packages(['docker-compose-plugin'])
 }

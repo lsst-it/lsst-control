@@ -1,6 +1,7 @@
 forge 'https://forgeapi.puppetlabs.com'
 
 mod 'bodgit/bodgitlib', '3.0.3'
+mod 'bodgit/dbus', git: 'https://github.com/lsst-it/puppet-dbus', branch: '452cbad'  # https://github.com/bodgit/puppet-dbus/pull/20
 mod 'bodgit/sssd', git: 'https://github.com/lsst-it/puppet-sssd.git', branch: '8654b3c'  # https://github.com/bodgit/puppet-sssd/pull/35
 mod 'camptocamp/augeas', '1.9.0'
 mod 'ccin2p3/etc_services', '2.0.3'

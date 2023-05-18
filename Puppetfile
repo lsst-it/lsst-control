@@ -104,7 +104,7 @@ mod 'simp/auditd', git: 'https://github.com/lsst-it/pupmod-simp-auditd', ref: '7
 mod 'simp/dconf', git: 'https://github.com/lsst-it/pupmod-simp-dconf', ref: 'c196d2c'  # https://github.com/simp/pupmod-simp-dconf/pull/45
 mod 'simp/mate', git: 'https://github.com/lsst-it/pupmod-simp-mate', ref: 'f692a64'  # https://github.com/simp/pupmod-simp-mate/pull/40
 mod 'simp/polkit', git: 'https://github.com/lsst-it/pupmod-simp-polkit', ref: '4f769e6'  # https://github.com/simp/pupmod-simp-polkit/pull/62
-mod 'simp/simplib', '4.10.2'
+mod 'simp/simplib', git: 'https://github.com/lsst-it/pupmod-simp-simplib', ref: 'de5ec9f'  # https://github.com/simp/pupmod-simp-simplib/pull/284
 mod 'stm/debconf', '4.1.0'
 mod 'theforeman/dhcp', '8.2.0'
 mod 'theforeman/dns', '9.2.0'

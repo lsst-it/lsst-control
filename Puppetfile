@@ -100,7 +100,7 @@ mod 'saz/resolv_conf', git: 'https://github.com/saz/puppet-resolv_conf', ref: 'c
 mod 'saz/ssh', git: 'https://github.com/lsst-it/saz-puppet-ssh', ref: '6fad31a'  # https://github.com/saz/puppet-ssh/pull/344
 mod 'saz/sudo', '7.0.2'
 mod 'saz/timezone', '6.2.0'
-mod 'simp/auditd', git: 'https://github.com/lsst-it/pupmod-simp-auditd', ref: '022b80c'  # https://github.com/simp/pupmod-simp-auditd/pull/160 https://github.com/simp/pupmod-simp-auditd/pull/161 https://github.com/simp/pupmod-simp-auditd/pull/164 https://github.com/simp/pupmod-simp-auditd/pull/165
+mod 'simp/auditd', git: 'https://github.com/lsst-it/pupmod-simp-auditd', ref: '72666e8'  # https://github.com/simp/pupmod-simp-auditd/pull/160 https://github.com/simp/pupmod-simp-auditd/pull/161 https://github.com/simp/pupmod-simp-auditd/pull/164 https://github.com/simp/pupmod-simp-auditd/pull/165 https://github.com/simp/pupmod-simp-auditd/pull/176
 mod 'simp/dconf', '0.2.2'
 mod 'simp/gnome', '9.1.0'
 mod 'simp/mate', '1.3.0'

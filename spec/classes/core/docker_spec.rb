@@ -32,7 +32,6 @@ describe 'profile::core::docker' do
               # fix for ceph mons crashing
               # See: https://github.com/rook/rook/issues/10110#issuecomment-1464898937
               [Service]
-              [Service]
               LimitNOFILE=1048576
               LimitNPROC=1048576
               LimitCORE=1048576

@@ -6,13 +6,10 @@ role = 'dnscache'
 
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
-    context "on #{os}" do
-      let(:facts) do
-        facts.merge(
-          fqdn: self.class.description,
-        )
-      end
+    next if os =~ %r{centos-7-x86_64}
 
+    context "on #{os}" do
+      let(:facts) { facts.merge(fqdn: self.class.description) }
       let(:node_params) do
         {
           role: role,
@@ -26,9 +23,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', facts: facts, network: false
-
-          it { is_expected.to contain_class('network') }
+          include_examples 'common', facts: facts
 
           it do
             is_expected.to contain_class('dns').with(

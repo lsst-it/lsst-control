@@ -1,7 +1,6 @@
 ---
 classes:
   - "dns"
-  - "network"  # XXX transition to NM; no other EL8 hosts should use initscripts
   - "profile::core::common"
 dns::forward: "only"
 dns::listen_on_v6: false

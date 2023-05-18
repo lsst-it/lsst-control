@@ -3,10 +3,9 @@
 require 'spec_helper'
 
 describe 'konkong01.ls.lsst.org', :site do
-  alma8 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '8' }).first
-  # rubocop:disable Naming/VariableNumber
-  { 'almalinux-8-x86_64': alma8 }.each do |os, facts|
-    # rubocop:enable Naming/VariableNumber
+  on_supported_os.each do |os, facts|
+    next if os =~ %r{centos-7-x86_64}
+
     context "on #{os}" do
       let(:facts) { override_facts(facts, fqdn: 'konkong01.ls.lsst.org') }
       let(:node_params) do

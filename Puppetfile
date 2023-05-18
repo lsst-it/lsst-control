@@ -96,7 +96,7 @@ mod 'puppet/telegraf', '4.3.1'  # requires toml-rb installed on master
 mod 'puppet/yum', '6.1.0'
 mod 'qtechnologies/sysstat', '1.2.4'
 mod 'richardc/datacat', '0.6.2'
-mod 'saz/resolv_conf', '5.0.0'
+mod 'saz/resolv_conf', git: 'https://github.com/saz/puppet-resolv_conf', ref: 'c22ad80'  # https://github.com/saz/puppet-resolv_conf/issues/71
 mod 'saz/ssh', git: 'https://github.com/lsst-it/saz-puppet-ssh', ref: '6fad31a'  # https://github.com/saz/puppet-ssh/pull/344
 mod 'saz/sudo', '7.0.2'
 mod 'saz/timezone', '6.2.0'

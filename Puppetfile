@@ -1,6 +1,7 @@
 forge 'https://forgeapi.puppetlabs.com'
 
 mod 'bodgit/bodgitlib', '3.0.3'
+mod 'bodgit/dbus', git: 'https://github.com/lsst-it/puppet-dbus', branch: '452cbad'  # https://github.com/bodgit/puppet-dbus/pull/20
 mod 'bodgit/sssd', git: 'https://github.com/lsst-it/puppet-sssd.git', branch: '8654b3c'  # https://github.com/bodgit/puppet-sssd/pull/35
 mod 'camptocamp/augeas', '1.9.0'
 mod 'ccin2p3/etc_services', '2.0.3'
@@ -16,7 +17,7 @@ mod 'icinga/icinga', '2.8.0'
 mod 'icinga/icingaweb2', '3.7.2'
 mod 'jamtur01/httpauth', '0.0.6'
 mod 'jcpunk/irqbalance', '1.0.3'
-mod 'jhoblitt/ipmi', '3.1.0'
+mod 'jhoblitt/ipmi', '5.0.0'
 mod 'lsst/ccs_daq', '0.5.0'
 mod 'lsst/ccs_database', '2.2.0'
 mod 'lsst/ccs_hcu', '2.3.0'
@@ -72,7 +73,7 @@ mod 'puppetlabs/puppetserver_gem', '1.1.1'
 mod 'puppetlabs/reboot', '4.1.0'
 mod 'puppetlabs/selinux_core', '1.2.0'
 mod 'puppetlabs/sshkeys_core', '2.3.0'
-mod 'puppetlabs/stdlib', '7.1.0'
+mod 'puppetlabs/stdlib', '8.6.0'
 mod 'puppetlabs/tomcat', '6.2.0'
 mod 'puppetlabs/vcsrepo', '5.3.0'
 mod 'puppetlabs/xinetd', '3.3.0'
@@ -96,16 +97,16 @@ mod 'puppet/telegraf', '4.3.1'  # requires toml-rb installed on master
 mod 'puppet/yum', '6.1.0'
 mod 'qtechnologies/sysstat', '1.2.4'
 mod 'richardc/datacat', '0.6.2'
-mod 'saz/resolv_conf', '5.0.0'
+mod 'saz/resolv_conf', git: 'https://github.com/saz/puppet-resolv_conf', ref: 'c22ad80'  # https://github.com/saz/puppet-resolv_conf/issues/71
 mod 'saz/ssh', git: 'https://github.com/lsst-it/saz-puppet-ssh', ref: '6fad31a'  # https://github.com/saz/puppet-ssh/pull/344
 mod 'saz/sudo', '7.0.2'
 mod 'saz/timezone', '6.2.0'
-mod 'simp/auditd', git: 'https://github.com/lsst-it/pupmod-simp-auditd', ref: '022b80c'  # https://github.com/simp/pupmod-simp-auditd/pull/160 https://github.com/simp/pupmod-simp-auditd/pull/161 https://github.com/simp/pupmod-simp-auditd/pull/164 https://github.com/simp/pupmod-simp-auditd/pull/165
-mod 'simp/dconf', '0.2.2'
-mod 'simp/gnome', '9.1.0'
-mod 'simp/mate', '1.3.0'
-mod 'simp/polkit', '6.4.0'
-mod 'simp/simplib', '4.10.2'
+mod 'simp/auditd', git: 'https://github.com/lsst-it/pupmod-simp-auditd', ref: '72666e8'  # https://github.com/simp/pupmod-simp-auditd/pull/160 https://github.com/simp/pupmod-simp-auditd/pull/161 https://github.com/simp/pupmod-simp-auditd/pull/164 https://github.com/simp/pupmod-simp-auditd/pull/165 https://github.com/simp/pupmod-simp-auditd/pull/176
+mod 'simp/dconf', git: 'https://github.com/lsst-it/pupmod-simp-dconf', ref: 'c196d2c'  # https://github.com/simp/pupmod-simp-dconf/pull/45
+mod 'simp/mate', git: 'https://github.com/lsst-it/pupmod-simp-mate', ref: 'f692a64'  # https://github.com/simp/pupmod-simp-mate/pull/40
+mod 'simp/polkit', git: 'https://github.com/lsst-it/pupmod-simp-polkit', ref: '4f769e6'  # https://github.com/simp/pupmod-simp-polkit/pull/62
+mod 'simp/simpkv', git: 'https://github.com/lsst-it/pupmod-simp-simpkv', ref: '71ae5b7'  # https://github.com/simp/pupmod-simp-simpkv/pull/72
+mod 'simp/simplib', git: 'https://github.com/lsst-it/pupmod-simp-simplib', ref: 'de5ec9f'  # https://github.com/simp/pupmod-simp-simplib/pull/284
 mod 'stm/debconf', '4.1.0'
 mod 'theforeman/dhcp', '8.2.0'
 mod 'theforeman/dns', '9.2.0'

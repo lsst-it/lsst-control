@@ -1,4 +1,6 @@
 ---
+docker::log_driver: ~
+docker::log_opt: ~
 easy_ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
 # sssd ipa client setup -- do not use on ipa servers
 sssd::domains:

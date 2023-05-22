@@ -9,12 +9,15 @@
 #   String specifying username for pkgurl
 # @param pkgurl_pass
 #   String specifying password for pkgurl
+# @param packages
+#   Optional list of packages to install.
 #
 class profile::ccs::common (
   Boolean $sysctls = true,
   String $pkgurl = 'https://example.org',
   String $pkgurl_user = 'someuser',
   String $pkgurl_pass = 'somepass',
+  Optional[Array[String[1]]] $packages = undef,
 ) {
   include clustershell
   include profile::ccs::cfs
@@ -40,5 +43,9 @@ class profile::ccs::common (
     options => {
       'AuthorizedKeysFile' => '.ssh/authorized_keys',
     },
+  }
+
+  if $packages {
+    ensure_packages($packages)
   }
 }

@@ -27,6 +27,7 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'common', facts: facts
+          include_examples 'ccs common', facts: facts
           include_examples 'x2go packages'
           it { is_expected.to contain_class('ccs_hcu') }
         end # host

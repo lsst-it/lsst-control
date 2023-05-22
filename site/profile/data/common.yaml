@@ -31,7 +31,8 @@ profile::core::debugutils::packages:
 profile::ccs::postfix::packages:
   # required for postfix sasl auth
   - "cyrus-sasl-plain"
-
+profile::ccs::common::packages:
+  - "time"
 profile::ts::nexusctio::repos:
   "nexus-ctio":
     ensure: "present"

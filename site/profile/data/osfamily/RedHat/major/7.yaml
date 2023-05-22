@@ -7,13 +7,13 @@ profile::core::docker::versionlock:
   containerd.io:
     # puppetlabs/docker only specifies a package resource for containerd.io for uninstall
     ensure: "present"
-    version: "1.6.10"
+    version: "1.6.21"
     release: "3.1.el7"
   docker-ce:
     ensure: "present"
     epoch: 3
     version: "%{lookup('profile::core::docker::version')}"
-    release: &docker_release "3.el7"
+    release: &docker_release "1.el7"
     # the puppet package resource name is `docker` with a seperate name param of `docker-ce`
     before: "Package[docker]"
   docker-ce-cli:
@@ -28,5 +28,9 @@ profile::core::docker::versionlock:
     release: *docker_release
   docker-scan-plugin:
     ensure: "present"
-    version: "0.21.0"
+    version: "0.23.0"
+    release: *docker_release
+  docker-compose-plugin:
+    ensure: "present"
+    version: "2.17.3"
     release: *docker_release

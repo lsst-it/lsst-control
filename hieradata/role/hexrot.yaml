@@ -4,7 +4,6 @@ classes:
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::docker"
-  - "profile::core::docker::compose"
   - "profile::core::docker::prune"
   - "profile::core::ni_packages"
   - "profile::core::x2go"

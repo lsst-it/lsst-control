@@ -109,7 +109,7 @@ profile::core::yum::lsst_ts_private::repos:
     gpgcheck: false
     target: "/etc/yum.repos.d/lsst-ts-private.repo"
 
-profile::core::docker::version: "20.10.21"
+profile::core::docker::version: "23.0.6"
 
 profile::core::sysctl::lhn::sysctls:
   # lhn tuning
@@ -195,7 +195,6 @@ profile::archive::common::packages:
   - "cmake"
   - "gcc-c++"
   - "git"
-  - "docker-compose-plugin"
 
 profile::archive::common::group_list:
   # this is duplicating the ipa gid as a local group

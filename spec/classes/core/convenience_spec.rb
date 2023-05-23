@@ -11,5 +11,8 @@ describe 'profile::core::convenience' do
 
       include_examples 'convenience'
     end
+
+    it { is_expected.to contain_package('screen') }
+    it { is_expected.to contain_package('jq') }
   end
 end

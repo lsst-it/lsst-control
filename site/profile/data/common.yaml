@@ -2,7 +2,9 @@
 profile::core::convenience::packages:
   - "ack"
   - "git"
+  - "jq"
   - "neovim"
+  - "screen"
   - "tree"
   - "vim"
 profile::core::debugutils::packages:

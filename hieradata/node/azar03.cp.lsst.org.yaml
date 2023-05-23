@@ -7,36 +7,87 @@ docker::networks::networks:
     gateway: "139.229.178.254"
     options: ["parent=dds"]
 
-network::interfaces_hash:
-  enp1s0f0:  # vlan1600|139.229.178.0/24
-    bootproto: "none"
-    bridge: "dds"
-    defroute: "no"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  enp1s0f1:  # vlan1601|139.229.169.0/24
-    bootproto: "none"
-    bridge: "startracker"
-    defroute: "no"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-    mtu: "9000"
-  dds:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "bridge"
-  startracker:
-    bootproto: "none"
-    defroute: "no"
-    onboot: "yes"
-    type: "bridge"
-    ipaddress: "139.229.169.1"
-    netmask: "255.255.255.0"
-    mtu: "9000"
+profile::nm::connections:
+  enp1s0f0:
+    content: |
+      [connection]
+      id=enp1s0f0
+      uuid=b625586a-b82c-b82f-f16c-e1bf600c7751
+      type=ethernet
+      interface-name=enp1s0f0
+      master=dds
+      slave-type=bridge
 
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  enp1s0f1:
+    content: |
+      [connection]
+      id=enp1s0f1
+      uuid=c133f197-d25e-a27d-acd8-cf2eda286822
+      type=ethernet
+      interface-name=enp1s0f1
+      master=startracker
+      slave-type=bridge
+
+      [ethernet]
+      mtu=9000
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  dds:
+    content: |
+      [connection]
+      id=dds
+      uuid=dbeb774e-d2ad-fcc5-a8b2-18b5f1b6f881
+      type=bridge
+      interface-name=dds
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=auto
+
+      [ipv6]
+      method=disabled
+
+      [proxy]
+  startracker:
+    content: |
+      [connection]
+      id=startracker
+      uuid=083cd29d-899a-be86-9e8e-f3250696839a
+      type=bridge
+      interface-name=startracker
+
+      [ethernet]
+      mtu=9000
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      address1=139.229.169.1/24,139.229.169.254
+      dns=139.229.160.53;139.229.160.54;139.229.160.55;
+      dns-search=cp.lsst.org;
+      never-default=true
+      method=manual
+
+      [ipv6]
+      method=disabled
+
+      [proxy]
 # These NFS mounts are suppose to be temporary until Rubin TV switches to
 # pulling data from S3/LFA.
 nfs::client_enabled: true

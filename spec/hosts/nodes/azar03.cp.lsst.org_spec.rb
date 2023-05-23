@@ -2,17 +2,12 @@
 
 require 'spec_helper'
 
-#
-# note that this hosts has interfaces with an mtu of 9000
-#
 describe 'azar03.cp.lsst.org', :site do
   on_supported_os.each do |os, facts|
+    next if os =~ %r{centos-7-x86_64}
+
     context "on #{os}" do
-      let(:facts) do
-        facts.merge(
-          fqdn: 'azar03.cp.lsst.org',
-        )
-      end
+      let(:facts) { facts.merge(fqdn: 'azar03.cp.lsst.org') }
 
       let(:node_params) do
         {
@@ -23,64 +18,59 @@ describe 'azar03.cp.lsst.org', :site do
 
       it { is_expected.to compile.with_all_deps }
 
-      if facts[:os]['release']['major'] == '7'
-        it do
-          is_expected.to contain_class('docker::networks').with(
-            'networks' => {
-              'dds-network' => {
-                'ensure' => 'present',
-                'driver' => 'macvlan',
-                'subnet' => '139.229.178.0/24',
-                'gateway' => '139.229.178.254',
-                'options' => ['parent=dds'],
-              },
+      it do
+        is_expected.to contain_class('docker::networks').with(
+          'networks' => {
+            'dds-network' => {
+              'ensure' => 'present',
+              'driver' => 'macvlan',
+              'subnet' => '139.229.178.0/24',
+              'gateway' => '139.229.178.254',
+              'options' => ['parent=dds'],
             },
-          )
-        end
+          },
+        )
+      end
 
-        it do
-          is_expected.to contain_network__interface('enp1s0f0').with(
-            bootproto: 'none',
-            bridge: 'dds',
-            defroute: 'no',
-            nozeroconf: 'yes',
-            onboot: 'yes',
-            type: 'Ethernet',
-          )
-        end
+      include_context 'with nm interface'
+      it { is_expected.to have_network__interface_resource_count(0) }
+      it { is_expected.to have_profile__nm__connection_resource_count(4) }
 
-        it do
-          is_expected.to contain_network__interface('enp1s0f1').with(
-            bootproto: 'none',
-            bridge: 'startracker',
-            defroute: 'no',
-            nozeroconf: 'yes',
-            onboot: 'yes',
-            type: 'Ethernet',
-            mtu: '9000',
-          )
-        end
+      context 'with enp1s0f0' do
+        let(:interface) { 'enp1s0f0' }
 
-        it do
-          is_expected.to contain_network__interface('dds').with(
-            bootproto: 'dhcp',
-            defroute: 'yes',
-            onboot: 'yes',
-            type: 'bridge',
-          )
-        end
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
+      end
 
-        it do
-          is_expected.to contain_network__interface('startracker').with(
-            bootproto: 'none',
-            defroute: 'no',
-            onboot: 'yes',
-            type: 'bridge',
-            ipaddress: '139.229.169.1',
-            netmask: '255.255.255.0',
-            mtu: '9000',
-          )
-        end
+      context 'with enp1s0f1' do
+        let(:interface) { 'enp1s0f1' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['ethernet']['mtu']).to eq(9000) }
+      end
+
+      context 'with dds' do
+        let(:interface) { 'dds' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm bridge interface'
+      end
+
+      context 'with startracker' do
+        let(:interface) { 'startracker' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm bridge interface'
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.169.1/24,139.229.169.254') }
+        it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.160.53;139.229.160.54;139.229.160.55;') }
+        it { expect(nm_keyfile['ipv4']['dns-search']).to eq('cp.lsst.org;') }
+        it { expect(nm_keyfile['ipv4']['never-default']).to be(true) }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
+        it { expect(nm_keyfile['ethernet']['mtu']).to eq(9000) }
       end
 
       it do

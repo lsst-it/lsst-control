@@ -973,4 +973,8 @@ shared_examples 'archive data auxtel' do
   end
 end
 
+shared_examples 'ccs common' do
+  it { is_expected.to contain_package('time') }
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

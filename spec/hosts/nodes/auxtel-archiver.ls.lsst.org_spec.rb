@@ -73,6 +73,13 @@ describe 'auxtel-archiver.ls.lsst.org', :sitepp do
           atboot: true,
         )
       end
+
+      it do
+        is_expected.to contain_k5login('/home/saluser/.k5login').with(
+          ensure: 'present',
+          principals: ['ccs-ipa/auxtel-fp01.ls.lsst.org@LSST.CLOUD'],
+        )
+      end
     end # on os
   end # on_supported_os
 end # role

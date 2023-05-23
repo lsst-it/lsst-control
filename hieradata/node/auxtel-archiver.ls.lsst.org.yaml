@@ -33,3 +33,9 @@ nfs::client_mounts:
     share: "data"
     server: "%{facts.fqdn}"
     atboot: true
+
+profile::core::k5login::k5login:
+  "/home/saluser/.k5login":
+    ensure: "present"
+    principals:
+      - "ccs-ipa/auxtel-fp01.ls.lsst.org@LSST.CLOUD"

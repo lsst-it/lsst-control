@@ -81,5 +81,4 @@ profile::core::k5login::k5login:
   "/home/saluser/.k5login":
     ensure: "present"
     principals:
-      - "iip/forwarders.tu.lsst.org@LSST.CLOUD"
       - "ccs-ipa/auxtel-fp01.tu.lsst.org@LSST.CLOUD"

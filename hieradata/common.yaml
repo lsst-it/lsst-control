@@ -225,7 +225,11 @@ accounts::user_list:
     <<: *rm_user
   hreinking_b:
     <<: *rm_user
-
+docker::log_driver: "json-file"
+docker::log_opt:
+  - "max-file=2"
+  - "max-size=50m"
+  - "mode=non-blocking"
 tuned::profile: "latency-performance"
 selinux::mode: "disabled"
 # Stop iptables by default - the default rules are highly restrictive to the

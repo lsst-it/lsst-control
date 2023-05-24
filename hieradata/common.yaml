@@ -345,9 +345,7 @@ sssd::domains:
 sssd::services:
   nss:
     homedir_substring: "/home"
-  pam:
-    pam_response_filter:
-      - "ENV:KRB5CCNAME:sudo-i"
+  pam: {}
   ssh: {}
   sudo: {}
 sssd::package_name:

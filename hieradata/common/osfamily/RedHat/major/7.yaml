@@ -35,6 +35,14 @@ scl::repos:
     ensure: "present"
     gpgcheck: true
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo"
+sssd::services:
+  nss:
+    homedir_substring: "/home"
+  pam:
+    pam_response_filter:
+      - "ENV:KRB5CCNAME:sudo-i"
+  ssh: {}
+  sudo: {}
 yum::managed_repos:
   - "extras"
 yum::repos:

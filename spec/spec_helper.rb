@@ -154,6 +154,36 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
   unless no_auth
     include_examples 'krb5.conf content', %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}}
     include_examples 'krb5.conf content', %r{udp_preference_limit = 0}
+
+    if facts[:os]['release']['major'] == '7'
+      it do
+        is_expected.to contain_class('sssd').with(
+          services: {
+            'nss' => {
+              'homedir_substring' => '/home',
+            },
+            'pam' => {
+              'pam_response_filter' => ['ENV:KRB5CCNAME:sudo-i'],
+            },
+            'ssh' => {},
+            'sudo' => {},
+          },
+        )
+      end
+    else
+      it do
+        is_expected.to contain_class('sssd').with(
+          services: {
+            'nss' => {
+              'homedir_substring' => '/home',
+            },
+            'pam' => {},
+            'ssh' => {},
+            'sudo' => {},
+          },
+        )
+      end
+    end
   end
 
   if facts[:os]['family'] == 'RedHat'

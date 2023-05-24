@@ -7,12 +7,7 @@ role = 'nfsserver'
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts.merge(
-          fqdn: fqdn,
-        )
-      end
-
+      let(:facts) { facts }
       let(:node_params) do
         {
           role: role,
@@ -22,7 +17,8 @@ describe "#{role} role" do
 
       describe 'nfsserver.cp.lsst.org', :site do
         let(:site) { 'cp' }
-        let(:fqdn) { 'nfsserver.cp.lsst.org' }
+
+        facts.merge!(fqdn: 'nfsserver.cp.lsst.org')
 
         it { is_expected.to compile.with_all_deps }
 
@@ -64,7 +60,7 @@ describe "#{role} role" do
         it do
           is_expected.to contain_nfs__client__mount('/net/self/data/project').with(
             share: 'project',
-            server: fqdn,
+            server: facts[:fqdn],
             atboot: true,
           )
         end
@@ -72,7 +68,7 @@ describe "#{role} role" do
         it do
           is_expected.to contain_nfs__client__mount('/net/self/data/scratch').with(
             share: 'scratch',
-            server: fqdn,
+            server: facts[:fqdn],
             atboot: true,
           )
         end

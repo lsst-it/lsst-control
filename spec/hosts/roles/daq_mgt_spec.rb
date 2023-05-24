@@ -50,12 +50,7 @@ describe "#{role} role" do
     next unless os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do
-      let(:facts) do
-        facts.merge(
-          fqdn: self.class.description,
-        )
-      end
-
+      let(:facts) { facts }
       let(:node_params) do
         {
           role: role,

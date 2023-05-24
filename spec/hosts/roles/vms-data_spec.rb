@@ -7,12 +7,7 @@ role = 'vms-data'
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts.merge(
-          fqdn: self.class.description,
-        )
-      end
-
+      let(:facts) { facts }
       let(:node_params) do
         {
           role: role,
@@ -21,8 +16,13 @@ describe "#{role} role" do
       end
 
       lsst_sites.each do |site|
-        describe "#{role}.#{site}.lsst.org", :site do
+        fqdn = "#{role}.#{site}.lsst.org"
+        override_facts(facts, fqdn: fqdn, networking: { fqdn => fqdn })
+
+        describe fqdn, :site do
           let(:site) { site }
+
+          it { is_expected.to compile.with_all_deps }
 
           include_examples 'docker'
 
@@ -30,7 +30,6 @@ describe "#{role} role" do
           it { is_expected.to contain_class('profile::core::docker') }
           it { is_expected.to contain_class('profile::core::nfsclient') }
           it { is_expected.to contain_class('profile::core::nfsserver') }
-          it { is_expected.to compile.with_all_deps }
         end # host
       end # lsst_sites
     end # on os

@@ -7,11 +7,7 @@ role = 'foreman'
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts.merge(
-          fqdn: self.class.description,
-        )
-      end
+      let(:facts) { facts }
       let(:node_params) do
         {
           role: role,
@@ -21,6 +17,7 @@ describe "#{role} role" do
       let(:smee_url) { 'https://smee.io/lpxrggGObEn5YTA' }
 
       describe 'foreman.dev.lsst.org', :site do
+        facts.merge!(fqdn: 'foreman.dev.lsst.org')
         let(:site) { 'dev' }
         let(:ntpservers) do
           %w[
@@ -59,6 +56,7 @@ describe "#{role} role" do
       end # host
 
       describe 'foreman.tuc.lsst.cloud', :site do
+        facts.merge!(fqdn: 'foreman.tuc.lsst.cloud')
         let(:site) { 'tu' }
         let(:ntpservers) do
           %w[
@@ -189,6 +187,7 @@ describe "#{role} role" do
       end # host
 
       describe 'foreman.ls.lsst.org', :site do
+        facts.merge!(fqdn: 'foreman.ls.lsst.org')
         let(:site) { 'ls' }
         let(:ntpservers) do
           %w[
@@ -433,6 +432,7 @@ describe "#{role} role" do
       end # host
 
       describe 'foreman.cp.lsst.org', :site do
+        facts.merge!(fqdn: 'foreman.cp.lsst.org')
         let(:site) { 'cp' }
         let(:ntpservers) do
           %w[

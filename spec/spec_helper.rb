@@ -899,7 +899,7 @@ end
 
 shared_examples 'generic perfsonar' do
   it do
-    is_expected.to contain_letsencrypt__certonly(fqdn).with(
+    is_expected.to contain_letsencrypt__certonly(facts[:networking]['fqdn']).with(
       plugin: 'dns-route53',
       manage_cron: true,
     )
@@ -929,7 +929,7 @@ shared_examples 'generic perfsonar' do
     )
                                              .that_requires('Yumrepo[perfSONAR]')
                                              .that_requires('Class[epel]')
-                                             .that_requires("Letsencrypt::Certonly[#{fqdn}]")
+                                             .that_requires("Letsencrypt::Certonly[#{facts[:networking]['fqdn']}]")
   end
 
   it do

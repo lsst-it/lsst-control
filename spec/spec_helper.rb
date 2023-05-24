@@ -152,8 +152,51 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
   include_examples 'convenience'
 
   unless no_auth
+    # inspect config fragment instead of class params to ensure that %{uid} is not
+    # being caught by hiera string interpolation
     include_examples 'krb5.conf content', %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}}
-    include_examples 'krb5.conf content', %r{udp_preference_limit = 0}
+
+    it do
+      # XXX dev is using ls ipa servers
+      next if site == 'dev'
+
+      is_expected.to contain_class('mit_krb5').with(
+        default_realm: 'LSST.CLOUD',
+        dns_canonicalize_hostname: true,
+        dns_lookup_kdc: false,
+        dns_lookup_realm: false,
+        forwardable: true,
+        rdns: false,
+        ticket_lifetime: '24h',
+        udp_preference_limit: 0,
+        includedir: [
+          '/etc/krb5.conf.d/',
+          '/var/lib/sss/pubconf/krb5.include.d/',
+        ],
+        realms: {
+          'LSST.CLOUD' => {
+            'kdc' => "ipa1.#{site}.lsst.org:88",
+            'master_kdc' => "ipa1.#{site}.lsst.org:88",
+            'admin_server' => "ipa1.#{site}.lsst.org:749",
+            'kpasswd_server' => "ipa1.#{site}.lsst.org:464",
+            'default_domain' => 'lsst.cloud',
+            'pkinit_anchors' => 'FILE:/var/lib/ipa-client/pki/kdc-ca-bundle.pem',
+            'pkinit_pool' => 'FILE:/var/lib/ipa-client/pki/ca-bundle.pem',
+          },
+        },
+        domain_realms: {
+          'LSST.CLOUD' => {
+            'domains' => [
+              '.lsst.cloud',
+              'lsst.cloud',
+              facts[:fqdn],
+              ".#{facts[:domain]}",
+              facts[:domain],
+            ],
+          },
+        },
+      ).that_requires('Class[easy_ipa]')
+    end
 
     if facts[:os]['release']['major'] == '7'
       it do

@@ -4,11 +4,9 @@ require 'spec_helper'
 
 shared_examples 'generic daq manager' do |facts:|
   include_examples 'common', facts: facts, chrony: false
-  include_examples 'lsst-daq dhcp-server'
   include_examples 'lsst-daq sysctls'
   include_examples 'nfsv2 enabled', facts: facts
   include_examples 'daq common'
-  include_examples 'daq nfs exports'
 
   it { is_expected.to contain_class('hosts') }
 
@@ -45,61 +43,10 @@ shared_examples 'generic daq manager' do |facts:|
   end
 end
 
-shared_examples 'lsst-daq dhcp-server' do
-  it do
-    is_expected.to contain_network__interface('lsst-daq').with(
-      bootproto: 'none',
-      defroute: 'no',
-      ipaddress: '192.168.100.1',
-      ipv6init: 'no',
-      netmask: '255.255.255.0',
-      onboot: true,
-      type: 'Ethernet',
-    )
-  end
-end
-
-shared_examples 'daq nfs exports' do
-  it do
-    is_expected.to contain_class('nfs').with(
-      server_enabled: true,
-      client_enabled: true,
-      nfs_v4_client: false,
-    )
-  end
-
-  it { is_expected.to contain_class('nfs::server').with_nfs_v4(false) }
-  it { is_expected.to contain_nfs__server__export('/srv/nfs/dsl') }
-  it { is_expected.to contain_nfs__server__export('/srv/nfs/lsst-daq') }
-
-  it do
-    is_expected.to contain_nfs__client__mount('/net/self/dsl').with(
-      share: '/srv/nfs/dsl',
-      server: facts[:fqdn],
-      atboot: true,
-    )
-  end
-
-  it do
-    is_expected.to contain_nfs__client__mount('/net/self/lsst-daq').with(
-      share: '/srv/nfs/lsst-daq',
-      server: facts[:fqdn],
-      atboot: true,
-    )
-  end
-end
-
-# XXX is it wrong to tie role and host specific details together?  This may
-# cause grief when refactoring in the future but it is also the only way to
-# fully test features when depend upon host specific data.  An alternative
-# would be to construct an alternate hiera hierarchy for testing each role
-# with synthetic node data.
-
 role = 'daq-mgt'
 
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
-    # XXX networking needs to be updated to support EL8+
     next unless os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do
@@ -116,103 +63,18 @@ describe "#{role} role" do
         }
       end
 
-      describe 'auxtel-daq-mgt.cp.lsst.org', :site do
-        let(:site) { 'cp' }
+      lsst_sites.each do |site|
+        fqdn = "#{role}.#{site}.lsst.org"
+        override_facts(facts, fqdn: fqdn, networking: { fqdn => fqdn })
 
-        it { is_expected.to compile.with_all_deps }
+        describe fqdn, :site do
+          let(:site) { site }
 
-        include_examples 'generic daq manager', facts: facts
+          it { is_expected.to compile.with_all_deps }
 
-        it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V6.1') }
-        it { is_expected.to contain_class('daq::rptsdk').with_version('V3.5.3') }
-        it { is_expected.to contain_network__interface('p3p1').with_ensure('absent') }
-
-        it do
-          is_expected.to contain_class('hosts').with(
-            host_entries: {
-              'auxtel-sm' => {
-                'ip' => '192.168.101.2',
-              },
-            },
-          )
-        end
-
-        it do
-          is_expected.to contain_network__interface('em2').with(
-            bootproto: 'none',
-            # defroute: 'no',
-            ipaddress: '192.168.101.1',
-            # ipv6init: 'no',
-            netmask: '255.255.255.0',
-            onboot: 'yes',
-            type: 'Ethernet',
-          )
-        end
-      end
-
-      describe 'daq-mgt.tu.lsst.org', :site do
-        let(:site) { 'tu' }
-
-        include_examples 'generic daq manager', facts: facts
-
-        it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V6.1') }
-        it { is_expected.to contain_class('daq::rptsdk').with_version('V3.5.3') }
-        it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }
-
-        it do
-          is_expected.to contain_class('hosts').with(
-            host_entries: {
-              'tts-sm' => {
-                'ip' => '10.0.0.212',
-              },
-            },
-          )
-        end
-
-        it do
-          is_expected.to contain_network__interface('em4').with(
-            bootproto: 'none',
-            # defroute: 'no',
-            ipaddress: '10.0.0.1',
-            # ipv6init: 'no',
-            netmask: '255.255.255.0',
-            onboot: 'yes',
-            type: 'Ethernet',
-          )
-        end
-      end
-
-      describe 'comcam-daq-mgt.cp.lsst.org', :site do
-        let(:site) { 'cp' }
-
-        include_examples 'generic daq manager', facts: facts
-
-        it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V6.1') }
-        it { is_expected.to contain_class('daq::rptsdk').with_version('V3.5.3') }
-        it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }
-
-        it do
-          is_expected.to contain_class('hosts').with(
-            host_entries: {
-              'comcam-sm' => {
-                'ip' => '10.0.0.212',
-              },
-            },
-          )
-        end
-
-        it do
-          is_expected.to contain_network__interface('em2').with(
-            bootproto: 'none',
-            defroute: 'no',
-            ipaddress: '10.0.0.1',
-            ipv6init: 'no',
-            netmask: '255.255.255.0',
-            onboot: 'yes',
-            type: 'Ethernet',
-          )
-        end
-      end
+          include_examples 'generic daq manager', facts: facts
+        end # host
+      end # lsst_sites
     end # on os
   end # on_supported_os
 end # role

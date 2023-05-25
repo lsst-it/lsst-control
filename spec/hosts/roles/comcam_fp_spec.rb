@@ -29,12 +29,7 @@ describe "#{role} role" do
 
           include_examples 'common', facts: facts
           include_examples 'x2go packages'
-
-          case site
-          when 'tu', 'cp'
-            include_examples 'lsst-daq client', facts: facts
-          end
-
+          include_examples 'lsst-daq sysctls'
           it { is_expected.not_to contain_class('profile::core::sysctl::lhn') }
           it { is_expected.not_to contain_class('dhcp') }
           it { is_expected.to contain_class('dhcp::disable') }

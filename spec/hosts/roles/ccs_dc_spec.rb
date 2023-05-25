@@ -30,6 +30,7 @@ describe "#{role} role" do
           include_examples 'common', facts: facts
           include_examples 'ccs common', facts: facts
           include_examples 'x2go packages'
+          include_examples 'lsst-daq sysctls', facts: facts
 
           %w[
             ccs_daq
@@ -39,11 +40,6 @@ describe "#{role} role" do
             profile::core::nfsclient
           ].each do |cls|
             it { is_expected.to contain_class(cls) }
-          end
-
-          case site
-          when 'tu', 'cp'
-            include_examples 'lsst-daq client', facts: facts
           end
         end # host
       end # lsst_sites

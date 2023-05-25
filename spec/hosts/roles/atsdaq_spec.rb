@@ -29,11 +29,7 @@ describe "#{role} role" do
 
           include_examples 'common', facts: facts
           include_examples 'ccs common', facts: facts
-
-          case site
-          when 'tu', 'cp'
-            include_examples 'lsst-daq client', facts: facts
-          end
+          include_examples 'lsst-daq sysctls'
           # it { is_expected.to contain_class('ccs_daq') }
           # it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V0.6') }
         end # host

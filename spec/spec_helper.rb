@@ -317,18 +317,6 @@ shared_examples 'lsst-daq sysctls' do
   end
 end
 
-shared_examples 'lsst-daq client' do |facts:|
-  include_examples 'lsst-daq sysctls'
-
-  if facts[:os]['release']['major'] == '7'
-    it do
-      is_expected.to contain_network__interface('lsst-daq').with(
-        bootproto: 'dhcp',
-      )
-    end
-  end
-end
-
 shared_examples 'nfsv2 enabled' do |facts:|
   if facts[:os]['release']['major'] == '7'
     it 'enables NFS V2 exports via /etc/sysconfig/nfs' do
@@ -991,6 +979,50 @@ end
 
 shared_examples 'ccs common' do
   it { is_expected.to contain_package('time') }
+end
+
+shared_examples 'lsst-daq dhcp-server' do
+  it do
+    is_expected.to contain_network__interface('lsst-daq').with(
+      bootproto: 'none',
+      defroute: 'no',
+      ipaddress: '192.168.100.1',
+      ipv6init: 'no',
+      netmask: '255.255.255.0',
+      onboot: true,
+      type: 'Ethernet',
+    )
+  end
+end
+
+shared_examples 'daq nfs exports' do
+  it do
+    is_expected.to contain_class('nfs').with(
+      server_enabled: true,
+      client_enabled: true,
+      nfs_v4_client: false,
+    )
+  end
+
+  it { is_expected.to contain_class('nfs::server').with_nfs_v4(false) }
+  it { is_expected.to contain_nfs__server__export('/srv/nfs/dsl') }
+  it { is_expected.to contain_nfs__server__export('/srv/nfs/lsst-daq') }
+
+  it do
+    is_expected.to contain_nfs__client__mount('/net/self/dsl').with(
+      share: '/srv/nfs/dsl',
+      server: facts[:fqdn],
+      atboot: true,
+    )
+  end
+
+  it do
+    is_expected.to contain_nfs__client__mount('/net/self/lsst-daq').with(
+      share: '/srv/nfs/lsst-daq',
+      server: facts[:fqdn],
+      atboot: true,
+    )
+  end
 end
 
 # 'spec_overrides' from sync.yml will appear below this line

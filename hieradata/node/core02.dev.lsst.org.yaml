@@ -1,0 +1,20 @@
+---
+profile::nm::connections:
+  enp1s0f0:  #fqdn
+    content: |
+      [connection]
+      id=enp1s0f0
+      uuid=0f3f1008-b16d-4e64-b92d-3f5d5fe2b214
+      type=ethernet
+      interface-name=enp1s0f0
+
+      [ethernet]
+
+      [ipv4]
+      address1=139.229.134.33/24,139.229.134.254
+      dns=139.229.134.53;
+      dns-search=dev.lsst.org;
+      method=manual
+
+      [ipv6]
+      method=disabled

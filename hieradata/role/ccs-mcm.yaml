@@ -5,6 +5,7 @@ classes:
   - "profile::ccs::graphical"
   - "profile::ccs::tomcat"
   - "profile::core::common"
+  - "profile::core::debugutils"
 
 nginx::confd_purge: true
 nginx::server_purge: true

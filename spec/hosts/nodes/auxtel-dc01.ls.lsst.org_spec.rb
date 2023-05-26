@@ -10,7 +10,7 @@ describe 'auxtel-dc01.ls.lsst.org', :site do
       let(:facts) { facts.merge(fqdn: 'auxtel-dc01.ls.lsst.org') }
       let(:node_params) do
         {
-          role: 'atsccs',
+          role: 'ccs-dc',
           site: 'ls',
           cluster: 'auxtel-ccs',
           variant: '1114s',

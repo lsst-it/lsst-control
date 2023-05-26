@@ -41,13 +41,6 @@ network::mroutes_hash:
       "140.252.147.48/28": "140.252.147.17"
       "140.252.147.128/27": "140.252.147.17"
 
-nfs::client_enabled: true
-nfs::client_mounts:
-  /ccs-data:
-    share: "ccs-data"
-    server: "auxtel-fp01.tu.lsst.org"
-    atboot: true
-
 ccs_software::services:
   prod:
     - "lockmanager"

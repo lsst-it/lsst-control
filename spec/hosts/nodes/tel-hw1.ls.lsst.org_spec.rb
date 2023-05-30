@@ -60,6 +60,14 @@ describe 'tel-hw1.ls.lsst.org', :site do
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm bridge interface'
       end
+
+      it do
+        is_expected.to contain_nfs__client__mount('/net/obs-env').with(
+          share: 'obs-env',
+          server: 'nfs-obsenv.ls.lsst.org',
+          atboot: true,
+        )
+      end
     end # on os
   end # on_supported_os
 end # role

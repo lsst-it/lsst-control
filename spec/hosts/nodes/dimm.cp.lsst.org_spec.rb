@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'dimm.cp.lsst.org', :site do
+describe 'dimm.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     next if os =~ %r{centos-7-x86_64}
 

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'dns3.cp.lsst.org', :site do
+describe 'dns3.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     next if os =~ %r{centos-7-x86_64}
 

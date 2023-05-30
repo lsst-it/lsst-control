@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'core01.dev.lsst.org', :site do
+describe 'core01.dev.lsst.org', :sitepp do
   alma9 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '9' }).first
   # rubocop:disable Naming/VariableNumber
   { 'almalinux-9-x86_64': alma9 }.each do |os, facts|

@@ -5,7 +5,7 @@ require 'spec_helper'
 #
 # testing cluster/ruka & cluster/ruka/variant/r440
 #
-describe 'ruka01.dev.lsst.org', :site do
+describe 'ruka01.dev.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) { override_facts(facts, fqdn: 'ruka01.dev.lsst.org') }

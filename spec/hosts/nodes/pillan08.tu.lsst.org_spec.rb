@@ -5,7 +5,7 @@ require 'spec_helper'
 #
 # pillan08 is "special" and has different PCI bus addresses for the X550T NIC.
 #
-describe 'pillan08.tu.lsst.org', :site do
+describe 'pillan08.tu.lsst.org', :sitepp do
   alma9 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '9' }).first
   # rubocop:disable Naming/VariableNumber
   { 'almalinux-9-x86_64': alma9 }.each do |os, facts|

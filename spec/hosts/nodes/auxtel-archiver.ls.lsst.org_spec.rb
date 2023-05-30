@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'auxtel-archiver.ls.lsst.org', :site do
+describe 'auxtel-archiver.ls.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     next if os =~ %r{centos-7-x86_64}
 

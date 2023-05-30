@@ -62,7 +62,7 @@ describe "#{role} role" do
         fqdn = "#{role}.#{site}.lsst.org"
         override_facts(facts, fqdn: fqdn, networking: { fqdn => fqdn })
 
-        describe fqdn, :site do
+        describe fqdn, :sitepp do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }

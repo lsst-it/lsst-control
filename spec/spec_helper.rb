@@ -123,7 +123,7 @@ def node_files
   Dir.children(node_dir)
 end
 
-shared_context 'with site.pp', :site do
+shared_context 'with site.pp', :sitepp do
   before(:context) do
     RSpec.configuration.manifest = File.join(root_path, 'manifests', 'site.pp')
     RSpec.configuration.hiera_config = File.join(fixtures_path, 'hiera.yaml')

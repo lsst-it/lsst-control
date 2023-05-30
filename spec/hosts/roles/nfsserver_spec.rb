@@ -15,7 +15,7 @@ describe "#{role} role" do
         }
       end
 
-      describe 'nfsserver.cp.lsst.org', :site do
+      describe 'nfsserver.cp.lsst.org', :sitepp do
         let(:site) { 'cp' }
 
         facts.merge!(fqdn: 'nfsserver.cp.lsst.org')

@@ -19,7 +19,7 @@ describe "#{role} role" do
         fqdn = "#{role}.#{site}.lsst.org"
         override_facts(facts, fqdn: fqdn, networking: { 'fqdn' => fqdn })
 
-        describe fqdn, :site do
+        describe fqdn, :sitepp do
           let(:site) { site }
 
           let(:le_root) { "/etc/letsencrypt/live/#{facts[:fqdn]}" }

@@ -106,6 +106,11 @@ RSpec.configure do |c|
   c.filter_run_excluding(bolt: true) unless ENV['GEM_BOLT']
 end
 
+# Disable rspec-puppet coverage reporting which is hardwired as enabled here:
+# https://github.com/voxpupuli/voxpupuli-test/blob/88c0ae0c635dee496ba361501d6afa79b9d886f2/lib/voxpupuli/test/spec_helper.rb#L21
+# Note that this is violating the private api of `RSpec::Core::Configuration`.
+RSpec.configuration.instance_variable_set(:@after_suite_hooks, [])
+
 # Ensures that a module is defined
 # @param module_name Name of the module
 def ensure_module_defined(module_name)

@@ -16,12 +16,7 @@ roles_without_spec.each do |role|
   describe "#{role} role" do
     on_supported_os.each do |os, facts|
       context "on #{os}" do
-        let(:facts) do
-          facts.merge(
-            fqdn: self.class.description,
-          )
-        end
-
+        let(:facts) { facts }
         let(:node_params) do
           {
             role: role,
@@ -32,14 +27,18 @@ roles_without_spec.each do |role|
         # as a performance optimization, test with only one site.  If it is
         # important that a role is better tested, it should have its own spec
         # file.
-        site = lsst_sites.sample
-        describe "#{role}.#{site}.lsst.org", :site do
-          let(:site) { site }
+        [lsst_sites.sample].each do |site|
+          fqdn = "#{role}.#{site}.lsst.org"
+          override_facts(facts, fqdn: fqdn, networking: { 'fqdn' => fqdn })
 
-          it { is_expected.to compile.with_all_deps }
+          describe fqdn, :sitepp do
+            let(:site) { site }
 
-          include_examples 'common', facts: facts
-        end # host
+            it { is_expected.to compile.with_all_deps }
+
+            include_examples 'common', facts: facts
+          end # host
+        end # site
       end # on os
     end # on_supported_os
   end # role

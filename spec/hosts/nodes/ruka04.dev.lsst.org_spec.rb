@@ -6,7 +6,7 @@ require 'spec_helper'
 # primarily testing cluster/ruka/variant/r430; for ruka cluster layer spec see
 # ruka01.dev.lsst.org.yaml
 #
-describe 'ruka04.dev.lsst.org', :site do
+describe 'ruka04.dev.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) { override_facts(facts, fqdn: 'ruka04.dev.lsst.org') }

@@ -9,7 +9,7 @@ describe "#{role} role" do
     next if os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do
-      let(:facts) { facts.merge(fqdn: self.class.description) }
+      let(:facts) { facts }
       let(:node_params) do
         {
           role: role,
@@ -18,7 +18,10 @@ describe "#{role} role" do
       end
 
       lsst_sites.each do |site|
-        describe "#{role}.#{site}.lsst.org", :site do
+        fqdn = "#{role}.#{site}.lsst.org"
+        override_facts(facts, fqdn: fqdn, networking: { fqdn => fqdn })
+
+        describe fqdn, :sitepp do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }

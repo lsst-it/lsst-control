@@ -7,12 +7,13 @@ role = 'it-ansible'
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts.merge(
-          fqdn: self.class.description,
-        )
+      let(:pre_condition) do
+        <<~PP
+          file { '/opt/ansible/.ssh/id_rsa': }
+        PP
       end
 
+      let(:facts) { facts }
       let(:node_params) do
         {
           role: role,
@@ -20,14 +21,11 @@ describe "#{role} role" do
         }
       end
 
-      let(:pre_condition) do
-        <<~PP
-          file { '/opt/ansible/.ssh/id_rsa': }
-        PP
-      end
-
       lsst_sites.each do |site|
-        describe "#{role}.#{site}.lsst.org", :site do
+        fqdn = "#{role}.#{site}.lsst.org"
+        override_facts(facts, fqdn: fqdn, networking: { fqdn => fqdn })
+
+        describe fqdn, :sitepp do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }

@@ -7,12 +7,7 @@ role = 'ccs-dc'
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts.merge(
-          fqdn: self.class.description,
-        )
-      end
-
+      let(:facts) { facts }
       let(:node_params) do
         {
           role: role,
@@ -22,7 +17,10 @@ describe "#{role} role" do
       end
 
       lsst_sites.each do |site|
-        describe "comcam-dc01.#{site}.lsst.org", :site do
+        fqdn = "#{role}.#{site}.lsst.org"
+        override_facts(facts, fqdn: fqdn, networking: { fqdn => fqdn })
+
+        describe fqdn, :sitepp do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }
@@ -30,6 +28,7 @@ describe "#{role} role" do
           include_examples 'common', facts: facts
           include_examples 'ccs common', facts: facts
           include_examples 'x2go packages'
+          include_examples 'lsst-daq sysctls', facts: facts
 
           %w[
             ccs_daq
@@ -39,11 +38,6 @@ describe "#{role} role" do
             profile::core::nfsclient
           ].each do |cls|
             it { is_expected.to contain_class(cls) }
-          end
-
-          case site
-          when 'tu', 'cp'
-            include_examples 'lsst-daq client', facts: facts
           end
         end # host
       end # lsst_sites

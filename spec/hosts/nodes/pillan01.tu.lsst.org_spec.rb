@@ -6,7 +6,7 @@ require 'spec_helper'
 # Testing network interfaces from the pillan cluster hiera layer. One node in
 # the pillan cluster should be sufficient.
 #
-describe 'pillan01.tu.lsst.org', :site do
+describe 'pillan01.tu.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:int1) do

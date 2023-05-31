@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'comcam-archiver.tu.lsst.org', :site do
+describe 'comcam-archiver.tu.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     # XXX networking needs to be updated to support EL8+
     next unless os =~ %r{centos-7-x86_64}

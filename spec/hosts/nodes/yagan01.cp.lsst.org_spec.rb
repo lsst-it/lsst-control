@@ -6,7 +6,7 @@ require 'spec_helper'
 # Testing network interfaces from the yagan cluster hiera layer. One node in
 # the cluster should be sufficient.
 #
-describe 'yagan01.cp.lsst.org', :site do
+describe 'yagan01.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     # XXX networking needs to be updated to support EL8+
     next unless os =~ %r{centos-7-x86_64}

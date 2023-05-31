@@ -364,6 +364,7 @@ mit_krb5::dns_canonicalize_hostname: true
 mit_krb5::dns_lookup_kdc: false
 mit_krb5::dns_lookup_realm: false
 mit_krb5::forwardable: true
+mit_krb5::krb5_conf_d_purge: true
 mit_krb5::rdns: false
 mit_krb5::ticket_lifetime: "24h"
 mit_krb5::udp_preference_limit: "0"

@@ -166,6 +166,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
         dns_lookup_kdc: false,
         dns_lookup_realm: false,
         forwardable: true,
+        krb5_conf_d_purge: true,
         rdns: false,
         ticket_lifetime: '24h',
         udp_preference_limit: 0,

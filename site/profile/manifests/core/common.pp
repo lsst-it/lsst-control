@@ -155,9 +155,7 @@ class profile::core::common (
   }
 
   if $manage_krb5 {
-    include mit_krb5
-    # run ipa-install-* script before trying to managing krb5.conf
-    Class[easy_ipa] -> Class[mit_krb5]
+    include profile::core::krb5
   }
 
   if $manage_ldap {

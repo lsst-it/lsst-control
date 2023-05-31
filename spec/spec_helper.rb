@@ -156,6 +156,8 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
     # being caught by hiera string interpolation
     include_examples 'krb5.conf content', %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}}
 
+    include_examples 'krb5.conf.d files', facts: facts
+
     it do
       # XXX dev is using ls ipa servers
       next if site == 'dev'
@@ -1101,6 +1103,35 @@ shared_examples 'daq nfs exports' do
       server: facts[:fqdn],
       atboot: true,
     )
+  end
+end
+
+shared_examples 'krb5.conf.d files' do |facts:|
+  to = if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
+         'not_to'
+       else
+         'to'
+       end
+
+  it do
+    is_expected.send(to, contain_file('/etc/krb5.conf.d/crypto-policies').with(
+                           ensure: 'link',
+                           owner: 'root',
+                           group: 'root',
+                           target: '/etc/crypto-policies/back-ends/krb5.config',
+                         ))
+  end
+
+  it do
+    is_expected.send(to, contain_file('/etc/krb5.conf.d/freeipa').with(
+                           ensure: 'file',
+                           owner: 'root',
+                           group: 'root',
+                           content: <<~CONTENT,
+        [libdefaults]
+            spake_preauth_groups = edwards25519
+                           CONTENT
+                         ))
   end
 end
 

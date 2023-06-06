@@ -1,0 +1,10 @@
+---
+# yamllint disable rule:quoted-strings
+noop: false
+repos:
+  - repo: lsst-it/lsst-control
+    noop: false
+  - repo: lsst-it/lsst-puppet-hiera-private
+    noop: false
+exclude_patterns:
+  - production

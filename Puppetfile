@@ -113,6 +113,7 @@ mod 'theforeman/dhcp', '8.2.0'
 mod 'theforeman/dns', '9.2.0'
 mod 'theforeman/foreman', '20.2.0'
 mod 'theforeman/foreman_proxy', git: 'https://github.com/lsst-it/puppet-foreman_proxy', ref: 'c3a92be'  # https://github.com/theforeman/puppet-foreman_proxy/pull/772
+mod 'theforeman/foreman_scap_client', '0.3.23'
 mod 'theforeman/puppet', '16.3.0'
 mod 'theforeman/puppetserver_foreman', '2.1.0'
 mod 'theforeman/tftp', '7.1.0'

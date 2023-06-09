@@ -490,6 +490,8 @@ shared_examples 'puppet_master' do
   it { is_expected.to contain_foreman__plugin('discovery') }
   it { is_expected.to contain_foreman__cli__plugin('foreman_discovery') }
   it { is_expected.to contain_foreman_proxy__plugin('discovery') }
+  it { is_expected.to contain_foreman__plugin('openscap') }
+  it { is_expected.to contain_foreman_proxy__plugin('openscap') }
 
   it { is_expected.to contain_class('foreman_proxy::plugin::dynflow') }
 

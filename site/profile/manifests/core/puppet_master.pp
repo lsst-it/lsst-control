@@ -37,6 +37,7 @@ class profile::core::puppet_master (
   include foreman_envsync
   include foreman::plugin::column_view
   include foreman::plugin::discovery
+  include foreman::plugin::openscap
   include foreman::plugin::puppet
   include foreman::plugin::remote_execution
   include foreman::plugin::tasks
@@ -45,6 +46,7 @@ class profile::core::puppet_master (
   include foreman_proxy::plugin::discovery
   include foreman_proxy::plugin::dns::route53
   include foreman_proxy::plugin::dynflow
+  include foreman_proxy::plugin::openscap
   include foreman_proxy::plugin::remote_execution::script
   include foreman::repo
   include puppet

@@ -113,42 +113,6 @@ accounts::user_list:
 ccs_software::desktop: true
 ccs_software::env: "ComCam"
 ccs_software::installations:
-  comcam-software-2.1.0:
-    aliases:
-      - "puppet-2.1.0"
-
-  comcam-software-2.2.0:
-    aliases:
-      - "puppet-2.2.0"
-
-  comcam-software-2.2.1:
-    aliases:
-      - "puppet-2.2.1"
-
-  comcam-software-2.2.2:
-    aliases:
-      - "puppet-2.2.2"
-
-  comcam-software-2.2.3:
-    aliases:
-      - "puppet-2.2.3"
-
-  comcam-software-2.2.4:
-    aliases:
-      - "puppet-2.2.4"
-
-  comcam-software-2.2.5:
-    aliases:
-      - "puppet-2.2.5"
-
-  comcam-software-2.2.6:
-    aliases:
-      - "puppet-2.2.6"
-
-  comcam-software-2.2.7:
-    aliases:
-      - "puppet-2.2.7"
-
   comcam-software-2.3.0:
     aliases:
       - "puppet-2.3.0"
@@ -192,6 +156,10 @@ ccs_software::installations:
   comcam-software-2.3.11:
     aliases:
       - "puppet-2.3.11"
+
+  comcam-software-2.3.12:
+    aliases:
+      - "puppet-2.3.12"
 
 profile::icinga::agent::host_template: "ComCamHostTemplate"
 daq::daqsdk::purge: false

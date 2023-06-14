@@ -44,7 +44,6 @@ nfs::nfs_exports_global:
       139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.0/26(ro,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.128/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      auxtel-archiver.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
       ts-csc-generic-01.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
       comcam-archiver.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/project:

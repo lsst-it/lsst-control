@@ -58,6 +58,6 @@ nfs::client_mounts:
     server: "auxtel-fp01.cp.lsst.org"
     atboot: true
   /repo:
-    share: "repo"
-    server: "auxtel-archiver.cp.lsst.org"
+    share: "auxtel/repo"
+    server: "nfs-auxtel.cp.lsst.org"
     atboot: true

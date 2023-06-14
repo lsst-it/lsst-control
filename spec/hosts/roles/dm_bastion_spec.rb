@@ -53,16 +53,16 @@ describe "#{role} role" do
 
           it do
             is_expected.to contain_nfs__client__mount('/readonly/lsstdata/auxtel').with(
-              share: 'lsstdata',
-              server: 'auxtel-archiver-1201.cp.lsst.org',
+              share: 'auxtel/lsstdata',
+              server: 'nfs-auxtel.cp.lsst.org',
               atboot: true,
             )
           end
 
           it do
             is_expected.to contain_nfs__client__mount('/repo/LATISS').with(
-              share: 'repo',
-              server: 'auxtel-archiver-1201.cp.lsst.org',
+              share: 'auxtel/repo',
+              server: 'nfs-auxtel.cp.lsst.org',
               atboot: true,
             )
           end

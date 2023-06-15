@@ -89,9 +89,9 @@ describe 'auxtel-archiver.cp.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       it do
-        is_expected.to contain_nfs__client__mount('/net/dimm').with(
-          share: 'dimm',
-          server: 'nfs1.cp.lsst.org',
+        is_expected.to contain_nfs__client__mount('/data').with(
+          share: 'auxtel',
+          server: 'nfs-auxtel.cp.lsst.org',
           atboot: true,
         )
       end

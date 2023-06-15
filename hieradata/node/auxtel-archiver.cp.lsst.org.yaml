@@ -60,9 +60,9 @@ network::mroutes_hash:
 
 nfs::client_enabled: true
 nfs::client_mounts:
-  /net/dimm:
-    share: "dimm"
-    server: "nfs1.cp.lsst.org"
+  /data:
+    share: "auxtel"
+    server: "nfs-auxtel.cp.lsst.org"
     atboot: true
 
 profile::core::k5login::k5login:

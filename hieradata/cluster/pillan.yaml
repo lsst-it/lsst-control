@@ -17,13 +17,16 @@ network::interfaces_hash:
     nozeroconf: "yes"
     onboot: "yes"
     type: "Bond"
-  bond0.3065: &vlan_int
+  bond0.3035: &vlan_int
     bootproto: "none"
     defroute: "no"
     nozeroconf: "yes"
     onboot: "yes"
     type: "none"
     vlan: "yes"
+    bridge: "br3035"
+  bond0.3065:
+    <<: *vlan_int
     bridge: "br3065"
   bond0.3075:
     <<: *vlan_int
@@ -31,10 +34,12 @@ network::interfaces_hash:
   bond0.3085:
     <<: *vlan_int
     bridge: "br3085"
-  br3065: &bridge_int
+  br3035: &bridge_int
     bootproto: "none"
     onboot: "yes"
     type: "bridge"
+  br3065:
+    <<: *bridge_int
   br3075:
     <<: *bridge_int
   br3085:

@@ -82,6 +82,24 @@ profile::nm::connections:
       method=disabled
 
       [proxy]
+  bond0.3035:
+    content: |
+      [connection]
+      id=bond0.3035
+      uuid=e34c3319-6aae-47ef-8d26-342c98ec5b51
+      type=vlan
+      interface-name=bond0.3035
+      master=br3035
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=3035
+      parent=bond0
+
+      [bridge-port]
   bond0.3065:
     content: |
       [connection]
@@ -136,6 +154,26 @@ profile::nm::connections:
       parent=bond0
 
       [bridge-port]
+  br3035:
+    content: |
+      [connection]
+      id=br3035
+      uuid=a75b0cc0-ec9c-4b1a-8ff9-ce56ac7ec81f
+      type=bridge
+      interface-name=br3035
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+      [proxy]
   br3065:
     content: |
       [connection]

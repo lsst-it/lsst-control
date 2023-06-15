@@ -25,7 +25,7 @@ describe 'pillan08.tu.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       # 2 extra instances in the catalog for the rename interfaces
-      it { is_expected.to have_profile__nm__connection_resource_count(12 + 2) }
+      it { is_expected.to have_profile__nm__connection_resource_count(14 + 2) }
 
       %w[
         enp4s0f3u2u2c2
@@ -61,6 +61,7 @@ describe 'pillan08.tu.lsst.org', :sitepp do
       end
 
       Hash[*%w[
+        bond0.3035 br3035
         bond0.3065 br3065
         bond0.3075 br3075
         bond0.3085 br3085
@@ -74,6 +75,7 @@ describe 'pillan08.tu.lsst.org', :sitepp do
       end
 
       %w[
+        br3035
         br3065
         br3065
         br3085

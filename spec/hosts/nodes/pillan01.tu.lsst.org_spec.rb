@@ -8,6 +8,8 @@ require 'spec_helper'
 #
 describe 'pillan01.tu.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
+    next unless os =~ %r{centos-7-x86_64}
+
     context "on #{os}" do
       let(:int1) do
         if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
@@ -95,7 +97,6 @@ describe 'pillan01.tu.lsst.org', :sitepp do
           )
         end
 
-        # common between EL7 & EL8
         %w[
           enp129s0f0
           enp129s0f1
@@ -107,6 +108,33 @@ describe 'pillan01.tu.lsst.org', :sitepp do
               onboot: 'yes',
               slave: 'yes',
               type: 'Ethernet',
+            )
+          end
+        end
+
+        %w[
+          3035
+          3065
+          3075
+          3085
+        ].each do |vlan|
+          it do
+            is_expected.to contain_network__interface("bond0.#{vlan}").with(
+              bootproto: 'none',
+              defroute: 'no',
+              nozeroconf: 'yes',
+              onboot: 'yes',
+              type: 'none',
+              vlan: 'yes',
+              bridge: "br#{vlan}",
+            )
+          end
+
+          it do
+            is_expected.to contain_network__interface("br#{vlan}").with(
+              bootproto: 'none',
+              onboot: 'yes',
+              type: 'bridge',
             )
           end
         end

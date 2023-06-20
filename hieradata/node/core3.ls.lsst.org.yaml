@@ -1,0 +1,4 @@
+---
+network::interfaces_hash:
+  em1:
+    ipaddress: "139.229.135.4"

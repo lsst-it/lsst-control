@@ -248,11 +248,11 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('TS-Kueyen').with(
+          is_expected.to contain_dhcp__pool('BDC-Ayekan').with(
             network: '139.229.144.0',
-            mask: '255.255.255.128',
-            range: ['139.229.144.100 139.229.144.120'],
-            gateway: '139.229.144.126',
+            mask: '255.255.255.192',
+            range: ['139.229.144.40 139.229.144.59'],
+            gateway: '139.229.144.62',
           )
         end
 

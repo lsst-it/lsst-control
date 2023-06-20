@@ -43,12 +43,12 @@ dhcp::pools:
     range:
       - "139.229.140.24 139.229.140.30"  # ~ /30
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  TS-Kueyen:  # https://jira.lsstcorp.org/browse/IT-2128
+  BDC-Ayekan:
     network: "139.229.144.0"
-    mask: "255.255.255.128"
-    gateway: "139.229.144.126"
+    mask: "255.255.255.192"
+    gateway: "139.229.144.62"
     range:
-      - "139.229.144.100 139.229.144.120"
+      - "139.229.144.40 139.229.144.59"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   BDC-Teststand-DDS:  # vlan2301
     network: "139.229.145.0"

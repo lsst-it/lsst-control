@@ -1,6 +1,11 @@
 ---
 nfs::server_enabled: false
 nfs::client_enabled: true
+nfs::client_mounts:
+  /data:
+    share: "auxtel"
+    server: "nfs-auxtel.ls.lsst.org"
+    atboot: true
 
 profile::core::k5login::k5login:
   "/home/saluser/.k5login":

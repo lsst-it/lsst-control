@@ -153,7 +153,7 @@ ccs_software::udp_properties:
 
 ccs_sal::ospl_home: "/opt/OpenSpliceDDS/V6.10.4/HDE/x86_64.linux"
 ccs_sal::rpms:
-  ts_sal_utils: "ts_sal_utils-7.0.0-1.x86_64.rpm"
+  ts_sal_utils: "ts_sal_utils-7.3.0-1.x86_64.rpm"
 
 daq::daqsdk::purge: false
 

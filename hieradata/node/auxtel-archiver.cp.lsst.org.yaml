@@ -58,6 +58,7 @@ network::mroutes_hash:
     ensure: "absent"
     routes: {}
 
+nfs::server_enabled: false
 nfs::client_enabled: true
 nfs::client_mounts:
   /data:

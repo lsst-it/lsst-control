@@ -45,34 +45,8 @@ describe 'auxtel-archiver.ls.lsst.org', :sitepp do
         it_behaves_like 'nm ethernet interface'
       end
 
-      it { is_expected.to contain_class('nfs::server').with_nfs_v4(true) }
-      it { is_expected.to contain_nfs__server__export('/data/lsstdata') }
-      it { is_expected.to contain_nfs__server__export('/data/repo') }
-      it { is_expected.to contain_nfs__server__export('/data') }
-
-      it do
-        is_expected.to contain_nfs__client__mount('/net/self/data/lsstdata').with(
-          share: 'lsstdata',
-          server: 'auxtel-archiver.ls.lsst.org',
-          atboot: true,
-        )
-      end
-
-      it do
-        is_expected.to contain_nfs__client__mount('/repo').with(
-          share: 'repo',
-          server: 'auxtel-archiver.ls.lsst.org',
-          atboot: true,
-        )
-      end
-
-      it do
-        is_expected.to contain_nfs__client__mount('/net/self/data/root').with(
-          share: 'data',
-          server: 'auxtel-archiver.ls.lsst.org',
-          atboot: true,
-        )
-      end
+      it { is_expected.to contain_class('nfs').with_server_enabled(false) }
+      it { is_expected.to contain_class('nfs').with_client_enabled(true) }
 
       it do
         is_expected.to contain_k5login('/home/saluser/.k5login').with(

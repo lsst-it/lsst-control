@@ -24,6 +24,10 @@ describe 'pillan08.tu.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
+      it do
+        is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
+      end
+
       # 2 extra instances in the catalog for the rename interfaces
       it { is_expected.to have_profile__nm__connection_resource_count(14 + 2) }
 

@@ -21,21 +21,8 @@ describe 'auxtel-mcm.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      it do
-        is_expected.to contain_nfs__client__mount('/data').with(
-          share: 'data',
-          server: 'auxtel-fp01.cp.lsst.org',
-          atboot: true,
-        )
-      end
-
-      it do
-        is_expected.to contain_nfs__client__mount('/repo').with(
-          share: 'auxtel/repo',
-          server: 'nfs-auxtel.cp.lsst.org',
-          atboot: true,
-        )
-      end
+      it { is_expected.to contain_class('nfs').with_server_enabled(false) }
+      it { is_expected.to contain_class('nfs').with_client_enabled(false) }
     end # on os
   end # on_supported_os
 end # role

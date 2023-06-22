@@ -95,8 +95,8 @@ describe 'auxtel-dc01.ls.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_nfs__client__mount('/repo').with(
-          share: 'repo',
-          server: 'auxtel-archiver.ls.lsst.org',
+          share: 'auxtel/repo',
+          server: 'nfs-auxtel.ls.lsst.org',
           atboot: true,
         )
       end

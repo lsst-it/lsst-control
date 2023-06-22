@@ -24,6 +24,10 @@ describe 'pillan08.tu.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
+      it do
+        is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
+      end
+
       # 2 extra instances in the catalog for the rename interfaces
       it { is_expected.to have_profile__nm__connection_resource_count(14 + 2) }
 
@@ -75,7 +79,6 @@ describe 'pillan08.tu.lsst.org', :sitepp do
       end
 
       %w[
-        br3035
         br3065
         br3065
         br3085
@@ -87,6 +90,20 @@ describe 'pillan08.tu.lsst.org', :sitepp do
           it_behaves_like 'nm bridge interface'
           it_behaves_like 'nm no-ip interface'
         end
+      end
+
+      context 'with br3035' do
+        let(:interface) { 'br3035' }
+        let(:vlan) { '3035' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm no-ip interface'
+        it_behaves_like 'nm bridge interface'
+        it { expect(nm_keyfile['ipv4']['route1']).to eq('140.252.147.192/27') }
+        it { expect(nm_keyfile['ipv4']['route1_options']).to eq("table=#{vlan}") }
+        it { expect(nm_keyfile['ipv4']['route2']).to eq('0.0.0.0/0,140.252.147.193') }
+        it { expect(nm_keyfile['ipv4']['route2_options']).to eq("table=#{vlan}") }
+        it { expect(nm_keyfile['ipv4']['routing-rule1']).to eq("priority 100 from 140.252.147.192/27 table #{vlan}") }
       end
     end # on os
   end # on_supported_os

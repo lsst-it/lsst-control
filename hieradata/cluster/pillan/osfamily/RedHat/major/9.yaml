@@ -169,6 +169,11 @@ profile::nm::connections:
 
       [ipv4]
       method=disabled
+      route1=140.252.147.192/27
+      route1_options=table=3035
+      route2=0.0.0.0/0,140.252.147.193
+      route2_options=table=3035
+      routing-rule1=priority 100 from 140.252.147.192/27 table 3035
 
       [ipv6]
       method=disabled

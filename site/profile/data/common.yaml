@@ -1,6 +1,7 @@
 ---
 profile::core::convenience::packages:
   - "ack"
+  - "fpart"
   - "git"
   - "jq"
   - "neovim"

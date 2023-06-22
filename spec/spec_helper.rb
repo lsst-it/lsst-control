@@ -830,6 +830,7 @@ end
 shared_examples 'convenience' do
   %w[
     ack
+    fpart
     git
     neovim
     tree

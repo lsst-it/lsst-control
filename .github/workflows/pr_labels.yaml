@@ -12,5 +12,3 @@ jobs:
           mode: "exactly"
           count: 1
           labels: "enhancement, bug, skip-changelog"
-          add_comment: true
-          message: "This PR is being prevented from merging because of missing or incorrect labels."

@@ -1,6 +1,12 @@
 ---
+ipmi::networks:
+  lan1:
+    ip: "139.229.134.35"
+    netmask: "255.255.255.0"
+    gateway: "139.229.134.254"
+    type: "static"
 profile::nm::connections:
-  enp1s0f0:  #fqdn
+  enp1s0f0:  # fqdn
     content: |
       [connection]
       id=enp1s0f0

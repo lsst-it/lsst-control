@@ -181,7 +181,7 @@ class profile::core::common (
     include resolv_conf
   }
 
-  unless $facts['is_virtual'] {
+  unless fact('is_virtual') {
     include profile::core::hardware
     if has_key($facts['ipmitool_mc_info'], 'Device Available') {
       ipmi::network { 'dhcp': }

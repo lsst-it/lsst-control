@@ -1152,6 +1152,8 @@ end
 
 shared_examples 'baremetal' do
   include_examples 'ipmi'
+
+  it { is_expected.to contain_ipmi__network('lan1').with_type('dhcp') }
 end
 
 shared_examples 'baremetal no bmc' do

@@ -183,9 +183,6 @@ class profile::core::common (
 
   unless fact('is_virtual') {
     include profile::core::hardware
-    if has_key($facts['ipmitool_mc_info'], 'Device Available') {
-      ipmi::network { 'dhcp': }
-    }
   }
 
   ensure_resource('service', 'NetworkManager', {

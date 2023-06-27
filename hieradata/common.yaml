@@ -423,3 +423,7 @@ ccs_hcu::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
 ccs_monit::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
 
 systemd::manage_udevd: true
+
+ipmi::networks:
+  lan1:
+    type: "dhcp"

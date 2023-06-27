@@ -6,11 +6,15 @@ describe 'gis-bastion01.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
-        facts.merge(
-          fqdn: 'gis-bastion01.cp.lsst.org',
-        )
+        override_facts(facts,
+                       fqdn: 'gis-bastion01.cp.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'AS -1114S-WN10RT',
+                         },
+                       })
       end
-
       let(:node_params) do
         {
           role: 'bastion',
@@ -19,6 +23,8 @@ describe 'gis-bastion01.cp.lsst.org', :sitepp do
       end
 
       it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
 
       if facts[:os]['release']['major'] == '7'
         it do

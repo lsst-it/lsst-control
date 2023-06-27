@@ -9,8 +9,16 @@ require 'spec_helper'
 describe 'ruka04.dev.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let(:facts) { override_facts(facts, fqdn: 'ruka04.dev.lsst.org') }
-
+      let(:facts) do
+        override_facts(facts,
+                       fqdn: 'ruka04.dev.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'PowerEdge R430',
+                         },
+                       })
+      end
       let(:node_params) do
         {
           role: 'rke',
@@ -22,6 +30,8 @@ describe 'ruka04.dev.lsst.org', :sitepp do
       let(:vlan_id) { 2505 }
 
       it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
       it { is_expected.to contain_class('profile::core::ifdown').with_interface('em1') }
 
       if facts[:os]['release']['major'] == '7'

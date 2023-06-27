@@ -6,11 +6,15 @@ describe 'lsstcam-db01.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
-        facts.merge(
-          fqdn: 'lsstcam-db01.cp.lsst.org',
-        )
+        override_facts(facts,
+                       fqdn: 'lsstcam-db01.cp.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'PowerEdge R640',
+                         },
+                       })
       end
-
       let(:node_params) do
         {
           role: 'ccs-database',
@@ -25,6 +29,7 @@ describe 'lsstcam-db01.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
+      include_examples 'baremetal'
       include_examples 'ccs alerts'
 
       it do

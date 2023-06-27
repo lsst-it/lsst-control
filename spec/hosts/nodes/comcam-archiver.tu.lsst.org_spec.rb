@@ -9,11 +9,15 @@ describe 'comcam-archiver.tu.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        facts.merge(
-          fqdn: 'comcam-archiver.tu.lsst.org',
-        )
+        override_facts(facts,
+                       fqdn: 'comcam-archiver.tu.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'PowerEdge R440',
+                         },
+                       })
       end
-
       let(:node_params) do
         {
           role: 'comcam-archiver',
@@ -21,6 +25,10 @@ describe 'comcam-archiver.tu.lsst.org', :sitepp do
           cluster: 'comcam-archiver',
         }
       end
+
+      it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
 
       it do
         is_expected.to contain_network__interface('p2p1').with(
@@ -67,8 +75,6 @@ describe 'comcam-archiver.tu.lsst.org', :sitepp do
           type: 'Ethernet',
         )
       end
-
-      it { is_expected.to compile.with_all_deps }
 
       it { is_expected.to contain_class('nfs::server').with_nfs_v4(true) }
       it { is_expected.to contain_nfs__server__export('/data/lsstdata') }

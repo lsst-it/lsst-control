@@ -9,11 +9,15 @@ describe 'auxtel-archiver.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        facts.merge(
-          fqdn: 'auxtel-archiver.cp.lsst.org',
-        )
+        override_facts(facts,
+                       fqdn: 'auxtel-archiver.cp.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'PowerEdge R640',
+                         },
+                       })
       end
-
       let(:node_params) do
         {
           role: 'auxtel-archiver',
@@ -21,6 +25,10 @@ describe 'auxtel-archiver.cp.lsst.org', :sitepp do
           cluster: 'auxtel-archiver',
         }
       end
+
+      it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
 
       it do
         is_expected.to contain_network__interface('em1').with(
@@ -85,8 +93,6 @@ describe 'auxtel-archiver.cp.lsst.org', :sitepp do
           vlan: 'yes',
         )
       end
-
-      it { is_expected.to compile.with_all_deps }
 
       it { is_expected.to contain_class('nfs').with_server_enabled(false) }
       it { is_expected.to contain_class('nfs').with_client_enabled(true) }

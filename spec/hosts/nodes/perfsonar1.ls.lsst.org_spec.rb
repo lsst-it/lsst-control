@@ -2,13 +2,22 @@
 
 require 'spec_helper'
 
-describe 'perfsonar1.cp.lsst.org', :sitepp do
+describe 'perfsonar1.ls.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     # XXX networking needs to be updated to support EL8+
     next unless os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do
-      let(:facts) { override_facts(facts, fqdn: 'perfsonar1.ls.lsst.org') }
+      let(:facts) do
+        override_facts(facts,
+                       fqdn: 'perfsonar1.ls.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'PowerEdge R340',
+                         },
+                       })
+      end
       let(:node_params) do
         {
           role: 'perfsonar',
@@ -16,11 +25,13 @@ describe 'perfsonar1.cp.lsst.org', :sitepp do
         }
       end
 
+      it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
+
       it { is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/50-em1').with_content(%r{rx 2047 tx 511}) }
       it { is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/50-p2p1').with_content(%r{.*rx 4096 tx 4096.*}) }
       it { is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/50-p2p2').with_content(%r{.*rx 4096 tx 4096.*}) }
-
-      it { is_expected.to compile.with_all_deps }
 
       %w[p2p1 p2p2].each do |i|
         it do

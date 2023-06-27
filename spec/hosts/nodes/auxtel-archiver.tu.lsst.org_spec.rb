@@ -9,11 +9,15 @@ describe 'auxtel-archiver.tu.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        facts.merge(
-          fqdn: 'auxtel-archiver.tu.lsst.org',
-        )
+        override_facts(facts,
+                       fqdn: 'auxtel-archiver.tu.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'PowerEdge R630',
+                         },
+                       })
       end
-
       let(:node_params) do
         {
           role: 'auxtel-archiver',
@@ -21,6 +25,10 @@ describe 'auxtel-archiver.tu.lsst.org', :sitepp do
           cluster: 'auxtel-archiver',
         }
       end
+
+      it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
 
       it do
         is_expected.to contain_network__interface('p3p1').with(
@@ -83,8 +91,6 @@ describe 'auxtel-archiver.tu.lsst.org', :sitepp do
           type: 'Ethernet',
         )
       end
-
-      it { is_expected.to compile.with_all_deps }
 
       it { is_expected.to contain_class('nfs').with_server_enabled(false) }
       it { is_expected.to contain_class('nfs').with_client_enabled(true) }

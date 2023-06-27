@@ -27,7 +27,15 @@ describe 'core1.ls.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
+      include_examples('baremetal',
+                       bmc: {
+                         lan1: {
+                           ip: '10.50.3.130',
+                           netmask: '255.255.255.0',
+                           gateway: '10.50.3.254',
+                           type: 'static',
+                         },
+                       })
 
       it do
         is_expected.to contain_network__interface('em1').with(

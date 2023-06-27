@@ -8,4 +8,4 @@ ccs_software::service_email: "base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@l
 ccs_monit::alert:
   - "base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com"
 
-daq::daqsdk::version: "R5-V6.1"
+#daq::daqsdk::version: "R5-V6.7"

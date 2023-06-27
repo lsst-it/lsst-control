@@ -1150,10 +1150,16 @@ shared_examples 'krb5.conf.d files' do |facts:|
   end
 end
 
-shared_examples 'baremetal' do
+shared_examples 'baremetal' do |bmc: nil|
   include_examples 'ipmi'
 
-  it { is_expected.to contain_ipmi__network('lan1').with_type('dhcp') }
+  if bmc.nil?
+    it { is_expected.to contain_ipmi__network('lan1').with_type('dhcp') }
+  else
+    bmc.each do |intf, conf|
+      it { is_expected.to contain_ipmi__network(intf).with(conf) }
+    end
+  end
 end
 
 shared_examples 'baremetal no bmc' do

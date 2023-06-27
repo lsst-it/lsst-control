@@ -6,6 +6,9 @@ lookup_options:
   accounts::user_list:
     merge:
       strategy: "deep"
+  ipmi::networks:
+    merge:
+      strategy: "deep"
   network::interfaces_hash:
     merge:
       strategy: "deep"

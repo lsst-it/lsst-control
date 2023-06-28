@@ -65,4 +65,13 @@ class profile::core::rke (
     target => '/etc/sysctl.d/80-rke.conf',
   }
   -> Class['docker']
+
+  sysctl::value { 'fs.inotify.max_inotify_instances':
+    value  => 104857,
+    target => '/etc/sysctl.d/80-rke.conf',
+  }
+  sysctl::value { 'fs.inotify.max_inotify_watches':
+    value  => 1048576,
+    target => '/etc/sysctl.d/80-rke.conf',
+  }
 }

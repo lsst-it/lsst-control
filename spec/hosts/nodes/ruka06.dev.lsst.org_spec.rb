@@ -11,7 +11,16 @@ describe 'ruka06.dev.lsst.org', :sitepp do
   { 'almalinux-9-x86_64': alma9 }.each do |os, facts|
     # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
-      let(:facts) { override_facts(facts, fqdn: 'ruka06.dev.lsst.org') }
+      let(:facts) do
+        override_facts(facts,
+                       fqdn: 'ruka06.dev.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'PowerEdge R430',
+                         },
+                       })
+      end
       let(:node_params) do
         {
           role: 'hypervisor',
@@ -19,9 +28,10 @@ describe 'ruka06.dev.lsst.org', :sitepp do
         }
       end
 
-      include_context 'with nm interface'
-
       it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
+      include_context 'with nm interface'
 
       it { is_expected.to have_profile__nm__connection_resource_count(7) }
 

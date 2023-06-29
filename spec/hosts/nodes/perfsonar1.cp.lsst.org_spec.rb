@@ -9,24 +9,31 @@ describe 'perfsonar1.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(facts, fqdn: 'perfsonar1.cp.lsst.org')
+        override_facts(facts,
+                       fqdn: 'perfsonar1.cp.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'AS -1114S-WN10RT',
+                         },
+                       })
       end
-
       let(:node_params) do
         {
           role: 'perfsonar',
           site: 'cp',
         }
       end
-
       let(:lhn_vlan_id) { 1120 }
+
+      it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
 
       it { is_expected.to contain_class('Profile::Core::Nm_dispatch') }
       it { is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/50-eno1').with_content(%r{.*rx 2047 tx 2047.*}) }
       it { is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/50-enp1s0f0').with_content(%r{.*rx 4096 tx 4096.*}) }
       it { is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/50-enp1s0f1').with_content(%r{.*rx 4096 tx 4096.*}) }
-
-      it { is_expected.to compile.with_all_deps }
 
       it do
         is_expected.to contain_network__interface('enp1s0f0').with(

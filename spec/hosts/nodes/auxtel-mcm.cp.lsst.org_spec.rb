@@ -6,11 +6,15 @@ describe 'auxtel-mcm.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
-        facts.merge(
-          fqdn: 'auxtel-mcm.cp.lsst.org',
-        )
+        override_facts(facts,
+                       fqdn: 'auxtel-mcm.cp.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'PowerEdge R630',
+                         },
+                       })
       end
-
       let(:node_params) do
         {
           role: 'atsccs',
@@ -21,6 +25,7 @@ describe 'auxtel-mcm.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
+      include_examples 'baremetal'
       it { is_expected.to contain_class('nfs').with_server_enabled(false) }
       it { is_expected.to contain_class('nfs').with_client_enabled(false) }
     end # on os

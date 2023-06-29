@@ -18,7 +18,6 @@ describe 'pillan01.tu.lsst.org', :sitepp do
           'eno1np0'
         end
       end
-
       let(:int2) do
         if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
           'eno2d1'
@@ -26,13 +25,17 @@ describe 'pillan01.tu.lsst.org', :sitepp do
           'eno2np1'
         end
       end
-
       let(:facts) do
         override_facts(facts,
                        networking: { interfaces: { int1 => { mac: '11:22:33:44:55:66' } } },
-                       fqdn: 'pillan01.tu.lsst.org')
+                       fqdn: 'pillan01.tu.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'AS -1114S-WN10RT',
+                         },
+                       })
       end
-
       let(:node_params) do
         {
           role: 'rke',
@@ -42,6 +45,8 @@ describe 'pillan01.tu.lsst.org', :sitepp do
       end
 
       it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
 
       it do
         is_expected.to contain_class('cni::plugins').with(

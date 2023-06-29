@@ -8,7 +8,16 @@ describe 'core02.dev.lsst.org', :sitepp do
   { 'almalinux-9-x86_64': alma9 }.each do |os, facts|
     # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
-      let(:facts) { override_facts(facts, fqdn: 'core02.dev.lsst.org') }
+      let(:facts) do
+        override_facts(facts,
+                       fqdn: 'core02.dev.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'AS -1114S-WN10RT',
+                         },
+                       })
+      end
       let(:node_params) do
         {
           role: 'hypervisor',
@@ -16,6 +25,17 @@ describe 'core02.dev.lsst.org', :sitepp do
         }
       end
 
+      it { is_expected.to compile.with_all_deps }
+
+      include_examples('baremetal',
+                       bmc: {
+                         lan1: {
+                           ip: '139.229.134.36',
+                           netmask: '255.255.255.0',
+                           gateway: '139.229.134.254',
+                           type: 'static',
+                         },
+                       })
       include_context 'with nm interface'
 
       it { is_expected.to have_network__interface_resource_count(0) }

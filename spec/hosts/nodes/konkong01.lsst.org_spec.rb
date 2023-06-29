@@ -7,7 +7,16 @@ describe 'konkong01.ls.lsst.org', :sitepp do
     next if os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do
-      let(:facts) { override_facts(facts, fqdn: 'konkong01.ls.lsst.org') }
+      let(:facts) do
+        override_facts(facts,
+                       fqdn: 'konkong01.ls.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'AS -1114S-WN10RT',
+                         },
+                       })
+      end
       let(:node_params) do
         {
           role: 'rke',
@@ -16,9 +25,10 @@ describe 'konkong01.ls.lsst.org', :sitepp do
         }
       end
 
-      include_context 'with nm interface'
-
       it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
+      include_context 'with nm interface'
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)

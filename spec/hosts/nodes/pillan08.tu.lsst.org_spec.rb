@@ -11,7 +11,16 @@ describe 'pillan08.tu.lsst.org', :sitepp do
   { 'almalinux-9-x86_64': alma9 }.each do |os, facts|
     # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
-      let(:facts) { override_facts(facts, fqdn: 'pillan08.tu.lsst.org') }
+      let(:facts) do
+        override_facts(facts,
+                       fqdn: 'pillan08.tu.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'AS -1114S-WN10RT',
+                         },
+                       })
+      end
       let(:node_params) do
         {
           role: 'rke',
@@ -20,9 +29,10 @@ describe 'pillan08.tu.lsst.org', :sitepp do
         }
       end
 
-      include_context 'with nm interface'
-
       it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
+      include_context 'with nm interface'
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)

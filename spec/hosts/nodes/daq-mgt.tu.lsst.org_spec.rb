@@ -7,7 +7,16 @@ describe 'daq-mgt.tu.lsst.org', :sitepp do
     next unless os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do
-      let(:facts) { facts.merge(fqdn: 'daq-mgt.tu.lsst.org') }
+      let(:facts) do
+        override_facts(facts,
+                       fqdn: 'daq-mgt.tu.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'PowerEdge R530',
+                         },
+                       })
+      end
       let(:node_params) do
         {
           role: 'daq-mgt',
@@ -15,10 +24,12 @@ describe 'daq-mgt.tu.lsst.org', :sitepp do
         }
       end
 
+      it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
       include_examples 'lsst-daq dhcp-server'
       include_examples 'daq nfs exports'
 
-      it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V6.1') }
       it { is_expected.to contain_class('daq::rptsdk').with_version('V3.5.3') }
       it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }

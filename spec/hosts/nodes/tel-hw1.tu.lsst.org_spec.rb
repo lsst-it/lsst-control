@@ -6,11 +6,15 @@ describe 'tel-hw1.tu.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
-        facts.merge(
-          fqdn: 'tel-hw1.tu.lsst.org',
-        )
+        override_facts(facts,
+                       fqdn: 'tel-hw1.tu.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'Super Server',
+                         },
+                       })
       end
-
       let(:node_params) do
         {
           role: 'amor',
@@ -19,6 +23,8 @@ describe 'tel-hw1.tu.lsst.org', :sitepp do
       end
 
       it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal no bmc'
 
       it do
         is_expected.to contain_nfs__client__mount('/net/obs-env').with(

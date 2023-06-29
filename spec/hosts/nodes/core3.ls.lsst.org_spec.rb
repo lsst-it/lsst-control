@@ -9,17 +9,33 @@ describe 'core3.ls.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        facts.merge(
-          fqdn: 'core3.ls.lsst.org',
-        )
+        override_facts(facts,
+                       fqdn: 'core3.ls.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'PowerEdge R440',
+                         },
+                       })
       end
-
       let(:node_params) do
         {
           role: 'hypervisor',
           site: 'ls',
         }
       end
+
+      it { is_expected.to compile.with_all_deps }
+
+      include_examples('baremetal',
+                       bmc: {
+                         lan1: {
+                           ip: '10.50.3.132',
+                           netmask: '255.255.255.0',
+                           gateway: '10.50.3.254',
+                           type: 'static',
+                         },
+                       })
 
       it do
         is_expected.to contain_network__interface('em1').with(

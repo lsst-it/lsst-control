@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'core2.ls.lsst.org', :sitepp do
+describe 'core1.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     # XXX networking needs to be updated to support EL8+
     next unless os =~ %r{centos-7-x86_64}
@@ -10,7 +10,7 @@ describe 'core2.ls.lsst.org', :sitepp do
     context "on #{os}" do
       let(:facts) do
         override_facts(facts,
-                       fqdn: 'core2.ls.lsst.org',
+                       fqdn: 'core1.cp.lsst.org',
                        is_virtual: false,
                        dmi: {
                          'product' => {
@@ -21,7 +21,7 @@ describe 'core2.ls.lsst.org', :sitepp do
       let(:node_params) do
         {
           role: 'hypervisor',
-          site: 'ls',
+          site: 'cp',
         }
       end
 
@@ -30,16 +30,16 @@ describe 'core2.ls.lsst.org', :sitepp do
       include_examples('baremetal',
                        bmc: {
                          lan1: {
-                           ip: '10.50.3.131',
+                           ip: '10.18.3.10',
                            netmask: '255.255.255.0',
-                           gateway: '10.50.3.254',
+                           gateway: '10.18.3.254',
                            type: 'static',
                          },
                        })
 
       it do
         is_expected.to contain_network__interface('em1').with(
-          ipaddress: '139.229.135.3',
+          ipaddress: '139.229.160.1',
         )
       end
     end # on os

@@ -13,9 +13,15 @@ describe 'chonchon01.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(facts, fqdn: 'chonchon01.cp.lsst.org')
+        override_facts(facts,
+                       fqdn: 'chonchon01.cp.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'PowerEdge R730xd',
+                         },
+                       })
       end
-
       let(:node_params) do
         {
           role: 'rke',
@@ -23,10 +29,11 @@ describe 'chonchon01.cp.lsst.org', :sitepp do
           cluster: 'chonchon',
         }
       end
-
       let(:lhn_vlan_id) { 1800 }
 
       it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
       it { is_expected.to contain_kmod__load('dummy') }
 
       it do

@@ -1150,4 +1150,28 @@ shared_examples 'krb5.conf.d files' do |facts:|
   end
 end
 
+shared_examples 'baremetal' do |bmc: nil|
+  include_examples 'ipmi'
+
+  if bmc.nil?
+    it { is_expected.to contain_ipmi__network('lan1').with_type('dhcp') }
+  else
+    bmc.each do |intf, conf|
+      it { is_expected.to contain_ipmi__network(intf).with(conf) }
+    end
+  end
+end
+
+shared_examples 'baremetal no bmc' do
+  it { is_expected.not_to contain_class('ipmi') }
+end
+
+shared_examples 'vm' do
+  it { is_expected.not_to contain_class('ipmi') }
+end
+
+shared_examples 'ipmi' do
+  it { is_expected.to contain_class('ipmi') }
+end
+
 # 'spec_overrides' from sync.yml will appear below this line

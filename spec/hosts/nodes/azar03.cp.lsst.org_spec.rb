@@ -7,8 +7,16 @@ describe 'azar03.cp.lsst.org', :sitepp do
     next if os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do
-      let(:facts) { facts.merge(fqdn: 'azar03.cp.lsst.org') }
-
+      let(:facts) do
+        override_facts(facts,
+                       fqdn: 'azar03.cp.lsst.org',
+                       is_virtual: false,
+                       dmi: {
+                         'product' => {
+                           'name' => 'AS -1114S-WN10RT',
+                         },
+                       })
+      end
       let(:node_params) do
         {
           role: 'dco',
@@ -17,6 +25,8 @@ describe 'azar03.cp.lsst.org', :sitepp do
       end
 
       it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
 
       it do
         is_expected.to contain_class('docker::networks').with(

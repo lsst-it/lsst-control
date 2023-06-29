@@ -1,4 +1,10 @@
 ---
+ipmi::networks:
+  lan1:
+    ip: "140.252.146.138"
+    netmask: "255.255.255.192"
+    gateway: "140.252.146.129"
+    type: "static"
 network::interfaces_hash:
   em1:  # fqdn
     ipaddress: "140.252.146.68"

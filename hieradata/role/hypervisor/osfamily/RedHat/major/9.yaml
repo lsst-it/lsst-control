@@ -1,0 +1,6 @@
+---
+libvirt::service::modular_services:
+  virtproxyd:
+    ensure: "running"
+    enable: true
+    tag: "libvirt-libvirtd-conf"

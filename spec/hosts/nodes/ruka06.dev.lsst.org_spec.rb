@@ -26,6 +26,7 @@ describe 'ruka06.dev.lsst.org', :sitepp do
           role: 'hypervisor',
           site: 'dev',
           variant: 'r430',
+          subvariant: 'hypervisor',
         }
       end
 

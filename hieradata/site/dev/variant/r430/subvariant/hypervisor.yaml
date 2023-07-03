@@ -1,0 +1,53 @@
+---
+profile::nm::connections:
+  enp10s0f0:
+    content: |
+      [connection]
+      id=enp10s0f0
+      uuid=4665d909-9fd9-4ab8-9dea-3c05a475647b
+      type=ethernet
+      interface-name=enp10s0f0
+      master=br2101
+      slave-type=bridge
+
+      [ethernet]
+
+      [bridge-port]
+  enp10s0f1:
+    content: |
+      [connection]
+      id=enp10s0f1
+      uuid=e2d5b866-6e73-46ed-9541-49da8d992e49
+      type=ethernet
+      autoconnect=false
+      interface-name=enp10s0f1
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+      [proxy]
+  br2101:
+    content: |
+      [connection]
+      id=br2101
+      uuid=1bdc7b0e-be45-510a-0f01-ded9a7c4e0c4
+      type=bridge
+      interface-name=br2101
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=auto
+
+      [ipv6]
+      method=disabled
+
+      [proxy]

@@ -1,12 +1,12 @@
 ---
 profile::nm::connections:
-  ens192:
+  ens3:
     content: |
       [connection]
-      id=ens192
+      id=ens3
       uuid=03da7500-2101-c722-2438-d0d006c28c73
       type=ethernet
-      interface-name=ens192
+      interface-name=ens3
 
       [ethernet]
 

@@ -31,8 +31,8 @@ describe 'dns1.dev.lsst.org', :sitepp do
       it { is_expected.to have_network__interface_resource_count(0) }
       it { is_expected.to have_profile__nm__connection_resource_count(1) }
 
-      context 'with ens192' do
-        let(:interface) { 'ens192' }
+      context 'with ens3' do
+        let(:interface) { 'ens3' }
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'

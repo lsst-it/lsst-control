@@ -726,6 +726,7 @@ shared_examples 'generic foreman' do
   it do
     is_expected.to contain_class('dhcp').with(
       ntpservers: ntpservers,
+      nameservers: nameservers,
       option_static_route: true,
     )
   end

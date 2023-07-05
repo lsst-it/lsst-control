@@ -2,14 +2,14 @@
 
 require 'spec_helper'
 
-describe 'dns1.dev.lsst.org', :sitepp do
+describe 'dns2.dev.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
     next if os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do
       let(:facts) do
         override_facts(facts,
-                       fqdn: 'dns1.dev.lsst.org',
+                       fqdn: 'dns2.dev.lsst.org',
                        is_virtual: true,
                        dmi: {
                          'product' => {
@@ -36,7 +36,7 @@ describe 'dns1.dev.lsst.org', :sitepp do
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.134.53/24,139.229.134.254') }
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.134.54/24,139.229.134.254') }
         it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.134.53;139.229.135.54;139.229.135.55;') }
         it { expect(nm_keyfile['ipv4']['dns-search']).to eq('dev.lsst.org;') }
         it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }

@@ -93,8 +93,8 @@ dhcp::dnsdomain: &dnsdomains
 # @see man 5 resolv.conf
 dhcp::nameservers: &nameservers
   - "139.229.134.53"  # dns1.dev.lsst.org
-  - "139.229.135.54"  # dns2.ls.lsst.org
-  - "139.229.135.55"  # dns3.ls.lsst.org
+  - "139.229.134.54"  # dns2.dev.lsst.org
+  - "139.229.134.55"  # dns3.dev.lsst.org
 dhcp::ntpservers: &ntpservers
   - "ntp.shoa.cl"
   - "ntp.cp.lsst.org"

@@ -27,6 +27,13 @@ describe "#{role} role" do
             1.south-america.pool.ntp.org
           ]
         end
+        let(:nameservers) do
+          %w[
+            139.229.134.53
+            139.229.134.54
+            139.229.134.55
+          ]
+        end
         let(:ignore_branch_prefixes) do
           %w[
             master
@@ -63,6 +70,13 @@ describe "#{role} role" do
             140.252.1.140
             140.252.1.141
             140.252.1.142
+          ]
+        end
+        let(:nameservers) do
+          %w[
+            140.252.146.71
+            140.252.146.72
+            140.252.146.73
           ]
         end
         let(:ignore_branch_prefixes) do
@@ -195,6 +209,13 @@ describe "#{role} role" do
             ntp.cp.lsst.org
             1.cl.pool.ntp.org
             1.south-america.pool.ntp.org
+          ]
+        end
+        let(:nameservers) do
+          %w[
+            139.229.135.53
+            139.229.135.54
+            139.229.135.55
           ]
         end
         let(:ignore_branch_prefixes) do
@@ -440,6 +461,13 @@ describe "#{role} role" do
             ntp.shoa.cl
             1.cl.pool.ntp.org
             1.south-america.pool.ntp.org
+          ]
+        end
+        let(:nameservers) do
+          %w[
+            139.229.160.53
+            139.229.160.54
+            139.229.160.55
           ]
         end
         let(:ignore_branch_prefixes) do

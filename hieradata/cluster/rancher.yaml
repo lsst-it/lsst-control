@@ -2,8 +2,27 @@
 # Be advised that there is a rancher cluster per site and changes here will
 # apply to all of them.
 clustershell::groupmembers:
-  kueyen: {group: "rancher", member: "rancher[1-3]"}
+  rancher: {group: "rancher", member: "rancher[1-3]"}
 
 profile::core::common::manage_powertop: true
 profile::core::ospl::enable_rundir: true
 profile::core::rke::enable_dhcp: true
+
+profile::nm::connections:
+  ens3:
+    content: |
+      [connection]
+      id=ens3
+      uuid=03da7500-2101-c722-2438-d0d006c28c73
+      type=ethernet
+      interface-name=ens3
+
+      [ethernet]
+
+      [ipv4]
+      method=auto
+
+      [ipv6]
+      method=disabled
+
+      [proxy]

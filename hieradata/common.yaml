@@ -68,6 +68,10 @@ lookup_options:
   profile::core::puppet_master::foreman_global_parameter:
     merge:
       strategy: "deep"
+  nm::conf:
+    merge:
+      strategy: "deep"
+      knockout_prefix: "--"
   nm::connections:
     merge:
       strategy: "deep"

@@ -5,6 +5,7 @@ profile::core::convenience::packages:
   - "git"
   - "jq"
   - "neovim"
+  - "parallel"
   - "screen"
   - "tree"
   - "vim"

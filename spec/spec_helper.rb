@@ -847,7 +847,11 @@ shared_examples 'convenience' do
     ack
     fpart
     git
+    jq
     neovim
+    parallel
+    rsync
+    screen
     tree
     vim
   ].each do |pkg|

@@ -39,7 +39,7 @@ describe 'pillan08.tu.lsst.org', :sitepp do
       end
 
       # 2 extra instances in the catalog for the rename interfaces
-      it { is_expected.to have_profile__nm__connection_resource_count(14 + 2) }
+      it { is_expected.to have_nm__connection_resource_count(14 + 2) }
 
       %w[
         enp4s0f3u2u2c2

@@ -118,7 +118,7 @@ class profile::core::common (
       }
       default: { # EL9+
         ensure_packages(['NetworkManager-initscripts-updown'])
-        include profile::nm
+        include nm
       }
     }
   }

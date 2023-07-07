@@ -11,7 +11,7 @@ describe 'profile::core::nm_dispatch' do
           if fact('os.release.major') == '7' {
             include network
           } else {
-            include profile::nm
+            include nm
           }
         PP
       end
@@ -35,7 +35,7 @@ describe 'profile::core::nm_dispatch' do
           if facts[:os]['release']['major'] == '7'
             'Class[network]'
           else
-            'Class[profile::nm]'
+            'Class[nm]'
           end
         end
 

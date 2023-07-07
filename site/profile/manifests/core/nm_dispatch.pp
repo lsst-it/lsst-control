@@ -16,7 +16,7 @@ class profile::core::nm_dispatch (
       #$network_notify = "Exec[network_restart_${dev}]"
       $network_notify = fact('os.release.major') ? {
         '7'     => 'Class[network]',
-        default => 'Class[profile::nm]',
+        default => 'Class[nm]',
       }
 
       $data = {

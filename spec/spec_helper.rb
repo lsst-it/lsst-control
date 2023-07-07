@@ -251,7 +251,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
 
       network and it { is_expected.to contain_class('network') }
-      it { is_expected.not_to contain_class('profile::nm') }
+      it { is_expected.not_to contain_class('nm') }
 
       if facts[:os]['architecture'] == 'x86_64'
         it { is_expected.to contain_class('scl') }
@@ -261,13 +261,24 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
     else # every EL version except 7
       it { is_expected.not_to contain_class('yum').with_managed_repos(['extras']) }
       it { is_expected.not_to contain_class('scl') }
+
+      it do
+        is_expected.to contain_class('nm').with(
+          conf: {
+            'main' => {
+              'dns' => 'none',
+            },
+            'logging' => {},
+          },
+        )
+      end
     end
 
     if facts[:os]['release']['major'] == '8'
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
 
       network and it { is_expected.not_to contain_class('network') }
-      it { is_expected.to contain_class('profile::nm') }
+      it { is_expected.to contain_class('nm') }
       it { is_expected.to contain_package('NetworkManager-initscripts-updown') }
     end
 
@@ -275,7 +286,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
       it { is_expected.to contain_class('lldpd').with_manage_repo(false) }
 
       network and it { is_expected.not_to contain_class('network') }
-      it { is_expected.to contain_class('profile::nm') }
+      it { is_expected.to contain_class('nm') }
       it { is_expected.to contain_package('NetworkManager-initscripts-updown') }
     end
   else # not osfamily RedHat
@@ -899,7 +910,7 @@ end
 
 shared_context 'with nm interface' do
   let(:nm_keyfile_raw) do
-    catalogue.resource('profile::nm::connection', interface)[:content]
+    catalogue.resource('nm::connection', interface)[:content]
   end
 
   let(:nm_keyfile) do

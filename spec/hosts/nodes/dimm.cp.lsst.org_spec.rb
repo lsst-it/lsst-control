@@ -29,7 +29,7 @@ describe 'dimm.cp.lsst.org', :sitepp do
       include_examples 'baremetal no bmc'
       include_context 'with nm interface'
       it { is_expected.to have_network__interface_resource_count(0) }
-      it { is_expected.to have_profile__nm__connection_resource_count(2) }
+      it { is_expected.to have_nm__connection_resource_count(2) }
 
       context 'with eno1' do
         let(:interface) { 'eno1' }

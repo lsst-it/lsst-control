@@ -850,6 +850,7 @@ shared_examples 'convenience' do
     jq
     neovim
     parallel
+    rsync
     screen
     tree
     vim

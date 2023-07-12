@@ -95,6 +95,10 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm bridge interface'
       end
+
+      it { is_expected.to contain_service('focal-plane') }
+
+      it { is_expected.to contain_systemd__unit_file('image-handling.service').with_content(%r{^User=ccs-ipa}) }
     end # on os
   end # on_supported_os
 end

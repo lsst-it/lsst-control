@@ -6,42 +6,162 @@ profile::core::nm_dispatch::interfaces:
     - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
   enp1s0f1:
     - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
+profile::nm::connections:
+  eno1np0:
+    content: |
+      [connection]
+      id=eno1np0
+      uuid=f330f829-20cc-b829-67b0-18086a5fe6fa
+      type=ethernet
+      autoconnect=true
+      interface-name=eno1np0
 
-network::interfaces_hash:
+      [ethernet]
+
+      [ipv4]
+      method=auto
+
+      [ipv6]
+      method=disabled
+  eno2np1:
+    content: |
+      [connection]
+      id=eno2np1
+      uuid=de9904c8-9577-1a17-36b1-34b94132f06a
+      type=ethernet
+      autoconnect=false
+      interface-name=eno2np1
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  enp5s0f3u2u2c2:
+    content: |
+      [connection]
+      id=enp5s0f3u2u2c2
+      uuid=283f3035-13d7-4c87-9d7a-7d47861fa1f9
+      type=ethernet
+      autoconnect=false
+      interface-name=enp5s0f3u2u2c2
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
   enp1s0f0:
-    bootproto: "none"
-    onboot: "yes"
-    type: "Ethernet"
-    mtu: "9000"
-  enp1s0f1:
-    bootproto: "none"
-    onboot: "yes"
-    type: "Ethernet"
-    mtu: "9000"
-  enp1s0f0.1120:
-    bootproto: "none"
-    onboot: "yes"
-    vlan: "yes"
-    type: "vlan"
-    ipaddress: "139.229.164.220"
-    netmask: "255.255.255.254"
-    nozeroconf: "yes"
-    mtu: "9000"
+    content: |
+      [connection]
+      id=enp1s0f0
+      uuid=46d19ce1-bcab-7e77-6fc7-b730b26c54b1
+      type=ethernet
+      autoconnect=false
+      interface-name=enp1s0f0
 
-network::hostname: "%{facts.fqdn}"
-network::mroutes_hash:
+      [ethernet]
+      mtu=9000
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
   enp1s0f0.1120:
-    routes:
-      "139.229.164.0/24": "enp1s0f0.1120"
-      "139.229.140.135/32": &via "139.229.164.254"
-      "139.229.140.137/32": *via
-      "198.32.252.39/32": *via
-      "198.32.252.192/31": *via  # miami throughput
-      "198.32.252.208/31": *via
-      "198.32.252.210/31": *via
-      "198.32.252.216/31": *via
-      "198.32.252.218/31": *via
-      "198.32.252.232/31": *via
-      "198.32.252.234/31": *via
-      "134.79.235.226/32": *via  # SLAC IT-3892
-      "134.79.235.242/32": *via  # SLAC IT-3892
+    content: |
+      [connection]
+      id=enp1s0f0.1120
+      uuid=e74daaad-4d73-4015-bb26-83c460ddf572
+      type=vlan
+      interface-name=enp1s0f0.1120
+      master=bra1120
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=1120
+      parent=enp1s0f0
+
+      [bridge-port]
+  bra1120:
+    content: |
+      [connection]
+      id=bra1120
+      uuid=7dd05d98-a9c3-4569-a7c3-00316b13c0eb
+      type=bridge
+      interface-name=bra1120
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=auto
+
+      [ipv6]
+      method=disabled
+
+      [proxy]
+  enp1s0f1:
+    content: |
+      [connection]
+      id=enp1s0f1
+      uuid=46d19ce1-bcab-7e77-6fc7-b730b26c54b1
+      type=ethernet
+      autoconnect=false
+      interface-name=enp1s0f1
+
+      [ethernet]
+      mtu=9000
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  enp1s0f1.1120:
+    content: |
+      [connection]
+      id=enp1s0f1.1120
+      uuid=e74daaad-4d73-4015-bb26-83c460ddf572
+      type=vlan
+      interface-name=enp1s0f1.1120
+      master=brb1120
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=1120
+      parent=enp1s0f1
+
+      [bridge-port]
+  brb1120:
+    content: |
+      [connection]
+      id=brb1120
+      uuid=7dd05d98-a9c3-4569-a7c3-00316b13c0eb
+      type=bridge
+      interface-name=brb1120
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=auto
+
+      [ipv6]
+      method=disabled
+
+      [proxy]

@@ -140,5 +140,6 @@ ccs_sal::rpms:
   ts_sal_utils: "ts_sal_utils-7.3.0-1.x86_64.rpm"
 
 daq::daqsdk::purge: false
+daq::daqsdk::version: "R5-V6.7"
 
 hosts::stored_config: false

@@ -54,6 +54,7 @@ ccs_site: "summit"
 ccs_instrument: "camera"
 
 ccs_daq::instrument: "%{lookup('ccs_instrument')}"
+ccs_daq::apps_noinstrument: true
 
 ccs_sal::dds_domain: "%{lookup('ccs_site')}"
 ccs_sal::dds_interface: "lsstcam-mcm-dds"

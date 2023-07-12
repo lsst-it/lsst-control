@@ -27,6 +27,9 @@ lookup_options:
   ccs_software::installations:
     merge:
       strategy: "deep"
+  ccs_software::services:
+    merge:
+      strategy: "deep"
   ccs_software::global_properties:
     merge:
       strategy: "unique"

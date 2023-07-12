@@ -51,7 +51,7 @@ ccs_sal::rpms_private:
 
 ## Used in lookups:
 ccs_site: "summit"
-ccs_instrument: "lsstcam"
+ccs_instrument: "camera"
 
 ccs_daq::instrument: "%{lookup('ccs_instrument')}"
 

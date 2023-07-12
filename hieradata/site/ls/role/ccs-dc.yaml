@@ -1,0 +1,4 @@
+---
+ccs_software::services:
+  prod:
+    - {name: "image-handling", user: "ccs-ipa", group: "ccs-ipa", workdir: "/home/ccs-ipa"}

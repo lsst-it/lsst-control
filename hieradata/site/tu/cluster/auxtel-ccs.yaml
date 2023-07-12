@@ -10,5 +10,3 @@ ccs_monit::alert:
 
 clustershell::groupmembers:
   all: {group: "all", member: "auxtel-fp01,auxtel-mcm"}
-
-daq::daqsdk::version: "R5-V6.1"

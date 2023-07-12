@@ -13,5 +13,3 @@ clustershell::groupmembers:
   #hcu: {group: "hcu", member: "auxtel-hcu01"}
   #all: {group: "all", member: "@misc,@hcu"}
   all: {group: "all", member: "@misc"}
-
-daq::daqsdk::version: "R5-V6.1"

@@ -99,6 +99,16 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
       it { is_expected.to contain_service('focal-plane') }
 
       it { is_expected.to contain_systemd__unit_file('image-handling.service').with_content(%r{^User=ccs-ipa}) }
+
+      it do
+        # ccs-ipa = 72055
+        is_expected.to contain_file('/data/ccs-ipa-data').with(
+          ensure: 'directory',
+          owner: 72_055,
+          group: 72_055,
+          mode: '0755',
+        )
+      end
     end # on os
   end # on_supported_os
 end

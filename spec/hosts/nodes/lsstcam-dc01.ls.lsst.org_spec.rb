@@ -100,6 +100,8 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
 
       it { is_expected.to contain_systemd__unit_file('image-handling.service').with_content(%r{^User=ccs-ipa}) }
 
+      it { is_expected.to contain_file('/etc/ccs/image-handling.app') }
+
       it do
         # ccs-ipa = 72055
         is_expected.to contain_file('/data/ccs-ipa-data').with(

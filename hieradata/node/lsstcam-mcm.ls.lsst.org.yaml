@@ -1,5 +1,7 @@
 ---
 ccs_software::services:
   prod:
+    - "mcm"
+    - "ocs-bridge"
     - "cluster-monitor"
     - "lockmanager"

@@ -1,11 +1,11 @@
 ---
-profile::ccs::data::files:
-  /data:
+files:
+  "/data":
     ensure: "directory"
     mode: "0755"
     owner: 0
     group: 0
-  /data/ccs-ipa-data:
+  "/data/ccs-ipa-data":
     ensure: "directory"
     mode: "0755"
     owner: &ccsipauser 72055

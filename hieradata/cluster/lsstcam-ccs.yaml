@@ -51,15 +51,17 @@ ccs_sal::rpms_private:
 
 ## Used in lookups:
 ccs_site: "summit"
-ccs_instrument: "lsstcam"
+ccs_instrument: "camera"
 
 ccs_daq::instrument: "%{lookup('ccs_instrument')}"
+ccs_daq::apps_noinstrument: true
 
 ccs_sal::dds_domain: "%{lookup('ccs_site')}"
 ccs_sal::dds_interface: "lsstcam-mcm-dds"
 ccs_sal::instrument: "%{lookup('ccs_instrument')}"
 
 ccs_software::global_properties:
+  - "org.lsst.ccs.lockservice=remote"
   - "org.lsst.ccs.subsystem.agent.property.instrument=%{lookup('ccs_instrument')}"
   - "org.lsst.ccs.subsystem.agent.property.cluster=%{lookup('ccs_instrument')}"
   - "org.lsst.ccs.subsystem.agent.property.site=%{lookup('ccs_site')}"

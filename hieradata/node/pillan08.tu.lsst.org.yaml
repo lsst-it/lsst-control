@@ -1,5 +1,5 @@
 ---
-profile::nm::connections:
+nm::connections:
   enp129s0f0:
     ensure: "absent"
   enp129s0f1:

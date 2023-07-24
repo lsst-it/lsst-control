@@ -68,7 +68,11 @@ lookup_options:
   profile::core::puppet_master::foreman_global_parameter:
     merge:
       strategy: "deep"
-  profile::nm::connections:
+  nm::conf:
+    merge:
+      strategy: "deep"
+      knockout_prefix: "--"
+  nm::connections:
     merge:
       strategy: "deep"
       knockout_prefix: "--"
@@ -427,3 +431,7 @@ systemd::manage_udevd: true
 ipmi::networks:
   lan1:
     type: "dhcp"
+
+nm::conf:
+  main:
+    dns: "none"

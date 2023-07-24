@@ -1,5 +1,5 @@
 ---
-profile::nm::connections:
+nm::connections:
   enp10s0f0:
     content: |
       [connection]

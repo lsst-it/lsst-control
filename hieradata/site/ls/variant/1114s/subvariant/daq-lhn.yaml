@@ -1,5 +1,5 @@
 ---
-profile::nm::connections:
+nm::connections:
   enp197s0f0:  # daq
     content: |
       [connection]

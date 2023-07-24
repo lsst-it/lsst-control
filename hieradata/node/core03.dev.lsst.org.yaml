@@ -5,7 +5,7 @@ ipmi::networks:
     netmask: "255.255.255.0"
     gateway: "139.229.134.254"
     type: "static"
-profile::nm::connections:
+nm::connections:
   enp1s0f0:  # fqdn
     content: |
       [connection]

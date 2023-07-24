@@ -7,7 +7,7 @@ docker::networks::networks:
     gateway: "139.229.178.254"
     options: ["parent=dds"]
 
-profile::nm::connections:
+nm::connections:
   enp1s0f0:
     content: |
       [connection]

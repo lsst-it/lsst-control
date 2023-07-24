@@ -1,5 +1,5 @@
 ---
-profile::nm::connections:
+nm::connections:
   eno1np0:
     content: |
       [connection]

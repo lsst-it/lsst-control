@@ -37,6 +37,24 @@ profile::ccs::postfix::packages:
   # required for postfix sasl auth
   - "cyrus-sasl-plain"
 profile::ccs::common::packages:
+  - "attr"
+  - "bison"
+  - "blas"
+  - "bzip2"
+  - "cmake"
+  - "emacs"
+  - "epel-release"
+  - "flex"
+  - "gcc"
+  - "gcc-c++"
+  - "gcc-gfortran"
+  - "maven"
+  - "nano"
+  - "parallel"
+  - "rsync"
+  - "screen"
+  - "tcl"
+  - "tcl-devel"
   - "time"
 profile::ts::nexusctio::repos:
   "nexus-ctio":

@@ -1,24 +1,4 @@
 ---
-packages:
-  - "attr"
-  - "bison"
-  - "blas"
-  - "bzip2"
-  - "cmake"
-  - "emacs"
-  - "epel-release"
-  - "flex"
-  - "gcc"
-  - "gcc-c++"
-  - "gcc-gfortran"
-  - "maven"
-  - "nano"
-  - "parallel"
-  - "rsync"
-  - "screen"
-  - "tcl"
-  - "tcl-devel"
-
 postfix::manage_root_alias: false
 postfix::inet_protocols: "ipv4"
 postfix::inet_interfaces: "localhost"

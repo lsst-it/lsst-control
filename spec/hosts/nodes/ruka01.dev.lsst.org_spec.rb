@@ -139,6 +139,21 @@ describe 'ruka01.dev.lsst.org', :sitepp do
             ],
           )
         end
+      else
+        include_context 'with nm interface'
+
+        it { is_expected.to have_nm__connection_resource_count(2) }
+
+        %w[
+          eno1
+          eno2
+        ].each do |i|
+          context "with #{i}" do
+            let(:interface) { i }
+
+            it_behaves_like 'nm disabled interface'
+          end
+        end
       end
     end # on os
   end # on_supported_os

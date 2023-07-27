@@ -1,0 +1,38 @@
+---
+nm::connections:
+  eno1:
+    content: |
+      [connection]
+      id=eno1
+      uuid=28edea4e-f8b8-42b5-bc65-a56e935fe8bb
+      type=ethernet
+      autoconnect=false
+      interface-name=eno1
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+      [proxy]
+  eno2:
+    content: |
+      [connection]
+      id=eno2
+      uuid=602db0f9-a454-44b5-8515-f24e1c5ac998
+      type=ethernet
+      autoconnect=false
+      interface-name=eno2
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+      [proxy]

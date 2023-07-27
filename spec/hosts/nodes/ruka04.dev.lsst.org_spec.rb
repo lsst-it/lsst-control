@@ -70,6 +70,23 @@ describe 'ruka04.dev.lsst.org', :sitepp do
             bridge: "br#{vlan_id}",
           )
         end
+      else
+        include_context 'with nm interface'
+
+        it { is_expected.to have_nm__connection_resource_count(4) }
+
+        %w[
+          eno1
+          eno2
+          eno3
+          eno4
+        ].each do |i|
+          context "with #{i}" do
+            let(:interface) { i }
+
+            it_behaves_like 'nm disabled interface'
+          end
+        end
       end
     end # on os
   end # on_supported_os

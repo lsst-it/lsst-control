@@ -76,7 +76,6 @@ class profile::core::common (
   include profile::core::ca
   include profile::core::convenience
   include profile::core::dielibwrapdie
-  include profile::core::ifdown
   include profile::core::ipa
   include profile::core::k5login
   include profile::core::kernel

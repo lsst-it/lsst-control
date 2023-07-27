@@ -32,7 +32,6 @@ describe 'ruka01.dev.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal'
-      it { is_expected.to contain_class('profile::core::ifdown').with_interface('em1') }
       it { is_expected.to contain_kmod__load('dummy') }
 
       it do

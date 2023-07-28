@@ -8,8 +8,11 @@
 # Inspired by https://forums.centos.org/viewtopic.php?t=53233
 #
 class profile::core::lhnrouting {
-  kmod::load { 'dummy': }
-  kmod::install { 'dummy':
-    command => '"/sbin/modprobe --ignore-install dummy; /sbin/ip link set name lhnrouting dev dummy0"',
+  # EL7 only
+  if fact('os.family') == 'RedHat' and fact('os.release.major') == '7' {
+    kmod::load { 'dummy': }
+    kmod::install { 'dummy':
+      command => '"/sbin/modprobe --ignore-install dummy; /sbin/ip link set name lhnrouting dev dummy0"',
+    }
   }
 }

@@ -60,7 +60,7 @@ describe 'perfsonar1.cp.lsst.org', :sitepp do
           type: 'vlan',
           vlan: 'yes',
           ipaddress: '139.229.164.220',
-          netmask: '255.255.255.254',
+          netmask: '255.255.255.0',
           nozeroconf: 'yes',
           mtu: '9000',
         )

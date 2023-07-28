@@ -24,7 +24,7 @@ network::interfaces_hash:
     vlan: "yes"
     type: "vlan"
     ipaddress: "139.229.164.220"
-    netmask: "255.255.255.254"
+    netmask: "255.255.255.0"
     nozeroconf: "yes"
     mtu: "9000"
 

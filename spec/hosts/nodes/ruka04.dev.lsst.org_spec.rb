@@ -34,6 +34,14 @@ describe 'ruka04.dev.lsst.org', :sitepp do
       include_examples 'baremetal'
 
       if facts[:os]['release']['major'] == '7'
+        it { is_expected.to contain_kmod__load('dummy') }
+
+        it do
+          is_expected.to contain_kmod__install('dummy').with(
+            command: '"/sbin/modprobe --ignore-install dummy; /sbin/ip link set name lhnrouting dev dummy0"',
+          )
+        end
+
         it do
           is_expected.to contain_network__interface('em1').with(
             bootproto: 'none',

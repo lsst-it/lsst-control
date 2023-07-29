@@ -32,17 +32,8 @@ network::interfaces_hash:
     onboot: "yes"
     vlan: "yes"
     type: "vlan"
-    ipaddress: "139.229.164.221"
+    ipaddress: "139.229.164.222"
     netmask: "255.255.255.254"
-    nozeroconf: "yes"
-    mtu: "9000"
-  enp1s0f1.1120:
-    bootproto: "none"
-    onboot: "yes"
-    vlan: "yes"
-    type: "vlan"
-    ipaddress: "139.229.164.221"
-    netmask: "255.255.255.0"
     nozeroconf: "yes"
     mtu: "9000"
 
@@ -50,7 +41,7 @@ network::hostname: "%{facts.fqdn}"
 network::mroutes_hash:
   enp1s0f0.1120:
     routes:
-      "139.229.164.220/32": "enp1s0f0.1120"
+      "139.229.164.220/31": "enp1s0f0.1120"
       "139.229.140.135/32": &via "139.229.164.220"
       "139.229.140.137/32": *via
       "198.32.252.39/32": *via
@@ -64,17 +55,10 @@ network::mroutes_hash:
       "134.79.235.226/32": *via  # SLAC IT-3892
       "134.79.235.242/32": *via  # SLAC IT-3892
       "134.79.23.0/24": *via
-<<<<<<< HEAD
    enp1s0f1.1120:
     routes:
-      "139.229.164.0/24": "enp1s0f1.1120"
-      "139.229.140.135/32": &via "139.229.164.254"
-=======
-  enp1s0f1.1120:
-    routes:
-      "139.229.164.221/32": "enp1s0f1.1120"
-      "139.229.140.135/32": &via "139.229.164.221"
->>>>>>> bd6da2b5 ((perfsonar1.cp.lsst.org) update nic2 config)
+      "139.229.164.222/31": "enp1s0f1.1120"
+      "139.229.140.135/32": &via "139.229.164.222"
       "139.229.140.137/32": *via
       "198.32.252.39/32": *via
       "198.32.252.192/31": *via  # miami throughput

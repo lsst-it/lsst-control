@@ -27,6 +27,15 @@ network::interfaces_hash:
     netmask: "255.255.255.0"
     nozeroconf: "yes"
     mtu: "9000"
+  enp1s0f1.1120:
+    bootproto: "none"
+    onboot: "yes"
+    vlan: "yes"
+    type: "vlan"
+    ipaddress: "139.229.164.221"
+    netmask: "255.255.255.0"
+    nozeroconf: "yes"
+    mtu: "9000"
 
 network::hostname: "%{facts.fqdn}"
 network::mroutes_hash:
@@ -45,3 +54,20 @@ network::mroutes_hash:
       "198.32.252.234/31": *via
       "134.79.235.226/32": *via  # SLAC IT-3892
       "134.79.235.242/32": *via  # SLAC IT-3892
+      "134.79.23.0/24": *via
+   enp1s0f1.1120:
+    routes:
+      "139.229.164.0/24": "enp1s0f1.1120"
+      "139.229.140.135/32": &via "139.229.164.254"
+      "139.229.140.137/32": *via
+      "198.32.252.39/32": *via
+      "198.32.252.192/31": *via  # miami throughput
+      "198.32.252.208/31": *via
+      "198.32.252.210/31": *via
+      "198.32.252.216/31": *via
+      "198.32.252.218/31": *via
+      "198.32.252.232/31": *via
+      "198.32.252.234/31": *via
+      "134.79.235.226/32": *via  # SLAC IT-3892
+      "134.79.235.242/32": *via  # SLAC IT-3892
+      "134.79.23.0/24": *via

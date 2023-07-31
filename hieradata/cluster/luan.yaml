@@ -6,16 +6,4 @@ cni::plugins::enable: ["macvlan"]
 cni::plugins::version: "0.9.1"
 profile::core::rke::enable_dhcp: true
 profile::core::ospl::enable_rundir: true
-network::interfaces_hash:
-  eno1:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  eno2d1:  # trunk
-    bootproto: "none"
-    onboot: "yes"
-    type: "Ethernet"
-
 profile::core::common::manage_powertop: true

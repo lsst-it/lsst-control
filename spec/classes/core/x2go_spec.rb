@@ -24,6 +24,29 @@ describe 'profile::core::x2go' do
           is_expected.to contain_file('/etc/sudoers.d/x2goserver')
             .that_comes_before('Sudo::Conf[bogus]')
         end
+
+        packages = if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '9')
+                     %w[
+                       x2goagent
+                       x2goclient
+                       x2godesktopsharing
+                       x2goserver
+                       x2goserver-common
+                       x2goserver-xsession
+                     ]
+                   else
+                     %w[
+                       x2goagent
+                       x2goclient
+                       x2goserver
+                       x2goserver-common
+                       x2goserver-xsession
+                     ]
+                   end
+
+        packages.each do |pkg|
+          it { is_expected.to contain_package(pkg) }
+        end
       end
     end
   end

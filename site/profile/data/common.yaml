@@ -56,6 +56,13 @@ profile::ccs::common::packages:
   - "tcl"
   - "tcl-devel"
   - "time"
+profile::core::x2go::packages:
+  - "x2goagent"
+  - "x2goclient"
+  - "x2godesktopsharing"
+  - "x2goserver"
+  - "x2goserver-common"
+  - "x2goserver-xsession"
 profile::ts::nexusctio::repos:
   "nexus-ctio":
     ensure: "present"

@@ -1,14 +1,15 @@
 # @summary
 #   Adds additional packages for x2go agent
-class profile::core::x2go {
-  ensure_packages([
-      'x2goagent',
-      'x2goclient',
-      'x2godesktopsharing',
-      'x2goserver',
-      'x2goserver-common',
-      'x2goserver-xsession',
-  ])
+#
+# @param packages
+#  An array of packages to install
+#
+class profile::core::x2go (
+  Optional[Array[String[1]]] $packages = undef,
+) {
+  if $packages {
+    ensure_packages($packages)
+  }
 
   # the rpm set mode for this file is 644, which upsets the visudo command
   file { '/etc/sudoers.d/x2goserver':

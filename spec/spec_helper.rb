@@ -288,6 +288,11 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
       network and it { is_expected.not_to contain_class('network') }
       it { is_expected.to contain_class('nm') }
       it { is_expected.to contain_package('NetworkManager-initscripts-updown') }
+      it { is_expected.to contain_class('yum').with_managed_repos(['crb']) }
+
+      it do
+        expect(catalogue.resource('class', 'yum')[:repos]['crb']).to include('enabled' => true)
+      end
     end
   else # not osfamily RedHat
     it { is_expected.not_to contain_class('epel') }

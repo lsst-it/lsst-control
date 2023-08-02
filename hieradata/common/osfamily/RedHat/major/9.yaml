@@ -6,3 +6,8 @@ profile::core::yum::versionlock:
     release: "1.el9"
     before: "Package[puppet-agent]"
 profile::core::common::deploy_icinga_agent: false
+yum::managed_repos:
+  - "crb"
+yum::repos:
+  crb:  # provides deps for x2goserver
+    enabled: true

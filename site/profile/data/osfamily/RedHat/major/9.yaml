@@ -2,6 +2,12 @@
 profile::core::bash_completion::packages:
   - "bash-completion"
 
+profile::core::x2go::packages:
+  - "x2goagent"
+  - "x2goclient"
+  - "x2goserver"
+  - "x2goserver-common"
+  - "x2goserver-xsession"
 profile::core::docker::versionlock:
   containerd.io:
     # puppetlabs/docker only specifies a package resource for containerd.io for uninstall

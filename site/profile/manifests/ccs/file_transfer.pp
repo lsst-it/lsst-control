@@ -40,7 +40,7 @@ class profile::ccs::file_transfer (
     }
 
     file { "${directory}/${secret_file}":
-      content => $secret,
+      content => "${secret}\n",
       owner   => $user,
       group   => $group,
       mode    => '0600',

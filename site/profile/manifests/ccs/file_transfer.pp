@@ -67,11 +67,13 @@ class profile::ccs::file_transfer (
     }
 
     vcsrepo { $repo_directory:
-      ensure   => latest,
+      ensure   => present,
       provider => git,
       source   => $repo_url,
       revision => $repo_ref,
       user     => $user,
+      owner    => $user,
+      group    => $group,
     }
 
     $script_files = ['ccs-push', 'compress', 'fpack-in-place', 'push-usdf']

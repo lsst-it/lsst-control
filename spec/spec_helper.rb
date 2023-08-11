@@ -272,6 +272,8 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
     it { is_expected.to contain_class('yum').with_manage_os_default_repos(true) }
     it { is_expected.to contain_resources('yumrepo').with_purge(true) }
     it { is_expected.to contain_class('profile::core::yum') }
+    it { is_expected.to contain_file('/etc/rc.d/rc.local').with_ensure('absent') }
+    it { is_expected.to contain_file('/etc/rc.local').with_ensure('absent') }
 
     # extras repo should be enabled. puppet/yum disables it by default on EL7.
     it do

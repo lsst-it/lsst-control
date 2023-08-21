@@ -2,8 +2,8 @@ forge 'https://forgeapi.puppetlabs.com'
 
 mod 'blockops/tailscale', git: 'https://github.com/lsst-it/puppet-tailscale', ref: '3b02597'  # https://gitlab.com/blockops/puppet-tailscale/-/merge_requests/6
 mod 'camptocamp/augeas', '1.9.0'
-mod 'ccin2p3/etc_services', '2.0.3'
-mod 'ccin2p3/mit_krb5', git: 'https://github.com/lsst-it/puppet-mit_krb5.git', branch: 'dbf352d'  # https://github.com/ccin2p3/puppet-mit_krb5/pull/29
+mod 'ccin2p3/etc_services', git: 'https://github.com/lsst-it/puppet-etc_services', ref: 'ff17b73' # https://github.com/ccin2p3/puppet-etc_services/pull/11
+mod 'ccin2p3/mit_krb5', git: 'https://github.com/lsst-it/puppet-mit_krb5.git', ref: 'f8f0242'  # https://github.com/ccin2p3/puppet-mit_krb5/pull/29 https://github.com/ccin2p3/puppet-mit_krb5/pull/34 https://github.com/ccin2p3/puppet-mit_krb5/pull/35
 mod 'cirrax/libvirt', '5.0.1'
 mod 'derdanne/nfs', '2.1.8'
 mod 'duritong/sysctl', git: 'https://github.com/duritong/puppet-sysctl', ref: '847ec1c'  # migrate to herculesteam/augeasproviders_sysctl; https://github.com/duritong/puppet-sysctl/pull/48

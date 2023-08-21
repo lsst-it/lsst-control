@@ -29,6 +29,12 @@ describe "#{role} role" do
 
           include_examples 'common', facts: facts, no_auth: true
 
+          it do
+            is_expected.to contain_class('tailscale').with_up_options(
+              'hostname' => facts[:fqdn],
+            )
+          end
+
           %w[
             python2-ipaserver
             ipa-client-common

@@ -2,9 +2,6 @@
 
 require 'spec_helper'
 
-IPA_SERVER_VERSION = '4.6.8'
-IPA_SERVER_RELEASE = '5.EL.centos.7'
-
 role = 'ipareplica'
 
 describe "#{role} role" do
@@ -36,39 +33,6 @@ describe "#{role} role" do
             )
           end
 
-          %w[
-            python2-ipaserver
-            ipa-client-common
-            python2-ipaclient
-            ipa-server-common
-            ipa-common
-            python2-ipalib
-            ipa-client
-            ipa-server
-          ].each do |pkg|
-            it do
-              el_release = "el#{facts[:os]['release']['major']}"
-
-              is_expected.to contain_yum__versionlock(pkg).with(
-                version: IPA_SERVER_VERSION,
-                release: IPA_SERVER_RELEASE.gsub('EL', el_release),
-              )
-            end
-          end
-          %w[
-            389-ds-base
-            389-ds-base-libs
-          ].each do |pkg|
-            it do
-              el_release = "el#{facts[:os]['release']['major']}"
-
-              is_expected.to contain_yum__versionlock(pkg).with(
-                version: '1.3.10.2',
-                release: '17.el7_9'.gsub('EL', el_release),
-              )
-            end
-          end
-
           {
             'ipa1.dev.lsst.org': '100.76.95.74',
             'ipa2.dev.lsst.org': '100.77.145.58',
@@ -87,6 +51,38 @@ describe "#{role} role" do
               is_expected.to contain_host(host).with(
                 ip: ip,
               )
+            end
+          end
+
+          case os
+          when 'centos-7-x86_64'
+            %w[
+              ipa-client
+              ipa-client-common
+              ipa-common
+              ipa-server
+              ipa-server-common
+              python2-ipaclient
+              python2-ipalib
+              python2-ipaserver
+            ].each do |pkg|
+              it do
+                is_expected.to contain_yum__versionlock(pkg).with(
+                  version: '4.6.8',
+                  release: '5.el7.centos.14',
+                )
+              end
+            end
+            %w[
+              389-ds-base
+              389-ds-base-libs
+            ].each do |pkg|
+              it do
+                is_expected.to contain_yum__versionlock(pkg).with(
+                  version: '1.3.11.1',
+                  release: '2.el7_9',
+                )
+              end
             end
           end
         end # host

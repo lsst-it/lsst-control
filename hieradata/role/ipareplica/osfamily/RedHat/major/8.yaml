@@ -1,20 +1,26 @@
 ---
 profile::core::yum::versionlock:
-  python2-ipaserver: &ipa_version
+  ipa-server: &ipa_version
     ensure: "present"
-    version: "4.6.8"
-    release: "5.el8.centos.7"
-  ipa-client-common:
-    <<: *ipa_version
-  python2-ipaclient:
+    version: "4.9.11"
+    release: "6.module_el8.8.0+3593+1210bde8.alma.1"
+  ipa-common:
     <<: *ipa_version
   ipa-server-common:
     <<: *ipa_version
-  ipa-common:
-    <<: *ipa_version
-  python2-ipalib:
+  python3-ipaserver:
     <<: *ipa_version
   ipa-client:
     <<: *ipa_version
-  ipa-server:
+  ipa-client-common:
     <<: *ipa_version
+  python3-ipaclient:
+    <<: *ipa_version
+  python3-ipalib:
+    <<: *ipa_version
+  389-ds-base: &ds_version
+    ensure: "present"
+    version: "1.4.3.35"
+    release: "1.module_el8.8.0+3584+33666a53"
+  389-ds-base-libs:
+    <<: *ds_version

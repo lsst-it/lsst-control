@@ -122,6 +122,35 @@ describe "#{role} role" do
                 )
               end
             end
+          when 'almalinux-8-x86_64'
+            %w[
+              ipa-client
+              ipa-client-common
+              ipa-common
+              ipa-server
+              ipa-server-common
+              python3-ipaclient
+              python3-ipalib
+              python3-ipaserver
+            ].each do |pkg|
+              it do
+                is_expected.to contain_yum__versionlock(pkg).with(
+                  version: '4.9.11',
+                  release: '6.module_el8.8.0+3593+1210bde8.alma.1',
+                )
+              end
+            end
+            %w[
+              389-ds-base
+              389-ds-base-libs
+            ].each do |pkg|
+              it do
+                is_expected.to contain_yum__versionlock(pkg).with(
+                  version: '1.4.3.35',
+                  release: '1.module_el8.8.0+3584+33666a53',
+                )
+              end
+            end
           end
         end # host
       end # lsst_sites

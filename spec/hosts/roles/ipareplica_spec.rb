@@ -68,6 +68,26 @@ describe "#{role} role" do
               )
             end
           end
+
+          {
+            'ipa1.dev.lsst.org': '100.85.248.128',
+            'ipa2.dev.lsst.org': '100.124.223.22',
+            'ipa1.tu.lsst.org': '100.107.132.55',
+            'ipa2.tu.lsst.org': '100.127.11.142',
+            'ipa3.tu.lsst.org': '100.87.197.47',
+            'ipa1.ls.lsst.org': '100.80.156.142',
+            'ipa2.ls.lsst.org': '100.70.18.128',
+            'ipa3.ls.lsst.org': '100.100.192.39',
+            'ipa1.cp.lsst.org': '100.97.236.28',
+            'ipa2.cp.lsst.org': '100.91.143.57',
+            'ipa3.cp.lsst.org': '100.94.76.56',
+          }.each do |host, ip|
+            it do
+              is_expected.to contain_host(host).with(
+                ip: ip,
+              )
+            end
+          end
         end # host
       end # lsst_sites
     end # on os

@@ -39,7 +39,7 @@ mod 'puppet/chrony', '2.6.0'
 mod 'puppet/cron', '3.0.0'
 mod 'puppet/epel', '4.1.0'
 mod 'puppet/extlib', '6.2.0'
-mod 'puppetfinland/easy_ipa', git: 'https://github.com/lsst-it/puppet-ipa', ref: 'e349cd3'  # https://github.com/Puppet-Finland/puppet-ipa/pull/32
+mod 'puppetfinland/easy_ipa', git: 'https://github.com/lsst-it/puppet-ipa', ref: 'e349cd3'  # EL8+ support
 mod 'puppet/firewalld', '4.5.1'
 mod 'puppet/ipset', '3.0.0'
 mod 'puppet/kmod', '3.2.0'

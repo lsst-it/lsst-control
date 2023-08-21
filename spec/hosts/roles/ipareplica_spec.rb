@@ -31,6 +31,7 @@ describe "#{role} role" do
 
           it do
             is_expected.to contain_class('tailscale').with_up_options(
+              'accept-dns' => false,
               'hostname' => facts[:fqdn],
             )
           end

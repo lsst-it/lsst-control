@@ -47,4 +47,5 @@ profile::core::yum::versionlock:
     release: "17.el7_9"
 
 tailscale::up_options:
+  accept-dns: false  # leave /etc/resolv.conf alone
   hostname: "%{facts.fqdn}"  # use fqdn instead of short hostname

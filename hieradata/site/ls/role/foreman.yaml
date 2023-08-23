@@ -184,7 +184,6 @@ profile::core::puppet_master::foreman_hostgroup:
   ls:
     description: "ls site"
 profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"
-profile::icinga::agent::host_template: "HttpTemplate"
 puppet::server::puppetdb::server: "puppetdb.ls.lsst.org"
 
 r10k::sources:

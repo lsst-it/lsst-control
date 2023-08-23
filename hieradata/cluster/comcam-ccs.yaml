@@ -151,7 +151,6 @@ ccs_software::installations:
     aliases:
       - "puppet-2.4.1"
 
-profile::icinga::agent::host_template: "ComCamHostTemplate"
 daq::daqsdk::purge: false
 
 hosts::stored_config: false

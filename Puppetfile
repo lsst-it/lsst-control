@@ -12,9 +12,6 @@ mod 'derdanne/nfs', '2.1.8'
 mod 'duritong/sysctl', git: 'https://github.com/duritong/puppet-sysctl', ref: '847ec1c'  # migrate to herculesteam/augeasproviders_sysctl; https://github.com/duritong/puppet-sysctl/pull/48
 mod 'example42/network', git: 'https://github.com/lsst-it/puppet-network', ref: 'v3.6.1'  # unmaintained. Migrate to puppet/network?
 mod 'fervid/snapd', '1.2.1' # 2021-05-31 hreinking: snapd for EAS Raspberry Pi
-mod 'icinga/icinga2', '3.4.0'
-mod 'icinga/icinga', '2.8.0'
-mod 'icinga/icingaweb2', '3.7.2'
 mod 'jamtur01/httpauth', '0.0.6'
 mod 'jcpunk/irqbalance', '1.0.3'
 mod 'jhoblitt/ipmi', '5.0.0'
@@ -84,7 +81,6 @@ mod 'puppet/lldpd', '5.1.0'
 mod 'puppet/mosquitto', '1.2.0'
 mod 'puppet/nginx', '3.3.0'
 mod 'puppet/openldap', '5.0.1'
-mod 'puppet/php', '8.0.3'
 mod 'puppet/postfix',  '3.0.0'
 mod 'puppet/python', '6.3.0'
 mod 'puppet/r10k', '10.3.0'

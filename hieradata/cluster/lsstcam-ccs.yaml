@@ -104,8 +104,6 @@ ccs_software::installations:
     aliases:
       - "puppet-1.0.4"
 
-# FIXME
-#profile::icinga::agent::host_template: "LSSTCamHostTemplate"
 daq::daqsdk::purge: false
 
 daq::daqsdk::version: "R5-V6.7"

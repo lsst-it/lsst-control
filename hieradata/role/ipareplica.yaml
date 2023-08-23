@@ -10,7 +10,6 @@ profile::core::common::manage_ipa: false
 profile::core::common::manage_krb5: false
 profile::core::common::manage_sssd: false
 profile::core::sysctl::disable_ipv6::disable: false  # ipa-server-install wants ipv6
-profile::icinga::agent::host_template: "IpaTemplate"
 easy_ipa::ipa_role: "replica"
 easy_ipa::configure_replica_ca: true
 easy_ipa::install_ipa_server: true

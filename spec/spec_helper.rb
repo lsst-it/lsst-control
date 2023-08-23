@@ -574,7 +574,6 @@ shared_examples 'foreman' do
   end
 
   it { is_expected.to contain_package('ipmitool') }
-  it { is_expected.to contain_package('toml-rb').with_provider('puppetserver_gem') }
   it { is_expected.to contain_package('hiera-eyaml').with_provider('puppetserver_gem') }
 
   it do

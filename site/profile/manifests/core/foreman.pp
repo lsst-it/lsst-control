@@ -104,14 +104,6 @@ class profile::core::foreman (
     minute  => 42,
   }
 
-  # The toml-rb gem is required for the telegraf module.
-  #
-  # Note that if the telegraf module is used then Puppet will fail during a catalog
-  # compilation, so we might need to manually install this gem in that scenario.
-  package { 'toml-rb':
-    provider => 'puppetserver_gem',
-  }
-
   package { 'hiera-eyaml':
     provider => 'puppetserver_gem',
   }

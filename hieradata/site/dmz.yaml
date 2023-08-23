@@ -1,12 +1,5 @@
 ---
 easy_ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
-# sssd ipa client setup -- do not use on ipa servers
-sssd::domains:
-  "lsst.cloud":
-    ipa_server:
-      - "_srv_"
-      - "%{lookup('easy_ipa::ipa_master_fqdn')}"
-
 rsyslog::config::actions:
 # Send copy to logs to GKE Graylog instance
   graylogCloud:

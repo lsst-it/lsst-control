@@ -39,7 +39,7 @@ lookup_options:
   profile::core::ipset::set:
     merge:
       strategy: "deep"
-  sssd::domains:
+  sssd::main_config:
     merge:
       strategy: "deep"
   ssh::client_options:
@@ -334,8 +334,14 @@ profile::core::ipset::set:
       - "10.0.0.0/8"
 
 # sssd ipa client setup -- do not use on ipa servers
-sssd::domains:
-  "%{lookup('easy_ipa::domain')}":
+sssd::main_config:
+  sssd:
+    config_file_version: 2
+    domains: "lsst.cloud"
+    services: []
+  nss:
+    homedir_substring: "/home"
+  "domain/%{lookup('easy_ipa::domain')}":
     cache_credentials: true
     krb5_store_password_if_offline: true
     ipa_domain: "%{lookup('easy_ipa::domain')}"
@@ -349,12 +355,6 @@ sssd::domains:
       - "_srv_"
       - "%{lookup('easy_ipa::ipa_master_fqdn')}"
     dns_discovery_domain: "%{::site}._locations.%{lookup('easy_ipa::domain')}"
-sssd::services:
-  nss:
-    homedir_substring: "/home"
-  pam: {}
-  ssh: {}
-  sudo: {}
 sssd::package_name:
   - "sssd"
   - "sssd-tools"  # not installed by default

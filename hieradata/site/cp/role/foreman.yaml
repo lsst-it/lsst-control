@@ -285,7 +285,6 @@ dhcp::hosts:
     mac: "00:40:9d:7f:0b:f2"
     ip: "139.229.170.58"
 
-profile::icinga::agent::host_template: "HttpTemplate"
 profile::core::puppet_master::foreman_hostgroup:
   cp:
     description: "cp site"

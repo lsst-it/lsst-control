@@ -1,8 +1,0 @@
----
-#Disable icinga-agent on master
-profile::core::common::deploy_icinga_agent: false
-#Set the Site
-profile::icinga::master::ldap_server: "139.229.160.6"
-profile::icinga::network::site: "summit"
-profile::icinga::resources::site: "summit"
-profile::icinga::opsgenie::site: "summit"

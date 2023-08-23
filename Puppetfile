@@ -6,7 +6,6 @@ mod 'bodgit/sssd', git: 'https://github.com/lsst-it/puppet-sssd.git', branch: '8
 mod 'camptocamp/augeas', '1.9.0'
 mod 'ccin2p3/etc_services', '2.0.3'
 mod 'ccin2p3/mit_krb5', git: 'https://github.com/lsst-it/puppet-mit_krb5.git', branch: 'dbf352d'  # https://github.com/ccin2p3/puppet-mit_krb5/pull/29
-mod 'ceritsc/tuned', git: 'https://github.com/lsst-it/puppet-tuned', branch: 'a5966b2' # https://github.com/CERIT-SC/puppet-tuned/pull/21 https://github.com/CERIT-SC/puppet-tuned/pull/24
 mod 'cirrax/libvirt', '5.0.1'
 mod 'derdanne/nfs', '2.1.8'
 mod 'duritong/sysctl', git: 'https://github.com/duritong/puppet-sysctl', ref: '847ec1c'  # migrate to herculesteam/augeasproviders_sysctl; https://github.com/duritong/puppet-sysctl/pull/48
@@ -56,7 +55,7 @@ mod 'puppetlabs/docker', '7.0.0'
 mod 'puppetlabs/facts', '1.4.0'
 mod 'puppetlabs/firewall', '3.4.0'
 mod 'puppetlabs/host_core', '1.1.0'
-mod 'puppetlabs/inifile', '5.2.0'
+mod 'puppetlabs/inifile', '5.4.0'
 mod 'puppetlabs/java', '8.0.0'
 mod 'puppetlabs/k5login_core', '1.0.2'
 mod 'puppetlabs/mailalias_core', '1.1.0'
@@ -91,6 +90,7 @@ mod 'puppet/selinux', '3.4.1'
 mod 'puppet/ssh_keygen', '5.0.2'
 mod 'puppet/systemd', '3.10.0'
 mod 'puppet/telegraf', '4.3.1'  # requires toml-rb installed on master
+mod 'puppet/tuned', '1.0.0'
 mod 'puppet/yum', '6.1.0'
 mod 'qtechnologies/sysstat', '1.2.4'
 mod 'richardc/datacat', '0.6.2'

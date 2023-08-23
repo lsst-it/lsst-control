@@ -16,6 +16,7 @@ describe 'chonchon01.cp.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'chonchon01.cp.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'PowerEdge R730xd',

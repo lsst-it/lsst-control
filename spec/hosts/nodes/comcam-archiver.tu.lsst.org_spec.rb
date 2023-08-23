@@ -12,6 +12,7 @@ describe 'comcam-archiver.tu.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'comcam-archiver.tu.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'PowerEdge R440',

@@ -30,6 +30,7 @@ describe 'pillan01.tu.lsst.org', :sitepp do
                        networking: { interfaces: { int1 => { mac: '11:22:33:44:55:66' } } },
                        fqdn: 'pillan01.tu.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'AS -1114S-WN10RT',

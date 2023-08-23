@@ -12,6 +12,7 @@ describe 'perfsonar1.ls.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'perfsonar1.ls.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'PowerEdge R340',

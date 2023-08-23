@@ -12,6 +12,7 @@ describe 'perfsonar1.cp.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'perfsonar1.cp.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'AS -1114S-WN10RT',

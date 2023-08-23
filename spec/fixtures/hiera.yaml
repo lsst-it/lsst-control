@@ -36,4 +36,5 @@ hierarchy:
       - "role/%{role}/osfamily/%{os.family}/major/%{os.release.major}.yaml"
       - "role/%{role}.yaml"
       - "common/osfamily/%{os.family}/major/%{os.release.major}.yaml"
+      - "common/virtual/%{virtual}.yaml"
       - "common.yaml"

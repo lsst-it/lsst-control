@@ -42,6 +42,8 @@ describe "#{role} role" do
           ].each do |pkg|
             it { is_expected.to contain_package(pkg) }
           end
+
+          it { is_expected.to contain_class('tuned').with_active_profile('virtual-host') }
         end # host
       end # lsst_sites
     end

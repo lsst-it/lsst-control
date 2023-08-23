@@ -14,6 +14,7 @@ describe 'rancher01.dev.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'rancher01.dev.lsst.org',
                        is_virtual: true,
+                       virtual: 'kvm',
                        dmi: {
                          'product' => {
                            'name' => 'KVM',

@@ -31,6 +31,7 @@ hierarchy:
       - "role/%{role}/osfamily/%{os.family}/major/%{os.release.major}.yaml"
       - "role/%{role}.yaml"
       - "common/osfamily/%{os.family}/major/%{os.release.major}.yaml"
+      - "common/virtual/%{virtual}.yaml"
       - "common.yaml"
   - name: "private hiera eyaml"
     lookup_key: "eyaml_lookup_key"  # eyaml backend
@@ -61,6 +62,7 @@ hierarchy:
       - "role/%{role}/osfamily/%{os.family}/major/%{os.release.major}.eyaml"
       - "role/%{role}.eyaml"
       - "common/osfamily/%{os.family}/major/%{os.release.major}.eyaml"
+      - "common/virtual/%{virtual}.eyaml"
       - "common.eyaml"
     options:
       pkcs7_private_key: "/etc/puppetlabs/puppet/eyaml/private_key.pkcs7.pem"

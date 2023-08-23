@@ -11,6 +11,7 @@ describe 'dimm.cp.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'dimm.cp.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'PH12LI',

@@ -12,6 +12,7 @@ describe 'core3.cp.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'core3.cp.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'PowerEdge R440',

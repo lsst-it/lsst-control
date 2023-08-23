@@ -11,6 +11,7 @@ describe 'dns3.ls.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'dns3.ls.lsst.org',
                        is_virtual: true,
+                       virtual: 'kvm',
                        dmi: {
                          'product' => {
                            'name' => 'KVM',

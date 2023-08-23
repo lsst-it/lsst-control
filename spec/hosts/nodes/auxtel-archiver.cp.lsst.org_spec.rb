@@ -12,6 +12,7 @@ describe 'auxtel-archiver.cp.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'auxtel-archiver.cp.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'PowerEdge R640',

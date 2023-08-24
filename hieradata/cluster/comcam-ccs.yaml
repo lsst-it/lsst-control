@@ -151,6 +151,10 @@ ccs_software::installations:
     aliases:
       - "puppet-2.4.1"
 
+  comcam-software-2.4.2:
+    aliases:
+      - "puppet-2.4.2"
+
 daq::daqsdk::purge: false
 
 hosts::stored_config: false

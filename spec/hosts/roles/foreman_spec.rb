@@ -486,7 +486,7 @@ describe "#{role} role" do
           is_expected.to contain_dhcp__pool('IT-GSS').with(
             network: '139.229.160.0',
             mask: '255.255.255.0',
-            range: ['139.229.160.1 139.229.160.99'],
+            range: ['139.229.160.115 139.229.160.126'],
             gateway: '139.229.160.254',
           )
         end

@@ -11,6 +11,7 @@ describe 'love01.ls.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'love01.ls.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'AS -1114S-WN10RT',

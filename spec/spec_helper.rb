@@ -1173,6 +1173,13 @@ end
 
 shared_examples 'baremetal' do |bmc: nil|
   include_examples 'ipmi'
+  it do
+    if node_params[:role] == 'hypervisor'
+      is_expected.to contain_class('tuned').with_active_profile('virtual-host')
+    else
+      is_expected.to contain_class('tuned').with_active_profile('balanced')
+    end
+  end
 
   if bmc.nil?
     it { is_expected.to contain_ipmi__network('lan1').with_type('dhcp') }
@@ -1189,6 +1196,7 @@ end
 
 shared_examples 'vm' do
   it { is_expected.not_to contain_class('ipmi') }
+  it { is_expected.to contain_class('tuned').with_active_profile('virtual-guest') }
 end
 
 shared_examples 'ipmi' do

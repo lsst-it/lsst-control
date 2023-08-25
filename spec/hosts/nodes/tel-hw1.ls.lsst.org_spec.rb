@@ -11,6 +11,7 @@ describe 'tel-hw1.ls.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'tel-hw1.ls.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'AS -1114S-WN10RT',

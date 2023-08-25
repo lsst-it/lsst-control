@@ -11,6 +11,7 @@ describe 'daq-mgt.tu.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'daq-mgt.tu.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'PowerEdge R530',

@@ -11,6 +11,7 @@ describe 'lsstcam-db01.ls.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'lsstcam-db01.ls.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'AS -1114S-WN10RT',

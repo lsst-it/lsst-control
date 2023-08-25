@@ -41,3 +41,4 @@ ssh::server::match_block:
     type: "user"
     options:
       AuthorizedKeysFile: ".ssh/authorized_keys"
+tuned::active_profile: 'virtual-host'

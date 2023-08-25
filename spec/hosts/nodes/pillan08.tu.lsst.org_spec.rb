@@ -15,6 +15,7 @@ describe 'pillan08.tu.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'pillan08.tu.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'AS -1114S-WN10RT',

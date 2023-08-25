@@ -13,6 +13,7 @@ describe 'ruka04.dev.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'ruka04.dev.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'PowerEdge R430',

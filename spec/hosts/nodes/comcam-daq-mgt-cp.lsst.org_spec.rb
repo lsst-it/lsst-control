@@ -11,6 +11,7 @@ describe 'comcam-daq-mgt.cp.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'comcam-daq-mgt.cp.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'PowerEdge R340',

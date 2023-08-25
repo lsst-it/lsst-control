@@ -11,6 +11,7 @@ describe 'auxtel-daq-mgt.cp.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'auxtel-daq-mgt.cp.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'PowerEdge R630',

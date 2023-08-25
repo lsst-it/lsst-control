@@ -12,6 +12,7 @@ describe 'auxtel-archiver.tu.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'auxtel-archiver.tu.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'PowerEdge R630',

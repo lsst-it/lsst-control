@@ -9,6 +9,7 @@ describe 'lsstcam-db01.cp.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'lsstcam-db01.cp.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'PowerEdge R640',

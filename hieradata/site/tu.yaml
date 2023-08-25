@@ -85,5 +85,3 @@ accounts::user_list:
 profile::core::common::manage_powertop: true
 # To be replaced once a production monitoring instance is set at TU site
 profile::core::monitoring::url: "http://it-influxdb.tu.lsst.org:8086"
-
-tuned::profile: "powersave"

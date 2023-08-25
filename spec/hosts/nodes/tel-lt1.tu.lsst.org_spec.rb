@@ -9,6 +9,7 @@ describe 'tel-lt1.tu.lsst.org', :sitepp do
         override_facts(facts,
                        fqdn: 'tel-lt1.tu.lsst.org',
                        is_virtual: false,
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
                            'name' => 'ZBOX-CI327NANO-GS-01',

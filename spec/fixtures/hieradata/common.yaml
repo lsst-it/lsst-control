@@ -2,6 +2,8 @@
 lookup_options:
   '^profile::.+::keytab_base64$':
     convert_to: "Sensitive"
+  '^tailscale::auth_key$':
+    convert_to: "Sensitive"
 ccs_database::database: "comcamdbprod"
 ccs_database::password: "foo"
 easy_ipa::admin_password: "foofoofoofoo"  # ipa master only
@@ -17,3 +19,4 @@ profile::core::monitoring::database: "foo"
 profile::core::monitoring::password: "foo"
 profile::core::monitoring::url: "foo"
 profile::core::monitoring::username: "foo"
+tailscale::auth_key: "foo"

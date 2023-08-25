@@ -1,5 +1,6 @@
 forge 'https://forgeapi.puppetlabs.com'
 
+mod 'blockops/tailscale', git: 'https://github.com/lsst-it/puppet-tailscale', ref: '3b02597'  # https://gitlab.com/blockops/puppet-tailscale/-/merge_requests/6
 mod 'camptocamp/augeas', '1.9.0'
 mod 'ccin2p3/etc_services', '2.0.3'
 mod 'ccin2p3/mit_krb5', git: 'https://github.com/lsst-it/puppet-mit_krb5.git', branch: 'dbf352d'  # https://github.com/ccin2p3/puppet-mit_krb5/pull/29

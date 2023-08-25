@@ -1,8 +1,5 @@
 forge 'https://forgeapi.puppetlabs.com'
 
-mod 'bodgit/bodgitlib', '3.0.3'
-mod 'bodgit/dbus', git: 'https://github.com/lsst-it/puppet-dbus', branch: '452cbad'  # https://github.com/bodgit/puppet-dbus/pull/20
-mod 'bodgit/sssd', git: 'https://github.com/lsst-it/puppet-sssd.git', branch: '8654b3c'  # https://github.com/bodgit/puppet-sssd/pull/35
 mod 'camptocamp/augeas', '1.9.0'
 mod 'ccin2p3/etc_services', '2.0.3'
 mod 'ccin2p3/mit_krb5', git: 'https://github.com/lsst-it/puppet-mit_krb5.git', branch: 'dbf352d'  # https://github.com/ccin2p3/puppet-mit_krb5/pull/29
@@ -88,6 +85,7 @@ mod 'puppet/rsyslog', '6.0.0'
 mod 'puppet/scl', git: 'https://github.com/lsst-it/puppet-scl', ref: 'production'  # https://github.com/bodgit/puppet-scl/pull/2
 mod 'puppet/selinux', '3.4.1'
 mod 'puppet/ssh_keygen', '5.0.2'
+mod 'puppet/sssd', '1.0.0'
 mod 'puppet/systemd', '3.10.0'
 mod 'puppet/telegraf', '4.3.1'  # requires toml-rb installed on master
 mod 'puppet/tuned', '1.0.0'

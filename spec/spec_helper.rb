@@ -203,31 +203,64 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
 
     if facts[:os]['release']['major'] == '7'
       it do
-        is_expected.to contain_class('sssd').with(
-          services: {
-            'nss' => {
-              'homedir_substring' => '/home',
-            },
-            'pam' => {
-              'pam_response_filter' => ['ENV:KRB5CCNAME:sudo-i'],
-            },
-            'ssh' => {},
-            'sudo' => {},
-          },
-        )
+        is_expected.to contain_file('/etc/sssd/sssd.conf').with_content(<<~SSSD)
+          #
+          # This file managed by Puppet - DO NOT EDIT
+          #
+
+          [sssd]
+          config_file_version=2
+          domains=lsst.cloud
+          services=
+
+          [domain/lsst.cloud]
+          access_provider=ipa
+          auth_provider=ipa
+          cache_credentials=true
+          chpass_provider=ipa
+          dns_discovery_domain=#{site}._locations.lsst.cloud
+          id_provider=ipa
+          ipa_domain=lsst.cloud
+          ipa_hostname=#{facts[:fqdn]}
+          ipa_server=_srv_, ipa1.#{site == 'dev' ? 'ls' : site}.lsst.org
+          krb5_store_password_if_offline=true
+          ldap_tls_cacert=/etc/ipa/ca.crt
+
+          [nss]
+          homedir_substring=/home
+
+          [pam]
+          pam_response_filter=ENV:KRB5CCNAME:sudo-i
+        SSSD
       end
     else
       it do
-        is_expected.to contain_class('sssd').with(
-          services: {
-            'nss' => {
-              'homedir_substring' => '/home',
-            },
-            'pam' => {},
-            'ssh' => {},
-            'sudo' => {},
-          },
-        )
+        is_expected.to contain_file('/etc/sssd/sssd.conf').with_content(<<~SSSD)
+          #
+          # This file managed by Puppet - DO NOT EDIT
+          #
+
+          [sssd]
+          config_file_version=2
+          domains=lsst.cloud
+          services=
+
+          [domain/lsst.cloud]
+          access_provider=ipa
+          auth_provider=ipa
+          cache_credentials=true
+          chpass_provider=ipa
+          dns_discovery_domain=#{site}._locations.lsst.cloud
+          id_provider=ipa
+          ipa_domain=lsst.cloud
+          ipa_hostname=#{facts[:fqdn]}
+          ipa_server=_srv_, ipa1.#{site == 'dev' ? 'ls' : site}.lsst.org
+          krb5_store_password_if_offline=true
+          ldap_tls_cacert=/etc/ipa/ca.crt
+
+          [nss]
+          homedir_substring=/home
+        SSSD
       end
     end
   end

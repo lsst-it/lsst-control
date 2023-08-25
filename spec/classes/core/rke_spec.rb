@@ -10,7 +10,7 @@ describe 'profile::core::rke' do
         <<~PP
           include docker
           include easy_ipa
-          include sssd
+          class { 'sssd': service_names => ['sssd'] }
         PP
       end
 

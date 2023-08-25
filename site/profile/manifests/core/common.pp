@@ -140,7 +140,9 @@ class profile::core::common (
   }
 
   if $manage_sssd {
-    include sssd
+    class { 'sssd':
+      service_names => ['sssd'],
+    }
     # run ipa-install-* script before trying to managing sssd.conf
     Class[easy_ipa] -> Class[sssd]
   }

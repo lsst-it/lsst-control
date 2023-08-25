@@ -1,0 +1,44 @@
+---
+nm::connections:
+  enp1s0f1:
+    content: |
+      [connection]
+      id=enp1s0f1
+      uuid=46d19ce1-bcab-7e77-6fc7-b730b26c54b1
+      type=ethernet
+      interface-name=enp1s0f1
+      [ethernet]
+      [ipv4]
+      method=disabled
+      [ipv6]
+      method=disabled
+  enp1s0f1.2101:
+    content: |
+      [connection]
+      id=enp1s0f1.2101
+      uuid=e74daaad-4d73-4015-bb26-83c460ddf572
+      type=vlan
+      interface-name=enp1s0f1.2101
+      master=br2101
+      slave-type=bridge
+      [ethernet]
+      [vlan]
+      flags=1
+      id=2101
+      parent=enp1s0f1
+      [bridge-port]
+  br2101:
+    content: |
+      [connection]
+      id=br2101
+      uuid=7dd05d98-a9c3-4569-a7c3-00316b13c0eb
+      type=bridge
+      interface-name=br2101
+      [ethernet]
+      [bridge]
+      stp=false
+      [ipv4]
+      method=disabled
+      [ipv6]
+      method=disabled
+      [proxy]

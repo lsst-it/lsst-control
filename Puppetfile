@@ -96,7 +96,7 @@ mod 'saz/resolv_conf', git: 'https://github.com/saz/puppet-resolv_conf', ref: 'c
 mod 'saz/ssh', git: 'https://github.com/lsst-it/saz-puppet-ssh', ref: '6fad31a'  # https://github.com/saz/puppet-ssh/pull/344
 mod 'saz/sudo', '7.0.2'
 mod 'saz/timezone', '6.2.0'
-mod 'simp/auditd', git: 'https://github.com/lsst-it/pupmod-simp-auditd', ref: 'e12c657'  # https://github.com/simp/pupmod-simp-auditd/pull/160 https://github.com/simp/pupmod-simp-auditd/pull/161 https://github.com/simp/pupmod-simp-auditd/pull/164 https://github.com/simp/pupmod-simp-auditd/pull/189
+mod 'simp/auditd', git: 'https://github.com/lsst-it/pupmod-simp-auditd', ref: '2b3f311'  # https://github.com/simp/pupmod-simp-auditd/pull/160 https://github.com/simp/pupmod-simp-auditd/pull/161 https://github.com/simp/pupmod-simp-auditd/pull/164 https://github.com/simp/pupmod-simp-auditd/pull/189
 mod 'simp/dconf', git: 'https://github.com/lsst-it/pupmod-simp-dconf', ref: 'c196d2c'  # https://github.com/simp/pupmod-simp-dconf/pull/45
 mod 'simp/mate', git: 'https://github.com/lsst-it/pupmod-simp-mate', ref: 'f692a64'  # https://github.com/simp/pupmod-simp-mate/pull/40
 mod 'simp/polkit', git: 'https://github.com/lsst-it/pupmod-simp-polkit', ref: '4f769e6'  # https://github.com/simp/pupmod-simp-polkit/pull/62

@@ -151,7 +151,7 @@ dhcp::pools:
     mask: "255.255.255.0"
     gateway: "139.229.180.254"
     range:
-      - "139.229.180.1 139.229.180.62"  # ~/26
+      - "139.229.180.71 139.229.180.100"  # ~/27
     search_domains: "%{alias('dhcp::dnsdomain')}"
     static_routes:
       - {network: "134.79.20", mask: "23", gateway: "139.229.180.254"}

@@ -655,7 +655,7 @@ describe "#{role} role" do
           is_expected.to contain_dhcp__pool('yagan-lhn').with(
             network: '139.229.180.0',
             mask: '255.255.255.0',
-            range: ['139.229.180.1 139.229.180.62'],
+            range: ['139.229.180.71 139.229.180.100'],
             gateway: '139.229.180.254',
             static_routes: [
               { 'network' => '134.79.20', 'mask' => '23', 'gateway' => '139.229.180.254' },

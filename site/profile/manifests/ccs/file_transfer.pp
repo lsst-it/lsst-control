@@ -19,6 +19,12 @@
 #   String specifying authorization string
 # @param secret_file
 #   String specifying file to write secret to
+# @param pkgurl
+#   String specifying url to fetch binaries from
+# @param pkgurl_user
+#   String specifying username for pkgurl
+# @param pkgurl_pass
+#   String specifying password for pkgurl
 #
 class profile::ccs::file_transfer (
   Boolean $install = false,
@@ -30,6 +36,9 @@ class profile::ccs::file_transfer (
   String $repo_ref = 'main',
   String $secret = "export MC_HOST_oga=localhost\n",
   String $secret_file = 'mc-secret',
+  String $pkgurl = $profile::ccs::common::pkgurl,
+  String $pkgurl_user = $profile::ccs::common::pkgurl_user,
+  String $pkgurl_pass = $profile::ccs::common::pkgurl_pass,
 ) {
   if $install {
     file { $directory:
@@ -52,9 +61,9 @@ class profile::ccs::file_transfer (
     $binary_files.each | String $binfile | {
       archive { "/var/tmp/${binfile}":
         ensure   => present,
-        source   => "${profile::ccs::common::pkgurl}/${binfile}",
-        username => $profile::ccs::common::pkgurl_user,
-        password => $profile::ccs::common::pkgurl_pass,
+        source   => "${pkgurl}/${binfile}",
+        username => $pkgurl_user,
+        password => $pkgurl_pass,
       }
       file { "${directory}/${binfile}":
         ensure  => file,

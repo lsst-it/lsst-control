@@ -95,54 +95,6 @@ accounts::user_list:
 ccs_software::desktop: true
 ccs_software::env: "ComCam"
 ccs_software::installations:
-  comcam-software-2.3.0:
-    aliases:
-      - "puppet-2.3.0"
-
-  comcam-software-2.3.1:
-    aliases:
-      - "puppet-2.3.1"
-
-  comcam-software-2.3.2:
-    aliases:
-      - "puppet-2.3.2"
-
-  comcam-software-2.3.3:
-    aliases:
-      - "puppet-2.3.3"
-
-  comcam-software-2.3.4:
-    aliases:
-      - "puppet-2.3.4"
-
-  comcam-software-2.3.5:
-    aliases:
-      - "puppet-2.3.5"
-
-  comcam-software-2.3.6:
-    aliases:
-      - "puppet-2.3.6"
-
-  comcam-software-2.3.7:
-    aliases:
-      - "puppet-2.3.7"
-
-  comcam-software-2.3.8:
-    aliases:
-      - "puppet-2.3.8"
-
-  comcam-software-2.3.9:
-    aliases:
-      - "puppet-2.3.9"
-
-  comcam-software-2.3.11:
-    aliases:
-      - "puppet-2.3.11"
-
-  comcam-software-2.3.12:
-    aliases:
-      - "puppet-2.3.12"
-
   comcam-software-2.4.0:
     aliases:
       - "puppet-2.4.0"

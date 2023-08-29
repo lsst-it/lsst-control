@@ -45,6 +45,7 @@ profile::ccs::common::packages:
   - "emacs"
   - "epel-release"
   - "flex"
+  - "fpack"
   - "gcc"
   - "gcc-c++"
   - "gcc-gfortran"

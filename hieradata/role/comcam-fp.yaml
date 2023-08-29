@@ -8,3 +8,5 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
+
+profile::ccs::file_transfer::install: true

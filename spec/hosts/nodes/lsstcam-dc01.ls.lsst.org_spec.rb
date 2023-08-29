@@ -112,6 +112,17 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
           mode: '0755',
         )
       end
+
+      it do
+        is_expected.to contain_file('/home/ccs-ipa/bin/fhe').with(
+          ensure: 'file',
+          owner: 'ccs-ipa',
+          group: 'ccs-ipa',
+          mode: '0755',
+        )
+      end
+
+      it { is_expected.to contain_file('/home/ccs-ipa/bin/mc-secret').with_content(%r{^export MC_HOST_oga=}) }
     end # on os
   end # on_supported_os
 end

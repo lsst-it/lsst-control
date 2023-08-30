@@ -628,7 +628,7 @@ describe "#{role} role" do
           is_expected.to contain_dhcp__pool('CCS-LSSTCam').with(
             network: '139.229.175.64',
             mask: '255.255.255.192',
-            range: ['139.229.175.65 139.229.175.125'],
+            range: ['139.229.175.101 139.229.175.120'],
             gateway: '139.229.175.126',
           )
         end

@@ -128,7 +128,7 @@ dhcp::pools:
     mask: "255.255.255.192"
     gateway: "139.229.175.126"
     range:
-      - "139.229.175.65 139.229.175.125"
+      - "139.229.175.101 139.229.175.120"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   CCS-Test-APP:
     network: "139.229.175.128"

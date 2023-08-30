@@ -16,4 +16,4 @@ restic::repositories:
       - "/tmp/back2"
     backup_timer: "Mon..Sun 20:00:00"
     enable_forget: true
-    forget_timer: Mon..Sun 23:00:00
+    forget_timer: "Mon..Sun 23:00:00"

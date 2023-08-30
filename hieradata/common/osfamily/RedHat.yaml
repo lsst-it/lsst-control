@@ -1,0 +1,6 @@
+---
+files:
+  /etc/rc.local:
+    ensure: "absent"
+  /etc/rc.d/rc.local:
+    ensure: "absent"

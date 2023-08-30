@@ -3,8 +3,9 @@ classes:
   - "profile::core::common"
   - "restic"
 
-restic::$bucket: "rubin-k8s-backups"
-restic::$enable_backup: true
+restic::bucket: "rubin-k8s-backups"
+restic::enable_backup: true
+restic::host: "s3.us-east-1.amazonaws.com"
 #Boolean                                       $init_repo            = true,
 #Restic::Repository::Type                      $type                 = 's3',
 
@@ -14,4 +15,5 @@ restic::repositories:
       - "/tmp/back1"
       - "/tmp/back2"
     backup_timer: "Mon..Sun 20:00:00"
-    host: "some.host.name"
+    enable_forget: true
+    forget_timer: Mon..Sun 23:00:00

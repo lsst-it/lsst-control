@@ -1,5 +1,6 @@
 ---
 classes:
+  - "profile::core::common"
   - "restic"
 
 restic::$bucket: "rubin-k8s-backups"

@@ -14,7 +14,7 @@ restic::repositories:
     backup_path:
       - "/tmp/back1"
       - "/tmp/back2"
-  #  backup_timer: "Mon..Sun 20:00:00"
+#backup_timer: "Mon..Sun 20:00:00"
     backup_timer: "*-*-* *:*:00"
     enable_forget: true
     forget_timer: "Mon..Sun 23:00:00"

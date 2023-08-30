@@ -11,7 +11,7 @@ nm::connections:
       [ethernet]
 
       [ipv4]
-      address1=139.229.175.65/26,139.229.175.126
+      address1=139.229.175.66/26,139.229.175.126
       dns=139.229.160.53;139.229.160.54;139.229.160.55;
       dns-search=cp.lsst.org;
       method=manual

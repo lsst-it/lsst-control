@@ -6,15 +6,12 @@ classes:
 restic::bucket: "rubin-k8s-backups/%{facts.fqdn}"
 restic::enable_backup: true
 restic::host: "s3.us-east-1.amazonaws.com"
-#Boolean                                       $init_repo            = true,
-#Restic::Repository::Type                      $type                 = 's3',
 
 restic::repositories:
-  some_repo2:
+  "%{facts.fqdn}"_repo:
     backup_path:
       - "/tmp/back1"
       - "/tmp/back2"
-#backup_timer: "Mon..Sun 20:00:00"
-    backup_timer: "*-*-* *:*:00"
+    backup_timer: "*-*-* 09:00:00"  # runs everyday at 9:00
     enable_forget: true
     forget_timer: "Mon..Sun 23:00:00"

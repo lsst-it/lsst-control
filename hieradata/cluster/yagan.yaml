@@ -30,6 +30,11 @@ network::interfaces_hash:
     onboot: "yes"
     type: "none"
     vlan: "yes"
+    bridge: "br1201"
+  br1201:
+    bootproto: "none"
+    onboot: "yes"
+    type: "Bridge"
   enp1s0f1.1800:
     bootproto: "none"
     defroute: "no"

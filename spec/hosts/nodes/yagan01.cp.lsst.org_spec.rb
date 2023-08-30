@@ -31,8 +31,6 @@ describe 'yagan01.cp.lsst.org', :sitepp do
         }
       end
 
-      let(:lhn_vlan_id) { 1800 }
-
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal'
@@ -75,19 +73,39 @@ describe 'yagan01.cp.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_network__interface("enp1s0f1.#{lhn_vlan_id}").with(
+        is_expected.to contain_network__interface('enp1s0f1.1201').with(
           bootproto: 'none',
           defroute: 'no',
           nozeroconf: 'yes',
           onboot: 'yes',
           type: 'none',
           vlan: 'yes',
-          bridge: "br#{lhn_vlan_id}",
+          bridge: 'br1201',
         )
       end
 
       it do
-        is_expected.to contain_network__interface("br#{lhn_vlan_id}").with(
+        is_expected.to contain_network__interface('br1201').with(
+          bootproto: 'none',
+          onboot: 'yes',
+          type: 'Bridge',
+        )
+      end
+
+      it do
+        is_expected.to contain_network__interface('enp1s0f1.1800').with(
+          bootproto: 'none',
+          defroute: 'no',
+          nozeroconf: 'yes',
+          onboot: 'yes',
+          type: 'none',
+          vlan: 'yes',
+          bridge: 'br1800',
+        )
+      end
+
+      it do
+        is_expected.to contain_network__interface('br1800').with(
           bootproto: 'none',
           onboot: 'yes',
           type: 'Bridge',
@@ -106,21 +124,21 @@ describe 'yagan01.cp.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_network__rule('lhnrouting').with(
-          iprule: ["priority 100 from 139.229.180.0/26 lookup #{lhn_vlan_id}"],
+          iprule: ['priority 100 from 139.229.180.0/26 lookup 1800'],
         )
       end
 
       it do
         is_expected.to contain_network__routing_table('lhn').with(
-          table_id: lhn_vlan_id,
+          table_id: 1800,
         )
       end
 
       it do
         is_expected.to contain_network__mroute('lhnrouting').with(
-          table: lhn_vlan_id,
+          table: 1800,
           routes: [
-            '139.229.180.0/24' => "br#{lhn_vlan_id}",
+            '139.229.180.0/24' => 'br1800',
             'default' => '139.229.180.254',
           ],
         )

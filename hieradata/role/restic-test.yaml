@@ -16,4 +16,3 @@ restic::repositories:
     backup_timer: "*-*-* 09:00:00"
     enable_forget: true
     forget_timer: "Mon..Sun 23:00:00"
-    password: "%{fqdn_rand}"

@@ -10,6 +10,8 @@ describe 'profile::ccs::el9' do
       let(:facts) { facts }
 
       it { is_expected.to compile.with_all_deps }
+
+      it { is_expected.to contain_package('compat-bin') }
     end # on os
   end  # on_supported_os
 end

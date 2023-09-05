@@ -6,6 +6,7 @@ classes:
 restic::bucket: "rubin-bm-backups/%{facts.fqdn}"
 restic::enable_backup: true
 restic::host: "s3.us-east-1.amazonaws.com"
+restic::password: "%{facts.restic-password}"
 
 # runs everyday at 9:00
 restic::repositories:
@@ -17,4 +18,3 @@ restic::repositories:
     enable_forget: true
     forget_timer: "Mon..Sun 23:00:00"
     forget_flags: "--keep-last 20"
-    password: "%{facts.restic-password}"

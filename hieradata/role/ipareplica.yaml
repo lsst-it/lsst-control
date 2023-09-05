@@ -52,9 +52,9 @@ tailscale::up_options:
 
 hosts::host_entries:
   ipa1.dev.lsst.org:
-    ip: "100.85.248.128"
+    ip: "100.112.180.100"
   ipa2.dev.lsst.org:
-    ip: "100.124.223.22"
+    ip: "100.71.133.15"
   ipa1.tu.lsst.org:
     ip: "100.107.132.55"
   ipa2.tu.lsst.org:

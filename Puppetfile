@@ -12,6 +12,7 @@ mod 'example42/network', git: 'https://github.com/lsst-it/puppet-network', ref: 
 mod 'jamtur01/httpauth', '0.0.6'
 mod 'jcpunk/irqbalance', '1.0.5'
 mod 'jhoblitt/ipmi', '5.3.1'
+mod 'lsst/anaconda', '0.1.0'
 mod 'lsst/ccs_daq', '1.1.0'
 mod 'lsst/ccs_database', '3.3.0'
 mod 'lsst/ccs_hcu', '3.5.0'

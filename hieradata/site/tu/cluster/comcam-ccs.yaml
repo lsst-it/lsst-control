@@ -10,3 +10,6 @@ ccs_monit::alert:
 
 clustershell::groupmembers:
   all: {group: "all", member: "comcam-dc01,comcam-fp01,comcam-mcm"}
+
+java_artisanal::set_alternatives: false
+java_artisanal::java17::set_alternatives: true

@@ -25,7 +25,7 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'common', facts: facts
-          it { is_expected.to contain_class('restic') }
+          it { is_expected.to contain_class('profile::core::restic') }
         end # host
       end # lsst_sites
     end # on os

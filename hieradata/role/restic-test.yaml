@@ -1,16 +1,16 @@
 ---
 classes:
   - "profile::core::common"
-  - "restic"
+  - "profile::core::restic"
 
-restic::bucket: "rubin-bm-backups/%{facts.fqdn}"
-restic::enable_backup: true
-restic::host: "s3.us-east-1.amazonaws.com"
-restic::password: "%{::restic_password}"
+profile::core::restic::bucket: "rubin-bm-backups/%{facts.fqdn}"
+profile::core::restic::enable_backup: true
+profile::core::restic::host: "s3.us-east-1.amazonaws.com"
+profile::core::restic::password: "%{::restic_password}"
 
 # runs everyday at 9:00
 # keeps last 20 backups
-restic::repositories:
+profile::core::restic::repositories:
   awsrepo:
     backup_path:
       - "/tmp/back1"

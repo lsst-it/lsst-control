@@ -70,8 +70,9 @@ describe "#{role} role" do
           end
 
           {
-            'ipa1.dev.lsst.org': '100.112.180.100',
-            'ipa2.dev.lsst.org': '100.71.133.15',
+            'ipa1.dev.lsst.org': '100.76.95.74',
+            'ipa2.dev.lsst.org': '100.77.145.58',
+            'ipa3.dev.lsst.org': '100.66.153.135',
             'ipa1.tu.lsst.org': '100.107.132.55',
             'ipa2.tu.lsst.org': '100.127.11.142',
             'ipa3.tu.lsst.org': '100.87.197.47',

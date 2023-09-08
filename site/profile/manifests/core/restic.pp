@@ -1,6 +1,5 @@
-class profile::core::restic {(
-    Optional[Variant[Sensitive[String],String]] $password = undef,
-)
+class profile::core::restic (
+    Optional[Variant[Sensitive[String],String]] $password = "foo",
+) {
     include restic
-
 }

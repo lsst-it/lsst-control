@@ -62,11 +62,11 @@ hosts::host_entries:
   ipa3.tu.lsst.org:
     ip: "100.87.197.47"
   ipa1.ls.lsst.org:
-    ip: "100.80.156.142"
+    ip: "100.78.115.42"
   ipa2.ls.lsst.org:
-    ip: "100.70.18.128"
+    ip: "100.81.221.120"
   ipa3.ls.lsst.org:
-    ip: "100.100.192.39"
+    ip: "100.80.142.127"
   ipa1.cp.lsst.org:
     ip: "100.97.236.28"
   ipa2.cp.lsst.org:

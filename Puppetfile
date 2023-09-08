@@ -106,8 +106,8 @@ mod 'simp/simplib', git: 'https://github.com/lsst-it/pupmod-simp-simplib', ref: 
 mod 'stm/debconf', '4.1.0'
 mod 'theforeman/dhcp', '8.2.0'
 mod 'theforeman/dns', '9.2.0'
-mod 'theforeman/foreman', '20.2.0'
-mod 'theforeman/foreman_proxy', git: 'https://github.com/lsst-it/puppet-foreman_proxy', ref: 'c3a92be'  # https://github.com/theforeman/puppet-foreman_proxy/pull/772
+mod 'theforeman/foreman', git: 'https://github.com/lsst-it/puppet-foreman', ref: '306b18e'  # 20.2.0 + dep updates
+mod 'theforeman/foreman_proxy', git: 'https://github.com/lsst-it/puppet-foreman_proxy', ref: 'f641120'  # https://github.com/theforeman/puppet-foreman_proxy/pull/772
 mod 'theforeman/puppet', '16.3.0'
 mod 'theforeman/puppetserver_foreman', '2.1.0'
 mod 'theforeman/tftp', '7.1.0'

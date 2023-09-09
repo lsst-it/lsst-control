@@ -18,4 +18,5 @@ restic::repositories:
     enable_forget: true
     forget_timer: "Mon..Sun 23:00:00"
     forget_flags: "--keep-last 20"
-    password: "%{::restic_password}"
+    password: 
+      - "%{::restic_password}"

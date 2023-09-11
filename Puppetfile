@@ -104,6 +104,7 @@ mod 'simp/polkit', git: 'https://github.com/lsst-it/pupmod-simp-polkit', ref: '4
 mod 'simp/simpkv', git: 'https://github.com/lsst-it/pupmod-simp-simpkv', ref: '71ae5b7'  # https://github.com/simp/pupmod-simp-simpkv/pull/72
 mod 'simp/simplib', git: 'https://github.com/lsst-it/pupmod-simp-simplib', ref: 'de5ec9f'  # https://github.com/simp/pupmod-simp-simplib/pull/284
 mod 'stm/debconf', '4.1.0'
+mod 'syseleven/restic', '2.6.1'
 mod 'theforeman/dhcp', '8.2.0'
 mod 'theforeman/dns', '9.2.0'
 mod 'theforeman/foreman', git: 'https://github.com/lsst-it/puppet-foreman', ref: '306b18e'  # 20.2.0 + dep updates

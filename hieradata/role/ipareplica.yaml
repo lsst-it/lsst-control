@@ -38,6 +38,7 @@ profile::core::ipa::default:
   global:
     server: "%{facts.fqdn}"
     xmlrpc_uri: "https://%{facts.fqdn}/ipa/xml"
+openldap::client::uri: "ldaps://%{facts.fqdn}"
 
 tailscale::up_options:
   accept-dns: false  # leave /etc/resolv.conf alone

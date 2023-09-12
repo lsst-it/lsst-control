@@ -72,6 +72,10 @@ describe "#{role} role" do
             is_expected.to contain_ini_setting('/etc/ipa/default.conf [global] xmlrpc_uri').with_value("https://#{facts[:fqdn]}/ipa/xml")
           end
 
+          it do
+            is_expected.to contain_class('openldap::client').with_uri("ldaps://#{facts[:fqdn]}")
+          end
+
           case os
           when 'centos-7-x86_64'
             %w[

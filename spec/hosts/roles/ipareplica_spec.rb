@@ -27,6 +27,22 @@ describe "#{role} role" do
           include_examples 'common', facts: facts, no_auth: true
 
           it do
+            is_expected.to contain_class('clustershell').with(
+              groupmembers: {
+                'ipa' => {
+                  'group' => 'ipa',
+                  'member' => [
+                    "ipa[1-3].cp.lsst.org",
+                    "ipa[1-3].ls.lsst.org",
+                    "ipa[1-3].tu.lsst.org",
+                    "ipa[1-3].dev.lsst.org",
+                  ]
+                },
+              },
+            )
+          end
+
+          it do
             is_expected.to contain_class('tailscale').with_up_options(
               'accept-dns' => false,
               'hostname' => facts[:fqdn],

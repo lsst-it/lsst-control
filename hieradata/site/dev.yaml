@@ -1,5 +1,5 @@
 ---
-easy_ipa::ipa_master_fqdn: "ipa1.ls.lsst.org"
+easy_ipa::ipa_master_fqdn: "ipa1.dev.lsst.org"
 rsyslog::config::actions:
 # Send copy to logs to Ruka Cluster
   graylogCloud:

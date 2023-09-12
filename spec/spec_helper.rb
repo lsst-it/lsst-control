@@ -222,7 +222,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
           id_provider=ipa
           ipa_domain=lsst.cloud
           ipa_hostname=#{facts[:fqdn]}
-          ipa_server=_srv_, ipa1.#{site == 'dev' ? 'ls' : site}.lsst.org
+          ipa_server=_srv_, ipa1.#{site}.lsst.org
           krb5_store_password_if_offline=true
           ldap_tls_cacert=/etc/ipa/ca.crt
 
@@ -254,7 +254,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
           id_provider=ipa
           ipa_domain=lsst.cloud
           ipa_hostname=#{facts[:fqdn]}
-          ipa_server=_srv_, ipa1.#{site == 'dev' ? 'ls' : site}.lsst.org
+          ipa_server=_srv_, ipa1.#{site}.lsst.org
           krb5_store_password_if_offline=true
           ldap_tls_cacert=/etc/ipa/ca.crt
 

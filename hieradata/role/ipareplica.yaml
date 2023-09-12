@@ -34,6 +34,10 @@ clustershell::groupmembers:
       - "ipa1.dev.lsst.org"
 
 profile::core::ipa_pwd_reset::ldap_user: "ldap-passwd-reset"
+profile::core::ipa::default:
+  global:
+    server: "%{facts.fqdn}"
+    xmlrpc_uri: "https://%{facts.fqdn}/ipa/xml"
 
 tailscale::up_options:
   accept-dns: false  # leave /etc/resolv.conf alone

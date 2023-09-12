@@ -54,6 +54,12 @@ describe "#{role} role" do
             end
           end
 
+          it do
+            is_expected.to contain_class('easy_ipa').with(
+              webui_enable_proxy: false,
+            )
+          end
+
           case os
           when 'centos-7-x86_64'
             %w[

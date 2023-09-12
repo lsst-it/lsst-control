@@ -15,9 +15,7 @@ easy_ipa::ipa_role: "replica"
 easy_ipa::configure_replica_ca: true
 easy_ipa::install_ipa_server: true
 easy_ipa::enable_ip_address: true
-easy_ipa::webui_disable_kerberos: true
-easy_ipa::webui_enable_proxy: true
-easy_ipa::webui_force_https: true
+easy_ipa::webui_enable_proxy: false
 easy_ipa::configure_dns_server: false
 easy_ipa::ipa_server_fqdn: "%{facts.fqdn}"
 easy_ipa::ip_address: "%{facts.networking.ip}"

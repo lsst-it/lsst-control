@@ -56,6 +56,9 @@ lookup_options:
   ssh::server::match_block:
     merge:
       strategy: "deep"
+  profile::core::ipa::default:
+    merge:
+      strategy: "deep"
   profile::core::systemd::tmpfile:
     merge:
       strategy: "deep"

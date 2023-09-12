@@ -54,6 +54,18 @@ describe "#{role} role" do
             end
           end
 
+          it do
+            is_expected.to contain_ini_setting('/etc/ipa/default.conf [global] host').with_value(facts[:fqdn])
+          end
+
+          it do
+            is_expected.to contain_ini_setting('/etc/ipa/default.conf [global] server').with_value(facts[:fqdn])
+          end
+
+          it do
+            is_expected.to contain_ini_setting('/etc/ipa/default.conf [global] xmlrpc_uri').with_value("https://#{facts[:fqdn]}/ipa/xml")
+          end
+
           case os
           when 'centos-7-x86_64'
             %w[

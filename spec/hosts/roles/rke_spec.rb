@@ -10,7 +10,7 @@ shared_examples 'generic rke' do
   it { is_expected.to contain_class('kubectl') }
   it { is_expected.to contain_class('profile::core::rke') }
   it { is_expected.to contain_class('clustershell') }
-  
+
   it do
     is_expected.to contain_class('restic').with(
       enable_backup: true,

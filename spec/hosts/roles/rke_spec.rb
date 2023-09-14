@@ -12,6 +12,12 @@ shared_examples 'generic rke' do
   it { is_expected.to contain_class('clustershell') }
 
   it do
+    is_expected.to contain_class('restic').with(
+      enable_backup: true,
+    )
+  end
+
+  it do
     is_expected.to contain_file('/home/rke/.bashrc.d/kubectl.sh')
       .with_content(%r{^alias k='kubectl'$})
       .with_content(%r{^complete -o default -F __start_kubectl k$})

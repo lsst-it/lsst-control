@@ -11,6 +11,8 @@ classes:
   - "profile::core::ospl"
   - "profile::core::rke"
   - "profile::core::velero"
+  - "restic"
+
 packages:
   - "gdisk"
 profile::core::helm::version: "3.5.4"
@@ -105,3 +107,21 @@ files:
       export GIT_PS1_SHOWDIRTYSTATE=true
       export GIT_PS1_SHOWUNTRACKEDFILES=true
       export PS1='[\u@\h \W$(declare -F __git_ps1 &>/dev/null && __git_ps1 " (%s)")]\$ '
+
+restic::bucket: "rubin-bm-backups/%{facts.fqdn}"
+restic::enable_backup: true
+restic::host: "s3.us-east-1.amazonaws.com"
+restic::password: "%{::restic_password}"
+
+# runs everyday at 9:00
+# keeps last 20 backups
+restic::repositories:
+  awsrepo:
+    backup_path:
+      - "/home/rke"
+      - "/var/lib/rook"
+    backup_flags: "--exclude=/var/lib/rook/rook-ceph/log"
+    backup_timer: "*-*-* 09:00:00"
+    enable_forget: true
+    forget_timer: "Mon..Sun 23:00:00"
+    forget_flags: "--keep-last 20"

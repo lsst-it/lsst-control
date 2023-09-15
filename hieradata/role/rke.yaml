@@ -120,6 +120,7 @@ restic::repositories:
     backup_path:
       - "/home/rke"
       - "/var/lib/rook"
+      - "/etc/kubernetes"
     backup_flags: "--exclude=/var/lib/rook/rook-ceph/log"
     backup_timer: "*-*-* 09:00:00"
     enable_forget: true

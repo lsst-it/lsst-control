@@ -31,6 +31,10 @@ class profile::ccs::common (
     include profile::daq::sysctl
   }
 
+  if fact('os.release.major') == '9' {
+    include profile::ccs::el9
+  }
+
   include ccs_software
   include java_artisanal
   include java_artisanal::java17

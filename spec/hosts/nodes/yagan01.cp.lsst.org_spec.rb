@@ -24,6 +24,8 @@ describe 'yagan01.cp.lsst.org', :sitepp do
           role: 'rke',
           site: 'cp',
           cluster: 'yagan',
+          variant: '1114s',
+          subvariant: '1.01',
         }
       end
 
@@ -68,8 +70,8 @@ describe 'yagan01.cp.lsst.org', :sitepp do
       %w[
         eno1np0
         eno2np1
-        enp4s0f3u2u2c2
-        enp197s0f1
+        enp5s0f3u2u2c2
+        enp1s0f1
       ].each do |i|
         context "with #{i}" do
           let(:interface) { i }
@@ -78,19 +80,19 @@ describe 'yagan01.cp.lsst.org', :sitepp do
         end
       end
 
-      context 'with enp197s0f0' do
-        let(:interface) { 'enp197s0f0' }
+      context 'with enp1s0f0' do
+        let(:interface) { 'enp1s0f0' }
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
       end
 
-      context 'with enp197s0f1.1201' do
-        let(:interface) { 'enp197s0f1.1201' }
+      context 'with enp1s0f1.1201' do
+        let(:interface) { 'enp1s0f1.1201' }
 
         it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm vlan interface', id: 1201, parent: 'enp197s0f1'
+        it_behaves_like 'nm vlan interface', id: 1201, parent: 'enp1s0f1'
         it_behaves_like 'nm bridge slave interface', master: 'br1201'
       end
 
@@ -102,11 +104,11 @@ describe 'yagan01.cp.lsst.org', :sitepp do
         it_behaves_like 'nm bridge interface'
       end
 
-      context 'with enp197s0f1.1800' do
-        let(:interface) { 'enp197s0f1.1800' }
+      context 'with enp1s0f1.1800' do
+        let(:interface) { 'enp1s0f1.1800' }
 
         it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm vlan interface', id: 1800, parent: 'enp197s0f1'
+        it_behaves_like 'nm vlan interface', id: 1800, parent: 'enp1s0f1'
         it_behaves_like 'nm bridge slave interface', master: 'br1800'
       end
 

@@ -24,6 +24,8 @@ describe 'yagan11.cp.lsst.org', :sitepp do
           role: 'rke',
           site: 'cp',
           cluster: 'yagan',
+          variant: '1114s',
+          subvariant: '1.02',
         }
       end
 

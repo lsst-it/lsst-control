@@ -1,4 +1,0 @@
----
-network::interfaces_hash:
-  enp1s0f0:  # fqdn
-    ipaddress: "139.229.160.67"

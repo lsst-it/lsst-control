@@ -1,6 +1,6 @@
 ---
 clustershell::groupmembers:
-  yagan: {group: "yagan", member: "yagan[01-10]"}
+  yagan: {group: "yagan", member: "yagan[01-20]"}
 cni::plugins::checksum: "f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37"
 cni::plugins::enable: ["macvlan"]
 cni::plugins::version: "1.2.0"

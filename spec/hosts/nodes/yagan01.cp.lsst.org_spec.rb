@@ -53,7 +53,7 @@ describe 'yagan01.cp.lsst.org', :sitepp do
           groupmembers: {
             'yagan' => {
               'group' => 'yagan',
-              'member' => 'yagan[01-10]',
+              'member' => 'yagan[01-20]',
             },
           },
         )

@@ -1,0 +1,3 @@
+---
+clustershell::groupmembers:
+  lukay: {group: "lukay", member: "lukay[01-04]"}

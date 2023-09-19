@@ -2,15 +2,11 @@
 
 require 'spec_helper'
 
-#
-# Testing network interfaces from the chonchon cluster hiera layer. One node in
-# the cluster should be sufficient.
-#
 describe 'chonchon01.cp.lsst.org', :sitepp do
-  on_supported_os.each do |os, facts|
-    # XXX networking needs to be updated to support EL8+
-    next unless os =~ %r{centos-7-x86_64}
-
+  alma9 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '9' }).first
+  # rubocop:disable Naming/VariableNumber
+  { 'almalinux-9-x86_64': alma9 }.each do |os, facts|
+    # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
       let(:facts) do
         override_facts(facts,
@@ -30,18 +26,11 @@ describe 'chonchon01.cp.lsst.org', :sitepp do
           cluster: 'chonchon',
         }
       end
-      let(:lhn_vlan_id) { 1800 }
 
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal'
-      it { is_expected.to contain_kmod__load('dummy') }
-
-      it do
-        is_expected.to contain_kmod__install('dummy').with(
-          command: '"/sbin/modprobe --ignore-install dummy; /sbin/ip link set name lhnrouting dev dummy0"',
-        )
-      end
+      include_context 'with nm interface'
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
@@ -73,56 +62,48 @@ describe 'chonchon01.cp.lsst.org', :sitepp do
         )
       end
 
-      it do
-        is_expected.to contain_network__interface("em2.#{lhn_vlan_id}").with(
-          bootproto: 'none',
-          defroute: 'no',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'none',
-          vlan: 'yes',
-          bridge: "br#{lhn_vlan_id}",
-        )
+      it { is_expected.to have_network__interface_resource_count(0) }
+      it { is_expected.to have_nm__connection_resource_count(6) }
+
+      %w[
+        em2
+        em3
+        em4
+      ].each do |i|
+        context "with #{i}" do
+          let(:interface) { i }
+
+          it_behaves_like 'nm disabled interface'
+        end
       end
 
-      it do
-        is_expected.to contain_network__interface("br#{lhn_vlan_id}").with(
-          bootproto: 'none',
-          onboot: 'yes',
-          type: 'Bridge',
-        )
+      context 'with em1' do
+        let(:interface) { 'em1' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm ethernet interface'
       end
 
-      it do
-        is_expected.to contain_network__interface('lhnrouting').with(
-          bootproto: 'none',
-          nm_controlled: 'no',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
+      context 'with em2.1800' do
+        let(:interface) { 'em2.1800' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm vlan interface', id: 1800, parent: 'em2'
+        it_behaves_like 'nm bridge slave interface', master: 'br1800'
       end
 
-      it do
-        is_expected.to contain_network__rule('lhnrouting').with(
-          iprule: ["priority 100 from 139.229.180.0/26 lookup #{lhn_vlan_id}"],
-        )
-      end
+      context 'with br1800' do
+        let(:interface) { 'br1800' }
 
-      it do
-        is_expected.to contain_network__routing_table('lhn').with(
-          table_id: lhn_vlan_id,
-        )
-      end
-
-      it do
-        is_expected.to contain_network__mroute('lhnrouting').with(
-          table: lhn_vlan_id,
-          routes: [
-            '139.229.180.0/24' => "br#{lhn_vlan_id}",
-            'default' => '139.229.180.254',
-          ],
-        )
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm no-ip interface'
+        it_behaves_like 'nm bridge interface'
+        it { expect(nm_keyfile['ipv4']['route1']).to eq('139.229.180.0/24') }
+        it { expect(nm_keyfile['ipv4']['route1_options']).to eq('table=1800') }
+        it { expect(nm_keyfile['ipv4']['route2']).to eq('0.0.0.0/0,139.229.180.254') }
+        it { expect(nm_keyfile['ipv4']['route2_options']).to eq('table=1800') }
+        it { expect(nm_keyfile['ipv4']['routing-rule1']).to eq('priority 100 from 139.229.180.0/26 table 1800') }
       end
     end # on os
   end # on_supported_os

@@ -31,9 +31,6 @@
 # @param install_telegraf
 #   If `true`, manage telegraf
 #
-# @param manage_powertop
-#   If `true`, manage powertop service
-#
 # @param manage_scl
 #   If `true`, enable redhat scl repos
 #
@@ -56,7 +53,6 @@ class profile::core::common (
   Boolean $disable_ipv6 = false,
   Boolean $manage_firewall = true,
   Boolean $install_telegraf = true,
-  Boolean $manage_powertop = false,
   Boolean $manage_scl = true,
   Boolean $manage_repos = true,
   Boolean $manage_irqbalance = true,
@@ -164,10 +160,6 @@ class profile::core::common (
 
   if $disable_ipv6 {
     include profile::core::sysctl::disable_ipv6
-  }
-
-  if $manage_powertop {
-    include profile::core::powertop
   }
 
   if $manage_resolv_conf {

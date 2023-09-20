@@ -1,6 +1,10 @@
 # @summary
 #   Manage packages and services needed on different hardware platforms.
+#   For *baremetal* only.
+#
 class profile::core::hardware {
+  include profile::core::powertop
+
   # lint:ignore:case_without_default
   case fact('dmi.product.name') {
     # XXX add a fact to check /sys/class/ipmi/ instead of white listing specific models

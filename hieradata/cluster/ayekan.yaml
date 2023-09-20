@@ -6,7 +6,6 @@ cni::plugins::enable: ["macvlan"]
 cni::plugins::version: "1.2.0"
 profile::core::rke::enable_dhcp: true
 profile::core::rke::version: "1.4.6-rc4"
-profile::core::ospl::enable_rundir: true
 nm::connections:
   eno1np0:
     content: |

@@ -22,6 +22,13 @@ shared_examples 'generic rke' do
       .with_content(%r{^alias k='kubectl'$})
       .with_content(%r{^complete -o default -F __start_kubectl k$})
   end
+
+  it do
+    is_expected.to contain_class('rke').with(
+      version: '1.3.12',
+      checksum: '579da2206aec09cadccd8d6f4818861e78a256b6ae550a229335e500a472bd50',
+    )
+  end
 end
 
 role = 'rke'
@@ -50,13 +57,6 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        it do
-          is_expected.to contain_class('rke').with(
-            version: '1.3.12',
-            checksum: '579da2206aec09cadccd8d6f4818861e78a256b6ae550a229335e500a472bd50',
-          )
-        end
-
         include_examples 'common', facts: facts
         include_examples 'generic rke'
       end # host
@@ -69,13 +69,6 @@ describe "#{role} role" do
         let(:site) { 'ls' }
 
         it { is_expected.to compile.with_all_deps }
-
-        it do
-          is_expected.to contain_class('rke').with(
-            version: '1.3.12',
-            checksum: '579da2206aec09cadccd8d6f4818861e78a256b6ae550a229335e500a472bd50',
-          )
-        end
 
         include_examples 'common', facts: facts
         include_examples 'generic rke'
@@ -90,13 +83,6 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        it do
-          is_expected.to contain_class('rke').with(
-            version: '1.3.12',
-            checksum: '579da2206aec09cadccd8d6f4818861e78a256b6ae550a229335e500a472bd50',
-          )
-        end
-
         include_examples 'common', facts: facts
         include_examples 'generic rke'
       end # host
@@ -109,13 +95,6 @@ describe "#{role} role" do
         let(:site) { 'dev' }
 
         it { is_expected.to compile.with_all_deps }
-
-        it do
-          is_expected.to contain_class('rke').with(
-            version: '1.4.6-rc4',
-            checksum: '220cdd575fcefc77ef8d7c2ff030cb8604fa484f7db5d3bcffa2cd6c794b2563',
-          )
-        end
 
         include_examples 'common', facts: facts
         include_examples 'generic rke'

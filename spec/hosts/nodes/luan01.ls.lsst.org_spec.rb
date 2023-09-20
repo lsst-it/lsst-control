@@ -52,7 +52,6 @@ describe 'luan01.ls.lsst.org', :sitepp do
         )
       end
 
-      it { is_expected.to have_network__interface_resource_count(0) }
       it { is_expected.to have_nm__connection_resource_count(0) }
     end # on os
   end # on_supported_os

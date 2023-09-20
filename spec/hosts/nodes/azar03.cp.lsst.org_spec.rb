@@ -44,7 +44,6 @@ describe 'azar03.cp.lsst.org', :sitepp do
       end
 
       include_context 'with nm interface'
-      it { is_expected.to have_network__interface_resource_count(0) }
       it { is_expected.to have_nm__connection_resource_count(4) }
 
       context 'with enp1s0f0' do

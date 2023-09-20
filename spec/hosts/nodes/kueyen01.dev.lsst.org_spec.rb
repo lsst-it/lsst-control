@@ -3,9 +3,10 @@
 require 'spec_helper'
 
 describe 'kueyen01.dev.lsst.org', :sitepp do
-  on_supported_os.each do |os, facts|
-    next if os =~ %r{centos-7-x86_64}
-
+  alma9 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '9' }).first
+  # rubocop:disable Naming/VariableNumber
+  { 'almalinux-9-x86_64': alma9 }.each do |os, facts|
+    # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
       let(:facts) do
         override_facts(facts,

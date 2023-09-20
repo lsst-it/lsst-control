@@ -51,6 +51,8 @@ describe 'pillan01.tu.lsst.org', :sitepp do
         )
       end
 
+      it { is_expected.to contain_class('profile::core::ospl').with_enable_rundir(true) }
+
       it { is_expected.to have_nm__connection_resource_count(14) }
 
       %w[

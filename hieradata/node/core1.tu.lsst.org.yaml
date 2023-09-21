@@ -5,6 +5,22 @@ ipmi::networks:
     netmask: "255.255.255.192"
     gateway: "140.252.146.129"
     type: "static"
-network::interfaces_hash:
+nm::connections:
   em1:  # fqdn
-    ipaddress: "140.252.146.68"
+    content: |
+      [connection]
+      id=em1
+      uuid=19429662-4ca9-3632-932f-56e3d300bd9a
+      type=ethernet
+      interface-name=em1
+
+      [ethernet]
+
+      [ipv4]
+      address1=140.252.146.68/27,140.252.146.65
+      dns=140.252.146.71;140.252.146.72;140.252.146.73
+      dns-search=tu.lsst.org;
+      method=manual
+
+      [ipv6]
+      method=disabled

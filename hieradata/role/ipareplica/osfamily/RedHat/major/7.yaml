@@ -3,7 +3,7 @@ profile::core::yum::versionlock:
   python2-ipaserver: &ipa_version
     ensure: "present"
     version: "4.6.8"
-    release: "5.el7.centos.7"
+    release: "5.el7.centos.14"
   ipa-client-common:
     <<: *ipa_version
   python2-ipaclient:
@@ -18,3 +18,9 @@ profile::core::yum::versionlock:
     <<: *ipa_version
   ipa-server:
     <<: *ipa_version
+  389-ds-base: &ds_version
+    ensure: "present"
+    version: "1.3.11.1"
+    release: "2.el7_9"
+  389-ds-base-libs:
+    <<: *ds_version

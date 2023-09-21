@@ -49,3 +49,129 @@ network::interfaces_hash:
     type: "bridge"
   br3085:  # misc-dds
     <<: *bridge_int
+nm::connections:
+  em2:  # not connected
+    content: |
+      [connection]
+      id=em2
+      uuid=74c4ee68-1de0-4a6d-9237-4992c34d244f
+      type=ethernet
+      autoconnect=false
+      interface-name=em2
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  p2p1:  # trunk
+    content: |
+      [connection]
+      id=p2p1
+      uuid=c4374a59-af0a-42e0-aeeb-718c87273e51
+      type=ethernet
+      autoconnect=false
+      interface-name=p2p1
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  p2p2:  # not connected
+    content: |
+      [connection]
+      id=p2p2
+      uuid=29b8c67a-2020-4f20-9647-fca2c48e1b2d
+      type=ethernet
+      autoconnect=false
+      interface-name=p2p2
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+  p2p1.3040:
+    content: |
+      [connection]
+      id=p2p1.3040
+      uuid=83eb4bbb-5f05-4d9d-9c0e-d465309a8cd9
+      type=vlan
+      interface-name=p2p1.3040
+      master=br3040
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=3040
+      parent=p2p1
+
+      [bridge-port]
+  p2p1.3085:
+    content: |
+      [connection]
+      id=p2p1.3085
+      uuid=c10f7f90-86c4-4244-ad6f-15898cbe729f
+      type=vlan
+      interface-name=p2p1.3085
+      master=br3085
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=3085
+      parent=p2p1
+
+      [bridge-port]
+  br3040:
+    content: |
+      [connection]
+      id=br3040
+      uuid=d032d1d6-9080-493b-bd2c-e243f8e1ba35
+      type=bridge
+      interface-name=br3040
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+      [proxy]
+  br3085:
+    content: |
+      [connection]
+      id=br3085
+      uuid=a578f93b-06c2-0434-5437-a69b0542c27e
+      type=bridge
+      interface-name=br3085
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+      [proxy]

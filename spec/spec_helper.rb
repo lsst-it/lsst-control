@@ -897,6 +897,7 @@ end
 shared_examples 'convenience' do
   %w[
     ack
+    diffstat
     fpart
     git
     jq

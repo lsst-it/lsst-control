@@ -3,11 +3,12 @@ classes:
   - "profile::core::common"
   - "mysqldump"
 
-mysqldump::backup::daily:
-  mysql_user: "userfoo",
-  mysql_passwd: "passbar",
-  mysqldump_extra_params: '--all-databases',
-  hour: "*",
-  minute: "50",
-  weekday: "*",
-  email: "monitor@example.org"
+mysqldump::backup:
+  daily:
+    mysql_user: "userfoo"
+    mysql_passwd: "passbar"
+    mysqldump_extra_params: '--all-databases'
+    hour: "*"
+    minute: "50"
+    weekday: "*"
+    email: "monitor@example.org"

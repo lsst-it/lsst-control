@@ -215,6 +215,7 @@ profile::core::puppet_master::foreman_config:
   host_details_ui: {value: false}  # https://projects.theforeman.org/issues/35115
   host_power_status: {value: false}
   idle_timeout: {value: 7200}  # session timeout in minutes
+  ignore_puppet_facts_for_provisioning: {value: true}
   matchers_inheritance: {value: false}
   maximum_structured_facts: {value: 1000}
   update_hostgroup_from_facts: {value: false}

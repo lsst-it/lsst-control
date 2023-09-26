@@ -39,6 +39,23 @@ describe 'pillan08.tu.lsst.org', :sitepp do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
       end
 
+      it do
+        is_expected.to contain_class('profile::core::rke').with(
+          enable_dhcp: true,
+          version: '1.3.12',
+        )
+      end
+
+      it do
+        is_expected.to contain_class('cni::plugins').with(
+          version: '1.2.0',
+          checksum: 'f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37',
+          enable: ['macvlan'],
+        )
+      end
+
+      it { is_expected.to contain_class('profile::core::ospl').with_enable_rundir(true) }
+
       # 2 extra instances in the catalog for the rename interfaces
       it { is_expected.to have_nm__connection_resource_count(14 + 2) }
 

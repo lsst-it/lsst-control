@@ -46,7 +46,6 @@ describe 'lsstcam-db01.cp.lsst.org', :sitepp do
         )
       end
 
-      it { is_expected.to have_network__interface_resource_count(0) }
       it { is_expected.to have_nm__connection_resource_count(1) }
 
       context 'with eno1' do

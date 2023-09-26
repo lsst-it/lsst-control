@@ -2,32 +2,14 @@
 
 require 'spec_helper'
 
-#
-# Testing network interfaces from the pillan cluster hiera layer. One node in
-# the pillan cluster should be sufficient.
-#
 describe 'pillan01.tu.lsst.org', :sitepp do
-  on_supported_os.each do |os, facts|
-    next unless os =~ %r{centos-7-x86_64}
-
+  alma9 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '9' }).first
+  # rubocop:disable Naming/VariableNumber
+  { 'almalinux-9-x86_64': alma9 }.each do |os, facts|
+    # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
-      let(:int1) do
-        if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
-          'eno1'
-        else
-          'eno1np0'
-        end
-      end
-      let(:int2) do
-        if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
-          'eno2d1'
-        else
-          'eno2np1'
-        end
-      end
       let(:facts) do
         override_facts(facts,
-                       networking: { interfaces: { int1 => { mac: '11:22:33:44:55:66' } } },
                        fqdn: 'pillan01.tu.lsst.org',
                        is_virtual: false,
                        virtual: 'physical',
@@ -48,6 +30,18 @@ describe 'pillan01.tu.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal'
+      include_context 'with nm interface'
+
+      it do
+        is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
+      end
+
+      it do
+        is_expected.to contain_class('profile::core::rke').with(
+          enable_dhcp: true,
+          version: '1.3.12',
+        )
+      end
 
       it do
         is_expected.to contain_class('cni::plugins').with(
@@ -57,93 +51,83 @@ describe 'pillan01.tu.lsst.org', :sitepp do
         )
       end
 
-      if facts[:os]['release']['major'] == '7'
-        it do
-          is_expected.to contain_network__interface('bond0').with(
-            bonding_master: 'yes',
-            bonding_opts: 'mode=4 miimon=100',
-            bootproto: 'dhcp',
-            defroute: 'yes',
-            nozeroconf: 'yes',
-            onboot: 'yes',
-            type: 'Bond',
-          )
-        end
+      it { is_expected.to contain_class('profile::core::ospl').with_enable_rundir(true) }
 
-        if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
-          # explicitly setting the bond mac address on EL7 might have no effect?
-          # We aren't changing the behavior for EL7 to avoid a network restart
-          # for legacy nodes.
-          it { is_expected.to contain_network__interface('bond0').without_macaddr }
-        else
-          it do
-            is_expected.to contain_network__interface('bond0').with(
-              macaddr: '11:22:33:44:55:66',
-            )
-          end
-        end
+      it { is_expected.to have_nm__connection_resource_count(14) }
 
-        it do
-          is_expected.to contain_network__interface(int1).with(
-            bootproto: 'none',
-            master: 'bond0',
-            onboot: 'yes',
-            slave: 'yes',
-            type: 'Ethernet',
-          )
-        end
+      %w[
+        enp4s0f3u2u2c2
+      ].each do |i|
+        context "with #{i}" do
+          let(:interface) { i }
 
-        it do
-          is_expected.to contain_network__interface(int2).with(
-            bootproto: 'none',
-            master: 'bond0',
-            onboot: 'yes',
-            slave: 'yes',
-            type: 'Ethernet',
-          )
+          it_behaves_like 'nm disabled interface'
         end
+      end
 
-        %w[
-          enp129s0f0
-          enp129s0f1
-        ].each do |int|
-          it do
-            is_expected.to contain_network__interface(int).with(
-              bootproto: 'none',
-              master: 'bond0',
-              onboot: 'yes',
-              slave: 'yes',
-              type: 'Ethernet',
-            )
-          end
+      %w[
+        eno1np0
+        eno2np1
+        enp129s0f0
+        enp129s0f1
+      ].each do |i|
+        context "with #{i}" do
+          let(:interface) { i }
+
+          it_behaves_like 'nm enabled interface'
+          it_behaves_like 'nm ethernet interface'
+          it_behaves_like 'nm bond slave interface', master: 'bond0'
         end
+      end
 
-        %w[
-          3035
-          3065
-          3075
-          3085
-        ].each do |vlan|
-          it do
-            is_expected.to contain_network__interface("bond0.#{vlan}").with(
-              bootproto: 'none',
-              defroute: 'no',
-              nozeroconf: 'yes',
-              onboot: 'yes',
-              type: 'none',
-              vlan: 'yes',
-              bridge: "br#{vlan}",
-            )
-          end
+      context 'with bond0' do
+        let(:interface) { 'bond0' }
 
-          it do
-            is_expected.to contain_network__interface("br#{vlan}").with(
-              bootproto: 'none',
-              onboot: 'yes',
-              type: 'bridge',
-            )
-          end
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm bond interface'
+      end
+
+      Hash[*%w[
+        bond0.3035 br3035
+        bond0.3065 br3065
+        bond0.3075 br3075
+        bond0.3085 br3085
+      ]].each do |slave, master|
+        context "with #{slave}" do
+          let(:interface) { slave }
+
+          it_behaves_like 'nm enabled interface'
+          it_behaves_like 'nm bridge slave interface', master: master
         end
+      end
+
+      %w[
+        br3065
+        br3065
+        br3085
+      ].each do |i|
+        context "with #{i}" do
+          let(:interface) { i }
+
+          it_behaves_like 'nm enabled interface'
+          it_behaves_like 'nm bridge interface'
+          it_behaves_like 'nm no-ip interface'
+        end
+      end
+
+      context 'with br3035' do
+        let(:interface) { 'br3035' }
+        let(:vlan) { '3035' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm no-ip interface'
+        it_behaves_like 'nm bridge interface'
+        it { expect(nm_keyfile['ipv4']['route1']).to eq('140.252.147.192/27') }
+        it { expect(nm_keyfile['ipv4']['route1_options']).to eq("table=#{vlan}") }
+        it { expect(nm_keyfile['ipv4']['route2']).to eq('0.0.0.0/0,140.252.147.193') }
+        it { expect(nm_keyfile['ipv4']['route2_options']).to eq("table=#{vlan}") }
+        it { expect(nm_keyfile['ipv4']['routing-rule1']).to eq("priority 100 from 140.252.147.192/27 table #{vlan}") }
       end
     end # on os
   end # on_supported_os

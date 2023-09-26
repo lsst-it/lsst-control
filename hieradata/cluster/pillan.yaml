@@ -1,45 +1,245 @@
 ---
 clustershell::groupmembers:
   pillan: {group: "pillan", member: "pillan[01-09]"}
-cni::plugins::checksum: "f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37"
-cni::plugins::enable: ["macvlan"]
-cni::plugins::version: "1.2.0"
 profile::core::ospl::enable_rundir: true
 profile::core::rke::enable_dhcp: true
+nm::connections:
+  enp4s0f3u2u2c2:
+    content: |
+      [connection]
+      id=enp4s0f3u2u2c2
+      uuid=283f3035-13d7-4c87-9d7a-7d47861fa1f9
+      type=ethernet
+      autoconnect=false
+      interface-name=enp4s0f3u2u2c2
 
-network::interfaces_hash:
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  eno1np0:
+    content: |
+      [connection]
+      id=eno1np0
+      uuid=f330f829-20cc-b829-67b0-18086a5fe6fa
+      type=ethernet
+      interface-name=eno1np0
+      master=bond0
+      slave-type=bond
+
+      [ethernet]
+  eno2np1:
+    content: |
+      [connection]
+      id=eno2np1
+      uuid=de9904c8-9577-1a17-36b1-34b94132f06a
+      type=ethernet
+      interface-name=eno2np1
+      master=bond0
+      slave-type=bond
+
+      [ethernet]
+  enp129s0f0:
+    content: |
+      [connection]
+      id=enp129s0f0
+      uuid=688bf5bf-d649-34b4-15eb-b07c50ac43f8
+      type=ethernet
+      interface-name=enp129s0f0
+      master=bond0
+      slave-type=bond
+
+      [ethernet]
+  enp129s0f1:
+    content: |
+      [connection]
+      id=enp129s0f1
+      uuid=46d19ce1-bcab-7e77-6fc7-b730b26c54b1
+      type=ethernet
+      interface-name=enp129s0f1
+      master=bond0
+      slave-type=bond
+
+      [ethernet]
   bond0:
-    bonding_master: "yes"
-    bonding_opts: "mode=4 miimon=100"
-    bootproto: "dhcp"
-    defroute: "yes"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Bond"
-  bond0.3035: &vlan_int
-    bootproto: "none"
-    defroute: "no"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "none"
-    vlan: "yes"
-    bridge: "br3035"
+    content: |
+      [connection]
+      id=bond0
+      uuid=ad33d8b0-1f7b-cab9-9447-ba07f855b143
+      type=bond
+      interface-name=bond0
+
+      [ethernet]
+      cloned-mac-address=%{facts.networking.interfaces.eno1np0.mac}
+
+      [bond]
+      miimon=100
+      mode=802.3ad
+
+      [ipv4]
+      method=auto
+
+      [ipv6]
+      method=disabled
+
+      [proxy]
+  bond0.3035:
+    content: |
+      [connection]
+      id=bond0.3035
+      uuid=e34c3319-6aae-47ef-8d26-342c98ec5b51
+      type=vlan
+      interface-name=bond0.3035
+      master=br3035
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=3035
+      parent=bond0
+
+      [bridge-port]
   bond0.3065:
-    <<: *vlan_int
-    bridge: "br3065"
+    content: |
+      [connection]
+      id=bond0.3065
+      uuid=f776e2dc-451d-4223-866b-39e1decfbe5e
+      type=vlan
+      interface-name=bond0.3065
+      master=br3065
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=3065
+      parent=bond0
+
+      [bridge-port]
   bond0.3075:
-    <<: *vlan_int
-    bridge: "br3075"
+    content: |
+      [connection]
+      id=bond0.3075
+      uuid=97dafee0-039e-41df-984f-9385a7e0d5dd
+      type=vlan
+      interface-name=bond0.3075
+      master=br3075
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=3075
+      parent=bond0
+
+      [bridge-port]
   bond0.3085:
-    <<: *vlan_int
-    bridge: "br3085"
-  br3035: &bridge_int
-    bootproto: "none"
-    onboot: "yes"
-    type: "bridge"
+    content: |
+      [connection]
+      id=bond0.3085
+      uuid=65b1c3a1-0a04-411e-9bc2-64266a23997e
+      type=vlan
+      interface-name=bond0.3085
+      master=br3085
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=3085
+      parent=bond0
+
+      [bridge-port]
+  br3035:
+    content: |
+      [connection]
+      id=br3035
+      uuid=a75b0cc0-ec9c-4b1a-8ff9-ce56ac7ec81f
+      type=bridge
+      interface-name=br3035
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=disabled
+      route1=140.252.147.192/27
+      route1_options=table=3035
+      route2=0.0.0.0/0,140.252.147.193
+      route2_options=table=3035
+      routing-rule1=priority 100 from 140.252.147.192/27 table 3035
+
+      [ipv6]
+      method=disabled
+
+      [proxy]
   br3065:
-    <<: *bridge_int
+    content: |
+      [connection]
+      id=br3065
+      uuid=65e8129e-3771-b239-f1fb-6549e4cb69f4
+      type=bridge
+      interface-name=br3065
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+      [proxy]
   br3075:
-    <<: *bridge_int
+    content: |
+      [connection]
+      id=br3075
+      uuid=1bdc7b0e-be45-510a-0f01-ded9a7c4e0c4
+      type=bridge
+      interface-name=br3075
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+      [proxy]
   br3085:
-    <<: *bridge_int
+    content: |
+      [connection]
+      id=br3085
+      uuid=a578f93b-06c2-0434-5437-a69b0542c27e
+      type=bridge
+      interface-name=br3085
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+      [proxy]

@@ -3,9 +3,10 @@
 require 'spec_helper'
 
 describe 'ayekan01.ls.lsst.org', :sitepp do
-  on_supported_os.each do |os, facts|
-    next if os =~ %r{centos-7-x86_64}
-
+  alma9 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '9' }).first
+  # rubocop:disable Naming/VariableNumber
+  { 'almalinux-9-x86_64': alma9 }.each do |os, facts|
+    # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
       let(:facts) { override_facts(facts, fqdn: 'ayekan01.ls.lsst.org') }
       let(:node_params) do
@@ -37,20 +38,10 @@ describe 'ayekan01.ls.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_class('profile::core::rke').with(
-          enable_dhcp: true,
           version: '1.4.6-rc4',
         )
       end
 
-      it do
-        is_expected.to contain_class('cni::plugins').with(
-          version: '1.2.0',
-          checksum: 'f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37',
-          enable: ['macvlan'],
-        )
-      end
-
-      it { is_expected.to have_network__interface_resource_count(0) }
       it { is_expected.to have_nm__connection_resource_count(5) }
 
       %w[

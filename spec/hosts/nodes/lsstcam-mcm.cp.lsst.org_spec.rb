@@ -31,7 +31,6 @@ describe 'lsstcam-mcm.cp.lsst.org', :sitepp do
       include_examples 'baremetal'
       include_context 'with nm interface'
 
-      it { is_expected.to have_network__interface_resource_count(0) }
       it { is_expected.to have_nm__connection_resource_count(1) }
 
       context 'with ens1f0np0' do

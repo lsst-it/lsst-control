@@ -3,9 +3,10 @@
 require 'spec_helper'
 
 describe 'manke01.ls.lsst.org', :sitepp do
-  on_supported_os.each do |os, facts|
-    next if os =~ %r{centos-7-x86_64}
-
+  alma9 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '9' }).first
+  # rubocop:disable Naming/VariableNumber
+  { 'almalinux-9-x86_64': alma9 }.each do |os, facts|
+    # rubocop:enable Naming/VariableNumber
     context "on #{os}" do
       let(:facts) do
         override_facts(facts,
@@ -61,7 +62,8 @@ describe 'manke01.ls.lsst.org', :sitepp do
         )
       end
 
-      it { is_expected.to have_network__interface_resource_count(0) }
+      it { is_expected.to contain_class('profile::core::ospl').with_enable_rundir(true) }
+
       it { is_expected.to have_nm__connection_resource_count(9) }
 
       %w[

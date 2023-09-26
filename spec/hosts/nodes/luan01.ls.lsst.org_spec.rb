@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'namkueyen01.dev.lsst.org', :sitepp do
+describe 'luan01.ls.lsst.org', :sitepp do
   alma9 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '9' }).first
   # rubocop:disable Naming/VariableNumber
   { 'almalinux-9-x86_64': alma9 }.each do |os, facts|
@@ -10,20 +10,23 @@ describe 'namkueyen01.dev.lsst.org', :sitepp do
     context "on #{os}" do
       let(:facts) do
         override_facts(facts,
-                       fqdn: 'namkueyen01.dev.lsst.org',
+                       fqdn: 'luan01.ls.sst.org',
                        is_virtual: false,
                        virtual: 'physical',
                        dmi: {
                          'product' => {
-                           'name' => 'PowerEdge R640',
+                           'name' => 'Super Server',
+                         },
+                         'board' => {
+                           'product' => 'H12SSL-NT',
                          },
                        })
       end
       let(:node_params) do
         {
           role: 'rke',
-          site: 'dev',
-          cluster: 'namkueyen',
+          site: 'ls',
+          cluster: 'luan',
         }
       end
 
@@ -33,15 +36,11 @@ describe 'namkueyen01.dev.lsst.org', :sitepp do
       include_context 'with nm interface'
 
       it do
-        is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
-      end
-
-      it do
         is_expected.to contain_class('clustershell').with(
           groupmembers: {
-            'namkueyen' => {
-              'group' => 'namkueyen',
-              'member' => 'namkueyen[01-03]',
+            'luan' => {
+              'group' => 'luan',
+              'member' => 'luan[01-05]',
             },
           },
         )
@@ -53,15 +52,7 @@ describe 'namkueyen01.dev.lsst.org', :sitepp do
         )
       end
 
-      it { is_expected.to have_nm__connection_resource_count(1) }
-
-      context 'with eno1' do
-        let(:interface) { 'eno1' }
-
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm dhcp interface'
-        it_behaves_like 'nm ethernet interface'
-      end
+      it { is_expected.to have_nm__connection_resource_count(0) }
     end # on os
   end # on_supported_os
 end

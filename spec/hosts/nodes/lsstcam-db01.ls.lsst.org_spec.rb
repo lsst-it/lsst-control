@@ -48,7 +48,6 @@ describe 'lsstcam-db01.ls.lsst.org', :sitepp do
 
       include_context 'with nm interface'
 
-      it { is_expected.to have_network__interface_resource_count(0) }
       it { is_expected.to have_nm__connection_resource_count(5) }
 
       %w[

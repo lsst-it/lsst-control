@@ -2,6 +2,7 @@
 classes:
   - "profile::core::common"
   - "mysqldump"
+  - "profile::core::x2go"
 
 mysqldump::backup:
   daily:

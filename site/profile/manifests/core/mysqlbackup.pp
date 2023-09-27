@@ -41,9 +41,7 @@ class profile::core::mysqlbackup (
   Optional[String] $email
 ) {
 
-  include mysqldump
-
-  mysqldump::backup { 'daily':
+  ::mysqldump::backup { 'daily':
     mysql_user             => $mysql_user,
     mysql_passwd           => $mysql_passwd,
     databases              => $databases,

@@ -49,7 +49,7 @@ hosts::host_entries:
   ipa3.dev.lsst.org:
     ip: "100.66.153.135"
   ipa1.tu.lsst.org:
-    ip: "100.107.132.55"
+    ip: "100.64.140.139"
   ipa2.tu.lsst.org:
     ip: "100.127.11.142"
   ipa3.tu.lsst.org:

@@ -35,14 +35,14 @@ class profile::core::mysqlbackup (
   $mysql_passwd          = undef,
   $databases             = [],
   $mysqldump_extra_params = undef,
-  $hour                  = [],
-  $minute                = [],
-  $weekday               = [],
+  $hour                  = "*",
+  $minute                = "50",
+  $weekday               = "*",
   $email                 = undef,
 ) {
 
   include mysqldump
-  
+
   mysqldump::backup { 'daily':
     mysql_user             => $mysql_user,
     mysql_passwd           => $mysql_passwd,

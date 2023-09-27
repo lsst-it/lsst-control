@@ -1,16 +1,13 @@
 ---
 classes:
   - "profile::core::common"
-  - "mysqldump"
+  - "profile::core::mysqlbackup"
   - "profile::core::x2go"
 
-mysqldump::backup:
-  daily:
-    mysql_user: "userfoo"
-    mysql_passwd: "passbar"
-    databases: "all"
-    mysqldump_extra_params: '--all-databases'
-    hour: "*"
-    minute: "50"
-    weekday: "*"
-    email: "monitor@example.org"
+profile::core::mysqlbackup::mysql_user: "userfoo"
+profile::core::mysqlbackup::mysql_passwd: "passbar"
+profile::core::mysqlbackup::databases: "all"
+profile::core::mysqlbackup::hour: "*"
+profile::core::mysqlbackup::minute: "50"
+profile::core::mysqlbackup::weekday: "*"
+profile::core::mysqlbackup::email: "monitor@example.org"

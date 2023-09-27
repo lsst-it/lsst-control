@@ -31,14 +31,14 @@
 #   $::servermonitor.
 #
 class profile::core::mysqlbackup (
-  Optional[String] $mysql_user,
-  Optional[String] $mysql_passwd,
-  Variant[String, Array]  $databases,
-  Optional[String] $mysqldump_extra_params,
-  Variant[Array[String], Array[Integer[0-23]], String, Integer[0-23]] $hour,
-  Variant[Array[String], Array[Integer[0-59]], String, Integer[0-59]] $minute,
-  Variant[Array[String], Array[Integer[0-7]],  String, Integer[0-7]] $weekday,
-  Optional[String] $email
+  $mysql_user            = undef,
+  $mysql_passwd          = undef,
+  $databases             = [],
+  $mysqldump_extra_params = undef,
+  $hour                  = [],
+  $minute                = [],
+  $weekday               = [],
+  $email                 = undef,
 ) {
 
   ::mysqldump::backup { 'daily':

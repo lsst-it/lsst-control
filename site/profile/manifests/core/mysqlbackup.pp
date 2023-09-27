@@ -41,7 +41,9 @@ class profile::core::mysqlbackup (
   $email                 = undef,
 ) {
 
-  ::mysqldump::backup { 'daily':
+  include mysqldump
+  
+  mysqldump::backup { 'daily':
     mysql_user             => $mysql_user,
     mysql_passwd           => $mysql_passwd,
     databases              => $databases,

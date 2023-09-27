@@ -29,6 +29,7 @@
 # @param email
 #   Email address where notifications are sent. Defaults to top-scope variable
 #   $::servermonitor.
+#
 class profile::core::mysqlbackup (
   Optional[String] $mysql_user,
   Optional[String] $mysql_passwd,

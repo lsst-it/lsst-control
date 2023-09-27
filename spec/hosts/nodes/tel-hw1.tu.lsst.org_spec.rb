@@ -34,13 +34,6 @@ describe 'tel-hw1.tu.lsst.org', :sitepp do
           atboot: true,
         )
       end
-
-      it do
-        is_expected.to contain_k5login('/home/saluser/.k5login').with(
-          ensure: 'present',
-          principals: ['saluser/tel-lt1.tu.lsst.org@LSST.CLOUD'],
-        )
-      end
     end # on os
   end # on_supported_os
 end # role

@@ -1,7 +1,0 @@
----
-profile::core::common::manage_resolv_conf: false
-profile::core::k5login::k5login:
-  "/home/saluser/.k5login":
-    ensure: "present"
-    principals:
-      - "saluser/tel-hw1.tu.lsst.org@LSST.CLOUD"

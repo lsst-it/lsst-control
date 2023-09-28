@@ -18,19 +18,26 @@ dhcp::pools:
     range:
       - "139.229.160.115 139.229.160.126"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  IT-GS:
+  IT-CORE-SERVICES:
     network: "139.229.161.0"
-    mask: "255.255.255.0"
-    gateway: "139.229.161.254"
+    mask: "255.255.255.224"
+    gateway: "139.229.161.30"
     range:
-      - "139.229.161.200 139.229.161.249"
+      - "139.229.161.20 139.229.161.27"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  IT-Legacy:
-    network: "139.229.162.0"
-    mask: "255.255.255.128"
-    gateway: "139.229.162.126"
+  IT-HYPERVISOR:
+    network: "139.229.161.32"
+    mask: "255.255.255.240"
+    gateway: "139.229.161.46"
     range:
-      - "139.229.162.28 139.229.162.37"
+      - "139.229.161.40 139.229.161.43"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-BMC:
+    network: "139.229.162.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.162.254"
+    range:
+      - "139.229.162.230 139.229.162.251"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   Summit-Wireless:
     network: "139.229.163.0"

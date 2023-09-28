@@ -30,12 +30,6 @@ network::mroutes_hash:
       "140.252.147.16/28": "140.252.147.129"
       "140.252.147.48/28": "140.252.147.129"
 
-profile::core::k5login::k5login:
-  "/home/saluser/.k5login":
-    ensure: "present"
-    principals:
-      - "saluser/tel-lt1.tu.lsst.org@LSST.CLOUD"
-
 nfs::client_enabled: true
 nfs::client_mounts:
   /net/obs-env:

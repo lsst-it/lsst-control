@@ -809,6 +809,7 @@ shared_examples 'generic foreman' do
   {
     bmc_credentials_accessible: false,
     default_pxe_item_global: 'discovery',
+    destroy_vm_on_host_delete: true,
     host_details_ui: false,
     ignore_puppet_facts_for_provisioning: true,
     template_sync_associate: 'always',

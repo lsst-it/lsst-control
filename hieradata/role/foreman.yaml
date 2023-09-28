@@ -200,7 +200,7 @@ ssh::client_match_block:
 profile::core::puppet_master::foreman_config:
   bmc_credentials_accessible: {value: false}  # disable bmc pass in enc yaml
   default_pxe_item_global: {value: "discovery"}
-  destroy_vm_on_host_delete: {value: false}
+  destroy_vm_on_host_delete: {value: true}
   discovery_fact_column: {value: "ipmi_ipaddress,ipmi_macaddress"}
   discovery_hostname: {value: "ipmi_macaddress,discovery_bootif"}
   entries_per_page: {value: 100}

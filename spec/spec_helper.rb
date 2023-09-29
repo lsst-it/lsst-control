@@ -670,6 +670,7 @@ end
 shared_examples 'generic foreman' do
   include_examples 'debugutils'
   include_examples 'docker'
+  include_examples 'fog_hack'
   include_examples 'foreman'
 
   it do
@@ -1242,6 +1243,26 @@ end
 
 shared_examples 'ipmi' do
   it { is_expected.to contain_class('ipmi') }
+end
+
+shared_examples 'fog_hack' do
+  it { is_expected.to contain_package('libvirt-devel') }
+
+  it do
+    is_expected.to contain_archive('fog-libvirt-0.11.0.gem').with(
+      ensure: 'present',
+      path: '/tmp/fog-libvirt-0.11.0.gem',
+      source: 'https://github.com/lsst-it/fog-libvirt/releases/download/v0.11.0/fog-libvirt-0.11.0.gem',
+    ).that_notifies('Exec[install-fog-libvirt.0.11.0.gem]')
+  end
+
+  it do
+    is_expected.to contain_exec('install-fog-libvirt.0.11.0.gem').with(
+      command: '/usr/bin/scl enable rh-ruby27 tfm -- gem install /tmp/fog-libvirt-0.11.0.gem',
+      path: '/usr/bin:/bin',
+      refreshonly: true,
+    ).that_requires('Package[libvirt-devel]')
+  end
 end
 
 # 'spec_overrides' from sync.yml will appear below this line

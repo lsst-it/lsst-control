@@ -6,6 +6,7 @@ classes:
   - "profile::core::docker"
   - "profile::core::docker::prune"
   - "profile::core::foreman"
+  - "profile::core::foreman::fog_hack"
 
 dhcp::bootp: true
 dhcp::ddns_update_style: "none"

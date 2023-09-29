@@ -1,6 +1,48 @@
 ---
 libvirt::service::modular_services:
-  virtproxyd:
+  virtproxyd: &svc
     ensure: "running"
     enable: true
     tag: "libvirt-libvirtd-conf"
+  virtqemud.socket:
+    <<: *svc
+  virtqemud-ro.socket:
+    <<: *svc
+  virtqemud-admin.socket:
+    <<: *svc
+  virtnetworkd.socket:
+    <<: *svc
+  virtnetworkd-ro.socket:
+    <<: *svc
+  virtnetworkd-admin.socket:
+    <<: *svc
+  virtnodedevd.socket:
+    <<: *svc
+  virtnodedevd-ro.socket:
+    <<: *svc
+  virtnodedevd-admin.socket:
+    <<: *svc
+  virtnwfilterd.socket:
+    <<: *svc
+  virtnwfilterd-ro.socket:
+    <<: *svc
+  virtnwfilterd-admin.socket:
+    <<: *svc
+  virtsecretd.socket:
+    <<: *svc
+  virtsecretd-ro.socket:
+    <<: *svc
+  virtsecretd-admin.socket:
+    <<: *svc
+  virtstoraged.socket:
+    <<: *svc
+  virtstoraged-ro.socket:
+    <<: *svc
+  virtstoraged-admin.socket:
+    <<: *svc
+  virtinterfaced.socket:
+    <<: *svc
+  virtinterfaced-ro.socket:
+    <<: *svc
+  virtinterfaced-admin.socket:
+    <<: *svc

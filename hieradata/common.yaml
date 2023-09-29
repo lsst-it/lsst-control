@@ -71,7 +71,7 @@ lookup_options:
   r10k::sources:
     merge:
       strategy: "deep"
-  profile::core::puppet_master::foreman_global_parameter:
+  profile::core::foreman::foreman_global_parameter:
     merge:
       strategy: "deep"
   nm::conf:

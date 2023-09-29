@@ -519,7 +519,7 @@ shared_examples 'debugutils' do
   it { is_expected.to contain_package('jq') }
 end
 
-shared_examples 'puppet_master' do
+shared_examples 'foreman' do
   it do
     is_expected.to contain_cron('webhook').with_command('/usr/bin/systemctl restart webhook > /dev/null 2>&1')
   end
@@ -669,8 +669,8 @@ end
 
 shared_examples 'generic foreman' do
   include_examples 'debugutils'
-  include_examples 'puppet_master'
   include_examples 'docker'
+  include_examples 'foreman'
 
   it do
     is_expected.to contain_class('foreman').with(

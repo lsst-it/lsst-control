@@ -5,7 +5,7 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::docker"
   - "profile::core::docker::prune"
-  - "profile::core::puppet_master"
+  - "profile::core::foreman"
 
 dhcp::bootp: true
 dhcp::ddns_update_style: "none"
@@ -154,7 +154,7 @@ postgresql::server::config_entries:
   work_mem: "8MB"
   autovacuum_vacuum_cost_limit: 2000
   log_min_duration_statement: 10000  # log slow queries >= 10s
-profile::core::puppet_master::enable_puppetdb: true
+profile::core::foreman::enable_puppetdb: true
 puppet::agent: true
 puppet::environment: "production"  # always overridden via enc
 puppet::master::config::soft_write_failure: true
@@ -197,7 +197,7 @@ ssh::client_match_block:
     options:
       StrictHostKeyChecking: "no"  # el7 does not support "accept-new"
 
-profile::core::puppet_master::foreman_config:
+profile::core::foreman::foreman_config:
   bmc_credentials_accessible: {value: false}  # disable bmc pass in enc yaml
   default_pxe_item_global: {value: "discovery"}
   destroy_vm_on_host_delete: {value: true}
@@ -232,7 +232,7 @@ profile::core::puppet_master::foreman_config:
   template_sync_repo: {value: "ssh://git@github.com/lsst-it/foreman_templates"}
   template_sync_verbose: {value: true}
 
-profile::core::puppet_master::foreman_global_parameter:
+profile::core::foreman::foreman_global_parameter:
   bootloader-append:
     parameter_type: "string"
     value: "nofb"

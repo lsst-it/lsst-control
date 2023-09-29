@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'profile::core::puppet_master' do
+describe 'profile::core::foreman' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) { facts }
@@ -10,7 +10,7 @@ describe 'profile::core::puppet_master' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'puppet_master'
+      include_examples 'foreman'
 
       context 'with foreman_hostgroup param' do
         let(:params) do

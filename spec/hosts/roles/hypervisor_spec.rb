@@ -44,6 +44,41 @@ describe "#{role} role" do
           end
 
           it { is_expected.to contain_class('tuned').with_active_profile('virtual-host') }
+
+          if facts[:os]['release']['major'] == '9'
+            %w[
+              virtproxyd
+              virtqemud.socket
+              virtqemud-ro.socket
+              virtqemud-admin.socket
+              virtnetworkd.socket
+              virtnetworkd-ro.socket
+              virtnetworkd-admin.socket
+              virtnodedevd.socket
+              virtnodedevd-ro.socket
+              virtnodedevd-admin.socket
+              virtnwfilterd.socket
+              virtnwfilterd-ro.socket
+              virtnwfilterd-admin.socket
+              virtsecretd.socket
+              virtsecretd-ro.socket
+              virtsecretd-admin.socket
+              virtstoraged.socket
+              virtstoraged-ro.socket
+              virtstoraged-admin.socket
+              virtinterfaced.socket
+              virtinterfaced-ro.socket
+              virtinterfaced-admin.socket
+            ].each do |svc|
+              it do
+                is_expected.to contain_service(svc).with(
+                  ensure: 'running',
+                  enable: true,
+                  tag: 'libvirt-libvirtd-conf',
+                )
+              end
+            end
+          end
         end # host
       end # lsst_sites
     end

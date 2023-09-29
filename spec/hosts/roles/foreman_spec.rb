@@ -492,20 +492,32 @@ describe "#{role} role" do
         end
 
         it do
-          is_expected.to contain_dhcp__pool('IT-GS').with(
+          # VLAN1102
+          is_expected.to contain_dhcp__pool('IT-CORE-SERVICES').with(
             network: '139.229.161.0',
-            mask: '255.255.255.0',
-            range: ['139.229.161.200 139.229.161.249'],
-            gateway: '139.229.161.254',
+            mask: '255.255.255.224',
+            range: ['139.229.161.20 139.229.161.27'],
+            gateway: '139.229.161.30',
           )
         end
 
         it do
-          is_expected.to contain_dhcp__pool('IT-Legacy').with(
+          # VLAN1103
+          is_expected.to contain_dhcp__pool('IT-HYPERVISOR').with(
+            network: '139.229.161.32',
+            mask: '255.255.255.240',
+            range: ['139.229.161.40 139.229.161.43'],
+            gateway: '139.229.161.46',
+          )
+        end
+
+        it do
+          # VLAN1104
+          is_expected.to contain_dhcp__pool('IT-BMC').with(
             network: '139.229.162.0',
-            mask: '255.255.255.128',
-            range: ['139.229.162.28 139.229.162.37'],
-            gateway: '139.229.162.126',
+            mask: '255.255.255.0',
+            range: ['139.229.162.230 139.229.162.251'],
+            gateway: '139.229.162.254',
           )
         end
 

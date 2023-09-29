@@ -9,43 +9,129 @@ accounts::user_list:
     system: true
     sshkeys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGCCYvVfrd3RvPlGtXh+e3NWWw7OVzvIyX9jj1jT2omYt07gPv2nx9xgHqtkr1n39aezN4T2/9PuuCinN/dCOAmDd1J3lV+4rbWVUQD1o356ElxnVgdDm7RLwFfGjNW+WnVVOSXudZaO8wN6JqzG0SM21bmaIrT5b8pmXI9aafIEtnVhUKpVrqXOMQR8RNF9nvnzQulRkX7y/Kcy//a1v6/1lt4D+0Y5QaQujt04i8+QkcUBNe9sukjYWfzcPW9FpdJAiiydxwJl27f8OvJ4OMp1LJkB8lI5BLvJQpJ6u0DlfjkrSusDx60MSU3LQKP9TsaOW16b+/FqcHpkSpLGy/ foreman@foreman.tuc.lsst.cloud"
-network::interfaces_hash:
-  em1:  # fqdn
-    bootproto: "none"
-    defroute: "yes"
-    dns1: "%{lookup('dhcp::nameservers.0')}"
-    dns2: "%{lookup('dhcp::nameservers.1')}"
-    domain: "%{lookup('dhcp::dnsdomain.0')}"
-    gateway: "140.252.146.65"
-    netmask: "255.255.255.224"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
+nm::connections:
   em2:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  p2p1:  # hypervisor
-    bootproto: "none"
-    onboot: "yes"
-    type: "Ethernet"
+    content: |
+      [connection]
+      id=em2
+      uuid=74c4ee68-1de0-4a6d-9237-4992c34d244f
+      type=ethernet
+      autoconnect=false
+      interface-name=em2
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  p2p1:  # trunk
+    content: |
+      [connection]
+      id=p2p1
+      uuid=c4374a59-af0a-42e0-aeeb-718c87273e51
+      type=ethernet
+      autoconnect=false
+      interface-name=p2p1
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
   p2p2:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  p2p1.3040: &vlan_int
-    bootproto: "none"
-    bridge: "br3040"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "none"
-    vlan: "yes"
+    content: |
+      [connection]
+      id=p2p2
+      uuid=29b8c67a-2020-4f20-9647-fca2c48e1b2d
+      type=ethernet
+      autoconnect=false
+      interface-name=p2p2
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+  p2p1.3040:
+    content: |
+      [connection]
+      id=p2p1.3040
+      uuid=83eb4bbb-5f05-4d9d-9c0e-d465309a8cd9
+      type=vlan
+      interface-name=p2p1.3040
+      master=br3040
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=3040
+      parent=p2p1
+
+      [bridge-port]
   p2p1.3085:
-    <<: *vlan_int
-    bridge: "br3085"
-  br3040: &bridge_int  # coresvc
-    bootproto: "none"
-    onboot: "yes"
-    type: "bridge"
-  br3085:  # misc-dds
-    <<: *bridge_int
+    content: |
+      [connection]
+      id=p2p1.3085
+      uuid=c10f7f90-86c4-4244-ad6f-15898cbe729f
+      type=vlan
+      interface-name=p2p1.3085
+      master=br3085
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=3085
+      parent=p2p1
+
+      [bridge-port]
+  br3040:
+    content: |
+      [connection]
+      id=br3040
+      uuid=d032d1d6-9080-493b-bd2c-e243f8e1ba35
+      type=bridge
+      interface-name=br3040
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+      [proxy]
+  br3085:
+    content: |
+      [connection]
+      id=br3085
+      uuid=a578f93b-06c2-0434-5437-a69b0542c27e
+      type=bridge
+      interface-name=br3085
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+      [proxy]

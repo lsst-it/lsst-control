@@ -1,6 +1,7 @@
 ---
 profile::core::convenience::packages:
   - "ack"
+  - "diffstat"
   - "fpart"
   - "git"
   - "jq"

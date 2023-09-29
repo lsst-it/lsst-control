@@ -810,6 +810,7 @@ shared_examples 'generic foreman' do
     bmc_credentials_accessible: false,
     default_pxe_item_global: 'discovery',
     host_details_ui: false,
+    ignore_puppet_facts_for_provisioning: true,
     template_sync_associate: 'always',
     template_sync_commit_msg: 'Templates export made by a Foreman user',
     template_sync_dirname: '/',
@@ -896,6 +897,7 @@ end
 shared_examples 'convenience' do
   %w[
     ack
+    diffstat
     fpart
     git
     jq

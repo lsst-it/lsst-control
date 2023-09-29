@@ -180,10 +180,10 @@ dhcp::pools:
       - "10.49.7.1 10.49.7.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
 
-profile::core::puppet_master::foreman_hostgroup:
+profile::core::foreman::foreman_hostgroup:
   ls:
     description: "ls site"
-profile::core::puppet_master::smee_url: "https://smee.io/lpxrggGObEn5YTA"
+profile::core::foreman::smee_url: "https://smee.io/lpxrggGObEn5YTA"
 puppet::server::puppetdb::server: "puppetdb.ls.lsst.org"
 
 r10k::sources:

@@ -17,7 +17,7 @@
 # @param foreman_global_parameter
 #   `foreman_global_parameter` resources to create.
 #
-class profile::core::puppet_master (
+class profile::core::foreman (
   Stdlib::HTTPSUrl $smee_url,
   Boolean $enable_puppetdb = false,
   Optional[Hash[String, Hash]] $foreman_config = undef,

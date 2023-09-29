@@ -32,17 +32,7 @@ describe 'rancher01.dev.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'vm'
-      include_context 'with nm interface'
-      it { is_expected.to have_nm__connection_resource_count(1) }
-
-      context 'with ens3' do
-        let(:interface) { 'ens3' }
-
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['ipv4']['method']).to eq('auto') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
-      end
+      it { is_expected.to have_nm__connection_resource_count(0) }
     end # on os
   end # on_supported_os
 end

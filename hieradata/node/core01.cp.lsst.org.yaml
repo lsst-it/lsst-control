@@ -1,0 +1,26 @@
+---
+ipmi::networks:
+  lan1:
+    ip: "139.229.162.1"
+    netmask: "255.255.255.0"
+    gateway: "139.229.162.254"
+    type: "static"
+nm::connections:
+  enp1s0f0:  # fqdn
+    content: |
+      [connection]
+      id=enp1s0f0
+      uuid=4bc723c4-e214-41a7-8c2b-a945a50a0aa5
+      type=ethernet
+      interface-name=enp1s0f0
+
+      [ethernet]
+
+      [ipv4]
+      address1=139.229.161.33/28,139.229.161.46
+      dns=139.229.160.53;139.229.160.54;139.229.160.55;
+      dns-search=cp.lsst.org;
+      method=manual
+
+      [ipv6]
+      method=disabled

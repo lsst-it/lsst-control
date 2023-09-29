@@ -46,3 +46,105 @@ network::interfaces_hash:
     type: "bridge"
   p2p1.1621:  # legacy IT network, no longer used
     ensure: "absent"
+nm::connections:
+  enp5s0f3u2u2c2:
+    content: |
+      [connection]
+      id=enp5s0f3u2u2c2
+      uuid=2b4b39f6-2339-4a59-890d-1a6e3676a6be
+      type=ethernet
+      interface-name=enp5s0f3u2u2c2
+      autoconnect=false
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  eno1np0:
+    content: |
+      [connection]
+      id=eno1np0
+      uuid=f50fcd61-00bf-490f-a738-df571a3c12c1
+      type=ethernet
+      interface-name=eno1np0
+      autoconnect=false
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  eno2np1:
+    content: |
+      [connection]
+      id=eno2np1
+      uuid=5641bb3f-fa2b-4729-82d9-233a5da74e86
+      type=ethernet
+      interface-name=eno2np1
+      autoconnect=false
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  enp1s0f1:
+    content: |
+      [connection]
+      id=enp1s0f1
+      uuid=46d19ce1-bcab-7e77-6fc7-b730b26c54b1
+      type=ethernet
+      interface-name=enp1s0f1
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  enp1s0f1.1101:
+    content: |
+      [connection]
+      id=enp1s0f1.1101
+      uuid=e74daaad-4d73-4015-bb26-83c460ddf572
+      type=vlan
+      interface-name=enp1s0f1.1101
+      master=br1101
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=1101
+      parent=enp1s0f1
+
+      [bridge-port]
+  br1101:
+    content: |
+      [connection]
+      id=br1101
+      uuid=7dd05d98-a9c3-4569-a7c3-00316b13c0eb
+      type=bridge
+      interface-name=br1101
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+      [proxy]

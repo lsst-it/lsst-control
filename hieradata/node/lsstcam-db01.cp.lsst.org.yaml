@@ -1,26 +1,20 @@
 ---
 nm::connections:
   eno1:
-    content: |
-      [connection]
-      id=eno1
-      uuid=2836281a-0427-31c4-871d-02c1747ec05b
-      type=ethernet
-      interface-name=eno1
-
-      [ethernet]
-
-      [ipv4]
-      address1=139.229.174.2/24,139.229.174.254
-      dns=139.229.160.53;139.229.160.54;139.229.160.55;
-      dns-search=cp.lsst.org;
-      method=manual
-
-      [ipv6]
-      method=ignore
-
-      [proxy]
-
+    content:
+      connection:
+        id: "eno1"
+        type: "ethernet"
+        interface-name: "eno1"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.175.77/24,139.229.175.126"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "ignore"
+      proxy: {}
 ccs_software::services:
   prod:
     - "rest-server"

@@ -955,7 +955,11 @@ end
 
 shared_context 'with nm interface' do
   let(:nm_keyfile_raw) do
-    catalogue.resource('nm::connection', interface)[:content]
+    int = catalogue.resource('nm::connection', interface)
+    if int.nil?
+      raise "nm::connection[#{interface}] not found in catalogue"
+    end
+    int[:content]
   end
 
   let(:nm_keyfile) do

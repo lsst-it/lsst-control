@@ -22,7 +22,7 @@ describe 'kueyen01.dev.lsst.org', :sitepp do
       let(:node_params) do
         {
           role: 'rke',
-          site: 'ls',
+          site: 'dev',
           cluster: 'kueyen',
         }
       end
@@ -50,7 +50,7 @@ describe 'kueyen01.dev.lsst.org', :sitepp do
       it do
         is_expected.to contain_class('profile::core::rke').with(
           enable_dhcp: true,
-          version: '1.3.12',
+          version: '1.4.6',
         )
       end
 

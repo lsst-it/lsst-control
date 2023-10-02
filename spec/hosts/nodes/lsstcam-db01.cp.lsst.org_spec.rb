@@ -53,7 +53,7 @@ describe 'lsstcam-db01.cp.lsst.org', :sitepp do
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.174.2/24,139.229.174.254') }
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.175.77/24,139.229.175.126') }
         it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.160.53;139.229.160.54;139.229.160.55;') }
         it { expect(nm_keyfile['ipv4']['dns-search']).to eq('cp.lsst.org;') }
         it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }

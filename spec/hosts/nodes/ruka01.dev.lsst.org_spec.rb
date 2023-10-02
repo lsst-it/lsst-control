@@ -55,7 +55,7 @@ describe 'ruka01.dev.lsst.org', :sitepp do
       it do
         is_expected.to contain_class('profile::core::rke').with(
           enable_dhcp: true,
-          version: '1.4.6-rc4',
+          version: '1.4.6',
         )
       end
 

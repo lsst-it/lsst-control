@@ -33,8 +33,8 @@ describe 'lsstcam-mcm.cp.lsst.org', :sitepp do
 
       it { is_expected.to have_nm__connection_resource_count(1) }
 
-      context 'with ens1f0np0' do
-        let(:interface) { 'ens1f0np0' }
+      context 'with eno1' do
+        let(:interface) { 'eno1' }
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'

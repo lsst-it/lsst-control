@@ -959,6 +959,7 @@ shared_context 'with nm interface' do
     if int.nil?
       raise "nm::connection[#{interface}] not found in catalogue"
     end
+
     int[:content]
   end
 

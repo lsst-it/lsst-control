@@ -1,22 +1,107 @@
 ---
 nm::connections:
-  eno1:
-    content: |
-      [connection]
-      id=eno1
-      uuid=89343895-a60e-4b07-91a0-0638487f6868
-      type=ethernet
-      interface-name=eno1
-
-      [ethernet]
-
-      [ipv4]
-      address1=139.229.175.76/26,139.229.175.126
-      dns=139.229.160.53;139.229.160.54;139.229.160.55;
-      dns-search=cp.lsst.org;
-      method=manual
-
-      [ipv6]
-      method=ignore
-
-      [proxy]
+  eno1:  # fqdn
+    content:
+      connection:
+        id: "eno1"
+        type: "ethernet"
+        interface-name: "eno1"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.175.76/26,139.229.175.126"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "ignore"
+      proxy: {}
+  eno2:  # not connected
+    content:
+      connection:
+        id: "eno2"
+        type: "ethernet"
+        autoconnect: false
+        interface-name: "eno2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno3:  # not connected
+    content:
+      connection:
+        id: "eno3"
+        type: "ethernet"
+        autoconnect: false
+        interface-name: "eno3"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno4:  # not connected
+    content:
+      connection:
+        id: "eno4"
+        type: "ethernet"
+        autoconnect: false
+        interface-name: "eno4"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  ens1f0:  # trunk
+    content:
+      connection:
+        id: "ens1f0"
+        type: "ethernet"
+        autoconnect: false
+        interface-name: "ens1f0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  ens1f1:  # not connected
+    content:
+      connection:
+        id: "ens1f1"
+        type: "ethernet"
+        autoconnect: false
+        interface-name: "ens1f1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  ens1f0.1400:
+    content:
+      connection:
+        id: "ens1f0.1400"
+        type: "vlan"
+        interface-name: "ens1f0.1400"
+        master: "dds"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: 1
+        id: 1400
+        parent: "ens1f0"
+      bridge-port: {}
+  dds:
+    content:
+      connection:
+        id: "dds"
+        type: "bridge"
+        interface-name: "dds"
+      ethernet: {}
+      bridge:
+        stp: false
+      ipv4:
+        address1: "139.229.170.4/24,139.229.170.254"
+        method: "manual"
+        never-default: true
+      ipv6:
+        method: "disabled"
+      proxy: {}

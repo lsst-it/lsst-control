@@ -136,11 +136,7 @@ class profile::core::common (
   }
 
   if $manage_sssd {
-    class { 'sssd':
-      service_names => ['sssd'],
-    }
-    # run ipa-install-* script before trying to managing sssd.conf
-    Class[easy_ipa] -> Class[sssd]
+    include profile::core::sssd
   }
 
   if $manage_krb5 {
@@ -155,7 +151,6 @@ class profile::core::common (
 
   if $manage_ipa {
     include profile::core::ipa
-    Class[easy_ipa] -> Class[profile::core::ipa]
   }
 
   if $disable_ipv6 {

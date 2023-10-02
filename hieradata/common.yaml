@@ -341,7 +341,11 @@ sssd::main_config:
   sssd:
     config_file_version: 2
     domains: "lsst.cloud"
-    services: []
+    services:
+      - "nss"
+      - "pam"
+      - "ssh"
+      - "sudo"
   nss:
     homedir_substring: "/home"
   "domain/%{lookup('easy_ipa::domain')}":
@@ -361,6 +365,8 @@ sssd::main_config:
 sssd::package_name:
   - "sssd"
   - "sssd-tools"  # not installed by default
+sssd::service_names:
+  - "sssd"
 
 telegraf::logfile: "/dev/null"
 telegraf::quiet: true

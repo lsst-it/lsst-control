@@ -157,6 +157,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
     include_examples 'krb5.conf content', %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}}
 
     include_examples 'krb5.conf.d files', facts: facts
+    include_examples 'sssd services'
 
     it do
       # XXX dev is using ls ipa servers
@@ -211,7 +212,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
           [sssd]
           config_file_version=2
           domains=lsst.cloud
-          services=
+          services=nss, pam, ssh, sudo
 
           [domain/lsst.cloud]
           access_provider=ipa
@@ -243,7 +244,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
           [sssd]
           config_file_version=2
           domains=lsst.cloud
-          services=
+          services=nss, pam, ssh, sudo
 
           [domain/lsst.cloud]
           access_provider=ipa
@@ -1264,5 +1265,7 @@ shared_examples 'fog_hack' do
     ).that_requires('Package[libvirt-devel]')
   end
 end
+
+Dir['./spec/support/spec/**/*.rb'].sort.each { |f| require f }
 
 # 'spec_overrides' from sync.yml will appear below this line

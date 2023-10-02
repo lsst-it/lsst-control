@@ -8,6 +8,8 @@
 class profile::core::ipa (
   Optional[Hash] $default = undef,
 ) {
+  require easy_ipa
+
   $param_defaults = {
     'path'  => '/etc/ipa/default.conf',
     require => Class[easy_ipa],

@@ -6,6 +6,12 @@ describe 'profile::archive::common' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) { facts }
+      let(:pre_condition) do
+        <<~PP
+          # easy_ipa has a hardwired dep on the sssd service
+          class { 'sssd': service_names => ['sssd'] }
+        PP
+      end
 
       it { is_expected.to compile.with_all_deps }
 

@@ -2,3 +2,5 @@
 classes:
   - "profile::core::common"
   - "tang"
+packages:
+  - "jose"

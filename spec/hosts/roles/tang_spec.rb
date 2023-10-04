@@ -29,6 +29,7 @@ describe "#{role} role" do
           include_examples 'common', facts: facts
 
           it { is_expected.to contain_class('tang') }
+          it { is_expected.to contain_package('jose') }
         end # host
       end # lsst_sites
     end # on os

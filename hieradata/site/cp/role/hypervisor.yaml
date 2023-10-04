@@ -128,6 +128,24 @@ nm::connections:
       parent=enp1s0f1
 
       [bridge-port]
+  enp1s0f1.1102:
+    content: |
+      [connection]
+      id=enp1s0f1.1102
+      uuid=096512f5-630a-45dc-bd54-7bf360e7c538
+      type=vlan
+      interface-name=enp1s0f1.1102
+      master=br1102
+      slave-type=bridge
+
+      [ethernet]
+
+      [vlan]
+      flags=1
+      id=1102
+      parent=enp1s0f1
+
+      [bridge-port]
   br1101:
     content: |
       [connection]
@@ -135,6 +153,26 @@ nm::connections:
       uuid=7dd05d98-a9c3-4569-a7c3-00316b13c0eb
       type=bridge
       interface-name=br1101
+
+      [ethernet]
+
+      [bridge]
+      stp=false
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+
+      [proxy]
+  br1102:
+    content: |
+      [connection]
+      id=br1102
+      uuid=944f0b9a-6ae0-43d3-96f2-4da2d5feeea0
+      type=bridge
+      interface-name=br1102
 
       [ethernet]
 

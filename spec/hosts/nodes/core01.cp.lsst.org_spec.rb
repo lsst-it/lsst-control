@@ -39,7 +39,7 @@ describe 'core01.cp.lsst.org', :sitepp do
                        })
       include_context 'with nm interface'
 
-      it { is_expected.to have_nm__connection_resource_count(7) }
+      it { is_expected.to have_nm__connection_resource_count(9) }
 
       %w[
         eno1np0
@@ -83,8 +83,27 @@ describe 'core01.cp.lsst.org', :sitepp do
         it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
       end
 
+      context 'with enp1s0f1.1102' do
+        let(:interface) { 'enp1s0f1.1102' }
+
+        it_behaves_like 'nm enabled interface'
+        it { expect(nm_keyfile['vlan']['id']).to eq(1102) }
+        it { expect(nm_keyfile['vlan']['parent']).to eq('enp1s0f1') }
+        it { expect(nm_keyfile['connection']['master']).to eq('br1102') }
+        it { expect(nm_keyfile['connection']['slave-type']).to eq('bridge') }
+      end
+
       context 'with br1101' do
         let(:interface) { 'br1101' }
+
+        it_behaves_like 'nm enabled interface'
+        it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
+        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+        it { expect(nm_keyfile['bridge']['stp']).to be(false) }
+      end
+
+      context 'with br1102' do
+        let(:interface) { 'br1102' }
 
         it_behaves_like 'nm enabled interface'
         it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }

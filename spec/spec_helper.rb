@@ -790,7 +790,7 @@ shared_examples 'generic foreman' do
     'enable-epel': true,
     'enable-puppetlabs-puppet6-repo': false,
     'enable-official-puppet7-repo': true,
-    fips_enabled: true,
+    fips_enabled: false,
     host_registration_insights: false,
     host_registration_remote_execution: true,
     package_upgrade: true,

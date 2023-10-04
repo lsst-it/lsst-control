@@ -268,7 +268,7 @@ profile::core::foreman::foreman_global_parameter:
     value: "%{::site}"
   fips_enabled:
     parameter_type: "boolean"
-    value: true
+    value: false
   role:
     parameter_type: "string"
     value: "generic"

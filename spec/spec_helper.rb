@@ -1102,15 +1102,27 @@ shared_examples 'generic perfsonar' do
   end
 end
 
-shared_examples 'x2go packages' do
-  %w[
-    x2goagent
-    x2goclient
-    x2godesktopsharing
-    x2goserver
-    x2goserver-common
-    x2goserver-xsession
-  ].each do |pkg|
+shared_examples 'x2go packages' do |facts:|
+  packages = if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
+               %w[
+                 x2goagent
+                 x2goclient
+                 x2godesktopsharing
+                 x2goserver
+                 x2goserver-common
+                 x2goserver-xsession
+               ]
+             else
+               %w[
+                 x2goagent
+                 x2goclient
+                 x2goserver
+                 x2goserver-common
+                 x2goserver-xsession
+               ]
+             end
+
+  packages.each do |pkg|
     it { is_expected.to contain_package(pkg) }
   end
 

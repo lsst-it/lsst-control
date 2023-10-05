@@ -22,7 +22,7 @@ describe 'profile::ccs::graphical' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'x2go packages'
+      include_examples 'x2go packages', facts: facts
 
       if facts[:os]['release']['major'] == '7'
         it do

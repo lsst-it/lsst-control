@@ -6,10 +6,9 @@ require 'spec_helper'
 # testing cluster/ruka & cluster/ruka/variant/r440
 #
 describe 'ruka01.dev.lsst.org', :sitepp do
-  alma9 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '9' }).first
-  # rubocop:disable Naming/VariableNumber
-  { 'almalinux-9-x86_64': alma9 }.each do |os, facts|
-    # rubocop:enable Naming/VariableNumber
+  on_supported_os.each do |os, facts|
+    next unless os =~ %r{almalinux-9-x86_64}
+
     context "on #{os}" do
       let(:facts) do
         override_facts(facts,

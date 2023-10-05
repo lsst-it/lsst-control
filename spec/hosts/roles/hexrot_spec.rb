@@ -25,7 +25,7 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'common', facts: facts
-          include_examples 'x2go packages'
+          include_examples 'x2go packages', facts: facts
           it { is_expected.to contain_class('mate') }
 
           # XXX hexrot uses devicemapper, so the docker example group isn't included

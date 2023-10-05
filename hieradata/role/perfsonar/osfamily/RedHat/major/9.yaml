@@ -1,0 +1,6 @@
+---
+profile::core::yum::versionlock:
+  perfsonar-toolkit:
+    ensure: "present"
+    version: "%{lookup('profile::core::perfsonar::version')}"
+    release: "1.el9"

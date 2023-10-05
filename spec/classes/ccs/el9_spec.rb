@@ -7,7 +7,13 @@ describe 'profile::ccs::el9' do
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
-      let(:facts) { facts }
+      let(:facts) { facts.merge(site: 'ls') }
+      let(:pre_condition) do
+        <<~PP
+          include ssh
+          include profile::ccs::common
+        PP
+      end
 
       it { is_expected.to compile.with_all_deps }
 

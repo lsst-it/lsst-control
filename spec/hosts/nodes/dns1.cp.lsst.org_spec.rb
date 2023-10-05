@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'dns1.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, facts|
-    next if os =~ %r{centos-7-x86_64}
+    next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
@@ -31,8 +31,8 @@ describe 'dns1.cp.lsst.org', :sitepp do
       include_context 'with nm interface'
       it { is_expected.to have_nm__connection_resource_count(1) }
 
-      context 'with ens3' do
-        let(:interface) { 'ens3' }
+      context 'with enp1s0' do
+        let(:interface) { 'enp1s0' }
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'

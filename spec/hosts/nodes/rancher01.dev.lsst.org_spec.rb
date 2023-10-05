@@ -3,10 +3,7 @@
 require 'spec_helper'
 
 describe 'rancher01.dev.lsst.org', :sitepp do
-  alma9 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '9' }).first
-  # rubocop:disable Naming/VariableNumber
-  on_supported_os.merge('almalinux-9-x86_64': alma9).each do |os, facts|
-    # rubocop:enable Naming/VariableNumber
+  on_supported_os.each do |os, facts|
     next if os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do

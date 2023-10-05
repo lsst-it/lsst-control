@@ -1,12 +1,12 @@
 ---
 nm::connections:
-  ens192:
+  enp1s0:
     content: |
       [connection]
-      id=ens192
+      id=enp1s0
       uuid=21d47e65-8523-1a06-af22-6f121086f085
       type=ethernet
-      interface-name=ens192
+      interface-name=enp1s0
 
       [ethernet]
 

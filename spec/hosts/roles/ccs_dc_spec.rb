@@ -27,7 +27,7 @@ describe "#{role} role" do
 
           include_examples 'common', facts: facts
           include_examples 'ccs common', facts: facts
-          include_examples 'x2go packages'
+          include_examples 'x2go packages', facts: facts
           include_examples 'lsst-daq sysctls', facts: facts
 
           %w[

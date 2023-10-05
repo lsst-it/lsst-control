@@ -26,7 +26,7 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'common', facts: facts
-          include_examples 'x2go packages'
+          include_examples 'x2go packages', facts: facts
           include_examples 'lsst-daq sysctls'
           it { is_expected.not_to contain_class('profile::core::sysctl::lhn') }
           it { is_expected.not_to contain_class('dhcp') }

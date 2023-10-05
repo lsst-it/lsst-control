@@ -26,7 +26,7 @@ describe "#{role} role" do
 
           include_examples 'common', facts: facts
           include_examples 'debugutils'
-          include_examples 'x2go packages'
+          include_examples 'x2go packages', facts: facts
           it { is_expected.to contain_class('mate') }
         end # host
       end # lsst_sites

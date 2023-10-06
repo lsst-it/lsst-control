@@ -43,6 +43,27 @@ dhcp::pools:
     range:
       - "139.229.140.24 139.229.140.30"  # ~ /30
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-CORE-SERVICES:   # vlan2103
+    network: "139.229.141.0"
+    mask: "255.255.255.224"
+    gateway: "139.229.141.30"
+    range:
+      - "139.229.141.20 139.229.141.26"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-HYPERVISOR:  # vlan2104
+    network: "139.229.141.32"
+    mask: "255.255.255.240"
+    gateway: "139.229.141.46"
+    range:
+      - "139.229.141.40 139.229.141.42"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-BMC:  # vlan2105
+    network: "139.229.142.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.142.254"
+    range:
+      - "139.229.142.230 139.229.142.250"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   BDC-Ayekan:
     network: "139.229.144.0"
     mask: "255.255.255.192"

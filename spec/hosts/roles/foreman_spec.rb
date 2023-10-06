@@ -271,6 +271,33 @@ describe "#{role} role" do
         end
 
         it do
+          is_expected.to contain_dhcp__pool('IT-CORE-SERVICES').with(
+            network: '139.229.141.0',
+            mask: '255.255.255.224',
+            gateway: '139.229.141.30',
+            range: ['139.229.141.20 139.229.141.26'],
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-HYPERVISOR').with(
+            network: '139.229.141.32',
+            mask: '255.255.255.240',
+            gateway: '139.229.141.46',
+            range: ['139.229.141.40 139.229.141.42'],
+          )
+        end
+
+        it do
+          is_expected.to contain_dhcp__pool('IT-BMC').with(
+            network: '139.229.142.0',
+            mask: '255.255.255.0',
+            gateway: '139.229.142.254',
+            range: ['139.229.142.230 139.229.142.250'],
+          )
+        end
+
+        it do
           is_expected.to contain_dhcp__pool('BDC-Ayekan').with(
             network: '139.229.144.0',
             mask: '255.255.255.192',

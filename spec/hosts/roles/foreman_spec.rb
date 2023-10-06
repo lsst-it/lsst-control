@@ -498,7 +498,7 @@ describe "#{role} role" do
           is_expected.to contain_dhcp__pool('IT-CORE-SERVICES').with(
             network: '139.229.161.0',
             mask: '255.255.255.224',
-            range: ['139.229.161.20 139.229.161.27'],
+            range: ['139.229.161.20 139.229.161.26'],
             gateway: '139.229.161.30',
           )
         end
@@ -508,7 +508,7 @@ describe "#{role} role" do
           is_expected.to contain_dhcp__pool('IT-HYPERVISOR').with(
             network: '139.229.161.32',
             mask: '255.255.255.240',
-            range: ['139.229.161.40 139.229.161.43'],
+            range: ['139.229.161.40 139.229.161.42'],
             gateway: '139.229.161.46',
           )
         end
@@ -518,7 +518,7 @@ describe "#{role} role" do
           is_expected.to contain_dhcp__pool('IT-BMC').with(
             network: '139.229.162.0',
             mask: '255.255.255.0',
-            range: ['139.229.162.230 139.229.162.251'],
+            range: ['139.229.162.230 139.229.162.250'],
             gateway: '139.229.162.254',
           )
         end

@@ -23,21 +23,21 @@ dhcp::pools:
     mask: "255.255.255.224"
     gateway: "139.229.161.30"
     range:
-      - "139.229.161.20 139.229.161.27"
+      - "139.229.161.20 139.229.161.26"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   IT-HYPERVISOR:
     network: "139.229.161.32"
     mask: "255.255.255.240"
     gateway: "139.229.161.46"
     range:
-      - "139.229.161.40 139.229.161.43"
+      - "139.229.161.40 139.229.161.42"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   IT-BMC:
     network: "139.229.162.0"
     mask: "255.255.255.0"
     gateway: "139.229.162.254"
     range:
-      - "139.229.162.230 139.229.162.251"
+      - "139.229.162.230 139.229.162.250"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   Summit-Wireless:
     network: "139.229.163.0"

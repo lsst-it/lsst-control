@@ -16,7 +16,6 @@ postfix::configs:
     value: "hash:/etc/postfix/sasl_passwd"
   smtp_sasl_mechanism_filter:
     value: "plain, login"
-sudo::purge: false  # FIXME
 sudo::configs:
   lsstcam_ccs_cmd:
     content: "%lsstcam-ccs-cmd ALL=(ccs) NOPASSWD: ALL"

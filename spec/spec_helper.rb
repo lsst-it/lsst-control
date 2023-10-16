@@ -384,6 +384,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
   end
 
   it { is_expected.to contain_class('systemd').with_manage_udevd(true) }
+  it { is_expected.to contain_class('sudo').with_purge(true) }
 end
 
 shared_examples 'lhn sysctls', :lhn_node do

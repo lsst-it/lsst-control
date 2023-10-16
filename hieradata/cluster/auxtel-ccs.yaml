@@ -17,8 +17,6 @@ postfix::configs:
     value: "hash:/etc/postfix/sasl_passwd"
   smtp_sasl_mechanism_filter:
     value: "plain, login"
-
-sudo::purge: false  # FIXME
 sudo::configs:
   auxtel_ccs_cmd:
     content: "%auxtel-ccs-cmd ALL=(ccs) NOPASSWD: ALL"

@@ -85,6 +85,8 @@ class profile::core::common (
   include timezone
   include tuned
 
+  Class['easy_ipa'] -> Class['ssh']
+
   if fact('os.family') == 'RedHat' {
     include epel
     include profile::core::yum

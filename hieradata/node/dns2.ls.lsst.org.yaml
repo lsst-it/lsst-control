@@ -1,22 +1,18 @@
 ---
 nm::connections:
-  ens3:
-    content: |
-      [connection]
-      id=ens3
-      uuid=21d47e65-8523-1a06-af22-6f121086f085
-      type=ethernet
-      interface-name=ens3
-
-      [ethernet]
-
-      [ipv4]
-      address1=139.229.135.54/24,139.229.135.254
-      dns=139.229.135.53;139.229.135.54;139.229.135.55;
-      dns-search=ls.lsst.org;
-      method=manual
-
-      [ipv6]
-      method=ignore
-
-      [proxy]
+  enp1s0:
+    content:
+      connection:
+        id: "enp1s0"
+        uuid: "21d47e65-8523-1a06-af22-6f121086f085"
+        type: "ethernet"
+        interface-name: "enp1s0"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.135.54/24,139.229.135.254"
+        dns: "139.229.135.53;139.229.135.54;139.229.135.55;"
+        dns-search: "ls.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "ignore"
+      proxy: {}

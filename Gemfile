@@ -8,7 +8,6 @@ group :test do
   gem 'simplecov-console',         require: false
   gem 'voxpupuli-test', '~> 5.4',  require: false
 
-  gem 'puppet-lint-legacy_facts-check', '~> 1.0.4',            require: false
   gem 'puppet-lint-no_erb_template-check', '~> 1.0.0',         require: false
   gem 'puppet-lint-optional_default-check',                    require: false
   gem 'puppet-lint-package_ensure-check', '~> 0.2.0',          require: false

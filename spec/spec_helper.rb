@@ -159,6 +159,8 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
     include_examples 'krb5.conf.d files', facts: facts
     include_examples 'sssd services'
 
+    it { is_expected.to contain_class('ssh').that_requires('Class[easy_ipa]') }
+
     it do
       # XXX dev is using ls ipa servers
       next if site == 'dev'

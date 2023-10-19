@@ -30,8 +30,8 @@ network::interfaces_hash:
   p2p2:
     <<: *not_connected
 
-hosts::host_entries:
-  "tts-sm":
+hosts::entries:
+  tts-sm:
     ip: "10.0.0.212"
 
 nfs::server_enabled: true

@@ -26,8 +26,8 @@ network::interfaces_hash:
     onboot: "no"
     type: "Ethernet"
 
-hosts::host_entries:
-  "comcam-sm":
+hosts::entries:
+  comcam-sm:
     ip: "10.0.0.212"
 
 nfs::server_enabled: true

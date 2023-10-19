@@ -33,17 +33,8 @@ describe 'daq-mgt.tu.lsst.org', :sitepp do
 
       it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V6.7') }
       it { is_expected.to contain_class('daq::rptsdk').with_version('V3.5.3') }
+      it { is_expected.to contain_host('tts-sm').with_ip('10.0.0.212') }
       it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }
-
-      it do
-        is_expected.to contain_class('hosts').with(
-          host_entries: {
-            'tts-sm' => {
-              'ip' => '10.0.0.212',
-            },
-          },
-        )
-      end
 
       it do
         is_expected.to contain_network__interface('em4').with(

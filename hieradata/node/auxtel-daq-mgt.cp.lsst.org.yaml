@@ -36,8 +36,8 @@ network::interfaces_hash:
     onboot: "no"
     type: "Ethernet"
 
-hosts::host_entries:
-  "auxtel-sm":
+hosts::entries:
+  auxtel-sm:
     ip: "192.168.101.2"
 
 nfs::server_enabled: true

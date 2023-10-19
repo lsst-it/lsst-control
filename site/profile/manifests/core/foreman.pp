@@ -81,8 +81,6 @@ class profile::core::foreman (
     }
   }
 
-  Class['r10k::webhook::config'] -> Class['r10k::webhook']
-
   class { 'smee':
     url  => $smee_url,
     path => '/payload',

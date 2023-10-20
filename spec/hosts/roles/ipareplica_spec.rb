@@ -33,6 +33,8 @@ describe "#{role} role" do
             )
           end
 
+          it { is_expected.to contain_class('hosts').with_manage_fqdn(false) }
+
           {
             'ipa1.dev.lsst.org': '100.76.95.74',
             'ipa2.dev.lsst.org': '100.77.145.58',

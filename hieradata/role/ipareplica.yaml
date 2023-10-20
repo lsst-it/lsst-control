@@ -46,6 +46,7 @@ tailscale::up_options:
   accept-dns: false  # leave /etc/resolv.conf alone
   hostname: "%{facts.fqdn}"  # use fqdn instead of short hostname
 
+hosts::manage_fqdn: false  # avoid conflict with tailscale address
 hosts::entries:
   ipa1.dev.lsst.org:
     ip: "100.76.95.74"

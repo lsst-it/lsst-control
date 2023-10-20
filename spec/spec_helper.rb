@@ -363,26 +363,41 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
     end
   end
 
-  it do
-    is_expected.to contain_user('csilva_b').with(
-      ensure: 'present',
-      groups: ['wheel_b'],
-      purge_ssh_keys: true,
-    )
+  admin_users = %w[
+    jhoblitt_b
+    cbarria_b
+    csilva_b
+  ]
+
+  (admin_users + ['root']).each do |user|
+    it do
+      is_expected.to contain_ssh__server__match_block(user).with(
+        type: 'user',
+        options: {
+          'AuthorizedKeysFile' => '.ssh/authorized_keys',
+        },
+      )
+    end
   end
 
-  it do
-    is_expected.to contain_user('hreinking_b').with(
-      ensure: 'absent',
-    )
+  admin_users.each do |user|
+    it do
+      is_expected.to contain_user(user).with(
+        ensure: 'present',
+        groups: ['wheel_b'],
+        purge_ssh_keys: true,
+      )
+    end
   end
 
-  it do
-    is_expected.to contain_file('/home/hreinking_b').with(
-      ensure: 'absent',
-      recurse: true,
-      force: true,
-    )
+  %w[
+    lssttech
+    sysadmin
+    athebo
+    athebo_b
+    hreinking_b
+  ].each do |user|
+    it { is_expected.to contain_user(user).with_ensure('absent') }
   end
 
   it { is_expected.to contain_class('systemd').with_manage_udevd(true) }

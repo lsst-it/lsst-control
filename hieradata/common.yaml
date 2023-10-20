@@ -86,7 +86,6 @@ lookup_options:
     merge:
       strategy: "deep"
 
-hosts::purge_hosts: true
 timezone::timezone: "UTC"
 chrony::cmdport: 0
 chrony::leapsecmode: "system"

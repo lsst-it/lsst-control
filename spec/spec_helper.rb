@@ -368,6 +368,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
     jhoblitt_b
     cbarria_b
     csilva_b
+    dtapia_b
   ]
 
   (admin_users + ['root']).each do |user|

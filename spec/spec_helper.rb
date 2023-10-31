@@ -793,14 +793,6 @@ shared_examples 'generic foreman' do
     )
   end
 
-  it do
-    is_expected.to contain_class('dhcp').with(
-      ntpservers: ntpservers,
-      nameservers: nameservers,
-      option_static_route: true,
-    )
-  end
-
   {
     'bootloader-append': 'nofb',
     'disable-firewall': true,

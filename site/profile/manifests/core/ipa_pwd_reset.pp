@@ -148,6 +148,5 @@ class profile::core::ipa_pwd_reset (
     ensure  => file,
     mode    => '0644',
     content => $ipa_reset_http,
-    notify  => Service['httpd'],
   }
 }

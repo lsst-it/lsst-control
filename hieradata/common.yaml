@@ -142,22 +142,16 @@ ssh::server::match_block:
     <<: *authorized_keys
   csilva_b:
     <<: *authorized_keys
-# easy_ipa server options
+# ipa server options
 # defines the uid/gid of the admin user
 # needs to be coordinated between master + replicas
-easy_ipa::idstart: 70000
-easy_ipa::idmax: 79999
-easy_ipa::domain: "lsst.cloud"
-easy_ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
-# easy_ipa client options
-easy_ipa::ipa_role: "client"
-easy_ipa::configure_ntp: false
-easy_ipa::configure_sshd: false
-easy_ipa::install_autofs: false
-easy_ipa::install_epel: false
-easy_ipa::install_kstart: false
-easy_ipa::install_sssd: false
-easy_ipa::install_sssdtools: false
+ipa::idstart: 70000
+ipa::idmax: 79999
+ipa::domain: "lsst.cloud"
+ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
+# ipa client options
+ipa::ipa_role: "client"
+ipa::configure_ntp: false
 epel::epel_managed: true
 epel::epel_source_managed: false
 epel::epel_debuginfo_managed: true
@@ -347,10 +341,10 @@ sssd::main_config:
       - "sudo"
   nss:
     homedir_substring: "/home"
-  "domain/%{lookup('easy_ipa::domain')}":
+  "domain/%{lookup('ipa::domain')}":
     cache_credentials: true
     krb5_store_password_if_offline: true
-    ipa_domain: "%{lookup('easy_ipa::domain')}"
+    ipa_domain: "%{lookup('ipa::domain')}"
     id_provider: "ipa"
     auth_provider: "ipa"
     access_provider: "ipa"
@@ -359,8 +353,8 @@ sssd::main_config:
     chpass_provider: "ipa"
     ipa_server:
       - "_srv_"
-      - "%{lookup('easy_ipa::ipa_master_fqdn')}"
-    dns_discovery_domain: "%{::site}._locations.%{lookup('easy_ipa::domain')}"
+      - "%{lookup('ipa::ipa_master_fqdn')}"
+    dns_discovery_domain: "%{::site}._locations.%{lookup('ipa::domain')}"
 sssd::package_name:
   - "sssd"
   - "sssd-tools"  # not installed by default
@@ -385,25 +379,25 @@ mit_krb5::ticket_lifetime: "24h"
 mit_krb5::udp_preference_limit: "0"
 mit_krb5::realms:
   "%{lookup('mit_krb5::default_realm')}":
-    kdc: "%{lookup('easy_ipa::ipa_master_fqdn')}:88"
-    master_kdc: "%{lookup('easy_ipa::ipa_master_fqdn')}:88"
-    admin_server: "%{lookup('easy_ipa::ipa_master_fqdn')}:749"
-    kpasswd_server: "%{lookup('easy_ipa::ipa_master_fqdn')}:464"
-    default_domain: "%{lookup('easy_ipa::domain')}"
+    kdc: "%{lookup('ipa::ipa_master_fqdn')}:88"
+    master_kdc: "%{lookup('ipa::ipa_master_fqdn')}:88"
+    admin_server: "%{lookup('ipa::ipa_master_fqdn')}:749"
+    kpasswd_server: "%{lookup('ipa::ipa_master_fqdn')}:464"
+    default_domain: "%{lookup('ipa::domain')}"
     pkinit_anchors: "FILE:/var/lib/ipa-client/pki/kdc-ca-bundle.pem"
     pkinit_pool: "FILE:/var/lib/ipa-client/pki/ca-bundle.pem"
 mit_krb5::domain_realms:
   "%{lookup('mit_krb5::default_realm')}":
     domains:
-      - ".%{lookup('easy_ipa::domain')}"
-      - "%{lookup('easy_ipa::domain')}"
+      - ".%{lookup('ipa::domain')}"
+      - "%{lookup('ipa::domain')}"
       - "%{facts.fqdn}"
       - ".%{facts.domain}"
       - "%{facts.domain}"
 
 openldap::client::tls_cacertdir: "/etc/openldap/certs"
 openldap::client::sasl_nocanon: true
-openldap::client::uri: "ldaps://%{lookup('easy_ipa::ipa_master_fqdn')}"
+openldap::client::uri: "ldaps://%{lookup('ipa::ipa_master_fqdn')}"
 openldap::client::base: "dc=lsst,dc=cloud"
 openldap::client::tls_cacert: "/etc/ipa/ca.crt"
 openldap::client::sasl_mech: "GSSAPI"
@@ -412,10 +406,10 @@ profile::core::ipa::default:
   global:
     basedn: "%{lookup('openldap::client::base')}"
     realm: "%{lookup('mit_krb5::default_realm')}"
-    domain: "%{lookup('easy_ipa::domain')}"
-    server: "%{lookup('easy_ipa::ipa_master_fqdn')}"
+    domain: "%{lookup('ipa::domain')}"
+    server: "%{lookup('ipa::ipa_master_fqdn')}"
     host: "%{facts.fqdn}"
-    xmlrpc_uri: "https://%{lookup('easy_ipa::ipa_master_fqdn')}/ipa/xml"
+    xmlrpc_uri: "https://%{lookup('ipa::ipa_master_fqdn')}/ipa/xml"
     enable_ra: "True"
 
 profile::core::monitoring::database: "telegraf"

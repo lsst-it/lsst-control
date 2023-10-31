@@ -1,9 +1,7 @@
 ---
 classes:
   - "accounts"
-  - "easy_ipa"
+  - "ipa"
   - "puppet_agent"
   - "ssh"
   - "sudo"
-
-easy_ipa::install_sssd: true

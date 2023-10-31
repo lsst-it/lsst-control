@@ -6,9 +6,9 @@ lookup_options:
     convert_to: "Sensitive"
 ccs_database::database: "comcamdbprod"
 ccs_database::password: "foo"
-easy_ipa::admin_password: "foofoofoofoo"  # ipa master only
-easy_ipa::directory_services_password: "foofoofoofoo"  # ipa master only
-easy_ipa::domain_join_password: "foofoofoofoo"  # 8 char min
+ipa::admin_password: "foofoofoofoo"  # ipa master only
+ipa::directory_services_password: "foofoofoofoo"  # ipa master only
+ipa::domain_join_password: "foofoofoofoo"  # 8 char min
 foreman_proxy::plugin::dns::route53::aws_access_key: "foo"
 foreman_proxy::plugin::dns::route53::aws_secret_key: "foo"
 profile::ccs::postfix::auth: "foo"

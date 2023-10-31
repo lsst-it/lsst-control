@@ -81,8 +81,6 @@ class profile::core::foreman (
     }
   }
 
-  Class['r10k::webhook::config'] -> Class['r10k::webhook']
-
   class { 'smee':
     url  => $smee_url,
     path => '/payload',
@@ -104,14 +102,6 @@ class profile::core::foreman (
     user    => 'root',
     hour    => 4,
     minute  => 42,
-  }
-
-  # The toml-rb gem is required for the telegraf module.
-  #
-  # Note that if the telegraf module is used then Puppet will fail during a catalog
-  # compilation, so we might need to manually install this gem in that scenario.
-  package { 'toml-rb':
-    provider => 'puppetserver_gem',
   }
 
   package { 'hiera-eyaml':

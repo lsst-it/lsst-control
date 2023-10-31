@@ -7,7 +7,7 @@ postfix::manage_root_alias: false
 postfix::inet_protocols: "ipv4"
 postfix::inet_interfaces: "localhost"
 postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"
-postfix::relayhost: "[mail.lsst.org]:submission"
+postfix::relayhost: "[exch-ls.lsst.org]:submission"
 postfix::mta: true
 postfix::configs:
   smtp_sasl_auth_enable:
@@ -63,7 +63,7 @@ ccs_software::global_properties:
 ## comcam-alerts
 ccs_software::service_email: "x7z0x9c0t2k4r1n1@lsstc.slack.com"
 
-ccs_monit::mailhost: "mail.lsst.org"
+ccs_monit::mailhost: "exch-ls.lsst.org"
 ccs_monit::alert:
   ## comcam-alerts
   - "x7z0x9c0t2k4r1n1@lsstc.slack.com"

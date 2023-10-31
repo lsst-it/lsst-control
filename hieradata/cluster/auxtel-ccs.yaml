@@ -4,7 +4,7 @@ postfix::inet_protocols: "ipv4"
 postfix::manage_root_alias: false
 postfix::inet_interfaces: "localhost"
 postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"
-postfix::relayhost: "[mail.lsst.org]:submission"
+postfix::relayhost: "[exch-ls.lsst.org]:submission"
 postfix::mta: true
 postfix::configs:
   smtp_sasl_auth_enable:
@@ -34,7 +34,7 @@ clustershell::groupmembers:
   all: {group: "all", member: "@misc,@hcu"}
 
 
-ccs_monit::mailhost: "mail.lsst.org"
+ccs_monit::mailhost: "exch-ls.lsst.org"
 ccs_monit::alert:
   - "auxtel-ccs-alerts-aaaadjkgtdl6pb2omvdi732xci@lsstc.slack.com"
 

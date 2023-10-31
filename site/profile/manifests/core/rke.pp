@@ -16,6 +16,7 @@ class profile::core::rke (
   String                         $version       = '1.3.12',
 ) {
   include kmod
+  require ipa
 
   $user = 'rke'
   $uid  = 75500
@@ -29,7 +30,7 @@ class profile::core::rke (
     profile::util::keytab { $user:
       uid           => $uid,
       keytab_base64 => $keytab_base64,
-      require       => Class[easy_ipa], # ipa must be setup to use the rke user
+      require       => Class[ipa], # ipa must be setup to use the rke user
     }
   }
 
@@ -41,7 +42,7 @@ class profile::core::rke (
     user               => $user,
     owner              => $user,
     group              => $user,
-    require            => Class[easy_ipa], # ipa must be setup to use the rke user
+    require            => Class[ipa], # ipa must be setup to use the rke user
   }
 
   $rke_checksum = $version ? {

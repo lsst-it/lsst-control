@@ -1,5 +1,5 @@
 ---
-easy_ipa::ipa_master_fqdn: "ipa1.tu.lsst.org"
+ipa::ipa_master_fqdn: "ipa1.tu.lsst.org"
 profile::core::common::disable_ipv6: true
 rsyslog::config::actions:
 # Send copy to logs to GKE Graylog instance

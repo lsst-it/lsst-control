@@ -6,12 +6,6 @@ describe 'profile::core::krb5' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) { facts }
-      let(:pre_condition) do
-        <<~PP
-          include easy_ipa
-          class { 'sssd': service_names => ['sssd'] }
-        PP
-      end
 
       context 'with no params' do
         it { is_expected.to compile.with_all_deps }

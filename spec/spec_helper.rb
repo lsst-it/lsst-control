@@ -159,7 +159,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
     include_examples 'krb5.conf.d files', facts: facts
     include_examples 'sssd services'
 
-    it { is_expected.to contain_class('ssh').that_requires('Class[easy_ipa]') }
+    it { is_expected.to contain_class('ssh').that_requires('Class[ipa]') }
 
     it do
       # XXX dev is using ls ipa servers
@@ -201,7 +201,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
             ],
           },
         },
-      ).that_requires('Class[easy_ipa]')
+      ).that_requires('Class[ipa]')
     end
 
     if facts[:os]['release']['major'] == '7'
@@ -681,7 +681,7 @@ shared_examples 'rke profile' do
   end
 
   it do
-    is_expected.to contain_vcsrepo('/home/rke/k8s-cookbook').that_requires('Class[easy_ipa]')
+    is_expected.to contain_vcsrepo('/home/rke/k8s-cookbook').that_requires('Class[ipa]')
   end
 end
 

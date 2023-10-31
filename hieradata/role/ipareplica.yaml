@@ -1,30 +1,21 @@
 ---
 classes:
   - "clustershell"
-  - "easy_ipa"
+  - "ipa"
   - "profile::core::common"
   - "profile::core::ipa_pwd_reset"
   - "tailscale"
 
 profile::core::common::disable_ipv6: true
-profile::core::common::manage_ipa: false
 profile::core::common::manage_krb5: false
 profile::core::common::manage_sssd: false
 profile::core::sysctl::disable_ipv6::disable: false  # ipa-server-install wants ipv6
-easy_ipa::ipa_role: "replica"
-easy_ipa::configure_replica_ca: true
-easy_ipa::install_ipa_server: true
-easy_ipa::enable_ip_address: true
-easy_ipa::webui_disable_kerberos: true
-easy_ipa::webui_enable_proxy: true
-easy_ipa::webui_force_https: true
-easy_ipa::configure_dns_server: false
-easy_ipa::ipa_server_fqdn: "%{facts.fqdn}"
-easy_ipa::ip_address: "%{facts.networking.ip}"
-
-# enable easy_ipa management of sssd packages on servers
-easy_ipa::install_sssd: true
-easy_ipa::install_sssdtools: true
+ipa::ipa_role: "replica"
+ipa::configure_replica_ca: true
+ipa::enable_ip_address: true
+ipa::configure_dns_server: false
+ipa::ipa_server_fqdn: "%{facts.fqdn}"
+ipa::ip_address: "%{facts.networking.ip}"
 
 clustershell::groupmembers:
   ipa:

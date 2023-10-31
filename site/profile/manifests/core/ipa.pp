@@ -1,6 +1,6 @@
 # @summary
-#   Manages ipa client configuration -- functionality not provided by easy_ipa.
-#   XXX should be added to easy_ipa and upstream?
+#   Manages ipa client configuration -- functionality not provided by ipa mod.
+#   XXX should be added to ipa mod?
 #
 # @param default
 #   Set values in `/etc/ipa/default.conf`.
@@ -8,11 +8,11 @@
 class profile::core::ipa (
   Optional[Hash] $default = undef,
 ) {
-  require easy_ipa
+  require ipa
 
   $param_defaults = {
     'path'  => '/etc/ipa/default.conf',
-    require => Class[easy_ipa],
+    require => Class[ipa],
   }
 
   if $default {

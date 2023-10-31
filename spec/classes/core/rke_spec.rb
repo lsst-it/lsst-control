@@ -9,8 +9,6 @@ describe 'profile::core::rke' do
       let(:pre_condition) do
         <<~PP
           include docker
-          include easy_ipa
-          class { 'sssd': service_names => ['sssd'] }
         PP
       end
 
@@ -24,7 +22,7 @@ describe 'profile::core::rke' do
 
         it do
           is_expected.not_to contain_profile__util__keytab('rke')
-            .that_requires('Class[easy_ipa]')
+            .that_requires('Class[ipa]')
         end
 
         it do

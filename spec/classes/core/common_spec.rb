@@ -8,7 +8,7 @@ describe 'profile::core::common' do
       let(:facts) { facts }
       let(:pre_condition) do
         <<~PP
-          # easy_ipa has a hardwired dep on the sssd service
+          # change service unit name from sssd.service to sssd
           class { 'sssd': service_names => ['sssd'] }
         PP
       end

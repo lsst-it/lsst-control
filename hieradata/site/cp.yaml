@@ -1,7 +1,7 @@
 ---
 docker::log_driver: ~
 docker::log_opt: ~
-easy_ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
+ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
 rsyslog::config::actions:
 # Send copy to logs to GKE Graylog instance
   graylogCloud:

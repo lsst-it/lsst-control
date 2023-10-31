@@ -8,9 +8,6 @@ describe 'profile::core::ipa_pwd_reset' do
       let(:facts) { facts }
       let(:pre_condition) do
         <<~PP
-          include easy_ipa
-          class { 'sssd': service_names => ['sssd'] }
-
           service { 'httpd': }
         PP
       end

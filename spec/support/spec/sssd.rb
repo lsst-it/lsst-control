@@ -3,7 +3,7 @@
 shared_examples 'sssd services' do
   it do
     is_expected.to contain_class('sssd').with_service_names(['sssd'])
-                                        .that_requires('Class[easy_ipa]')
+                                        .that_requires('Class[ipa]')
   end
 
   it do
@@ -36,7 +36,7 @@ shared_examples 'sssd services' do
         enable: false,
       )
                                           .that_requires('Class[sssd]')
-                                          .that_requires('Class[easy_ipa]')
+                                          .that_requires('Class[ipa]')
     end
   end
 end

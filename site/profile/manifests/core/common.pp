@@ -15,11 +15,8 @@
 # @param manage_krb5
 #   Enable or disable management of `/etc/krb5.conf`
 #
-# @param manage_ldap
-#   Enable or disable management of openldap ipa client config
-#
 # @param manage_ipa
-#   Enable or disable management of `/etc/ipa/default.conf`
+#   Enable or disable management of free ipa.
 #
 # @param disable_ipv6
 #   If `true`, disable ipv6 networking support. This parameter is intended to eventually
@@ -48,7 +45,6 @@ class profile::core::common (
   Boolean $manage_chrony = true,
   Boolean $manage_sssd = true,
   Boolean $manage_krb5 = true,
-  Boolean $manage_ldap = true,
   Boolean $manage_ipa = true,
   Boolean $disable_ipv6 = false,
   Boolean $manage_firewall = true,
@@ -61,7 +57,6 @@ class profile::core::common (
   include auditd
   include accounts
   include augeas
-  include easy_ipa
   include hosts
   include lldpd
   include profile::core::bash_completion
@@ -84,8 +79,6 @@ class profile::core::common (
   include sysstat
   include timezone
   include tuned
-
-  Class['easy_ipa'] -> Class['ssh']
 
   if fact('os.family') == 'RedHat' {
     include epel
@@ -126,7 +119,6 @@ class profile::core::common (
 
   if $manage_firewall {
     include firewall
-    Class[easy_ipa] -> Class[firewall]
   }
 
   if $manage_puppet_agent {
@@ -145,14 +137,17 @@ class profile::core::common (
     include profile::core::krb5
   }
 
-  if $manage_ldap {
-    include openldap::client
-    # run ipa-install-* script before trying to managing openldap
-    Class[easy_ipa] -> Class[openldap::client]
-  }
-
   if $manage_ipa {
+    include ipa
+    include openldap::client
     include profile::core::ipa
+
+    # prevent ipa packages from being installed before versionlocks are set
+    Yum::Versionlock<| |> -> Class[ipa]
+
+    # run ipa-install-* script before X
+    Class[ipa] -> Class[ssh]
+    Class[ipa] -> Class[openldap::client]
   }
 
   if $disable_ipv6 {
@@ -178,7 +173,4 @@ class profile::core::common (
   file { '/etc/sysconfig/network-scripts/ifcfg-':
     ensure => absent,
   }
-
-  # prevent ipa packages from being installed before versionlocks are set
-  Yum::Versionlock<| |> -> Class[easy_ipa]
 }

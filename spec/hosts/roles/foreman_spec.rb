@@ -29,13 +29,6 @@ describe "#{role} role" do
             1.south-america.pool.ntp.org
           ]
         end
-        let(:nameservers) do
-          %w[
-            139.229.134.53
-            139.229.134.54
-            139.229.134.55
-          ]
-        end
         let(:ignore_branch_prefixes) do
           %w[
             master
@@ -47,15 +40,6 @@ describe "#{role} role" do
             ls
             tu
           ]
-        end
-
-        it do
-          is_expected.to contain_dhcp__pool('IT-Dev').with(
-            network: '139.229.134.0',
-            mask: '255.255.255.0',
-            range: ['139.229.134.120 139.229.134.149'],
-            gateway: '139.229.134.254',
-          )
         end
 
         it { is_expected.to compile.with_all_deps }

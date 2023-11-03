@@ -150,6 +150,7 @@ end
 shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true|
   include_examples 'bash_completion', facts: facts
   include_examples 'convenience'
+  include_examples 'telegraf'
 
   unless no_auth
     # inspect config fragment instead of class params to ensure that %{uid} is not

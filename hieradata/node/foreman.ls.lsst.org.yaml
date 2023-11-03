@@ -1,0 +1,216 @@
+---
+network::interfaces_hash:
+  eth0:  # fqdn
+    bootproto: "none"
+    defroute: "yes"
+    dns1: "%{lookup('dhcp::nameservers.0')}"
+    dns2: "%{lookup('dhcp::nameservers.1')}"
+    domain: "%{lookup('dhcp::dnsdomain.0')}"
+    ipaddress: "139.229.135.5"
+    gateway: "139.229.135.254"
+    netmask: "255.255.255.0"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+
+dhcp::interfaces:
+  - "eth0"
+
+dhcp::authoritative: true
+dhcp::pxeserver: "139.229.135.5"  # foreman.ls.lsst.org
+# theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
+dhcp::options:
+  - "voip-tftp-server code 150 = { ip-address }"
+  - "space cisco"
+  - "cisco.wlc code 241 = array of ip-address"
+  - "local-encapsulation code 43 = encapsulate cisco"
+dhcp::pools:
+  IT-Services:  # https://jira.lsstcorp.org/browse/IT-1676
+    network: "139.229.135.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.135.254"
+    range:
+      - "139.229.135.192 139.229.135.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  RubinObs-LHN:
+    network: "139.229.137.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.137.254"
+    range:
+      - "139.229.137.1 139.229.137.200"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  Rubin-DMZ:
+    network: "139.229.138.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.138.254"
+    range:
+      - "139.229.138.200 139.229.138.250"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+    nameservers:
+      - "1.0.0.1"
+      - "1.1.1.1"
+      - "8.8.8.8"
+  Archive-LHN:
+    network: "139.229.140.0"
+    mask: "255.255.255.224"
+    gateway: "139.229.140.1"
+    range:
+      - "139.229.140.24 139.229.140.30"  # ~ /30
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-CORE-SERVICES:   # vlan2103
+    network: "139.229.141.0"
+    mask: "255.255.255.224"
+    gateway: "139.229.141.30"
+    range:
+      - "139.229.141.20 139.229.141.26"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-HYPERVISOR:  # vlan2104
+    network: "139.229.141.32"
+    mask: "255.255.255.240"
+    gateway: "139.229.141.46"
+    range:
+      - "139.229.141.40 139.229.141.42"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-BMC:  # vlan2105
+    network: "139.229.142.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.142.254"
+    range:
+      - "139.229.142.230 139.229.142.250"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-Ayekan:
+    network: "139.229.144.0"
+    mask: "255.255.255.192"
+    gateway: "139.229.144.62"
+    range:
+      - "139.229.144.40 139.229.144.59"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-Teststand-DDS:  # vlan2301
+    network: "139.229.145.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.145.254"
+    range:
+      - "139.229.145.225 139.229.145.249"  # ~ /27
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  Commissioning-Cluster:  # https://jira.lsstcorp.org/browse/IT-1679
+    network: "139.229.146.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.146.254"
+    range:
+      - "139.229.146.225 139.229.146.249"  # ~ /27
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  DDS-Base:  # https://jira.lsstcorp.org/browse/IT-1679
+    network: "139.229.147.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.147.254"
+    range:
+      - "139.229.147.225 139.229.147.249"  # ~ /27
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  CDS-NAS:
+    network: "139.229.148.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.148.254"
+    range:
+      - "139.229.148.225 139.229.148.249"  # ~ /27
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  Base-Archive:
+    network: "139.229.149.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.149.254"
+    range:
+      - "139.229.149.225 139.229.149.249"  # ~ /27
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  Comcam-CCS:
+    network: "139.229.150.0"
+    mask: "255.255.255.128"
+    gateway: "139.229.150.126"
+    range:
+      - "139.229.150.112 139.229.150.125"  # ~ /28
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  BTS_MANKE:
+    network: "139.229.151.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.151.254"
+    range:
+      - "139.229.151.201 139.229.151.249"  # ~ /27
+  DDS-BTS:
+    network: "139.229.152.0"
+    mask: "255.255.255.128"
+    range:
+      - "139.229.152.70 139.229.152.120"
+  BTS_AUXTEL:  # vlan2503
+    network: "139.229.152.128"
+    mask: "255.255.255.192"
+    gateway: "139.229.152.190"
+    range:
+      - "139.229.152.171 139.229.152.180"
+  BTS_MISC:
+    network: "139.229.152.192"
+    mask: "255.255.255.192"
+    gateway: "139.229.152.254"
+    range:
+      - "139.229.152.210 139.229.152.250"
+  BTS_LHN:
+    network: "139.229.153.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.153.254"
+    range:
+      - "139.229.153.201 139.229.153.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+    static_routes:
+      - {network: "134.79.20", mask: "23", gateway: "139.229.153.254"}
+      - {network: "134.79.23", mask: "24", gateway: "139.229.153.254"}
+      - {network: "134.79.235.224", mask: "28", gateway: "139.229.153.254"}
+      - {network: "134.79.235.240", mask: "28", gateway: "139.229.153.254"}
+  BTS_LSSTCAM:  # vlan2507
+    network: "139.229.154.0"
+    mask: "255.255.255.192"
+    gateway: "139.229.154.62"
+    range:
+      - "139.229.154.49 139.229.154.58"
+  RubinObs-WiFi-Guest:
+    network: "139.229.159.128"
+    mask: "255.255.255.128"
+    gateway: "139.229.159.254"
+    range:
+      - "139.229.159.129 139.229.159.230"  # ~ /101
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-BMC:  # https://jira.lsstcorp.org/browse/IT-1679
+    network: "10.50.3.0"
+    mask: "255.255.255.0"
+    gateway: "10.50.3.254"
+    range:
+      - "10.50.3.1 10.50.3.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-APS:
+    network: "10.49.3.0"
+    mask: "255.255.255.0"
+    gateway: "10.49.3.254"
+    range:
+      - "10.49.3.1 10.49.3.249"
+    options:
+      - "cisco.wlc 139.229.134.100"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-VoIP:
+    network: "10.49.1.0"
+    mask: "255.255.255.0"
+    gateway: "10.49.1.254"
+    range:
+      - "10.49.1.1 10.49.1.249"
+    options:
+      - "voip-tftp-server 139.229.134.102"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-PDU:
+    network: "10.50.1.0"
+    mask: "255.255.255.0"
+    gateway: "10.50.1.254"
+    range:
+      - "10.50.1.200 10.50.1.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-CCTV:
+    network: "10.49.7.0"
+    mask: "255.255.255.0"
+    gateway: "10.49.7.254"
+    range:
+      - "10.49.7.1 10.49.7.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"

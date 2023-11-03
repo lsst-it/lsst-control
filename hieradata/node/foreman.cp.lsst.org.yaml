@@ -12,3 +12,296 @@ network::interfaces_hash:
     nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
+
+dhcp::interfaces:
+  - "eth0"
+
+dhcp::authoritative: true
+dhcp::pxeserver: "139.229.160.5"  # foreman
+# theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
+dhcp::options:
+  - "voip-tftp-server code 150 = { ip-address }"
+  - "space cisco"
+  - "cisco.wlc code 241 = array of ip-address"
+  - "local-encapsulation code 43 = encapsulate cisco"
+dhcp::pools:
+  IT-GSS:
+    network: "139.229.160.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.160.254"
+    range:
+      - "139.229.160.115 139.229.160.126"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-CORE-SERVICES:
+    network: "139.229.161.0"
+    mask: "255.255.255.224"
+    gateway: "139.229.161.30"
+    range:
+      - "139.229.161.20 139.229.161.26"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-HYPERVISOR:
+    network: "139.229.161.32"
+    mask: "255.255.255.240"
+    gateway: "139.229.161.46"
+    range:
+      - "139.229.161.40 139.229.161.42"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-BMC:
+    network: "139.229.162.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.162.254"
+    range:
+      - "139.229.162.230 139.229.162.250"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  Summit-Wireless:
+    network: "139.229.163.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.163.254"
+    range:
+      - "139.229.163.1 139.229.163.239"
+      # 139.229.163.240/28 is reserved for the network gateway and static
+      # IP addresses.
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  RubinObs-LHN:
+    network: "139.229.164.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.164.254"
+    range:
+      - "139.229.164.1 139.229.164.200"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  CDS-ARCH:
+    network: "139.229.165.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.165.254"
+    range:
+      - "139.229.165.200 139.229.165.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  CDS-ARCH-DDS:
+    network: "139.229.166.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.166.254"
+    range:
+      - "139.229.166.200 139.229.166.249"
+    static_routes:
+      - {network: "139.229.147", mask: "24", gateway: "139.229.166.254"}
+      - {network: "139.229.167", mask: "24", gateway: "139.229.166.254"}
+      - {network: "139.229.170", mask: "24", gateway: "139.229.166.254"}
+      - {network: "139.229.178", mask: "24", gateway: "139.229.166.254"}
+  OCS-APP:
+    network: "139.229.167.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.167.254"
+    range:
+      - "139.229.167.241 139.229.167.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  ESS-Sensors:
+    network: "139.229.168.0"
+    mask: "255.255.255.128"
+    gateway: "139.229.168.126"
+    range:
+      - "139.229.168.100 139.229.168.125"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  Dome-Calibrations:
+    network: "139.229.168.128"
+    mask: "255.255.255.192"
+    gateway: "139.229.168.190"
+    range:
+      - "139.229.168.180 139.229.168.189"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  MTDome-Hardware:
+    network: "139.229.168.192"
+    mask: "255.255.255.192"
+    gateway: "139.229.168.254"
+    range:
+      - "139.229.168.243 139.229.168.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  Startracker:
+    network: "139.229.169.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.169.254"
+    range:
+      - "139.229.169.200 139.229.169.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+    mtu: 9000
+  DDS-Auxtel:
+    network: "139.229.170.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.170.254"
+    range:
+      - "139.229.170.64 139.229.170.191"  # ~/25
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  CCS-Pathfinder:
+    network: "139.229.174.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.174.254"
+    range:
+      - "139.229.174.200 139.229.174.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  CCS-ComCam:
+    network: "139.229.175.0"
+    mask: "255.255.255.192"
+    gateway: "139.229.175.62"
+    range:
+      - "139.229.175.1 139.229.175.61"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  CCS-LSSTCam:
+    network: "139.229.175.64"
+    mask: "255.255.255.192"
+    gateway: "139.229.175.126"
+    range:
+      - "139.229.175.101 139.229.175.120"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  CCS-Test-APP:
+    network: "139.229.175.128"
+    mask: "255.255.255.128"
+    gateway: "139.229.175.254"
+    range:
+      - "139.229.175.241 139.229.175.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  TCS-APP:
+    network: "139.229.178.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.178.254"
+    range:
+      # We allocate 139.229.178.0/26 for DHCP, minus .178.1 as that
+      # host is statically allocated.
+      - "139.229.178.2 139.229.178.58"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  yagan-lhn:
+    network: "139.229.180.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.180.254"
+    range:
+      - "139.229.180.71 139.229.180.100"  # ~/27
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+    static_routes:
+      - {network: "134.79.20", mask: "23", gateway: "139.229.180.254"}
+      - {network: "134.79.23", mask: "24", gateway: "139.229.180.254"}
+      - {network: "134.79.235.224", mask: "28", gateway: "139.229.180.254"}
+      - {network: "134.79.235.240", mask: "28", gateway: "139.229.180.254"}
+  IT-Contractors:
+    network: "139.229.191.0"
+    mask: "255.255.255.128"
+    gateway: "139.229.191.126"
+    range:
+      - "139.229.191.1 139.229.191.64"  # .65: dimm-laptop
+      - "139.229.191.66 139.229.191.100"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-Guess:
+    network: "139.229.191.128"
+    mask: "255.255.255.128"
+    gateway: "139.229.191.254"
+    range:
+      - "139.229.191.129 139.229.191.239"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-CCTV:
+    network: "10.17.7.0"
+    mask: "255.255.255.0"
+    gateway: "10.17.7.254"
+    range:
+      - "10.17.7.1 10.17.7.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-IPMI-BMC:
+    network: "10.18.3.0"
+    mask: "255.255.255.0"
+    gateway: "10.18.3.254"
+    range:
+      - "10.18.3.150 10.18.3.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  Rubin-Power:
+    network: "10.18.7.0"
+    mask: "255.255.255.0"
+    gateway: "10.18.7.254"
+    range:
+      - "10.18.7.150 10.18.7.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-AP:
+    network: "10.17.3.0"
+    mask: "255.255.255.0"
+    gateway: "10.17.3.254"
+    range:
+      - "10.17.3.1 10.17.3.249"
+    options:
+      - "cisco.wlc 139.229.160.100"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-VOIP:
+    network: "10.17.1.0"
+    mask: "255.255.255.0"
+    gateway: "10.17.1.254"
+    range:
+      - "10.17.1.1 10.17.1.249"
+    options:
+      - "voip-tftp-server 139.229.160.102"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-IPMI-PDU:
+    network: "10.18.1.0"
+    mask: "255.255.255.0"
+    gateway: "10.18.1.254"
+    range:
+      - "10.18.1.200 10.18.1.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-MISC:
+    network: "10.17.5.0"
+    mask: "255.255.255.0"
+    gateway: "10.17.5.254"
+    range:
+      - "10.17.5.200 10.17.5.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  IT-IPMI-PXE:
+    network: "10.18.5.0"
+    mask: "255.255.255.0"
+    gateway: "10.18.5.254"
+    range:
+      - "10.18.5.200 10.18.5.249"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+
+dhcp::hosts:
+  M207-gs-plotter-01.cp.cl.lsst.org:
+    comment: "Plotter configuration: https://jira.lsstcorp.org/browse/IHS-1600"
+    mac: "F4:30:B9:48:D5:9A"
+    ip: "139.229.162.98"
+  M207-gs-printer-01.cp.cl.lsst.org:
+    comment: "Printer configuration: https://jira.lsstcorp.org/browse/IHS-1787"
+    mac: "58:38:79:08:5B:07"
+    ip: "139.229.162.99"
+  dimm-dimm:
+    comment: "Requested for DIMM https://jira.lsstcorp.org/browse/IHS-2341"
+    mac: "00:0C:29:61:59:A8"
+    ip: "139.229.191.103"
+  dimm-esci:
+    comment: "Requested for DIMM https://jira.lsstcorp.org/browse/IHS-2341"
+    mac: "AC:1F:6B:6B:63:12"
+    ip: "139.229.191.102"
+  dimm-ipmi:
+    comment: "Requested for DIMM https://jira.lsstcorp.org/browse/IHS-2341"
+    mac: "AC:1F:6B:6B:5F:B1"
+    ip: "139.229.191.101"
+  dimm-laptop:
+    comment: "Requested for DIMM https://jira.lsstcorp.org/browse/IHS-2341"
+    mac: "54:B2:03:1C:BB:D3"
+    ip: "139.229.191.65"
+  dimm-nas:
+    comment: "Requested for DIMM https://jira.lsstcorp.org/browse/IHS-2341"
+    mac: "00:0C:29:E3:6C:F5"
+    ip: "139.229.191.104"
+  gs-wlc-master:
+    comment: "Main Wireless Controller Summit"
+    mac: "40:CE:24:F7:E2:73"
+    ip: "139.229.162.61"
+  conference-voip:
+    comment: "Summit conference room VOIP"
+    mac: "52:54:00:F5:63:7E"
+    ip: "139.229.163.200"
+  dns1:  # XXX: Check if this reservation should live in foreman or should be a static IP address.
+    mac: "52:54:00:F5:63:7E"
+    ip: "139.229.162.22"
+  ups194:
+    mac: "00:20:85:e3:c6:c2"
+    ip: "139.229.162.122"
+  cloud1:  # DIMM Raspberry Pi, DIMM switch port 13
+    mac: "b8:27:eb:b9:36:fa"
+    ip: "139.229.170.198"
+  backup-wind-sensor:
+    comment: "https://jira.lsstcorp.org/browse/IT-1666"
+    mac: "00:40:9d:7f:0b:f2"
+    ip: "139.229.170.58"

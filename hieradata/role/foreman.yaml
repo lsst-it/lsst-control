@@ -1,8 +1,8 @@
 ---
 classes:
-  - "dhcp"
   - "profile::core::common"
   - "profile::core::debugutils"
+  - "profile::core::dhcp"
   - "profile::core::docker"
   - "profile::core::docker::prune"
   - "profile::core::foreman"

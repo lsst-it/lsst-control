@@ -114,7 +114,7 @@ class profile::core::common (
   }
 
   if $install_telegraf {
-    include profile::core::monitoring
+    include telegraf
   }
 
   if $manage_firewall {

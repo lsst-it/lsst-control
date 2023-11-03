@@ -361,8 +361,33 @@ sssd::package_name:
 sssd::service_names:
   - "sssd"
 
-telegraf::logfile: "/dev/null"
 telegraf::quiet: true
+telegraf::hostname: "%{facts.networking.fqdn}"
+telegraf::inputs:
+  cpu:
+    - percpu: true
+      totalcpu: true
+  mem: [{}]
+  disk: [{}]
+  diskio: [{}]
+  net:
+    - ignore_protocol_stats: true
+  nstat: [{}]
+  swap: [{}]
+  system: [{}]
+  ethtool: [{}]
+  kernel: [{}]
+  kernel_vmstat: [{}]
+  netstat: [{}]
+  processes: [{}]
+telegraf::outputs:
+  http:
+    - url: "https://mimir.o11y.dev.lsst.org/api/v1/push"
+      data_format: "prometheusremotewrite"
+      headers:
+        Content-Type: "application/x-protobuf"
+        Content-Encoding: "snappy"
+        X-Prometheus-Remote-Write-Version: "0.1.0"
 
 mit_krb5::includedir:
   - "/etc/krb5.conf.d/"
@@ -412,8 +437,6 @@ profile::core::ipa::default:
     xmlrpc_uri: "https://%{lookup('ipa::ipa_master_fqdn')}/ipa/xml"
     enable_ra: "True"
 
-profile::core::monitoring::database: "telegraf"
-profile::core::monitoring::username: "lsstadmin"
 resolv_conf::options:
   - "rotate"
   - "timeout:2"

@@ -108,4 +108,3 @@ accounts::user_list:
 
 letsencrypt::server: "https://acme-staging.api.letsencrypt.org/directory"  # testing url
 profile::core::common::disable_ipv6: true
-profile::core::monitoring::url: "http://it-influxdb.ls.lsst.org:8086"

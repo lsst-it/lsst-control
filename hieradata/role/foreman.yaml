@@ -180,7 +180,7 @@ puppet::server::puppetserver_metrics: false  # disabled for performance
 puppet::server::puppetserver_profiler: false  # disabled for performance
 puppet::server_version: *server_version  # XXX does this do anything?
 puppet::version: "%{lookup('puppet_agent::package_version')}"  # agent version
-puppetdb::globals::version: "7.11.0"
+puppetdb::globals::version: "7.14.0"
 
 ssh::client_options:
   "ProxyCommand": "--"

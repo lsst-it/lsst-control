@@ -752,6 +752,8 @@ shared_examples 'generic foreman' do
   it do
     is_expected.to contain_class('puppet').with(
       server_puppetserver_version: PUPPETSERVER_VERSION,
+      server_reports: 'foreman,puppetdb',
+      server_storeconfigs: true,
       server_version: PUPPETSERVER_VERSION,
     )
   end

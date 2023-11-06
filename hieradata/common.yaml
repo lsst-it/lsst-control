@@ -142,6 +142,8 @@ ssh::server::match_block:
     <<: *authorized_keys
   csilva_b:
     <<: *authorized_keys
+  dtapia_b:
+    <<: *authorized_keys
 # ipa server options
 # defines the uid/gid of the admin user
 # needs to be coordinated between master + replicas
@@ -219,6 +221,12 @@ accounts::user_list:
     purge_sshkeys: true
     sshkeys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8sKqmS0H7irkQ54l8+aBicM3cmJUxo6Zo3pJt+XgjB5eiB4fvBfwkRm+QSqlR9E9jgFmoo3A+zPd1vZEqjTLuAZ4GEglB4sa9uVxPWOrqW0M6Z0Tiw8lsbXVVFCLOIDl4En7KqTA9B3rg98pSoj2P4ooDywCYn0hSMZEU62O4EnnuJbGWk6azelWicyydszpsHuwjjp0o+K0wuYlPnKioTNyYMzkAx70Uft4+qRMI9mFx7wGySNVFCBS5BcskdM/bmzmKzhz+rOmD8c1K00uKTe/qEAJiQQAZR5N+JW3kky1LllUrpmUySC41eMONA2lkNpmcup9pQ1JrsNjlQUbD cristiansilva@gmail.com"
+  dtapia_b:  # backup access in case LDAP fails
+    groups:
+      - "wheel_b"
+    purge_sshkeys: true
+    sshkeys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC71rIbJq0BkvWS0vaUbvRMpnt64kmRjvP9Eac23YJkfAeRL8JZs8LO6M2FzMgwGUmH+8r7eUHNQrvZy+DzhejB7lD1sWk503/4k44q7X2g0ymnjMheNRsxSjwuqXGuCklIS8kMeiJsMBCvIF7fOJ9Eh4h5I7O+4vxogig2VxCeX+LFKKDLKjIyXlFTjpl3qOrEDhujCabejbAhAdz5u7dAnGINFM+9gLKi/TVbjb6BmSnBG1UxOkmK6SmtLdEioaLiOANscrGdc/pMnva1snS0QRlHksCjpcKza58QbEDUpzITSCkGyJRSTQcxrnzJHuS8L+/ssbeK0el97J6GkrRivJjJEJDmstLjd1mXGWhmqO/HYbX0s82TqoXTxw8P/kEaL3XVYOkAuNsypEtpH2oSv30fEdUOlJmy3PzcshW9mzTvdBbT8jQnFiO107lVmhGNAvtJFgeFEXGbnAHL33ff0kUNgOO7zdWfuTng5Hchwj5Gzgl0dOX7uxG/b5mk4mc= dtapia@Diegos-MacBook-Pro.local"
   lssttech: &rm_user
     ensure: "absent"
     managehome: true

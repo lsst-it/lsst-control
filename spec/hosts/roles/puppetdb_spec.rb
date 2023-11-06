@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-PUPPETDB_VERSION = '7.11.0'
+PUPPETDB_VERSION = '7.14.0'
 
 shared_examples 'puppetdb' do
   it { is_expected.to contain_yum__versionlock('puppetdb').with_version(PUPPETDB_VERSION) }

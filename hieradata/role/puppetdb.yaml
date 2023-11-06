@@ -4,7 +4,7 @@ classes:
   - "profile::core::puppetdb"
 
 puppetdb::database_listen_address: "localhost"
-puppetdb::globals::version: "7.11.0"
+puppetdb::globals::version: "7.14.0"
 puppetdb::java_args:
   "-Xmx": "1g"
   "-Xms": "512m"

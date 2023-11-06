@@ -1,6 +1,0 @@
----
-profile::core::yum::versionlock:
-  puppetdb:
-    ensure: "present"
-    version: "%{lookup('puppetdb::globals::version')}"
-    release: "1.el8"

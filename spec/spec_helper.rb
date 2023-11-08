@@ -7,7 +7,7 @@ include RspecPuppetFacts
 # foreman, puppetserver and termini versions
 FOREMAN_VERSION = '3.2.1'
 PUPPETSERVER_VERSION = '7.9.3'
-TERMINI_VERSION = '7.11.0'
+TERMINI_VERSION = '7.14.0'
 
 # facterdb does not include puppetlabs/stdlib facts
 add_stdlib_facts
@@ -752,6 +752,8 @@ shared_examples 'generic foreman' do
   it do
     is_expected.to contain_class('puppet').with(
       server_puppetserver_version: PUPPETSERVER_VERSION,
+      server_reports: 'foreman,puppetdb',
+      server_storeconfigs: true,
       server_version: PUPPETSERVER_VERSION,
     )
   end

@@ -174,13 +174,13 @@ puppet::server_jvm_extra_args: ["-XX:ReservedCodeCacheSize=1G", "-Djruby.logger.
 puppet::server::puppetdb::soft_write_failure: true
 puppet::server_puppetserver_version: &server_version "7.9.3"
 puppet::server_reports: "foreman,puppetdb"
-puppet::server_storeconfigs: false
+puppet::server_storeconfigs: true
 puppet::server: true
 puppet::server::puppetserver_metrics: false  # disabled for performance
 puppet::server::puppetserver_profiler: false  # disabled for performance
 puppet::server_version: *server_version  # XXX does this do anything?
 puppet::version: "%{lookup('puppet_agent::package_version')}"  # agent version
-puppetdb::globals::version: "7.11.0"
+puppetdb::globals::version: "7.14.0"
 
 ssh::client_options:
   "ProxyCommand": "--"

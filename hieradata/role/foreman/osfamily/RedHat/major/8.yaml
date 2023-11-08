@@ -7,7 +7,7 @@ profile::core::yum::versionlock:
     before: "Package[puppetserver]"
   puppetdb-termini:
     ensure: "present"
-    version: "7.11.0"
+    version: "7.14.0"
     release: "1.el8"
     before: "Package[puppetdb-termini]"
   foreman:

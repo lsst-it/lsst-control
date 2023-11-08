@@ -3,12 +3,21 @@
 require 'spec_helper'
 
 describe 'chango01.ls.lsst.org', :sitepp do
-  alma9 = FacterDB.get_facts({ operatingsystem: 'AlmaLinux', operatingsystemmajrelease: '9' }).first
-  # rubocop:disable Naming/VariableNumber
-  { 'almalinux-9-x86_64': alma9 }.each do |os, facts|
-    # rubocop:enable Naming/VariableNumber
+  on_supported_os.each do |os, facts|
+    next unless os =~ %r{almalinux-9-x86_64}
+
     context "on #{os}" do
-      let(:facts) { override_facts(facts, fqdn: 'chango01.ls.lsst.org') }
+      let(:facts) do
+        override_facts(facts,
+                       fqdn: 'chango01.ls.lsst.org',
+                       is_virtual: false,
+                       virtual: 'physical',
+                       dmi: {
+                         'product' => {
+                           'name' => 'SSG-640SP-E1CR90',
+                         },
+                       })
+      end
       let(:node_params) do
         {
           role: 'rke',
@@ -17,9 +26,10 @@ describe 'chango01.ls.lsst.org', :sitepp do
         }
       end
 
-      include_context 'with nm interface'
-
       it { is_expected.to compile.with_all_deps }
+
+      include_examples 'baremetal'
+      include_context 'with nm interface'
 
       it do
         is_expected.to contain_class('clustershell').with(

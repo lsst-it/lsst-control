@@ -40,6 +40,9 @@
 # @param manage_resolv_conf
 #   If `true`, manage resolv.conf
 #
+# @param manage_node_exporter
+#   If `true`, install prometheus node_exporter
+#
 class profile::core::common (
   Boolean $manage_puppet_agent = true,
   Boolean $manage_chrony = true,
@@ -53,6 +56,7 @@ class profile::core::common (
   Boolean $manage_repos = true,
   Boolean $manage_irqbalance = true,
   Boolean $manage_resolv_conf = true,
+  Boolean $manage_node_exporter = true,
 ) {
   include auditd
   include accounts
@@ -115,6 +119,10 @@ class profile::core::common (
 
   if $install_telegraf {
     include telegraf
+  }
+
+  if $manage_node_exporter {
+    include prometheus::node_exporter
   }
 
   if $manage_firewall {

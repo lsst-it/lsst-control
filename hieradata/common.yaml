@@ -468,3 +468,5 @@ ipmi::networks:
 nm::conf:
   main:
     dns: "none"
+
+prometheus::node_exporter::version: "1.6.1"

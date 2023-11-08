@@ -20,8 +20,9 @@ cni::plugins::checksum: "f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb
 cni::plugins::enable: ["macvlan"]
 cni::plugins::version: "1.2.0"
 profile::core::helm::version: "3.5.4"
-profile::core::kernel::devel: true
 profile::core::kernel::debuginfo: true
+profile::core::kernel::devel: true
+profile::core::common::manage_node_exporter: false
 profile::core::rke::version: "1.3.12"
 
 files:

@@ -2,7 +2,8 @@
 
 require 'spec_helper'
 
-shared_examples 'generic rke' do
+shared_examples 'generic rke' do |facts:|
+  include_examples 'common', facts: facts, node_exporter: false
   include_examples 'debugutils'
   include_examples 'docker'
   include_examples 'rke profile'
@@ -47,8 +48,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'common', facts: facts
-        include_examples 'generic rke'
+        include_examples 'generic rke', facts: facts
 
         it do
           is_expected.to contain_class('rke').with(
@@ -67,8 +67,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'common', facts: facts
-        include_examples 'generic rke'
+        include_examples 'generic rke', facts: facts
 
         it do
           is_expected.to contain_class('rke').with(
@@ -87,8 +86,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'common', facts: facts
-        include_examples 'generic rke'
+        include_examples 'generic rke', facts: facts
 
         it do
           is_expected.to contain_class('rke').with(
@@ -107,8 +105,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'common', facts: facts
-        include_examples 'generic rke'
+        include_examples 'generic rke', facts: facts
 
         it do
           is_expected.to contain_class('rke').with(

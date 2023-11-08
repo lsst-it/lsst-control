@@ -147,7 +147,7 @@ end
 
 # XXX The network param is a kludge until the el8 dnscache nodes are converted
 # to NM.
-shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true|
+shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true, node_exporter: true|
   include_examples 'bash_completion', facts: facts
   include_examples 'convenience'
   include_examples 'telegraf'
@@ -267,6 +267,12 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
         SSSD
       end
     end
+  end
+
+  if node_exporter
+    include_examples 'node_exporter'
+  else
+    include_examples 'no node_exporter'
   end
 
   if facts[:os]['family'] == 'RedHat'

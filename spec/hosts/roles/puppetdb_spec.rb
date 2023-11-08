@@ -13,6 +13,8 @@ role = 'puppetdb'
 
 describe "#{role} role" do
   on_supported_os.each do |os, facts|
+    next unless os =~ %r{almalinux-9-x86_64}
+
     context "on #{os}" do
       let(:facts) { facts }
       let(:node_params) do

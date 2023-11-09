@@ -151,6 +151,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
   include_examples 'bash_completion', facts: facts
   include_examples 'convenience'
   include_examples 'telegraf'
+  include_examples 'rsyslog defaults'
 
   unless no_auth
     # inspect config fragment instead of class params to ensure that %{uid} is not
@@ -345,16 +346,6 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
     it { is_expected.to contain_yum__versionlock('puppet-agent') }
     it { is_expected.not_to contain_class('yum') }
     it { is_expected.not_to contain_resources('yumrepo').with_purge(true) }
-  end
-
-  it do
-    is_expected.to contain_rsyslog__component__input('auditd').with(
-      type: 'imfile',
-      config: {
-        'file' => '/var/log/audit/audit.log',
-        'Tag' => 'auditd',
-      },
-    )
   end
 
   if chrony

@@ -39,6 +39,10 @@ lookup_options:
   profile::core::ipset::set:
     merge:
       strategy: "deep"
+  rsyslog::config::actions:
+    merge:
+      strategy: "deep"
+      knockout_prefix: "--"
   sssd::main_config:
     merge:
       strategy: "deep"
@@ -275,28 +279,16 @@ rsyslog::config::modules:
   imfile: {}
 
 rsyslog::config::actions:
-  # Log anything (except mail) of level info or higher.
-  # Don't log private authentication messages!
-  #
-  # local6 is used for logs that should only be forwarded to a central log
-  # server and should never be stored locally. See IT-1734.
   messages:
     type: "omfile"
-    facility: "*.info;mail.none;authpriv.none;cron.none;local6.none"
+    facility: "*.info;mail.none;authpriv.none;cron.none"
     config:
       file: "/var/log/messages"
-  # The authpriv file has restricted access.
   secure:
     type: "omfile"
     facility: "authpriv.*"
     config:
       file: "/var/log/secure"
-  # Everybody gets emergency messages
-  emerg:
-    type: "omusrmsg"
-    facility: "*.emerg"
-    config:
-      users: "*"
   maillog:
     type: "omfile"
     facility: "mail.*"
@@ -307,13 +299,16 @@ rsyslog::config::actions:
     facility: "cron.*"
     config:
       file: "/var/log/cron"
-  # local7 does not appear to be used by CentOS 7, but for the sake of
-  # consistency we preserve it to match the CentOS configuration.
+  emerg:
+    type: "omusrmsg"
+    facility: "*.emerg"
+    config:
+      users: "*"
   boot:
     type: "omfile"
     facility: "local7.*"
     config:
-      file: "-/var/log/boot.log"
+      file: "/var/log/boot.log"
 rsyslog::config::inputs:
   auditd:
     type: "imfile"

@@ -36,7 +36,7 @@ lookup_options:
   ccs_software::udp_properties:
     merge:
       strategy: "unique"
-  profile::core::ipset::set:
+  ipset::sets:
     merge:
       strategy: "deep"
   rsyslog::config::actions:
@@ -321,7 +321,7 @@ yum::manage_os_default_repos: true
 
 letsencrypt::email: "rubinobs-it-las@lsst.org"
 
-profile::core::ipset::set:
+ipset::sets:
   # lsst/aura "internal" prefixes
   lsst:
     ensure: "present"

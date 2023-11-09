@@ -58,6 +58,28 @@ describe 'profile::core::common' do
           it { is_expected.to contain_class('resolv_conf') }
         end
       end
+
+      context 'with manage_node_exporter param' do
+        context 'when false' do
+          let(:params) do
+            {
+              manage_node_exporter: false,
+            }
+          end
+
+          include_examples 'no node_exporter'
+        end
+
+        context 'when true' do
+          let(:params) do
+            {
+              manage_node_exporter: true,
+            }
+          end
+
+          it { is_expected.to contain_class('prometheus::node_exporter') }
+        end
+      end
     end
   end
 end

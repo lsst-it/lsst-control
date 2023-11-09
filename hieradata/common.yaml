@@ -331,6 +331,19 @@ ipset::sets:
       - "139.229.0.0/16"
       - "198.19.0.0/16"
       - "10.0.0.0/8"
+  # rubin "internal" prefixes
+  rubin:
+    ensure: "present"
+    type: "hash:net"
+    set:
+      - "139.229.134.0/23"
+      - "139.229.136.0/21"
+      - "139.229.144.0/20"
+      - "139.229.160.0/19"
+      - "139.229.192.0/18"
+      - "140.252.146.0/23"
+      - "198.19.0.0/16"
+      - "10.0.0.0/8"
 
 # sssd ipa client setup -- do not use on ipa servers
 sssd::main_config:

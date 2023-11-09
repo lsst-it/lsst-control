@@ -30,6 +30,9 @@ class profile::core::hardware {
         }
       }
     }
+    /SSG-640SP-E1CR90/: {
+      include ipmi
+    }
   }
 
   # On SM H12SSL-NT dmi.product.name == "Super Server", which isn't very helpful

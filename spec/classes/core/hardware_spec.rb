@@ -86,6 +86,21 @@ describe 'profile::core::hardware' do
         it { is_expected.not_to contain_class('profile::core::kernel::nvme_apst') }
         it { is_expected.not_to contain_profile__util__kernel_param('pci=pcie_bus_perf') }
       end  # H12SSL-NT
+
+      context 'with SSG-640SP-E1CR90' do
+        let(:facts) do
+          super().merge(
+            dmi: {
+              product: {
+                name: 'SSG-640SP-E1CR90',
+              },
+            },
+          )
+        end
+
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_class('ipmi') }
+      end  # SSG-640SP-E1CR90
     end
   end
 end

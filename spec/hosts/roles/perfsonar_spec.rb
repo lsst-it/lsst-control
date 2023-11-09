@@ -30,10 +30,22 @@ describe "#{role} role" do
           include_examples 'common', facts: facts
           include_examples 'generic perfsonar', facts: facts
           include_examples 'ipset'
+          include_examples 'firewall default', facts: facts
 
           it do
             is_expected.to contain_yum__versionlock('perfsonar-toolkit').with(
               version: perfsonar_version,
+            )
+          end
+
+          it do
+            is_expected.to contain_firewall('400 accept ssh').with(
+              proto: 'tcp',
+              state: 'NEW',
+              ipset: 'aura src',
+              dport: '22',
+              action: 'accept',
+              require: 'Ipset::Set[aura]',
             )
           end
         end # host

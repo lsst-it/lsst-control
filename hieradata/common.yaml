@@ -63,6 +63,9 @@ lookup_options:
   profile::core::ipa::default:
     merge:
       strategy: "deep"
+  profile::core::firewall::firewall:
+    merge:
+      strategy: "deep"
   profile::core::systemd::tmpfile:
     merge:
       strategy: "deep"
@@ -483,3 +486,47 @@ nm::conf:
     dns: "none"
 
 prometheus::node_exporter::version: "1.6.1"
+
+# profile::core::firewall is not included by default; including it in a role is
+# used to opt-in to configuring filtering instead of the default of disabling
+# it.  Eventually, filtering should be enabled by default and roles would have
+# to opt-out.
+profile::core::firewall::purge_firewall: true
+profile::core::firewall::firewall:
+  # 000-099           reserved for common rules
+  # 100-199           reserved for site rules
+  # 200-299           reserved for role rules
+  # 400-599           reserved for host specific rules
+  # 700-899           reserved for role rules
+  # 800-899           reserved for site rules
+  # 900-999           reserved for common rules
+  "000 accept established":
+    proto: "all"
+    state: ["RELATED", "ESTABLISHED"]
+    action: "accept"
+  "001 accept all icmp":
+    proto: "icmp"
+    action: "accept"
+  "002 accept all loopback":
+    proto: "all"
+    iniface: "lo"
+    action: "accept"
+  "010 accept ssh":
+    proto: "tcp"
+    state: "NEW"
+    ipset: "rubin src"
+    dport: "22"
+    action: "accept"
+    require: "Ipset::Set[rubin]"
+  "020 accept dhcp":
+    proto: "udp"
+    sport: ["67", "68"]
+    dport: ["67", "68"]
+    action: "accept"
+  "990 reject all":
+    proto: "all"
+    action: "reject"
+  "991 reject forward all":
+    chain: "FORWARD"
+    proto: "all"
+    action: "reject"

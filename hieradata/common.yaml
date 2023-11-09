@@ -344,6 +344,11 @@ ipset::sets:
       - "140.252.146.0/23"
       - "198.19.0.0/16"
       - "10.0.0.0/8"
+  ayekan:  # ayekan cluster
+    ensure: "present"
+    type: "hash:net"
+    set:
+      - "139.229.144.0/26"
 
 # sssd ipa client setup -- do not use on ipa servers
 sssd::main_config:

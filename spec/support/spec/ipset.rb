@@ -28,4 +28,12 @@ shared_examples 'ipset' do
       ],
     )
   end
+
+  it do
+    is_expected.to contain_ipset__set('ayekan').with_set(
+      %w[
+        139.229.144.0/26
+      ],
+    )
+  end
 end

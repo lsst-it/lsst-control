@@ -27,9 +27,26 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'common', facts: facts
+          include_examples 'ipset'
+          include_examples 'firewall default', facts: facts
+          include_examples 'firewall node_exporter scraping', site: site
 
           it { is_expected.to contain_class('tang') }
           it { is_expected.to contain_package('jose') }
+
+          case site
+          when 'dev'
+            it do
+              is_expected.to contain_firewall('200 accept tang').with(
+                proto: 'tcp',
+                state: 'NEW',
+                ipset: 'dev src',
+                dport: '7500',
+                action: 'accept',
+                require: 'Ipset::Set[dev]',
+              )
+            end
+          end
         end # host
       end # lsst_sites
     end # on os

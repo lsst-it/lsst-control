@@ -1,6 +1,9 @@
 ---
 classes:
   - "profile::core::common"
+  - "profile::core::firewall"
   - "tang"
 packages:
   - "jose"
+
+firewall::ensure: "running"

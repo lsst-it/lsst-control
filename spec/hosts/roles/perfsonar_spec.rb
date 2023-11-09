@@ -29,6 +29,7 @@ describe "#{role} role" do
 
           include_examples 'common', facts: facts
           include_examples 'generic perfsonar', facts: facts
+          include_examples 'ipset'
 
           it do
             is_expected.to contain_yum__versionlock('perfsonar-toolkit').with(

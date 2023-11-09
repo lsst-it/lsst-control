@@ -322,8 +322,8 @@ yum::manage_os_default_repos: true
 letsencrypt::email: "rubinobs-it-las@lsst.org"
 
 ipset::sets:
-  # lsst/aura "internal" prefixes
-  lsst:
+  # rubin/aura "internal" prefixes
+  aura:
     ensure: "present"
     type: "hash:net"
     set:

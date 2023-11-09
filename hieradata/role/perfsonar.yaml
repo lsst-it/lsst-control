@@ -34,10 +34,10 @@ profile::core::firewall::firewall:
   "010 accept ssh":
     proto: "tcp"
     state: "NEW"
-    ipset: "lsst src"
+    ipset: "aura src"
     dport: "22"
     action: "accept"
-    require: "Ipset::Set[lsst]"
+    require: "Ipset::Set[aura]"
   "990 reject all":
     proto: "all"
     action: "reject"

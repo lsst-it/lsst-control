@@ -5,7 +5,7 @@ class profile::core::sssd {
   require ipa
   contain sssd
 
-  Class[ipa] -> Class[sssd]
+  Class['ipa'] -> Class['sssd']
 
   if fact('os.family') == 'RedHat' {
     # disable sssd socket activation and services which should be started by
@@ -30,7 +30,7 @@ class profile::core::sssd {
       service { $unit:
         ensure  => stopped,
         enable  => false,
-        require => Class[sssd],
+        require => Class['sssd'],
       }
     }
   }

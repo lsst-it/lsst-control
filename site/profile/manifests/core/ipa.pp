@@ -12,7 +12,7 @@ class profile::core::ipa (
 
   $param_defaults = {
     'path'  => '/etc/ipa/default.conf',
-    require => Class[ipa],
+    require => Class['ipa'],
   }
 
   if $default {

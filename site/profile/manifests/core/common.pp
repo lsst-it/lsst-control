@@ -151,7 +151,7 @@ class profile::core::common (
     include profile::core::ipa
 
     # prevent ipa packages from being installed before versionlocks are set
-    Yum::Versionlock<| |> -> Class[ipa]
+    Yum::Versionlock<| |> -> Class['ipa']
 
     # run ipa-install-* script before X
     Class[ipa] -> Class[ssh]

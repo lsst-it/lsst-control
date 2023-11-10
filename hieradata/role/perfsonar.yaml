@@ -56,7 +56,7 @@ files:
   # perfsonar packaging installs this one file with the wrong mode
   "/etc/sudoers.d/perfsonar_sudo":
     mode: "0440"
-    require: "Class[perfsonar]"
+    require: "Class[Perfsonar]"
 
 # The perfsonar class does not allow a pS version to be set.
 # The yumrepo mirror list used:

@@ -15,8 +15,8 @@ class profile::core::nm_dispatch (
       # if restart is configured to be only per interface... needs some experimentation
       #$network_notify = "Exec[network_restart_${dev}]"
       $network_notify = fact('os.release.major') ? {
-        '7'     => 'Class[network]',
-        default => 'Class[nm]',
+        '7'     => 'network',
+        default => 'nm',
       }
 
       $data = {
@@ -28,7 +28,7 @@ class profile::core::nm_dispatch (
         ensure  => file,
         content => epp("${module_name}/core/nm_interface/50-dev.epp", $data),
         mode    => '0755',
-        notify  => $network_notify,
+        notify  => Class[$network_notify],
       }
     }
   }

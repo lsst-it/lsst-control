@@ -19,5 +19,5 @@ class profile::ccs::postfix (
   }
 
   ensure_packages($packages)
-  Package[$packages] -> Class[postfix]
+  Package[$packages] -> Class['postfix']
 }

@@ -6,7 +6,7 @@ class profile::core::krb5 {
   include mit_krb5
 
   # run ipa-install-* script before trying to managing krb5.conf
-  Class[ipa] -> Class[mit_krb5]
+  Class['ipa'] -> Class['mit_krb5']
 
   # create /etc/krb5.conf.d files only on EL8+
   unless fact('os.family') == 'RedHat' and fact('os.release.major') == '7' {

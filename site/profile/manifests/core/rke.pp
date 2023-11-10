@@ -30,7 +30,7 @@ class profile::core::rke (
     profile::util::keytab { $user:
       uid           => $uid,
       keytab_base64 => $keytab_base64,
-      require       => Class[ipa], # ipa must be setup to use the rke user
+      require       => Class['ipa'], # ipa must be setup to use the rke user
     }
   }
 
@@ -42,7 +42,7 @@ class profile::core::rke (
     user               => $user,
     owner              => $user,
     group              => $user,
-    require            => Class[ipa], # ipa must be setup to use the rke user
+    require            => Class['ipa'], # ipa must be setup to use the rke user
   }
 
   $rke_checksum = $version ? {

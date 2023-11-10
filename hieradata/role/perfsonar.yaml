@@ -1,6 +1,5 @@
 ---
 classes:
-  - "ipset"
   - "ntp"
   - "profile::core::common"
   - "profile::core::debugutils"

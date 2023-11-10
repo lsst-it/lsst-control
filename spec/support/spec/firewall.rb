@@ -55,3 +55,19 @@ shared_examples 'firewall default' do |facts:|
     )
   end
 end
+
+shared_examples 'firewall node_exporter scraping' do |site:|
+  case site
+  when 'dev', 'ls'
+    it do
+      is_expected.to contain_firewall('100 accept node_exporter').with(
+        proto: 'tcp',
+        state: 'NEW',
+        ipset: 'ayekan src',
+        dport: '9100',
+        action: 'accept',
+        require: 'Ipset::Set[ayekan]',
+      )
+    end
+  end
+end

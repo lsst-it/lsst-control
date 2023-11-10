@@ -31,6 +31,7 @@ describe "#{role} role" do
           include_examples 'generic perfsonar', facts: facts
           include_examples 'ipset'
           include_examples 'firewall default', facts: facts
+          include_examples 'firewall node_exporter scraping', site: site
 
           it do
             is_expected.to contain_yum__versionlock('perfsonar-toolkit').with(

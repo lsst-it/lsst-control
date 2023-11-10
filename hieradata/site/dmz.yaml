@@ -1,70 +1,13 @@
 ---
 ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"
 rsyslog::config::actions:
-# Send copy to logs to GKE Graylog instance
-  graylogCloud:
-    type: "omfwd"
-    facility: "*.*"
-    config:
-      Target: "collector.lsst.cloud"
-      Port: 5514
-      Protocol: "udp"
-# Send copy to logs to Base Graylog instance
-  graylogBase:
+  graylogls:
     type: "omfwd"
     facility: "*.*"
     config:
       Target: "collector.ls.lsst.org"
       Port: 5514
       Protocol: "udp"
-# Send copy to logs to Summit Graylog instance
-  graylogSummit:
-    type: "omfwd"
-    facility: "*.*"
-    config:
-      Target: "collector.cp.lsst.org"
-      Port: 5514
-      Protocol: "udp"
-  # Log anything (except mail) of level info or higher.
-  # Don't log private authentication messages!
-  #
-  # local6 is used for logs that should only be forwarded to a central log
-  # server and should never be stored locally. See IT-1734.
-  messages:
-    type: "omfile"
-    facility: "*.info;mail.none;authpriv.none;cron.none;local6.none"
-    config:
-      file: "/var/log/messages"
-  # The authpriv file has restricted access.
-  secure:
-    type: "omfile"
-    facility: "authpriv.*"
-    config:
-      file: "/var/log/secure"
-  # Everybody gets emergency messages
-  emerg:
-    type: "omusrmsg"
-    facility: "*.emerg"
-    config:
-      users: "*"
-  maillog:
-    type: "omfile"
-    facility: "mail.*"
-    config:
-      file: "-/var/log/maillog"
-  cron:
-    type: "omfile"
-    facility: "cron.*"
-    config:
-      file: "/var/log/cron"
-  # local7 does not appear to be used by CentOS 7, but for the sake of
-  # consistency we preserve it to match the CentOS configuration.
-  boot:
-    type: "omfile"
-    facility: "local7.*"
-    config:
-      file: "-/var/log/boot.log"
-
 # The following keys are shared between the `dhcp` and `resolv_conf` classes:
 # - dhcp::dnsdomain
 # - dhcp::nameservers

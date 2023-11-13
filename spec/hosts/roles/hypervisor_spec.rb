@@ -43,8 +43,14 @@ describe "#{role} role" do
           it { is_expected.to contain_class('tuned').with_active_profile('virtual-host') }
 
           if facts[:os]['release']['major'] == '9'
+            it do
+              is_expected.to contain_service('virtproxyd').with(
+                enable: true,
+                tag: 'libvirt-libvirtd-conf',
+              )
+            end
+
             %w[
-              virtproxyd
               virtqemud.socket
               virtqemud-ro.socket
               virtqemud-admin.socket

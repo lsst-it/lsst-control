@@ -1,11 +1,14 @@
 ---
 libvirt::service::modular_services:
-  virtproxyd: &svc
+  virtproxyd:
+    # The virtproxyd service should be enabled but puppet should not enforce
+    # that it is running as it is socket activated and will shutdown when idle.
+    enable: true
+    tag: "libvirt-libvirtd-conf"
+  virtqemud.socket: &svc
     ensure: "running"
     enable: true
     tag: "libvirt-libvirtd-conf"
-  virtqemud.socket:
-    <<: *svc
   virtqemud-ro.socket:
     <<: *svc
   virtqemud-admin.socket:

@@ -113,11 +113,6 @@ files:
       export GIT_PS1_SHOWUNTRACKEDFILES=true
       export PS1='[\u@\h \W$(declare -F __git_ps1 &>/dev/null && __git_ps1 " (%s)")]\$ '
 
-restic::bucket: "rubin-bm-backups/%{facts.fqdn}"
-restic::enable_backup: true
-restic::host: "s3.us-east-1.amazonaws.com"
-restic::password: "%{::restic_password}"
-
 # runs everyday at 9:00
 # keeps last 20 backups
 restic::repositories:

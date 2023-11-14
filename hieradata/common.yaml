@@ -530,3 +530,7 @@ profile::core::firewall::firewall:
     chain: "FORWARD"
     proto: "all"
     action: "reject"
+
+restic::bucket: "rubin-bm-backups/%{facts.fqdn}"
+restic::enable_backup: true
+restic::host: "s3.us-east-1.amazonaws.com"

@@ -400,7 +400,6 @@ telegraf::inputs:
   nstat: [{}]
   swap: [{}]
   system: [{}]
-  ethtool: [{}]
   kernel: [{}]
   kernel_vmstat: [{}]
   netstat: [{}]

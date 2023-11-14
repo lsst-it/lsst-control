@@ -19,6 +19,21 @@ shared_examples 'generic rke' do |facts:|
       .with_content(%r{^alias k='kubectl'$})
       .with_content(%r{^complete -o default -F __start_kubectl k$})
   end
+
+  it do
+    is_expected.to contain_restic__repository('awsrepo').with(
+      backup_path: %w[
+        /home/rke
+        /var/lib/rook
+        /etc/kubernetes
+      ],
+      backup_flags: '--exclude=/var/lib/rook/rook-ceph/log',
+      backup_timer: '*-*-* 09:00:00',
+      enable_forget: true,
+      forget_timer: 'Mon..Sun 23:00:00',
+      forget_flags: '--keep-last 20',
+    )
+  end
 end
 
 role = 'rke'

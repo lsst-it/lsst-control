@@ -387,6 +387,7 @@ sssd::service_names:
 
 telegraf::quiet: true
 telegraf::hostname: "%{facts.networking.fqdn}"
+telegraf::purge_config_fragments: true
 telegraf::inputs:
   cpu:
     - percpu: true

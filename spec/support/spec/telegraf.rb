@@ -14,4 +14,6 @@ shared_examples 'telegraf' do
       }],
     )
   end
+
+  it { is_expected.to contain_file('/etc/telegraf/telegraf.d').with_purge(true) }
 end

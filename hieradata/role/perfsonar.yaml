@@ -4,7 +4,6 @@ classes:
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::firewall"
-  - "profile::core::ipset"
   - "profile::core::perfsonar"
   - "profile::core::perfsonar::sysctl"
   - "profile::core::sysctl::rp_filter"
@@ -17,40 +16,14 @@ chrony::service_enable: false
 chrony::service_ensure: "stopped"
 
 firewall::ensure: "running"
-profile::core::firewall::purge_firewall: true
 profile::core::firewall::firewall:
-  # centos 7 defaults
-  "000 accept established":
-    proto: "all"
-    state: ["RELATED", "ESTABLISHED"]
-    action: "accept"
-  "001 accept all icmp":
-    proto: "icmp"
-    action: "accept"
-  "002 accept all loopback":
-    proto: "all"
-    iniface: "lo"
-    action: "accept"
-  "010 accept ssh":
+  "400 accept ssh":  # allow aura but non-rubin subnets
     proto: "tcp"
     state: "NEW"
-    ipset: "lsst src"
+    ipset: "aura src"
     dport: "22"
     action: "accept"
-    require: "Ipset::Set[lsst]"
-  "990 reject all":
-    proto: "all"
-    action: "reject"
-  "991 reject forward all":
-    chain: "FORWARD"
-    proto: "all"
-    action: "reject"
-  # dhcp client
-  "020 accept dhcp":
-    proto: "udp"
-    sport: ["67", "68"]
-    dport: ["67", "68"]
-    action: "accept"
+    require: "Ipset::Set[aura]"
 
 files:
   # perfsonar packaging installs this one file with the wrong mode

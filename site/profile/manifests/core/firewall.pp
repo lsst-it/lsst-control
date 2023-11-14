@@ -12,6 +12,7 @@ class profile::core::firewall (
   Boolean $purge_firewall = false,
 ) {
   include firewall
+  include ipset
 
   if $purge_firewall {
     resources { 'firewall': purge => true }

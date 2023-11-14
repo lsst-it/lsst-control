@@ -36,7 +36,7 @@ lookup_options:
   ccs_software::udp_properties:
     merge:
       strategy: "unique"
-  profile::core::ipset::set:
+  ipset::sets:
     merge:
       strategy: "deep"
   rsyslog::config::actions:
@@ -61,6 +61,9 @@ lookup_options:
     merge:
       strategy: "deep"
   profile::core::ipa::default:
+    merge:
+      strategy: "deep"
+  profile::core::firewall::firewall:
     merge:
       strategy: "deep"
   profile::core::systemd::tmpfile:
@@ -321,9 +324,9 @@ yum::manage_os_default_repos: true
 
 letsencrypt::email: "rubinobs-it-las@lsst.org"
 
-profile::core::ipset::set:
-  # lsst/aura "internal" prefixes
-  lsst:
+ipset::sets:
+  # rubin/aura "internal" prefixes
+  aura:
     ensure: "present"
     type: "hash:net"
     set:
@@ -331,6 +334,24 @@ profile::core::ipset::set:
       - "139.229.0.0/16"
       - "198.19.0.0/16"
       - "10.0.0.0/8"
+  # rubin "internal" prefixes
+  rubin:
+    ensure: "present"
+    type: "hash:net"
+    set:
+      - "139.229.134.0/23"
+      - "139.229.136.0/21"
+      - "139.229.144.0/20"
+      - "139.229.160.0/19"
+      - "139.229.192.0/18"
+      - "140.252.146.0/23"
+      - "198.19.0.0/16"
+      - "10.0.0.0/8"
+  ayekan:  # ayekan cluster
+    ensure: "present"
+    type: "hash:net"
+    set:
+      - "139.229.144.0/26"
 
 # sssd ipa client setup -- do not use on ipa servers
 sssd::main_config:
@@ -465,3 +486,47 @@ nm::conf:
     dns: "none"
 
 prometheus::node_exporter::version: "1.6.1"
+
+# profile::core::firewall is not included by default; including it in a role is
+# used to opt-in to configuring filtering instead of the default of disabling
+# it.  Eventually, filtering should be enabled by default and roles would have
+# to opt-out.
+profile::core::firewall::purge_firewall: true
+profile::core::firewall::firewall:
+  # 000-099           reserved for common rules
+  # 100-199           reserved for site rules
+  # 200-299           reserved for role rules
+  # 400-599           reserved for host specific rules
+  # 700-899           reserved for role rules
+  # 800-899           reserved for site rules
+  # 900-999           reserved for common rules
+  "000 accept established":
+    proto: "all"
+    state: ["RELATED", "ESTABLISHED"]
+    action: "accept"
+  "001 accept all icmp":
+    proto: "icmp"
+    action: "accept"
+  "002 accept all loopback":
+    proto: "all"
+    iniface: "lo"
+    action: "accept"
+  "010 accept ssh":
+    proto: "tcp"
+    state: "NEW"
+    ipset: "rubin src"
+    dport: "22"
+    action: "accept"
+    require: "Ipset::Set[rubin]"
+  "020 accept dhcp":
+    proto: "udp"
+    sport: ["67", "68"]
+    dport: ["67", "68"]
+    action: "accept"
+  "990 reject all":
+    proto: "all"
+    action: "reject"
+  "991 reject forward all":
+    chain: "FORWARD"
+    proto: "all"
+    action: "reject"

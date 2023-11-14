@@ -47,3 +47,12 @@ accounts::user_list:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDsF9VQ7wjm0Rm/1HA6Zc94IAkhqol5cwT44MwwR6uzDyo+/tqa8awUnmVF+RyiJaR6NEKO6YhjkIPga7rDQJerCMLg/xfFzpRcKSi+Xw5YCQ3Z+4P8XZrICM2vzDV6rBELl4n8Bzk6ncXOcKwbUitw3aj6bJNduv6hGrhkJKlWob+cXGH+KZwDiLX82hxsWmktRWcwDEaXTFWq6dahg3/0niAojkfo2ZlJtRblSEgUBf7JITeXBGYAunAeUYE93xUC9tB1OIzisQLQKCFM2OgSjnO4NSx2r4nIPYhEOEhBnNBqF9mPqalRjoyimvF+lu/vsZ43r7nZyV4RwYbyfmVL foreman-proxy@foreman.ls.lsst.org"
 
 profile::core::common::disable_ipv6: true
+
+profile::core::firewall::firewall:
+  "100 accept node_exporter":
+    proto: "tcp"
+    state: "NEW"
+    ipset: "ayekan src"
+    dport: "9100"
+    action: "accept"
+    require: "Ipset::Set[ayekan]"

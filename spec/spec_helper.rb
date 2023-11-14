@@ -810,7 +810,13 @@ shared_examples 'generic foreman' do
     it { is_expected.to contain_foreman_global_parameter(k).with_value(v) }
   end
 
-  it { is_expected.to contain_foreman_global_parameter('org').with_ensure('absent') }
+  %w[
+    org
+    restic_password
+  ].each do |v|
+    it { is_expected.to contain_foreman_global_parameter(v).with_ensure('absent') }
+  end
+
   it { is_expected.to contain_foreman_global_parameter('site').with_value(site) }
 
   it do

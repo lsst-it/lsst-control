@@ -7,17 +7,12 @@ shared_examples 'generic rke' do |facts:|
   include_examples 'debugutils'
   include_examples 'docker'
   include_examples 'rke profile'
+  include_examples 'restic common'
 
   it { is_expected.to contain_class('kubectl') }
   it { is_expected.to contain_class('profile::core::rke') }
   it { is_expected.to contain_class('clustershell') }
   it { is_expected.to contain_package('make') }
-
-  it do
-    is_expected.to contain_class('restic').with(
-      enable_backup: true,
-    )
-  end
 
   it do
     is_expected.to contain_file('/home/rke/.bashrc.d/kubectl.sh')

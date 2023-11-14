@@ -30,6 +30,7 @@ describe "#{role} role" do
           include_examples 'ipset'
           include_examples 'firewall default', facts: facts
           include_examples 'firewall node_exporter scraping', site: site
+          include_examples 'restic common'
 
           it { is_expected.to contain_class('tang') }
           it { is_expected.to contain_package('jose') }
@@ -46,6 +47,18 @@ describe "#{role} role" do
                 require: 'Ipset::Set[dev]',
               )
             end
+          end
+
+          it do
+            is_expected.to contain_restic__repository('awsrepo').with(
+              backup_path: %w[
+                /var/db/tang
+              ],
+              backup_timer: '*-*-* *:47:00',
+              enable_forget: true,
+              forget_timer: '*-*-* 15:00:00',
+              forget_flags: '--keep-within 1y',
+            )
           end
         end # host
       end # lsst_sites

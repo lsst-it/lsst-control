@@ -47,6 +47,17 @@ describe "#{role} role" do
                 require: 'Ipset::Set[dev]',
               )
             end
+          when 'tu'
+            it do
+              is_expected.to contain_firewall('200 accept tang').with(
+                proto: 'tcp',
+                state: 'NEW',
+                ipset: 'tufde src',
+                dport: '7500',
+                action: 'accept',
+                require: 'Ipset::Set[tufde]',
+              )
+            end
           end
 
           it do

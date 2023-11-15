@@ -63,3 +63,5 @@ nm::connections:
 
       [ipv6]
       method=disabled
+
+ccs_hcu::imanager: true

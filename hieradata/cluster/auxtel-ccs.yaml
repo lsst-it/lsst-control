@@ -30,7 +30,7 @@ ccs_software::service_email: "auxtel-ccs-alerts-aaaadjkgtdl6pb2omvdi732xci@lsstc
 
 clustershell::groupmembers:
   misc: {group: "misc", member: "auxtel-mcm,auxtel-dc01,auxtel-fp01"}
-  hcu: {group: "hcu", member: "auxtel-hcu01"}
+  hcu: {group: "hcu", member: "auxtel-hcu01,auxtel-hcu02"}
   all: {group: "all", member: "@misc,@hcu"}
 
 

@@ -1,0 +1,67 @@
+---
+nm::connections:
+  eno1:
+    content: |
+      [connection]
+      id=eno1
+      uuid=250c1a0b-95c3-4798-a4df-d864e60d3b63
+      type=ethernet
+      interface-name=eno1
+
+      [ethernet]
+
+      [ipv4]
+      method=auto
+
+      [ipv6]
+      method=disabled
+  enp8s0:
+    content: |
+      [connection]
+      id=enp8s0
+      uuid=de9904c8-9577-1a17-36b1-34b94132f06a
+      type=ethernet
+      autoconnect=false
+      interface-name=enp8s0
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  enp7s0:
+    content: |
+      [connection]
+      id=enp7s0
+      uuid=de9904c8-9577-1a17-36b1-34b94132f06a
+      type=ethernet
+      autoconnect=false
+      interface-name=enp7s0
+
+      [ethernet]
+
+      [ipv4]
+      method=disabled
+
+      [ipv6]
+      method=disabled
+  enp6s0:
+    content: |
+      [connection]
+      id=enp6s0
+      uuid=de9904c8-9577-1a17-36b1-34b94132f06a
+      type=ethernet
+      interface-name=enp6s0
+
+      [ethernet]
+
+      [ipv4]
+      method=manual
+      address1=192.168.1.1/24
+
+      [ipv6]
+      method=disabled
+
+ccs_hcu::imanager: true

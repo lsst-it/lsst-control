@@ -6,4 +6,3 @@ profile::core::firewall::firewall:
     ipset: "tufde src"
     dport: "7500"
     action: "accept"
-    require: "Ipset::Set[tufde]"

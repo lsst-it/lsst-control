@@ -529,7 +529,6 @@ profile::core::firewall::firewall:
     ipset: "rubin src"
     dport: "22"
     action: "accept"
-    require: "Ipset::Set[rubin]"
   "020 accept dhcp":
     proto: "udp"
     sport: ["67", "68"]

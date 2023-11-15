@@ -46,7 +46,6 @@ describe "#{role} role" do
               ipset: 'aura src',
               dport: '22',
               action: 'accept',
-              require: 'Ipset::Set[aura]',
             )
           end
         end # host

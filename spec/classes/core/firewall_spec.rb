@@ -9,7 +9,7 @@ describe 'profile::core::firewall' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('firewall') }
-      it { is_expected.to contain_class('ipset') }
+      it { is_expected.to contain_class('ipset').that_comes_before('Class[firewall]') }
       it { is_expected.to have_resources_resource_count(0) }
       it { is_expected.to have_firewall_resource_count(0) }
 

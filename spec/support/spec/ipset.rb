@@ -11,7 +11,7 @@ shared_examples 'ipset' do
         198.19.0.0/16
         10.0.0.0/8
       ],
-    )
+    ).that_comes_before('Class[firewall]')
   end
 
   it do
@@ -26,7 +26,7 @@ shared_examples 'ipset' do
         198.19.0.0/16
         10.0.0.0/8
       ],
-    )
+    ).that_comes_before('Class[firewall]')
   end
 
   it do
@@ -34,7 +34,7 @@ shared_examples 'ipset' do
       %w[
         139.229.144.0/26
       ],
-    )
+    ).that_comes_before('Class[firewall]')
   end
 
   it do
@@ -42,7 +42,7 @@ shared_examples 'ipset' do
       %w[
         139.229.134.0/24
       ],
-    )
+    ).that_comes_before('Class[firewall]')
   end
 
   it do
@@ -54,6 +54,6 @@ shared_examples 'ipset' do
         140.252.147.32/28
         140.252.147.64/27
       ],
-    )
+    ).that_comes_before('Class[firewall]')
   end
 end

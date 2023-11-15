@@ -44,7 +44,6 @@ describe "#{role} role" do
                 ipset: 'dev src',
                 dport: '7500',
                 action: 'accept',
-                require: 'Ipset::Set[dev]',
               )
             end
           when 'tu'
@@ -55,7 +54,6 @@ describe "#{role} role" do
                 ipset: 'tufde src',
                 dport: '7500',
                 action: 'accept',
-                require: 'Ipset::Set[tufde]',
               )
             end
           end

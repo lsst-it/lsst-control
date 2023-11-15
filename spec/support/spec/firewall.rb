@@ -66,7 +66,6 @@ shared_examples 'firewall node_exporter scraping' do |site:|
         ipset: 'ayekan src',
         dport: '9100',
         action: 'accept',
-        require: 'Ipset::Set[ayekan]',
       )
     end
   end

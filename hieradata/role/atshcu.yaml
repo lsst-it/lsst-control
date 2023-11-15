@@ -16,7 +16,7 @@ ccs_hcu::vldrive::module: "versaapi"
 ccs_hcu::vldrive::version: "1.5.0"
 
 ccs_hcu::imanager::module: "imanager"
-ccs_hcu::imanager::version: "1.5.0"
+ccs_hcu::imanager::version: "1.5.1"
 
 nfs::client_enabled: true
 nfs::client_mounts:

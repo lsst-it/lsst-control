@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 describe 'profile::core::nm_dispatch' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { facts }
+      let(:facts) { os_facts }
       let(:pre_condition) do
         <<~PP
           if fact('os.release.major') == '7' {
@@ -32,7 +32,7 @@ describe 'profile::core::nm_dispatch' do
         end
 
         let(:net_class) do
-          if facts[:os]['release']['major'] == '7'
+          if os_facts[:os]['release']['major'] == '7'
             'Class[network]'
           else
             'Class[nm]'

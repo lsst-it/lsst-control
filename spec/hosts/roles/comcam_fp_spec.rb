@@ -5,9 +5,9 @@ require 'spec_helper'
 role = 'comcam-fp'
 
 describe "#{role} role" do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { facts }
+      let(:facts) { os_facts }
       let(:node_params) do
         {
           role: role,
@@ -18,15 +18,15 @@ describe "#{role} role" do
 
       lsst_sites.each do |site|
         fqdn = "#{role}.#{site}.lsst.org"
-        override_facts(facts, fqdn: fqdn, networking: { fqdn => fqdn })
+        override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
 
         describe fqdn, :sitepp do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', facts: facts
-          include_examples 'x2go packages', facts: facts
+          include_examples 'common', os_facts: os_facts
+          include_examples 'x2go packages', os_facts: os_facts
           include_examples 'lsst-daq sysctls'
           it { is_expected.not_to contain_class('profile::core::sysctl::lhn') }
           it { is_expected.not_to contain_class('dhcp') }

@@ -7,12 +7,12 @@ require 'spec_helper'
 # ruka01.dev.lsst.org.yaml
 #
 describe 'ruka04.dev.lsst.org', :sitepp do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(facts,
+        override_facts(os_facts,
                        fqdn: 'ruka04.dev.lsst.org',
                        is_virtual: false,
                        virtual: 'physical',

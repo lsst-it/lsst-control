@@ -3,12 +3,12 @@
 require 'spec_helper'
 
 describe 'auxtel-fp01.ls.lsst.org', :sitepp do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     next if os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(facts,
+        override_facts(os_facts,
                        fqdn: 'auxtel-fp01.ls.lsst.org',
                        is_virtual: false,
                        virtual: 'physical',

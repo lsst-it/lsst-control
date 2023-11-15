@@ -6,12 +6,12 @@ require 'spec_helper'
 # pillan08 is "special" and has different PCI bus addresses for the X550T NIC.
 #
 describe 'pillan08.tu.lsst.org', :sitepp do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(facts,
+        override_facts(os_facts,
                        fqdn: 'pillan08.tu.lsst.org',
                        is_virtual: false,
                        virtual: 'physical',

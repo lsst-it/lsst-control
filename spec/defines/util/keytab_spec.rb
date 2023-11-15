@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 describe 'profile::util::keytab' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { facts }
+      let(:facts) { os_facts }
       let(:title) { 'foo' }
       let(:params) { { 'uid' => 123, 'keytab_base64' => sensitive('YmFy') } }
 

@@ -3,14 +3,14 @@
 require 'spec_helper'
 
 describe 'profile::core::krb5' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { facts }
+      let(:facts) { os_facts }
 
       context 'with no params' do
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'krb5.conf.d files', facts: facts
+        include_examples 'krb5.conf.d files', os_facts: os_facts
       end
     end
   end

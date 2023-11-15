@@ -3,11 +3,11 @@
 require 'spec_helper'
 
 describe 'profile::ccs::el9' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
-      let(:facts) { facts.merge(site: 'ls') }
+      let(:facts) { override_facts(os_facts, site: 'ls') }
       let(:pre_condition) do
         <<~PP
           include ssh

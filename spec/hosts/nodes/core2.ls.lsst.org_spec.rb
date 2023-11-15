@@ -3,13 +3,13 @@
 require 'spec_helper'
 
 describe 'core2.ls.lsst.org', :sitepp do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     # XXX networking needs to be updated to support EL8+
     next unless os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(facts,
+        override_facts(os_facts,
                        fqdn: 'core2.ls.lsst.org',
                        is_virtual: false,
                        virtual: 'physical',

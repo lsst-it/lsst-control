@@ -3,11 +3,9 @@
 require 'spec_helper'
 
 describe 'profile::core::x2go' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) do
-        facts
-      end
+      let(:facts) { os_facts }
       let(:pre_condition) do
         <<~PP
         sudo::conf { 'bogus':
@@ -19,7 +17,7 @@ describe 'profile::core::x2go' do
       context 'with no parameters' do
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'x2go packages', facts: facts
+        include_examples 'x2go packages', os_facts: os_facts
 
         it do
           is_expected.to contain_file('/etc/sudoers.d/x2goserver')

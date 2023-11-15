@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 describe 'profile::core::common' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { facts }
+      let(:facts) { os_facts }
       let(:pre_condition) do
         <<~PP
           # change service unit name from sssd.service to sssd
@@ -22,7 +22,7 @@ describe 'profile::core::common' do
         it { is_expected.to contain_class('profile::core::nm_dispatch') }
         it { is_expected.to contain_package('ca-certificates').with_ensure('latest') }
 
-        if facts[:os]['release']['major'] == '7'
+        if os_facts[:os]['release']['major'] == '7'
           it { is_expected.to contain_class('network') }
         else
           it { is_expected.not_to contain_class('network') }

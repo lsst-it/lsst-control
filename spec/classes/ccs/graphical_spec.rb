@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 describe 'profile::ccs::graphical' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { facts }
+      let(:facts) { os_facts }
       let(:unwanted_pkgs) do
         %w[
           gnome-initial-setup
@@ -22,9 +22,9 @@ describe 'profile::ccs::graphical' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'x2go packages', facts: facts
+      include_examples 'x2go packages', os_facts: os_facts
 
-      if facts[:os]['release']['major'] == '7'
+      if os_facts[:os]['release']['major'] == '7'
         it do
           unwanted_pkgs.each do |pkg|
             is_expected.to contain_yum__group('GNOME Desktop').with(

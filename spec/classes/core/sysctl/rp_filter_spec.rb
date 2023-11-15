@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'profile::core::sysctl::rp_filter' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:net_int) do
         {
@@ -33,8 +33,8 @@ describe 'profile::core::sysctl::rp_filter' do
         }
       end
       let(:facts) do
-        facts.delete(:networking)
-        override_facts(facts, networking: { interfaces: net_int })
+        os_facts.delete(:networking)
+        override_facts(os_facts, networking: { interfaces: net_int })
       end
 
       interfaces = %w[

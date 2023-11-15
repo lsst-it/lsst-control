@@ -3,11 +3,11 @@
 require 'spec_helper'
 
 describe 'ayekan01.ls.lsst.org', :sitepp do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
-      let(:facts) { override_facts(facts, fqdn: 'ayekan01.ls.lsst.org') }
+      let(:facts) { override_facts(os_facts, fqdn: 'ayekan01.ls.lsst.org') }
       let(:node_params) do
         {
           role: 'rke',

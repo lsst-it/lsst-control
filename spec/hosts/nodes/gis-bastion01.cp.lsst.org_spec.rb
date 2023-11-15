@@ -3,10 +3,10 @@
 require 'spec_helper'
 
 describe 'gis-bastion01.cp.lsst.org', :sitepp do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) do
-        override_facts(facts,
+        override_facts(os_facts,
                        fqdn: 'gis-bastion01.cp.lsst.org',
                        is_virtual: false,
                        virtual: 'physical',
@@ -27,7 +27,7 @@ describe 'gis-bastion01.cp.lsst.org', :sitepp do
 
       include_examples 'baremetal'
 
-      if facts[:os]['release']['major'] == '7'
+      if os_facts[:os]['release']['major'] == '7'
         it do
           is_expected.to contain_network__interface('enp1s0f0').with(
             bootproto: 'dhcp',

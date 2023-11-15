@@ -355,6 +355,15 @@ ipset::sets:
     type: "hash:net"
     set:
       - "139.229.134.0/24"
+  tufde:  # tu/tts site hosts which might need FDE
+    ensure: "present"
+    type: "hash:net"
+    set:
+      - "140.252.146.32/27"
+      - "140.252.146.64/27"
+      - "140.252.147.0/28"
+      - "140.252.147.32/28"
+      - "140.252.147.64/27"
 
 # sssd ipa client setup -- do not use on ipa servers
 sssd::main_config:

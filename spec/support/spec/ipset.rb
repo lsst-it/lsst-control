@@ -44,4 +44,16 @@ shared_examples 'ipset' do
       ],
     )
   end
+
+  it do
+    is_expected.to contain_ipset__set('tufde').with_set(
+      %w[
+        140.252.146.32/27
+        140.252.146.64/27
+        140.252.147.0/28
+        140.252.147.32/28
+        140.252.147.64/27
+      ],
+    )
+  end
 end

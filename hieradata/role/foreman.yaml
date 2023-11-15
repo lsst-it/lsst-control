@@ -272,6 +272,8 @@ profile::core::foreman::foreman_global_parameter:
   role:
     parameter_type: "string"
     value: "generic"
+  restic_password:
+    ensure: "absent"
 
 profile::core::systemd::dropin_file:
   50-MemoryLimit.conf:

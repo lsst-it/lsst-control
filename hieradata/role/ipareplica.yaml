@@ -3,7 +3,6 @@ classes:
   - "clustershell"
   - "ipa"
   - "profile::core::common"
-  - "profile::core::ipa_pwd_reset"
   - "tailscale"
 
 profile::core::common::disable_ipv6: true
@@ -26,7 +25,6 @@ clustershell::groupmembers:
       - "ipa[1-3].tu.lsst.org"
       - "ipa1.dev.lsst.org"
 
-profile::core::ipa_pwd_reset::ldap_user: "ldap-passwd-reset"
 profile::core::ipa::default:
   global:
     server: "%{facts.fqdn}"

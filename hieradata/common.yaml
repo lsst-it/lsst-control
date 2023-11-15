@@ -387,6 +387,7 @@ sssd::service_names:
 
 telegraf::quiet: true
 telegraf::hostname: "%{facts.networking.fqdn}"
+telegraf::purge_config_fragments: true
 telegraf::inputs:
   cpu:
     - percpu: true
@@ -399,7 +400,6 @@ telegraf::inputs:
   nstat: [{}]
   swap: [{}]
   system: [{}]
-  ethtool: [{}]
   kernel: [{}]
   kernel_vmstat: [{}]
   netstat: [{}]

@@ -283,3 +283,6 @@ profile::core::dtn::sysctls:
 profile::core::dtn::packages:
   - "hwloc"
   - "hwloc-gui"
+
+profile::core::gpio::packages:
+  - "libgpiod-utils"

@@ -39,7 +39,7 @@ describe "#{role} role" do
             'ipa1.dev.lsst.org': '100.76.95.74',
             'ipa2.dev.lsst.org': '100.77.145.58',
             'ipa3.dev.lsst.org': '100.66.153.135',
-            'ipa1.tu.lsst.org': '100.64.140.139',
+            'ipa1.tu.lsst.org': '100.110.133.58',
             'ipa2.tu.lsst.org': '100.127.11.142',
             'ipa3.tu.lsst.org': '100.126.127.154',
             'ipa1.ls.lsst.org': '100.78.115.42',

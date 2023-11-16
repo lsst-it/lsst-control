@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-role = 'rpi'
+role = 'ess'
 
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|

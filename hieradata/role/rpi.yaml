@@ -1,6 +1,6 @@
 ---
 classes:
-  - "docker"
+  - "profile::core::docker"
   - "profile::core::common"
   - "profile::ts::rpi"
 

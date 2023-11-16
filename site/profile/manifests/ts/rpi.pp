@@ -1,8 +1,6 @@
 # @summary
 #   Installs and configures all required packages for EAS Raspberry Pi
 class profile::ts::rpi {
-  include snapd
-
   #<------------ Variables -------------->
   $root_dir              = '/opt'
   $packages_dir          = "${root_dir}/packages"
@@ -17,8 +15,6 @@ class profile::ts::rpi {
   $gphoto_version        = 'gphoto2-2.5.27'
   $python_gphoto_version = 'python-gphoto2-2.2.4'
   $docker_group          = '70014'
-  #  Packages to be installed through snapd
-  $snap_packages = 'raspberry-pi-node-gpio'
 
   #  I/O Interfaces
   $io_interfaces = [
@@ -252,12 +248,6 @@ class profile::ts::rpi {
   ensure_packages($yum_packages)
   Package[$yum_packages] -> Package[$docker_packages]
 
-  # The required snap packages are in the edge channel, and provider option from package does not allow it.
-  exec { "snap install --edge ${snap_packages}":
-    path     => ['/sbin', '/usr/sbin', '/bin'],
-    provider => shell,
-    unless   => "snap list | grep ${snap_packages}",
-  }
   #<-------END Packages Installation-------->
   #
   #

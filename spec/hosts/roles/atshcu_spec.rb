@@ -28,6 +28,8 @@ describe "#{role} role" do
           include_examples 'ccs common', os_facts: os_facts
           include_examples 'x2go packages', os_facts: os_facts
           it { is_expected.to contain_class('ccs_hcu') }
+
+          include_examples 'gpio'
         end # host
       end # lsst_sites
     end # on os

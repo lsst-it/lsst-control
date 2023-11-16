@@ -3,10 +3,10 @@
 require 'spec_helper'
 
 describe 'auxtel-dc01.cp.lsst.org', :sitepp do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) do
-        override_facts(facts,
+        override_facts(os_facts,
                        fqdn: 'auxtel-dc01.cp.lsst.org',
                        is_virtual: false,
                        virtual: 'physical',

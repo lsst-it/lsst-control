@@ -5,9 +5,9 @@ require 'spec_helper'
 # XXX testing for classes in the catalog is not a great practice but it is
 # expendent to do here as the goal is primary to test branching based on facts.
 describe 'profile::core::hardware' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { facts }
+      let(:facts) { os_facts }
 
       context 'with PowerEdge' do
         let(:facts) do
@@ -53,7 +53,7 @@ describe 'profile::core::hardware' do
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('ipmi') }
 
-        if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
+        if (os_facts[:os]['family'] == 'RedHat') && (os_facts[:os]['release']['major'] == '7')
           it { is_expected.to contain_class('profile::core::kernel::pcie_aspm') }
           it { is_expected.to contain_class('profile::core::kernel::nvme_apst') }
 

@@ -3,13 +3,13 @@
 require 'spec_helper'
 
 describe 'profile::core::firewall' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { facts }
+      let(:facts) { os_facts }
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('firewall') }
-      it { is_expected.to contain_class('ipset') }
+      it { is_expected.to contain_class('ipset').that_comes_before('Class[firewall]') }
       it { is_expected.to have_resources_resource_count(0) }
       it { is_expected.to have_firewall_resource_count(0) }
 

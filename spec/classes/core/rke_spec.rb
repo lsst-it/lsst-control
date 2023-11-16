@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 describe 'profile::core::rke' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { facts }
+      let(:facts) { os_facts }
       let(:pre_condition) do
         <<~PP
           include docker

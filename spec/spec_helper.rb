@@ -147,8 +147,8 @@ end
 
 # XXX The network param is a kludge until the el8 dnscache nodes are converted
 # to NM.
-shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true, node_exporter: true|
-  include_examples 'bash_completion', facts: facts
+shared_examples 'common' do |os_facts:, no_auth: false, chrony: true, network: true, node_exporter: true|
+  include_examples 'bash_completion', os_facts: os_facts
   include_examples 'convenience'
   include_examples 'telegraf'
   include_examples 'rsyslog defaults'
@@ -158,7 +158,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
     # being caught by hiera string interpolation
     include_examples 'krb5.conf content', %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}}
 
-    include_examples 'krb5.conf.d files', facts: facts
+    include_examples 'krb5.conf.d files', os_facts: os_facts
     include_examples 'sssd services'
 
     it { is_expected.to contain_class('ssh').that_requires('Class[ipa]') }
@@ -206,7 +206,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
       ).that_requires('Class[ipa]')
     end
 
-    if facts[:os]['release']['major'] == '7'
+    if os_facts[:os]['release']['major'] == '7'
       it do
         is_expected.to contain_file('/etc/sssd/sssd.conf').with_content(<<~SSSD)
           #
@@ -276,7 +276,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
     include_examples 'no node_exporter'
   end
 
-  if facts[:os]['family'] == 'RedHat'
+  if os_facts[:os]['family'] == 'RedHat'
     it { is_expected.to contain_class('epel') }
     it { is_expected.to contain_class('yum::plugin::versionlock').with_clean(true) }
     it { is_expected.to contain_yum__versionlock('puppet-agent').with_version('7.21.0') }
@@ -291,7 +291,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
       expect(catalogue.resource('class', 'yum')[:repos]['extras']).to include('enabled' => true)
     end
 
-    if facts[:os]['release']['major'] == '7'
+    if os_facts[:os]['release']['major'] == '7'
       it { is_expected.not_to contain_package('NetworkManager-initscripts-updown') }
       it { is_expected.to contain_class('yum').with_managed_repos(['extras']) }
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
@@ -299,7 +299,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
       network and it { is_expected.to contain_class('network') }
       it { is_expected.not_to contain_class('nm') }
 
-      if facts[:os]['architecture'] == 'x86_64'
+      if os_facts[:os]['architecture'] == 'x86_64'
         it { is_expected.to contain_class('scl') }
       else
         it { is_expected.not_to contain_class('scl') }
@@ -320,7 +320,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
       end
     end
 
-    if facts[:os]['release']['major'] == '8'
+    if os_facts[:os]['release']['major'] == '8'
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
 
       network and it { is_expected.not_to contain_class('network') }
@@ -328,7 +328,7 @@ shared_examples 'common' do |facts:, no_auth: false, chrony: true, network: true
       it { is_expected.to contain_package('NetworkManager-initscripts-updown') }
     end
 
-    if facts[:os]['release']['major'] == '9'
+    if os_facts[:os]['release']['major'] == '9'
       it { is_expected.to contain_class('lldpd').with_manage_repo(false) }
 
       network and it { is_expected.not_to contain_class('network') }
@@ -467,8 +467,8 @@ shared_examples 'lsst-daq sysctls' do
   end
 end
 
-shared_examples 'nfsv2 enabled' do |facts:|
-  if facts[:os]['release']['major'] == '7'
+shared_examples 'nfsv2 enabled' do |os_facts:|
+  if os_facts[:os]['release']['major'] == '7'
     it 'enables NFS V2 exports via /etc/sysconfig/nfs' do
       is_expected.to contain_augeas('enable nfs v2 exports').with(
         context: '/files/etc/sysconfig/nfs',
@@ -899,11 +899,11 @@ shared_examples 'generic foreman' do
   end
 end
 
-shared_examples 'bash_completion' do |facts:|
-  if facts[:os]['family'] == 'RedHat'
+shared_examples 'bash_completion' do |os_facts:|
+  if os_facts[:os]['family'] == 'RedHat'
     it { is_expected.to contain_package('bash-completion') }
 
-    if facts[:os]['release']['major'] == '7'
+    if os_facts[:os]['release']['major'] == '7'
       it { is_expected.to contain_package('bash-completion-extras') }
     else
       it { is_expected.not_to contain_package('bash-completion-extras') }
@@ -1118,8 +1118,8 @@ shared_examples 'generic perfsonar' do
   end
 end
 
-shared_examples 'x2go packages' do |facts:|
-  packages = if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
+shared_examples 'x2go packages' do |os_facts:|
+  packages = if (os_facts[:os]['family'] == 'RedHat') && (os_facts[:os]['release']['major'] == '7')
                %w[
                  x2goagent
                  x2goclient
@@ -1215,8 +1215,8 @@ shared_examples 'daq nfs exports' do
   end
 end
 
-shared_examples 'krb5.conf.d files' do |facts:|
-  to = if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '7')
+shared_examples 'krb5.conf.d files' do |os_facts:|
+  to = if (os_facts[:os]['family'] == 'RedHat') && (os_facts[:os]['release']['major'] == '7')
          'not_to'
        else
          'to'

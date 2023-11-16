@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 describe 'profile::ccs::file_transfer' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { facts }
+      let(:facts) { os_facts }
 
       context 'with param install => true' do
         let(:params) do

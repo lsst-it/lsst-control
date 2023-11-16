@@ -1,0 +1,19 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::firewall"
+  - "restic"
+  - "tang"
+packages:
+  - "jose"
+
+firewall::ensure: "running"
+
+restic::repositories:
+  awsrepo:
+    backup_path:
+      - "/var/db/tang"
+    backup_timer: "*-*-* *:47:00"
+    enable_forget: true
+    forget_timer: "*-*-* 15:00:00"
+    forget_flags: "--keep-within 1y"

@@ -3,11 +3,9 @@
 require 'spec_helper'
 
 describe 'profile::core::keytab' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) do
-        facts
-      end
+      let(:facts) { os_facts }
 
       context 'with no parameters' do
         it { is_expected.to compile.with_all_deps }

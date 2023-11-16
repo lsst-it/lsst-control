@@ -3,13 +3,13 @@
 require 'spec_helper'
 
 describe 'profile::core::bash_completion' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { facts }
+      let(:facts) { os_facts }
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'bash_completion', facts: facts
+      include_examples 'bash_completion', os_facts: os_facts
     end
   end
 end

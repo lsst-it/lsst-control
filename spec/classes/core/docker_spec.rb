@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 describe 'profile::core::docker' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { facts }
+      let(:facts) { os_facts }
 
       it { is_expected.to compile.with_all_deps }
 
@@ -24,7 +24,7 @@ describe 'profile::core::docker' do
           .that_notifies('Service[docker]')
       end
 
-      if facts[:os]['release']['major'] == '9'
+      if os_facts[:os]['release']['major'] == '9'
         it do
           is_expected.to contain_systemd__dropin_file('ceph.conf').with(
             unit: 'containerd.service',

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-shared_examples 'firewall default' do |facts:|
-  if (facts[:os]['family'] == 'RedHat') && (facts[:os]['release']['major'] == '9')
+shared_examples 'firewall default' do |os_facts:|
+  if (os_facts[:os]['family'] == 'RedHat') && (os_facts[:os]['release']['major'] == '9')
     it { is_expected.to contain_service('nftables').with_enable(true) }
   end
 
@@ -66,7 +66,6 @@ shared_examples 'firewall node_exporter scraping' do |site:|
         ipset: 'ayekan src',
         dport: '9100',
         action: 'accept',
-        require: 'Ipset::Set[ayekan]',
       )
     end
   end

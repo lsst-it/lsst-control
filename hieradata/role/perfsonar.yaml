@@ -23,7 +23,6 @@ profile::core::firewall::firewall:
     ipset: "aura src"
     dport: "22"
     action: "accept"
-    require: "Ipset::Set[aura]"
 
 files:
   # perfsonar packaging installs this one file with the wrong mode

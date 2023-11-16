@@ -12,11 +12,11 @@ end
 role = 'puppetdb'
 
 describe "#{role} role" do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
-      let(:facts) { facts }
+      let(:facts) { os_facts }
       let(:node_params) do
         {
           role: role,
@@ -26,14 +26,14 @@ describe "#{role} role" do
 
       lsst_sites.each do |site|
         fqdn = "#{role}.#{site}.lsst.org"
-        override_facts(facts, fqdn: fqdn, networking: { fqdn => fqdn })
+        override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
 
         describe fqdn, :sitepp do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', facts: facts
+          include_examples 'common', os_facts: os_facts
           include_examples 'puppetdb'
         end # host
       end # lsst_sites

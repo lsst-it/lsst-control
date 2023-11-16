@@ -325,8 +325,7 @@ yum::manage_os_default_repos: true
 letsencrypt::email: "rubinobs-it-las@lsst.org"
 
 ipset::sets:
-  # rubin/aura "internal" prefixes
-  aura:
+  aura:  # rubin/aura "internal" prefixes
     ensure: "present"
     type: "hash:net"
     set:
@@ -334,8 +333,7 @@ ipset::sets:
       - "139.229.0.0/16"
       - "198.19.0.0/16"
       - "10.0.0.0/8"
-  # rubin "internal" prefixes
-  rubin:
+  rubin:  # rubin "internal" prefixes
     ensure: "present"
     type: "hash:net"
     set:
@@ -352,6 +350,20 @@ ipset::sets:
     type: "hash:net"
     set:
       - "139.229.144.0/26"
+  dev:  # dev site hosts
+    ensure: "present"
+    type: "hash:net"
+    set:
+      - "139.229.134.0/24"
+  tufde:  # tu/tts site hosts which might need FDE
+    ensure: "present"
+    type: "hash:net"
+    set:
+      - "140.252.146.32/27"
+      - "140.252.146.64/27"
+      - "140.252.147.0/28"
+      - "140.252.147.32/28"
+      - "140.252.147.64/27"
 
 # sssd ipa client setup -- do not use on ipa servers
 sssd::main_config:
@@ -517,7 +529,6 @@ profile::core::firewall::firewall:
     ipset: "rubin src"
     dport: "22"
     action: "accept"
-    require: "Ipset::Set[rubin]"
   "020 accept dhcp":
     proto: "udp"
     sport: ["67", "68"]

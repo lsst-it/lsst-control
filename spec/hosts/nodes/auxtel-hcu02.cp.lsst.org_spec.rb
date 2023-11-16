@@ -3,12 +3,12 @@
 require 'spec_helper'
 
 describe 'auxtel-hcu02.cp.lsst.org', :sitepp do
-  on_supported_os.each do |os, facts|
-    next if os =~ %r{centos-7-x86_64}
+  on_supported_os.each do |os, os_facts|
+    next unless os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(facts,
+        override_facts(os_facts,
                        fqdn: 'auxtel-hcu02.cp.lsst.org',
                        is_virtual: false,
                        virtual: 'physical',
@@ -28,37 +28,42 @@ describe 'auxtel-hcu02.cp.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal no bmc'
-      include_context 'with nm interface'
-      it { is_expected.to have_nm__connection_resource_count(4) }
+      it { is_expected.to have_network__interface_resource_count(4) }
 
-      context 'with eno1' do
-        let(:interface) { 'eno1' }
-
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm dhcp interface'
-        it_behaves_like 'nm ethernet interface'
+      it do
+        is_expected.to contain_network__interface('eno1').with(
+          bootproto: 'dhcp',
+          defroute: 'yes',
+          onboot: 'yes',
+          type: 'Ethernet',
+        )
       end
 
-      context 'with enp8s0' do
-        let(:interface) { 'enp8s0' }
-
-        it_behaves_like 'nm disabled interface'
+      it do
+        is_expected.to contain_network__interface('enp6s0').with(
+          bootproto: 'none',
+          ipaddress: '192.168.1.1',
+          netmask: '255.255.255.0',
+          onboot: 'yes',
+          type: 'Ethernet',
+        )
       end
 
-      context 'with enp7s0' do
-        let(:interface) { 'enp7s0' }
-
-        it_behaves_like 'nm disabled interface'
+      it do
+        is_expected.to contain_network__interface('enp7s0').with(
+          bootproto: 'none',
+          onboot: 'no',
+          type: 'Ethernet',
+        )
       end
 
-      context 'with enp6s0' do
-        let(:interface) { 'enp6s0' }
-
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['ipv4']['address1']).to eq('192.168.1.1/24') }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
+      it do
+        is_expected.to contain_network__interface('enp8s0').with(
+          bootproto: 'none',
+          onboot: 'no',
+          type: 'Ethernet',
+        )
       end
     end # on os
   end # on_supported_os
-end
+end # role

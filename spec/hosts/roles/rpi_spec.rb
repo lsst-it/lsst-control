@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-# NOTE: that this role does not include profile::core::common
 role = 'rpi'
 
 describe "#{role} role" do
@@ -24,6 +23,8 @@ describe "#{role} role" do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }
+
+          include_examples 'gpio'
         end # host
       end # lsst_sites
     end # on os

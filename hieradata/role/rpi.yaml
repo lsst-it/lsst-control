@@ -1,7 +1,8 @@
 ---
 classes:
-  - "profile::core::docker"
   - "profile::core::common"
+  - "profile::core::docker"
+  - "profile::core::gpio"
   - "profile::ts::rpi"
 
 # disabling the kernel version check is needed on el7

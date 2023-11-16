@@ -28,17 +28,6 @@ class profile::ts::rpi {
     'AMA3',
     'AMA4',
   ]
-  #  Remove default docker packages
-  $docker_packages = [
-    'docker-1.13*.aarch64',
-    'docker-client',
-    'docker-client-latest',
-    'docker-common',
-    'docker-latest',
-    'docker-latest-logrotate',
-    'docker-logrotate',
-    'docker-engine',
-  ]
 
   #  Conda Packages
   $conda_packages = [
@@ -243,14 +232,9 @@ class profile::ts::rpi {
   #
   #
   #<-------- Packages Installation---------->
-  #  Remove preinstalled docker packages
-  package { $docker_packages:
-    ensure => 'absent',
-  }
 
   #  Install yum packages
   ensure_packages($yum_packages)
-  Package[$yum_packages] -> Package[$docker_packages]
 
   # The required snap packages are in the edge channel, and provider option from package does not allow it.
   exec { "snap install --edge ${snap_packages}":

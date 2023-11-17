@@ -1,0 +1,15 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::docker"
+  - "profile::core::gpio"
+  - "profile::ts::rpi"
+
+# disabling the kernel version check is needed on el7
+docker::overlay2_override_kernel_check: true
+docker::storage_driver: "overlay2"
+# ipa docker group is 70014
+docker::socket_group: "70014"
+docker::socket_override: true
+# SCL has no architecture for aarch64
+profile::core::common::manage_scl: false

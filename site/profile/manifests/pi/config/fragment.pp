@@ -11,6 +11,8 @@ define profile::pi::config::fragment (
   String[1] $content,
   Integer[1] $order = 50,
 ) {
+  include profile::pi::config
+
   concat::fragment { $name:
     target  => '/boot/config.txt',
     content => $content,

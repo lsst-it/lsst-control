@@ -3,6 +3,8 @@ classes:
   - "profile::core::common"
   - "profile::core::docker"
   - "profile::core::gpio"
+  - "profile::core::i2c"
+  - "profile::pi::config"
   - "profile::ts::rpi"
 
 # disabling the kernel version check is needed on el7

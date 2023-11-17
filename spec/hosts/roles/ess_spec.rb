@@ -37,6 +37,7 @@ describe "#{role} role" do
           include_examples 'gpio'
           include_examples 'i2c', os_facts: os_facts
           include_examples 'ftdi'
+          include_examples 'rubinhat'
         end # host
       end # lsst_sites
     end # on os

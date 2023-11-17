@@ -6,6 +6,7 @@ classes:
   - "profile::core::i2c"
   - "profile::pi::config"
   - "profile::pi::ftdi"
+  - "profile::pi::rubinhat"
 
 # disabling the kernel version check is needed on el7
 docker::overlay2_override_kernel_check: true

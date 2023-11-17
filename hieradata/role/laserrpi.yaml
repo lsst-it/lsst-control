@@ -3,7 +3,6 @@ classes:
   - "profile::core::common"
   - "profile::core::docker"
   - "profile::core::gpio"
-  - "profile::ts::rpi"
 
 # disabling the kernel version check is needed on el7
 docker::overlay2_override_kernel_check: true

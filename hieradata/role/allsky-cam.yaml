@@ -2,6 +2,8 @@
 classes:
   - "profile::core::common"
   - "profile::core::nfsclient"
+packages:
+  - "libgphoto2"
 
 files:
   /dimm:

@@ -66,6 +66,9 @@ lookup_options:
   profile::core::firewall::firewall:
     merge:
       strategy: "deep"
+  profile::pi::config::fragments:
+    merge:
+      strategy: "deep"
   profile::core::systemd::tmpfile:
     merge:
       strategy: "deep"

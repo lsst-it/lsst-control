@@ -7,10 +7,14 @@ role = 'ess'
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      os_facts = override_facts(os_facts, cpuinfo: {
+      os_facts = override_facts(os_facts,
+                                cpuinfo: {
                                   'processor' => {
                                     'Model' => 'Raspberry Pi 4 Model B Rev 1.2',
                                   },
+                                },
+                                os: {
+                                  'architecture' => 'aarch64',
                                 })
       let(:facts) { os_facts }
       let(:node_params) do
@@ -22,13 +26,14 @@ describe "#{role} role" do
 
       lsst_sites.each do |site|
         fqdn = "#{role}.#{site}.lsst.org"
-        override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
+        os_facts = override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
 
         describe fqdn, :sitepp do
           let(:site) { site }
 
           it { is_expected.to compile.with_all_deps }
 
+          include_examples 'common', os_facts: os_facts
           include_examples 'gpio'
           include_examples 'i2c', os_facts: os_facts
           include_examples 'ftdi'

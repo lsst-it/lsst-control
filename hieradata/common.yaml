@@ -548,3 +548,6 @@ profile::core::firewall::firewall:
 restic::bucket: "rubin-bm-backups/%{facts.fqdn}"
 restic::enable_backup: true
 restic::host: "s3.us-east-1.amazonaws.com"
+
+# XXX this should be removed when pi role/profile refactoring is complete
+profile::pi::config::reboot: false

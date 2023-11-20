@@ -7,6 +7,15 @@ role = 'allsky-cam'
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
+      os_facts = override_facts(os_facts,
+                                cpuinfo: {
+                                  'processor' => {
+                                    'Model' => 'Raspberry Pi 4 Model B Rev 1.2',
+                                  },
+                                },
+                                os: {
+                                  'architecture' => 'aarch64',
+                                })
       let(:facts) { os_facts }
       let(:node_params) do
         {
@@ -17,7 +26,7 @@ describe "#{role} role" do
 
       lsst_sites.each do |site|
         fqdn = "#{role}.#{site}.lsst.org"
-        override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
+        os_facts = override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
 
         describe fqdn, :sitepp do
           let(:site) { site }

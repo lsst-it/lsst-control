@@ -10,5 +10,3 @@ docker::storage_driver: "overlay2"
 # ipa docker group is 70014
 docker::socket_group: "70014"
 docker::socket_override: true
-# SCL has no architecture for aarch64
-profile::core::common::manage_scl: false

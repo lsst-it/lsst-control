@@ -2,7 +2,7 @@
 #  yamllint disable rule:quoted-strings
 sudoversion: "1.8.23"
 snmp_community: "MhcZxm00k6GjpRedxFnnxA"  #  lsst/ccs_mrtg
-aio_agent_version: "7.21.0"  #  puppetlabs/puppet_agent
+aio_agent_version: "7.27.0"  #  puppetlabs/puppet_agent
 grub_version: "grub2-mkconfig (GRUB) 2.02~beta2"  # simp/auditd
 ipmitool_mc_info:
   IPMI_Puppet_Service_Recommend: "running"

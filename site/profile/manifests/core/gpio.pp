@@ -17,6 +17,22 @@ class profile::core::gpio (
     ],
   }
 
+  if fact('os.family') == 'RedHat' and fact('os.release.major') == '7' {
+    systemd::udev::rule { 'gpio-el7.rules':
+      rules => [
+        # lint:ignore:strict_indent
+        @(GPIO),
+        SUBSYSTEM=="gpio*", PROGRAM="/bin/sh -c '\
+          chown -R root:gpio /sys/class/gpio && chmod -R 770 /sys/class/gpio;\
+          chown -R root:gpio /sys/devices/virtual/gpio && chmod -R 770 /sys/devices/virtual/gpio;\
+          chown -R root:gpio /sys$devpath && chmod -R 770 /sys$devpath\
+        '"
+        | GPIO
+        # lint:endignore
+      ],
+    }
+  }
+
   # ccs_hcu::imanager declares the gpio group, but it's not a system group
   unless defined(Group['gpio']) {
     group { 'gpio':

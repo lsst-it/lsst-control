@@ -9,6 +9,22 @@ shared_examples 'gpio' do |os_facts:|
     )
   end
 
+  if os_facts[:os]['family'] == 'RedHat' && os_facts[:os]['release']['major'] == '7'
+    it do
+      is_expected.to contain_systemd__udev__rule('gpio-el7.rules').with(
+        rules: [
+          <<~'RULE',
+          SUBSYSTEM=="gpio*", PROGRAM="/bin/sh -c '\
+            chown -R root:gpio /sys/class/gpio && chmod -R 770 /sys/class/gpio;\
+            chown -R root:gpio /sys/devices/virtual/gpio && chmod -R 770 /sys/devices/virtual/gpio;\
+            chown -R root:gpio /sys$devpath && chmod -R 770 /sys$devpath\
+          '"
+          RULE
+        ],
+      )
+    end
+  end
+
   it do
     is_expected.to contain_group('gpio').with(
       ensure: 'present',

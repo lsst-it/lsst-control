@@ -23,7 +23,7 @@ shared_examples 'i2c' do |os_facts:|
     it { is_expected.to contain_package('python3-i2c-tools') }
   end
 
-  it { is_expected.to contain_kmod__load('i2c-dev') }
+  it { is_expected.to contain_kmod__load('i2c_dev') }
 
   if os_facts[:cpuinfo]&.[]('processor')&.[]('Model') =~ %r{Raspberry Pi}
     it do

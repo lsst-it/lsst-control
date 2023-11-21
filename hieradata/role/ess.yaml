@@ -2,8 +2,6 @@
 classes:
   - "profile::core::common"
   - "profile::core::docker"
-  - "profile::core::gpio"
-  - "profile::core::i2c"
   - "profile::pi::config"
   - "profile::pi::ftdi"
   - "profile::pi::rubinhat"

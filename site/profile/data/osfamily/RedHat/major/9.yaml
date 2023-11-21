@@ -39,3 +39,6 @@ profile::core::docker::versionlock:
     ensure: "present"
     version: "2.17.3"
     release: *docker_release
+
+profile::core::gpio::packages:
+  - "libgpiod-utils"

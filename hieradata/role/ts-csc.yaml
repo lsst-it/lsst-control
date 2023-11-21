@@ -1,6 +1,0 @@
----
-classes:
-  - "profile::core::common"
-  - "profile::core::docker"
-  - "profile::core::docker::prune"
-  - "profile::nfs::client::csc"

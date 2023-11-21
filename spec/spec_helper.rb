@@ -278,9 +278,26 @@ shared_examples 'common' do |os_facts:, no_auth: false, chrony: true, network: t
   end
 
   if os_facts[:os]['family'] == 'RedHat'
+    if os_facts[:os]['release']['major'] == '7' && os_facts[:os]['architecture'] == 'aarch64'
+      # 7.24.0 is the last version of puppet-agent to support aarch64 on RHEL 7
+      # see: http://yum.puppet.com/puppet7/el/7/aarch64/
+      let(:puppetagent_version) { '7.24.0' }
+    else
+      let(:puppetagent_version) { PUPPETAGENT_VERSION }
+    end
+
+    it do
+      is_expected.to contain_yum__versionlock('puppet-agent')
+        .with_version(puppetagent_version)
+    end
+
+    it do
+      is_expected.to contain_package('puppet-agent')
+        .with_ensure(puppetagent_version)
+    end
+
     it { is_expected.to contain_class('epel') }
     it { is_expected.to contain_class('yum::plugin::versionlock').with_clean(true) }
-    it { is_expected.to contain_yum__versionlock('puppet-agent').with_version(PUPPETAGENT_VERSION) }
     it { is_expected.to contain_class('yum').with_manage_os_default_repos(true) }
     it { is_expected.to contain_resources('yumrepo').with_purge(true) }
     it { is_expected.to contain_class('profile::core::yum') }
@@ -344,7 +361,7 @@ shared_examples 'common' do |os_facts:, no_auth: false, chrony: true, network: t
   else # not osfamily RedHat
     it { is_expected.not_to contain_class('epel') }
     it { is_expected.not_to contain_class('yum::plugin::versionlock') }
-    it { is_expected.to contain_yum__versionlock('puppet-agent') }
+    it { is_expected.not_to contain_yum__versionlock('puppet-agent') }
     it { is_expected.not_to contain_class('yum') }
     it { is_expected.not_to contain_resources('yumrepo').with_purge(true) }
   end

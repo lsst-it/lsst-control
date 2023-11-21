@@ -284,8 +284,5 @@ profile::core::dtn::packages:
   - "hwloc"
   - "hwloc-gui"
 
-profile::core::gpio::packages:
-  - "libgpiod-utils"
-
 profile::core::i2c::packages:
   - "i2c-tools"

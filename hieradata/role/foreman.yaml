@@ -172,7 +172,7 @@ puppet::server_jvm_max_heap_size: &jvm_heap "5G"  # (max-act-inst * 0.5G) + 1G
 puppet::server_jvm_min_heap_size: *jvm_heap
 puppet::server_jvm_extra_args: ["-XX:ReservedCodeCacheSize=1G", "-Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"]
 puppet::server::puppetdb::soft_write_failure: true
-puppet::server_puppetserver_version: &server_version "7.9.3"
+puppet::server_puppetserver_version: &server_version "7.14.0"
 puppet::server_reports: "foreman,puppetdb"
 puppet::server_storeconfigs: true
 puppet::server: true

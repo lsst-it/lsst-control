@@ -259,7 +259,7 @@ selinux::mode: "disabled"
 # Stop iptables by default - the default rules are highly restrictive to the
 # point of harm and we don't have a meaningful permission set to make this useful.
 firewall::ensure: "stopped"
-puppet_agent::package_version: "7.21.0"
+puppet_agent::package_version: "7.27.0"
 puppet_agent::collection: "puppet7"
 puppet_agent::config:
   - {section: "agent", setting: "environment", ensure: "absent"}

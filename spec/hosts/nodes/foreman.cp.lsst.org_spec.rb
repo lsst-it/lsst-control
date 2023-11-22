@@ -139,15 +139,6 @@ describe 'foreman.cp.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_dhcp__pool('OCS-APP').with(
-          network: '139.229.167.0',
-          mask: '255.255.255.0',
-          range: ['139.229.167.241 139.229.167.249'],
-          gateway: '139.229.167.254',
-        )
-      end
-
-      it do
         is_expected.to contain_dhcp__pool('ESS-Sensors').with(
           network: '139.229.168.0',
           mask: '255.255.255.128',

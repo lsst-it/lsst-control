@@ -87,13 +87,6 @@ dhcp::pools:
       - {network: "139.229.167", mask: "24", gateway: "139.229.166.254"}
       - {network: "139.229.170", mask: "24", gateway: "139.229.166.254"}
       - {network: "139.229.178", mask: "24", gateway: "139.229.166.254"}
-  OCS-APP:
-    network: "139.229.167.0"
-    mask: "255.255.255.0"
-    gateway: "139.229.167.254"
-    range:
-      - "139.229.167.241 139.229.167.249"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
   ESS-Sensors:
     network: "139.229.168.0"
     mask: "255.255.255.128"

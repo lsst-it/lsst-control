@@ -81,6 +81,7 @@ foreman::oauth_active: true
 #foreman::oauth_consumer_key:  # secret
 #foreman::oauth_consumer_secret:  # secret
 foreman::passenger: false  # use puma; param removed in theforman/foreman >= 17.0.0
+# we need to figure out how to configure columns in newer foreman versions
 foreman::plugin::column_view::columns:
   role:
     title: "Role"

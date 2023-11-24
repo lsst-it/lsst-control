@@ -1,4 +1,4 @@
-lookup('classes', Array[String], 'unique').include
+lookup('classes', Array[String], 'unique', []).include
 
 $files = lookup(
   name          => 'files',

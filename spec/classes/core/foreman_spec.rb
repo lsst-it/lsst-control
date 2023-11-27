@@ -7,6 +7,13 @@ describe 'profile::core::foreman' do
     context "on #{os}" do
       let(:facts) { os_facts }
       let(:params) { { smee_url: 'https://foo.example.org' } }
+      let(:pre_condition) do
+        <<~PP
+        class { 'puppet':
+          environment => 'production',
+        }
+        PP
+      end
 
       it { is_expected.to compile.with_all_deps }
 

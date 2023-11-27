@@ -37,6 +37,7 @@ describe "#{role} role" do
           include_examples 'docker'
           include_examples 'gpio', os_facts: os_facts
           include_examples 'gpshat'
+          include_examples 'pigpio'
         end # host
       end # lsst_sites
     end # on os

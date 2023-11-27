@@ -286,3 +286,7 @@ profile::core::dtn::packages:
 
 profile::core::i2c::packages:
   - "i2c-tools"
+
+profile::pi::gpsd::packages:
+  - "gpsd-minimal"
+  - "gpsd-minimal-clients"

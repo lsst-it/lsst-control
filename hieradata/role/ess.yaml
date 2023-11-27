@@ -2,6 +2,5 @@
 classes:
   - "profile::core::common"
   - "profile::core::docker"
-  - "profile::pi::config"
   - "profile::pi::ftdi"
   - "profile::pi::rubinhat"

@@ -33,7 +33,7 @@ class profile::core::i2c (
   kmod::load { 'i2c_dev': }
 
   if fact('cpuinfo.processor.Model') =~ /Raspberry Pi/ {
-    profile::pi::config::fragment { 'i2c':
+    pi::config::fragment { 'i2c':
       content => 'dtparam=i2c_arm=on',
     }
   }

@@ -123,6 +123,13 @@ dhcp::pools:
     range:
       - "139.229.170.64 139.229.170.191"  # ~/25
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  TMA-Network:
+    network: "139.229.171.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.171.254"
+    range:
+      - "139.229.171.150 139.229.171.180"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   CCS-Pathfinder:
     network: "139.229.174.0"
     mask: "255.255.255.0"

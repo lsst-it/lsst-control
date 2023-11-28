@@ -50,7 +50,7 @@ hosts::entries:
   ipa3.tu.lsst.org:
     ip: "100.126.127.154"
   ipa1.ls.lsst.org:
-    ip: "100.78.115.42"
+    ip: "100.76.175.89"
   ipa2.ls.lsst.org:
     ip: "100.81.221.120"
   ipa3.ls.lsst.org:

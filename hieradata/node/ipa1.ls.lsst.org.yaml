@@ -1,3 +1,3 @@
 ---
 # need to use an off site ipa replica to bootstrap the first local ipa instance
-ipa::ipa_master_fqdn: "ipa1.tu.lsst.org"
+ipa::ipa_master_fqdn: "ipa1.cp.lsst.org"

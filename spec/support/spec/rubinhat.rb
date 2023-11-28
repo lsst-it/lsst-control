@@ -2,7 +2,7 @@
 
 shared_examples 'rubinhat' do
   it do
-    is_expected.to contain_profile__pi__config__fragment('rubinhat').with(
+    is_expected.to contain_pi__config__fragment('rubinhat').with(
       content: <<~CONTENT,
       enable_uart=1
       dtoverlay=disable-bt

@@ -3,7 +3,7 @@
 #
 class profile::pi::rubinhat {
   # https://confluence.lsstcorp.org/pages/viewpage.action?spaceKey=LTS&title=Rubin+Raspberry+Pi+Pin+Configuration+Issue
-  profile::pi::config::fragment { 'rubinhat':
+  pi::config::fragment { 'rubinhat':
     # lint:ignore:strict_indent
     content => @("CONTENT"),
       enable_uart=1

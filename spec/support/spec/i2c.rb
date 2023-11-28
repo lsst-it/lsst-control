@@ -27,7 +27,7 @@ shared_examples 'i2c' do |os_facts:|
 
   if os_facts[:cpuinfo]&.[]('processor')&.[]('Model') =~ %r{Raspberry Pi}
     it do
-      is_expected.to contain_profile__pi__config__fragment('i2c').with(
+      is_expected.to contain_pi__config__fragment('i2c').with(
         content: 'dtparam=i2c_arm=on',
       )
     end

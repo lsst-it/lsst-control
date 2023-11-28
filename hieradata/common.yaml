@@ -66,7 +66,7 @@ lookup_options:
   profile::core::firewall::firewall:
     merge:
       strategy: "deep"
-  profile::pi::config::fragments:
+  pi::config::fragments:
     merge:
       strategy: "deep"
   profile::core::systemd::tmpfile:
@@ -549,5 +549,5 @@ restic::bucket: "rubin-bm-backups/%{facts.fqdn}"
 restic::enable_backup: true
 restic::host: "s3.us-east-1.amazonaws.com"
 
-# XXX this should be removed when pi role/profile refactoring is complete
-profile::pi::config::reboot: false
+pi::config::reboot: false  # XXX this should be removed when pi role/profile refactoring is complete
+pi::cmdline::reboot: false  # XXX this should be removed when pi role/profile refactoring is complete

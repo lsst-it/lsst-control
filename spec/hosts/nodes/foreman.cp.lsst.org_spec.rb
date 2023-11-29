@@ -185,6 +185,15 @@ describe 'foreman.cp.lsst.org', :sitepp do
       end
 
       it do
+        is_expected.to contain_dhcp__pool('TMA-Network').with(
+          network: '139.229.171.0',
+          mask: '255.255.255.0',
+          range: ['139.229.171.150 139.229.171.180'],
+          gateway: '139.229.171.254',
+        )
+      end
+
+      it do
         is_expected.to contain_dhcp__pool('CCS-Pathfinder').with(
           network: '139.229.174.0',
           mask: '255.255.255.0',

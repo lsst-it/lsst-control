@@ -72,6 +72,8 @@ describe "#{role} role" do
             is_expected.to contain_class('openldap::client').with_uri("ldaps://#{facts[:fqdn]}")
           end
 
+          it { is_expected.to contain_class('ipa').with_enable_ip_address(false) }
+
           case os
           when 'centos-7-x86_64'
             %w[
@@ -87,7 +89,7 @@ describe "#{role} role" do
               it do
                 is_expected.to contain_yum__versionlock(pkg).with(
                   version: '4.6.8',
-                  release: '5.el7.centos.14',
+                  release: '5.el7.centos.15',
                 )
               end
             end
@@ -98,7 +100,7 @@ describe "#{role} role" do
               it do
                 is_expected.to contain_yum__versionlock(pkg).with(
                   version: '1.3.11.1',
-                  release: '2.el7_9',
+                  release: '3.el7_9',
                 )
               end
             end

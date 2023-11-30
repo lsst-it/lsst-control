@@ -11,10 +11,9 @@ profile::core::common::manage_sssd: false
 profile::core::sysctl::disable_ipv6::disable: false  # ipa-server-install wants ipv6
 ipa::ipa_role: "replica"
 ipa::configure_replica_ca: true
-ipa::enable_ip_address: true
+ipa::enable_ip_address: false
 ipa::configure_dns_server: false
 ipa::ipa_server_fqdn: "%{facts.fqdn}"
-ipa::ip_address: "%{facts.networking.ip}"
 
 clustershell::groupmembers:
   ipa:

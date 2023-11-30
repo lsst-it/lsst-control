@@ -1,8 +1,4 @@
 ---
-packages:
-  - "devtoolset-8"
-  - "rh-git218"
-
 postfix::manage_root_alias: false
 postfix::inet_protocols: "ipv4"
 postfix::inet_interfaces: "localhost"

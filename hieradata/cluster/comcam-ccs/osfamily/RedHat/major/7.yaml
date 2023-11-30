@@ -1,3 +1,7 @@
 ---
+packages:
+  - "devtoolset-8"
+  - "rh-git218"
+
 ccs_sal::rpms_private:
   OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"

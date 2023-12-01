@@ -13,6 +13,7 @@ describe 'auxtel-hcu02.cp.lsst.org', :sitepp do
                        is_virtual: false,
                        virtual: 'physical',
                        dmi: {
+                         'manufacturer' => 'Advantech',
                          'product' => {
                            'name' => 'UNO-1483G-434AE',
                          },
@@ -28,6 +29,7 @@ describe 'auxtel-hcu02.cp.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal no bmc'
+      include_examples 'powertop'
       it { is_expected.to have_network__interface_resource_count(4) }
 
       it do

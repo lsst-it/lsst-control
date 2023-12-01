@@ -3,7 +3,16 @@
 #   For *baremetal* only.
 #
 class profile::core::hardware {
-  include profile::core::powertop
+  case fact('dmi.manufacturer') {
+    /Advantech/, /VersaLogic Corporation/: {
+      class { 'powertop':
+        ensure => 'absent',
+      }
+    }
+    default: {
+      include powertop
+    }
+  }
 
   # lint:ignore:case_without_default
   case fact('dmi.product.name') {

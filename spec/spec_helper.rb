@@ -1280,7 +1280,7 @@ shared_examples 'baremetal' do |bmc: nil|
     end
   end
 
-  it { is_expected.to contain_class('profile::core::powertop') }
+  it { is_expected.to contain_class('powertop') }
 end
 
 shared_examples 'baremetal no bmc' do
@@ -1290,7 +1290,7 @@ end
 shared_examples 'vm' do
   it { is_expected.not_to contain_class('ipmi') }
   it { is_expected.to contain_class('tuned').with_active_profile('virtual-guest') }
-  it { is_expected.not_to contain_class('profile::core::powertop') }
+  it { is_expected.not_to contain_class('powertop') }
 end
 
 shared_examples 'ipmi' do

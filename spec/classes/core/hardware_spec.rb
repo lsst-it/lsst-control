@@ -13,14 +13,17 @@ describe 'profile::core::hardware' do
         let(:facts) do
           super().merge(
             dmi: {
-              product: {
-                name: 'PowerEdge',
+              'manufacturer' => 'Dell Inc.',
+              'product' => {
+                'name' => 'PowerEdge',
               },
             },
           )
         end
 
         it { is_expected.to compile.with_all_deps }
+
+        include_examples 'powertop'
         it { is_expected.to contain_class('ipmi') }
         it { is_expected.not_to contain_class('profile::core::kernel::pcie_aspm') }
         it { is_expected.not_to contain_class('profile::core::kernel::nvme_apst') }
@@ -43,14 +46,17 @@ describe 'profile::core::hardware' do
         let(:facts) do
           super().merge(
             dmi: {
-              product: {
-                name: '1114S-WN10RT',
+              'manufacturer' => 'Supermicro',
+              'product' => {
+                'name' => '1114S-WN10RT',
               },
             },
           )
         end
 
         it { is_expected.to compile.with_all_deps }
+
+        include_examples 'powertop'
         it { is_expected.to contain_class('ipmi') }
 
         if (os_facts[:os]['family'] == 'RedHat') && (os_facts[:os]['release']['major'] == '7')
@@ -72,14 +78,17 @@ describe 'profile::core::hardware' do
         let(:facts) do
           super().merge(
             dmi: {
-              board: {
-                product: 'H12SSL-NT',
+              'manufacturer' => 'Supermicro',
+              'board' => {
+                'product' => 'H12SSL-NT',
               },
             },
           )
         end
 
         it { is_expected.to compile.with_all_deps }
+
+        include_examples 'powertop'
         it { is_expected.to contain_class('ipmi') }
         it { is_expected.not_to contain_class('profile::core::perccli') }
         it { is_expected.not_to contain_class('profile::core::kernel::pcie_aspm') }
@@ -91,16 +100,49 @@ describe 'profile::core::hardware' do
         let(:facts) do
           super().merge(
             dmi: {
-              product: {
-                name: 'SSG-640SP-E1CR90',
+              'manufacturer' => 'Supermicro',
+              'product' => {
+                'name' => 'SSG-640SP-E1CR90',
               },
             },
           )
         end
 
         it { is_expected.to compile.with_all_deps }
+
+        include_examples 'powertop'
         it { is_expected.to contain_class('ipmi') }
       end  # SSG-640SP-E1CR90
+
+      context 'with manufacturer' do
+        context 'when VersLogic Corp.' do
+          let(:facts) do
+            super().merge(
+              dmi: {
+                'manufacturer' => 'VersLogic Corp.',
+              },
+            )
+          end
+
+          it { is_expected.to compile.with_all_deps }
+
+          include_examples 'powertop'
+        end  # VersLogic Corp.
+
+        context 'when Advantech' do
+          let(:facts) do
+            super().merge(
+              dmi: {
+                'manufacturer' => 'Advantech',
+              },
+            )
+          end
+
+          it { is_expected.to compile.with_all_deps }
+
+          include_examples 'powertop'
+        end  # Advantech
+      end
     end
   end
 end

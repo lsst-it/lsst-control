@@ -8,6 +8,7 @@ classes:
   - "profile::core::nfsclient"
 
 packages:
+  - "telnet"
   - "usbutils"
 
 ccs_hcu::canbus::module: "advSocketCAN"

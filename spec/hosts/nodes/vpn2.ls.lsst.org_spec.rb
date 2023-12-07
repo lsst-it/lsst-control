@@ -11,10 +11,10 @@ describe 'vpn2.ls.lsst.org', :sitepp do
         override_facts(os_facts,
                        fqdn: 'vpn2.ls.lsst.org',
                        is_virtual: true,
-                       virtual: 'vmware',
+                       virtual: 'physical',
                        dmi: {
                          'product' => {
-                           'name' => 'VMware7,1',
+                           'name' => 'PowerEdge R640',
                          },
                        })
       end
@@ -28,10 +28,11 @@ describe 'vpn2.ls.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       include_context 'with nm interface'
+
       it { is_expected.to have_nm__connection_resource_count(1) }
 
-      context 'with ens192' do
-        let(:interface) { 'ens192' }
+      context 'with eno1' do
+        let(:interface) { 'eno1' }
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
@@ -39,13 +40,6 @@ describe 'vpn2.ls.lsst.org', :sitepp do
         it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.135.53;139.229.135.54;139.229.135.55;') }
         it { expect(nm_keyfile['ipv4']['dns-search']).to eq('ls.lsst.org;') }
         it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
-
-        it do
-          is_expected.to contain_k5login('/home/vpn-ha/.k5login').with(
-            ensure: 'present',
-            principals: ['vpn-ha/vpn1.ls.lsst.org@LSST.CLOUD'],
-          )
-        end
       end
     end # on os
   end # on_supported_os

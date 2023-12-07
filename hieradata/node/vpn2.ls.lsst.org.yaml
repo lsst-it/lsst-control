@@ -1,12 +1,12 @@
 ---
 nm::connections:
-  ens192:
+  eno1:
     content:
       connection:
-        id: "ens192"
+        id: "eno1"
         uuid: "03da7500-2101-c722-2438-d0d006c28c73"
         type: "ethernet"
-        interface-name: "ens192"
+        interface-name: "eno1"
       ethernet: {}
       ipv4:
         address1: "139.229.138.3/24,139.229.138.254"
@@ -16,9 +16,3 @@ nm::connections:
       ipv6:
         method: "ignore"
       proxy: {}
-
-profile::core::k5login::k5login:
-  "/home/vpn-ha/.k5login":
-    ensure: "present"
-    principals:
-      - "vpn-ha/vpn1.ls.lsst.org@LSST.CLOUD"

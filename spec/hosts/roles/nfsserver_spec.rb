@@ -128,6 +128,23 @@ describe "#{role} role" do
         end
 
         it do
+          expect(catalogue.resource('nfs::server::export', '/data/rsphome')[:clients])
+            .to include(
+              '139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
+              '139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)',
+              'nfs2.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,no_root_squash)',
+            )
+        end
+
+        it do
+          is_expected.to contain_nfs__client__mount('/net/self/data/rsphome').with(
+            share: 'rsphome',
+            server: facts[:fqdn],
+            atboot: true,
+          )
+        end
+
+        it do
           is_expected.to contain_nfs__client__mount('/net/self/data/project').with(
             share: 'project',
             server: facts[:fqdn],

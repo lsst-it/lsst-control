@@ -16,9 +16,3 @@ nm::connections:
       ipv6:
         method: "ignore"
       proxy: {}
-
-profile::core::k5login::k5login:
-  "/home/vpn-ha/.k5login":
-    ensure: "present"
-    principals:
-      - "vpn-ha/vpn2.ls.lsst.org@LSST.CLOUD"

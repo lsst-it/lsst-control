@@ -39,13 +39,6 @@ describe 'vpn1.ls.lsst.org', :sitepp do
         it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.135.53;139.229.135.54;139.229.135.55;') }
         it { expect(nm_keyfile['ipv4']['dns-search']).to eq('ls.lsst.org;') }
         it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
-
-        it do
-          is_expected.to contain_k5login('/home/vpn-ha/.k5login').with(
-            ensure: 'present',
-            principals: ['vpn-ha/vpn2.ls.lsst.org@LSST.CLOUD'],
-          )
-        end
       end
     end # on os
   end # on_supported_os

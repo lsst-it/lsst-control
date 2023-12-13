@@ -23,6 +23,11 @@ shared_examples 'rubinhat' do
       rules: [
         'KERNEL=="ttyS[0-9]*", GROUP="70014", MODE="0660"',
         'KERNEL=="ttyAMA[0-9]*", GROUP="70014", MODE="0660"',
+        'ATTR{iomem_base}=="0xFE201000", SYMLINK:="serial0"',
+        'ATTR{iomem_base}=="0xFE201400", SYMLINK:="serial1"',
+        'ATTR{iomem_base}=="0xFE201600", SYMLINK:="serial2"',
+        'ATTR{iomem_base}=="0xFE201800", SYMLINK:="serial3"',
+        'ATTR{iomem_base}=="0xFE201A00", SYMLINK:="serial4"',
       ],
     )
   end

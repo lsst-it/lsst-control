@@ -6,6 +6,7 @@ classes:
   - "profile::core::common"
 
 packages:
+  - "telnet"
   - "usbutils"
 
 ccs_hcu::canbus::module: "advSocketCAN"

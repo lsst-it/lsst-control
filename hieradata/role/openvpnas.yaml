@@ -1,0 +1,4 @@
+---
+classes:
+  - "profile::core::openvpnas"
+  - "profile::core::common"

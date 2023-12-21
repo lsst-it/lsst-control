@@ -194,6 +194,10 @@ dhcp::pools:
     range:
       - "139.229.191.129 139.229.191.239"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+    nameservers:
+      - "1.1.1.1"
+      - "1.0.0.1"
+      - "8.8.8.8"
   IT-CCTV:
     network: "10.17.7.0"
     mask: "255.255.255.0"

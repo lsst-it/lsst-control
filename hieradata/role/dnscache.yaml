@@ -42,10 +42,4 @@ dns::zones:
     zonetype: "forward"
     forward: "only"
     forwarders:
-      - &crux "139.229.136.23"
-  "136.229.139.in-addr.arpa":
-    reverse: true
-    zonetype: "forward"
-    forward: "only"
-    forwarders:
-      - *crux
+      - &dc-ls-2 "139.229.135.58"

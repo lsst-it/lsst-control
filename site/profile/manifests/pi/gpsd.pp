@@ -26,4 +26,21 @@ class profile::pi::gpsd (
       require => Package[$packages],
     }
   }
+  systemd::dropin_file { 'gpsd.conf':
+    unit    => 'gpsd.socket',
+    # lint:ignore:strict_indent
+    content => @(EOS),
+      [Socket]
+      ListenStream=/run/gpsd.sock
+      #ListenStream=[::1]:2947
+      ListenStream=127.0.0.1:2947
+      # To allow gpsd remote access, start gpsd with the -G option and
+      # uncomment the next two lines:
+      # ListenStream=[::]:2947
+      # ListenStream=0.0.0.0:2947
+      SocketMode=0600
+      BindIPv6Only=yes
+      | EOS
+    # lint:endignore
+  }
 }

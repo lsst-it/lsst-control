@@ -30,6 +30,9 @@ describe 'rancher01.ls.lsst.org', :sitepp do
 
       include_examples 'vm'
       include_context 'with nm interface'
+      it do
+        is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
+      end
 
       it { is_expected.to have_nm__connection_resource_count(2) }
 

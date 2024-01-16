@@ -400,33 +400,8 @@ sssd::package_name:
 sssd::service_names:
   - "sssd"
 
-telegraf::quiet: true
-telegraf::hostname: "%{facts.networking.fqdn}"
+telegraf::ensure: "absent"
 telegraf::purge_config_fragments: true
-telegraf::inputs:
-  cpu:
-    - percpu: true
-      totalcpu: true
-  mem: [{}]
-  disk: [{}]
-  diskio: [{}]
-  net:
-    - ignore_protocol_stats: true
-  nstat: [{}]
-  swap: [{}]
-  system: [{}]
-  kernel: [{}]
-  kernel_vmstat: [{}]
-  netstat: [{}]
-  processes: [{}]
-telegraf::outputs:
-  http:
-    - url: "https://mimir.o11y.dev.lsst.org/api/v1/push"
-      data_format: "prometheusremotewrite"
-      headers:
-        Content-Type: "application/x-protobuf"
-        Content-Encoding: "snappy"
-        X-Prometheus-Remote-Write-Version: "0.1.0"
 
 mit_krb5::includedir:
   - "/etc/krb5.conf.d/"

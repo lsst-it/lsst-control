@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-role = 'laserrpi'
+role = 'logictimer'
 
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
@@ -36,6 +36,7 @@ describe "#{role} role" do
           include_examples 'common', os_facts: os_facts
           include_examples 'docker'
           include_examples 'gpio', os_facts: os_facts
+          include_examples 'gpshat'
           include_examples 'pigpio'
         end # host
       end # lsst_sites

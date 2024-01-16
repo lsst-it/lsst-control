@@ -3,7 +3,4 @@ classes:
   - "profile::core::common"
   - "profile::core::docker"
   - "profile::core::gpio"
-  - "profile::pi::gpshat"
   - "profile::pi::pigpio"
-
-profile::core::common::manage_chrony: false  # conflicts with profile::pi::gpshat

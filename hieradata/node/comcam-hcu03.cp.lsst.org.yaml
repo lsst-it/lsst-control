@@ -1,6 +1,9 @@
 ---
 ccs_hcu::filter_changer: true
 
+ccs_hcu::imanager: true
+ccs_hcu::imanager::version: "1.5.1"
+
 ccs_software::services:
   prod:
     - "bonn-shutter"

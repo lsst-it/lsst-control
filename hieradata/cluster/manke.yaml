@@ -1,166 +1,167 @@
 ---
 clustershell::groupmembers:
-  manke: {group: "manke", member: "manke[01-10]"}
+  manke:
+    group: "manke"
+    member: "manke[01-10]"
 profile::core::ospl::enable_rundir: true
 profile::core::rke::enable_dhcp: true
 nm::connections:
   eno1np0:
-    content: |
-      [connection]
-      id=eno1np0
-      uuid=f330f829-20cc-b829-67b0-18086a5fe6fa
-      type=ethernet
-      autoconnect=false
-      interface-name=eno1np0
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
+    content:
+      connection:
+        id: "eno1np0"
+        uuid: "f330f829-20cc-b829-67b0-18086a5fe6fa"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno1np0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
   eno2np1:
-    content: |
-      [connection]
-      id=eno2np1
-      uuid=de9904c8-9577-1a17-36b1-34b94132f06a
-      type=ethernet
-      autoconnect=false
-      interface-name=eno2np1
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
+    content:
+      connection:
+        id: "eno2np1"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno2np1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
   enp4s0f3u2u2c2:
-    content: |
-      [connection]
-      id=enp4s0f3u2u2c2
-      uuid=283f3035-13d7-4c87-9d7a-7d47861fa1f9
-      type=ethernet
-      autoconnect=false
-      interface-name=enp4s0f3u2u2c2
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
+    content:
+      connection:
+        id: "enp4s0f3u2u2c2"
+        uuid: "283f3035-13d7-4c87-9d7a-7d47861fa1f9"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp4s0f3u2u2c2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
   enp129s0f0:
-    content: |
-      [connection]
-      id=enp129s0f0
-      uuid=688bf5bf-d649-34b4-15eb-b07c50ac43f8
-      type=ethernet
-      interface-name=enp129s0f0
-
-      [ethernet]
-
-      [ipv4]
-      method=auto
-
-      [ipv6]
-      method=disabled
+    content:
+      connection:
+        id: "enp129s0f0"
+        uuid: "688bf5bf-d649-34b4-15eb-b07c50ac43f8"
+        type: "ethernet"
+        interface-name: "enp129s0f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
   enp129s0f1:
-    content: |
-      [connection]
-      id=enp129s0f1
-      uuid=46d19ce1-bcab-7e77-6fc7-b730b26c54b1
-      type=ethernet
-      autoconnect=false
-      interface-name=enp129s0f1
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
+    content:
+      connection:
+        id: "enp129s0f1"
+        uuid: "46d19ce1-bcab-7e77-6fc7-b730b26c54b1"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp129s0f1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
   enp129s0f1.2502:
-    content: |
-      [connection]
-      id=enp129s0f1.2502
-      uuid=e74daaad-4d73-4015-bb26-83c460ddf572
-      type=vlan
-      interface-name=enp129s0f1.2502
-      master=br2502
-      slave-type=bridge
-
-      [ethernet]
-
-      [vlan]
-      flags=1
-      id=2502
-      parent=enp129s0f1
-
-      [bridge-port]
+    content:
+      connection:
+        id: "enp129s0f1.2502"
+        uuid: "e74daaad-4d73-4015-bb26-83c460ddf572"
+        type: "vlan"
+        interface-name: "enp129s0f1.2502"
+        master: "br2502"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2502"
+        parent: "enp129s0f1"
+      bridge-port: {}
+  enp129s0f1.2504:
+    content:
+      connection:
+        id: "enp129s0f1.2504"
+        uuid: "0690521a-4240-44a0-9fa6-b9ab82594970"
+        type: "vlan"
+        interface-name: "enp129s0f1.2504"
+        master: "br2504"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2504"
+        parent: "enp129s0f1"
+      bridge-port: {}
   enp129s0f1.2505:
-    content: |
-      [connection]
-      id=enp129s0f1.2505
-      uuid=d5642f16-53c6-6053-7d4d-8c6ef5ae8a38
-      type=vlan
-      interface-name=enp129s0f1.2505
-      master=br2505
-      slave-type=bridge
-
-      [ethernet]
-
-      [vlan]
-      flags=1
-      id=2505
-      parent=enp129s0f1
-
-      [bridge-port]
+    content:
+      connection:
+        id: "enp129s0f1.2505"
+        uuid: "d5642f16-53c6-6053-7d4d-8c6ef5ae8a38"
+        type: "vlan"
+        interface-name: "enp129s0f1.2505"
+        master: "br2505"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2505"
+        parent: "enp129s0f1"
+      bridge-port: {}
   br2502:
-    content: |
-      [connection]
-      id=br2502
-      uuid=7dd05d98-a9c3-4569-a7c3-00316b13c0eb
-      type=bridge
-      interface-name=br2502
-
-      [ethernet]
-
-      [bridge]
-      stp=false
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
-
-      [proxy]
+    content:
+      connection:
+        id: "br2502"
+        uuid: "7dd05d98-a9c3-4569-a7c3-00316b13c0eb"
+        type: "bridge"
+        interface-name: "br2502"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  br2504:
+    content:
+      connection:
+        id: "br2504"
+        uuid: "3a801536-2861-43ee-a773-ff25ac344f4a"
+        type: "bridge"
+        interface-name: "br2504"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
   br2505:
-    content: |
-      [connection]
-      id=br2505
-      uuid=61800cc2-7bf7-4463-de5a-25e7d7c355a4
-      type=bridge
-      interface-name=br2505
-
-      [ethernet]
-
-      [bridge]
-      stp=false
-
-      [ipv4]
-      method=disabled
-      route1=139.229.153.0/24
-      route1_options=table=2505
-      route2=0.0.0.0/0,139.229.153.254
-      route2_options=table=2505
-      routing-rule1=priority 100 from 139.229.153.64/26 table 2505
-
-      [ipv6]
-      method=disabled
-
-      [proxy]
+    content:
+      connection:
+        id: "br2505"
+        uuid: "61800cc2-7bf7-4463-de5a-25e7d7c355a4"
+        type: "bridge"
+        interface-name: "br2505"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "disabled"
+        route1: "139.229.153.0/24"
+        route1_options: "table=2505"
+        route2: "0.0.0.0/0,139.229.153.254"
+        route2_options: "table=2505"
+        routing-rule1: "priority 100 from 139.229.153.64/26 table 2505"
+      ipv6:
+        method: "disabled"
+      proxy: {}

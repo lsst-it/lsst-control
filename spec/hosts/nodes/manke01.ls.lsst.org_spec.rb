@@ -63,7 +63,7 @@ describe 'manke01.ls.lsst.org', :sitepp do
 
       it { is_expected.to contain_class('profile::core::ospl').with_enable_rundir(true) }
 
-      it { is_expected.to have_nm__connection_resource_count(9) }
+      it { is_expected.to have_nm__connection_resource_count(11) }
 
       %w[
         eno1np0
@@ -96,6 +96,22 @@ describe 'manke01.ls.lsst.org', :sitepp do
 
       context 'with br2502' do
         let(:interface) { 'br2502' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm no-ip interface'
+        it_behaves_like 'nm bridge interface'
+      end
+
+      context 'with enp129s0f1.2504' do
+        let(:interface) { 'enp129s0f1.2504' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm vlan interface', id: 2504, parent: 'enp129s0f1'
+        it_behaves_like 'nm bridge slave interface', master: 'br2504'
+      end
+
+      context 'with br2504' do
+        let(:interface) { 'br2504' }
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm no-ip interface'

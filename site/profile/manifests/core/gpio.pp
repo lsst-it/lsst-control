@@ -17,7 +17,7 @@ class profile::core::gpio (
     ],
   }
 
-  # ccs_hcu::imanager declares the gpio group, but it's not a system group
+  # ccs_hcu::imanager also declares the gpio group.
   unless defined(Group['gpio']) {
     group { 'gpio':
       ensure     => present,

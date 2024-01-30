@@ -2,5 +2,3 @@
 dhcp::dnsdomain: []  # ignore site value & mod default
 dhcp::nameservers: ~  # ignore site value
 dhcp::ntpservers: ~  # ignore site value
-
-#daq::daqsdk::version: "R5-V6.7"

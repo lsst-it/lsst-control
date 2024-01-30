@@ -12,3 +12,5 @@ ccs_software::installations:
 
 ccs_monit::alert:
   - "base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com"
+
+daq::daqsdk::version: "R5-V8.1"

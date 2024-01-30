@@ -31,7 +31,7 @@ describe 'comcam-daq-mgt.cp.lsst.org', :sitepp do
       include_examples 'lsst-daq dhcp-server'
       include_examples 'daq nfs exports'
 
-      it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V6.7') }
+      it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V8.1') }
       it { is_expected.to contain_class('daq::rptsdk').with_version('V3.5.3') }
       it { is_expected.to contain_host('comcam-sm').with_ip('10.0.0.212') }
       it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }

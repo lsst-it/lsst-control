@@ -24,7 +24,7 @@ chrony::queryhosts:
   - "192.168/16"
 chrony::clientlog: true
 
-daq::daqsdk::version: "R5-V8.1"
+daq::daqsdk::version: "R5-V8.2"
 daq::rptsdk::version: "V3.5.3"
 
 # dhcp for DAQ + clients

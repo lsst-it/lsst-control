@@ -31,7 +31,7 @@ describe 'auxtel-daq-mgt.cp.lsst.org', :sitepp do
       include_examples 'lsst-daq dhcp-server'
       include_examples 'daq nfs exports'
 
-      it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V8.1') }
+      it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V8.2') }
       it { is_expected.to contain_class('daq::rptsdk').with_version('V3.5.3') }
       it { is_expected.to contain_host('auxtel-sm').with_ip('192.168.101.2') }
       it { is_expected.to contain_network__interface('p3p1').with_ensure('absent') }

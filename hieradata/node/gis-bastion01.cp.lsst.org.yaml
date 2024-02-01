@@ -1,15 +1,29 @@
 ---
-network::interfaces_hash:
-  enp1s0f0:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  enp1s0f1:  # GIS Private Network
-    bootproto: "none"
-    ipaddress: "192.168.180.230"
-    netmask: "255.255.255.0"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
+nm::connections:
+  enp1s0f0:
+    content:
+      connection:
+        id: "enp1s0f0"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "enp1s0f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp1s0f1:
+    content:
+      connection:
+        id: "enp1s0f1"
+        uuid: "da97db8e-6400-4cca-9334-71995eb2ac1d"
+        type: "ethernet"
+        interface-name: "enp1s0f1"
+      ethernet: {}
+      ipv4:
+        method: "manual"
+        address1: "192.168.180.230/24"
+      ipv6:
+        method: "disabled"
+      proxy: {}

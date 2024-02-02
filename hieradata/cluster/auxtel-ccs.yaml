@@ -64,42 +64,6 @@ accounts::user_list:
 ccs_software::desktop: true
 ccs_software::env: "AuxTel"
 ccs_software::installations:
-  ats-software-2.2.10:
-    aliases:
-      - "puppet-2.2.10"
-
-  ats-software-2.2.11:
-    aliases:
-      - "puppet-2.2.11"
-
-  ats-software-2.2.13:
-    aliases:
-      - "puppet-2.2.13"
-
-  ats-software-2.2.14:
-    aliases:
-      - "puppet-2.2.14"
-
-  ats-software-2.2.15:
-    aliases:
-      - "puppet-2.2.15"
-
-  ats-software-2.3.0:
-    aliases:
-      - "puppet-2.3.0"
-
-  ats-software-2.3.1:
-    aliases:
-      - "puppet-2.3.1"
-
-  ats-software-2.3.2:
-    aliases:
-      - "puppet-2.3.2"
-
-  ats-software-2.3.3:
-    aliases:
-      - "puppet-2.3.3"
-
   ats-software-2.3.4:
     aliases:
       - "puppet-2.3.4"
@@ -111,6 +75,10 @@ ccs_software::installations:
   ats-software-2.3.6:
     aliases:
       - "puppet-2.3.6"
+
+  ats-software-2.3.7:
+    aliases:
+      - "puppet-2.3.7"
 
 ## Used in lookups:
 ccs_site: "summit"

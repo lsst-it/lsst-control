@@ -90,18 +90,6 @@ java_artisanal::dir: "jdk1.8.0_202-amd64"
 ccs_software::desktop: true
 ccs_software::env: "MainCamera"
 ccs_software::installations:
-  lsstcam-software-1.0.0:
-    aliases:
-      - "puppet-1.0.0"
-  lsstcam-software-1.0.1:
-    aliases:
-      - "puppet-1.0.1"
-  lsstcam-software-1.0.3:
-    aliases:
-      - "puppet-1.0.3"
-  lsstcam-software-1.0.4:
-    aliases:
-      - "puppet-1.0.4"
   lsstcam-software-1.0.5:
     aliases:
       - "puppet-1.0.5"
@@ -111,6 +99,9 @@ ccs_software::installations:
   lsstcam-software-1.0.7:
     aliases:
       - "puppet-1.0.7"
+  lsstcam-software-1.0.8:
+    aliases:
+      - "puppet-1.0.8"
 
 daq::daqsdk::purge: false
 

@@ -105,4 +105,4 @@ ccs_software::installations:
 
 daq::daqsdk::purge: false
 
-daq::daqsdk::version: "R5-V6.7"
+daq::daqsdk::version: "R5-V8.1"

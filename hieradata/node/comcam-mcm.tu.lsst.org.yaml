@@ -42,6 +42,7 @@ ccs_software::services:
     - "mmm"
     - "comcam-mmm"
     - "cluster-monitor"
+    - "lockmanager"
 ## Next two are handled by the ccs_sal module. FIXME duplication.
 #    - "comcam-mcm"  # XXX should both comcam-mcm and mcm-comcam be running???
 #    - "comcam-ocs-bridge"

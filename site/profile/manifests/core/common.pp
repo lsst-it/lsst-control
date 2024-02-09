@@ -43,6 +43,9 @@
 # @param manage_node_exporter
 #   If `true`, install prometheus node_exporter
 #
+# @param manage_network_manager
+#  If `true`, Networkmanager will be configured
+#
 class profile::core::common (
   Boolean $manage_puppet_agent = true,
   Boolean $manage_chrony = true,
@@ -57,6 +60,7 @@ class profile::core::common (
   Boolean $manage_irqbalance = true,
   Boolean $manage_resolv_conf = true,
   Boolean $manage_node_exporter = true,
+  Boolean $manage_network_manager = true,
 ) {
   include auditd
   include accounts
@@ -107,8 +111,10 @@ class profile::core::common (
         include network
       }
       default: { # EL9+
-        ensure_packages(['NetworkManager-initscripts-updown'])
-        include nm
+        if $manage_network_manager {
+          ensure_packages(['NetworkManager-initscripts-updown'])
+          include nm
+        }
       }
     }
   }

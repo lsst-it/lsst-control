@@ -59,21 +59,21 @@ dnf -y install puppetdb puppetdb-termini postgresql-contrib
 Output from the installer should be like this:
 
 ```
-[root@lsst ~]# foreman-installer --enable-foreman-plugin-puppetdb
-2024-02-09 19:15:16 [NOTICE] [root] Loading installer configuration. This will take some time.
-2024-02-09 19:15:18 [NOTICE] [root] Running installer with log based terminal output at level NOTICE.
-2024-02-09 19:15:18 [NOTICE] [root] Use -l to set the terminal output log level to ERROR, WARN, NOTICE, INFO, or DEBUG. See --full-help for definitions.
-2024-02-09 19:15:20 [NOTICE] [configure] Starting system configuration.
-2024-02-09 19:16:21 [NOTICE] [configure] 250 configuration steps out of 1244 steps complete.
-2024-02-09 19:16:32 [NOTICE] [configure] 500 configuration steps out of 1247 steps complete.
-2024-02-09 19:16:37 [NOTICE] [configure] 750 configuration steps out of 1272 steps complete.
-2024-02-09 19:16:49 [NOTICE] [configure] 1000 configuration steps out of 1272 steps complete.
-2024-02-09 19:18:04 [NOTICE] [configure] 1250 configuration steps out of 1272 steps complete.
-2024-02-09 19:18:07 [NOTICE] [configure] System configuration has finished.
+[root@lsst ~]# foreman-installer --enable-foreman-plugin-remote-execution --enable-foreman-cli-remote-execution --enable-foreman-proxy-plugin-remote-execution-script
+2024-02-11 13:36:41 [NOTICE] [root] Loading installer configuration. This will take some time.
+2024-02-11 13:36:43 [NOTICE] [root] Running installer with log based terminal output at level NOTICE.
+2024-02-11 13:36:43 [NOTICE] [root] Use -l to set the terminal output log level to ERROR, WARN, NOTICE, INFO, or DEBUG. See --full-help for definitions.
+2024-02-11 13:36:44 [NOTICE] [configure] Starting system configuration.
+2024-02-11 13:37:40 [NOTICE] [configure] 250 configuration steps out of 1323 steps complete.
+2024-02-11 13:37:48 [NOTICE] [configure] 500 configuration steps out of 1326 steps complete.
+2024-02-11 13:37:59 [NOTICE] [configure] 750 configuration steps out of 1351 steps complete.
+2024-02-11 13:38:00 [NOTICE] [configure] 1000 configuration steps out of 1351 steps complete.
+2024-02-11 13:38:17 [NOTICE] [configure] 1250 configuration steps out of 1351 steps complete.
+2024-02-11 13:39:33 [NOTICE] [configure] System configuration has finished.
 Executing: foreman-rake upgrade:run
   Success!
   * Foreman is running at https://lsst.tim.betadots.training
-      Initial credentials are admin / oXBKGyVfGa4wJzEQ
+      Initial credentials are admin / fbNn4VM4NjA2n2H4
   * Foreman Proxy is running at https://lsst.tim.betadots.training:8443
 
 The full log is at /var/log/foreman-installer/foreman.log
@@ -201,4 +201,4 @@ We need to set the role and site
 
 
 
-puppet agent -t accounts,prometheus,chrony,yumrepo,auditd,tftp,convenience,debugutils,rsyslog,discovery,puppetserver,host,irqbalance,ssh,lldpd,sysstat
+puppet agent -t --tags accounts,prometheus,chrony,yumrepo,auditd,tftp,convenience,debugutils,rsyslog,discovery,puppetserver,host,irqbalance,ssh,lldpd,sysstat

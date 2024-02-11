@@ -1,13 +1,13 @@
 ---
 # some hacks to get puppet working outside of LSST
-profile::core::common::manage_ipa: false
 ipa::domain_join_password: "foofoofoofoo"
 resolv_conf::nameservers:
   - "185.12.64.2"
   - "185.12.64.1"
   - "2a01:4ff:ff00::add:2"
   - "2a01:4ff:ff00::add:1"
-profile::core::foreman::smee_url: "https://smee.io/foo"
+# profile::core::foreman::smee_url: "https://smee.io/foo"
+profile::core::foreman::manage_smee: false
 foreman_proxy::plugin::dns::route53::aws_access_key: "foo"
 foreman_proxy::plugin::dns::route53::aws_secret_key: "foo"
 puppet::server::puppetdb::server: "%{trusted.certname}"
@@ -38,4 +38,5 @@ puppetdb::globals::version: '7.16.0'
 profile::core::common::manage_sssd: false
 profile::core::common::manage_network_manager: false
 profile::core::common::manage_krb5: false
+# ipa class is still added to the catalog :thinking:
 profile::core::common::manage_ipa: false

@@ -12,16 +12,16 @@ example IPA isn't managed and no real route53 keys are provided.
 We use Hetzner for cloud instances to test setups:
 
 ```
-hcloud server create --image=alma-8 --name=lsst.tim.betadots.training --type=cpx41 --ssh-key='bastelfreak betadots'
-hcloud server set-rdns lsst.tim.betadots.training --ip=95.217.179.41 --hostname=lsst.tim.betadots.training
-hcloud server set-rdns lsst.tim.betadots.training --ip=2a01:4f9:c012:acee::1 --hostname=lsst.tim.betadots.training
+hcloud server create --image=alma-8 --name=$host --type=cpx41 --ssh-key='bastelfreak'
+hcloud server set-rdns $host --ip=95.217.179.41 --hostname=$host
+hcloud server set-rdns $host --ip=2a01:4f9:c012:acee::1 --hostname=$host
 ```
 
 (Now also add matching A/AAAA records to make this easier)
 
 ```
-ssh-keygen -f ~/.ssh/known_hosts -R lsst.tim.betadots.training
-ssh-keyscan lsst.tim.betadots.training >> ~/.ssh/known_hosts
+ssh-keygen -f ~/.ssh/known_hosts -R $host
+ssh-keyscan $host >> ~/.ssh/known_hosts
 ```
 
 ## Patching
@@ -45,6 +45,14 @@ mkdir -p ~/.vim/{backupdir,undodir}
 wget https://gist.githubusercontent.com/bastelfreak/a3cfa50db2a7be92c47f246f8f22ca5c/raw/dab14889680d4a8bbcb83580185ca2e5040d5947/vla.vimrc -O ~/.vimrc
 ```
 
+### Helpful tools
+
+Those are helpful during testing
+
+```
+dnf -y install htop tig jq
+```
+
 ## install Puppet + Foreman
 
 ```
@@ -59,22 +67,22 @@ dnf -y install puppetdb puppetdb-termini postgresql-contrib
 Output from the installer should be like this:
 
 ```
-[root@lsst ~]# foreman-installer --enable-foreman-plugin-remote-execution --enable-foreman-cli-remote-execution --enable-foreman-proxy-plugin-remote-execution-script
-2024-02-11 13:36:41 [NOTICE] [root] Loading installer configuration. This will take some time.
-2024-02-11 13:36:43 [NOTICE] [root] Running installer with log based terminal output at level NOTICE.
-2024-02-11 13:36:43 [NOTICE] [root] Use -l to set the terminal output log level to ERROR, WARN, NOTICE, INFO, or DEBUG. See --full-help for definitions.
-2024-02-11 13:36:44 [NOTICE] [configure] Starting system configuration.
-2024-02-11 13:37:40 [NOTICE] [configure] 250 configuration steps out of 1323 steps complete.
-2024-02-11 13:37:48 [NOTICE] [configure] 500 configuration steps out of 1326 steps complete.
-2024-02-11 13:37:59 [NOTICE] [configure] 750 configuration steps out of 1351 steps complete.
-2024-02-11 13:38:00 [NOTICE] [configure] 1000 configuration steps out of 1351 steps complete.
-2024-02-11 13:38:17 [NOTICE] [configure] 1250 configuration steps out of 1351 steps complete.
-2024-02-11 13:39:33 [NOTICE] [configure] System configuration has finished.
+[root@lsst ~]# foreman-installer --enable-foreman-plugin-puppetdb
+2024-02-11 18:57:31 [NOTICE] [root] Loading installer configuration. This will take some time.
+2024-02-11 18:57:33 [NOTICE] [root] Running installer with log based terminal output at level NOTICE.
+2024-02-11 18:57:33 [NOTICE] [root] Use -l to set the terminal output log level to ERROR, WARN, NOTICE, INFO, or DEBUG. See --full-help for definitions.
+2024-02-11 18:57:35 [NOTICE] [configure] Starting system configuration.
+2024-02-11 18:58:30 [NOTICE] [configure] 250 configuration steps out of 1244 steps complete.
+2024-02-11 18:58:39 [NOTICE] [configure] 500 configuration steps out of 1247 steps complete.
+2024-02-11 18:58:45 [NOTICE] [configure] 750 configuration steps out of 1272 steps complete.
+2024-02-11 18:58:56 [NOTICE] [configure] 1000 configuration steps out of 1272 steps complete.
+2024-02-11 19:00:12 [NOTICE] [configure] 1250 configuration steps out of 1272 steps complete.
+2024-02-11 19:00:15 [NOTICE] [configure] System configuration has finished.
 Executing: foreman-rake upgrade:run
   Success!
-  * Foreman is running at https://lsst.tim.betadots.training
-      Initial credentials are admin / fbNn4VM4NjA2n2H4
-  * Foreman Proxy is running at https://lsst.tim.betadots.training:8443
+  * Foreman is running at https://foreman
+      Initial credentials are admin / s2hYUi7oEksKxaNM
+  * Foreman Proxy is running at https://foreman
 
 The full log is at /var/log/foreman-installer/foreman.log
 [root@lsst ~]#
@@ -170,7 +178,7 @@ Update Puppetserver to talk to PuppetDB
 ```
 puppet config set --section server storeconfigs true
 puppet config set --section main reports foreman,puppetdb
-echo -e "[main]\nserver_urls = https://$(hostname -f):8081/\nsoft_write_failure = false" > /etc/puppetlabs/puppet/puppetdb.conf
+echo -e "[main]\nserver_urls = https://$(hostname -f):8081/\nsoft_write_failure = true" > /etc/puppetlabs/puppet/puppetdb.conf
 systemctl restart puppetserver
 ```
 
@@ -179,26 +187,55 @@ systemctl restart puppetserver
 We need to ensure foreman knows the environment `bastelfreak` before we can
 assign it
 
-* login at https://lsst.tim.betadots.training/
-* got to https://lsst.tim.betadots.training/foreman_puppet/environments, import new environments
+* login at https://foreman/
+* got to https://foreman/foreman_puppet/environments, import new environments
 
 We need to set the environment in foreman
 
-* login at https://lsst.tim.betadots.training/
+* login at https://foreman/
 * select the node, click edit
-    * should bring you to https://lsst.tim.betadots.training/hosts/lsst.tim.betadots.training/edit
+    * should bring you to https://foreman/hosts/foreman/edit
 * At environment, select `bastelfreak`
 * save
 
 We need to set the role and site
 
-* login at https://lsst.tim.betadots.training/
-* At https://lsst.tim.betadots.training/hosts/lsst.tim.betadots.training/edit, go to `Parameters`
+* login at https://foreman/
+* At https://foreman/hosts/foreman/edit, go to `Parameters`
 * Select `Add Parameter`
 * Name=site, Value=test; save
 * Repeat: Name=role, Value=foreman; save
 
 
+At the moment a full puppet run doesn't succeed, but we can apply the following tags:
 
+```
+puppet agent -t --tags accounts,prometheus,chrony,yumrepo,auditd,tftp,convenience,debugutils,rsyslog,discovery,puppetserver,host,irqbalance,ssh,lldpd,sysstat,r10k,webhook,timezone,selinux,yum,docker,firewall,foreman_envsync,resolv_conf,sudo,postgresql_conf,udevd,reboot.target
+```
 
-puppet agent -t --tags accounts,prometheus,chrony,yumrepo,auditd,tftp,convenience,debugutils,rsyslog,discovery,puppetserver,host,irqbalance,ssh,lldpd,sysstat
+Due to this we miss some migrations:
+
+```
+systemctl restart foreman
+foreman-rake db:migrate
+```
+
+Then we can reboot:
+
+```
+sync; reboot
+```
+
+## Rebuilding the instance
+
+```
+hcloud server rebuild $host --image=alma-8
+ssh-keygen -f ~/.ssh/known_hosts -R $host
+ssh-keyscan $host >> ~/.ssh/known_hosts
+```
+
+## Final updates
+
+**update**: After a bit of playing with Hiera, Puppet now succeeds within two
+runs. The `foreman_config_entry` resources only work on the second run, maybe
+because they have a missing dependency to one of the foreman packages.

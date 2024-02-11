@@ -17,12 +17,16 @@
 # @param foreman_global_parameter
 #   `foreman_global_parameter` resources to create.
 #
+# @param manage_smee
+#   Make smee installation opt-out
+#
 class profile::core::foreman (
-  Stdlib::HTTPSUrl $smee_url,
+  Optional[Stdlib::HTTPSUrl] $smee_url = undef,
   Boolean $enable_puppetdb = false,
   Optional[Hash[String, Hash]] $foreman_config = undef,
   Optional[Hash[String, Hash]] $foreman_hostgroup = undef,
   Optional[Hash[String, Hash]] $foreman_global_parameter = undef,
+  Boolean $manage_smee = true,
 ) {
   include cron
   include foreman
@@ -81,10 +85,21 @@ class profile::core::foreman (
     }
   }
 
-  class { 'smee':
-    url  => $smee_url,
-    path => '/payload',
-    port => 8088,
+  # smee has some startup problems due to too new (?) nodejs on EL8
+  # https://gist.github.com/bastelfreak/6d0d3bc324633f04c5b1fc432e871192
+  if $manage_smee {
+    assert_type(Stdlib::HTTPSUrl, $smee_url)
+    class { 'smee':
+      url  => $smee_url,
+      path => '/payload',
+      port => 8088,
+    }
+    cron { 'smee':
+      command => '/usr/bin/systemctl restart smee > /dev/null 2>&1',
+      user    => 'root',
+      hour    => 4,
+      minute  => 42,
+    }
   }
 
   # el7 systemd is too old to support periodic graceful restarts of a service unit.
@@ -92,13 +107,6 @@ class profile::core::foreman (
   # service to restart the original service unit.
   cron { 'webhook':
     command => '/usr/bin/systemctl restart webhook > /dev/null 2>&1',
-    user    => 'root',
-    hour    => 4,
-    minute  => 42,
-  }
-
-  cron { 'smee':
-    command => '/usr/bin/systemctl restart smee > /dev/null 2>&1',
     user    => 'root',
     hour    => 4,
     minute  => 42,

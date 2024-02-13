@@ -28,6 +28,12 @@ describe 'rancher01.ls.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
+      it do
+        is_expected.to contain_class('profile::core::rke').with(
+          version: '1.4.6',
+        )
+      end
+
       include_examples 'vm'
       include_context 'with nm interface'
       it do

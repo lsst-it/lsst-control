@@ -2,14 +2,14 @@
 
 require 'spec_helper'
 
-describe 'rancher01.dev.lsst.org', :sitepp do
+describe 'rancher01.tu.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
         override_facts(os_facts,
-                       fqdn: 'rancher01.dev.lsst.org',
+                       fqdn: 'rancher01.tu.lsst.org',
                        is_virtual: true,
                        virtual: 'kvm',
                        dmi: {
@@ -21,7 +21,7 @@ describe 'rancher01.dev.lsst.org', :sitepp do
       let(:node_params) do
         {
           role: 'rke',
-          site: 'dev',
+          site: 'tu',
           cluster: 'rancher',
         }
       end

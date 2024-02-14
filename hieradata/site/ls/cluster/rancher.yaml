@@ -24,3 +24,5 @@ nm::connections:
         method: "disabled"
       ipv6:
         method: "disabled"
+
+profile::core::docker::version: "24.0.9"

@@ -28,6 +28,8 @@ describe 'rancher01.dev.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
+      include_examples 'docker', docker_version: '24.0.9'
+
       it do
         is_expected.to contain_class('profile::core::rke').with(
           version: '1.4.6',

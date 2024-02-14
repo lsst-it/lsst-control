@@ -9,7 +9,7 @@ describe 'profile::core::docker' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'docker'
+      include_examples 'docker', docker_version: '23.0.6'
 
       it do
         is_expected.to contain_systemd__dropin_file('wait-for-docker-group.conf').with(

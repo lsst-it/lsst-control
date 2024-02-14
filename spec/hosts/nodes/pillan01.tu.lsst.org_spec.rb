@@ -39,7 +39,7 @@ describe 'pillan01.tu.lsst.org', :sitepp do
       it do
         is_expected.to contain_class('profile::core::rke').with(
           enable_dhcp: true,
-          version: '1.3.12',
+          version: '1.4.6',
         )
       end
 

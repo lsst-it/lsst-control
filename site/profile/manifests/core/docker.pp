@@ -14,20 +14,19 @@
 #   Array of yum::versionlock resources to create
 #
 class profile::core::docker (
-  Optional[String] $version,
-  String $socket_group                      = '70014',
-  String $storage_driver                    = 'overlay2',
-  Optional[Hash[String, Hash]] $versionlock = undef,
+  Optional[String[1]] $version,
+  String[1] $socket_group                      = '70014',
+  String[1] $storage_driver                    = 'overlay2',
+  Optional[Hash[String[1], Hash]] $versionlock = undef,
 ) {
   include docker::networks
 
   class { 'docker':
-    overlay2_override_kernel_check => true,  # needed on el7
-    package_source                 => 'docker-ce',
-    socket_group                   => $socket_group,
-    socket_override                => false,
-    storage_driver                 => $storage_driver,
-    version                        => $version,
+    package_source  => 'docker-ce',
+    socket_group    => $socket_group,
+    socket_override => false,
+    storage_driver  => $storage_driver,
+    version         => $version,
   }
 
   if $versionlock {

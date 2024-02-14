@@ -608,7 +608,6 @@ shared_examples 'docker' do
 
   it do
     is_expected.to contain_class('docker').with(
-      overlay2_override_kernel_check: true,
       package_source: 'docker-ce',
       socket_group: 70_014,
       socket_override: false,

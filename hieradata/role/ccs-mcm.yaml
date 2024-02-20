@@ -20,3 +20,9 @@ profile::ccs::tomcat::wars:
 profile::core::systemd::tmpfile:
   docker_tmp.conf:  # XXX short term kludge
     content: "x /tmp/docker_tmp 0777 saluser saluser -"
+
+ccs_software::services:
+  prod:
+    - "mmm"
+    - "cluster-monitor"
+    - "lockmanager"

@@ -1,8 +1,0 @@
----
-ccs_software::services:
-  prod:
-## Next two are handled by the ccs_sal module.
-#    - "mcm"
-#    - "ocs-bridge"
-    - "cluster-monitor"
-    - "lockmanager"

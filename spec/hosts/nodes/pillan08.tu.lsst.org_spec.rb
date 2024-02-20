@@ -31,6 +31,7 @@ describe 'pillan08.tu.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
+      include_examples 'docker', docker_version: '24.0.9'
       include_examples 'baremetal'
       include_context 'with nm interface'
 
@@ -41,7 +42,7 @@ describe 'pillan08.tu.lsst.org', :sitepp do
       it do
         is_expected.to contain_class('profile::core::rke').with(
           enable_dhcp: true,
-          version: '1.3.12',
+          version: '1.4.6',
         )
       end
 

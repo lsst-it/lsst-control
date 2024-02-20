@@ -38,10 +38,3 @@ network::mroutes_hash:
       "139.229.167.0/24": "139.229.170.254"
       #"139.229.170.0/24": "139.229.170.254"
       "139.229.178.0/24": "139.229.170.254"
-
-ccs_software::services:
-  prod:
-    - "comcam-mmm"
-## Next two are handled by the ccs_sal module. FIXME duplication.
-#    - "comcam-mcm"  # XXX should both comcam-mcm and mcm-comcam be running???
-#    - "comcam-ocs-bridge"

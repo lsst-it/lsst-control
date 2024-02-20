@@ -3,7 +3,11 @@
 name: shellcheck
 
 "on":
-  - push
+  push:
+    branches:
+      - production
+      - cp_production
+  pull_request:
 
 jobs:
   shellcheck:

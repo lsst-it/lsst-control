@@ -3,7 +3,11 @@
 name: rake checks
 
 "on":
-  - push
+  push:
+    branches:
+      - production
+      - cp_production
+  pull_request:
 
 jobs:
   rake_checks:

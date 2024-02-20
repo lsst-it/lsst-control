@@ -17,7 +17,7 @@ jobs:
   rake_checks:
     runs-on:
       group: Default Larger Runners
-      labels: ubuntu-latest-16-cores
+      labels: ubuntu-latest-32-cores
     steps:
       - uses: actions/checkout@v4
 

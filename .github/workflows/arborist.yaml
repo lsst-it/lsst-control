@@ -5,8 +5,6 @@ name: Arborist
 "on":
   - create
   - delete
-  - pull_request
-  - push
 
 permissions:
   contents: write

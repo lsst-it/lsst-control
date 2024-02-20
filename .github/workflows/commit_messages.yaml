@@ -1,26 +1,26 @@
 ---
-name: 'Commit Message Check'
+# yamllint disable rule:quoted-strings
+name: Commit Message Check
 
-"on":
-  - "push"
+"on": pull_request
 
 jobs:
   check-commit-message:
-    name: "Check Commit Message"
-    runs-on: "ubuntu-latest"
+    name: Check Commit Message
+    runs-on: ubuntu-latest
     steps:
-      - name: "Check Commit Type"
-        uses: "gsactions/commit-message-checker@v2"
+      - name: Check Commit Type
+        uses: gsactions/commit-message-checker@v2
         with:
           pattern: '\([^)]+\) .+$'
-          flags: "gm"
-          error: "Your first line has to contain a commit type like '(role/foo)'."
+          flags: gm
+          error: Your first line has to contain a commit type like '(role/foo)'.
           checkAllCommitMessages: "true"
           accessToken: "${{ secrets.GITHUB_TOKEN }}"
-      - name: "Check Line Length"
-        uses: "gsactions/commit-message-checker@v2"
+      - name: Check Line Length
+        uses: gsactions/commit-message-checker@v2
         with:
-          pattern: "^(?!.{73})"
-          error: "The maximum line length of 72 characters is exceeded."
+          pattern: '^(?!.{73})'
+          error: The maximum line length of 72 characters is exceeded.
           checkAllCommitMessages: "true"
           accessToken: "${{ secrets.GITHUB_TOKEN }}"

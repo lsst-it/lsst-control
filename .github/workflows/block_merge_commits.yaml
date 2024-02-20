@@ -1,16 +1,17 @@
 ---
-name: "Block Merge Commits"
+# yamllint disable rule:quoted-strings
+name: Block Merge Commits
 
-"on": "pull_request"
+"on": pull_request
 
 jobs:
   message-check:
-    name: "Block Merge Commits"
+    name: Block Merge Commits
 
-    runs-on: "ubuntu-latest"
+    runs-on: ubuntu-latest
 
     steps:
-      - name: "Block Merge Commits"
-        uses: "Morishiri/block-merge-commits-action@v1.0.1"
+      - name: Block Merge Commits
+        uses: Morishiri/block-merge-commits-action@v1.0.1
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"

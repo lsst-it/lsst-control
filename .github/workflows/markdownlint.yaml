@@ -3,7 +3,11 @@
 name: markdownlint
 
 "on":
-  - push
+  push:
+    branches:
+      - production
+      - cp_production
+  pull_request:
 
 jobs:
   markdownlint:

@@ -3,7 +3,11 @@
 name: librarian-puppet
 
 "on":
-  - push
+  push:
+    branches:
+      - production
+      - cp_production
+  pull_request:
 
 jobs:
   librarian_puppet:

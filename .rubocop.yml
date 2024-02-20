@@ -1,6 +1,7 @@
 ---
 require:
 - rubocop-rspec
+- rubocop-rake
 AllCops:
   DisplayCopNames: true
   TargetRubyVersion: '2.7'
@@ -129,4 +130,6 @@ Style/CommentedKeyword:
 Naming/FileName:
   Enabled: false
 RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+RSpec/ContextWording:
   Enabled: false

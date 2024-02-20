@@ -8,7 +8,7 @@ def coreutils_sort(data)
     ax = a.gsub(pat, '')
     bx = b.gsub(pat, '')
 
-    ax == bx ? b.size <=> a.size : ax <=> bx
+    (ax == bx) ? b.size <=> a.size : ax <=> bx
   end
 end
 

@@ -1,0 +1,18 @@
+---
+nm::connections:
+  ens192:
+    content:
+      connection:
+        id: "ens192"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "ens192"
+      ethernet: {}
+      ipv4:
+        address1: "10.17.9.253/24,10.17.9.254"
+        dns: "139.229.160.53;139.229.160.54;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}

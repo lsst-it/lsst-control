@@ -4,18 +4,20 @@ profile::daq::daq_interface::uuid: "b3cb2632-fc6f-4698-b8f5-feea068266ed"
 profile::daq::daq_interface::was: "p2p2"
 profile::daq::daq_interface::mode: "dhcp-client"
 
-network::interfaces_hash:
-  p2p1:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  em1: &not_connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  em2:
-    <<: *not_connected
+nm::connections:
+  ens2f0:
+    content:
+      connection:
+        id: "ens2f0"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "ens2f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
 
 nfs::client_enabled: true
 nfs::client_mounts:

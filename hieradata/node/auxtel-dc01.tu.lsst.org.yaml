@@ -1,0 +1,46 @@
+---
+nm::connections:
+  ens2f0:  #fqdn
+    content:
+      connection:
+        id: "ens2f0"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "ens2f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  ens2f1:
+    content:
+      connection:
+        id: "ens2f1"
+        uuid: "d5642f16-53c6-6053-7d4d-8c6ef5ae8a38"
+        type: "ethernet"
+        interface-name: "ens2f1"
+        master: "lsst-daq"
+        slave-type: "bridge"
+      ethernet: {}
+      ethtool:
+        ring-rx: 4096
+        ring-tx: 4096
+      bridge-port: {}
+  lsst-daq:
+    content:
+      connection:
+        id: "lsst-daq"
+        uuid: "d5642f16-7bf7-7d4d-de5a-25e7d7c355a4"
+        type: "bridge"
+        interface-name: "lsst-daq"
+      ethernet: {}
+      bridge:
+        stp: false
+      ipv4:
+        address1: "192.168.100.13/24"
+        ignore-auto-dns: true
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}

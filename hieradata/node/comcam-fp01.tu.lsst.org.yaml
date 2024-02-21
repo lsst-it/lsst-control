@@ -4,26 +4,34 @@ profile::daq::daq_interface::uuid: "648439ba-19de-41cb-9b52-77ecfd69934b"
 profile::daq::daq_interface::was: "p3p2"
 profile::daq::daq_interface::mode: "dhcp-client"
 
-network::interfaces_hash:
-  p1p1:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  em1: &not_connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  em2:
-    <<: *not_connected
-  em3:
-    <<: *not_connected
-  em4:
-    <<: *not_connected
-  p1p2:
-    <<: *not_connected
-  p3p1:
-    <<: *not_connected
+nm::connections:
+  ens1f0:
+    content:
+      connection:
+        id: "ens1f0"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "ens1f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  ens3f1:
+    content:
+      connection:
+        id: "ens3f1"
+        uuid: "da97db8e-6400-4cca-9334-71995eb2ac1d"
+        type: "ethernet"
+        interface-name: "ens3f1"
+      ethernet: {}
+      ipv4:
+        method: "manual"
+        address1: "192.168.100.15/24"
+      ipv6:
+        method: "disabled"
+      proxy: {}
 
 nfs::server_enabled: true
 nfs::nfs_v4_export_root_clients: >-

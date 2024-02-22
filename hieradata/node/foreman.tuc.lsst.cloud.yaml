@@ -105,6 +105,7 @@ dhcp::pools:
     mask: "255.255.255.224"
     gateway: "140.252.147.97"
     range:
+      - "140.252.147.109 140.252.147.113"
       - "140.252.147.124 140.252.147.126"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   vlan3085:  # misc-dds

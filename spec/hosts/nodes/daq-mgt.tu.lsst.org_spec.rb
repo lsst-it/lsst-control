@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'daq-mgt.tu.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
-    next unless os =~ %r{centos-7-x86_64}
+    next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
@@ -27,25 +27,47 @@ describe 'daq-mgt.tu.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
-      include_examples 'lsst-daq dhcp-server'
-      include_examples 'daq nfs exports'
+      include_context 'with nm interface'
+      it { is_expected.to have_nm__connection_resource_count(4) }
 
-      it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V8.2') }
-      it { is_expected.to contain_class('daq::rptsdk').with_version('V3.5.3') }
-      it { is_expected.to contain_host('tts-sm').with_ip('10.0.0.212') }
-      it { is_expected.to contain_network__interface('p2p1').with_ensure('absent') }
+      context 'with enp5s0f0' do
+        let(:interface) { 'enp5s0f0' }
 
-      it do
-        is_expected.to contain_network__interface('em4').with(
-          bootproto: 'none',
-          # defroute: 'no',
-          ipaddress: '10.0.0.1',
-          # ipv6init: 'no',
-          netmask: '255.255.255.0',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+      end
+
+      context 'with enp4s0f0' do
+        let(:interface) { 'enp4s0f0' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm ethernet interface'
+        it_behaves_like 'nm bridge slave interface', master: 'lsst-daq'
+        it { expect(nm_keyfile['ethtool']['ring-rx']).to eq(4000) }
+        it { expect(nm_keyfile['ethtool']['ring-tx']).to eq(4000) }
+      end
+
+      context 'with lsst-daq' do
+        let(:interface) { 'lsst-daq' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm bridge interface'
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('192.168.100.1/24') }
+        it { expect(nm_keyfile['ipv4']['ignore-auto-dns']).to be true }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
+        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+      end
+
+      context 'with eno4' do
+        let(:interface) { 'eno4' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('10.0.0.1/24') }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
+        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
     end # on os
   end # on_supported_os

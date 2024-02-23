@@ -1,34 +1,63 @@
 ---
-profile::daq::daq_interface::hwaddr: "40:a6:b7:20:50:24"
-profile::daq::daq_interface::uuid: "512124b2-7b70-40ed-9edc-746c121b651c"
-profile::daq::daq_interface::was: "p2p1"
-profile::daq::daq_interface::mode: "dhcp-server"
-
-network::interfaces_hash:
-  p1p1:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  p1p2: &not_connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  em1:
-    <<: *not_connected
-  em2:
-    <<: *not_connected
-  em3:
-    <<: *not_connected
-  em4:  # 10.0.0/24
-    bootproto: "none"
-    ipaddress: "10.0.0.1"
-    netmask: "255.255.255.0"
-    onboot: "yes"
-    type: "Ethernet"
-  # p2p1 -> lsst-daq
-  p2p2:
-    <<: *not_connected
+nm::connections:
+  enp5s0f0:  #fqdn
+    content:
+      connection:
+        id: "enp5s0f0"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "enp5s0f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp4s0f0:
+    content:
+      connection:
+        id: "enp4s0f0"
+        uuid: "d5642f16-53c6-6053-7d4d-8c6ef5ae8a38"
+        type: "ethernet"
+        interface-name: "enp4s0f0"
+        master: "lsst-daq"
+        slave-type: "bridge"
+      ethernet: {}
+      ethtool:
+        ring-rx: 4000
+        ring-tx: 4000
+      bridge-port: {}
+  lsst-daq:
+    content:
+      connection:
+        id: "lsst-daq"
+        uuid: "d5642f16-7bf7-7d4d-de5a-25e7d7c355a4"
+        type: "bridge"
+        interface-name: "lsst-daq"
+      ethernet: {}
+      bridge:
+        stp: false
+      ipv4:
+        address1: "192.168.100.1/24"
+        ignore-auto-dns: true
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  eno4:
+    content:
+      connection:
+        id: "eno4"
+        uuid: "da97db8e-6400-4cca-9334-71995eb2ac1d"
+        type: "ethernet"
+        interface-name: "eno4"
+      ethernet: {}
+      ipv4:
+        method: "manual"
+        address1: "10.0.0.1/24"
+      ipv6:
+        method: "disabled"
+      proxy: {}
 
 hosts::entries:
   tts-sm:

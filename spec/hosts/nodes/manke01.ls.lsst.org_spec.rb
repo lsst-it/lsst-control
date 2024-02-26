@@ -30,6 +30,7 @@ describe 'manke01.ls.lsst.org', :sitepp do
 
       include_examples 'baremetal'
       include_context 'with nm interface'
+      include_examples 'docker', docker_version: '24.0.9'
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)

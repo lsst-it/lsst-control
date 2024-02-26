@@ -47,9 +47,9 @@ describe 'konkong01.ls.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_class('profile::core::rke').with(
-          enable_dhcp: true,
-          version: '1.3.12',
+        is_expected.to contain_class('rke').with(
+          version: '1.4.6',
+          checksum: '12d8fee6f759eac64b3981ef2822353993328f2f839ac88b3739bfec0b9d818c',
         )
       end
 
@@ -61,6 +61,7 @@ describe 'konkong01.ls.lsst.org', :sitepp do
         )
       end
 
+      it { is_expected.to contain_class('cni::plugins::dhcp') }
       it { is_expected.to contain_class('profile::core::ospl').with_enable_rundir(true) }
 
       it { is_expected.to have_nm__connection_resource_count(7) }

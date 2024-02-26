@@ -1,7 +1,6 @@
 ---
 clustershell::groupmembers:
   ayekan: {group: "ayekan", member: "ayekan[01-03]"}
-profile::core::rke::version: "1.4.6"
 nm::connections:
   eno1np0:
     content: |

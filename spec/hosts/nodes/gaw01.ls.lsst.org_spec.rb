@@ -2,14 +2,14 @@
 
 require 'spec_helper'
 
-describe 'luan01.ls.lsst.org', :sitepp do
+describe 'gaw01.ls.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
         override_facts(os_facts,
-                       fqdn: 'luan01.ls.sst.org',
+                       fqdn: 'gaw01.ls.sst.org',
                        is_virtual: false,
                        virtual: 'physical',
                        dmi: {
@@ -25,7 +25,7 @@ describe 'luan01.ls.lsst.org', :sitepp do
         {
           role: 'rke',
           site: 'ls',
-          cluster: 'luan',
+          cluster: 'gaw',
         }
       end
 
@@ -37,9 +37,9 @@ describe 'luan01.ls.lsst.org', :sitepp do
       it do
         is_expected.to contain_class('clustershell').with(
           groupmembers: {
-            'luan' => {
-              'group' => 'luan',
-              'member' => 'luan[01-05]',
+            'gaw' => {
+              'group' => 'gaw',
+              'member' => 'gaw[01-05]',
             },
           },
         )

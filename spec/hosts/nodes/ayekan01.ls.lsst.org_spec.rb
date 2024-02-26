@@ -7,7 +7,17 @@ describe 'ayekan01.ls.lsst.org', :sitepp do
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
-      let(:facts) { override_facts(os_facts, fqdn: 'ayekan01.ls.lsst.org') }
+      let(:facts) do
+        override_facts(os_facts,
+                       fqdn: 'ayekan01.ls.lsst.org',
+                       is_virtual: false,
+                       virtual: 'physical',
+                       dmi: {
+                         'product' => {
+                           'name' => 'AS -1114S-WN10RT',
+                         },
+                       })
+      end
       let(:node_params) do
         {
           role: 'rke',
@@ -16,7 +26,9 @@ describe 'ayekan01.ls.lsst.org', :sitepp do
         }
       end
 
+      include_examples 'baremetal'
       include_context 'with nm interface'
+      include_examples 'docker', docker_version: '24.0.9'
 
       it { is_expected.to compile.with_all_deps }
 

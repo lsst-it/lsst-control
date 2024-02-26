@@ -4,5 +4,6 @@ classes:
   - "profile::core::docker"
   - "profile::core::gpio"
   - "profile::core::i2c"
+  - "profile::pi::darkmode"
   - "profile::pi::ftdi"
   - "profile::pi::pigpio"

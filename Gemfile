@@ -40,7 +40,8 @@ end
 gem 'facter', ENV['FACTER_GEM_VERSION'], require: false, groups: [:test]
 gem 'rake', require: false
 
-puppetversion = ENV['PUPPET_GEM_VERSION'] || '~> 7.24'
+# See: https://github.com/puppetlabs/puppet/issues/9268
+puppetversion = ENV['PUPPET_GEM_VERSION'] || '~> 7.28.0'
 gem 'puppet', puppetversion, require: false, groups: [:test]
 
 gem 'librarian-puppet'

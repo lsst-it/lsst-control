@@ -55,7 +55,7 @@ shared_examples 'docker' do |docker_version: nil|
     # skip this example for class tests
     next unless defined?(node_params)
 
-    to = node_params[:site] == 'cp' ? 'not_to' : 'to'
+    to = (node_params[:site] == 'cp') ? 'not_to' : 'to'
 
     is_expected.send(to, contain_class('docker').with(
                            log_driver: 'json-file',

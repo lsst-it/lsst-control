@@ -19,5 +19,5 @@ describe 'profile::ccs::el9' do
 
       it { is_expected.to contain_package('compat-bin') }
     end # on os
-  end  # on_supported_os
+  end # on_supported_os
 end

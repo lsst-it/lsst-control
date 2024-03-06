@@ -50,3 +50,4 @@ accounts::user_list:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDN16b56V3j7wot509IlRvOFXaLxI9AH9/eOr1WuLEdpGoQ3lDuz26P6zFLbopjgsZxdzxE492QAmGpdUkn+Ducny1JK83L0N/d6INrM48fQeiUiSsN/YKua9qO8QQbvTsiiKanj38u9x1vOfqKn2/kK7BKAZblr+qT7U6nofMFlG3zJpNOCAIHyd4DJRrWB+xPR1YRwljV6BOtpI5+/FwdoX+/61cdsP0895iejDlnYRNFBYWRdGHDdDN6yfSNy00D/ADwaZP9sO+gyvHPqz/saPFYx8Petbhl/PlUjqWx7sktQxPgpMPBU/KQU5SEd5RkcT+CVjLHuHfOa3jXEdVx foreman-proxy@foreman.cp.lsst.org"
 
 profile::core::common::disable_ipv6: true
+profile::core::docker::version: "24.0.9"

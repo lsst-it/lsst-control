@@ -40,3 +40,5 @@ nm::connections:
       ipv6:
         method: "disabled"
       proxy: {}
+
+ccs_sal::kafka: true

@@ -34,6 +34,13 @@ shared_examples 'generic rke' do |os_facts:|
       forget_flags: '--keep-last 20',
     )
   end
+
+  it do
+    is_expected.to contain_class('rke').with(
+      version: '1.4.6',
+      checksum: '12d8fee6f759eac64b3981ef2822353993328f2f839ac88b3739bfec0b9d818c',
+    )
+  end
 end
 
 role = 'rke'
@@ -59,13 +66,6 @@ describe "#{role} role" do
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'generic rke', os_facts: os_facts
-
-        it do
-          is_expected.to contain_class('rke').with(
-            version: '1.4.6',
-            checksum: '12d8fee6f759eac64b3981ef2822353993328f2f839ac88b3739bfec0b9d818c',
-          )
-        end
       end # host
 
       fqdn = "#{role}.ls.lsst.org"
@@ -78,13 +78,6 @@ describe "#{role} role" do
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'generic rke', os_facts: os_facts
-
-        it do
-          is_expected.to contain_class('rke').with(
-            version: '1.4.6',
-            checksum: '12d8fee6f759eac64b3981ef2822353993328f2f839ac88b3739bfec0b9d818c',
-          )
-        end
       end # host
 
       fqdn = "#{role}.cp.lsst.org"
@@ -97,13 +90,6 @@ describe "#{role} role" do
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'generic rke', os_facts: os_facts
-
-        it do
-          is_expected.to contain_class('rke').with(
-            version: '1.3.12',
-            checksum: '579da2206aec09cadccd8d6f4818861e78a256b6ae550a229335e500a472bd50',
-          )
-        end
       end # host
 
       fqdn = "#{role}.dev.lsst.org"
@@ -116,13 +102,6 @@ describe "#{role} role" do
         it { is_expected.to compile.with_all_deps }
 
         include_examples 'generic rke', os_facts: os_facts
-
-        it do
-          is_expected.to contain_class('rke').with(
-            version: '1.4.6',
-            checksum: '12d8fee6f759eac64b3981ef2822353993328f2f839ac88b3739bfec0b9d818c',
-          )
-        end
       end # host
     end # on os
   end # on_supported_os

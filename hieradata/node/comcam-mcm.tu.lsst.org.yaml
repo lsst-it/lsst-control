@@ -1,38 +1,43 @@
 ---
-network::interfaces_hash:
-  p1p1:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  p1p2:  # comcam-dds|140.252.147.48/28
-    bootproto: "none"
-    bridge: "dds"
-    defroute: "no"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
+nm::connections:
+  enp4s0f0:  #fqdn
+    content:
+      connection:
+        id: "enp4s0f0"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "enp4s0f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp4s0f1:  #comcam-dds|140.252.147.48/28
+    content:
+      connection:
+        id: "enp4s0f1"
+        uuid: "d5642f16-53c6-6053-7d4d-8c6ef5ae8a38"
+        type: "ethernet"
+        interface-name: "enp4s0f1"
+        master: "dds"
+        slave-type: "bridge"
+      ethernet: {}
+      bridge-port: {}
   dds:
-    bootproto: "none"
-    ipaddress: "140.252.147.52"
-    netmask: "255.255.255.240"
-    onboot: "yes"
-    type: "bridge"
-  em1: &not_connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  em2:
-    <<: *not_connected
-  em3:
-    <<: *not_connected
-  em4:
-    <<: *not_connected
-network::mroutes_hash:
-  dds:
-    routes:
-      "140.252.147.16/28": "140.252.147.49"
-      "140.252.147.128/27": "140.252.147.49"
-  p1p2:
-    ensure: "absent"
-    routes: {}
+    content:
+      connection:
+        id: "dds"
+        uuid: "d5642f16-7bf7-7d4d-de5a-25e7d7c355a4"
+        type: "bridge"
+        interface-name: "dds"
+      ethernet: {}
+      bridge:
+        stp: false
+      ipv4:
+        address1: "140.252.147.52/28"
+        ignore-auto-dns: true
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}

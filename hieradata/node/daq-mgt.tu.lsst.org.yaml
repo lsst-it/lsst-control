@@ -24,8 +24,8 @@ nm::connections:
         slave-type: "bridge"
       ethernet: {}
       ethtool:
-        ring-rx: 4000
-        ring-tx: 4000
+        ring-rx: 4096
+        ring-tx: 4096
       bridge-port: {}
   lsst-daq:
     content:
@@ -39,7 +39,6 @@ nm::connections:
         stp: false
       ipv4:
         address1: "192.168.100.1/24"
-        ignore-auto-dns: true
         method: "manual"
       ipv6:
         method: "disabled"

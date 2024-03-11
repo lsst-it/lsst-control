@@ -38,9 +38,8 @@ nm::connections:
       bridge:
         stp: false
       ipv4:
-        address1: "192.168.100.13/24"
+        method: "auto"
         ignore-auto-dns: true
-        method: "manual"
       ipv6:
         method: "disabled"
       proxy: {}

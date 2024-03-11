@@ -36,7 +36,6 @@ describe 'auxtel-dc01.tu.lsst.org', :sitepp do
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
 
       context 'with ens2f1' do
@@ -53,11 +52,9 @@ describe 'auxtel-dc01.tu.lsst.org', :sitepp do
         let(:interface) { 'lsst-daq' }
 
         it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm bridge interface'
-        it { expect(nm_keyfile['ipv4']['address1']).to eq('192.168.100.13/24') }
         it { expect(nm_keyfile['ipv4']['ignore-auto-dns']).to be true }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
     end # on os
   end # on_supported_os

@@ -63,11 +63,9 @@ ccs_monit::ping_hosts:
   - "comcam-lion03"
   - "pathfinder-lion01"
 
-ccs_software::services:
-  prod:
-    - "comcam-daq-monitor"
-    - "comcam-fp"
-    - {name: "comcam-ih", user: "ccs-ipa", group: "ccs-ipa", workdir: "/home/ccs-ipa", env: "PATH=/usr/lib/jvm/zulu-17/bin:/usr/sbin:/usr/bin"}
+# See also role/comcam-fp.
+# ccs_software::services:
+#   prod:
     # XXX
     # - "cantaloupe"
     # - "dsid"

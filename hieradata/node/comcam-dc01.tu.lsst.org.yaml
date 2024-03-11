@@ -17,7 +17,7 @@ nm::connections:
     content:
       connection:
         id: "ens2f1"
-        uuid: "1aea73f67-58f6-4119-abd6-d9d72235297b"
+        uuid: "92e489fd-9f97-4d04-88ee-7b1cf65427c9"
         type: "ethernet"
         interface-name: "ens2f1"
         master: "lsst-daq"

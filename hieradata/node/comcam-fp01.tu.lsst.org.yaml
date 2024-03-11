@@ -1,9 +1,4 @@
 ---
-profile::daq::daq_interface::hwaddr: "40:a6:b7:20:4f:71"
-profile::daq::daq_interface::uuid: "648439ba-19de-41cb-9b52-77ecfd69934b"
-profile::daq::daq_interface::was: "p3p2"
-profile::daq::daq_interface::mode: "dhcp-client"
-
 nm::connections:
   ens1f0:
     content:
@@ -25,10 +20,26 @@ nm::connections:
         uuid: "da97db8e-6400-4cca-9334-71995eb2ac1d"
         type: "ethernet"
         interface-name: "ens3f1"
+        master: "lsst-daq"
+        slave-type: "bridge"
       ethernet: {}
+      ethtool:
+        ring-rx: 4096
+        ring-tx: 4096
+      bridge-port: {}
+  lsst-daq:
+    content:
+      connection:
+        id: "lsst-daq"
+        uuid: "d5642f16-7bf7-7d4d-de5a-25e7d7c355a4"
+        type: "bridge"
+        interface-name: "lsst-daq"
+      ethernet: {}
+      bridge:
+        stp: false
       ipv4:
-        method: "manual"
-        address1: "192.168.100.15/24"
+        method: "auto"
+        ignore-auto-dns: true
       ipv6:
         method: "disabled"
       proxy: {}

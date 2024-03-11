@@ -36,7 +36,6 @@ nm::connections:
         stp: false
       ipv4:
         address1: "140.252.147.52/28"
-        ignore-auto-dns: true
         method: "manual"
       ipv6:
         method: "disabled"

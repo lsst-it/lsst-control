@@ -54,7 +54,6 @@ describe 'comcam-mcm.tu.lsst.org', :sitepp do
         it_behaves_like 'nm bridge interface'
         it_behaves_like 'nm manual interface'
         it { expect(nm_keyfile['ipv4']['address1']).to eq('140.252.147.52/28') }
-        it { expect(nm_keyfile['ipv4']['ignore-auto-dns']).to be true }
       end
     end # on os
   end # on_supported_os

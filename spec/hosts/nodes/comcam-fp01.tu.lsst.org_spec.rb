@@ -22,6 +22,7 @@ describe 'comcam-fp01.tu.lsst.org', :sitepp do
         {
           role: 'comcam-fp',
           site: 'tu',
+          cluster: 'comcam-ccs',
         }
       end
 
@@ -56,6 +57,11 @@ describe 'comcam-fp01.tu.lsst.org', :sitepp do
         it_behaves_like 'nm bridge interface'
         it { expect(nm_keyfile['ipv4']['ignore-auto-dns']).to be true }
       end
+
+      it { is_expected.to contain_service('comcam-daq-monitor') }
+      it { is_expected.to contain_service('comcam-fp') }
+      it { is_expected.to contain_service('comcam-ih') }
+      it { is_expected.to contain_service('h2db') }
     end # on os
   end # on_supported_os
 end

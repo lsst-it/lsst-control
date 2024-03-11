@@ -10,3 +10,9 @@ classes:
   - "profile::core::nfsserver"
 
 profile::ccs::file_transfer::install: true
+
+ccs_software::services:
+  prod:
+    - "comcam-daq-monitor"
+    - "comcam-fp"
+    - {name: "comcam-ih", user: "ccs-ipa", group: "ccs-ipa", workdir: "/home/ccs-ipa", env: "PATH=/usr/lib/jvm/zulu-17/bin:/usr/sbin:/usr/bin"}

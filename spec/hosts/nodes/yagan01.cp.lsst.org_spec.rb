@@ -30,6 +30,7 @@ describe 'yagan01.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
+      include_examples 'docker', docker_version: '24.0.9'
       include_examples 'baremetal'
       include_context 'with nm interface'
 

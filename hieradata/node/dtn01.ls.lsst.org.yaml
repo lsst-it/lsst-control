@@ -3,9 +3,9 @@ network::interfaces_hash:
   eno1:
     bootproto: "none"
     defroute: "yes"
-    gateway: "139.229.127.97"
-    ipaddress: "139.229.127.99"
-    netmask: "255.255.255.224"
+    gateway: "139.229.135.12"
+    ipaddress: "139.229.135.254"
+    netmask: "255.255.255.0"
     nozeroconf: "yes"
     onboot: "yes"
   enp6s0:

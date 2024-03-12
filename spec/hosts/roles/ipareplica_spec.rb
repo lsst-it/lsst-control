@@ -24,7 +24,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts, no_auth: true
+          include_examples 'common', os_facts: os_facts, site: site, no_auth: true
 
           it do
             is_expected.to contain_class('tailscale').with_up_options(

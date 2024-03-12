@@ -24,7 +24,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts
+          include_examples 'common', os_facts: os_facts, site: site
           it { is_expected.to have_nfs__client__mount_resource_count(6) }
 
           it do

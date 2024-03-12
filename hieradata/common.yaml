@@ -39,6 +39,12 @@ lookup_options:
   ipset::sets:
     merge:
       strategy: "deep"
+  rsyslog::feature_packages:
+    merge:
+      strategy: "deep"
+  rsyslog::config::modules:
+    merge:
+      strategy: "deep"
   rsyslog::config::actions:
     merge:
       strategy: "deep"
@@ -265,6 +271,8 @@ puppet_agent::config:
   - {section: "agent", setting: "environment", ensure: "absent"}
 
 # Rsyslog configuration is based on the default rsyslog.conf shipping with CentOS 7.7
+rsyslog::conf_permissions: "0640"  # conf file may contain secrets
+rsyslog::confdir_permissions: "0750"
 rsyslog::config::global_config:
   workDirectory:
     value: "/var/lib/rsyslog"

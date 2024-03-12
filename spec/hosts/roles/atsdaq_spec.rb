@@ -25,7 +25,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts
+          include_examples 'common', os_facts: os_facts, site: site
           include_examples 'ccs common', os_facts: os_facts
           include_examples 'lsst-daq sysctls'
           # it { is_expected.to contain_class('ccs_daq') }

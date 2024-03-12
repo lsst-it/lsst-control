@@ -36,7 +36,6 @@ describe 'daq-mgt.tu.lsst.org', :sitepp do
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
 
       context 'with enp4s0f0' do
@@ -45,8 +44,8 @@ describe 'daq-mgt.tu.lsst.org', :sitepp do
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
         it_behaves_like 'nm bridge slave interface', master: 'lsst-daq'
-        it { expect(nm_keyfile['ethtool']['ring-rx']).to eq(4000) }
-        it { expect(nm_keyfile['ethtool']['ring-tx']).to eq(4000) }
+        it { expect(nm_keyfile['ethtool']['ring-rx']).to eq(4096) }
+        it { expect(nm_keyfile['ethtool']['ring-tx']).to eq(4096) }
       end
 
       context 'with lsst-daq' do
@@ -54,10 +53,8 @@ describe 'daq-mgt.tu.lsst.org', :sitepp do
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm bridge interface'
+        it_behaves_like 'nm manual interface'
         it { expect(nm_keyfile['ipv4']['address1']).to eq('192.168.100.1/24') }
-        it { expect(nm_keyfile['ipv4']['ignore-auto-dns']).to be true }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
 
       context 'with eno4' do
@@ -65,9 +62,8 @@ describe 'daq-mgt.tu.lsst.org', :sitepp do
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
+        it_behaves_like 'nm manual interface'
         it { expect(nm_keyfile['ipv4']['address1']).to eq('10.0.0.1/24') }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
     end # on os
   end # on_supported_os

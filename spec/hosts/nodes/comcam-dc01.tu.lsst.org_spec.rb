@@ -22,6 +22,7 @@ describe 'comcam-dc01.tu.lsst.org', :sitepp do
         {
           role: 'ccs-dc',
           site: 'tu',
+          cluster: 'comcam-ccs',
         }
       end
 

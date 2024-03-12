@@ -50,10 +50,8 @@ describe 'lsstcam-daq-mgt.ls.lsst.org', :sitepp do
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
+        it_behaves_like 'nm manual interface'
         it { expect(nm_keyfile['ipv4']['address1']).to eq('192.168.101.1/24') }
-        it { expect(nm_keyfile['ipv4']['ignore-auto-dns']).to be true }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
 
       context 'with enp129s0f0' do
@@ -79,10 +77,8 @@ describe 'lsstcam-daq-mgt.ls.lsst.org', :sitepp do
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm bridge interface'
+        it_behaves_like 'nm manual interface'
         it { expect(nm_keyfile['ipv4']['address1']).to eq('192.168.100.1/24') }
-        it { expect(nm_keyfile['ipv4']['ignore-auto-dns']).to be true }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
       end
 
       it { is_expected.to contain_class('nfs::server').with_nfs_v4(false) }

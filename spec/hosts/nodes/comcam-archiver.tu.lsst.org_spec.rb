@@ -4,8 +4,7 @@ require 'spec_helper'
 
 describe 'comcam-archiver.tu.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
-    # XXX networking needs to be updated to support EL8+
-    next unless os =~ %r{centos-7-x86_64}
+    next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
@@ -30,52 +29,6 @@ describe 'comcam-archiver.tu.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal'
-
-      it do
-        is_expected.to contain_network__interface('p2p1').with(
-          bootproto: 'dhcp',
-          defroute: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('p2p2').with(
-          bootproto: 'none',
-          bridge: 'dds',
-          defroute: 'no',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('dds').with(
-          bootproto: 'none',
-          ipaddress: '140.252.147.136',
-          netmask: '255.255.255.224',
-          onboot: 'yes',
-          type: 'bridge',
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('em1').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('em2').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
-      end
 
       it { is_expected.to contain_class('nfs::server').with_nfs_v4(true) }
       it { is_expected.to contain_nfs__server__export('/data/lsstdata') }

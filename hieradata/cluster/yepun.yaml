@@ -1,3 +1,4 @@
 ---
 clustershell::groupmembers:
   yepun: {group: "yepun", member: "yepun[01-05]"}
+profile::core::rke::version: "1.3.12"

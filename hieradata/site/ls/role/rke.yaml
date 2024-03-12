@@ -1,2 +1,2 @@
 ---
-profile::core::rke::version: "1.4.6"
+profile::core::docker::version: "24.0.9"

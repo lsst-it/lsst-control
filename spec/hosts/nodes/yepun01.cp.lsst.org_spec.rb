@@ -47,8 +47,9 @@ describe 'yepun01.cp.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_class('profile::core::rke').with(
+        is_expected.to contain_class('rke').with(
           version: '1.3.12',
+          checksum: '579da2206aec09cadccd8d6f4818861e78a256b6ae550a229335e500a472bd50',
         )
       end
 

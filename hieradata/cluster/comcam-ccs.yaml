@@ -106,6 +106,10 @@ ccs_software::installations:
     aliases:
       - "puppet-2.4.5"
 
+  comcam-software-2.4.6:
+    aliases:
+      - "puppet-2.4.6"
+
 daq::daqsdk::purge: false
 
 daq::daqsdk::version: "R5-V8.1"

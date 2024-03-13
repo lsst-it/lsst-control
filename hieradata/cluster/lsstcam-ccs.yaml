@@ -104,6 +104,9 @@ ccs_software::installations:
   lsstcam-software-1.0.8:
     aliases:
       - "puppet-1.0.8"
+  lsstcam-software-1.0.9:
+    aliases:
+      - "puppet-1.0.9"
 
 daq::daqsdk::purge: false
 

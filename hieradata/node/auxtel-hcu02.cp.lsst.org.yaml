@@ -19,5 +19,3 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
-
-ccs_hcu::imanager: true

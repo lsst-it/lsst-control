@@ -32,16 +32,83 @@ describe "#{role} role" do
           it { is_expected.to contain_class('docker') }
 
           %w[
+            mate
+            profile::core::anaconda
             profile::core::common
             profile::core::debugutils
             profile::core::docker
             profile::core::docker::prune
             profile::core::ni_packages
+            profile::core::x2go
+            profile::ts::hexrot
+            profile::ts::nexusctio
           ].each do |c|
             it { is_expected.to contain_class(c) }
           end
 
+          it { is_expected.to contain_class('profile::core::anaconda').with_python_env_name('py311') }
+
+          it { is_expected.to contain_class('profile::core::anaconda').with_python_env_version('3.11') }
+
+          pkgs = {
+            'pyside2' => {
+              'channel' => 'conda-forge',
+              'version' => '5.15.8',
+            },
+            'qasync' => {
+              'channel' => 'conda-forge',
+              'version' => '0.23.0',
+            },
+            'ts-m2com' => {
+              'channel' => 'lsstts',
+              'version' => '1.4.2',
+            },
+            'ts-m2gui' => {
+              'channel' => 'lsstts',
+              'version' => '0.7.2',
+            },
+          }
+
+          it { is_expected.to contain_class('profile::core::anaconda').with_conda_packages(pkgs) }
+
           it { is_expected.to contain_package('docker-compose-plugin') }
+
+          it do
+            is_expected.to contain_file('/rubin/mtm2/python').with(
+              ensure: 'directory',
+              owner: '73006',
+              group: '73006',
+            )
+          end
+
+          it do
+            is_expected.to contain_file('/rubin/mtm2/python/run_m2gui').with(
+              ensure: 'link',
+              owner: '73006',
+              group: '73006',
+              target: '/opt/anaconda/envs/py311/bin/run_m2gui',
+            )
+          end
+
+          ['/rubin/rotator', '/rubin/hexapod', '/rubin/mtm2'].each do |path|
+            it do
+              is_expected.to contain_file(path).with(
+                ensure: 'directory',
+                owner: '73006',
+                group: '73006',
+                recurse: 'true',
+              )
+            end
+          end
+
+          ['/rubin/rotator/log', '/rubin/hexapod/log', '/rubin/mtm2/log'].each do |path|
+            it do
+              is_expected.to contain_file(path).with(
+                ensure: 'directory',
+                mode: '0775',
+              )
+            end
+          end
         end # host
       end # lsst_sites
     end # on os

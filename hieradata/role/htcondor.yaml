@@ -1,0 +1,7 @@
+---
+classes:
+  - "htcondor"
+  - "profile::core::common"
+  - "profile::core::nfsclient"
+
+htcondor::htcondor_version: "23.0"

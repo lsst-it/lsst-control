@@ -39,7 +39,10 @@ class profile::core::foreman (
   include foreman::compute::libvirt
   include foreman::compute::vmware
   include foreman_envsync
-  include foreman::plugin::column_view
+  # the plugin isn't supported in foreman 3.8 and newer
+  # https://github.com/theforeman/foreman_column_view
+  # it's now integrated into foreman
+  # include foreman::plugin::column_view
   include foreman::plugin::discovery
   include foreman::plugin::puppet
   include foreman::plugin::remote_execution

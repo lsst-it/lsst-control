@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
-shared_examples 'rsyslog defaults' do
+shared_examples 'rsyslog defaults' do |site:|
+  it { is_expected.to contain_concat('/etc/rsyslog.d/50_rsyslog.conf').with_mode('0640') }
+  it { is_expected.to contain_file('/etc/rsyslog.d').with_mode('0750') }
+
   it do
     is_expected.to contain_rsyslog__component__input('auditd').with(
       type: 'imfile',
@@ -71,9 +74,9 @@ shared_examples 'rsyslog defaults' do
     )
   end
 
-  it do
-    case site  # XXX this is super ugly, we may need to pass in site as a param
-    when 'cp'
+  case site
+  when 'cp'
+    it do
       is_expected.to contain_rsyslog__component__action('graylogcp').with(
         type: 'omfwd',
         facility: '*.*',
@@ -83,7 +86,9 @@ shared_examples 'rsyslog defaults' do
           'Protocol' => 'udp',
         },
       )
-    when 'dev', 'dmz', 'ls'
+    end
+  when 'dmz', 'ls'
+    it do
       is_expected.to contain_rsyslog__component__action('graylogls').with(
         type: 'omfwd',
         facility: '*.*',
@@ -93,7 +98,43 @@ shared_examples 'rsyslog defaults' do
           'Protocol' => 'udp',
         },
       )
-    when 'tu'
+    end
+  when 'dev'
+    it { is_expected.to contain_package('rsyslog-elasticsearch') }
+    it { is_expected.to contain_rsyslog__component__module('omelasticsearch') }
+
+    it do
+      is_expected.to contain_rsyslog__component__action('graylogls').with(
+        type: 'omfwd',
+        facility: '*.*',
+        config: {
+          'Target' => 'collector.ls.lsst.org',
+          'Port' => '5514',
+          'Protocol' => 'udp',
+        },
+      )
+    end
+
+    it do
+      is_expected.to contain_rsyslog__component__action('opensearch').with(
+        type: 'omelasticsearch',
+        facility: '*.*',
+        config: {
+          'server' => 'opensearch.ayekan.dev.lsst.org',
+          'serverport' => 443,
+          'allowunsignedcerts' => 'on',
+          'searchIndex' => 'rsyslog-hosts',
+          'bulkmode' => 'on',
+          'maxbytes' => '100m',
+          'queue.type' => 'linkedlist',
+          'queue.size' => '5000',
+          'queue.dequeuebatchsize' => '300',
+          'action.resumeretrycount' => '-1',
+        },
+      )
+    end
+  when 'tu'
+    it do
       is_expected.to contain_rsyslog__component__action('graylogtu').with(
         type: 'omfwd',
         facility: '*.*',

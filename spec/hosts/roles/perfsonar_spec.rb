@@ -27,7 +27,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts
+          include_examples 'common', os_facts: os_facts, site: site
           include_examples 'generic perfsonar', os_facts: os_facts
           include_examples 'ipset'
           include_examples 'firewall default', os_facts: os_facts

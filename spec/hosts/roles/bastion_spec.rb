@@ -24,7 +24,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts
+          include_examples 'common', os_facts: os_facts, site: site
           include_examples 'x2go packages', os_facts: os_facts
           it { is_expected.to contain_class('mate') }
 

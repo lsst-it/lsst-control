@@ -148,11 +148,11 @@ end
 
 # XXX The network param is a kludge until the el8 dnscache nodes are converted
 # to NM.
-shared_examples 'common' do |os_facts:, no_auth: false, chrony: true, network: true, node_exporter: true|
+shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, network: true, node_exporter: true|
   include_examples 'bash_completion', os_facts: os_facts
   include_examples 'convenience'
   include_examples 'telegraf'
-  include_examples 'rsyslog defaults'
+  include_examples 'rsyslog defaults', site: site
 
   unless no_auth
     # inspect config fragment instead of class params to ensure that %{uid} is not

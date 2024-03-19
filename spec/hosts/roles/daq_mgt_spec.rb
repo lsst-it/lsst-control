@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-shared_examples 'generic daq manager' do |os_facts:|
-  include_examples 'common', os_facts: os_facts, chrony: false
+shared_examples 'generic daq manager' do |os_facts:, site:|
+  include_examples 'common', os_facts: os_facts, site: site, chrony: false
   include_examples 'lsst-daq sysctls'
   include_examples 'nfsv2 enabled', os_facts: os_facts
   include_examples 'daq common'
@@ -68,7 +68,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'generic daq manager', os_facts: os_facts
+          include_examples 'generic daq manager', os_facts: os_facts, site: site
         end # host
       end # lsst_sites
     end # on os

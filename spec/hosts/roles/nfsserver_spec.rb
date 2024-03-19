@@ -16,12 +16,13 @@ describe "#{role} role" do
       end
 
       describe 'nfsserver.cp.lsst.org', :sitepp do
-        let(:site) { 'cp' }
+        site = 'cp'
+        let(:site) { site }
         let(:facts) { override_facts(os_facts, fqdn: 'nfsserver.cp.lsst.org') }
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'common', os_facts: os_facts
+        include_examples 'common', os_facts: os_facts, site: site
 
         it do
           is_expected.to contain_class('nfs').with(

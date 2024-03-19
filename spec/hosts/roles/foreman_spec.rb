@@ -20,7 +20,8 @@ describe "#{role} role" do
 
       describe 'foreman.dev.lsst.org', :sitepp do
         os_facts.merge!(fqdn: 'foreman.dev.lsst.org')
-        let(:site) { 'dev' }
+        site = 'dev'
+        let(:site) { site }
         let(:ntpservers) do
           %w[
             ntp.shoa.cl
@@ -44,13 +45,14 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'common', os_facts: os_facts
+        include_examples 'common', os_facts: os_facts, site: site
         include_examples 'generic foreman'
       end # host
 
       describe 'foreman.tuc.lsst.cloud', :sitepp do
         os_facts.merge!(fqdn: 'foreman.tuc.lsst.cloud')
-        let(:site) { 'tu' }
+        site = 'tu'
+        let(:site) { site }
         let(:ntpservers) do
           %w[
             140.252.1.140
@@ -73,13 +75,14 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'common', os_facts: os_facts
+        include_examples 'common', os_facts: os_facts, site: site
         include_examples 'generic foreman'
       end # host
 
       describe 'foreman.ls.lsst.org', :sitepp do
         os_facts.merge!(fqdn: 'foreman.ls.lsst.org')
-        let(:site) { 'ls' }
+        site = 'ls'
+        let(:site) { site }
         let(:ntpservers) do
           %w[
             ntp.shoa.cl
@@ -103,13 +106,14 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'common', os_facts: os_facts
+        include_examples 'common', os_facts: os_facts, site: site
         include_examples 'generic foreman'
       end # host
 
       describe 'foreman.cp.lsst.org', :sitepp do
         os_facts.merge!(fqdn: 'foreman.cp.lsst.org')
-        let(:site) { 'cp' }
+        site = 'cp'
+        let(:site) { site }
         let(:ntpservers) do
           %w[
             ntp.cp.lsst.org
@@ -132,7 +136,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'common', os_facts: os_facts
+        include_examples 'common', os_facts: os_facts, site: site
         include_examples 'generic foreman'
       end # host
     end

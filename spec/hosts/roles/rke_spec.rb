@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-shared_examples 'generic rke' do |os_facts:|
-  include_examples 'common', os_facts: os_facts, node_exporter: false
+shared_examples 'generic rke' do |os_facts:, site:|
+  include_examples 'common', os_facts: os_facts, site: site, node_exporter: false
   include_examples 'debugutils'
   include_examples 'docker'
   include_examples 'rke profile'
@@ -56,53 +56,18 @@ describe "#{role} role" do
         }
       end
 
-      fqdn = "#{role}.tu.lsst.org"
-      # rubocop:disable RSpec/RepeatedExampleGroupDescription
-      describe fqdn, :sitepp do
-        # rubocop:enable RSpec/RepeatedExampleGroupDescription
-        override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
-        let(:site) { 'tu' }
+      lsst_sites.each do |site|
+        fqdn = "#{role}.#{site}.lsst.org"
+        describe fqdn, :sitepp do
+          let(:site) { site }
 
-        it { is_expected.to compile.with_all_deps }
+          override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
 
-        include_examples 'generic rke', os_facts: os_facts
-      end # host
+          it { is_expected.to compile.with_all_deps }
 
-      fqdn = "#{role}.ls.lsst.org"
-      # rubocop:disable RSpec/RepeatedExampleGroupDescription
-      describe fqdn, :sitepp do
-        # rubocop:enable RSpec/RepeatedExampleGroupDescription
-        override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
-        let(:site) { 'ls' }
-
-        it { is_expected.to compile.with_all_deps }
-
-        include_examples 'generic rke', os_facts: os_facts
-      end # host
-
-      fqdn = "#{role}.cp.lsst.org"
-      # rubocop:disable RSpec/RepeatedExampleGroupDescription
-      describe fqdn, :sitepp do
-        # rubocop:enable RSpec/RepeatedExampleGroupDescription
-        override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
-        let(:site) { 'cp' }
-
-        it { is_expected.to compile.with_all_deps }
-
-        include_examples 'generic rke', os_facts: os_facts
-      end # host
-
-      fqdn = "#{role}.dev.lsst.org"
-      # rubocop:disable RSpec/RepeatedExampleGroupDescription
-      describe fqdn, :sitepp do
-        # rubocop:enable RSpec/RepeatedExampleGroupDescription
-        override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
-        let(:site) { 'dev' }
-
-        it { is_expected.to compile.with_all_deps }
-
-        include_examples 'generic rke', os_facts: os_facts
-      end # host
+          include_examples 'generic rke', os_facts: os_facts, site: site
+        end # host
+      end # lsst_sites
     end # on os
   end # on_supported_os
 end # role

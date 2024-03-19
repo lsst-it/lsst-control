@@ -30,7 +30,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts
+          include_examples 'common', os_facts: os_facts, site: site
         end # host
       end # lsst_sites
     end # on os

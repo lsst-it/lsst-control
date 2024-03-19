@@ -1,8 +1,49 @@
 ---
-profile::daq::daq_interface::hwaddr: "40:a6:b7:20:c8:7c"
-profile::daq::daq_interface::uuid: "fd524cfc-e6e4-4571-8fcb-7fbc0be591c1"
-profile::daq::daq_interface::was: "p2p1"
-profile::daq::daq_interface::mode: "dhcp-client"
+nm::connections:
+  enp5s0f0:
+    content:
+      connection:
+        id: "enp5s0f0"
+        uuid: "4c8003aa-7918-4e75-9afd-c8c258c606b8"
+        type: "ethernet"
+        interface-name: "enp5s0f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp4s0f0:
+    content:
+      connection:
+        id: "enp4s0f0"
+        uuid: "ed651fc9-9dc0-4e83-9318-2e2704f6f4ae"
+        type: "ethernet"
+        interface-name: "enp4s0f0"
+        master: "lsst-daq"
+        slave-type: "bridge"
+      ethernet: {}
+      ethtool:
+        ring-rx: 4096
+        ring-tx: 4096
+      bridge-port: {}
+  lsst-daq:
+    content:
+      connection:
+        id: "lsst-daq"
+        uuid: "e81c2bf9-d1af-4107-8804-603696902080"
+        type: "bridge"
+        interface-name: "lsst-daq"
+      ethernet: {}
+      bridge:
+        stp: false
+      ipv4:
+        address1: "192.168.100.10/24"
+        method: "manual"
+        ignore-auto-dns: true
+      ipv6:
+        method: "disabled"
+      proxy: {}
 
 nfs::server_enabled: true
 nfs::nfs_v4_export_root_clients: >-

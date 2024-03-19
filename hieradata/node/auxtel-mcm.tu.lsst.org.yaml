@@ -1,40 +1,45 @@
 ---
-profile::daq::daq_interface::hwaddr: "40:a6:b7:20:4c:1c"
-profile::daq::daq_interface::uuid: "ff897057-3958-47f7-bfe0-a2579288aebf"
-profile::daq::daq_interface::was: "p2p1"
-profile::daq::daq_interface::mode: "dhcp-client"
-
-network::interfaces_hash:
-  p1p1:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  p1p2:  # auxtel-dds|140.252.147.16/28
-    bootproto: "none"
-    bridge: "dds"
-    defroute: "no"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
+nm::connections:
+  enp5s0f0:  #fqdn
+    content:
+      connection:
+        id: "enp5s0f0"
+        uuid: "7facb6a1-edf7-4726-bca8-1733932828fe"
+        type: "ethernet"
+        interface-name: "enp5s0f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp5s0f1:  #auxtel-dds|140.252.147.16/28
+    content:
+      connection:
+        id: "enp5s0f1"
+        uuid: "5c8056f4-14d7-4ff2-89ff-eee3cd295b34"
+        type: "ethernet"
+        interface-name: "enp5s0f1"
+        master: "dds"
+        slave-type: "bridge"
+      ethernet: {}
+      bridge-port: {}
   dds:
-    bootproto: "none"
-    ipaddress: "140.252.147.20"
-    netmask: "255.255.255.240"
-    onboot: "yes"
-    type: "bridge"
-  p2p2: &not_connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  em1:
-    <<: *not_connected
-  em2:
-    <<: *not_connected
-  em3:
-    <<: *not_connected
-  em4:
-    <<: *not_connected
+    content:
+      connection:
+        id: "dds"
+        uuid: "dca22ce5-3111-4f5f-9e9e-d3d11ecaec33"
+        type: "bridge"
+        interface-name: "dds"
+      ethernet: {}
+      bridge:
+        stp: false
+      ipv4:
+        address1: "140.252.147.20/28"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
 network::mroutes_hash:
   dds:
     routes:

@@ -28,7 +28,7 @@ ccs_sal::prefix_service: false
 ccs_sal::rpms:
   ts_sal_utils: "ts_sal_utils-7.4.0-1.x86_64.rpm"
 ccs_sal::rpms_private:
-  OpenSpliceDDS: "OpenSpliceDDS-6.10.4-6.el7.x86_64.rpm"
+  OpenSpliceDDS: "OpenSpliceDDS-6.10.4-1.el8.x86_64.rpm"
 
 ## Used in lookups:
 ccs_site: "summit"

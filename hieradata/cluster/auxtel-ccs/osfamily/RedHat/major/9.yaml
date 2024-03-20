@@ -1,0 +1,4 @@
+---
+ccs_sal::rpm_requirements:
+  - "linuxptp"
+  - "compat-openssl11"

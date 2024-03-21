@@ -4,8 +4,7 @@ require 'spec_helper'
 
 describe 'auxtel-archiver.tu.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
-    # XXX networking needs to be updated to support EL8+
-    next unless os =~ %r{centos-7-x86_64}
+    next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
@@ -23,74 +22,38 @@ describe 'auxtel-archiver.tu.lsst.org', :sitepp do
         {
           role: 'auxtel-archiver',
           site: 'tu',
-          cluster: 'auxtel-archiver',
         }
       end
 
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal'
+      include_context 'with nm interface'
+      it { is_expected.to have_nm__connection_resource_count(3) }
 
-      it do
-        is_expected.to contain_network__interface('p3p1').with(
-          bootproto: 'dhcp',
-          defroute: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
+      context 'with enp3s0f0' do
+        let(:interface) { 'enp3s0f0' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm ethernet interface'
       end
 
-      it do
-        is_expected.to contain_network__interface('p3p2').with(
-          bootproto: 'none',
-          bridge: 'dds',
-          defroute: 'no',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
+      context 'with enp3s0f1' do
+        let(:interface) { 'enp3s0f1' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm ethernet interface'
+        it_behaves_like 'nm bridge slave interface', master: 'dds'
       end
 
-      it do
-        is_expected.to contain_network__interface('dds').with(
-          bootproto: 'none',
-          ipaddress: '140.252.147.133',
-          netmask: '255.255.255.224',
-          onboot: 'yes',
-          type: 'bridge',
-        )
-      end
+      context 'with dds' do
+        let(:interface) { 'dds' }
 
-      it do
-        is_expected.to contain_network__interface('em1').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('em2').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('em3').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('em4').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm bridge interface'
+        it_behaves_like 'nm manual interface'
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('140.252.147.133/27') }
       end
 
       it { is_expected.to contain_class('nfs').with_server_enabled(false) }
@@ -105,4 +68,4 @@ describe 'auxtel-archiver.tu.lsst.org', :sitepp do
       end
     end # on os
   end # on_supported_os
-end # role
+end

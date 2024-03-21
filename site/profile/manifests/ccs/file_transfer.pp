@@ -1,8 +1,6 @@
 # @summary
 #   Install items related to ccs file transfer.
 #
-# @param install
-#   Boolean, false means do nothing.
 # @param directory
 #   String specifying directory to install to.
 # @param user
@@ -27,7 +25,6 @@
 #   String specifying password for pkgurl
 #
 class profile::ccs::file_transfer (
-  Boolean $install = false,
   String $directory = '/home/ccs-ipa/bin',
   String $user  = 'ccs-ipa',
   String $group = 'ccs-ipa',
@@ -40,60 +37,58 @@ class profile::ccs::file_transfer (
   String $pkgurl_user = $profile::ccs::common::pkgurl_user,
   String $pkgurl_pass = $profile::ccs::common::pkgurl_pass,
 ) {
-  if $install {
-    file { $directory:
-      ensure => directory,
-      owner  => $user,
-      group  => $group,
-      mode   => '0755',
-    }
+  file { $directory:
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
+    mode   => '0755',
+  }
 
-    file { "${directory}/${secret_file}":
-      content => "${secret}\n",
+  file { "${directory}/${secret_file}":
+    content => "${secret}\n",
+    owner   => $user,
+    group   => $group,
+    mode    => '0600',
+    require => File[$directory],
+  }
+
+  $binary_files = ['fhe', 'mc']
+
+  $binary_files.each | String $binfile | {
+    archive { "/var/tmp/${binfile}":
+      ensure   => present,
+      source   => "${pkgurl}/${binfile}",
+      username => $pkgurl_user,
+      password => $pkgurl_pass,
+    }
+    file { "${directory}/${binfile}":
+      ensure  => file,
+      source  => "/var/tmp/${binfile}",
       owner   => $user,
       group   => $group,
-      mode    => '0600',
+      mode    => '0755',
       require => File[$directory],
     }
+  }
 
-    $binary_files = ['fhe', 'mc']
+  vcsrepo { $repo_directory:
+    ensure   => present,
+    provider => git,
+    source   => $repo_url,
+    revision => $repo_ref,
+    user     => $user,
+    owner    => $user,
+    group    => $group,
+  }
 
-    $binary_files.each | String $binfile | {
-      archive { "/var/tmp/${binfile}":
-        ensure   => present,
-        source   => "${pkgurl}/${binfile}",
-        username => $pkgurl_user,
-        password => $pkgurl_pass,
-      }
-      file { "${directory}/${binfile}":
-        ensure  => file,
-        source  => "/var/tmp/${binfile}",
-        owner   => $user,
-        group   => $group,
-        mode    => '0755',
-        require => File[$directory],
-      }
-    }
-
-    vcsrepo { $repo_directory:
-      ensure   => present,
-      provider => git,
-      source   => $repo_url,
-      revision => $repo_ref,
-      user     => $user,
-      owner    => $user,
-      group    => $group,
-    }
-
-    $script_files = ['ccs-push', 'compress', 'fpack-in-place', 'push-usdf']
-    $script_files.each | String $scriptfile | {
-      file { "${directory}/${scriptfile}":
-        ensure  => link,
-        target  => "${repo_directory}/${scriptfile}",
-        owner   => $user,
-        group   => $group,
-        require => File[$directory],
-      }
+  $script_files = ['ccs-push', 'compress', 'fpack-in-place', 'push-usdf']
+  $script_files.each | String $scriptfile | {
+    file { "${directory}/${scriptfile}":
+      ensure  => link,
+      target  => "${repo_directory}/${scriptfile}",
+      owner   => $user,
+      group   => $group,
+      require => File[$directory],
     }
   }
 }

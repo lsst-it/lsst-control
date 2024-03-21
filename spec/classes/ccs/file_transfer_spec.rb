@@ -7,10 +7,9 @@ describe 'profile::ccs::file_transfer' do
     context "on #{os}" do
       let(:facts) { os_facts }
 
-      context 'with param install => true' do
+      context 'with params' do
         let(:params) do
           {
-            install: true,
             pkgurl: 'https://example.org',
             pkgurl_user: 'user',
             pkgurl_pass: 'pass',

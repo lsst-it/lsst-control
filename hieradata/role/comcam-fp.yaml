@@ -3,13 +3,12 @@ classes:
   - "ccs_daq"
   - "dhcp::disable"
   - "profile::ccs::common"
+  - "profile::ccs::file_transfer"
   - "profile::ccs::graphical"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
-
-profile::ccs::file_transfer::install: true
 
 ccs_software::services:
   prod:

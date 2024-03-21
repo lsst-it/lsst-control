@@ -1,0 +1,29 @@
+<%- | String $desc,
+      String $user,
+      String $group,
+      String $cmd,
+      String $workdir,
+      Optional[String] $envfile = undef
+| -%>
+[Unit]
+Description=<%= $desc %>
+Wants=network-online.target
+After=network-online.target
+OnFailure=status-email-user@%n.service
+
+[Service]
+Type=simple
+WorkingDirectory=<%= $workdir %>
+<% unless $envfile =~ Undef { -%>
+EnvironmentFile=<%= $envfile %>
+<% } -%>
+ExecStart=<%= $cmd %>
+Restart=on-failure
+RestartSec=42s
+StartLimitInterval=600
+StartLimitBurst=5
+User=<%= $user %>
+Group=<%= $group %>
+
+[Install]
+WantedBy=multi-user.target

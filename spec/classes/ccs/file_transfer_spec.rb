@@ -7,12 +7,13 @@ describe 'profile::ccs::file_transfer' do
     context "on #{os}" do
       let(:facts) { os_facts }
 
-      context 'with params' do
+      context 'with s3daemon' do
         let(:params) do
           {
             pkgurl: 'https://example.org',
             pkgurl_user: 'user',
             pkgurl_pass: 'pass',
+            s3daemon: true,
           }
         end
 
@@ -31,6 +32,17 @@ describe 'profile::ccs::file_transfer' do
         it { is_expected.to contain_file('/home/ccs-ipa/bin/mc').with_mode('0755') }
 
         it { is_expected.to contain_vcsrepo('/home/ccs-ipa/file-transfer') }
+
+        ## s3daemon
+        it { is_expected.to contain_vcsrepo('/home/ccs-ipa/s3daemon/git') }
+        it { is_expected.to contain_file('/home/ccs-ipa/s3daemon/env').with_mode('0600') }
+
+        it do
+          is_expected.to contain_service('s3daemon').with(
+            ensure: 'running',
+            enable: true,
+          )
+        end
       end
     end
   end

@@ -3,9 +3,8 @@
 classes:
   - "ccs_daq"
   - "profile::ccs::common"
+  - "profile::ccs::file_transfer"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
-
-profile::ccs::file_transfer::install: true

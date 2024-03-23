@@ -21,7 +21,6 @@ class profile::ccs::common (
 ) {
   include clustershell
   include profile::ccs::cfs
-  include profile::ccs::file_transfer
   include profile::ccs::home
   include profile::ccs::monitoring
   include profile::ccs::postfix

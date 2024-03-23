@@ -11,6 +11,8 @@ ipa::directory_services_password: "foofoofoofoo"  # ipa master only
 ipa::domain_join_password: "foofoofoofoo"  # 8 char min
 foreman_proxy::plugin::dns::route53::aws_access_key: "foo"
 foreman_proxy::plugin::dns::route53::aws_secret_key: "foo"
+profile::ccs::file_transfer::s3daemon_env_access: "foo"
+profile::ccs::file_transfer::s3daemon_env_secret: "foo"
 profile::ccs::postfix::auth: "foo"
 profile::core::monitoring::database: "foo"
 profile::core::monitoring::password: "foo"

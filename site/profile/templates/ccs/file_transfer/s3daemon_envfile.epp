@@ -1,0 +1,7 @@
+<%- | String $url,
+      String $access,
+      String $secret
+| -%>
+S3_ENDPOINT_URL=<%= $url %>
+AWS_ACCESS_KEY_ID=<%= $access %>
+AWS_SECRET_ACCESS_KEY=<%= $secret %>

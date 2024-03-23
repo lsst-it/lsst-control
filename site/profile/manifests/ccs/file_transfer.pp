@@ -61,6 +61,15 @@ class profile::ccs::file_transfer (
   String $pkgurl_user = $profile::ccs::common::pkgurl_user,
   String $pkgurl_pass = $profile::ccs::common::pkgurl_pass,
 ) {
+  $parent = "${dirname($directory)}"
+
+  file { $parent:
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
+    mode   => '0755',
+  }
+
   ## We expect that s3daemon will become the default (and only) method
   ## some time soonish.
   if $s3daemon {
@@ -180,10 +189,11 @@ class profile::ccs::file_transfer (
   }                           # s3daemon
 
   file { $directory:
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
-    mode   => '0755',
+    ensure  => directory,
+    owner   => $user,
+    group   => $group,
+    mode    => '0755',
+    require => File[$parent],
   }
 
   file { "${directory}/${secret_file}":

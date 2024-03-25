@@ -123,6 +123,7 @@ shared_examples 'rsyslog defaults' do |site:|
           'server' => 'opensearch.ayekan.dev.lsst.org',
           'serverport' => 443,
           'allowunsignedcerts' => 'on',
+          'usehttps' => 'on',
           'searchIndex' => 'rsyslog-hosts',
           'bulkmode' => 'on',
           'maxbytes' => '100m',

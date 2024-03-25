@@ -18,6 +18,7 @@ rsyslog::config::actions:
     config:
       server: "opensearch.ayekan.dev.lsst.org"
       serverport: 443
+      usehttps: "on"
       allowunsignedcerts: "on"  # off for prod
       searchIndex: "rsyslog-hosts"
       bulkmode: "on"

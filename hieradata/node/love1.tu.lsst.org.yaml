@@ -1,33 +1,45 @@
 ---
-network::interfaces_hash:
-  p1p1:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  p1p2:  # misc-dds|140.252.147.128/27
-    bootproto: "none"
-    bridge: "dds"
-    defroute: "no"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
+nm::connections:
+  enp4s0f0:  #fqdn
+    content:
+      connection:
+        id: "enp4s0f0"
+        uuid: "3c890805-ea73-4812-aca5-f9432f703486"
+        type: "ethernet"
+        interface-name: "enp4s0f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp4s0f1:  # misc-dds|140.252.147.128/27
+    content:
+      connection:
+        id: "enp4s0f1"
+        uuid: "9f6121cd-1fdf-4322-b954-bdc52fa8ee89"
+        type: "ethernet"
+        interface-name: "enp4s0f1"
+        master: "dds"
+        slave-type: "bridge"
+      ethernet: {}
+      bridge-port: {}
   dds:
-    bootproto: "none"
-    ipaddress: "140.252.147.134"
-    netmask: "255.255.255.224"
-    onboot: "yes"
-    type: "bridge"
-  em1: &not_connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  em2:
-    <<: *not_connected
-  em3:
-    <<: *not_connected
-  em4:
-    <<: *not_connected
+    content:
+      connection:
+        id: "dds"
+        uuid: "eb659101-5521-4e54-981e-588aae7908d9"
+        type: "bridge"
+        interface-name: "dds"
+      ethernet: {}
+      bridge:
+        stp: false
+      ipv4:
+        address1: "140.252.147.134/27"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
 network::mroutes_hash:
   dds:
     routes:

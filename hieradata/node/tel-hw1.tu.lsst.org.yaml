@@ -1,38 +1,55 @@
 ---
-network::interfaces_hash:
-  ens6f0:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
+nm::connections:
+  ens6f0:  #fqdn
+    content:
+      connection:
+        id: "ens6f0"
+        uuid: "dcb9c7ab-cadd-4e7e-bb61-40654eb86ebd"
+        type: "ethernet"
+        interface-name: "ens6f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
   ens6f1:  # misc-dds|140.252.147.128/27
-    bootproto: "none"
-    bridge: "dds"
-    defroute: "no"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
+    content:
+      connection:
+        id: "ens6f1"
+        uuid: "61f94d47-ae52-44f1-9ad9-178f475253be"
+        type: "ethernet"
+        interface-name: "ens6f1"
+        master: "dds"
+        slave-type: "bridge"
+      ethernet: {}
+      bridge-port: {}
   dds:
-    bootproto: "none"
-    ipaddress: "140.252.147.135"
-    netmask: "255.255.255.224"
-    onboot: "yes"
-    type: "bridge"
-  eno1: &not_connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  eno2:
-    <<: *not_connected
+    content:
+      connection:
+        id: "dds"
+        uuid: "37e93e3c-90e7-4ab6-9793-25caad52d9f0"
+        type: "bridge"
+        interface-name: "dds"
+      ethernet: {}
+      bridge:
+        stp: false
+      ipv4:
+        address1: "140.252.147.135/27"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
 network::mroutes_hash:
   dds:
     routes:
       "140.252.147.16/28": "140.252.147.129"
       "140.252.147.48/28": "140.252.147.129"
 
+nfs::server_enabled: false
 nfs::client_enabled: true
 nfs::client_mounts:
-  /net/obs-env:
+  /data:
     share: "obs-env"
     server: "nfs-obsenv.tu.lsst.org"
     atboot: true

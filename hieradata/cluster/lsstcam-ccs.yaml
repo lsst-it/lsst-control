@@ -50,7 +50,6 @@ ccs_software::global_properties:
 ## lsstcam-alerts
 ccs_software::service_email: "lsstcam-alerts-aaaah4qfu4lhjnjpl4wmbjyx2y@lsstc.slack.com"
 
-ccs_monit::mailhost: "exch-ls.lsst.org"
 ccs_monit::alert:
   ## lsstcam-alerts
   - "lsstcam-alerts-aaaah4qfu4lhjnjpl4wmbjyx2y@lsstc.slack.com"

@@ -1,79 +1,78 @@
 ---
 nm::connections:
   eno1np0:
-    content: |
-      [connection]
-      id=eno1np0
-      uuid=f330f829-20cc-b829-67b0-18086a5fe6fa
-      type=ethernet
-      autoconnect=false
-      interface-name=eno1np0
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
+    content:
+      connection:
+        id: "eno1np0"
+        uuid: "f330f829-20cc-b829-67b0-18086a5fe6fa"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno1np0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
   eno2np1:
-    content: |
-      [connection]
-      id=eno2np1
-      uuid=de9904c8-9577-1a17-36b1-34b94132f06a
-      type=ethernet
-      autoconnect=false
-      interface-name=eno2np1
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
+    content:
+      connection:
+        id: "eno2np1"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno2np1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  br1101:
+    content:
+      connection:
+        id: "br1101"
+        uuid: "f40a7bfd-d023-4a9b-8a1e-df8962ae56f5"
+        type: "bridge"
+        interface-name: "br1101"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
   br1201:
-    content: |
-      [connection]
-      id=br1201
-      uuid=7dd05d98-a9c3-4569-a7c3-00316b13c0eb
-      type=bridge
-      interface-name=br1201
-
-      [ethernet]
-
-      [bridge]
-      stp=false
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
-
-      [proxy]
+    content:
+      connection:
+        id: "br1201"
+        uuid: "7dd05d98-a9c3-4569-a7c3-00316b13c0eb"
+        type: "bridge"
+        interface-name: "br1201"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
   br1800:
-    content: |
-      [connection]
-      id=br1800
-      uuid=61800cc2-7bf7-4463-de5a-25e7d7c355a4
-      type=bridge
-      interface-name=br1800
-
-      [ethernet]
-
-      [bridge]
-      stp=false
-
-      [ipv4]
-      method=disabled
-      route1=139.229.180.0/24
-      route1_options=table=1800
-      route2=0.0.0.0/0,139.229.180.254
-      route2_options=table=1800
-      routing-rule1=priority 100 from 139.229.180.0/26 table 1800
-
-      [ipv6]
-      method=disabled
-
-      [proxy]
+    content:
+      connection:
+        id: "br1800"
+        uuid: "61800cc2-7bf7-4463-de5a-25e7d7c355a4"
+        type: "bridge"
+        interface-name: "br1800"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "disabled"
+        route1: "139.229.180.0/24"
+        route1_options: "table=1800"
+        route2: "0.0.0.0/0,139.229.180.254"
+        route2_options: "table=1800"
+        routing-rule1: "priority 100 from 139.229.180.0/26 table 1800"
+      ipv6:
+        method: "disabled"
+      proxy: {}

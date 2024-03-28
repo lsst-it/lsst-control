@@ -1,7 +1,7 @@
 ---
 classes:
   - "profile::core::common"
-  - "profile::core::puppetdb"
+  - "puppetdb"
 
 puppetdb::database_listen_address: "localhost"
 puppetdb::globals::version: "7.14.0"

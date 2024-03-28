@@ -15,4 +15,3 @@ java_artisanal::set_alternatives: false
 java_artisanal::java17::set_alternatives: true
 
 postfix::relayhost: "[mail.lsst.org]:submission"
-ccs_monit::mailhost: "mail.lsst.org"

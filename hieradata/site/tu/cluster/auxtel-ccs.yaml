@@ -12,4 +12,3 @@ clustershell::groupmembers:
   all: {group: "all", member: "auxtel-fp01,auxtel-mcm"}
 
 postfix::relayhost: "[mail.lsst.org]:submission"
-ccs_monit::mailhost: "mail.lsst.org"

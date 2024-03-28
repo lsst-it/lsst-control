@@ -1,5 +1,7 @@
 ---
 lookup_options:
+  profile::core::puppetboard::secret_key:
+    convert_to: "Sensitive"
   '^profile::.+::keytab_base64$':
     convert_to: "Sensitive"
   '^tailscale::auth_key$':
@@ -8,9 +10,9 @@ ccs_database::database: "comcamdbprod"
 ccs_database::password: "foo"
 ipa::admin_password: "foofoofoofoo"  # ipa master only
 ipa::directory_services_password: "foofoofoofoo"  # ipa master only
-ipa::domain_join_password: "foofoofoofoo"  # 8 char min
 foreman_proxy::plugin::dns::route53::aws_access_key: "foo"
 foreman_proxy::plugin::dns::route53::aws_secret_key: "foo"
+ipa::domain_join_password: "foofoofoofoo"  # 8 char min
 profile::ccs::file_transfer::s3daemon_env_access: "foo"
 profile::ccs::file_transfer::s3daemon_env_secret: "foo"
 profile::ccs::postfix::auth: "foo"
@@ -18,7 +20,8 @@ profile::core::monitoring::database: "foo"
 profile::core::monitoring::password: "foo"
 profile::core::monitoring::url: "foo"
 profile::core::monitoring::username: "foo"
-tailscale::auth_key: "foo"
+profile::core::puppetboard::secret_key: "foo"
 restic::id: "foo"
 restic::key: "foo"
 restic::password: "foo"
+tailscale::auth_key: "foo"

@@ -27,6 +27,25 @@ shared_examples 'puppetdb' do
   end
 end
 
+shared_examples 'puppetboard' do
+  it { is_expected.to contain_class('docker') }
+  it { is_expected.to contain_cron__job('docker_prune') }
+  it { is_expected.to contain_docker__image('ghcr.io/voxpupuli/puppetboard') }
+
+  it do
+    is_expected.to contain_docker__run('puppetboard').with(
+      image: 'ghcr.io/voxpupuli/puppetboard',
+      env: [
+        'PUPPETDB_HOST=127.0.0.1',
+        'PUPPETDB_PORT=8080',
+        'PUPPETBOARD_PORT=8088',
+        'SECRET_KEY=foo',
+      ],
+      net: 'host',
+    )
+  end
+end
+
 role = 'puppetdb'
 
 describe "#{role} role" do
@@ -53,6 +72,7 @@ describe "#{role} role" do
 
           include_examples 'common', os_facts: os_facts, site: site
           include_examples 'puppetdb'
+          include_examples 'puppetboard'
         end # host
       end # lsst_sites
     end

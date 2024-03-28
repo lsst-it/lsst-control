@@ -5,7 +5,8 @@ require 'spec_helper'
 describe 'profile::ccs::common' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { override_facts(os_facts, site: 'ls') }
+      let(:facts) { os_facts }
+      let(:node_params) { { site: 'ls' } }
       let(:pre_condition) do
         <<~PP
           include ssh

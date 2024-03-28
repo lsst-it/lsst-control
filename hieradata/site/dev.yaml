@@ -2,16 +2,20 @@
 ipa::ipa_master_fqdn: "ipa1.ls.lsst.org"
 rsyslog::feature_packages:
   - "rsyslog-elasticsearch"
+  - "rsyslog-openssl"
 rsyslog::config::modules:
   omelasticsearch: {}
 rsyslog::config::actions:
-  graylogls:
+  fluentbit_dev:
     type: "omfwd"
     facility: "*.*"
     config:
-      Target: "collector.ls.lsst.org"
-      Port: 5514
-      Protocol: "udp"
+      target: "rsyslog.fluent.ayekan.dev.lsst.org"
+      port: 5140
+      protocol: "tcp"
+      StreamDriver: "ossl"
+      StreamDriverMode: "1"
+      StreamDriverAuthMode: "anon"
   opensearch:
     type: "omelasticsearch"
     facility: "*.*"

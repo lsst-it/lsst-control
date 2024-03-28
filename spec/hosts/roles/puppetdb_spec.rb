@@ -5,8 +5,26 @@ require 'spec_helper'
 PUPPETDB_VERSION = '7.14.0'
 
 shared_examples 'puppetdb' do
-  it { is_expected.to contain_yum__versionlock('puppetdb').with_version(PUPPETDB_VERSION) }
   it { is_expected.to contain_class('puppetdb::globals').with_version(PUPPETDB_VERSION) }
+  it { is_expected.to contain_yum__versionlock('puppetdb').with_version(PUPPETDB_VERSION) }
+
+  it do
+    is_expected.to contain_class('puppetdb').with(
+      listen_address: '0.0.0.0',
+      java_args: {
+        '-Xmx' => '1g',
+        '-Xms' => '512m',
+      },
+    )
+  end
+
+  it do
+    is_expected.to contain_class('postgresql::globals').with(
+      manage_package_repo: false,
+      manage_dnf_module: true,
+      version: '15',
+    )
+  end
 end
 
 role = 'puppetdb'

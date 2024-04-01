@@ -1,85 +1,85 @@
 ---
 nm::connections:
   enp5s0f3u2u2c2:
-    content: |
-      [connection]
-      id=enp5s0f3u2u2c2
-      uuid=f6ad78f1-1c50-3196-9787-eeefde3b2ff3
-      type=ethernet
-      autoconnect=false
-      interface-name=enp5s0f3u2u2c2
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
+    content:
+      connection:
+        id: "enp5s0f3u2u2c2"
+        uuid: "f6ad78f1-1c50-3196-9787-eeefde3b2ff3"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp5s0f3u2u2c2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
   enp1s0f0:
-    content: |
-      [connection]
-      id=enp1s0f0
-      uuid=f8d70709-c9a6-34a1-be91-8af255090535
-      type=ethernet
-      interface-name=enp1s0f0
-
-      [ethernet]
-
-      [ipv4]
-      method=auto
-
-      [ipv6]
-      method=disabled
+    content:
+      connection:
+        id: "enp1s0f0"
+        uuid: "f8d70709-c9a6-34a1-be91-8af255090535"
+        type: "ethernet"
+        interface-name: "enp1s0f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
   enp1s0f1:
-    content: |
-      [connection]
-      id=enp1s0f1
-      uuid=f19ec6bf-508b-35d0-8f59-2763498895ca
-      type=ethernet
-      autoconnect=false
-      interface-name=enp1s0f1
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
+    content:
+      connection:
+        id: "enp1s0f1"
+        uuid: "f19ec6bf-508b-35d0-8f59-2763498895ca"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp1s0f1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp1s0f1.1101:
+    content:
+      connection:
+        id: "enp1s0f1.1101"
+        uuid: "1bea2cfd-7ecb-4058-8f3a-48d219cb226c"
+        type: "vlan"
+        interface-name: "enp1s0f1.1101"
+        master: "br1101"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1101"
+        parent: "enp1s0f1"
+      bridge-port: {}
   enp1s0f1.1201:
-    content: |
-      [connection]
-      id=enp1s0f1.1201
-      uuid=9e44b900-c674-49db-a59b-fc3f13638dc4
-      type=vlan
-      interface-name=enp1s0f1.1201
-      master=br1201
-      slave-type=bridge
-
-      [ethernet]
-
-      [vlan]
-      flags=1
-      id=1201
-      parent=enp1s0f1
-
-      [bridge-port]
+    content:
+      connection:
+        id: "enp1s0f1.1201"
+        uuid: "9e44b900-c674-49db-a59b-fc3f13638dc4"
+        type: "vlan"
+        interface-name: "enp1s0f1.1201"
+        master: "br1201"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1201"
+        parent: "enp1s0f1"
+      bridge-port: {}
   enp1s0f1.1800:
-    content: |
-      [connection]
-      id=enp1s0f1.1800
-      uuid=9fc3eb60-7afd-487c-8a5c-1899170c91f5
-      type=vlan
-      interface-name=enp1s0f1.1800
-      master=br1800
-      slave-type=bridge
-
-      [ethernet]
-
-      [vlan]
-      flags=1
-      id=1800
-      parent=enp1s0f1
-
-      [bridge-port]
+    content:
+      connection:
+        id: "enp1s0f1.1800"
+        uuid: "9fc3eb60-7afd-487c-8a5c-1899170c91f5"
+        type: "vlan"
+        interface-name: "enp1s0f1.1800"
+        master: "br1800"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1800"
+        parent: "enp1s0f1"
+      bridge-port: {}

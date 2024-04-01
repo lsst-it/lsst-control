@@ -1,10 +1,13 @@
 ---
 classes:
   - "profile::core::common"
-  - "profile::core::puppetdb"
+  - "puppetdb"
 
+postgresql::globals::manage_dnf_module: true  # use appstream packages
 puppetdb::database_listen_address: "localhost"
 puppetdb::globals::version: "7.14.0"
+puppetdb::manage_package_repo: false
+puppetdb::postgres_version: "15"
 puppetdb::java_args:
   "-Xmx": "1g"
   "-Xms": "512m"

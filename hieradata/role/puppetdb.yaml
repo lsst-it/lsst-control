@@ -3,15 +3,19 @@ classes:
   - "profile::core::common"
   - "profile::core::docker"
   - "profile::core::docker::prune"
+  - "profile::core::firewall"
   - "profile::core::puppetboard"
   - "puppetdb"
 
+firewall::ensure: "running"
 postgresql::globals::manage_dnf_module: true  # use appstream packages
 puppetdb::database_listen_address: "localhost"
 puppetdb::globals::version: "7.14.0"
+puppetdb::listen_address: "localhost"  # http only
 puppetdb::manage_package_repo: false
+puppetdb::open_ssl_listen_port: true  # open port 8081
 puppetdb::postgres_version: "15"
+puppetdb::ssl_listen_address: "0.0.0.0"
 puppetdb::java_args:
   "-Xmx": "1g"
   "-Xms": "512m"
-puppetdb::listen_address: "0.0.0.0"

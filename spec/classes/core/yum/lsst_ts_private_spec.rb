@@ -25,7 +25,7 @@ describe 'profile::core::yum::lsst_ts_private' do
         let(:params) do
           {
             username: 'foo',
-            password: 'bar',
+            password: sensitive('bar'),
           }
         end
 
@@ -37,7 +37,7 @@ describe 'profile::core::yum::lsst_ts_private' do
             ensure: 'present',
             enabled: true,
             username: 'foo',
-            password: 'bar',
+            password: sensitive('bar'),
           )
         end
       end

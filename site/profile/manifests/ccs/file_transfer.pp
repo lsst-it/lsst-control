@@ -58,8 +58,8 @@ class profile::ccs::file_transfer (
   String $secret = "export MC_HOST_oga=localhost\n",
   String $secret_file = 'mc-secret',
   String $pkgurl = $profile::ccs::common::pkgurl,
-  String $pkgurl_user = $profile::ccs::common::pkgurl_user,
-  String $pkgurl_pass = $profile::ccs::common::pkgurl_pass,
+  Variant[Sensitive[String[1]],String[1]] $pkgurl_user = $profile::ccs::common::pkgurl_user,
+  Sensitive[String[1]] $pkgurl_pass = $profile::ccs::common::pkgurl_pass,
 ) {
   $parent = "${dirname($directory)}"
 
@@ -209,8 +209,8 @@ class profile::ccs::file_transfer (
     archive { "/var/tmp/${binfile}":
       ensure   => present,
       source   => "${pkgurl}/${binfile}",
-      username => $pkgurl_user,
-      password => $pkgurl_pass,
+      username => $pkgurl_user.unwrap,
+      password => $pkgurl_pass.unwrap,
     }
     file { "${directory}/${binfile}":
       ensure  => file,

@@ -8,6 +8,12 @@ lookup_options:
     convert_to: "Sensitive"
   '^profile::core::ipam::password$':
     convert_to: "Sensitive"
+  '^ipa::domain_join_+$':
+    convert_to: "Sensitive"
+  '^ipa::directory_services_password$':
+    convert_to: "Sensitive"
+  '^ipa::admin_password$':
+    convert_to: "Sensitive"
 ccs_database::database: "comcamdbprod"
 ccs_database::password: "foo"
 foreman_proxy::plugin::dns::route53::aws_access_key: "foo"

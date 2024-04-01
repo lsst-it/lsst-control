@@ -41,8 +41,8 @@
 #  String giving s3daemon secret key
 #
 class profile::ccs::file_transfer (
-  String[1] $s3daemon_env_access,
-  String[1] $s3daemon_env_secret,
+  Sensitive[String[1]] $s3daemon_env_access,
+  Sensitive[String[1]] $s3daemon_env_secret,
   Boolean $s3daemon = false,
   Stdlib::HTTPUrl $s3daemon_repo_url = 'https://github.com/lsst-dm/s3daemon',
   Optional[String[1]] $s3daemon_repo_rev = undef,
@@ -55,7 +55,7 @@ class profile::ccs::file_transfer (
   String $repo_directory = '/home/ccs-ipa/file-transfer',
   String $repo_url = 'https://github.com/lsst-camera-dh/ccs-data-transfer',
   String $repo_ref = 'main',
-  String $secret = "export MC_HOST_oga=localhost\n",
+  Sensitive[String[1]] $secret = "export MC_HOST_oga=localhost\n",
   String $secret_file = 'mc-secret',
   String $pkgurl = $profile::ccs::common::pkgurl,
   Variant[Sensitive[String[1]],String[1]] $pkgurl_user = $profile::ccs::common::pkgurl_user,
@@ -196,7 +196,7 @@ class profile::ccs::file_transfer (
   }
 
   file { "${directory}/${secret_file}":
-    content => "${secret}\n",
+    content => "${secret.unwrap}\n",
     owner   => $user,
     group   => $group,
     mode    => '0600',

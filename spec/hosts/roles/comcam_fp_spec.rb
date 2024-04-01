@@ -43,7 +43,7 @@ describe "#{role} role" do
             )
           end
 
-          it { is_expected.to contain_file('/home/ccs-ipa/bin/mc-secret').with_content(%r{^export MC_HOST_oga=}) }
+          it { is_expected.to contain_file('/home/ccs-ipa/bin/mc-secret').with_content(%r{^foo$}) }
         end # host
       end # lsst_sites
     end # on os

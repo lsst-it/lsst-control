@@ -16,6 +16,10 @@ lookup_options:
     convert_to: "Sensitive"
   '^profile::ccs::common::pkgurl_.+$':
     convert_to: "Sensitive"
+  '^profile::ccs::file_transfer::s3daemon_env_.+$':
+    convert_to: "Sensitive"
+  '^profile::ccs::file_transfer::secret$':
+    convert_to: "Sensitive"
 ccs_database::database: "comcamdbprod"
 ccs_database::password: "foo"
 foreman_proxy::plugin::dns::route53::aws_access_key: "foo"
@@ -27,6 +31,7 @@ profile::ccs::common::pkgurl_pass: "foo"
 profile::ccs::common::pkgurl_user: "foo"
 profile::ccs::file_transfer::s3daemon_env_access: "foo"
 profile::ccs::file_transfer::s3daemon_env_secret: "foo"
+profile::ccs::file_transfer::secret: "foo"
 profile::ccs::postfix::auth: "foo"
 profile::core::ipam::password: "foo"
 profile::core::monitoring::database: "foo"

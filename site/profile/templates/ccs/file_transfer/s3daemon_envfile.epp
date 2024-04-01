@@ -1,6 +1,6 @@
 <%- | String $url,
-      String $access,
-      String $secret
+      Sensitive[String[1]] $access,
+      Sensitive[String[1]] $secret
 | -%>
 S3_ENDPOINT_URL=<%= $url %>
 AWS_ACCESS_KEY_ID=<%= $access %>

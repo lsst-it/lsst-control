@@ -5,7 +5,7 @@
 #  The secret key to use for the puppetboard
 #
 class profile::core::puppetboard (
-  Sensitive $secret_key,
+  Sensitive[String[1]] $secret_key,
 ) {
   docker::image { 'ghcr.io/voxpupuli/puppetboard': }
 

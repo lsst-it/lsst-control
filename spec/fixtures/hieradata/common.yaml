@@ -22,6 +22,8 @@ lookup_options:
     convert_to: "Sensitive"
   '^restic::(id|key|password)$':
     convert_to: "Sensitive"
+  '^profile::ccs::postfix::auth$':
+    convert_to: "Sensitive"
 ccs_database::database: "comcamdbprod"
 ccs_database::password: "foo"
 foreman_proxy::plugin::dns::route53::aws_access_key: "foo"

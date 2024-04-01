@@ -8,14 +8,14 @@
 #   List of postfix packages to install
 #
 class profile::ccs::postfix (
-  String        $auth,
+  Sensitive[String[1]] $auth,
   Array[String] $packages,
 ) {
   include postfix
 
   postfix::hash { '/etc/postfix/sasl_passwd':
     ensure  => 'present',
-    content => $auth,
+    content => $auth.unwrap,
   }
 
   ensure_packages($packages)

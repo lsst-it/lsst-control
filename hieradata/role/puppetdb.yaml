@@ -5,17 +5,44 @@ classes:
   - "profile::core::docker::prune"
   - "profile::core::firewall"
   - "profile::core::puppetboard"
-  - "puppetdb"
+  - "profile::core::puppetdb"
 
+apache::default_vhost: false
+# apache::log_level: "debug"  # for debugging ldap binding
 firewall::ensure: "running"
 postgresql::globals::manage_dnf_module: true  # use appstream packages
+profile::core::puppetdb::ldap_servers:
+  - "ipa1.ls.lsst.org"
+  - "ipa2.ls.lsst.org"
+  - "ipa3.ls.lsst.org"
 puppetdb::database_listen_address: "localhost"
 puppetdb::globals::version: "7.14.0"
 puppetdb::listen_address: "localhost"  # http only
 puppetdb::manage_package_repo: false
-puppetdb::open_ssl_listen_port: true  # open port 8081
 puppetdb::postgres_version: "15"
 puppetdb::ssl_listen_address: "0.0.0.0"
 puppetdb::java_args:
   "-Xmx": "1g"
   "-Xms": "512m"
+
+profile::core::firewall::firewall:
+  "250 accept http - redirect to 443":
+    proto: "tcp"
+    state: "NEW"
+    dport: "80"
+    action: "accept"
+  "251 accept https - puppetboard ldap":
+    proto: "tcp"
+    state: "NEW"
+    dport: "443"
+    action: "accept"
+  "252 accept https - puppetdb x509":
+    proto: "tcp"
+    state: "NEW"
+    dport: "8081"
+    action: "accept"
+  "253 accept https - puppetdb ldap":
+    proto: "tcp"
+    state: "NEW"
+    dport: "8443"
+    action: "accept"

@@ -24,6 +24,8 @@ lookup_options:
     convert_to: "Sensitive"
   '^profile::ccs::postfix::auth$':
     convert_to: "Sensitive"
+  '^profile::core::puppetdb::ldap_bind_(user|pass)$':
+    convert_to: "Sensitive"
 ccs_database::database: "comcamdbprod"
 ccs_database::password: "foo"
 foreman_proxy::plugin::dns::route53::aws_access_key: "foo"
@@ -43,6 +45,8 @@ profile::core::monitoring::password: "foo"
 profile::core::monitoring::url: "foo"
 profile::core::monitoring::username: "foo"
 profile::core::puppetboard::secret_key: "foo"
+profile::core::puppetdb::ldap_bind_pass: "foo"
+profile::core::puppetdb::ldap_bind_user: "foo"
 restic::id: "foo"
 restic::key: "foo"
 restic::password: "foo"

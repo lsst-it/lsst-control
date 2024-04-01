@@ -1,0 +1,5 @@
+---
+profile::core::puppetdb::ldap_servers:
+  - "ipa1.tu.lsst.org"
+  - "ipa2.tu.lsst.org"
+  - "ipa3.tu.lsst.org"

@@ -1,6 +1,9 @@
 ---
 classes:
   - "profile::core::common"
+  - "profile::core::docker"
+  - "profile::core::docker::prune"
+  - "profile::core::puppetboard"
   - "puppetdb"
 
 postgresql::globals::manage_dnf_module: true  # use appstream packages

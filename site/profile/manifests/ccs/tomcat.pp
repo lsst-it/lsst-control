@@ -4,8 +4,12 @@
 # @param wars
 #   `tomcat::wars` resources to create.
 #
+# @param jars
+#   Hash of jar files to install in lib directory: basename, source.
+#
 class profile::ccs::tomcat (
   Hash[String, Hash] $wars = {},
+  Hash[String[1],String[1]] $jars = {},
 ) {
   include nginx
 
@@ -13,6 +17,7 @@ class profile::ccs::tomcat (
   $root_path     = '/opt/tomcat'
   $catalina_home = "${root_path}/apache-tomcat-${version}"
   $catalina_base = "${root_path}/catalina_base"
+  $catalina_lib  = "${catalina_base}/lib"
 
   file { $root_path:
     ensure => directory,
@@ -77,6 +82,17 @@ class profile::ccs::tomcat (
         catalina_base => $catalina_base,
         *             => $conf,
       }
+    }
+  }
+
+  $jars.each |String $jfile, String $jsrc| {
+    file { "${catalina_lib}/${jfile}":
+      ensure  => file,
+      owner   => 'tomcat',
+      group   => 'tomcat',
+      mode    => '0664',
+      source  => $jsrc,
+      require => Exec['wait for tomcat'],
     }
   }
 

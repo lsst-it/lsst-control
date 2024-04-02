@@ -11,8 +11,8 @@ describe 'profile::ccs::file_transfer' do
         let(:params) do
           {
             pkgurl: 'https://example.org',
-            pkgurl_user: 'user',
-            pkgurl_pass: 'pass',
+            pkgurl_user: sensitive('user'),
+            pkgurl_pass: sensitive('pass'),
             s3daemon: true,
           }
         end

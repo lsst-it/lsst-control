@@ -1,22 +1,22 @@
 # @summary
 #   Common functionality needed by ccs nodes.
 #
-# @param sysctls
-#   if `true`, enable `profile::ccs::sysctl` sysctls.
-# @param pkgurl
-#   String specifying URL to fetch sources from
 # @param pkgurl_user
 #   String specifying username for pkgurl
 # @param pkgurl_pass
 #   String specifying password for pkgurl
+# @param sysctls
+#   if `true`, enable `profile::ccs::sysctl` sysctls.
+# @param pkgurl
+#   String specifying URL to fetch sources from
 # @param packages
 #   Optional list of packages to install.
 #
 class profile::ccs::common (
+  Variant[Sensitive[String[1]],String[1]] $pkgurl_user,
+  Sensitive[String[1]] $pkgurl_pass,
   Boolean $sysctls = true,
   String $pkgurl = 'https://example.org',
-  String $pkgurl_user = 'someuser',
-  String $pkgurl_pass = 'somepass',
   Optional[Array[String[1]]] $packages = undef,
 ) {
   include clustershell

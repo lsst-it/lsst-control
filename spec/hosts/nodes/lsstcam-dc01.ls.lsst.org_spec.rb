@@ -121,7 +121,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
         )
       end
 
-      it { is_expected.to contain_file('/home/ccs-ipa/bin/mc-secret').with_content(%r{^export MC_HOST_oga=}) }
+      it { is_expected.to contain_file('/home/ccs-ipa/bin/mc-secret').with_content(%r{^foo$}) }
     end # on os
   end # on_supported_os
 end

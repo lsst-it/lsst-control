@@ -6,16 +6,38 @@ lookup_options:
     convert_to: "Sensitive"
   '^tailscale::auth_key$':
     convert_to: "Sensitive"
+  '^profile::core::ipam::password$':
+    convert_to: "Sensitive"
+  '^ipa::domain_join_+$':
+    convert_to: "Sensitive"
+  '^ipa::directory_services_password$':
+    convert_to: "Sensitive"
+  '^ipa::admin_password$':
+    convert_to: "Sensitive"
+  '^profile::ccs::common::pkgurl_.+$':
+    convert_to: "Sensitive"
+  '^profile::ccs::file_transfer::s3daemon_env_.+$':
+    convert_to: "Sensitive"
+  '^profile::ccs::file_transfer::secret$':
+    convert_to: "Sensitive"
+  '^restic::(id|key|password)$':
+    convert_to: "Sensitive"
+  '^profile::ccs::postfix::auth$':
+    convert_to: "Sensitive"
 ccs_database::database: "comcamdbprod"
 ccs_database::password: "foo"
-ipa::admin_password: "foofoofoofoo"  # ipa master only
-ipa::directory_services_password: "foofoofoofoo"  # ipa master only
 foreman_proxy::plugin::dns::route53::aws_access_key: "foo"
 foreman_proxy::plugin::dns::route53::aws_secret_key: "foo"
+ipa::admin_password: "foofoofoofoo"  # ipa master only
+ipa::directory_services_password: "foofoofoofoo"  # ipa master only
 ipa::domain_join_password: "foofoofoofoo"  # 8 char min
+profile::ccs::common::pkgurl_pass: "foo"
+profile::ccs::common::pkgurl_user: "foo"
 profile::ccs::file_transfer::s3daemon_env_access: "foo"
 profile::ccs::file_transfer::s3daemon_env_secret: "foo"
+profile::ccs::file_transfer::secret: "foo"
 profile::ccs::postfix::auth: "foo"
+profile::core::ipam::password: "foo"
 profile::core::monitoring::database: "foo"
 profile::core::monitoring::password: "foo"
 profile::core::monitoring::url: "foo"

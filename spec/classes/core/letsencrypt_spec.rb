@@ -68,7 +68,7 @@ describe 'profile::core::letsencrypt' do
       context 'with aws_credentials param' do
         let(:params) do
           {
-            aws_credentials: 'foo',
+            aws_credentials: sensitive('foo'),
           }
         end
 

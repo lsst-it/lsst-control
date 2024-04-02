@@ -15,8 +15,8 @@ class profile::ccs::el9 (
     'compat-bin' => 'compat-bin-1.0.0-1.el9.noarch.rpm',
   },
   String $pkgurl = $profile::ccs::common::pkgurl,
-  String $pkgurl_user = $profile::ccs::common::pkgurl_user,
-  String $pkgurl_pass = $profile::ccs::common::pkgurl_pass,
+  Variant[Sensitive[String[1]],String[1]] $pkgurl_user = $profile::ccs::common::pkgurl_user,
+  Sensitive[String[1]] $pkgurl_pass = $profile::ccs::common::pkgurl_pass,
 ) {
   $rpm_opts = {
     ensure   => 'latest',
@@ -29,8 +29,8 @@ class profile::ccs::el9 (
     archive { $file:
       ensure   => present,
       source   => "${pkgurl}/${rpm}",
-      username => $pkgurl_user,
-      password => $pkgurl_pass,
+      username => $pkgurl_user.unwrap,
+      password => $pkgurl_pass.unwrap,
     }
     package { $package:
       source => $file,

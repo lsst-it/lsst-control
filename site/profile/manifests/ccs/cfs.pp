@@ -6,8 +6,8 @@ class profile::ccs::cfs ( ) {
   archive { $cfs_tmp:
     ensure   => present,
     source   => "${profile::ccs::common::pkgurl}/cfs",
-    username => $profile::ccs::common::pkgurl_user,
-    password => $profile::ccs::common::pkgurl_pass,
+    username => $profile::ccs::common::pkgurl_user.unwrap,
+    password => $profile::ccs::common::pkgurl_pass.unwrap,
   }
   file { '/usr/local/bin/cfs':
     ensure => file,

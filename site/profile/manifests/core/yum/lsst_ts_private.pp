@@ -12,8 +12,8 @@
 #
 class profile::core::yum::lsst_ts_private (
   Optional[Hash] $repos      = undef,
-  Optional[String] $username = undef,
-  Optional[String] $password = undef,
+  Optional[String[1]] $username = undef,
+  Optional[Sensitive[String[1]]] $password = undef,
 ) {
   if $repos {
     $_real_repos = $repos.map |String $k, Hash $h| {

@@ -28,8 +28,8 @@
 # @param aws_credentials
 #   `.aws/credentials` format string for aws route53 credentials
 class profile::core::letsencrypt (
-  Optional[Hash[String, Hash]] $certonly = undef,
-  Optional[String] $aws_credentials      = undef,
+  Optional[Hash[String[1], Hash]] $certonly = undef,
+  Optional[Sensitive[String[1]]] $aws_credentials      = undef,
 ) {
   include letsencrypt
   include letsencrypt::plugin::dns_route53
@@ -68,7 +68,7 @@ class profile::core::letsencrypt (
         ensure  => file,
         mode    => '0600',
         backup  => false,
-        content => $aws_credentials,
+        content => $aws_credentials.unwrap,
         ;
     }
 

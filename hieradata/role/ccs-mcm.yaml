@@ -19,7 +19,7 @@ profile::ccs::tomcat::jars:
   "h2-1.4.191.jar": "https://repo1.maven.org/maven2/com/h2database/h2/1.4.191/h2-1.4.191.jar"
 profile::ccs::tomcat::wars:
   CCSWebTrending.war:
-    war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2-public/org/lsst/CCSWebTrending/2.1/CCSWebTrending-2.1.war"
+    war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2-public/org/lsst/CCSWebTrending/2.2/CCSWebTrending-2.2.war"
   CCSImageUtilities.war:
     war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2-public/org/lsst/org-lsst-ccs-image-utilities-war/3.1.18/org-lsst-ccs-image-utilities-war-3.1.18.war"
 

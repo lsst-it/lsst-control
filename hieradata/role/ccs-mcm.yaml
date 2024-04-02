@@ -17,6 +17,9 @@ nginx::gzip_proxied: "any"
 profile::ccs::tomcat::wars:
   CCSWebTrending.war:
     war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2-public/org/lsst/CCSWebTrending/2.1/CCSWebTrending-2.1.war"
+  CCSImageUtilities.war:
+    war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2-public/org/lsst/org-lsst-ccs-image-utilities-war/3.1.18/org-lsst-ccs-image-utilities-war-3.1.18.war"
+
 profile::core::systemd::tmpfile:
   docker_tmp.conf:  # XXX short term kludge
     content: "x /tmp/docker_tmp 0777 saluser saluser -"

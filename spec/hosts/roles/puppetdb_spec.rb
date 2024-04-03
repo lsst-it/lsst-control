@@ -90,13 +90,21 @@ shared_examples 'puppetboard' do
   it do
     is_expected.to contain_docker__run('puppetboard').with(
       image: 'ghcr.io/voxpupuli/puppetboard',
-      env: [
-        'PUPPETDB_HOST=127.0.0.1',
-        'PUPPETDB_PORT=8080',
-        'PUPPETBOARD_PORT=8088',
-        'SECRET_KEY=foo',
+      volumes: [
+        '/etc/puppetlabs/puppet/ssl:/etc/puppetlabs/puppet/ssl:ro',
       ],
       net: 'host',
+      env: [
+        'PUPPETDB_HOST=127.0.0.1',
+        'PUPPETDB_PORT=8081',
+        'PUPPETBOARD_PORT=8088',
+        'ENABLE_CATALOG=true',
+        'PUPPETDB_SSL_VERIFY=false',
+        "PUPPETDB_KEY=/etc/puppetlabs/puppet/ssl/private_keys/#{facts[:networking]['fqdn']}.pem",
+        "PUPPETDB_CERT=/etc/puppetlabs/puppet/ssl/certs/#{facts[:networking]['fqdn']}.pem",
+        'SECRET_KEY=foo',
+        'DEFAULT_ENVIRONMENT=*',
+      ],
     )
   end
 end

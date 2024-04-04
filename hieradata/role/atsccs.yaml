@@ -3,6 +3,7 @@
 classes:
   - "ccs_sal"
   - "profile::ccs::common"
+  - "profile::ccs::graphical"
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::nfsclient"

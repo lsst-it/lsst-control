@@ -105,6 +105,14 @@ RSpec.configure do |c|
     Puppet.settings[:strict] = :warning
   end
   c.filter_run_excluding(bolt: true) unless ENV['GEM_BOLT']
+  # stub out enc parameters which will show up as top level variables, if set.
+  c.default_node_params = {
+    role: nil,
+    site: nil,
+    cluster: nil,
+    variant: nil,
+    subvariant: nil,
+  }
 end
 
 # Disable rspec-puppet coverage reporting which is hardwired as enabled here:
@@ -419,6 +427,18 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, net
 
   it { is_expected.to contain_class('systemd').with_manage_udevd(true) }
   it { is_expected.to contain_class('sudo').with_purge(true) }
+
+  # All host spec are expected to set the role & site node params. The other
+  # node params will vary per host spec.
+  it do
+    is_expected.to contain_class('profile::core::node_info').with(
+      role: node_params[:role],
+      site: node_params[:site],
+      cluster: node_params[:cluster],
+      variant: node_params[:variant],
+      subvariant: node_params[:subvariant],
+    )
+  end
 end
 
 shared_examples 'lhn sysctls', :lhn_node do

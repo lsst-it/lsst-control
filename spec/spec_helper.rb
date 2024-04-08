@@ -41,13 +41,13 @@ def puppetfile_path
 end
 
 # extract public hiera hierarchy
-def public_hierarchy
+def hiera_public_hierarchy
   hc = YAML.load_file(control_hiera_config)
-  hc['hierarchy'][1]['paths']
+  hc['hierarchy'].find { |h| h['name'] == 'public hiera' }['paths']
 end
 
 def hiera_all_files
-  public_hierarchy.map { |l| hiera_files_in_layer(l) }.flatten
+  hiera_public_hierarchy.map { |l| hiera_files_in_layer(l) }.flatten
 end
 
 default_facts = {
@@ -71,7 +71,7 @@ end
 
 # all hiera role layers
 def hiera_role_layers
-  public_hierarchy.grep(%r{role})
+  hiera_public_hierarchy.grep(%r{role})
 end
 
 def hiera_files_in_layer(layer)

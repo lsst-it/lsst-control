@@ -1,99 +1,80 @@
 ---
 nm::connections:
-  enp197s0f0:  # daq
-    content: |
-      [connection]
-      id=enp197s0f0
-      uuid=d5642f16-53c6-6053-7d4d-8c6ef5ae8a38
-      type=ethernet
-      interface-name=enp197s0f0
-      master=lsst-daq
-      slave-type=bridge
-
-      [ethernet]
-
-      [ethtool]
-      ring-rx=4096
-      ring-tx=4096
-
-      [bridge-port]
-  enp197s0f1:  # unused
-    content: |
-      [connection]
-      id=enp197s0f1
-      uuid=61800cc2-7bf7-4463-de5a-8c6ef5ae8a38
-      type=ethernet
-      autoconnect=false
-      interface-name=enp197s0f1
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
+  enp197s0f0:
+    content:
+      connection:
+        id: "enp197s0f0"
+        uuid: "d5642f16-53c6-6053-7d4d-8c6ef5ae8a38"
+        type: "ethernet"
+        interface-name: "enp197s0f0"
+        master: "lsst-daq"
+        slave-type: "bridge"
+      ethernet: {}
+      ethtool:
+        ring-rx: "4096"
+        ring-tx: "4096"
+      bridge-port: {}
+  enp197s0f1:
+    content:
+      connection:
+        id: "enp197s0f1"
+        uuid: "61800cc2-7bf7-4463-de5a-8c6ef5ae8a38"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp197s0f1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
   enp129s0f1.2505:
-    content: |
-      [connection]
-      id=enp129s0f1.2505
-      uuid=4ccd60a0-d28a-415a-a677-36cef796b9ea
-      type=vlan
-      interface-name=enp129s0f1.2505
-      master=lhn
-      slave-type=bridge
-
-      [ethernet]
-
-      [vlan]
-      flags=1
-      id=2505
-      parent=enp129s0f1
-
-      [bridge-port]
+    content:
+      connection:
+        id: "enp129s0f1.2505"
+        uuid: "4ccd60a0-d28a-415a-a677-36cef796b9ea"
+        type: "vlan"
+        interface-name: "enp129s0f1.2505"
+        master: "lhn"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2505"
+        parent: "enp129s0f1"
+      bridge-port: {}
   lhn:
-    content: |
-      [connection]
-      id=lhn
-      uuid=61800cc2-7bf7-4463-de5a-25e7d7c355a4
-      type=bridge
-      interface-name=lhn
-
-      [ethernet]
-
-      [bridge]
-      stp=false
-
-      [ipv4]
-      method=auto
-      never-default=true
-      route1=139.229.153.0/24
-      route1_options=table=2505
-      route2=0.0.0.0/0,139.229.153.254
-      route2_options=table=2505
-      routing-rule1=priority 100 from 139.229.153.64/26 table 2505
-
-      [ipv6]
-      method=disabled
-
-      [proxy]
+    content:
+      connection:
+        id: "lhn"
+        uuid: "61800cc2-7bf7-4463-de5a-25e7d7c355a4"
+        type: "bridge"
+        interface-name: "lhn"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
+        never-default: "true"
+        route1: "139.229.153.0/24"
+        route1_options: "table=2505"
+        route2: "0.0.0.0/0,139.229.153.254"
+        route2_options: "table=2505"
+        routing-rule1: "priority 100 from 139.229.153.64/26 table 2505"
+      ipv6:
+        method: "disabled"
+      proxy: {}
   lsst-daq:
-    content: |
-      [connection]
-      id=lsst-daq
-      uuid=d5642f16-7bf7-7d4d-de5a-25e7d7c355a4
-      type=bridge
-      interface-name=lsst-daq
-
-      [ethernet]
-
-      [bridge]
-      stp=false
-
-      [ipv4]
-      method=auto
-
-      [ipv6]
-      method=disabled
-
-      [proxy]
+    content:
+      connection:
+        id: "lsst-daq"
+        uuid: "d5642f16-7bf7-7d4d-de5a-25e7d7c355a4"
+        type: "bridge"
+        interface-name: "lsst-daq"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}

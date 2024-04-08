@@ -118,26 +118,6 @@ shared_examples 'rsyslog defaults' do |site:|
         },
       )
     end
-
-    it do
-      is_expected.to contain_rsyslog__component__action('opensearch').with(
-        type: 'omelasticsearch',
-        facility: '*.*',
-        config: {
-          'server' => 'opensearch.ayekan.dev.lsst.org',
-          'serverport' => 443,
-          'allowunsignedcerts' => 'on',
-          'usehttps' => 'on',
-          'searchIndex' => 'rsyslog-hosts',
-          'bulkmode' => 'on',
-          'maxbytes' => '100m',
-          'queue.type' => 'linkedlist',
-          'queue.size' => '5000',
-          'queue.dequeuebatchsize' => '300',
-          'action.resumeretrycount' => '-1',
-        },
-      )
-    end
   when 'tu'
     it do
       is_expected.to contain_rsyslog__component__action('graylogtu').with(

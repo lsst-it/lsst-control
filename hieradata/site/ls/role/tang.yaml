@@ -1,0 +1,8 @@
+---
+profile::core::firewall::firewall:
+  "200 accept tang":
+    proto: "tcp"
+    state: "NEW"
+    ipset: "lsfde src"
+    dport: "7500"
+    action: "accept"

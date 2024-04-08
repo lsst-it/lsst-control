@@ -1,81 +1,66 @@
 ---
 nm::connections:
   eno1np0:
-    content: |
-      [connection]
-      id=eno1np0
-      uuid=f330f829-20cc-b829-67b0-18086a5fe6fa
-      type=ethernet
-      autoconnect=false
-      interface-name=eno1np0
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
+    content:
+      connection:
+        id: "eno1np0"
+        uuid: "f330f829-20cc-b829-67b0-18086a5fe6fa"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno1np0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
   eno2np1:
-    content: |
-      [connection]
-      id=eno2np1
-      uuid=de9904c8-9577-1a17-36b1-34b94132f06a
-      type=ethernet
-      autoconnect=false
-      interface-name=eno2np1
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
+    content:
+      connection:
+        id: "eno2np1"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno2np1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
   enp4s0f3u2u2c2:
-    content: |
-      [connection]
-      id=enp4s0f3u2u2c2
-      uuid=283f3035-13d7-4c87-9d7a-7d47861fa1f9
-      type=ethernet
-      autoconnect=false
-      interface-name=enp4s0f3u2u2c2
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
-  enp129s0f0:  # fqdn
-    content: |
-      [connection]
-      id=enp129s0f0
-      uuid=688bf5bf-d649-34b4-15eb-b07c50ac43f8
-      type=ethernet
-      interface-name=enp129s0f0
-
-      [ethernet]
-
-      [ipv4]
-      method=auto
-
-      [ipv6]
-      method=disabled
-  enp129s0f1:  # trunk
-    content: |
-      [connection]
-      id=enp129s0f1
-      uuid=46d19ce1-bcab-7e77-6fc7-b730b26c54b1
-      type=ethernet
-      autoconnect=false
-      interface-name=enp129s0f1
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
+    content:
+      connection:
+        id: "enp4s0f3u2u2c2"
+        uuid: "283f3035-13d7-4c87-9d7a-7d47861fa1f9"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp4s0f3u2u2c2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp129s0f0:
+    content:
+      connection:
+        id: "enp129s0f0"
+        uuid: "688bf5bf-d649-34b4-15eb-b07c50ac43f8"
+        type: "ethernet"
+        interface-name: "enp129s0f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+  enp129s0f1:
+    content:
+      connection:
+        id: "enp129s0f1"
+        uuid: "46d19ce1-bcab-7e77-6fc7-b730b26c54b1"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp129s0f1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"

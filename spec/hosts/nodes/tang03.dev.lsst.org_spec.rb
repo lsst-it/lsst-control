@@ -36,10 +36,10 @@ describe 'tang03.dev.lsst.org', :sitepp do
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
+        it_behaves_like 'nm manual interface'
         it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.134.59/24,139.229.134.254') }
         it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.134.53;139.229.134.54;139.229.134.55;') }
         it { expect(nm_keyfile['ipv4']['dns-search']).to eq('dev.lsst.org;') }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
       end
     end # on os
   end # on_supported_os

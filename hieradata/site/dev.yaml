@@ -1,10 +1,7 @@
 ---
 ipa::ipa_master_fqdn: "ipa1.ls.lsst.org"
 rsyslog::feature_packages:
-  - "rsyslog-elasticsearch"
   - "rsyslog-openssl"
-rsyslog::config::modules:
-  omelasticsearch: {}
 rsyslog::config::actions:
   fluentbit_dev:
     type: "omfwd"

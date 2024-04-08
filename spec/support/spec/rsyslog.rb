@@ -100,9 +100,7 @@ shared_examples 'rsyslog defaults' do |site:|
       )
     end
   when 'dev'
-    it { is_expected.to contain_package('rsyslog-elasticsearch') }
     it { is_expected.to contain_package('rsyslog-openssl') }
-    it { is_expected.to contain_rsyslog__component__module('omelasticsearch') }
 
     it do
       is_expected.to contain_rsyslog__component__action('fluentbit_dev').with(

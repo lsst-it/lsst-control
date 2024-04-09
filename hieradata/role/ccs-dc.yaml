@@ -7,3 +7,11 @@ classes:
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
+
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /net/lsstdata/admin:
+    share: "lsstdata/admin"
+    server: "ddn-nfs.ls.lsst.org"
+    atboot: true

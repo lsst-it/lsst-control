@@ -1,4 +1,8 @@
 ---
+# XXX temporarily extend dhcp lease time to 5 days during foreman vm migration
+dhcp::default_lease_time: &lease_time 432000
+dhcp::max_lease_time: *lease_time
+
 network::interfaces_hash:
   eth0:  # fqdn
     bootproto: "none"

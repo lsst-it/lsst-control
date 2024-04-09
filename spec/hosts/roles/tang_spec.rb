@@ -56,6 +56,16 @@ describe "#{role} role" do
                 action: 'accept',
               )
             end
+          when 'ls'
+            it do
+              is_expected.to contain_firewall('200 accept tang').with(
+                proto: 'tcp',
+                state: 'NEW',
+                ipset: 'lsfde src',
+                dport: '7500',
+                action: 'accept',
+              )
+            end
           end
 
           it do

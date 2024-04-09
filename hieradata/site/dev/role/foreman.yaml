@@ -4,6 +4,10 @@ profile::core::foreman::foreman_hostgroup:
     description: "dev site"
 profile::core::foreman::smee_url: "https://smee.io/lpxrggGObEn5YTA"
 puppet::server::puppetdb::server: "puppetdb.dev.lsst.org"
+profile::core::foreman::foreman_global_parameter:
+  disk_enc_tang_servers:  # XXX not idempotent
+    parameter_type: "json"
+    value: '["tang01.dev.lsst.org:7500", "tang02.dev.lsst.org:7500", "tang03.dev.lsst.org:7500"]'
 
 r10k::sources:
   control:

@@ -2,14 +2,14 @@
 
 require 'spec_helper'
 
-describe 'tang02.dev.lsst.org', :sitepp do
+describe 'tang03.ls.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
         override_facts(os_facts,
-                       fqdn: 'tang02.dev.lsst.org',
+                       fqdn: 'tang03.ls.lsst.org',
                        is_virtual: true,
                        virtual: 'kvm',
                        dmi: {
@@ -21,7 +21,7 @@ describe 'tang02.dev.lsst.org', :sitepp do
       let(:node_params) do
         {
           role: 'tang',
-          site: 'dev',
+          site: 'ls',
         }
       end
 
@@ -37,9 +37,9 @@ describe 'tang02.dev.lsst.org', :sitepp do
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
         it_behaves_like 'nm manual interface'
-        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.134.58/24,139.229.134.254') }
-        it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.134.53;139.229.134.54;139.229.134.55;') }
-        it { expect(nm_keyfile['ipv4']['dns-search']).to eq('dev.lsst.org;') }
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.141.6/27,139.229.141.30') }
+        it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.135.53;139.229.135.54;139.229.135.55;') }
+        it { expect(nm_keyfile['ipv4']['dns-search']).to eq('ls.lsst.org;') }
       end
     end # on os
   end # on_supported_os

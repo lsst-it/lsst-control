@@ -14,5 +14,5 @@ nm::connections:
         dns-search: "tu.lsst.org;"
         method: "manual"
       ipv6:
-        method: "ignore"
+        method: "disabled"
       proxy: {}

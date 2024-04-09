@@ -10,9 +10,9 @@ nm::connections:
       ethernet: {}
       ipv4:
         address1: "139.229.134.4/24,139.229.134.254"
-        dns: "139.229.134.53;139.229.135.54;139.229.135.55;"
+        dns: "139.229.134.53;139.229.134.54;139.229.134.55;"
         dns-search: "dev.lsst.org;"
         method: "manual"
       ipv6:
-        method: "ignore"
+        method: "disabled"
       proxy: {}

@@ -375,6 +375,19 @@ ipset::sets:
       - "140.252.147.0/28"
       - "140.252.147.32/28"
       - "140.252.147.64/27"
+  lsfde:  # ls/bts site hosts which might need FDE
+    ensure: "present"
+    type: "hash:net"
+    set:
+      - "139.229.135.0/24"  # vlan2102
+      - "139.229.141.0/27"  # vlan2103
+      - "139.229.141.32/28"  # vlan2104
+      - "139.229.144.0/26"  # vlan2300 - should be migrated to dev?
+      - "139.229.147.0/24"  # vlan2400
+      - "139.229.151.0/24"  # vlan2501
+      - "139.229.152.128/26"  # vlan2503
+      - "139.229.152.192/26"  # vlan2504
+      - "139.229.154.0/26"  # vlan2507
 
 # sssd ipa client setup -- do not use on ipa servers
 sssd::main_config:

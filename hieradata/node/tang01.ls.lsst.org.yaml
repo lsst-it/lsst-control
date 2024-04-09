@@ -9,9 +9,9 @@ nm::connections:
         interface-name: "enp1s0"
       ethernet: {}
       ipv4:
-        address1: "139.229.134.59/24,139.229.134.254"
-        dns: "139.229.134.53;139.229.134.54;139.229.134.55;"
-        dns-search: "dev.lsst.org;"
+        address1: "139.229.141.4/27,139.229.141.30"
+        dns: "139.229.135.53;139.229.135.54;139.229.135.55;"
+        dns-search: "ls.lsst.org;"
         method: "manual"
       ipv6:
         method: "disabled"

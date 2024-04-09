@@ -38,7 +38,29 @@ describe 'rancher01.cp.lsst.org', :sitepp do
       end
 
       include_examples 'vm'
-      it { is_expected.to have_nm__connection_resource_count(0) }
+      include_context 'with nm interface'
+      it do
+        is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
+      end
+
+      it { is_expected.to have_nm__connection_resource_count(2) }
+
+      context 'with enp1s0' do
+        let(:interface) { 'enp1s0' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm ethernet interface'
+        it_behaves_like 'nm dhcp interface'
+      end
+
+      context 'with enp2s0' do
+        let(:interface) { 'enp2s0' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
+        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+      end
     end # on os
   end # on_supported_os
 end

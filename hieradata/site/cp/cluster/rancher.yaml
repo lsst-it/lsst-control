@@ -1,0 +1,26 @@
+---
+nm::connections:
+  enp1s0:  # fqdn
+    content:
+      connection:
+        id: "enp1s0"
+        uuid: "a79e6dc7-7679-3237-a351-49132a22e919"
+        type: "ethernet"
+        interface-name: "enp1s0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+  enp2s0:
+    content:
+      connection:
+        id: "enp2s0"
+        uuid: "f6785b81-b268-3d77-bd7a-5833f9851108"
+        type: "ethernet"
+        interface-name: "enp2s0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"

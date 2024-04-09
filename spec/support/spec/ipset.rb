@@ -72,4 +72,16 @@ shared_examples 'ipset' do
       ],
     ).that_comes_before('Class[firewall]')
   end
+
+  it do
+    is_expected.to contain_ipset__set('cpfde').with_set(
+      %w[
+        139.229.160.0/24
+        139.229.161.0/27
+        139.229.175.128/25
+        139.229.175.0/26
+        139.229.175.64/26
+      ],
+    ).that_comes_before('Class[firewall]')
+  end
 end

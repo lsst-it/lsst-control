@@ -1,0 +1,18 @@
+---
+nm::connections:
+  enp1s0:
+    content:
+      connection:
+        id: "enp1s0"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "enp1s0"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.161.6/27,139.229.161.30"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}

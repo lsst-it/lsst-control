@@ -1,41 +1,33 @@
 ---
 nm::connections:
   enp129s0f1.2502:
-    content: |
-      [connection]
-      id=enp129s0f1.2502
-      uuid=d7618012-e034-434e-a9a9-f33f0c19408a
-      type=vlan
-      interface-name=enp129s0f1.2502
-      master=dds
-      slave-type=bridge
-
-      [ethernet]
-
-      [vlan]
-      flags=1
-      id=2502
-      parent=enp129s0f1
-
-      [bridge-port]
+    content:
+      connection:
+        id: "enp129s0f1.2502"
+        uuid: "d7618012-e034-434e-a9a9-f33f0c19408a"
+        type: "vlan"
+        interface-name: "enp129s0f1.2502"
+        master: "dds"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2502"
+        parent: "enp129s0f1"
+      bridge-port: {}
   dds:
-    content: |
-      [connection]
-      id=dds
-      uuid=d269ffaa-3906-4c54-9e73-9b2d21baf2a4
-      type=bridge
-      interface-name=dds
-
-      [ethernet]
-
-      [bridge]
-      stp=false
-
-      [ipv4]
-      method=auto
-      never-default=true
-
-      [ipv6]
-      method=disabled
-
-      [proxy]
+    content:
+      connection:
+        id: "dds"
+        uuid: "d269ffaa-3906-4c54-9e73-9b2d21baf2a4"
+        type: "bridge"
+        interface-name: "dds"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
+        never-default: "true"
+      ipv6:
+        method: "disabled"
+      proxy: {}

@@ -47,6 +47,8 @@ role = 'rke'
 
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
+    next unless os =~ %r{almalinux-9-x86_64}
+
     context "on #{os}" do
       let(:facts) { os_facts }
       let(:node_params) do

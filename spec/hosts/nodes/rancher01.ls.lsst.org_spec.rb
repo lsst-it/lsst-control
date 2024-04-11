@@ -49,8 +49,7 @@ describe 'rancher01.ls.lsst.org', :sitepp do
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['ipv4']['method']).to eq('auto') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+        it_behaves_like 'nm dhcp interface'
       end
 
       context 'with enp2s0' do

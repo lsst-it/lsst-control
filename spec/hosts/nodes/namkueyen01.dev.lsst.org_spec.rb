@@ -48,8 +48,8 @@ describe 'namkueyen01.dev.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_class('profile::core::rke').with(
-          version: '1.4.6',
+        is_expected.to contain_class('rke').with(
+          version: '1.5.8',
         )
       end
 

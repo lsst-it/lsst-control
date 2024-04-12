@@ -31,8 +31,8 @@ describe 'rancher01.dev.lsst.org', :sitepp do
       include_examples 'docker', docker_version: '24.0.9'
 
       it do
-        is_expected.to contain_class('profile::core::rke').with(
-          version: '1.4.6',
+        is_expected.to contain_class('rke').with(
+          version: '1.5.8',
         )
       end
 

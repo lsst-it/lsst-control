@@ -48,9 +48,8 @@ describe 'kueyen01.dev.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_class('profile::core::rke').with(
-          enable_dhcp: true,
-          version: '1.4.6',
+        is_expected.to contain_class('rke').with(
+          version: '1.5.8',
         )
       end
 
@@ -61,6 +60,8 @@ describe 'kueyen01.dev.lsst.org', :sitepp do
           enable: ['macvlan'],
         )
       end
+
+      it { is_expected.to contain_class('cni::plugins::dhcp') }
 
       it { is_expected.to contain_class('profile::core::ospl').with_enable_rundir(true) }
 

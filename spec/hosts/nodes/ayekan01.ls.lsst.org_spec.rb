@@ -21,7 +21,7 @@ describe 'ayekan01.ls.lsst.org', :sitepp do
       let(:node_params) do
         {
           role: 'rke',
-          site: 'ls',
+          site: 'dev',
           cluster: 'ayekan',
         }
       end
@@ -49,8 +49,7 @@ describe 'ayekan01.ls.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_class('rke').with(
-          version: '1.4.6',
-          checksum: '12d8fee6f759eac64b3981ef2822353993328f2f839ac88b3739bfec0b9d818c',
+          version: '1.5.8',
         )
       end
 

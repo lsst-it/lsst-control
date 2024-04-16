@@ -141,6 +141,25 @@ describe 'profile::core::rke' do
           end
         end
 
+        context 'when 1.5.8' do
+          let(:params) do
+            {
+              version: '1.5.8',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+
+          include_examples 'rke profile'
+
+          it do
+            is_expected.to contain_class('rke').with(
+              version: '1.5.8',
+              checksum: 'f691a33b59db48485e819d89773f2d634e347e9197f4bb6b03270b192bd9786d',
+            )
+          end
+        end
+
         context 'when 42' do
           let(:params) do
             {

@@ -1,0 +1,13 @@
+---
+htcondor::htcondor_host: "htcondor-cm.cp.lsst.org"
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /mnt/project:
+    share: "project"
+    server: "nfs1.cp.lsst.org"
+    atboot: true
+  /mnt/rsphome:
+    share: "rsphome"
+    server: "nfs-rsphome.cp.lsst.org"
+    atboot: true

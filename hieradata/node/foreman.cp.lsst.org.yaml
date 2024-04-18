@@ -99,7 +99,7 @@ dhcp::pools:
     mask: "255.255.255.192"
     gateway: "139.229.168.190"
     range:
-      - "139.229.168.180 139.229.168.189"
+      - "139.229.168.140 139.229.168.189"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   MTDome-Hardware:
     network: "139.229.168.192"

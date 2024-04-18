@@ -151,7 +151,7 @@ describe 'foreman.cp.lsst.org', :sitepp do
         is_expected.to contain_dhcp__pool('Dome-Calibrations').with(
           network: '139.229.168.128',
           mask: '255.255.255.192',
-          range: ['139.229.168.180 139.229.168.189'],
+          range: ['139.229.168.140 139.229.168.189'],
           gateway: '139.229.168.190',
         )
       end

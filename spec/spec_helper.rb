@@ -1060,10 +1060,10 @@ shared_examples 'generic perfsonar' do
   it do
     is_expected.to contain_yumrepo('perfSONAR').with(
       descr: 'perfSONAR RPM Repository - software.internet2.edu - main',
-      baseurl: "http://software.internet2.edu/rpms/el7/x86_64/#{perfsonar_version}/",
+      baseurl: "http://software.internet2.edu/rpms/el#{facts[:os]['release']['major']}/x86_64/#{perfsonar_version}/",
       enabled: '1',
       protect: '0',
-      gpgkey: 'http://software.internet2.edu/rpms/RPM-GPG-KEY-perfSONAR',
+      gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-perfSONAR',
       gpgcheck: '1',
       mirrorlist: 'absent',
     )

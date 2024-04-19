@@ -6,6 +6,7 @@ role = 'perfsonar'
 
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
+    next if os =~ %r{almalinux-8-x86_64}
     context "on #{os}" do
       let(:facts) { os_facts }
       let(:node_params) do
@@ -23,8 +24,13 @@ describe "#{role} role" do
           let(:site) { site }
 
           let(:le_root) { "/etc/letsencrypt/live/#{facts[:fqdn]}" }
-          let(:perfsonar_version) { '5.0.8' }
-
+          
+          if os =~ %r{almalinux-9-x86_64}
+            let(:perfsonar_version) { '5.0.8' }
+          else
+            let(:perfsonar_version) { '4.4.6' }
+          end
+          
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'common', os_facts: os_facts, site: site

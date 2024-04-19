@@ -1,4 +1,12 @@
 ---
+classes:
+  - "ntp"
+
+profile::core::perfsonar::version: "4.4.6"
+
+chrony::service_enable: false
+chrony::service_ensure: "stopped"
+
 profile::core::yum::versionlock:
   # XXX do we need to versionlock all of the sub-packages as well?
   perfsonar-toolkit:

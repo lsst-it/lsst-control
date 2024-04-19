@@ -1,4 +1,6 @@
 ---
+profile::core::perfsonar::version: "5.0.8"
+
 profile::core::yum::versionlock:
   perfsonar-toolkit:
     ensure: "present"

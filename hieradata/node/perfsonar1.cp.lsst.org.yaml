@@ -1,47 +1,96 @@
 ---
-profile::core::nm_dispatch::interfaces:
-  eno1:
-    - "/sbin/ethtool --set-ring ${DEV} rx 2047 tx 2047"
+nm::connections:
+  eno1np0:
+    content:
+      connection:
+        id: "eno1np0"
+        uuid: "8db97bf6-5ef5-447c-ae28-829bb54ebe25"
+        type: "ethernet"
+        interface-name: "eno1np0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+      ethtool:
+        ring-rx: 2047
+        ring-tx: 2047
   enp1s0f0:
-    - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
+    content:
+      connection:
+        id: "enp1s0f0"
+        uuid: "1168b20e-3a04-4a17-96d4-3994986c96ef"
+        type: "ethernet"
+        interface-name: "enp1s0f0"
+      ethernet:
+        mtu: 9000
+      ipv4:
+        address1: "139.229.140.13/31"
+        gateway: "139.229.140.12"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
   enp1s0f1:
-    - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
-
-network::interfaces_hash:
-  enp1s0f0:
-    bootproto: "none"
-    onboot: "yes"
-    type: "Ethernet"
-    mtu: "9000"
-  enp1s0f1:
-    bootproto: "none"
-    onboot: "yes"
-    type: "Ethernet"
-    mtu: "9000"
-  enp1s0f0.1120:
-    bootproto: "none"
-    onboot: "yes"
-    vlan: "yes"
-    type: "vlan"
-    ipaddress: "139.229.164.220"
-    netmask: "255.255.255.254"
-    nozeroconf: "yes"
-    mtu: "9000"
-
-network::hostname: "%{facts.fqdn}"
-network::mroutes_hash:
-  enp1s0f0.1120:
-    routes:
-      "139.229.164.0/24": "enp1s0f0.1120"
-      "139.229.140.135/32": &via "139.229.164.254"
-      "139.229.140.137/32": *via
-      "198.32.252.39/32": *via
-      "198.32.252.192/31": *via  # miami throughput
-      "198.32.252.208/31": *via
-      "198.32.252.210/31": *via
-      "198.32.252.216/31": *via
-      "198.32.252.218/31": *via
-      "198.32.252.232/31": *via
-      "198.32.252.234/31": *via
-      "134.79.235.226/32": *via  # SLAC IT-3892
-      "134.79.235.242/32": *via  # SLAC IT-3892
+    content:
+      connection:
+        id: "enp1s0f1"
+        uuid: "61544e1a-cf7c-4b43-a453-622ff464027a"
+        type: "ethernet"
+        interface-name: "enp1s0f1"
+      ethernet:
+        mtu: 9000
+      ipv4:
+        address1: "139.229.140.15/31"
+        gateway: "139.229.140.14"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp129s0f0np0:
+    content:
+      connection:
+        id: "enp129s0f0np0"
+        uuid: "92f57bf8-40b6-4fea-afdc-e72ad93a2a45"
+        type: "ethernet"
+        interface-name: "enp129s0f0np0"
+      ethernet:
+        mtu: 9000
+      ipv4:
+        address1: "139.229.140.9/31"
+        gateway: "139.229.140.8"
+        method: "manual"
+#        route1: "139.229.140.8/31"
+#        route1_options: "table=1891"
+#        route2: "0.0.0.0/0,139.229.140.8"
+#        route2_options: "table=1891"
+#        route3: "172.24.7.0/24, 139.229.140.8"
+#        route3_options: "table=1891"
+#        routing-rule1: "priority 401 from 172.24.7.0/24 table 1891"
+#        routing-rule2: "priority 401 to 172.24.7.0/24 table 1891"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+      ethtool:
+        ring-rx: 8192
+        ring-tx: 8192
+  enp129s0f1np1:
+    content:
+      connection:
+        id: "enp129s0f1np1"
+        uuid: "14738512-9a6f-4de0-b3d3-6476177ef25b"
+        type: "ethernet"
+        interface-name: "enp129s0f1np1"
+      ethernet:
+        mtu: 9000
+      ipv4:
+        address1: "139.229.140.11/31"
+        gateway: "139.229.140.10"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+      ethtool:
+        ring-rx: 8192
+        ring-tx: 8192

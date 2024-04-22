@@ -120,3 +120,4 @@ mod 'theforeman/puppetserver_foreman', '2.4.0'
 mod 'theforeman/tftp', git: 'https://github.com/theforeman/puppet-tftp', ref: '6e49a28'  # stdlib 9.x
 mod 'treydock/clustershell', '3.0.0'
 mod 'treydock/perfsonar', '3.1.0'
+mod 'thias-openvpn', '1.0.7'

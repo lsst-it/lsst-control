@@ -61,5 +61,11 @@ profile::core::firewall::firewall:
     ipset: "ayekan src"
     dport: "9100"
     action: "accept"
+  "101 accept node_exporter":
+    proto: "tcp"
+    state: "NEW"
+    ipset: "dev src"  # allow ruka to access node_exporter
+    dport: "9100"
+    action: "accept"
 
 profile::core::docker::version: "24.0.9"

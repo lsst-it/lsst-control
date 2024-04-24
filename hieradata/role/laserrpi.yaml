@@ -3,4 +3,5 @@ classes:
   - "profile::core::common"
   - "profile::core::docker"
   - "profile::core::gpio"
+  - "profile::pi::ftdi"
   - "profile::pi::pigpio"

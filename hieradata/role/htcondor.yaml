@@ -4,4 +4,13 @@ classes:
   - "profile::core::common"
   - "profile::core::nfsclient"
 
+packages:
+  - "nano"
+
+files:
+  /etc/profile.d/rubin.sh:
+    ensure: "file"
+    mode: "0600"
+    content: "export DAF_BUTLER_REPOSITORY_INDEX=/project/data-repos.yaml"
+
 htcondor::htcondor_version: "23.0"

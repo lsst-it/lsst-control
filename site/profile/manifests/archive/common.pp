@@ -26,7 +26,6 @@ class profile::archive::common (
   include profile::core::docker::prune
   include profile::core::nfsclient
   include profile::core::nfsserver
-  include profile::core::sysctl::lhn
 
   if $packages {
     ensure_packages($packages)

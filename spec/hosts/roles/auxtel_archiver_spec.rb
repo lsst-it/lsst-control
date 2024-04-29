@@ -25,7 +25,6 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'common', os_facts: os_facts, site: site
-          include_examples 'lhn sysctls'
           include_examples 'archiver'
           include_examples 'docker'
           include_examples 'archive data auxtel'

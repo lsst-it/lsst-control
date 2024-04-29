@@ -487,7 +487,6 @@ shared_examples 'archiver', :archiver do
     profile::core::docker::prune
     profile::core::nfsclient
     profile::core::nfsserver
-    profile::core::sysctl::lhn
   ].each do |c|
     it { is_expected.to contain_class(c) }
   end

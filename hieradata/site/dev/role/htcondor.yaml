@@ -3,11 +3,11 @@ htcondor::htcondor_host: "htcondor-cm.dev.lsst.org"
 
 nfs::client_enabled: true
 nfs::client_mounts:
-  /mnt/project:
+  /project:
     share: "project"
     server: "nfs-project.ls.lsst.org"
     atboot: true
-  /mnt/rsphome:
+  /rsphome:
     share: "rsphome"
     server: "nfs-rsphome.ls.lsst.org"
     atboot: true

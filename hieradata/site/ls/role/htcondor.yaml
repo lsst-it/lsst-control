@@ -3,11 +3,23 @@ htcondor::htcondor_host: "htcondor-cm.ls.lsst.org"
 
 nfs::client_enabled: true
 nfs::client_mounts:
-  /mnt/project:
+  /project:
     share: "project"
     server: "nfs-project.ls.lsst.org"
     atboot: true
-  /mnt/rsphome:
+  /rsphome:
     share: "rsphome"
     server: "nfs-rsphome.ls.lsst.org"
+    atboot: true
+  /repo/LATISS:
+    share: "/auxtel/repo/LATISS"
+    server: "nfs-auxtel.ls.lsst.org"
+    atboot: true
+  /data/lsstdata/BTS/auxtel:
+    share: "/auxtel/lsstdata/BTS/auxtel"
+    server: "nfs-auxtel.ls.lsst.org"
+    atboot: true
+  /datasets:
+    share: "lsstdata"
+    server: "nfs-lsstdata.ls.lsst.org"
     atboot: true

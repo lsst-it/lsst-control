@@ -41,8 +41,13 @@ describe "#{role} role" do
           it do
             is_expected.to contain_file('/etc/profile.d/rubin.sh').with(
               ensure: 'file',
-              mode: '0600',
-              content: 'export DAF_BUTLER_REPOSITORY_INDEX=/project/data-repos.yaml',
+              mode: '0644',
+              content: <<~CONTENT,
+                export DAF_BUTLER_REPOSITORY_INDEX=/project/data-repos.yaml
+                export PGPASSFILE=/rsphome/$USER/.lsst/postgres-credentials.txt
+                export PGUSER=oods
+                export AWS_SHARED_CREDENTIALS_FILE=/rsphome/$USER/.lsst/aws-credentials.ini
+              CONTENT
             )
           end
 
@@ -172,6 +177,20 @@ describe "#{role} role" do
                 share: '/auxtel/lsstdata',
                 server: 'nfs-auxtel.cp.lsst.org',
                 atboot: true,
+              )
+            end
+
+            it do
+              is_expected.to contain_file('/data/lsstdata/base/comcam').with(
+                ensure: 'link',
+                target: '/readonly/lsstdata/comcam/base/comcam',
+              )
+            end
+
+            it do
+              is_expected.to contain_file('/data/lsstdata/base/auxtel').with(
+                ensure: 'link',
+                target: '/readonly/lsstdata/auxtel/base/auxtel',
               )
             end
           end

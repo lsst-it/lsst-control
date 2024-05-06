@@ -5,4 +5,4 @@ docker::networks::networks:
     driver: "macvlan"
     subnet: "139.229.170.0/24"
     gateway: "139.229.170.254"
-    options: ["parent=p2p1"]
+    options: ["parent=ens2f0"]

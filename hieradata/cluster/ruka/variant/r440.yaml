@@ -1,51 +1,57 @@
 ---
 nm::connections:
-  ens2f1:  # fqdn
-    content: |
-      [connection]
-      id=ens2f1
-      uuid=688bf5bf-d649-34b4-15eb-b07c50ac43f8
-      type=ethernet
-      interface-name=ens2f1
-
-      [ethernet]
-
-      [ipv4]
-      method=auto
-
-      [ipv6]
-      method=disabled
-  ens2f0:  # trunk
-    content: |
-      [connection]
-      id=ens2f0
-      uuid=46d19ce1-bcab-7e77-6fc7-b730b26c54b1
-      type=ethernet
-      autoconnect=false
-      interface-name=ens2f0
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
+  ens2f1:
+    content:
+      connection:
+        id: "ens2f1"
+        uuid: "688bf5bf-d649-34b4-15eb-b07c50ac43f8"
+        type: "ethernet"
+        interface-name: "ens2f1"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+  ens2f0:
+    content:
+      connection:
+        id: "ens2f0"
+        uuid: "46d19ce1-bcab-7e77-6fc7-b730b26c54b1"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens2f0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  ens2f0.2101:
+    content:
+      connection:
+        id: "ens2f0.2101"
+        uuid: "87823dc2-278d-4ee5-a55a-3730b856141c"
+        type: "vlan"
+        interface-name: "ens2f0.2101"
+        master: "br2101"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2101"
+        parent: "ens2f0"
+      bridge-port: {}
   ens2f0.2505:
-    content: |
-      [connection]
-      id=ens2f0.2505
-      uuid=d5642f16-53c6-6053-7d4d-8c6ef5ae8a38
-      type=vlan
-      interface-name=ens2f0.2505
-      master=br2505
-      slave-type=bridge
-
-      [ethernet]
-
-      [vlan]
-      flags=1
-      id=2505
-      parent=ens2f0
-
-      [bridge-port]
+    content:
+      connection:
+        id: "ens2f0.2505"
+        uuid: "d5642f16-53c6-6053-7d4d-8c6ef5ae8a38"
+        type: "vlan"
+        interface-name: "ens2f0.2505"
+        master: "br2505"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2505"
+        parent: "ens2f0"
+      bridge-port: {}

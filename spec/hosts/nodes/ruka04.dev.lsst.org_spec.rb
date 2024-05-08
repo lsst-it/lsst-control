@@ -30,7 +30,6 @@ describe 'ruka04.dev.lsst.org', :sitepp do
           variant: 'r430',
         }
       end
-      let(:vlan_id) { 2505 }
 
       it { is_expected.to compile.with_all_deps }
 
@@ -38,7 +37,7 @@ describe 'ruka04.dev.lsst.org', :sitepp do
 
       include_context 'with nm interface'
 
-      it { is_expected.to have_nm__connection_resource_count(8) }
+      it { is_expected.to have_nm__connection_resource_count(10) }
 
       %w[
         eno1
@@ -60,6 +59,22 @@ describe 'ruka04.dev.lsst.org', :sitepp do
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
+      end
+
+      context 'with enp5s0f1.2101' do
+        let(:interface) { 'enp5s0f1.2101' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm vlan interface', id: 2101, parent: 'enp5s0f1'
+        it_behaves_like 'nm bridge slave interface', master: 'br2101'
+      end
+
+      context 'with br2101' do
+        let(:interface) { 'br2101' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm no-ip interface'
+        it_behaves_like 'nm bridge interface'
       end
 
       context 'with enp5s0f1.2505' do

@@ -1,51 +1,57 @@
 ---
 nm::connections:
-  enp5s0f0:  # fqdn
-    content: |
-      [connection]
-      id=enp5s0f0
-      uuid=688bf5bf-d649-34b4-15eb-b07c50ac43f8
-      type=ethernet
-      interface-name=enp5s0f0
-
-      [ethernet]
-
-      [ipv4]
-      method=auto
-
-      [ipv6]
-      method=disabled
-  enp5s0f1:  # trunk
-    content: |
-      [connection]
-      id=enp5s0f1
-      uuid=46d19ce1-bcab-7e77-6fc7-b730b26c54b1
-      type=ethernet
-      autoconnect=false
-      interface-name=enp5s0f1
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
+  enp5s0f0:
+    content:
+      connection:
+        id: "enp5s0f0"
+        uuid: "688bf5bf-d649-34b4-15eb-b07c50ac43f8"
+        type: "ethernet"
+        interface-name: "enp5s0f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+  enp5s0f1:
+    content:
+      connection:
+        id: "enp5s0f1"
+        uuid: "46d19ce1-bcab-7e77-6fc7-b730b26c54b1"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp5s0f1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp5s0f1.2101:
+    content:
+      connection:
+        id: "enp5s0f1.2101"
+        uuid: "89e2562d-37b5-4124-bb8e-f1261492e1fa"
+        type: "vlan"
+        interface-name: "enp5s0f1.2101"
+        master: "br2101"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2101"
+        parent: "enp5s0f1"
+      bridge-port: {}
   enp5s0f1.2505:
-    content: |
-      [connection]
-      id=enp5s0f1.2505
-      uuid=d5642f16-53c6-6053-7d4d-8c6ef5ae8a38
-      type=vlan
-      interface-name=enp5s0f1.2505
-      master=br2505
-      slave-type=bridge
-
-      [ethernet]
-
-      [vlan]
-      flags=1
-      id=2505
-      parent=enp5s0f1
-
-      [bridge-port]
+    content:
+      connection:
+        id: "enp5s0f1.2505"
+        uuid: "d5642f16-53c6-6053-7d4d-8c6ef5ae8a38"
+        type: "vlan"
+        interface-name: "enp5s0f1.2505"
+        master: "br2505"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2505"
+        parent: "enp5s0f1"
+      bridge-port: {}

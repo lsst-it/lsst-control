@@ -298,6 +298,33 @@ describe 'foreman.ls.lsst.org', :sitepp do
           gateway: '10.49.7.254',
         )
       end
+
+      it do
+        is_expected.to contain_dhcp__pool('ANTU-FQDN').with(
+          network: '139.229.154.96',
+          mask: '255.255.255.240',
+          range: ['139.229.154.102 139.229.154.107'],
+          gateway: '139.229.154.110',
+        )
+      end
+
+      it do
+        is_expected.to contain_dhcp__pool('BDC-BMC-PUBLIC').with(
+          network: '139.229.139.0',
+          mask: '255.255.255.0',
+          range: ['139.229.139.230 139.229.139.250'],
+          gateway: '139.229.139.254',
+        )
+      end
+
+      it do
+        is_expected.to contain_dhcp__pool('ANTU-METALLB').with(
+          network: '139.229.154.64',
+          mask: '255.255.255.224',
+          range: ['139.229.154.88 139.229.154.91'],
+          gateway: '139.229.154.94',
+        )
+      end
     end # on os
   end # on_supported_os
 end # role

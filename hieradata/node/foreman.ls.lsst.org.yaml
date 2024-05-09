@@ -214,3 +214,24 @@ dhcp::pools:
     range:
       - "10.49.7.1 10.49.7.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  ANTU-FQDN:
+    network: "139.229.154.96"
+    mask: "255.255.255.240"
+    gateway: "139.229.154.110"
+    range:
+      - "139.229.154.102 139.229.154.107"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-BMC-PUBLIC:
+    network: "139.229.139.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.139.254"
+    range:
+      - "139.229.139.230 139.229.139.250"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  ANTU-METALLB:
+    network: "139.229.154.64"
+    mask: "255.255.255.224"
+    gateway: "139.229.154.94"
+    range:
+      - "139.229.154.88 139.229.154.91"
+    search_domains: "%{alias('dhcp::dnsdomain')}"

@@ -1,0 +1,40 @@
+---
+nm::connections:
+  enp12s0f4u1u2c2:
+    content:
+      connection:
+        id: "enp12s0f4u1u2c2"
+        uuid: "f330f829-20cc-b829-67b0-18086a5fe6fa"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp12s0f4u1u2c2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp65s0f0:
+    content:
+      connection:
+        id: "enp65s0f0"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp65s0f0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp65s0f1:
+    content:
+      connection:
+        id: "enp65s0f1"
+        uuid: "688bf5bf-d649-34b4-15eb-b07c50ac43f8"
+        type: "ethernet"
+        interface-name: "enp65s0f1"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"

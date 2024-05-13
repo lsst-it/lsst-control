@@ -1,0 +1,37 @@
+---
+clustershell::groupmembers:
+  antu:
+    group: "antu"
+    member: "antu[01-04]"
+
+nm::connections:
+  enp65s0f0.2130:
+    content:
+      connection:
+        id: "enp65s0f0.2130"
+        uuid: "e74daaad-4d73-4015-bb26-83c460ddf572"
+        type: "vlan"
+        interface-name: "enp65s0f0.2130"
+        master: "br2130"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2130"
+        parent: "enp65s0f0"
+      bridge-port: {}
+  br2130:
+    content:
+      connection:
+        id: "br2130"
+        uuid: "7dd05d98-a9c3-4569-a7c3-00316b13c0eb"
+        type: "bridge"
+        interface-name: "br2130"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}

@@ -7,9 +7,13 @@
 # @param jars
 #   Hash of jar files to install in lib directory: basename, source.
 #
+# @param trending_site
+#   String giving web trending site (ir2, ats, comcam, maincamera)
+#
 class profile::ccs::tomcat (
   Hash[String, Hash] $wars = {},
   Hash[String[1],String[1]] $jars = {},
+  String[1] $trending_site = 'maincamera',
 ) {
   include nginx
 
@@ -75,6 +79,11 @@ class profile::ccs::tomcat (
   #   ,
   #   require => Exec['wait for tomcat'],  # config dir creation
   # }
+
+  tomcat::config::properties::property { 'org.lsst.ccs.web.trending.default.site':
+    catalina_base => $catalina_base,
+    value         => $trending_site,
+  }
 
   unless (empty($wars)) {
     $wars.each |String $n, Hash $conf| {

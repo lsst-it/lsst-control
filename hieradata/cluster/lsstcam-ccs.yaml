@@ -86,6 +86,8 @@ clustershell::groupmembers:
 
 java_artisanal::package: "jdk1.8"
 java_artisanal::dir: "jdk1.8.0_202-amd64"
+java_artisanal::set_alternatives: false
+java_artisanal::java17::set_alternatives: true
 
 # XXX should all hosts be a desktop?
 ccs_software::desktop: true

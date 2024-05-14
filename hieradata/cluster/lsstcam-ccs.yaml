@@ -100,3 +100,6 @@ ccs_software::installations:
 daq::daqsdk::purge: false
 
 daq::daqsdk::version: "R5-V8.1"
+
+## Note this is not the same as ccs_instrument.
+profile::ccs::tomcat::trending_site: "maincamera"

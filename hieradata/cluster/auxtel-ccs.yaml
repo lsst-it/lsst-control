@@ -115,3 +115,5 @@ ccs_sal::rpms_private:
 
 daq::daqsdk::purge: false
 daq::daqsdk::version: "R5-V8.1"
+
+profile::ccs::tomcat::trending_site: "%{lookup('ccs_instrument')}"

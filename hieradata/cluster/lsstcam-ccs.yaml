@@ -93,21 +93,6 @@ java_artisanal::java17::set_alternatives: true
 ccs_software::desktop: true
 ccs_software::env: "MainCamera"
 ccs_software::installations:
-  lsstcam-software-1.0.5:
-    aliases:
-      - "puppet-1.0.5"
-  lsstcam-software-1.0.6:
-    aliases:
-      - "puppet-1.0.6"
-  lsstcam-software-1.0.7:
-    aliases:
-      - "puppet-1.0.7"
-  lsstcam-software-1.0.8:
-    aliases:
-      - "puppet-1.0.8"
-  lsstcam-software-1.0.9:
-    aliases:
-      - "puppet-1.0.9"
   lsstcam-software-1.0.10:
     aliases:
       - "puppet-1.0.10"

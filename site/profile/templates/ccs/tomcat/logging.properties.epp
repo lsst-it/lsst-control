@@ -1,0 +1,74 @@
+# This file is managed by Puppet; changes may be overwritten
+
+# Properties file which configures the operation of the CCS
+# logging facility.
+
+# Global logging properties.
+# ------------------------------------------
+# The set of handlers to be loaded upon startup.
+# Comma-separated list of class names.
+# (? LogManager docs say no comma here, but JDK example has comma.)
+# do not put space characters in this list!
+# handlers are loaded by the primordial log manager
+
+handlers=org.lsst.ccs.utilities.logging.DailyRollingFileHandler,java.util.logging.ConsoleHandler
+
+## BEWARE: you CAN'T set  org.lsst.ccs.bus.utils.LogBusHandler HERE!
+## because it is initialized later (when the buses are activated)
+
+# Default global logging level.
+# Loggers and Handlers may override this level
+# SEE LSSTCCS-290
+.level=WARNING
+
+#The level of the CCS Root logger LSSTCCS-297
+org.lsst.ccs.level=INFO
+# Loggers
+# ------------------------------------------
+# Loggers are usually attached to packages.
+# Here, the level for each package is specified.
+# The global level is used by default, so levels
+# specified here simply act as an override.
+#myapp.ui.level=ALL
+#myapp.business.level=CONFIG
+#myapp.data.level=SEVERE
+
+
+# Handlers
+# -----------------------------------------
+
+# --- ConsoleHandler ---
+# Override of global logging level
+java.util.logging.ConsoleHandler.level=INFO
+
+
+## Pattern and Level
+org.lsst.ccs.utilities.logging.DailyRollingFileHandler.pattern=/var/log/ccs/ccs-rest-server.log
+org.lsst.ccs.utilities.logging.DailyRollingFileHandler.level=ALL
+
+## Number of log files to cycle through restarts
+org.lsst.ccs.utilities.logging.DailyRollingFileHandler.count=100
+
+# Style of output
+org.lsst.ccs.utilities.logging.DailyRollingFileHandler.formatter=java.util.logging.SimpleFormatter
+
+
+# a special formatter that deals with StackTraces
+org.lsst.ccs.messaging.LogBusHandler.formatter=org.lsst.ccs.utilities.logging.TextFormatter
+java.util.logging.ConsoleHandler.formatter=org.lsst.ccs.utilities.logging.TextFormatter
+
+# change that one if you want to modify the way StackTraces are printed
+# negative value means all the stacktrace will be printed
+org.lsst.ccs.logging.StackTraceFormats.depth=2
+
+# Example to customize the SimpleFormatter output format
+# to print one-line log message like this:
+#     <level>: <log message> [<date/time>]
+#
+java.util.logging.SimpleFormatter.format=[%1$tY-%1$tm-%1$tdT%1$tT.%1$tL%1$tZ] %4$s: %5$s (%2$s)%n%6$s
+
+# index starts at 1 : date, source, Logger, Level, message, throwableStr
+# here we have <source> :<log message> <throwable>
+org.lsst.ccs.utilities.logging.TextFormatter.format=%4$s: %5$s (%2$s) [%1$tc]%n%6$s
+
+org.lsst.ccs.localdb.level=INFO

@@ -10,10 +10,26 @@
 # @param trending_site
 #   String giving web trending site (ir2, ats, comcam, maincamera)
 #
+# @param rest_etc_path
+#   Path to CCS tomcat configuration directory.
+#
+# @param rest_url
+#   String giving URL for the rest server.
+#
+# @param rest_user
+#   Sensitive string giving username for the rest server.
+#
+# @param rest_pass
+#   Sensitive string giving password for the rest server.
+#
 class profile::ccs::tomcat (
   Hash[String, Hash] $wars = {},
   Hash[String[1],String[1]] $jars = {},
   String[1] $trending_site = 'maincamera',
+  String[1] $rest_etc_path = '/etc/ccs/tomcat',
+  String[1] $rest_url      = 'lsstcam-db01:3306/ccsdbprod',
+  Sensitive[String[1]] $rest_user = Sensitive('user'),
+  Sensitive[String[1]] $rest_pass = Sensitive('pass'),
 ) {
   include nginx
 
@@ -166,5 +182,45 @@ class profile::ccs::tomcat (
     proxy_set_header      => ['Host $host', 'X-Real-IP $remote_addr', 'X-Forwarded-For $proxy_add_x_forwarded_for', 'X-Forwarded-Host $host', 'X-Forwarded-Proto $scheme', 'Proxy ""', 'Connection ""',],
     proxy_http_version    => '1.1',
     proxy_buffering       => 'off',
+  }
+
+  $adm_user = 'ccsadm'
+  $adm_group = 'ccsadm'
+
+  $etc_path = "${dirname($rest_etc_path)}"
+
+  ensure_resources('file', {
+      $etc_path => {
+        ensure => directory,
+        owner  => $adm_user,
+        group  => $adm_group,
+        mode   => '2775',
+      },
+      $rest_etc_path => {
+        ensure => directory,
+        owner  => 'tomcat',
+        group  => $adm_group,
+        mode   => '2770',
+      },
+  })
+
+  ## Hash of templates and any arguments they take.
+  $rest_etc_files = {
+    'logging.properties' => {},
+    'statusPersister.properties' => {
+      'user' => $rest_user,
+      'pass' => $rest_pass,
+      'url'  => $rest_url,
+    },
+  }
+
+  $rest_etc_files.each |$file, $epp_vars| {
+    file { "${rest_etc_path}/${file}":
+      ensure  => file,
+      owner   => 'tomcat',
+      group   => $adm_group,
+      mode    => '0660',
+      content => epp("${module_name}/ccs/tomcat/${file}.epp", $epp_vars),
+    }
   }
 }

@@ -13,6 +13,16 @@ rsyslog::config::actions:
       StreamDriver: "ossl"
       StreamDriverMode: "1"
       StreamDriverAuthMode: "anon"
+  fluentbit_ruka:
+    type: "omfwd"
+    facility: "*.*"
+    config:
+      target: "rsyslog.fluent.ruka.dev.lsst.org"
+      port: 5140
+      protocol: "tcp"
+      StreamDriver: "ossl"
+      StreamDriverMode: "1"
+      StreamDriverAuthMode: "anon"
 # The following keys are shared between the `dhcp` and `resolv_conf` classes:
 # - dhcp::dnsdomain
 # - dhcp::nameservers

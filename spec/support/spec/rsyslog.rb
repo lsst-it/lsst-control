@@ -116,6 +116,21 @@ shared_examples 'rsyslog defaults' do |site:|
         },
       )
     end
+
+    it do
+      is_expected.to contain_rsyslog__component__action('fluentbit_ruka').with(
+        type: 'omfwd',
+        facility: '*.*',
+        config: {
+          'target' => 'rsyslog.fluent.ruka.dev.lsst.org',
+          'port' => '5140',
+          'protocol' => 'tcp',
+          'StreamDriver' => 'ossl',
+          'StreamDriverMode' => '1',
+          'StreamDriverAuthMode' => 'anon',
+        },
+      )
+    end
   when 'tu'
     it do
       is_expected.to contain_rsyslog__component__action('graylogtu').with(

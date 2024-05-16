@@ -130,6 +130,13 @@ dhcp::pools:
     range:
       - "139.229.171.150 139.229.171.180"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  LSSTCAM:
+    network: "139.229.173.0"
+    mask: "255.255.255.128"
+    gateway: "139.229.173.126"
+    range:
+      - "139.229.173.40 139.229.173.100"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   CCS-Pathfinder:
     network: "139.229.174.0"
     mask: "255.255.255.0"

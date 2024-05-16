@@ -35,7 +35,7 @@ shared_examples 'generic rke' do |os_facts:, site:|
     )
   end
 
-  if (site == 'dev') || (site == 'tu')
+  if (site == 'dev') || (site == 'tu') || (site == 'ls')
     it do
       is_expected.to contain_class('rke').with(
         version: '1.5.8',

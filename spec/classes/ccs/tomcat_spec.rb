@@ -26,9 +26,16 @@ describe 'profile::ccs::tomcat' do
 
         it { is_expected.to contain_file('/opt/tomcat/catalina_base/lib/h2-1.4.191.jar').with_mode('0664') }
 
-        ## This should contain fragment:
-        ## org.lsst.ccs.web.trending.default.site=mysite
         it { is_expected.to contain_concat('/opt/tomcat/catalina_base/conf/catalina.properties') }
+
+        it do
+          is_expected.to contain_concat__fragment('/opt/tomcat/catalina_base/conf/catalina.properties property org.lsst.ccs.web.trending.default.site').with(
+            {
+              target: '/opt/tomcat/catalina_base/conf/catalina.properties',
+              content: 'org.lsst.ccs.web.trending.default.site=mysite',
+            },
+          )
+        end
 
         it do
           is_expected.to contain_service('tomcat').with(

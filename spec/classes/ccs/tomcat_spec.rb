@@ -22,7 +22,7 @@ describe 'profile::ccs::tomcat' do
 
         it { is_expected.to contain_file('/etc/ccs/tomcat/statusPersister.properties').with_mode('0660') }
 
-        it { is_expected.to contain_file('/etc/ccs/tomcat/statusPersister.properties').with_content(%r{^hibernate.connection.url=jdbc:mysql://myurl}) }
+        it { is_expected.to contain_file('/etc/ccs/tomcat/statusPersister.properties').with_content(sensitive(%r{^hibernate.connection.url=jdbc:mysql://myurl})) }
 
         it { is_expected.to contain_file('/opt/tomcat/catalina_base/lib/h2-1.4.191.jar').with_mode('0664') }
 

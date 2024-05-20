@@ -1,0 +1,60 @@
+---
+nm::connections:
+  eno1:
+    content:
+      connection:
+        id: "eno1"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "eno1"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.175.83/26,139.229.175.126"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp6s0:
+    content:
+      connection:
+        id: "enp6s0"
+        uuid: "da97db8e-6400-4cca-9334-71995eb2ac1d"
+        type: "ethernet"
+        interface-name: "enp6s0"
+      ethernet: {}
+      ipv4:
+        method: "manual"
+        address1: "192.168.0.200/24"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp7s0:
+    content:
+      connection:
+        id: "enp7s0"
+        uuid: "da97db8e-6400-4cca-9334-71995eb2ac1d"
+        type: "ethernet"
+        interface-name: "enp7s0"
+      ethernet: {}
+      ipv4:
+        method: "manual"
+        address1: "192.168.2.1/24"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp8s0:
+    content:
+      connection:
+        id: "enp8s0"
+        uuid: "da97db8e-6400-4cca-9334-71995eb2ac1d"
+        type: "ethernet"
+        interface-name: "enp8s0"
+      ethernet: {}
+      ipv4:
+        method: "manual"
+        address1: "192.168.1.1/24"
+      ipv6:
+        method: "disabled"
+      proxy: {}

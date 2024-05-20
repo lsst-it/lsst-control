@@ -18,6 +18,7 @@ AllCops:
   - "spec/fixtures/**/*"
   - "**/Vagrantfile"
   - ".vendor/**/*"
+  - "vendor/**/*"
 Layout/LineLength:
   Description: People have wide screens, use them.
   Max: 200

@@ -23,7 +23,7 @@ profile::core::helm::version: "3.5.4"
 profile::core::kernel::debuginfo: true
 profile::core::kernel::devel: true
 profile::core::common::manage_node_exporter: false
-profile::core::rke::version: "1.4.6"
+profile::core::rke::version: "1.5.8"
 
 files:
   /home/rke/.bash_profile:

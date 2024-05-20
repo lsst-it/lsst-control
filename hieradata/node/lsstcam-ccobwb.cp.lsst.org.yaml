@@ -48,3 +48,8 @@ nm::connections:
 ccs_software::services:
   prod:
     - "ccob"
+
+systemd::udev_rules:
+  71-ccob.rules:
+    rules:
+      - 'SUBSYSTEMS=="usb", ATTRS{idVendor}=="04d8", ATTRS{idProduct}=="003f", MODE="0666", GROUP="dialout", OPTIONS:="ignore_device"'

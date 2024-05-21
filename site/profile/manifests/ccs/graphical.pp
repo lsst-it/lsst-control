@@ -35,6 +35,7 @@ class profile::ccs::graphical (
       'cockpit-packagekit',
       'cockpit-podman',  # does not exist on el7
       'cockpit-system',
+      'NetworkManager-config-server',
     ]
 
     ## Slow. Maybe better done separately?
@@ -71,7 +72,7 @@ class profile::ccs::graphical (
   }
 
   if $officeapps {
-    ensure_packages(['libreoffice-base'])
+    ensure_packages(['libreoffice-base', 'ibus-m17n', 'libXScrnSaver'])
 
     $zoomrpm = 'zoom.x86_64.rpm'
     $zoomfile = "/var/tmp/${zoomrpm}"

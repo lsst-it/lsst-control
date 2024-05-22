@@ -82,6 +82,15 @@ describe "#{role} role" do
               end
             end
           end
+
+          it do
+            is_expected.to contain_file('/vm').with(
+              ensure: 'directory',
+              owner: 'qemu',
+              group: 'qemu',
+              mode: '0750',
+            )
+          end
         end # host
       end # lsst_sites
     end

@@ -36,6 +36,11 @@ files:
     owner: "root"
     group: "root"
     mode: "0644"
+  /vm:
+    ensure: "directory"
+    owner: "qemu"
+    group: "qemu"
+    mode: "0750"
 ssh::server::match_block:
   foreman:
     type: "user"

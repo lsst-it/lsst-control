@@ -20,7 +20,8 @@ nm::connections:
         type: "ethernet"
         autoconnect: "false"
         interface-name: "ens2f0"
-      ethernet: {}
+      ethernet:
+        cloned-mac-address: "stable"
       ipv4:
         method: "disabled"
       ipv6:
@@ -34,7 +35,8 @@ nm::connections:
         interface-name: "ens2f0.2101"
         master: "br2101"
         slave-type: "bridge"
-      ethernet: {}
+      ethernet:
+        cloned-mac-address: "stable"
       vlan:
         flags: "1"
         id: "2101"
@@ -49,7 +51,8 @@ nm::connections:
         interface-name: "ens2f0.2505"
         master: "br2505"
         slave-type: "bridge"
-      ethernet: {}
+      ethernet:
+        cloned-mac-address: "stable"
       vlan:
         flags: "1"
         id: "2505"

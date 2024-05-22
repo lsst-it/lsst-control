@@ -10,7 +10,8 @@ nm::connections:
         uuid: "488bf841-4a72-4e02-af3c-34a64493d677"
         type: "bridge"
         interface-name: "br2101"
-      ethernet: {}
+      ethernet:
+        cloned-mac-address: "stable"
       bridge:
         stp: "false"
       ipv4:
@@ -25,7 +26,8 @@ nm::connections:
         uuid: "61800cc2-7bf7-4463-de5a-25e7d7c355a4"
         type: "bridge"
         interface-name: "br2505"
-      ethernet: {}
+      ethernet:
+        cloned-mac-address: "stable"
       bridge:
         stp: "false"
       ipv4:

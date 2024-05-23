@@ -12,12 +12,13 @@
 #
 class profile::core::yum::lsst_ts_private (
   Optional[Hash] $repos      = undef,
-  Optional[String[1]] $username = undef,
+  Optional[Variant[Sensitive[String[1]],String[1]]] $username = undef,
   Optional[Sensitive[String[1]]] $password = undef,
 ) {
   if $repos {
     $_real_repos = $repos.map |String $k, Hash $h| {
-      [$k, $h + { username => $username, password => $password }]
+      # yumrepo supports password as Sensitive but not username
+      [$k, $h + { username => $username.unwrap, password => $password }]
     }
     create_resources('yumrepo', Hash($_real_repos))
   }

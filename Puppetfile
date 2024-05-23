@@ -10,7 +10,6 @@ mod 'derdanne/nfs', git: 'https://github.com/lsst-it/puppet-nfs', ref: '6d51f51'
 mod 'duritong/sysctl', git: 'https://github.com/duritong/puppet-sysctl', ref: '847ec1c'  # migrate to herculesteam/augeasproviders_sysctl; https://github.com/duritong/puppet-sysctl/pull/48
 mod 'example42/network', git: 'https://github.com/lsst-it/puppet-network', ref: 'c2b5c59'  # allow stdlib/concat 9.x
 mod 'fervid/snapd', '1.2.1' # 2021-05-31 hreinking: snapd for EAS Raspberry Pi
-mod 'jamesnetherton/google_chrome', '0.10.0'
 mod 'jamtur01/httpauth', '0.0.6'
 mod 'jcpunk/irqbalance', '1.0.5'
 mod 'jhoblitt/ipmi', '5.2.0'
@@ -24,6 +23,7 @@ mod 'lsst/cni', '3.2.0'
 mod 'lsst/daq', '2.3.0'
 mod 'lsst/dellperc', '2.0.0'
 mod 'lsst/foreman_envsync', '2.1.0'
+mod 'lsst/google_chrome', git: 'https://github.com/lsst-it/puppet-google-chrome', ref: '974a7b1'
 mod 'lsst/helm_binary', '2.1.0'
 mod 'lsst/htcondor', '0.1.0'
 mod 'lsst/ipa', git: 'https://github.com/lsst-it/puppet-ipa', ref: '37eb701'

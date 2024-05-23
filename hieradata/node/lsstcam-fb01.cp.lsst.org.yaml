@@ -8,3 +8,5 @@ network::interfaces_hash:
     nozeroconf: "yes"
     onboot: "yes"
     type: "Ethernet"
+
+ccs_hcu::canbus: true

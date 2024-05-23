@@ -90,5 +90,9 @@ class profile::ccs::graphical (
       provider => 'rpm',
       source   => $zoomfile,
     }
+
+    if fact('os.release.major') == '9' {
+      include 'google_chrome'
+    }
   }
 }

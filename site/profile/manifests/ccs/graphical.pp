@@ -72,24 +72,7 @@ class profile::ccs::graphical (
   }
 
   if $officeapps {
-    ensure_packages(['libreoffice-base', 'ibus-m17n', 'libXScrnSaver'])
-
-    $zoomrpm = 'zoom.x86_64.rpm'
-    $zoomfile = "/var/tmp/${zoomrpm}"
-
-    archive { $zoomfile:
-      ensure   => present,
-      source   => "${profile::ccs::common::pkgurl}/${zoomrpm}",
-      username => $profile::ccs::common::pkgurl_user.unwrap,
-      password => $profile::ccs::common::pkgurl_pass.unwrap,
-    }
-
-    ## TODO use a local yum repository?
-    package { 'zoom':
-      ensure   => 'installed',
-      provider => 'rpm',
-      source   => $zoomfile,
-    }
+    ensure_packages(['libreoffice-base'])
 
     if fact('os.release.major') == '9' {
       include 'google_chrome'

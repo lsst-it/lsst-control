@@ -44,6 +44,11 @@ class profile::core::hardware {
     }
     /1115HS-TNR/: {
       include ipmi
+
+      # https://docs.kernel.org/admin-guide/pm/amd-pstate.html
+      profile::util::kernel_param { 'amd_pstate=active':
+        reboot => false,
+      }
     }
   }
   # On SM H12SSL-NT dmi.product.name == "Super Server", which isn't very helpful

@@ -34,6 +34,7 @@ describe 'ruka01.dev.lsst.org', :sitepp do
 
       include_examples 'docker', docker_version: '24.0.9'
       include_examples 'baremetal'
+      include_examples 'ceph cluster'
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)

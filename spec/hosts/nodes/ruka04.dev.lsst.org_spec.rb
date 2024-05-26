@@ -34,6 +34,7 @@ describe 'ruka04.dev.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal'
+      include_examples 'ceph cluster'
 
       include_context 'with nm interface'
 

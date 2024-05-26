@@ -1,6 +1,7 @@
 ---
 clustershell::groupmembers:
   namkueyen: {group: "namkueyen", member: "namkueyen[01-03]"}
+tuned::active_profile: "latency-performance"
 nm::connections:
   eno1:  #fqdn
     content: |

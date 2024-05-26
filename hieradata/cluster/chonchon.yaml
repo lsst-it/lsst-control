@@ -2,6 +2,7 @@
 clustershell::groupmembers:
   chonchon: {group: "chonchon", member: "chonchon[01-05]"}
 profile::core::k8snode::enable_dhcp: true
+tuned::active_profile: "latency-performance"
 nm::connections:
   br1800:
     content:

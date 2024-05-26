@@ -910,8 +910,6 @@ shared_examples 'baremetal' do |bmc: nil|
   it do
     if node_params[:role] == 'hypervisor'
       is_expected.to contain_class('tuned').with_active_profile('virtual-host')
-    else
-      is_expected.to contain_class('tuned').with_active_profile('balanced')
     end
   end
 

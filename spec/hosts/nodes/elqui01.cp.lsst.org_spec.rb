@@ -30,6 +30,7 @@ describe 'elqui01.cp.lsst.org', :sitepp do
 
       include_examples 'baremetal'
       include_context 'with nm interface'
+      include_examples 'ceph cluster'
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(

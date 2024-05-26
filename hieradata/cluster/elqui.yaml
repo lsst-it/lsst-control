@@ -3,6 +3,7 @@ clustershell::groupmembers:
   elqui:
     group: "elqui"
     member: "elqui[01-18]"
+tuned::active_profile: "latency-performance"
 nm::conf:
   device:
     keep-configuration: "no"

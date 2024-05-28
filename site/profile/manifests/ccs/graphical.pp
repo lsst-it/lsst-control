@@ -61,7 +61,19 @@ class profile::ccs::graphical (
         timeout => 900,
         notify  => Package[$unwanted_gnome_pkgs],
       }
-      ensure_packages(['mate-desktop'])
+      ## There doesn't seem to be a group for this in epel9.
+      ensure_packages([
+          'mate-desktop',
+          'mate-applets',
+          'mate-menu',
+          'mate-panel',
+          'mate-session-manager',
+          'mate-terminal',
+          'mate-themes',
+          'mate-utils',
+          'marco',
+          'caja',
+      ])
     }
 
     package { $unwanted_gnome_pkgs:
@@ -72,23 +84,10 @@ class profile::ccs::graphical (
   }
 
   if $officeapps {
-    ensure_packages(['libreoffice-base', 'ibus-m17n', 'libXScrnSaver'])
+    ensure_packages(['libreoffice-base'])
 
-    $zoomrpm = 'zoom.x86_64.rpm'
-    $zoomfile = "/var/tmp/${zoomrpm}"
-
-    archive { $zoomfile:
-      ensure   => present,
-      source   => "${profile::ccs::common::pkgurl}/${zoomrpm}",
-      username => $profile::ccs::common::pkgurl_user.unwrap,
-      password => $profile::ccs::common::pkgurl_pass.unwrap,
-    }
-
-    ## TODO use a local yum repository?
-    package { 'zoom':
-      ensure   => 'installed',
-      provider => 'rpm',
-      source   => $zoomfile,
+    if fact('os.release.major') == '9' {
+      include 'google_chrome'
     }
   }
 }

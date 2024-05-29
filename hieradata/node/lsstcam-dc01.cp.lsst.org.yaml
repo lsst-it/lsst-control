@@ -1,25 +1,21 @@
 ---
 nm::connections:
   ens1f0np0:
-    content: |
-      [connection]
-      id=ens1f0np0
-      uuid=89343895-a60e-4b07-91a0-0638487f6868
-      type=ethernet
-      interface-name=ens1f0np0
-
-      [ethernet]
-
-      [ipv4]
-      address1=139.229.175.65/26,139.229.175.126
-      dns=139.229.160.53;139.229.160.54;139.229.160.55;
-      dns-search=cp.lsst.org;
-      method=manual
-
-      [ipv6]
-      method=ignore
-
-      [proxy]
+    content:
+      connection:
+        id: "ens1f0np0"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "ens1f0np0"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.175.65/26,139.229.175.126"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
 
 ccs_software::services:
   prod:

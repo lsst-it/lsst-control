@@ -1,0 +1,16 @@
+---
+files:
+  "/data":
+    ensure: "directory"
+    mode: "0755"
+    owner: 0
+    group: 0
+  "/data/ccs-ipa-data":
+    ensure: "directory"
+    mode: "0755"
+    owner: &ccsipauser 72055
+    group: *ccsipauser
+
+ccs_software::services:
+  prod:
+    - {name: "image-handling", user: "ccs-ipa", group: "ccs-ipa", workdir: "/home/ccs-ipa"}

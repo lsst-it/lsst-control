@@ -58,3 +58,7 @@ nm::connections:
       ipv6:
         method: "disabled"
       proxy: {}
+
+ccs_software::services:
+  prod:
+    - "ccob-thin"

@@ -20,7 +20,7 @@ describe 'lsstcam-pcs01.cp.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'ccs-dc',
+          role: 'ccs-hcu',
           cluster: 'lsstcam-ccs',
           site: 'cp',
         }
@@ -41,7 +41,8 @@ describe 'lsstcam-pcs01.cp.lsst.org', :sitepp do
         it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.175.94/26,139.229.175.126') }
         it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.160.53;139.229.160.54;139.229.160.55;') }
         it { expect(nm_keyfile['ipv4']['dns-search']).to eq('cp.lsst.org;') }
-        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
+
+        it_behaves_like 'nm manual interface'
       end
 
       context 'with enp2s0' do

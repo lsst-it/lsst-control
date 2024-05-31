@@ -50,6 +50,7 @@ profile::ccs::common::packages:
   - "gcc"
   - "gcc-c++"
   - "gcc-gfortran"
+  - "lm_sensors"
   - "maven"
   - "nano"
   - "parallel"
@@ -58,6 +59,7 @@ profile::ccs::common::packages:
   - "tcl"
   - "tcl-devel"
   - "time"
+  - "tmux"
 profile::core::x2go::packages:
   - "x2goagent"
   - "x2goclient"

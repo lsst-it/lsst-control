@@ -6,9 +6,9 @@ ccs_sal::dds_interface: "auxtel-mcm-dds.ls.lsst.org"
 ccs_software::service_email: "base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com"
 
 ccs_software::installations:
-  ats-software-2.3.7:
+  ats-software-2.3.10:
     aliases:
-      - "puppet-2.3.7"
+      - "puppet-2.3.10"
 
 ccs_monit::alert:
   - "base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com"

@@ -20,3 +20,7 @@ nm::connections:
       method=ignore
 
       [proxy]
+
+ccs_software::services:
+  prod:
+    - "daq-monitor"

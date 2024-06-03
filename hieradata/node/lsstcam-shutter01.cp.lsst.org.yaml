@@ -32,3 +32,7 @@ nm::connections:
       proxy: {}
 
 ccs_hcu::shutter: true
+
+ccs_software::services:
+  prod:
+    - "shutter"

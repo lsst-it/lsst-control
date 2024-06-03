@@ -103,25 +103,6 @@ describe 'profile::core::rke' do
       end
 
       context 'with version param' do
-        context 'when 1.3.12' do
-          let(:params) do
-            {
-              version: '1.3.12',
-            }
-          end
-
-          it { is_expected.to compile.with_all_deps }
-
-          include_examples 'rke profile'
-
-          it do
-            is_expected.to contain_class('rke').with(
-              version: '1.3.12',
-              checksum: '579da2206aec09cadccd8d6f4818861e78a256b6ae550a229335e500a472bd50',
-            )
-          end
-        end
-
         context 'when 1.4.6' do
           let(:params) do
             {
@@ -156,6 +137,25 @@ describe 'profile::core::rke' do
             is_expected.to contain_class('rke').with(
               version: '1.5.8',
               checksum: 'f691a33b59db48485e819d89773f2d634e347e9197f4bb6b03270b192bd9786d',
+            )
+          end
+        end
+
+        context 'when 1.5.9' do
+          let(:params) do
+            {
+              version: '1.5.9',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+
+          include_examples 'rke profile'
+
+          it do
+            is_expected.to contain_class('rke').with(
+              version: '1.5.9',
+              checksum: '1d31248135c2d0ef0c3606313d80bd27a199b98567a053036b9e49e13827f54b',
             )
           end
         end

@@ -307,7 +307,7 @@ rsyslog::config::actions:
     type: "omfile"
     facility: "mail.*"
     config:
-      file: "-/var/log/maillog"
+      file: "/var/log/maillog"
   cron:
     type: "omfile"
     facility: "cron.*"

@@ -39,7 +39,7 @@ shared_examples 'rsyslog defaults' do |site:|
       type: 'omfile',
       facility: 'mail.*',
       config: {
-        'file' => '-/var/log/maillog',
+        'file' => '/var/log/maillog',
       },
     )
   end

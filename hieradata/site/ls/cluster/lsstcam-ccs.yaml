@@ -7,3 +7,8 @@ ccs_software::service_email: "base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@l
 
 ccs_monit::alert:
   - "base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com"
+
+ccs_software::installations:
+  lsstcam-software-1.0.11:
+    aliases:
+      - "puppet-1.0.11"

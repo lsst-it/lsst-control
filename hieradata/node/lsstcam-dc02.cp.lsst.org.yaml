@@ -20,3 +20,13 @@ nm::connections:
       method=ignore
 
       [proxy]
+
+## The role ccs-dc adds the image-handling service to all lsstcam-dc*.cp nodes.
+## However, dc02.cp is a special case, where the service should not run.
+profile::core::systemd::dropin_file:
+  override.conf:
+    unit: "image-handling.service"
+    content: |
+      [Service]
+      ExecStart=
+      ExecStart=/bin/false

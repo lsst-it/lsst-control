@@ -32,7 +32,7 @@ describe 'rancher01.tu.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_class('profile::core::rke').with(
-          version: '1.5.8',
+          version: '1.5.9',
         )
       end
 

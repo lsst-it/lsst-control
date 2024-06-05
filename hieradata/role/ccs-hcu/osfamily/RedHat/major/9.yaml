@@ -1,0 +1,3 @@
+---
+ccs_hcu::canbus::module: "advSocketCAN"
+ccs_hcu::canbus::version: "3.0.2.2"

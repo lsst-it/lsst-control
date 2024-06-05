@@ -4,9 +4,9 @@ clustershell::groupmembers:
   all: {group: "all", member: "@aio,@dc,@hcu,@misc,@vw"}
   dc: {group: "dc", member: "lsstcam-dc[01-10]"}
   hcu: {group: "hcu", member: "@lion,@uno"}
-  lion: {group: "lion", member: "@quadbox,lsstcam-fb01,lsstcam-shutter[01-02]"}
+  lion: {group: "lion", member: "@quadbox,lsstcam-fb[01-04],lsstcam-shutter[01-02]"}
   misc: {group: "misc", member: "lsstcam-db01,lsstcam-mcm,lsstcam-vs01"}
   moxa: {group: "moxa", member: "lsstcam-moxa[1-2]"}
   quadbox: {group: "quadbox", member: "lsstcam-fcs,lsstcam-quad,lsstcam-rebps,lsstcam-vac"}
   uno: {group: "uno", member: "lsstcam-ccobtb,lsstcam-ccobwb,lsstcam-pcs[01-02]"}
-  vw: {group: "vw", member: "lsstcam-vw[01-02,04]"}
+  vw: {group: "vw", member: "lsstcam-vw[01-04]"}

@@ -31,3 +31,4 @@ nm::connections:
         method: "disabled"
 
 ccs_hcu::canbus: true
+ccs_hcu::aiousb: true

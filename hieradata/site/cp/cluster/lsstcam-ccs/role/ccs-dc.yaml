@@ -11,6 +11,10 @@ files:
     owner: &ccsipauser 72055
     group: *ccsipauser
 
+## Note: node/lsstcam-dc02.cp should not have image-handling,
+## and so specifically redefines services to be empty.
+## If you want to add more services here, they will also need to be
+## added to that node.
 ccs_software::services:
   prod:
     - {name: "image-handling", user: "ccs-ipa", group: "ccs-ipa", workdir: "/home/ccs-ipa"}

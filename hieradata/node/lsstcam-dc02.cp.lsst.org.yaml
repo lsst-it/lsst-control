@@ -20,3 +20,12 @@ nm::connections:
       method=ignore
 
       [proxy]
+
+## The role ccs-dc adds the image-handling service to all lsstcam-dc*.cp nodes.
+## However, dc02.cp is a special case, where the service should not be present.
+lookup_options:
+  ccs_software::services:
+    merge:
+      strategy: "first"
+
+ccs_software::services:

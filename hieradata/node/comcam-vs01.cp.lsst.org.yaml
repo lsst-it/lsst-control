@@ -1,4 +1,89 @@
 ---
+nm::connections:
+  ens1f0np0:
+    content:
+      connection:
+        id: "ens1f0np0"
+        uuid: "d3b49cfc-ffb6-428b-abb6-6b5f6f3bf43b"
+        type: "ethernet"
+        interface-name: "ens1f0np0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  ens1f1np1:
+    content:
+      connection:
+        id: "ens1f1np1"
+        uuid: "6aa09686-55cb-4419-9f70-5e80ff39937d"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens1f1np1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  eno1:
+    content:
+      connection:
+        id: "eno1"
+        uuid: "910cc179-a5cb-4889-b968-bc11a09e84cd"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  eno2:
+    content:
+      connection:
+        id: "eno2"
+        uuid: "a7be34c2-f56d-4b03-958d-7e19db4023af"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  ens4f0np0:
+    content:
+      connection:
+        id: "ens4f0np0"
+        uuid: "8cc023e1-2b3b-4842-92dd-02d0dac92fd3"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens4f0np0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  ens4f1np1:
+    content:
+      connection:
+        id: "ens4f1np1"
+        uuid: "70f97a7a-3c09-421e-9e11-2ad59f6ba481"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens4f1np1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+
 nfs::client_enabled: true
 nfs::nfs_v4_client: true
 nfs::client_mounts:

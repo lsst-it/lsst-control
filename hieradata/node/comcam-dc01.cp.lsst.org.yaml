@@ -1,23 +1,99 @@
 ---
-profile::daq::daq_interface::hwaddr: "1c:34:da:6a:8e:c6"
-profile::daq::daq_interface::uuid: "faf763be-13a8-481b-9e3f-af5766581a41"
-profile::daq::daq_interface::was: "p3p1"
-profile::daq::daq_interface::mode: "dhcp-client"
-
-network::interfaces_hash:
-  p1p1:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  em1:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  em2:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
+nm::connections:
+  ens1f0np0:
+    content:
+      connection:
+        id: "ens1f0np0"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "ens1f0np0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  ens1f1np1:
+    content:
+      connection:
+        id: "ens1f1np1"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens1f1np1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno1:
+    content:
+      connection:
+        id: "eno1"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno2:
+    content:
+      connection:
+        id: "eno2"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  ens3f0np0:  # lsst-daq interface
+    content:
+      connection:
+        id: "ens3f0np0"
+        uuid: "d5642f16-53c6-6053-7d4d-8c6ef5ae8a38"
+        type: "ethernet"
+        interface-name: "ens3f0np0"
+        master: "lsst-daq"
+        slave-type: "bridge"
+      ethernet: {}
+      ethtool:
+        ring-rx: "4096"
+        ring-tx: "4096"
+      bridge-port: {}
+  ens3f1np1:
+    content:
+      connection:
+        id: "ens3f1np1"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens3f1np1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  lsst-daq:
+    content:
+      connection:
+        id: "lsst-daq"
+        uuid: "d5642f16-7bf7-7d4d-de5a-25e7d7c355a4"
+        type: "bridge"
+        interface-name: "lsst-daq"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
 
 nfs::client_enabled: true
 nfs::nfs_v4_client: true

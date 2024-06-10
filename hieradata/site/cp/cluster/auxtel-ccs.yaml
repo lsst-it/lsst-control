@@ -1,0 +1,5 @@
+---
+ccs_software::installations:
+  ats-software-2.3.10:
+    aliases:
+      - "puppet-2.3.10"

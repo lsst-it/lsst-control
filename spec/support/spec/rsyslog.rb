@@ -74,6 +74,33 @@ shared_examples 'rsyslog defaults' do |site:|
     )
   end
 
+  it do
+    is_expected.to contain_file('/etc/logrotate.d/rsyslog').with(
+      ensure: 'file',
+      owner: 'root',
+      group: 'root',
+      mode: '0644',
+      content: <<~CONTENT,
+        /var/log/cron
+        /var/log/maillog
+        /var/log/messages
+        /var/log/secure
+        /var/log/spooler
+        {
+            size 50M
+            rotate 4
+            compress
+            delaycompress
+            missingok
+            sharedscripts
+            postrotate
+                /usr/bin/systemctl -s HUP kill rsyslog.service >/dev/null 2>&1 || true
+            endscript
+        }
+      CONTENT
+    )
+  end
+
   case site
   when 'cp'
     it do

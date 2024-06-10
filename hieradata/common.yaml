@@ -330,6 +330,29 @@ rsyslog::config::inputs:
       file: "/var/log/audit/audit.log"
       Tag: "auditd"
 
+files:
+  /etc/logrotate.d/rsyslog:
+    ensure: 'file'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    content: |
+      /var/log/cron
+      /var/log/maillog
+      /var/log/messages
+      /var/log/secure
+      /var/log/spooler
+      {
+          size 50M
+          rotate 4
+          compress
+          delaycompress
+          missingok
+          sharedscripts
+          postrotate
+              /usr/bin/systemctl -s HUP kill rsyslog.service >/dev/null 2>&1 || true
+          endscript
+      }
 yum::plugin::versionlock::clean: true  # trigger `yum clean all`
 yum::manage_os_default_repos: true
 

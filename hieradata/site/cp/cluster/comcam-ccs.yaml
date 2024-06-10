@@ -1,4 +1,7 @@
 ---
+ccs_sal::rpms:
+  ts_sal_utils: "ts_sal_utils-8.0.0-1.x86_64.rpm"
+
 ccs_software::installations:
   comcam-software-2.4.8:
     aliases:

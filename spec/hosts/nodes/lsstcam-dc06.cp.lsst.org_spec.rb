@@ -2,14 +2,14 @@
 
 require 'spec_helper'
 
-describe 'lsstcam-dc01.cp.lsst.org', :sitepp do
+describe 'lsstcam-dc06.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next if os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do
       let(:facts) do
         override_facts(os_facts,
-                       fqdn: 'lsstcam-dc01.cp.lsst.org',
+                       fqdn: 'lsstcam-dc06.cp.lsst.org',
                        is_virtual: false,
                        virtual: 'physical',
                        dmi: {
@@ -52,7 +52,7 @@ describe 'lsstcam-dc01.cp.lsst.org', :sitepp do
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.175.65/26,139.229.175.126') }
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.175.70/26,139.229.175.126') }
         it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.160.53;139.229.160.54;139.229.160.55;') }
         it { expect(nm_keyfile['ipv4']['dns-search']).to eq('cp.lsst.org;') }
         it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }

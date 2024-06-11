@@ -6,9 +6,11 @@
 # Stop python OpenBLAS running amok.
 export OMP_NUM_THREADS=1
 
-# Add /lsst/ccs/prod/bin to PATH if not present.
-_dir=/lsst/ccs/prod/bin
-[ -e $_dir ] && [[ $PATH != *$_dir* ]] && PATH=$_dir:$PATH
+# Add some directories to PATH if not present, eg
+# /usr/local/bin can be missing inside sudo -u ccs.
+for _dir in /opt/lsst/ccs/prod/bin /usr/local/bin; do
+    [ -e $_dir ] && [[ $PATH != *$_dir* ]] && PATH=$_dir:$PATH
+done
 unset _dir
 
 # shellcheck disable=SC1091

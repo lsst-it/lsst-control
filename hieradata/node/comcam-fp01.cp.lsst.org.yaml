@@ -1,36 +1,99 @@
 ---
-profile::daq::daq_interface::hwaddr: "b4:96:91:4d:d2:5c"
-profile::daq::daq_interface::uuid: "995511a3-a10e-490d-b65e-c0e40fc3e233"
-profile::daq::daq_interface::was: "p1p1"
-profile::daq::daq_interface::mode: "dhcp-client"
-profile::core::nm_dispatch::interfaces:
-  em1:
-    - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
-    - "tc filter del dev ${DEV} chain 0 || true"
-    - "tc qdisc del dev ${DEV} root || true"
-    - "tc qdisc add dev ${DEV} root handle 1: htb default 1"
-    - "tc class add dev ${DEV} parent 1: classid 1:1 htb rate 10gbit burst 40mbit"
-    - "tc class add dev ${DEV} parent 1:1 classid 1:10 htb rate 2.5gbit burst 40mbit"
-    - "tc filter add dev ${DEV} parent 1: protocol ip matchall flowid 1:1"
-    - "tc filter add dev ${DEV} parent 1:1 protocol ip prio 1 u32 match ip dst 141.142.0.0/16 flowid 1:10"
-
-network::interfaces_hash:
-  em1:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  em2: &not_connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  em3:
-    <<: *not_connected
-  em4:
-    <<: *not_connected
-  # p2p1 -> lsst-daq -- 192.168.100.0/24
-  p1p2:
-    <<: *not_connected
+nm::connections:
+  eno1:  #fqdn
+    content:
+      connection:
+        id: "eno1"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "eno1"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  eno2:
+    content:
+      connection:
+        id: "eno2"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno3:
+    content:
+      connection:
+        id: "eno3"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno3"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno4:
+    content:
+      connection:
+        id: "eno4"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno4"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  ens1f0:  # lsst-daq interface
+    content:
+      connection:
+        id: "ens1f0"
+        uuid: "d5642f16-53c6-6053-7d4d-8c6ef5ae8a38"
+        type: "ethernet"
+        interface-name: "ens1f0"
+        master: "lsst-daq"
+        slave-type: "bridge"
+      ethernet: {}
+      ethtool:
+        ring-rx: "4096"
+        ring-tx: "4096"
+      bridge-port: {}
+  ens1f1:
+    content:
+      connection:
+        id: "ens1f1"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens1f1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  lsst-daq:
+    content:
+      connection:
+        id: "lsst-daq"
+        uuid: "d5642f16-7bf7-7d4d-de5a-25e7d7c355a4"
+        type: "bridge"
+        interface-name: "lsst-daq"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
 
 nfs::server_enabled: true
 nfs::server::nfs_v4: true
@@ -62,14 +125,3 @@ ccs_monit::ping_hosts:
   - "comcam-lion02"
   - "comcam-lion03"
   - "pathfinder-lion01"
-
-# See also role/comcam-fp.
-# ccs_software::services:
-#   prod:
-    # XXX
-    # - "cantaloupe"
-    # - "dsid"
-    # - "dss"
-    # - "emu"
-    # - "rce"
-    # - "ssu"

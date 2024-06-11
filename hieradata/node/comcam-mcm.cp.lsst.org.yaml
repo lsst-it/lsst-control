@@ -1,37 +1,89 @@
 ---
-network::interfaces_hash:
-  em1:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  em2:  # dds
-    bootproto: "none"
-    defroute: "no"
-    ipaddress: "139.229.170.11"
-    netmask: "255.255.255.0"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  em3:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  em4:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  p1p1:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  p1p2:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
+nm::connections:
+  eno1:
+    content:
+      connection:
+        id: "eno1"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "eno1"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  eno2:  #dds interface
+    content:
+      connection:
+        id: "eno2"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "eno2"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.170.11/24,139.229.170.254"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  eno3:
+    content:
+      connection:
+        id: "eno3"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno3"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno4:
+    content:
+      connection:
+        id: "eno4"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno4"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  ens1f0:
+    content:
+      connection:
+        id: "ens1f0"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens1f0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  ens1f1:
+    content:
+      connection:
+        id: "ens1f1"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens1f1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
 
 network::mroutes_hash:
-  em2:
+  eno2:
     routes:
       "139.229.147.0/24": "139.229.170.254"
       "139.229.166.0/24": "139.229.170.254"

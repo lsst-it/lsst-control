@@ -1,0 +1,12 @@
+---
+network::interfaces_hash:
+  enp3s0:  # fqdn
+    bootproto: "none"
+    ipaddress: "139.229.175.89"
+    gateway: "139.229.175.126"
+    netmask: "255.255.255.192"
+    nozeroconf: "yes"
+    onboot: "yes"
+    type: "Ethernet"
+
+ccs_hcu::canbus: true

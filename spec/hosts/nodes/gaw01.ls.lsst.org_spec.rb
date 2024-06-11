@@ -48,8 +48,8 @@ describe 'gaw01.ls.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_class('rke').with(
-          version: '1.5.8',
-          checksum: 'f691a33b59db48485e819d89773f2d634e347e9197f4bb6b03270b192bd9786d',
+          version: '1.5.9',
+          checksum: '1d31248135c2d0ef0c3606313d80bd27a199b98567a053036b9e49e13827f54b',
         )
       end
 

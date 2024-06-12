@@ -186,6 +186,20 @@ dhcp::pools:
       - {network: "134.79.23", mask: "24", gateway: "139.229.180.254"}
       - {network: "134.79.235.224", mask: "28", gateway: "139.229.180.254"}
       - {network: "134.79.235.240", mask: "28", gateway: "139.229.180.254"}
+  ELQUI:
+    network: "139.229.181.0"
+    mask: "255.255.255.224"
+    gateway: "139.229.181.30"
+    range:
+      - "139.229.181.21 139.229.181.25"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  ELQUI-SVC:
+    network: "139.229.181.32"
+    mask: "255.255.255.224"
+    gateway: "139.229.181.62"
+    range:
+      - "139.229.181.53 139.229.181.57"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   IT-Contractors:
     network: "139.229.191.0"
     mask: "255.255.255.128"

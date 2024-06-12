@@ -263,6 +263,24 @@ describe 'foreman.cp.lsst.org', :sitepp do
       end
 
       it do
+        is_expected.to contain_dhcp__pool('ELQUI').with(
+          network: '139.229.181.0',
+          mask: '255.255.255.224',
+          range: ['139.229.181.21 139.229.181.25'],
+          gateway: '139.229.181.30',
+        )
+      end
+
+      it do
+        is_expected.to contain_dhcp__pool('ELQUI-SVC').with(
+          network: '139.229.181.32',
+          mask: '255.255.255.224',
+          range: ['139.229.181.53 139.229.181.57'],
+          gateway: '139.229.181.62',
+        )
+      end
+
+      it do
         is_expected.to contain_dhcp__pool('IT-Contractors').with(
           network: '139.229.191.0',
           mask: '255.255.255.128',

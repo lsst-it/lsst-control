@@ -1,0 +1,125 @@
+---
+nm::connections:
+  eno1:  #fqdn
+    content:
+      connection:
+        id: "eno1"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "eno1"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  eno2:  # mgt shelf interface
+    content:
+      connection:
+        id: "eno2"
+        uuid: "46d19ce1-bcab-7e77-6fc7-b730b26c54b1"
+        type: "ethernet"
+        interface-name: "eno2"
+      ethernet: {}
+      ipv4:
+        address1: "192.168.101.1/24"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+  eno3:
+    content:
+      connection:
+        id: "eno3"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno3"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno4:
+    content:
+      connection:
+        id: "eno4"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno4"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  ens2f0:  # lsst-daq interface
+    content:
+      connection:
+        id: "ens2f0"
+        uuid: "d5642f16-53c6-6053-7d4d-8c6ef5ae8a38"
+        type: "ethernet"
+        interface-name: "ens2f0"
+        master: "lsst-daq"
+        slave-type: "bridge"
+      ethernet: {}
+      ethtool:
+        ring-rx: "4096"
+        ring-tx: "4096"
+      bridge-port: {}
+  ens2f1:
+    content:
+      connection:
+        id: "ens2f1"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens2f1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  lsst-daq:
+    content:
+      connection:
+        id: "lsst-daq"
+        uuid: "d5642f16-7bf7-7d4d-de5a-25e7d7c355a4"
+        type: "bridge"
+        interface-name: "lsst-daq"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        address1: "192.168.100.1/24"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+
+hosts::entries:
+  lsstcam-sm:
+    ip: "192.168.101.2"
+
+nfs::server_enabled: true
+nfs::server::nfs_v4: false  # XXX disable v4 style exports because of the DAQ
+nfs::nfs_exports_global:
+  /srv/nfs/dsl:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,crossmnt,no_subtree_check,all_squash,anongid=2660,insecure)
+      192.168.100.0/24(rw,nohide,crossmnt,no_subtree_check,all_squash,anongid=2660,insecure)
+  /srv/nfs/lsst-daq:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,crossmnt,no_subtree_check,all_squash,anongid=2660,insecure)
+      192.168.100.0/24(rw,nohide,crossmnt,no_subtree_check,all_squash,anongid=2660,insecure)
+
+nfs::client_enabled: true
+nfs::nfs_v4_client: false  # XXX disable v4 because of DAQ
+nfs::client_mounts:
+  /net/self/dsl:
+    share: "/srv/nfs/dsl"
+    server: "%{facts.fqdn}"
+    atboot: true
+  /net/self/lsst-daq:
+    share: "/srv/nfs/lsst-daq"
+    server: "%{facts.fqdn}"
+    atboot: true

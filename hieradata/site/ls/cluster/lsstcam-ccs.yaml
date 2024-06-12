@@ -2,16 +2,8 @@
 ccs_site: "base"
 ccs_sal::dds_interface: "lsstcam-mcm-dds.ls.lsst.org"
 
-ccs_sal::rpms:
-  ts_sal_utils: "ts_sal_utils-8.0.0-1.x86_64.rpm"
-
 ## base-teststand-alerts
 ccs_software::service_email: "base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com"
 
 ccs_monit::alert:
   - "base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com"
-
-ccs_software::installations:
-  lsstcam-software-1.0.11:
-    aliases:
-      - "puppet-1.0.11"

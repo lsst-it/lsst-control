@@ -52,6 +52,7 @@ ccs_sal::dds_interface: "comcam-mcm-dds"
 ccs_sal::instrument: "%{lookup('ccs_instrument')}"
 
 ccs_software::global_properties:
+  - "org.lsst.ccs.InfluxDb.default.tags=<site>|<cluster>"
   - "org.lsst.ccs.lockservice=remote"
   - "org.lsst.ccs.config.publish.config.info=false"
   - "org.lsst.ccs.subsystem.agent.property.instrument=%{lookup('ccs_instrument')}"

@@ -13,7 +13,7 @@
 class profile::core::rke (
   Boolean                        $enable_dhcp   = false,
   Optional[Sensitive[String[1]]] $keytab_base64 = undef,
-  String                         $version       = '1.5.8',
+  String                         $version       = '1.5.9',
 ) {
   include kmod
   require ipa

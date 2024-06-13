@@ -97,7 +97,6 @@ ccs_sal::dds_interface: "auxtel-mcm-dds.cp.lsst.org"
 ccs_sal::instrument: "%{lookup('ccs_instrument')}"
 
 ccs_software::global_properties:
-  - "org.lsst.ccs.InfluxDb.default.tags=<site>|<cluster>"
   - "org.lsst.ccs.lockservice=remote"
   - "org.lsst.ccs.subsystem.agent.property.instrument=%{lookup('ccs_instrument')}"
   - "org.lsst.ccs.subsystem.agent.property.cluster=%{lookup('ccs_instrument')}"

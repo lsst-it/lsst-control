@@ -74,6 +74,12 @@ class profile::ccs::tomcat (
     require => Exec['wait for tomcat'],  # config dir creation
   }
 
+  tomcat::config::context::parameter { 'org.lsst.ccs.imagenaming.rest.dbURL':
+    catalina_base => $catalina_base,
+    value         => "jdbc:mysql://${rest_url}?user=${rest_user.unwrap}&amp;password=${rest_pass.unwrap}&amp;autoReconnect=true",
+    override      => false,
+  }
+
   # XXX appears to be broken... hardwired to look at $catalina_base/conf/context.xml
   tomcat::config::context::manager { 'org.apache.catalina.valves.RemoteAddrValve':
     ensure        => 'absent',

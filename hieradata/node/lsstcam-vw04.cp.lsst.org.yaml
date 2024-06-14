@@ -1,0 +1,18 @@
+---
+nm::connections:
+  enp114s0:  #fqdn
+    content:
+      connection:
+        id: "enp114s0"
+        uuid: "83bb3036-3f8d-441b-a324-41d0667bed66"
+        type: "ethernet"
+        interface-name: "enp114s0"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.175.97/26,139.229.175.126"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}

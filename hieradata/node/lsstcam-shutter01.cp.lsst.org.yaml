@@ -31,6 +31,7 @@ nm::connections:
         method: "disabled"
       proxy: {}
 
+ccs_hcu::pth450: true
 ccs_hcu::shutter: true
 
 ccs_software::services:

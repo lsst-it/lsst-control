@@ -6,6 +6,9 @@ classes:
   - "profile::core::common"
 
 packages:
+  - "libusb"
+  - "libusb-devel"
+  - "libusbx-devel"
   - "telnet"
   - "usbutils"
 

@@ -9,6 +9,9 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
+  - "profile::core::sysctl::lhn"
+
+profile::ccs::common::sysctls: false
 
 ccs_software::services:
   prod:

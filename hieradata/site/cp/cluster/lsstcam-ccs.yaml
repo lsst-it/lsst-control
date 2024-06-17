@@ -10,11 +10,3 @@ clustershell::groupmembers:
   quadbox: {group: "quadbox", member: "lsstcam-fcs,lsstcam-quad,lsstcam-rebps,lsstcam-vac"}
   uno: {group: "uno", member: "lsstcam-ccobtb,lsstcam-ccobwb,lsstcam-pcs[01-02]"}
   vw: {group: "vw", member: "lsstcam-vw[01-02,04]"}
-
-ccs_sal::rpms:
-  ts_sal_utils: "ts_sal_utils-8.0.0-1.x86_64.rpm"
-
-ccs_software::installations:
-  lsstcam-software-1.0.11:
-    aliases:
-      - "puppet-1.0.11"

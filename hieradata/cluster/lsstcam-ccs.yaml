@@ -26,7 +26,7 @@ ccs_sal::ospl_home: "/opt/OpenSpliceDDS/V6.10.4/HDE/x86_64.linux"
 ## Do not add instrument- prefix to service names.
 ccs_sal::prefix_service: false
 ccs_sal::rpms:
-  ts_sal_utils: "ts_sal_utils-7.4.0-1.x86_64.rpm"
+  ts_sal_utils: "ts_sal_utils-8.0.0-1.x86_64.rpm"
 ccs_sal::rpms_private:
   OpenSpliceDDS: "OpenSpliceDDS-6.10.4-1.el8.x86_64.rpm"
 
@@ -96,6 +96,9 @@ ccs_software::installations:
   lsstcam-software-1.0.10:
     aliases:
       - "puppet-1.0.10"
+  lsstcam-software-1.0.11:
+    aliases:
+      - "puppet-1.0.11"
 
 daq::daqsdk::purge: false
 

@@ -62,29 +62,12 @@ accounts::user_list:
 ccs_software::desktop: true
 ccs_software::env: "AuxTel"
 ccs_software::installations:
-  ats-software-2.3.4:
-    aliases:
-      - "puppet-2.3.4"
-
-  ats-software-2.3.5:
-    aliases:
-      - "puppet-2.3.5"
-
-  ats-software-2.3.6:
-    aliases:
-      - "puppet-2.3.6"
-
-  ats-software-2.3.7:
-    aliases:
-      - "puppet-2.3.7"
-
-  ats-software-2.3.8:
-    aliases:
-      - "puppet-2.3.8"
-
   ats-software-2.3.9:
     aliases:
       - "puppet-2.3.9"
+  ats-software-2.3.10:
+    aliases:
+      - "puppet-2.3.10"
 
 ## Used in lookups:
 ccs_site: "summit"
@@ -109,7 +92,7 @@ ccs_software::udp_properties:
 
 ccs_sal::ospl_home: "/opt/OpenSpliceDDS/V6.10.4/HDE/x86_64.linux"
 ccs_sal::rpms:
-  ts_sal_utils: "ts_sal_utils-7.4.0-1.x86_64.rpm"
+  ts_sal_utils: "ts_sal_utils-8.0.0-1.x86_64.rpm"
 ccs_sal::rpms_private:
   OpenSpliceDDS: "OpenSpliceDDS-6.10.4-1.el8.x86_64.rpm"
 

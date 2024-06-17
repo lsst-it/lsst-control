@@ -8,6 +8,9 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
+  - "profile::core::sysctl::lhn"
+
+profile::ccs::common::sysctls: false
 
 profile::core::systemd::tmpfile:
   docker_tmp.conf:  # XXX short term kludge

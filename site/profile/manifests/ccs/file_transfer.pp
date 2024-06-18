@@ -124,9 +124,7 @@ class profile::ccs::file_transfer (
       'aiobotocore',
     ]
 
-    package { $yum_packages:
-      ensure => 'present',
-    }
+    ensure_packages($yum_packages)
 
     package { $pip_packages:
       ensure   => 'present',

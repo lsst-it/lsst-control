@@ -124,13 +124,12 @@ class profile::ccs::file_transfer (
       'aiobotocore',
     ]
 
-    package { $yum_packages:
-      ensure => 'present',
-    }
+    ensure_packages($yum_packages)
 
     package { $pip_packages:
       ensure   => 'present',
       provider => 'pip3',
+      require  => Package['python3-pip'],
     }
 
     $repo_parent = "${dirname($s3daemon_repo_directory)}"

@@ -1,0 +1,36 @@
+---
+nm::connections:
+  enp1s0:
+    content:
+      connection:
+        id: "enp1s0"
+        uuid: "5fd87e1-15f2-4a15-b290-ffbe705e86ae"
+        type: "ethernet"
+        interface-name: "enp1s0"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.175.93/26,139.229.175.126"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp2s0:
+    content:
+      connection:
+        id: "enp2s0"
+        uuid: "1d9a3260-eefd-409c-ad51-496d82ad3c4c"
+        type: "ethernet"
+        interface-name: "enp2s0"
+      ethernet: {}
+      ipv4:
+        method: "manual"
+        address1: "192.168.1.1/24"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+
+ccs_software::services:
+  prod:
+    - "chiller"

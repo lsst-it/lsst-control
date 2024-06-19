@@ -32,7 +32,6 @@ describe 'comcam-fp01.cp.lsst.org', :sitepp do
       it { is_expected.to have_nm__connection_resource_count(7) }
 
       %w[
-        eno2
         eno3
         eno4
         ens1f1
@@ -50,6 +49,17 @@ describe 'comcam-fp01.cp.lsst.org', :sitepp do
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
+      end
+
+      context 'with eno2' do
+        let(:interface) { 'eno2' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm ethernet interface'
+        it_behaves_like 'nm manual interface'
+        it_behaves_like 'nm no default route'
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.181.73/29,139.229.181.78') }
+        it { expect(nm_keyfile['ipv4']['route1']).to eq('172.24.7.0/24,139.229.181.78') }
       end
 
       context 'with ens1f0' do

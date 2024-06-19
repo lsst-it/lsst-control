@@ -17,15 +17,18 @@ nm::connections:
     content:
       connection:
         id: "eno2"
-        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        uuid: "08328931-a5f2-47ad-bebc-6939e83e9af1"
         type: "ethernet"
-        autoconnect: "false"
         interface-name: "eno2"
       ethernet: {}
       ipv4:
-        method: "disabled"
+        address1: "139.229.181.73/29,139.229.181.78"
+        method: "manual"
+        never-default: "true"
+        route1: "172.24.7.0/24,139.229.181.78"
       ipv6:
         method: "disabled"
+      proxy: {}
   eno3:
     content:
       connection:

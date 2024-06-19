@@ -80,6 +80,7 @@ describe 'comcam-fp01.cp.lsst.org', :sitepp do
         it_behaves_like 'nm dhcp interface'
       end
 
+      it { is_expected.to contain_host('sdfembs3.sdf.slac.stanford.edu').with_ip('172.24.7.249') }
       it { is_expected.to contain_class('nfs::server').with_nfs_v4(true) }
       it { is_expected.to contain_nfs__server__export('/ccs-data') }
     end # on os

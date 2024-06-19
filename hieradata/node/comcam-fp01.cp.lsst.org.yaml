@@ -118,6 +118,10 @@ nfs::client_mounts:
     server: "%{facts.fqdn}"
     atboot: true
 
+hosts::entries:
+  sdfembs3.sdf.slac.stanford.edu:
+    ip: "172.24.7.249"
+
 ccs_monit::ping_hosts:
   - "comcam-db01"
   - "comcam-dc01"

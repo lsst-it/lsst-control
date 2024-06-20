@@ -31,7 +31,7 @@ nm::connections:
       bridge:
         stp: "false"
       ipv4:
-        method: "disabled"
+        method: "auto"
         route1: "139.229.153.0/24"
         route1_options: "table=2505"
         route2: "0.0.0.0/0,139.229.153.254"

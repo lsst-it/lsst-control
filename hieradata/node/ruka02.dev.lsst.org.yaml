@@ -10,6 +10,11 @@ nm::connections:
   br2505:
     content:
       ipv4:
+        method: "disabled"
+        # route-table: "2505"
+        # never-default: "true"
+  ens2f0.2505:
+    content:
+      ipv4:
         method: "auto"
         route-table: "2505"
-        # never-default: "true"

@@ -2,24 +2,14 @@
 nm::connections:
   br2101:
     content:
-      connection:
-        id: "br2101"
-        uuid: "488bf841-4a72-4e02-af3c-34a64493d677"
-        type: "bridge"
-        interface-name: "br2101"
-      ethernet:
-        cloned-mac-address: "stable"
-      bridge:
-        stp: "false"
       ipv4:
         method: "manual"
         address1: "139.229.134.140/24"
-        # route1: "139.229.134.0/24"
-        # route1_options: "table=2101"
-        # route2: "0.0.0.0/0,139.229.134.254"
-        # route2_options: "table=2101"
-        # routing-rule1: "priority 100 from 139.229.134.140/32 table 2101"
-      ipv6:
-        method: "disabled"
-      proxy: {}
-
+        route-table: "2101"
+        never-default: "true"
+  br2505:
+    content:
+      ipv4:
+        method: "auto"
+        route-table: "2505"
+        # never-default: "true"

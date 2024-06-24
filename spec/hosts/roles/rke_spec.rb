@@ -16,6 +16,7 @@ shared_examples 'generic rke' do |os_facts:, site:|
     )
   end
 
+  it { is_expected.to contain_class('helm_binary').with_version('3.10.3') }
   it { is_expected.to contain_class('profile::core::rke') }
   it { is_expected.to contain_class('clustershell') }
   it { is_expected.to contain_package('make') }

@@ -1,0 +1,15 @@
+---
+nm::connections:
+  enp3s0:
+    content:
+      connection:
+        id: "enp3s0"
+        uuid: "5066f843-1baa-4dc0-9c9b-680a7a54f8e3"
+        type: "ethernet"
+        interface-name: "enp3s0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}

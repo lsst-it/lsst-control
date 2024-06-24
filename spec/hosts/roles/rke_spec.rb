@@ -9,7 +9,13 @@ shared_examples 'generic rke' do |os_facts:, site:|
   include_examples 'rke profile'
   include_examples 'restic common'
 
-  it { is_expected.to contain_class('kubectl') }
+  it do
+    is_expected.to contain_class('kubectl').with(
+      version: '1.28.10',
+      checksum: '389c17a9700a4b01ebb055e39b8bc0886330497440dde004b5ed90f2a3a028db',
+    )
+  end
+
   it { is_expected.to contain_class('profile::core::rke') }
   it { is_expected.to contain_class('clustershell') }
   it { is_expected.to contain_package('make') }

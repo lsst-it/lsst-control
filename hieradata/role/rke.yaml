@@ -19,6 +19,8 @@ packages:
 cni::plugins::checksum: "f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37"
 cni::plugins::enable: ["macvlan"]
 cni::plugins::version: "1.2.0"
+kubectl::version: "1.28.10"
+kubectl::checksum: "389c17a9700a4b01ebb055e39b8bc0886330497440dde004b5ed90f2a3a028db"
 profile::core::helm::version: "3.5.4"
 profile::core::kernel::debuginfo: true
 profile::core::kernel::devel: true

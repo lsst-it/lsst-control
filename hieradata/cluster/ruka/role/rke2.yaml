@@ -1,0 +1,8 @@
+---
+classes:
+  - "profile::core::lhnrouting"
+  - "profile::core::sysctl::rp_filter"
+profile::core::sysctl::rp_filter::enable: false
+rke2::config:
+  node-label:
+    - "role=storage-node"

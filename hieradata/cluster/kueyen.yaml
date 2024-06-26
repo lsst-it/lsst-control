@@ -2,7 +2,7 @@
 clustershell::groupmembers:
   kueyen: {group: "kueyen", member: "kueyen[01-03]"}
 profile::core::ospl::enable_rundir: true
-profile::core::rke::enable_dhcp: true
+profile::core::k8snode::enable_dhcp: true
 nm::connections:
   em1:  #PXE Boot
     content: |

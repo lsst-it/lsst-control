@@ -1,7 +1,7 @@
 ---
 clustershell::groupmembers:
   ruka: {group: "ruka", member: "ruka[01-05]"}
-profile::core::rke::enable_dhcp: true
+profile::core::k8snode::enable_dhcp: true
 nm::connections:
   br2101:
     content:

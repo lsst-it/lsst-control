@@ -62,6 +62,8 @@ describe 'chonchon01.cp.lsst.org', :sitepp do
         )
       end
 
+      it { is_expected.to contain_class('cni::plugins::dhcp') }
+
       it { is_expected.to have_nm__connection_resource_count(6) }
 
       %w[

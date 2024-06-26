@@ -6,6 +6,7 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::docker"
   - "profile::core::helm"
+  - "profile::core::k8snode"
   - "profile::core::kernel::pquota"
   - "profile::core::kubecompletion"
   - "profile::core::ospl"

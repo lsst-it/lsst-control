@@ -1,5 +1,5 @@
 ---
 clustershell::groupmembers:
   yagan: {group: "yagan", member: "yagan[01-20]"}
-profile::core::rke::enable_dhcp: true
+profile::core::k8snode::enable_dhcp: true
 profile::core::ospl::enable_rundir: true

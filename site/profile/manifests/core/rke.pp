@@ -1,9 +1,6 @@
 # @summary
 #   Common functionality needed by rke on kubernetes nodes.
 #
-# @param enable_dhcp
-#   Enable CNI dhcp plugin
-#
 # @param keytab_base64
 #   base64 encoded krb5 keytab
 #
@@ -11,7 +8,6 @@
 #   Version of rke utility to install
 #
 class profile::core::rke (
-  Boolean                        $enable_dhcp   = false,
   Optional[Sensitive[String[1]]] $keytab_base64 = undef,
   String                         $version       = '1.5.9',
 ) {
@@ -20,11 +16,6 @@ class profile::core::rke (
 
   $user = 'rke'
   $uid  = 75500
-
-  if $enable_dhcp {
-    include cni::plugins
-    include cni::plugins::dhcp
-  }
 
   if $keytab_base64 {
     profile::util::keytab { $user:
@@ -66,13 +57,4 @@ class profile::core::rke (
     target => '/etc/sysctl.d/80-rke.conf',
   }
   -> Class['docker']
-
-  sysctl::value { 'fs.inotify.max_user_instances':
-    value  => 104857,
-    target => '/etc/sysctl.d/80-rke.conf',
-  }
-  sysctl::value { 'fs.inotify.max_user_watches':
-    value  => 1048576,
-    target => '/etc/sysctl.d/80-rke.conf',
-  }
 }

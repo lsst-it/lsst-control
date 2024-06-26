@@ -1,7 +1,7 @@
 ---
 clustershell::groupmembers:
   chonchon: {group: "chonchon", member: "chonchon[01-03]"}
-profile::core::rke::enable_dhcp: true
+profile::core::k8snode::enable_dhcp: true
 nm::connections:
   em1:
     content: |

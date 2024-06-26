@@ -13,20 +13,6 @@ shared_examples 'rke profile' do
   end
 
   it do
-    is_expected.to contain_sysctl__value('fs.inotify.max_user_instances').with(
-      value: 104_857,
-      target: '/etc/sysctl.d/80-rke.conf',
-    )
-  end
-
-  it do
-    is_expected.to contain_sysctl__value('fs.inotify.max_user_watches').with(
-      value: 1_048_576,
-      target: '/etc/sysctl.d/80-rke.conf',
-    )
-  end
-
-  it do
     is_expected.to contain_vcsrepo('/home/rke/k8s-cookbook').that_requires('Class[ipa]')
   end
 end

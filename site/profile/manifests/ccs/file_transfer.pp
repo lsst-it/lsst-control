@@ -222,7 +222,7 @@ class profile::ccs::file_transfer (
   }
 
   vcsrepo { $repo_directory:
-    ensure   => present,
+    ensure   => latest,
     provider => git,
     source   => $repo_url,
     revision => $repo_ref,
@@ -231,7 +231,14 @@ class profile::ccs::file_transfer (
     group    => $group,
   }
 
-  $script_files = ['ccs-push', 'compress', 'fpack-in-place', 'push-usdf']
+  $script_files = [
+    'ccs-push',
+    'compress',
+    'fpack-in-place',
+    'generate-sidecar',
+    'push-oods',
+    'push-usdf',
+  ]
   $script_files.each | String $scriptfile | {
     file { "${directory}/${scriptfile}":
       ensure  => link,

@@ -43,6 +43,22 @@ accounts::user_list:
     purge_sshkeys: true
     system: false
 files:
+  /home/rke2/.kube:
+    ensure: "directory"
+    force: true
+    group: *rke2
+    mode: "0700"
+    owner: *rke2
+    purge: true
+    recurse: true
+  /home/rke2/.kube/config:
+    ensure: "file"
+    mode: "0600"
+    show_diff: false
+    owner: *rke2
+    group: *rke2
+    source: "file:///etc/rancher/rke2/rke2.yaml"
+    require: "Class[Rke2]"
   /home/rke2/.bash_profile:
     ensure: "file"
     mode: "0600"
@@ -80,10 +96,6 @@ files:
     <<: *bashrc
     content: |
       export PATH="/var/lib/rancher/rke2/bin:${PATH}"
-  /home/rke2/.bashrc.d/kubeconfig.sh:
-    <<: *bashrc
-    content: |
-      export KUBECONFIG="/etc/rancher/rke2/rke2.yaml"
   /home/rke2/.bashrc.d/etc_bashrc.sh:
     <<: *bashrc
     content: |

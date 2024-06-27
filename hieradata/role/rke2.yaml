@@ -76,6 +76,10 @@ files:
     content: |
       # enable vi mode
       set -o vi
+  /home/rke2/.bashrc.d/rke2.sh:
+    <<: *bashrc
+    content: |
+      export PATH="/var/lib/rancher/rke2/bin:${PATH}"
   /home/rke2/.bashrc.d/kubeconfig.sh:
     <<: *bashrc
     content: |

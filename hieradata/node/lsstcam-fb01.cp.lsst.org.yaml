@@ -1,12 +1,34 @@
 ---
-network::interfaces_hash:
-  enp3s0:  # fqdn
-    bootproto: "none"
-    ipaddress: "139.229.175.89"
-    gateway: "139.229.175.126"
-    netmask: "255.255.255.192"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
+nm::connections:
+  enp0s31f6:
+    content:
+      connection:
+        id: "enp0s31f6"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "enp0s31f6"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.175.89/26,139.229.175.126"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp3s0:
+    content:
+      connection:
+        id: "enp3s0"
+        uuid: "df30450e-88e5-40c5-bdc8-0edf49cd7e3e"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp3s0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
 
 ccs_hcu::canbus: true
+ccs_hcu::aiousb: true

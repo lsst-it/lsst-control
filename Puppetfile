@@ -98,7 +98,6 @@ mod 'puppet/tang', '0.1.1'
 mod 'puppet/telegraf', '5.2.0'
 mod 'puppet/tuned', '1.0.0'
 mod 'puppet/yum', '7.1.0'
-mod 'qtechnologies/sysstat', '1.2.7'
 mod 'richardc/datacat', '0.6.2'
 mod 'saz/resolv_conf', git: 'https://github.com/lsst-it/puppet-resolv_conf', ref: '5c00538'  # https://github.com/saz/puppet-resolv_conf/pull/72
 mod 'saz/ssh', '11.1.0'

@@ -1,8 +1,0 @@
----
-network::interfaces_hash:
-  enp0s31f6:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"

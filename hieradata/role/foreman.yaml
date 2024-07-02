@@ -236,7 +236,7 @@ profile::core::foreman::foreman_config:
 profile::core::foreman::foreman_global_parameter:
   bootloader-append:
     parameter_type: "string"
-    value: "nofb"
+    value: "nofb rd.neednet=1 ip=dhcp"
   disable-firewall:
     parameter_type: "boolean"
     value: true

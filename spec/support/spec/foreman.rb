@@ -159,7 +159,7 @@ shared_examples 'generic foreman' do
   end
 
   {
-    'bootloader-append': 'nofb',
+    'bootloader-append': 'nofb rd.neednet=1 ip=dhcp',
     'disable-firewall': true,
     'enable-epel': true,
     'enable-puppetlabs-puppet6-repo': false,

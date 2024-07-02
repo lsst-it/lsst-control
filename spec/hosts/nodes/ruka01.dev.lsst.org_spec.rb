@@ -52,7 +52,7 @@ describe 'ruka01.dev.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_class('rke').with(
-          version: '1.5.9',
+          version: '1.5.10',
         )
       end
 

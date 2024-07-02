@@ -81,6 +81,7 @@ foreman::oauth_active: true
 #foreman::oauth_consumer_key:  # secret
 #foreman::oauth_consumer_secret:  # secret
 foreman::passenger: false  # use puma; param removed in theforman/foreman >= 17.0.0
+# we need to figure out how to configure columns in newer foreman versions
 foreman::plugin::column_view::columns:
   role:
     title: "Role"
@@ -202,8 +203,9 @@ profile::core::foreman::foreman_config:
   bmc_credentials_accessible: {value: false}  # disable bmc pass in enc yaml
   default_pxe_item_global: {value: "discovery"}
   destroy_vm_on_host_delete: {value: true}
-  discovery_fact_column: {value: "ipmi_ipaddress,ipmi_macaddress"}
-  discovery_hostname: {value: "ipmi_macaddress,discovery_bootif"}
+  # on older foreman/puppet-foreman it wasn't idempotent to set this, but it works withforeman 3.8/ puppet-foreman 24.1.0
+  discovery_fact_column: {value: '["ipmi_ipaddress","ipmi_macaddress"]'}
+  discovery_hostname: {value: '["ipmi_macaddress","discovery_bootif"]'}
   entries_per_page: {value: 100}
   # remove "docker*" from default excluded_facts
   # XXX using block scalar style results in the double quotes being preceeded
@@ -214,7 +216,9 @@ profile::core::foreman::foreman_config:
   #excluded_facts:
   #  value: '["lo", "en*v*", "usb*", "vnet*", "macvtap*", ";vdsmdummy;", "veth*", "tap*", "qbr*", "qvb*", "qvo*", "qr-*", "qg-*", "vlinuxbr*", "vovsbr*", "br-int", "vif*", "load_averages::*", "memory::swap::available*", "memory::swap::capacity", "memory::swap::used*", "memory::system::available*", "memory::system::capacity", "memory::system::used*", "memoryfree", "memoryfree_mb", "swapfree", "swapfree_mb", "uptime_hours", "uptime_days"]'
   host_details_ui: {value: false}  # https://projects.theforeman.org/issues/35115
-  host_power_status: {value: false}
+  # since isn't required/doesn't work anymore since https://github.com/theforeman/foreman/pull/9462/files
+  # the option host_power_status doesn't exist in foreman 3.8, I think due to #9462, but that's a bit of a guess
+  # host_power_status: {value: false}
   idle_timeout: {value: 7200}  # session timeout in minutes
   ignore_puppet_facts_for_provisioning: {value: true}
   matchers_inheritance: {value: false}

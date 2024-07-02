@@ -1,0 +1,38 @@
+---
+resolv_conf::nameservers:
+  - "185.12.64.2"
+  - "185.12.64.1"
+  - "2a01:4ff:ff00::add:2"
+  - "2a01:4ff:ff00::add:1"
+profile::core::foreman::manage_smee: false
+foreman_proxy::plugin::dns::route53::aws_access_key: "foo"
+foreman_proxy::plugin::dns::route53::aws_secret_key: "foo"
+puppet::server::puppetdb::server: "%{trusted.certname}"
+r10k::sources:
+  control:
+    remote: "https://github.com/bastelfreak/lsst-control"
+    basedir: "/etc/puppetlabs/code/environments"
+    invalid_branches: "correct"
+lookup_options:
+  r10k::sources:
+    merge:
+      strategy: "first"
+
+puppet::server_puppetserver_version: &server_version '7.15.0'
+puppet::server_version: '7.15.0'
+puppet_agent::package_version: '7.28.0'
+profile::core::yum::versionlock:
+  puppetdb-termini:
+    ensure: "present"
+    version: "7.16.0"
+    release: "1.el8"
+    before: "Package[puppetdb-termini]"
+
+foreman::repo::repo: "3.8"
+foreman::version: "3.8.0"
+puppetdb::globals::version: '7.16.0'
+
+profile::core::common::manage_sssd: false
+profile::core::common::manage_network_manager: false
+profile::core::common::manage_krb5: false
+profile::core::common::manage_ipa: false

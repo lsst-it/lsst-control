@@ -1,0 +1,6 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::openvpn"
+
+profile::core::openvpn::version: "2.14.2_40b190d8"

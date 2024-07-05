@@ -19,9 +19,6 @@ describe 'profile::core::rke' do
 
         include_examples 'rke profile'
 
-        it { is_expected.not_to contain_class('cni::plugins') }
-        it { is_expected.not_to contain_class('cni::plugins::dhcp') }
-
         it do
           is_expected.not_to contain_profile__util__keytab('rke')
             .that_requires('Class[ipa]')
@@ -32,38 +29,6 @@ describe 'profile::core::rke' do
             version: '1.5.9',
             checksum: '1d31248135c2d0ef0c3606313d80bd27a199b98567a053036b9e49e13827f54b',
           )
-        end
-      end
-
-      context 'with enable_dhcp param' do
-        context 'when false' do
-          let(:params) do
-            {
-              enable_dhcp: false,
-            }
-          end
-
-          it { is_expected.to compile.with_all_deps }
-
-          include_examples 'rke profile'
-
-          it { is_expected.not_to contain_class('cni::plugins') }
-          it { is_expected.not_to contain_class('cni::plugins::dhcp') }
-        end
-
-        context 'when true' do
-          let(:params) do
-            {
-              enable_dhcp: true,
-            }
-          end
-
-          it { is_expected.to compile.with_all_deps }
-
-          include_examples 'rke profile'
-
-          it { is_expected.to contain_class('cni::plugins') }
-          it { is_expected.to contain_class('cni::plugins::dhcp') }
         end
       end
 

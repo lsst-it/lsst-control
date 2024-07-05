@@ -4,7 +4,7 @@ clustershell::groupmembers:
     group: "manke"
     member: "manke[01-10]"
 profile::core::ospl::enable_rundir: true
-profile::core::rke::enable_dhcp: true
+profile::core::k8snode::enable_dhcp: true
 nm::connections:
   eno1np0:
     content:

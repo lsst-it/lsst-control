@@ -7,6 +7,7 @@ shared_examples 'generic rke' do |os_facts:, site:|
   include_examples 'debugutils'
   include_examples 'docker'
   include_examples 'rke profile'
+  include_examples 'k8snode profile'
   include_examples 'restic common'
 
   it do

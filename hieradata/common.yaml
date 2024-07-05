@@ -397,6 +397,7 @@ ipset::sets:
       - "139.229.175.128/25"  # vlan1502
       - "139.229.175.0/26"  # vlan1510
       - "139.229.175.64/26"  # vlan1511
+      - "139.229.181.0/27"  # vlan1801
 
 # sssd ipa client setup -- do not use on ipa servers
 sssd::main_config:

@@ -37,6 +37,9 @@ nm::connections:
       ipv4:
         address1: "140.252.147.52/28"
         method: "manual"
+        never-default: "true"
+        route1: "140.252.147.16/28,140.252.147.49"
+        route2: "140.252.147.128/27,140.252.147.49"
       ipv6:
         method: "disabled"
       proxy: {}

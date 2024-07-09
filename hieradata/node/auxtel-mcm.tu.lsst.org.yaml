@@ -37,14 +37,12 @@ nm::connections:
       ipv4:
         address1: "140.252.147.20/28"
         method: "manual"
+        never-default: "true"
+        route1: "140.252.147.48/28,140.252.147.17"
+        route2: "140.252.147.128/27,140.252.147.17"
       ipv6:
         method: "disabled"
       proxy: {}
-network::mroutes_hash:
-  dds:
-    routes:
-      "140.252.147.48/28": "140.252.147.17"
-      "140.252.147.128/27": "140.252.147.17"
 
 nfs::client_enabled: true
 nfs::client_mounts:

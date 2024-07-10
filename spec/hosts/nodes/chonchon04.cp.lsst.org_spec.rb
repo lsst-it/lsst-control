@@ -2,19 +2,19 @@
 
 require 'spec_helper'
 
-describe 'chonchon01.cp.lsst.org', :sitepp do
+describe 'chonchon04.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
         override_facts(os_facts,
-                       fqdn: 'chonchon01.cp.lsst.org',
+                       fqdn: 'chonchon04.cp.lsst.org',
                        is_virtual: false,
                        virtual: 'physical',
                        dmi: {
                          'product' => {
-                           'name' => 'PowerEdge R730xd',
+                           'name' => 'AS -1115HS-TNR',
                          },
                        })
       end
@@ -23,7 +23,7 @@ describe 'chonchon01.cp.lsst.org', :sitepp do
           role: 'rke',
           site: 'cp',
           cluster: 'chonchon',
-          variant: 'R730',
+          variant: '1115hs',
         }
       end
 
@@ -65,12 +65,11 @@ describe 'chonchon01.cp.lsst.org', :sitepp do
 
       it { is_expected.to contain_class('cni::plugins::dhcp') }
 
-      it { is_expected.to have_nm__connection_resource_count(6) }
+      it { is_expected.to have_nm__connection_resource_count(5) }
 
       %w[
-        em2
-        em3
-        em4
+        enp12s0f4u1u2c2
+        enp65s0f0
       ].each do |i|
         context "with #{i}" do
           let(:interface) { i }
@@ -79,19 +78,19 @@ describe 'chonchon01.cp.lsst.org', :sitepp do
         end
       end
 
-      context 'with em1' do
-        let(:interface) { 'em1' }
+      context 'with enp65s0f1' do
+        let(:interface) { 'enp65s0f1' }
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
       end
 
-      context 'with em2.1800' do
-        let(:interface) { 'em2.1800' }
+      context 'with enp65s0f0.1800' do
+        let(:interface) { 'enp65s0f0.1800' }
 
         it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm vlan interface', id: 1800, parent: 'em2'
+        it_behaves_like 'nm vlan interface', id: 1800, parent: 'enp65s0f0'
         it_behaves_like 'nm bridge slave interface', master: 'br1800'
       end
 

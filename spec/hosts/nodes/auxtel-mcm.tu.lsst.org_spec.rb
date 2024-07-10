@@ -55,6 +55,8 @@ describe 'auxtel-mcm.tu.lsst.org', :sitepp do
         it_behaves_like 'nm bridge interface'
         it_behaves_like 'nm manual interface'
         it { expect(nm_keyfile['ipv4']['address1']).to eq('140.252.147.20/28') }
+        it { expect(nm_keyfile['ipv4']['route1']).to eq('140.252.147.48/28,140.252.147.17') }
+        it { expect(nm_keyfile['ipv4']['route2']).to eq('140.252.147.128/27,140.252.147.17') }
       end
     end # on os
   end # on_supported_os

@@ -21,7 +21,7 @@ profile::ccs::tomcat::wars:
   CCSWebTrending.war:
     war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2-public/org/lsst/CCSWebTrending/2.3/CCSWebTrending-2.3.war"
   ImageUtilities.war:
-    war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2-public/org/lsst/org-lsst-ccs-image-utilities-war/3.1.18/org-lsst-ccs-image-utilities-war-3.1.18.war"
+    war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2-public/org/lsst/org-lsst-ccs-image-utilities-war/3.1.19/org-lsst-ccs-image-utilities-war-3.1.19.war"
   FITSInfo.war:
     war_source: "https://repo-nexus.lsst.org/nexus/repository/ccs-maven2/org/lsst/fits/FITSInfo/1.0.0/FITSInfo-1.0.0.war"
   rest.war:

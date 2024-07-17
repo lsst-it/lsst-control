@@ -84,9 +84,18 @@ class profile::core::common (
   include ssh
   include sudo
   include sysctl::values
-  include sysstat
   include timezone
   include tuned
+
+  # Ensure sysstat package is absent
+  package { 'sysstat':
+    ensure => absent,
+  }
+
+  # Ensure /etc/cron.d/sysstat file is absent
+  file { '/etc/cron.d/sysstat':
+    ensure => absent,
+  }
 
   if fact('os.family') == 'RedHat' {
     include epel

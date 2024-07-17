@@ -55,6 +55,8 @@ describe 'love1.tu.lsst.org', :sitepp do
         it_behaves_like 'nm bridge interface'
         it_behaves_like 'nm manual interface'
         it { expect(nm_keyfile['ipv4']['address1']).to eq('140.252.147.134/27') }
+        it { expect(nm_keyfile['ipv4']['route1']).to eq('140.252.147.16/28,140.252.147.129') }
+        it { expect(nm_keyfile['ipv4']['route2']).to eq('140.252.147.48/28,140.252.147.129') }
       end
     end # on os
   end # on_supported_os

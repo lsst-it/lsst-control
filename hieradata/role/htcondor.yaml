@@ -10,7 +10,17 @@ packages:
 files:
   /etc/profile.d/rubin.sh:
     ensure: "file"
-    mode: "0600"
-    content: "export DAF_BUTLER_REPOSITORY_INDEX=/project/data-repos.yaml"
+    mode: "0644"
+    content: |
+      export DAF_BUTLER_REPOSITORY_INDEX=/project/data-repos.yaml
+      export PGPASSFILE=/rsphome/$USER/.lsst/postgres-credentials.txt
+      export PGUSER=oods
+      export AWS_SHARED_CREDENTIALS_FILE=/rsphome/$USER/.lsst/aws-credentials.ini
+  /data/lsstdata/base/comcam:
+    ensure: "link"
+    target: "/readonly/lsstdata/comcam/base/comcam"
+  /data/lsstdata/base/auxtel:
+    ensure: "link"
+    target: "/readonly/lsstdata/auxtel/base/auxtel"
 
 htcondor::htcondor_version: "23.0"

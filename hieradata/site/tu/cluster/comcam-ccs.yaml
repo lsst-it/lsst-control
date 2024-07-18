@@ -2,6 +2,7 @@
 ccs_site: "tucson"
 ccs_sal::dds_interface: "comcam-mcm-dds.tu.lsst.org"
 ## Java 17:
+ccs_sal::java_home: "/usr/lib/jvm/zulu-17"
 ccs_sal::dds_extra: "export LD_PRELOAD=${JAVA_HOME}/lib/libjsig.so"
 
 ccs_software::service_email: "tucson-teststand-aler-aaaae4zsdubhmm3n7mowaugr2y@lsstc.slack.com"

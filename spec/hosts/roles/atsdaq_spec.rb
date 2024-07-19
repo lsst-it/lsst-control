@@ -28,8 +28,6 @@ describe "#{role} role" do
           include_examples 'common', os_facts: os_facts, site: site
           include_examples 'ccs common', os_facts: os_facts
           include_examples 'lsst-daq sysctls'
-          # it { is_expected.to contain_class('ccs_daq') }
-          # it { is_expected.to contain_class('daq::daqsdk').with_version('R5-V0.6') }
         end # host
       end # lsst_sites
     end # on os

@@ -4,8 +4,6 @@ profile::daq::daq_interface::uuid: "9129970c-d4b9-4602-82be-da776c06c064"
 profile::daq::daq_interface::was: "p3p1"
 profile::daq::daq_interface::mode: "dhcp-server"
 
-#daq::daqsdk::version: "R5-V6.7"
-
 network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"

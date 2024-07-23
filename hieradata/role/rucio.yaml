@@ -1,13 +1,5 @@
 ---
 classes:
   - "profile::core::common"
-  - "profile::core::debugutils"
-  - "profile::core::dmz"
+  - "profile::core::nfsclient"
   - "profile::core::rucio"
-  - "python"
-
-python::version: "python36"
-python::pip: "present"
-python::dev: "present"
-python::virtualenv: "present"
-profile::core::common::manage_firewall: false

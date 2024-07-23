@@ -1,0 +1,29 @@
+---
+nm::connections:
+  ens192:
+    content:
+      connection:
+        id: "ens192"
+        uuid: "810adb94-e2c0-4d41-b66f-1175a5c358ba"
+        type: "ethernet"
+        interface-name: "ens192"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.134.94/24,139.229.134.254"
+        dns: "139.229.134.53;139.229.134.54;139.229.134.55;"
+        dns-search: "dev.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /repo/LATISS:
+    share: "/auxtel/repo/LATISS"
+    server: "nfs-auxtel.ls.lsst.org"
+    atboot: true
+  /datasets:
+    share: "/lsstdata"
+    server: "nfs-lsstdata.ls.lsst.org"
+    atboot: true

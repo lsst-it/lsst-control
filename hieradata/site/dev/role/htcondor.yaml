@@ -7,7 +7,7 @@ nfs::client_mounts:
     share: "project"
     server: "nfs-project.ls.lsst.org"
     atboot: true
-  /rsphome:
+  /home:
     share: "rsphome"
     server: "nfs-rsphome.ls.lsst.org"
     atboot: true

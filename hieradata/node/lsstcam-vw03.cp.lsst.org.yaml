@@ -1,0 +1,44 @@
+---
+nm::connections:
+  enp0s31f6:
+    content:
+      connection:
+        id: "enp0s31f6"
+        uuid: "5fb5ddc5-e1b1-48a1-8817-8b1ebd07f0ad"
+        type: "ethernet"
+        interface-name: "enp0s31f6"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.175.102/26,139.229.175.126"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp4s0f0:
+    content:
+      connection:
+        id: "enp4s0f0"
+        uuid: "df30450e-88e5-40c5-bdc8-0edf49cd7e3e"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp4s0f0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp4s0f1:
+    content:
+      connection:
+        id: "enp4s0f1"
+        uuid: "df30450e-88e5-40c5-bdc8-0edf49cd7e3e"
+        type: "ethernet"
+        interface-name: "enp4s0f1"
+      ethernet: {}
+      ipv4:
+        address1: "192.168.122.1/24"
+        method: "manual"
+      ipv6:
+        method: "disabled"

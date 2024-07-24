@@ -3,5 +3,6 @@ classes:
   - "profile::ccs::common"
   - "profile::ccs::graphical"
   - "profile::core::common"
+  - "profile::core::crdesktop"
 
 profile::ccs::graphical::officeapps: true

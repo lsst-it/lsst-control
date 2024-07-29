@@ -46,10 +46,12 @@ ccs_site: "summit"
 ccs_instrument: "comcam"
 
 ccs_daq::instrument: "%{lookup('ccs_instrument')}"
-
+ccs_sal::instrument: "%{lookup('ccs_instrument')}"
 ccs_sal::dds_domain: "%{lookup('ccs_site')}"
 ccs_sal::dds_interface: "comcam-mcm-dds"
-ccs_sal::instrument: "%{lookup('ccs_instrument')}"
+## Java 17
+ccs_sal::dds_extra: "export LD_PRELOAD=${JAVA_HOME}/lib/libjsig.so"
+ccs_sal::java_home: "/usr/lib/jvm/zulu-17"
 
 ccs_software::global_properties:
   - "org.lsst.ccs.lockservice=remote"

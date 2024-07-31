@@ -1,29 +1,62 @@
 ---
+nm::connections:
+  eno1:
+    content:
+      connection:
+        id: "eno1"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "eno1"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.175.13/26,139.229.175.62"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp6s0:
+    content:
+      connection:
+        id: "enp6s0"
+        uuid: "edb4ebb1-6d05-427b-b6ea-d483bdf32ec7"
+        type: "ethernet"
+        interface-name: "enp6s0"
+      ethernet: {}
+      ipv4:
+        method: "manual"
+        address1: "192.168.1.122/24"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp7s0:
+    content:
+      connection:
+        id: "enp7s0"
+        uuid: "df30450e-88e5-40c5-bdc8-0edf49cd7e3e"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp7s0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp8s0:
+    content:
+      connection:
+        id: "enp8s0"
+        uuid: "df30450e-88e5-40c5-bdc8-0edf49cd7e3e"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp8s0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+
 ccs_software::services:
   prod:
     - "pathfinder-refrig"
-
-network::interfaces_hash:
-  eno1:  # fqdn
-    bootproto: "none"
-    ipaddress: "139.229.175.13"
-    gateway: "139.229.175.62"
-    netmask: "255.255.255.192"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  enp6s0:  # 192.168.1.0/24
-    bootproto: "none"
-    ipaddress: "192.168.1.122"
-    netmask: "255.255.255.0"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  enp7s0:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  enp8s0:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"

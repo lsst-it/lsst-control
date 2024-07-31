@@ -27,8 +27,7 @@ describe "#{role} role" do
 
           include_examples 'common', os_facts: os_facts, site: site
           include_examples 'x2go packages', os_facts: os_facts
-          include_examples 'lsst-daq sysctls'
-          it { is_expected.not_to contain_class('profile::core::sysctl::lhn') }
+          include_examples 'lhn sysctls'
           it { is_expected.not_to contain_class('dhcp') }
           it { is_expected.to contain_class('dhcp::disable') }
           it { is_expected.to contain_class('ccs_daq') }

@@ -27,6 +27,7 @@ describe "#{role} role" do
 
           include_examples 'common', os_facts: os_facts, site: site
           include_examples 'ccs common', os_facts: os_facts
+          include_examples 'lhn sysctls'
           it { is_expected.to contain_class('ccs_sal') }
         end # host
       end # lsst_sites

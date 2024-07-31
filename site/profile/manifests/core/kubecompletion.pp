@@ -8,7 +8,7 @@ class profile::core::kubecompletion {
 
   exec { $command:
     cwd      => '/var/tmp',
-    path     => ['/sbin', '/usr/sbin', '/bin'],
+    path     => ['/sbin', '/usr/sbin', '/bin', '/var/lib/rancher/rke2/bin'],
     provider => shell,
     onlyif   => [$runif1, $runif2],
   }

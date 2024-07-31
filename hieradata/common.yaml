@@ -101,6 +101,9 @@ lookup_options:
   systemd::udev_rules:
     merge:
       strategy: "deep"
+  rke2::config:
+    merge:
+      strategy: "deep"
 
 timezone::timezone: "UTC"
 chrony::cmdport: 0

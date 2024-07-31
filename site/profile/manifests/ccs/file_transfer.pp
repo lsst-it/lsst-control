@@ -83,12 +83,14 @@ class profile::ccs::file_transfer (
           'multidict',
           'typing_extensions',
           'yarl',
+          'idna_ssl',
         ]
         $yum_extra_packages = []
       }
       '8': {
         $pip_extra_packages = [
           'aiosignal',
+          'idna_ssl',
         ]
         $yum_extra_packages = [
           'python3-async-timeout',
@@ -120,7 +122,6 @@ class profile::ccs::file_transfer (
     ]
 
     $pip_packages = $pip_extra_packages + [
-      'idna_ssl',
       'aiobotocore',
     ]
 

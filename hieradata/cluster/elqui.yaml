@@ -1,0 +1,116 @@
+---
+clustershell::groupmembers:
+  elqui:
+    group: "elqui"
+    member: "elqui[01-18]"
+nm::conf:
+  device:
+    keep-configuration: "no"
+    allowed-connections: "except:origin:nm-initrd-generator"
+nm::connections:
+  enp13s0f4u1u2c2:  # bmc
+    content:
+      connection:
+        id: "enp13s0f4u1u2c2"
+        uuid: "3df5e6b6-918b-35e6-8cee-8e6fa53bf6d1"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp13s0f4u1u2c2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp65s0f0:  # 10G - sdc-a02-lf1 - connected but unused
+    content:
+      connection:
+        id: "enp65s0f0"
+        uuid: "85e6965d-5031-31f2-8bdb-51b985e2daef"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp65s0f0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp65s0f1:  # 10G - not connected
+    content:
+      connection:
+        id: "enp65s0f1"
+        uuid: "eb5b7039-74e5-3399-b56f-bfba0fb0788d"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp65s0f1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp1s0f0np0:  # 100G - sdc-a02-ipsec01
+    content:
+      connection:
+        id: "enp1s0f0np0"
+        uuid: "a42dd676-0461-3fb8-9413-8f3abde2cb54"
+        type: "ethernet"
+        interface-name: "enp1s0f0np0"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}
+  enp1s0f1np1:  # 100G - sdc-a02-ipsec02
+    content:
+      connection:
+        id: "enp1s0f1np1"
+        uuid: "43698def-dfb8-3e5e-bc26-687894589baf"
+        type: "ethernet"
+        interface-name: "enp1s0f1np1"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}
+  bond0:
+    content:
+      connection:
+        id: "bond0"
+        uuid: "a6612831-30b3-47f0-8af5-bc9c6ff49ec2"
+        type: "bond"
+        interface-name: "bond0"
+      ethernet:
+        cloned-mac-address: "%{facts.networking.interfaces.enp1s0f0np0.mac}"
+      bond:
+        miimon: "100"
+        mode: "802.3ad"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  bond0.1801:
+    content:
+      connection:
+        id: "bond0.1801"
+        uuid: "bd348d6b-0309-49d6-a6f8-9327abc47c09"
+        type: "vlan"
+        interface-name: "bond0.1801"
+        master: "br1801"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1801"
+        parent: "bond0"
+      bridge-port: {}
+  br1801:
+    content:
+      connection:
+        id: "br1801"
+        uuid: "9db4c5c9-e050-40b2-a2e0-e868259ab312"
+        type: "bridge"
+        interface-name: "br1801"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}

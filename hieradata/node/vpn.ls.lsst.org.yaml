@@ -1,15 +1,15 @@
 ---
 nm::connections:
-  eno1:
+  ens192:
     content:
       connection:
-        id: "eno1"
+        id: "ens192"
         uuid: "03da7500-2101-c722-2438-d0d006c28c73"
         type: "ethernet"
-        interface-name: "eno1"
+        interface-name: "ens192"
       ethernet: {}
       ipv4:
-        address1: "139.229.138.3/24,139.229.138.254"
+        address1: "139.229.138.10/24,139.229.138.254"
         dns: "139.229.135.53;139.229.135.54;139.229.135.55;"
         dns-search: "ls.lsst.org;"
         method: "manual"

@@ -7,6 +7,9 @@
 # @param jars
 #   Hash of jar files to install in lib directory: basename, source.
 #
+# @param java_home
+#   String giving JAVA_HOME to use in tomcat service file.
+#
 # @param trending_site
 #   String giving web trending site (ir2, ats, comcam, maincamera)
 #
@@ -25,6 +28,7 @@
 class profile::ccs::tomcat (
   Hash[String, Hash] $wars = {},
   Hash[String[1],String[1]] $jars = {},
+  String[1] $java_home = '/usr/java/default',
   String[1] $trending_site = 'maincamera',
   String[1] $rest_etc_path = '/etc/ccs/tomcat',
   String[1] $rest_url      = 'lsstcam-db01:3306/ccsdbprod',
@@ -72,6 +76,12 @@ class profile::ccs::tomcat (
     mode    => '0664',
     content => '<Context docBase="/home/mrtg/comcam" path="/mrtg" />',
     require => Exec['wait for tomcat'],  # config dir creation
+  }
+
+  tomcat::config::context::parameter { 'org.lsst.ccs.imagenaming.rest.dbURL':
+    catalina_base => $catalina_base,
+    value         => "jdbc:mysql://${rest_url}?user=${rest_user.unwrap}&amp;password=${rest_pass.unwrap}&amp;autoReconnect=true",
+    override      => false,
   }
 
   # XXX appears to be broken... hardwired to look at $catalina_base/conf/context.xml
@@ -132,7 +142,7 @@ class profile::ccs::tomcat (
     User=tomcat
     Group=tomcat
 
-    Environment="JAVA_HOME=/usr/java/default"
+    Environment="JAVA_HOME=${java_home}"
     Environment="JAVA_OPTS=-Djava.security.egd=file:///dev/urandom"
 
     Environment="CATALINA_BASE=${catalina_base}"

@@ -26,6 +26,8 @@ describe 'profile::ccs::tomcat' do
 
         it { is_expected.to contain_file('/opt/tomcat/catalina_base/lib/h2-1.4.191.jar').with_mode('0664') }
 
+        it { is_expected.to contain_augeas('context-/opt/tomcat/catalina_base-parameter-org.lsst.ccs.imagenaming.rest.dbURL') }
+
         it { is_expected.to contain_concat('/opt/tomcat/catalina_base/conf/catalina.properties') }
 
         it do

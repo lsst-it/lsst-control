@@ -109,5 +109,6 @@ daq::daqsdk::purge: false
 
 daq::daqsdk::version: "R5-V8.1"
 
+profile::ccs::tomcat::java_home: "/usr/lib/jvm/zulu-17"
 profile::ccs::tomcat::rest_url: "comcam-db01:3306/comcamdbprod"
 profile::ccs::tomcat::trending_site: "%{lookup('ccs_instrument')}"

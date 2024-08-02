@@ -23,7 +23,7 @@ jobs:
     name: Check Commit Message
     needs: [preflight]
     # ignore PRs from renovate
-    if: ${{ needs.preflight.outputs.renovate }} == 'false'
+    if: ${{ needs.preflight.outputs.renovate == 'false' }}
     runs-on: ubuntu-latest
     steps:
       - name: Check Commit Type

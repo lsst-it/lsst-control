@@ -4,5 +4,6 @@
     "config:recommended"
   ],
   "ignorePaths": ["**/hieradata/**"],
-  "labels": ["enhancement"]
+  "labels": ["enhancement"],
+  "prConcurrentLimit": 2
 }

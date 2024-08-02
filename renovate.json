@@ -3,5 +3,6 @@
   "extends": [
     "config:recommended"
   ],
-  "ignorePaths": ["**/hieradata/**"]
+  "ignorePaths": ["**/hieradata/**"],
+  "labels": ["enhancement"]
 }

@@ -5,8 +5,25 @@ name: Commit Message Check
 "on": pull_request
 
 jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    outputs:
+      renovate: ${{ steps.renovate.outputs.renovate }}
+    steps:
+      # flag PRs opened by renovate
+      - id: renovate
+        run: |
+          if [[ ${{ github.head_ref }} == *"renovate"* ]]; then
+             echo "renovate=true" >> $GITHUB_OUTPUT
+          else
+             echo "renovate=false" >> $GITHUB_OUTPUT
+          fi
+
   check-commit-message:
     name: Check Commit Message
+    needs: [preflight]
+    # ignore PRs from renovate
+    if: ${{ needs.preflight.outputs.renovate }} == 'false'
     runs-on: ubuntu-latest
     steps:
       - name: Check Commit Type

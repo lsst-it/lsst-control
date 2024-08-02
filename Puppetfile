@@ -12,7 +12,7 @@ mod 'example42/network', git: 'https://github.com/lsst-it/puppet-network', ref: 
 mod 'fervid/snapd', '1.2.1' # 2021-05-31 hreinking: snapd for EAS Raspberry Pi
 mod 'jamtur01/httpauth', '0.0.6'
 mod 'jcpunk/irqbalance', '1.0.5'
-mod 'jhoblitt/ipmi', '5.2.0'
+mod 'jhoblitt/ipmi', '5.3.1'
 mod 'lsst/ccs_daq', '1.1.0'
 mod 'lsst/ccs_database', '3.1.0'
 mod 'lsst/ccs_hcu', '3.5.0'

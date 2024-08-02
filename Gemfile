@@ -17,7 +17,7 @@ group :test do
   gem 'puppet-lint-top_scope_facts-check', '~> 1.0.1',         require: false
   gem 'puppet-lint-trailing_newline-check', '~> 1.1.0',        require: false
   gem 'puppet-lint-unquoted_string-check', '~> 2.2.0',         require: false
-  gem 'puppet-lint-variable_contains_upcase', '~> 1.2.0',      require: false
+  gem 'puppet-lint-variable_contains_upcase', '~> 1.4.0',      require: false
 
   gem 'facterdb', '< 2', require: false # 3.0.0 drops support for EL7
 

@@ -109,7 +109,7 @@ mod 'simp/dconf', '0.4.0'
 mod 'simp/mate', '1.6.0'
 mod 'simp/polkit', '6.7.0'
 mod 'simp/simpkv', '0.12.0'
-mod 'simp/simplib', '4.12.1'
+mod 'simp/simplib', '4.12.2'
 mod 'stm/debconf', '5.0.0'
 mod 'syseleven/restic', '2.6.1'
 mod 'theforeman/dhcp', git: 'https://github.com/lsst-it/puppet-dhcp', ref: '4d48173'  # https://github.com/theforeman/puppet-dhcp/pull/226

@@ -12,7 +12,7 @@ group :test do
   gem 'puppet-lint-optional_default-check',                    require: false
   gem 'puppet-lint-package_ensure-check', '~> 0.2.0',          require: false
   gem 'puppet-lint-resource_reference_syntax', '~> 1.1.0',     require: false
-  gem 'puppet-lint-strict_indent-check', '~> 2.0.8',           require: false
+  gem 'puppet-lint-strict_indent-check', '~> 2.1.0',           require: false
   gem 'puppet-lint-template_file_extension-check', '~> 0.1.3', require: false
   gem 'puppet-lint-top_scope_facts-check', '~> 1.0.1',         require: false
   gem 'puppet-lint-trailing_newline-check', '~> 1.1.0',        require: false

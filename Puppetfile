@@ -44,7 +44,7 @@ mod 'puppet/augeasproviders_shellvar', '6.0.1'
 mod 'puppet/chrony', '3.0.0'
 mod 'puppet/cron', '4.2.0'
 mod 'puppet/epel', '4.1.0'
-mod 'puppet/extlib', '7.0.0'
+mod 'puppet/extlib', '7.2.0'
 mod 'puppet/firewalld', git: 'https://github.com/voxpupuli/puppet-firewalld', ref: '1eb95e1'  # stdlib 9.x
 mod 'puppet/hosts', '0.1.0'
 mod 'puppet/ipset', '4.0.0'

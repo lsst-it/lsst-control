@@ -34,7 +34,7 @@ group :release do
   gem 'voxpupuli-release', '~> 3.0', require: false
 end
 
-gem 'facter', ENV['FACTER_GEM_VERSION'], require: false, groups: [:test]
+gem 'facter', ENV.fetch('FACTER_GEM_VERSION', nil), require: false, groups: [:test]
 gem 'rake', require: false
 
 # See: https://github.com/puppetlabs/puppet/issues/9268

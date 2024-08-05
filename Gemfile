@@ -8,14 +8,9 @@ group :test do
   gem 'simplecov-console',         require: false
   gem 'voxpupuli-test', '~> 5.4',  require: false
 
-  gem 'puppet-lint-no_erb_template-check', '~> 1.0.0',         require: false
-  gem 'puppet-lint-optional_default-check',                    require: false
   gem 'puppet-lint-package_ensure-check', '~> 0.2.0',          require: false
   gem 'puppet-lint-resource_reference_syntax', '~> 1.2.0',     require: false
   gem 'puppet-lint-strict_indent-check', '~> 2.1.0',           require: false
-  gem 'puppet-lint-template_file_extension-check', '~> 0.1.3', require: false
-  gem 'puppet-lint-top_scope_facts-check', '~> 1.0.1',         require: false
-  gem 'puppet-lint-trailing_newline-check', '~> 1.1.0',        require: false
   gem 'puppet-lint-unquoted_string-check', '~> 2.2.0',         require: false
   gem 'puppet-lint-variable_contains_upcase', '~> 1.4.0',      require: false
 

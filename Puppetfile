@@ -104,7 +104,7 @@ mod 'saz/resolv_conf', git: 'https://github.com/lsst-it/puppet-resolv_conf', ref
 mod 'saz/ssh', '11.2.0'
 mod 'saz/sudo', '8.0.0'
 mod 'saz/timezone', '6.3.0'
-mod 'simp/auditd', '8.13.0'
+mod 'simp/auditd', '8.14.3'
 mod 'simp/dconf', '0.4.0'
 mod 'simp/mate', '1.6.0'
 mod 'simp/polkit', '6.7.0'

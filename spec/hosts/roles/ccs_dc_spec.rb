@@ -28,7 +28,7 @@ describe "#{role} role" do
           include_examples 'common', os_facts: os_facts, site: site
           include_examples 'ccs common', os_facts: os_facts
           include_examples 'x2go packages', os_facts: os_facts
-          include_examples 'lhn sysctls'
+          include_examples 'tcp_tweak'
 
           %w[
             ccs_daq

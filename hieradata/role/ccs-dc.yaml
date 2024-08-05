@@ -7,6 +7,6 @@ classes:
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
-  - "profile::core::sysctl::lhn"
+  - "profile::core::sysctl::tcp_tweak"
 
 profile::ccs::common::sysctls: false

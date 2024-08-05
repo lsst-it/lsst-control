@@ -103,7 +103,7 @@ mod 'richardc/datacat', '0.6.2'
 mod 'saz/resolv_conf', git: 'https://github.com/lsst-it/puppet-resolv_conf', ref: '5c00538'  # https://github.com/saz/puppet-resolv_conf/pull/72
 mod 'saz/ssh', '12.1.0'
 mod 'saz/sudo', '8.0.0'
-mod 'saz/timezone', '6.3.0'
+mod 'saz/timezone', '7.0.0'
 mod 'simp/auditd', '8.14.3'
 mod 'simp/dconf', '0.5.0'
 mod 'simp/mate', '1.6.0'

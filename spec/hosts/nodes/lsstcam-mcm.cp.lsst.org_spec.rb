@@ -74,6 +74,10 @@ describe 'lsstcam-mcm.cp.lsst.org', :sitepp do
         it_behaves_like 'nm bridge interface'
         it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
         it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.170.4/24,139.229.170.254') }
+        it { expect(nm_keyfile['ipv4']['route1']).to eq('139.229.147.0/24,139.229.170.254') }
+        it { expect(nm_keyfile['ipv4']['route2']).to eq('139.229.166.0/24,139.229.170.254') }
+        it { expect(nm_keyfile['ipv4']['route3']).to eq('139.229.167.0/24,139.229.170.254') }
+        it { expect(nm_keyfile['ipv4']['route4']).to eq('139.229.178.0/24,139.229.170.254') }
       end
     end # on os
   end # on_supported_os

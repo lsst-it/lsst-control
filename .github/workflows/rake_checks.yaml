@@ -15,7 +15,7 @@ jobs:
       group: Default Larger Runners
       labels: ubuntu-latest-16-cores
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: ruby/setup-ruby@v1
         with:

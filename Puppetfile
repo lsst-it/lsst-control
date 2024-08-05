@@ -79,7 +79,7 @@ mod 'puppetlabs/tomcat', git: 'https://github.com/puppetlabs/puppetlabs-tomcat',
 mod 'puppetlabs/transition', '2.0.0'
 mod 'puppetlabs/vcsrepo', '6.1.0'
 mod 'puppetlabs/xinetd', '3.4.1'
-mod 'puppetlabs/yumrepo_core', '2.0.0'
+mod 'puppetlabs/yumrepo_core', '2.1.0'
 mod 'puppet/letsencrypt', '10.1.0'
 mod 'puppet/lldpd', '6.0.0'
 mod 'puppet/mosquitto', '2.1.0'

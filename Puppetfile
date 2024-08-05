@@ -68,7 +68,7 @@ mod 'puppetlabs/mount_providers', '2.0.1'
 mod 'puppetlabs/mysql', '15.0.0'
 mod 'puppetlabs/ntp', '10.1.0'
 mod 'puppetlabs/postgresql', '9.2.0'
-mod 'puppetlabs/puppet_agent', '4.15.0'
+mod 'puppetlabs/puppet_agent', '4.20.1'
 mod 'puppetlabs/puppetdb', git: 'https://github.com/puppetlabs/puppetlabs-puppetdb', ref: '7.14.0'  # 7.14.0 was tagged but not released to forge
 mod 'puppetlabs/puppetserver_gem', '1.1.1'
 mod 'puppetlabs/reboot', '5.0.0'

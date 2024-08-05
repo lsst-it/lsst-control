@@ -74,7 +74,7 @@ mod 'puppetlabs/puppetserver_gem', '1.1.1'
 mod 'puppetlabs/reboot', '5.0.0'
 mod 'puppetlabs/selinux_core', '1.4.0'
 mod 'puppetlabs/sshkeys_core', '2.4.0'
-mod 'puppetlabs/stdlib', '9.4.0'
+mod 'puppetlabs/stdlib', '9.6.0'
 mod 'puppetlabs/tomcat', git: 'https://github.com/puppetlabs/puppetlabs-tomcat', ref: 'ad28630'  # archive 7.x
 mod 'puppetlabs/transition', '2.0.0'
 mod 'puppetlabs/vcsrepo', '6.1.0'

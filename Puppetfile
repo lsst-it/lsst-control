@@ -72,7 +72,7 @@ mod 'puppetlabs/puppet_agent', '4.20.1'
 mod 'puppetlabs/puppetdb', git: 'https://github.com/puppetlabs/puppetlabs-puppetdb', ref: '7.14.0'  # 7.14.0 was tagged but not released to forge
 mod 'puppetlabs/puppetserver_gem', '1.1.1'
 mod 'puppetlabs/reboot', '5.0.0'
-mod 'puppetlabs/selinux_core', '1.3.0'
+mod 'puppetlabs/selinux_core', '1.4.0'
 mod 'puppetlabs/sshkeys_core', '2.4.0'
 mod 'puppetlabs/stdlib', '9.4.0'
 mod 'puppetlabs/tomcat', git: 'https://github.com/puppetlabs/puppetlabs-tomcat', ref: 'ad28630'  # archive 7.x

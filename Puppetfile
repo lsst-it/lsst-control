@@ -49,7 +49,7 @@ mod 'puppet/firewalld', git: 'https://github.com/voxpupuli/puppet-firewalld', re
 mod 'puppet/hosts', '0.1.0'
 mod 'puppet/ipset', '4.2.0'
 mod 'puppet/kmod', '4.0.1'
-mod 'puppetlabs/accounts', '8.1.0'
+mod 'puppetlabs/accounts', '8.2.0'
 mod 'puppetlabs/apache', '10.1.1'
 mod 'puppetlabs/apt', '9.1.0'
 mod 'puppetlabs/augeas_core', '1.4.1'

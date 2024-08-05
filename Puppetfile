@@ -111,7 +111,7 @@ mod 'simp/polkit', '6.8.0'
 mod 'simp/simpkv', '0.12.0'
 mod 'simp/simplib', '4.12.2'
 mod 'stm/debconf', '5.0.0'
-mod 'syseleven/restic', '2.6.1'
+mod 'syseleven/restic', '2.7.0'
 mod 'theforeman/dhcp', git: 'https://github.com/lsst-it/puppet-dhcp', ref: '4d48173'  # https://github.com/theforeman/puppet-dhcp/pull/226
 mod 'theforeman/dns', '10.1.0'
 mod 'theforeman/foreman', git: 'https://github.com/lsst-it/puppet-foreman', ref: '70b70bc'  # 20.2.0 + dep updates

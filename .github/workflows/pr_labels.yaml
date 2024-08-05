@@ -10,6 +10,10 @@ name: Pull Request Labels
       - unlabeled
       - synchronize
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   label:
     runs-on: ubuntu-latest

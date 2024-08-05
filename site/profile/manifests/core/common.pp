@@ -116,8 +116,6 @@ class profile::core::common (
             include scl
           }
         }
-
-        include network
       }
       default: { # EL9+
         if $manage_network_manager {

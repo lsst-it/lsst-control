@@ -154,9 +154,7 @@ shared_examples 'krb5.conf content' do |match|
   end
 end
 
-# XXX The network param is a kludge until the el8 dnscache nodes are converted
-# to NM.
-shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, network: true, node_exporter: true|
+shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, node_exporter: true|
   include_examples 'bash_completion', os_facts: os_facts
   include_examples 'convenience'
   include_examples 'telegraf'
@@ -322,7 +320,6 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, net
       it { is_expected.to contain_class('yum').with_managed_repos(['extras']) }
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
 
-      network and it { is_expected.to contain_class('network') }
       it { is_expected.not_to contain_class('nm') }
 
       if os_facts[:os]['architecture'] == 'x86_64'
@@ -349,7 +346,6 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, net
     if os_facts[:os]['release']['major'] == '8'
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
 
-      network and it { is_expected.not_to contain_class('network') }
       it { is_expected.to contain_class('nm') }
       it { is_expected.to contain_package('NetworkManager-initscripts-updown') }
     end
@@ -357,7 +353,6 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, net
     if os_facts[:os]['release']['major'] == '9'
       it { is_expected.to contain_class('lldpd').with_manage_repo(false) }
 
-      network and it { is_expected.not_to contain_class('network') }
       it { is_expected.to contain_class('nm') }
       it { is_expected.to contain_package('NetworkManager-initscripts-updown') }
       it { is_expected.to contain_class('yum').with_managed_repos(['crb']) }

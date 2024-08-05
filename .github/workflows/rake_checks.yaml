@@ -9,6 +9,10 @@ name: rake checks
       - cp_production
   pull_request:
 
+concurrency:
+  group: ${{ github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   rake_checks:
     runs-on:

@@ -9,6 +9,10 @@ name: librarian-puppet
       - cp_production
   pull_request:
 
+concurrency:
+  group: ${{ github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   librarian_puppet:
     runs-on: ubuntu-latest

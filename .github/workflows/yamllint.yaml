@@ -9,6 +9,10 @@ name: yamllint
       - cp_production
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   yamllint:
     runs-on: ubuntu-latest

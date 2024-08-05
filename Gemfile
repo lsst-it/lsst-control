@@ -14,7 +14,7 @@ group :test do
   gem 'puppet-lint-unquoted_string-check', '~> 2.2.0',         require: false
   gem 'puppet-lint-variable_contains_upcase', '~> 1.4.0',      require: false
 
-  gem 'facterdb', '< 2', require: false # 3.0.0 drops support for EL7
+  gem 'facterdb', '< 3.1.1', require: false # 3.0.0 drops support for EL7
 
   gem 'r10k',    require: false
   gem 'toml-rb', require: false # puppet/telegraf

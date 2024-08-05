@@ -10,7 +10,7 @@ group :test do
 
   gem 'puppet-lint-package_ensure-check', '~> 0.2.0',          require: false
   gem 'puppet-lint-resource_reference_syntax', '~> 1.2.0',     require: false
-  gem 'puppet-lint-strict_indent-check', '~> 2.1.0',           require: false
+  gem 'puppet-lint-strict_indent-check', '~> 3.0.0',           require: false
   gem 'puppet-lint-unquoted_string-check', '~> 2.2.0',         require: false
   gem 'puppet-lint-variable_contains_upcase', '~> 1.4.0',      require: false
 

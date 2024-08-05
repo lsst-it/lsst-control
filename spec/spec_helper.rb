@@ -851,20 +851,6 @@ shared_examples 'ccs common' do
   it { is_expected.to contain_package('time') }
 end
 
-shared_examples 'lsst-daq dhcp-server' do
-  it do
-    is_expected.to contain_network__interface('lsst-daq').with(
-      bootproto: 'none',
-      defroute: 'no',
-      ipaddress: '192.168.100.1',
-      ipv6init: 'no',
-      netmask: '255.255.255.0',
-      onboot: true,
-      type: 'Ethernet',
-    )
-  end
-end
-
 shared_examples 'daq nfs exports' do
   it do
     is_expected.to contain_class('nfs').with(

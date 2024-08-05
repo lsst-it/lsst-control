@@ -12,7 +12,7 @@ group :test do
   gem 'puppet-lint-resource_reference_syntax', '~> 1.2.0',     require: false
   gem 'puppet-lint-strict_indent-check', '~> 2.1.0',           require: false
   gem 'puppet-lint-unquoted_string-check', '~> 2.2.0',         require: false
-  gem 'puppet-lint-variable_contains_upcase', '~> 1.4.0',      require: false
+  gem 'puppet-lint-variable_contains_upcase', '~> 2.0.0',      require: false
 
   gem 'facterdb', '< 2', require: false # 3.0.0 drops support for EL7
 

@@ -9,7 +9,6 @@ mod 'cirrax/libvirt', '5.0.4'
 mod 'derdanne/nfs', git: 'https://github.com/lsst-it/puppet-nfs', ref: '6d51f51'  # https://github.com/derdanne/puppet-nfs/pull/170
 mod 'duritong/sysctl', git: 'https://github.com/duritong/puppet-sysctl', ref: '847ec1c'  # migrate to herculesteam/augeasproviders_sysctl; https://github.com/duritong/puppet-sysctl/pull/48
 mod 'example42/network', git: 'https://github.com/lsst-it/puppet-network', ref: 'c2b5c59'  # allow stdlib/concat 9.x
-mod 'fervid/snapd', '1.2.1' # 2021-05-31 hreinking: snapd for EAS Raspberry Pi
 mod 'jamtur01/httpauth', '0.0.6'
 mod 'jcpunk/irqbalance', '1.0.5'
 mod 'jhoblitt/ipmi', '5.3.1'

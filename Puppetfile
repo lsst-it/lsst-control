@@ -6,7 +6,6 @@ mod 'camptocamp/augeas', '1.9.0'
 mod 'ccin2p3/etc_services', git: 'https://github.com/lsst-it/puppet-etc_services', ref: 'ff17b73' # https://github.com/ccin2p3/puppet-etc_services/pull/11
 mod 'ccin2p3/mit_krb5', git: 'https://github.com/lsst-it/puppet-mit_krb5.git', ref: 'f8f0242'  # https://github.com/ccin2p3/puppet-mit_krb5/pull/29 https://github.com/ccin2p3/puppet-mit_krb5/pull/34 https://github.com/ccin2p3/puppet-mit_krb5/pull/35
 mod 'cirrax/libvirt', '5.0.4'
-mod 'derdanne/nfs', git: 'https://github.com/lsst-it/puppet-nfs', ref: '6d51f51'  # https://github.com/derdanne/puppet-nfs/pull/170
 mod 'duritong/sysctl', git: 'https://github.com/duritong/puppet-sysctl', ref: '847ec1c'  # migrate to herculesteam/augeasproviders_sysctl; https://github.com/duritong/puppet-sysctl/pull/48
 mod 'example42/network', git: 'https://github.com/lsst-it/puppet-network', ref: 'c2b5c59'  # allow stdlib/concat 9.x
 mod 'jamtur01/httpauth', '0.0.6'
@@ -82,6 +81,7 @@ mod 'puppetlabs/yumrepo_core', '2.1.0'
 mod 'puppet/letsencrypt', '11.0.0'
 mod 'puppet/lldpd', '6.0.0'
 mod 'puppet/mosquitto', '2.1.0'
+mod 'puppet/nfs', '3.0.0'
 mod 'puppet/nginx', '6.0.0'
 mod 'puppet/openldap', '8.0.0'
 mod 'puppet/postfix',  '4.4.0'

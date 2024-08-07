@@ -20,7 +20,7 @@ describe 'elqui01.cp.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'generic', # XXX temporary until rke2 role is ready
+          role: 'rke2',
           cluster: 'elqui',
           site: 'cp',
         }
@@ -30,6 +30,31 @@ describe 'elqui01.cp.lsst.org', :sitepp do
 
       include_examples 'baremetal'
       include_context 'with nm interface'
+
+      it do
+        expect(catalogue.resource('class', 'rke2')[:config]).to include(
+          'node-label' => ['role=storage-node'],
+        )
+      end
+
+      it do
+        is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
+      end
+
+      it do
+        is_expected.to contain_class('clustershell').with(
+          groupmembers: {
+            'elqui' => {
+              'group' => 'elqui',
+              'member' => 'elqui[01-18]',
+            },
+          },
+        )
+      end
+
+      it do
+        is_expected.to contain_class('rke2')
+      end
 
       it do
         expect(catalogue.resource('class', 'nm')[:conf]).to include(

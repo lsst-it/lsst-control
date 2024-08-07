@@ -30,19 +30,19 @@ profile::core::firewall::firewall:
     proto: "tcp"
     state: "NEW"
     dport: "80"
-    action: "accept"
+    jump: "accept"
   "251 accept https - puppetboard ldap":
     proto: "tcp"
     state: "NEW"
     dport: "443"
-    action: "accept"
+    jump: "accept"
   "252 accept https - puppetdb x509":
     proto: "tcp"
     state: "NEW"
     dport: "8081"
-    action: "accept"
+    jump: "accept"
   "253 accept https - puppetdb ldap":
     proto: "tcp"
     state: "NEW"
     dport: "8443"
-    action: "accept"
+    jump: "accept"

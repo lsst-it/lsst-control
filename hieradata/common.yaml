@@ -527,32 +527,32 @@ profile::core::firewall::firewall:
   "000 accept established":
     proto: "all"
     state: ["RELATED", "ESTABLISHED"]
-    action: "accept"
+    jump: "accept"
   "001 accept all icmp":
     proto: "icmp"
-    action: "accept"
+    jump: "accept"
   "002 accept all loopback":
     proto: "all"
     iniface: "lo"
-    action: "accept"
+    jump: "accept"
   "010 accept ssh":
     proto: "tcp"
     state: "NEW"
     ipset: "rubin src"
     dport: "22"
-    action: "accept"
+    jump: "accept"
   "020 accept dhcp":
     proto: "udp"
     sport: ["67", "68"]
     dport: ["67", "68"]
-    action: "accept"
+    jump: "accept"
   "990 reject all":
     proto: "all"
-    action: "reject"
+    jump: "reject"
   "991 reject forward all":
     chain: "FORWARD"
     proto: "all"
-    action: "reject"
+    jump: "reject"
 
 restic::bucket: "rubin-bm-backups/%{facts.fqdn}"
 restic::enable_backup: true

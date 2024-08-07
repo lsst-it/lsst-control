@@ -43,7 +43,7 @@ describe "#{role} role" do
                 state: 'NEW',
                 ipset: 'dev src',
                 dport: '7500',
-                action: 'accept',
+                jump: 'accept',
               )
             end
           when 'tu'
@@ -53,7 +53,7 @@ describe "#{role} role" do
                 state: 'NEW',
                 ipset: 'tufde src',
                 dport: '7500',
-                action: 'accept',
+                jump: 'accept',
               )
             end
           when 'ls'
@@ -63,7 +63,7 @@ describe "#{role} role" do
                 state: 'NEW',
                 ipset: 'lsfde src',
                 dport: '7500',
-                action: 'accept',
+                jump: 'accept',
               )
             end
           when 'cp'
@@ -73,7 +73,7 @@ describe "#{role} role" do
                 state: 'NEW',
                 ipset: 'cpfde src',
                 dport: '7500',
-                action: 'accept',
+                jump: 'accept',
               )
             end
           end

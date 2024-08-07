@@ -52,7 +52,7 @@ shared_examples 'puppetdb' do
       proto: 'tcp',
       state: 'NEW',
       dport: '80',
-      action: 'accept',
+      jump: 'accept',
     )
   end
 
@@ -61,7 +61,7 @@ shared_examples 'puppetdb' do
       proto: 'tcp',
       state: 'NEW',
       dport: '443',
-      action: 'accept',
+      jump: 'accept',
     )
   end
 
@@ -70,7 +70,7 @@ shared_examples 'puppetdb' do
       proto: 'tcp',
       state: 'NEW',
       dport: '8081',
-      action: 'accept',
+      jump: 'accept',
     )
   end
 
@@ -79,7 +79,7 @@ shared_examples 'puppetdb' do
       proto: 'tcp',
       state: 'NEW',
       dport: '8443',
-      action: 'accept',
+      jump: 'accept',
     )
   end
 end

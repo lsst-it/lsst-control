@@ -1,5 +1,6 @@
 ---
 classes:
+  - "anaconda"
   - "mate"
   - "profile::core::common"
   - "profile::core::debugutils"
@@ -7,6 +8,7 @@ classes:
   - "profile::core::docker::prune"
   - "profile::core::ni_packages"
   - "profile::core::x2go"
+  - "profile::ts::hexrot"
   - "profile::ts::nexusctio"
 files:
   /rubin:
@@ -18,6 +20,8 @@ files:
     subscribe:
       - "Package[runHexEui]"
       - "Package[runRotEui]"
+      - "Package[runM2Cntlr]"
+
 # / on hexrot.cp was formated with xfs fstype=0 (long, long, long ago) and is
 # not compatible with overlayfs[2]
 profile::core::docker::storage_driver: "devicemapper"
@@ -27,3 +31,23 @@ accounts::group_list:
     ensure: "present"
     gid: 70014
     forcelocal: true
+
+anaconda::anaconda_version: "Anaconda3-2023.07-2"
+anaconda::python_env_name: "py311"
+anaconda::python_env_version: "3.11"
+anaconda::conda_packages:
+  pyside6:
+    channel: "conda-forge"
+    version: "6.7.0"
+  qasync:
+    channel: "conda-forge"
+    version: "0.23.0"
+  qt6-charts:
+    channel: "conda-forge"
+    version: "6.7.0"
+  ts-m2com:
+    channel: "lsstts"
+    version: "1.5.4"
+  ts-m2gui:
+    channel: "lsstts"
+    version: "1.0.2"

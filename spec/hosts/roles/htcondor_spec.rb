@@ -44,9 +44,9 @@ describe "#{role} role" do
               mode: '0644',
               content: <<~CONTENT,
                 export DAF_BUTLER_REPOSITORY_INDEX=/project/data-repos.yaml
-                export PGPASSFILE=/rsphome/$USER/.lsst/postgres-credentials.txt
+                export PGPASSFILE=/home/$USER/.lsst/postgres-credentials.txt
                 export PGUSER=oods
-                export AWS_SHARED_CREDENTIALS_FILE=/rsphome/$USER/.lsst/aws-credentials.ini
+                export AWS_SHARED_CREDENTIALS_FILE=/home/$USER/.lsst/aws-credentials.ini
               CONTENT
             )
           end
@@ -77,7 +77,7 @@ describe "#{role} role" do
 
           if %w[ls dev].include?(site)
             it do
-              is_expected.to contain_nfs__client__mount('/rsphome').with(
+              is_expected.to contain_nfs__client__mount('/home').with(
                 share: 'rsphome',
                 server: 'nfs-rsphome.ls.lsst.org',
                 atboot: true,
@@ -125,7 +125,7 @@ describe "#{role} role" do
             it { is_expected.to contain_class('htcondor').with_htcondor_host('htcondor-cm.cp.lsst.org') }
 
             it do
-              is_expected.to contain_nfs__client__mount('/rsphome').with(
+              is_expected.to contain_nfs__client__mount('/home').with(
                 share: 'rsphome',
                 server: 'nfs-rsphome.cp.lsst.org',
                 atboot: true,

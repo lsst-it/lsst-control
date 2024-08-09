@@ -13,9 +13,9 @@ files:
     mode: "0644"
     content: |
       export DAF_BUTLER_REPOSITORY_INDEX=/project/data-repos.yaml
-      export PGPASSFILE=/rsphome/$USER/.lsst/postgres-credentials.txt
+      export PGPASSFILE=/home/$USER/.lsst/postgres-credentials.txt
       export PGUSER=oods
-      export AWS_SHARED_CREDENTIALS_FILE=/rsphome/$USER/.lsst/aws-credentials.ini
+      export AWS_SHARED_CREDENTIALS_FILE=/home/$USER/.lsst/aws-credentials.ini
   /data/lsstdata/base/comcam:
     ensure: "link"
     target: "/readonly/lsstdata/comcam/base/comcam"

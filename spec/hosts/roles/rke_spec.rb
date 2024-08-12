@@ -44,7 +44,7 @@ shared_examples 'generic rke' do |os_facts:, site:|
   end
 
   case site
-  when 'dev'
+  when 'dev', 'tu'
     it do
       is_expected.to contain_class('rke').with(
         version: '1.5.12',

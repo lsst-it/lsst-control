@@ -34,7 +34,6 @@ shared_examples 'generic rke2' do |os_facts:, site:|
 
   it { is_expected.to contain_class('helm_binary').with_version('3.10.3') }
   it { is_expected.to contain_class('clustershell') }
-  it { is_expected.to contain_package('make') }
 
   it do
     is_expected.to contain_accounts__user('rke2').with(

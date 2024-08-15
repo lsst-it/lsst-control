@@ -12,8 +12,6 @@ classes:
   - "restic"
   - "rke2"
 
-packages:
-  - "make"
 rke2::release_series: "1.28"
 rke2::version: "1.28.10~rke2r1"
 rke2::versionlock: true

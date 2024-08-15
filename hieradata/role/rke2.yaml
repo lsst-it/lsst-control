@@ -22,8 +22,6 @@ cni::plugins::checksum: "f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb
 cni::plugins::enable: ["macvlan"]
 cni::plugins::version: "1.2.0"
 profile::core::helm::version: "3.10.3"
-profile::core::kernel::debuginfo: true
-profile::core::kernel::devel: true
 profile::core::common::manage_node_exporter: false
 rke2::config:
   server: "https://%{::cluster}.%{::site}.lsst.org:9345"

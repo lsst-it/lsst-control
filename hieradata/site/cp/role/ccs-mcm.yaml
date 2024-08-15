@@ -1,0 +1,4 @@
+---
+ccs_software::services:
+  prod:
+    - "kafka-broker"

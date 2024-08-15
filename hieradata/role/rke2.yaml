@@ -13,7 +13,6 @@ classes:
   - "rke2"
 
 packages:
-  - "gdisk"
   - "make"
 rke2::release_series: "1.28"
 rke2::version: "1.28.10~rke2r1"

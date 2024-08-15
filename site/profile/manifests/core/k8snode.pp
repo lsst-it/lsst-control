@@ -7,6 +7,11 @@
 class profile::core::k8snode (
   Boolean $enable_dhcp = false,
 ) {
+  $pkgs = [
+    'gdisk',  # used to cleanup after rook-ceph
+  ]
+  ensure_packages($pkgs)
+
   if $enable_dhcp {
     include cni::plugins
     include cni::plugins::dhcp

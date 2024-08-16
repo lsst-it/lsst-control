@@ -5,7 +5,7 @@
 #   Enable CNI dhcp plugin
 #
 class profile::core::k8snode (
-  Boolean $enable_dhcp = false,
+  Variant[Boolean, Enum['service_only']] $enable_dhcp = false,
 ) {
   $pkgs = [
     'gdisk',  # used to cleanup after rook-ceph
@@ -13,8 +13,13 @@ class profile::core::k8snode (
   ensure_packages($pkgs)
 
   if $enable_dhcp {
-    include cni::plugins
-    include cni::plugins::dhcp
+    if $enable_dhcp == 'service_only' {
+      include cni
+      include cni::plugins::dhcp::service
+    } else {
+      include cni::plugins
+      include cni::plugins::dhcp
+    }
   }
 
   sysctl::value { 'fs.inotify.max_user_instances':

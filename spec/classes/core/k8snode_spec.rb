@@ -48,6 +48,22 @@ describe 'profile::core::k8snode' do
           it { is_expected.to contain_class('cni::plugins') }
           it { is_expected.to contain_class('cni::plugins::dhcp') }
         end
+
+        context 'when service_only' do
+          let(:params) do
+            {
+              enable_dhcp: 'service_only',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+
+          include_examples 'k8snode profile'
+
+          it { is_expected.not_to contain_class('cni::plugins') }
+          it { is_expected.not_to contain_class('cni::plugins::dhcp') }
+          it { is_expected.to contain_class('cni::plugins::dhcp::service') }
+        end
       end
     end
   end

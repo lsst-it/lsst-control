@@ -43,3 +43,5 @@ nm::connections:
       ipv6:
         method: "disabled"
       proxy: {}
+
+profile::ccs::tomcat::rest_dburl: 'jdbc:h2:tcp://comcam-fp01/~/comcam-database;MODE=MYSQL'

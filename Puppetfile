@@ -1,5 +1,6 @@
 forge 'https://forgeapi.puppetlabs.com'
 
+mod 'atsonkov/grubby', '0.3.2'
 mod 'blockops/tailscale', git: 'https://github.com/lsst-it/puppet-tailscale', ref: '6334c25'  # https://gitlab.com/blockops/puppet-tailscale/-/merge_requests/6
 mod 'bodgit/scl', git: 'https://github.com/lsst-it/puppet-scl', ref: 'c367361'  # https://github.com/bodgit/puppet-scl/pull/2
 mod 'camptocamp/augeas', '1.9.0'

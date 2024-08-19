@@ -56,7 +56,11 @@ describe 'ruka01.dev.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_class('rke2')
+        is_expected.to contain_class('rke2').with(
+          node_type: 'server',
+          release_series: '1.28',
+          version: '1.28.12~rke2r1',
+        )
       end
 
       it { is_expected.to contain_class('cni::plugins::dhcp::service') }

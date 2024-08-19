@@ -12,7 +12,7 @@ shared_examples 'generic rke2agent' do |os_facts:, site:|
     is_expected.to contain_class('rke2').with(
       node_type: 'agent',
       release_series: '1.28',
-      version: '1.28.10~rke2r1',
+      version: '1.28.12~rke2r1',
       versionlock: true,
     )
   end

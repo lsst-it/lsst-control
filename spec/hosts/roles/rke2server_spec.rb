@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-shared_examples 'generic rke2' do |os_facts:, site:|
+shared_examples 'generic rke2server' do |os_facts:, site:|
   include_examples 'common', os_facts: os_facts, site: site, node_exporter: false
   include_examples 'debugutils'
   include_examples 'k8snode profile'
@@ -65,7 +65,7 @@ shared_examples 'generic rke2' do |os_facts:, site:|
   end
 end
 
-role = 'rke2'
+role = 'rke2server'
 
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
@@ -89,7 +89,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'generic rke2', os_facts: os_facts, site: site
+          include_examples 'generic rke2server', os_facts: os_facts, site: site
         end # host
       end # lsst_sites
     end # on os

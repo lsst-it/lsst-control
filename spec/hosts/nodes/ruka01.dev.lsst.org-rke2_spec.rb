@@ -23,7 +23,7 @@ describe 'ruka01.dev.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'rke2',
+          role: 'rke2server',
           site: 'dev',
           cluster: 'ruka',
           variant: 'r440',

@@ -2,14 +2,14 @@
 
 require 'spec_helper'
 
-describe 'elqui01.cp.lsst.org', :sitepp do
+describe 'elqui06.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
         override_facts(os_facts,
-                       fqdn: 'elqui01.tu.lsst.org',
+                       fqdn: 'elqui06.tu.lsst.org',
                        is_virtual: false,
                        virtual: 'physical',
                        dmi: {
@@ -20,7 +20,7 @@ describe 'elqui01.cp.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'rke2server',
+          role: 'rke2agent',
           cluster: 'elqui',
           site: 'cp',
         }
@@ -53,7 +53,7 @@ describe 'elqui01.cp.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_class('rke2').with_node_type('server')
+        is_expected.to contain_class('rke2').with_node_type('agent')
       end
 
       it do

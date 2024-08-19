@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-shared_examples 'generic rke2server' do |os_facts:, site:|
+shared_examples 'generic rke2agent' do |os_facts:, site:|
   include_examples 'common', os_facts: os_facts, site: site, node_exporter: false
   include_examples 'debugutils'
   include_examples 'k8snode profile'
@@ -10,7 +10,7 @@ shared_examples 'generic rke2server' do |os_facts:, site:|
 
   it do
     is_expected.to contain_class('rke2').with(
-      node_type: 'server',
+      node_type: 'agent',
       release_series: '1.28',
       version: '1.28.10~rke2r1',
       versionlock: true,
@@ -33,28 +33,14 @@ shared_examples 'generic rke2server' do |os_facts:, site:|
     )
   end
 
-  it { is_expected.to contain_class('helm_binary').with_version('3.10.3') }
   it { is_expected.to contain_class('clustershell') }
-
-  it do
-    is_expected.to contain_accounts__user('rke2').with(
-      uid: '61616',
-      gid: '61616',
-    )
-  end
-
-  it do
-    is_expected.to contain_file('/home/rke2/.bashrc.d/kubectl.sh')
-      .with_content(%r{^alias k='kubectl'$})
-      .with_content(%r{^complete -o default -F __start_kubectl k$})
-  end
 
   it do
     is_expected.to contain_restic__repository('awsrepo').with(
       backup_path: %w[
         /etc/cni
         /etc/rancher
-        /var/lib/rancher/rke2/server/db/snapshots
+        /var/lib/rancher/rke2/agent
         /var/lib/rook
       ],
       backup_flags: '--exclude=/var/lib/rook/rook-ceph/log',
@@ -66,7 +52,7 @@ shared_examples 'generic rke2server' do |os_facts:, site:|
   end
 end
 
-role = 'rke2server'
+role = 'rke2agent'
 
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
@@ -90,7 +76,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'generic rke2server', os_facts: os_facts, site: site
+          include_examples 'generic rke2agent', os_facts: os_facts, site: site
         end # host
       end # lsst_sites
     end # on os

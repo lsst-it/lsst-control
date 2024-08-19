@@ -13,19 +13,8 @@ classes:
   - "rke2"
 
 rke2::node_type: "server"
-rke2::release_series: "1.28"
-rke2::version: "1.28.10~rke2r1"
-rke2::versionlock: true
 profile::core::helm::version: "3.10.3"
 profile::core::common::manage_node_exporter: false
-rke2::config:
-  server: "https://%{::cluster}.%{::site}.lsst.org:9345"
-  node-name: "%{facts.hostname}"
-  tls-san:
-    - "%{::cluster}.%{::site}.lsst.org"
-  disable:
-    - "rke2-ingress-nginx"
-  disable-cloud-controller: true
 
 accounts::user_list:
   rke2:

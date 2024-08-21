@@ -27,6 +27,8 @@ describe 'lsstcam-dc01.cp.lsst.org', :sitepp do
         }
       end
 
+      include_examples 'lsstcam-rsyslog'
+
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal'

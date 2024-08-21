@@ -1,4 +1,18 @@
 ---
+rsyslog::feature_packages:
+  - "rsyslog-openssl"
+rsyslog::config::actions:
+  fluentbit_dev:
+    type: "omfwd"
+    facility: "*.*"
+    config:
+      target: "rsyslog.fluent.ayekan.dev.lsst.org"
+      port: 5140
+      protocol: "tcp"
+      StreamDriver: "ossl"
+      StreamDriverMode: "1"
+      StreamDriverAuthMode: "anon"
+
 postfix::manage_root_alias: false
 postfix::inet_protocols: "ipv4"
 postfix::inet_interfaces: "localhost"

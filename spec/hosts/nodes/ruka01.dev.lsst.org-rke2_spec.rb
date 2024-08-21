@@ -23,7 +23,7 @@ describe 'ruka01.dev.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'rke2',
+          role: 'rke2server',
           site: 'dev',
           cluster: 'ruka',
           variant: 'r440',
@@ -59,15 +59,7 @@ describe 'ruka01.dev.lsst.org', :sitepp do
         is_expected.to contain_class('rke2')
       end
 
-      it do
-        is_expected.to contain_class('cni::plugins').with(
-          version: '1.2.0',
-          checksum: 'f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37',
-          enable: ['macvlan'],
-        )
-      end
-
-      it { is_expected.to contain_class('cni::plugins::dhcp') }
+      it { is_expected.to contain_class('cni::plugins::dhcp::service') }
 
       include_context 'with nm interface'
 

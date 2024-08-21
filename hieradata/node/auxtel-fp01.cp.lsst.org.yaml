@@ -1,9 +1,4 @@
 ---
-profile::daq::daq_interface::hwaddr: "18:66:da:bb:3a:07"
-profile::daq::daq_interface::uuid: "2ccf9a2a-bed7-6832-5c25-097862b4929f"
-profile::daq::daq_interface::was: "em1"
-profile::daq::daq_interface::mode: "dhcp-client"
-
 network::interfaces_hash:
   em2:  # dds-auxtel
     bootproto: "dhcp"

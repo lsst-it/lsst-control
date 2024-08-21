@@ -28,7 +28,6 @@ describe 'auxtel-daq-mgt.cp.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal'
-      include_examples 'lsst-daq dhcp-server'
       include_examples 'daq nfs exports'
 
       it { is_expected.to contain_class('daq::daqsdk') }

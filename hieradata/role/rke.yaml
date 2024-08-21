@@ -22,8 +22,6 @@ cni::plugins::version: "1.2.0"
 kubectl::version: "1.28.10"
 kubectl::checksum: "389c17a9700a4b01ebb055e39b8bc0886330497440dde004b5ed90f2a3a028db"
 profile::core::helm::version: "3.10.3"
-profile::core::kernel::debuginfo: true
-profile::core::kernel::devel: true
 profile::core::common::manage_node_exporter: false
 
 files:

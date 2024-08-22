@@ -13,8 +13,9 @@ define profile::util::kernel_param (
 ) {
   $message = "set kernel parameter: ${name}"
 
-  kernel_parameter { $name:
+  grubby::kernel_opt { $name:
     ensure => present,
+    scope  => 'ALL',
   }
 
   if ($reboot) {
@@ -22,7 +23,7 @@ define profile::util::kernel_param (
       apply     => finished,
       message   => $message,
       when      => refreshed,
-      subscribe => Kernel_parameter[$name],
+      subscribe => Grubby::Kernel_opt[$name],
     }
   }
 }

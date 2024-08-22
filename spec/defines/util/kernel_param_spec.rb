@@ -12,8 +12,9 @@ describe 'profile::util::kernel_param' do
 
       context 'with no params' do
         it do
-          is_expected.to contain_kernel_parameter(title).with(
+          is_expected.to contain_grubby__kernel_opt(title).with(
             ensure: 'present',
+            scope: 'ALL',
           )
         end
 
@@ -26,7 +27,7 @@ describe 'profile::util::kernel_param' do
         end
 
         it do
-          is_expected.to contain_reboot(title).that_subscribes_to("Kernel_parameter[#{title}]")
+          is_expected.to contain_reboot(title).that_subscribes_to("Grubby::Kernel_opt[#{title}]")
         end
       end
 
@@ -34,7 +35,7 @@ describe 'profile::util::kernel_param' do
         let(:params) { { reboot: true } }
 
         it do
-          is_expected.to contain_kernel_parameter(title).with(
+          is_expected.to contain_grubby__kernel_opt(title).with(
             ensure: 'present',
           )
         end
@@ -48,7 +49,7 @@ describe 'profile::util::kernel_param' do
         end
 
         it do
-          is_expected.to contain_reboot(title).that_subscribes_to("Kernel_parameter[#{title}]")
+          is_expected.to contain_reboot(title).that_subscribes_to("Grubby::Kernel_opt[#{title}]")
         end
       end
 
@@ -56,7 +57,7 @@ describe 'profile::util::kernel_param' do
         let(:params) { { reboot: false } }
 
         it do
-          is_expected.to contain_kernel_parameter(title).with(
+          is_expected.to contain_grubby__kernel_opt(title).with(
             ensure: 'present',
           )
         end

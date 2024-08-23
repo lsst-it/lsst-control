@@ -1,3 +1,4 @@
 ---
 clustershell::groupmembers:
   luan: {group: "luan", member: "luan[01-05]"}
+tuned::active_profile: "latency-performance"

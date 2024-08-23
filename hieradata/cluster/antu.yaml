@@ -3,7 +3,7 @@ clustershell::groupmembers:
   antu:
     group: "antu"
     member: "antu[01-04]"
-
+tuned::active_profile: "latency-performance"
 nm::connections:
   enp65s0f0.2130:
     content:

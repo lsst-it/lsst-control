@@ -33,6 +33,7 @@ describe 'ruka01.dev.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal'
+      include_examples 'ceph cluster'
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(

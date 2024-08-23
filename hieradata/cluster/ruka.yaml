@@ -2,6 +2,7 @@
 clustershell::groupmembers:
   ruka: {group: "ruka", member: "ruka[01-05]"}
 profile::core::k8snode::enable_dhcp: true
+tuned::active_profile: "latency-performance"
 nm::connections:
   br2101:
     content:

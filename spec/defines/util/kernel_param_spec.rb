@@ -76,7 +76,7 @@ describe 'profile::util::kernel_param' do
       end
 
       context 'with ensure => absent' do
-        let(:params) { { ensure: 'present' } }
+        let(:params) { { ensure: 'absent' } }
 
         it do
           is_expected.to contain_grubby__kernel_opt(title).with(

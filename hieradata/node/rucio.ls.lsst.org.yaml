@@ -1,0 +1,15 @@
+---
+nm::connections:
+  eno1np0:
+    content:
+      connection:
+        id: "eno1np0"
+        uuid: "810adb94-e2c0-4d41-b66f-1175a5c358ba"
+        type: "ethernet"
+        interface-name: "eno1np0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}

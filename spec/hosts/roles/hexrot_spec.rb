@@ -74,7 +74,7 @@ describe "#{role} role" do
             },
             'ts-m2gui' => {
               'channel' => 'lsstts',
-              'version' => '1.0.2',
+              'version' => '1.0.3',
             },
           }
 

@@ -50,4 +50,4 @@ anaconda::conda_packages:
     version: "1.5.4"
   ts-m2gui:
     channel: "lsstts"
-    version: "1.0.2"
+    version: "1.0.3"

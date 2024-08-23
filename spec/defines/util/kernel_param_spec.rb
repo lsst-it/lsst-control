@@ -21,7 +21,7 @@ describe 'profile::util::kernel_param' do
         it do
           is_expected.to contain_reboot(title).with(
             apply: 'finished',
-            message: "set kernel parameter: #{title}",
+            message: "set kernel parameter: #{title} to present",
             when: 'refreshed',
           )
         end
@@ -43,7 +43,7 @@ describe 'profile::util::kernel_param' do
         it do
           is_expected.to contain_reboot(title).with(
             apply: 'finished',
-            message: "set kernel parameter: #{title}",
+            message: "set kernel parameter: #{title} to present",
             when: 'refreshed',
           )
         end
@@ -63,6 +63,26 @@ describe 'profile::util::kernel_param' do
         end
 
         it { is_expected.not_to contain_reboot(title) }
+      end
+
+      context 'with ensure => present' do
+        let(:params) { { ensure: 'present' } }
+
+        it do
+          is_expected.to contain_grubby__kernel_opt(title).with(
+            ensure: 'present',
+          )
+        end
+      end
+
+      context 'with ensure => absent' do
+        let(:params) { { ensure: 'present' } }
+
+        it do
+          is_expected.to contain_grubby__kernel_opt(title).with(
+            ensure: 'absent',
+          )
+        end
       end
     end
   end

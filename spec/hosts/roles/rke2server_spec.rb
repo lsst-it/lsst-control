@@ -64,6 +64,12 @@ shared_examples 'generic rke2server' do |os_facts:, site:|
       forget_flags: '--keep-last 20',
     )
   end
+
+  it do
+    is_expected.to contain_grubby__kernel_opt('rootflags=pquota').with(
+      ensure: 'absent',
+    )
+  end
 end
 
 role = 'rke2server'

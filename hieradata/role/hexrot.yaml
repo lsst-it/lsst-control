@@ -47,7 +47,7 @@ anaconda::conda_packages:
     version: "6.7.0"
   ts-m2com:
     channel: "lsstts"
-    version: "1.5.4"
+    version: "1.5.6"
   ts-m2gui:
     channel: "lsstts"
     version: "1.0.3"

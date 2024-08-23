@@ -70,7 +70,7 @@ describe "#{role} role" do
             },
             'ts-m2com' => {
               'channel' => 'lsstts',
-              'version' => '1.5.4',
+              'version' => '1.5.6',
             },
             'ts-m2gui' => {
               'channel' => 'lsstts',
@@ -133,6 +133,8 @@ describe "#{role} role" do
             it do
               is_expected.to contain_file(path).with(
                 ensure: 'directory',
+                owner: '73006',
+                group: '73006',
                 mode: '0775',
               )
             end

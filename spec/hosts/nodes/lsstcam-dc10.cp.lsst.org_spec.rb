@@ -35,7 +35,6 @@ describe 'lsstcam-dc10.cp.lsst.org', :sitepp do
       it { is_expected.to have_nm__connection_resource_count(7) }
 
       %w[
-        ens1f1np1
         eno1
         eno2
         ens3f1np1
@@ -56,6 +55,19 @@ describe 'lsstcam-dc10.cp.lsst.org', :sitepp do
         it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.160.53;139.229.160.54;139.229.160.55;') }
         it { expect(nm_keyfile['ipv4']['dns-search']).to eq('cp.lsst.org;') }
         it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
+      end
+
+      context 'with ens1f1np1' do
+        let(:interface) { 'ens1f1np1' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.173.141/27,139.229.173.129') }
+        it { expect(nm_keyfile['ipv4']['route1']).to eq('172.24.7.0/24,139.229.173.129') }
+        it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.160.53;139.229.160.54;139.229.160.55;') }
+        it { expect(nm_keyfile['ipv4']['dns-search']).to eq('cp.lsst.org;') }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
+        it { expect(nm_keyfile['ethernet']['mtu']).to eq(9000) }
       end
 
       context 'with ens3f0np0' do

@@ -71,6 +71,8 @@ ccs_monit::alert:
   ## lsstcam-alerts
   - "lsstcam-alerts-aaaah4qfu4lhjnjpl4wmbjyx2y@lsstc.slack.com"
 
+ccs_mrtg::loss_host: "lsstcam-mcm"
+
 accounts::group_list:
   lsstadm:
     gid: 24000  # XXX reserve GID

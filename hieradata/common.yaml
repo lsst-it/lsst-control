@@ -572,3 +572,5 @@ rke2::config:
   disable:
     - "rke2-ingress-nginx"
   disable-cloud-controller: true
+
+profile::core::kernel::pquota::ensure: "absent"  # temporary until profile::core::kernel::pquota profile is removed from roles which don't need it

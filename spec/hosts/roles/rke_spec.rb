@@ -49,6 +49,12 @@ shared_examples 'generic rke' do |os_facts:, site:|
       checksum: 'f0d1f6981edbb4c93f525ee51bc2a8ad729ba33c04f21a95f5fc86af4a7af586',
     )
   end
+
+  it do
+    is_expected.to contain_grubby__kernel_opt('rootflags=pquota').with(
+      ensure: 'absent',
+    )
+  end
 end
 
 role = 'rke'

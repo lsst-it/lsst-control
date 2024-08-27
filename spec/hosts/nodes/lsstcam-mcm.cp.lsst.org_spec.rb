@@ -31,10 +31,9 @@ describe 'lsstcam-mcm.cp.lsst.org', :sitepp do
       include_examples 'baremetal'
       include_context 'with nm interface'
 
-      it { is_expected.to have_nm__connection_resource_count(8) }
+      it { is_expected.to have_nm__connection_resource_count(7) }
 
       %w[
-        eno2
         eno3
         eno4
         ens1f0
@@ -58,11 +57,11 @@ describe 'lsstcam-mcm.cp.lsst.org', :sitepp do
         it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
       end
 
-      context 'with ens1f0.1400' do
-        let(:interface) { 'ens1f0.1400' }
+      context 'with eno2.1400' do
+        let(:interface) { 'eno2.1400' }
 
         it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm vlan interface', id: 1400, parent: 'ens1f0'
+        it_behaves_like 'nm vlan interface', id: 1400, parent: 'eno2'
         it_behaves_like 'nm bridge slave interface', master: 'dds'
       end
 

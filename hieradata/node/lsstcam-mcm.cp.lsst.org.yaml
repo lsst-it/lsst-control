@@ -15,18 +15,42 @@ nm::connections:
       ipv6:
         method: "ignore"
       proxy: {}
-  eno2:  # not connected
+  eno2.1400:
     content:
       connection:
-        id: "eno2"
-        type: "ethernet"
-        autoconnect: false
-        interface-name: "eno2"
+        id: "eno2.1400"
+        uuid: "d7618012-e034-434e-a9a9-f33f0c19408a"
+        type: "vlan"
+        interface-name: "eno2.1400"
+        master: "dds"
+        slave-type: "bridge"
       ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1400"
+        parent: "eno2"
+      bridge-port: {}
+  dds:
+    content:
+      connection:
+        id: "dds"
+        uuid: "d269ffaa-3906-4c54-9e73-9b2d21baf2a4"
+        type: "bridge"
+        interface-name: "dds"
+      ethernet: {}
+      bridge:
+        stp: false
       ipv4:
-        method: "disabled"
+        address1: "139.229.170.4/24,139.229.170.254"
+        method: "manual"
+        never-default: true
+        route1: "139.229.147.0/24,139.229.170.254"
+        route2: "139.229.166.0/24,139.229.170.254"
+        route3: "139.229.167.0/24,139.229.170.254"
+        route4: "139.229.178.0/24,139.229.170.254"
       ipv6:
         method: "disabled"
+      proxy: {}
   eno3:  # not connected
     content:
       connection:
@@ -51,7 +75,7 @@ nm::connections:
         method: "disabled"
       ipv6:
         method: "disabled"
-  ens1f0:  # trunk
+  ens1f0:  # not connected
     content:
       connection:
         id: "ens1f0"
@@ -75,37 +99,3 @@ nm::connections:
         method: "disabled"
       ipv6:
         method: "disabled"
-  ens1f0.1400:
-    content:
-      connection:
-        id: "ens1f0.1400"
-        type: "vlan"
-        interface-name: "ens1f0.1400"
-        master: "dds"
-        slave-type: "bridge"
-      ethernet: {}
-      vlan:
-        flags: 1
-        id: 1400
-        parent: "ens1f0"
-      bridge-port: {}
-  dds:
-    content:
-      connection:
-        id: "dds"
-        type: "bridge"
-        interface-name: "dds"
-      ethernet: {}
-      bridge:
-        stp: false
-      ipv4:
-        address1: "139.229.170.4/24,139.229.170.254"
-        method: "manual"
-        never-default: true
-        route1: "139.229.147.0/24,139.229.170.254"
-        route2: "139.229.166.0/24,139.229.170.254"
-        route3: "139.229.167.0/24,139.229.170.254"
-        route4: "139.229.178.0/24,139.229.170.254"
-      ipv6:
-        method: "disabled"
-      proxy: {}

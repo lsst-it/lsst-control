@@ -86,7 +86,7 @@ nm::connections:
     content:
       connection:
         id: "lsst-daq"
-        uuid: "d5642f16-7bf7-7d4d-de5a-25e7d7c355a4"
+        uuid: "1273d7be-1f8e-4656-84fe-2fbf9d51a486"
         type: "bridge"
         interface-name: "lsst-daq"
       ethernet: {}

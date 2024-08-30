@@ -35,7 +35,9 @@ nm::connections:
       bridge:
         stp: false
       ipv4:
-        address1: "140.252.147.137/27"
+        address1: "140.252.147.137/27,140.252.147.129"
+        dns: "140.252.146.71;140.252.146.72;"
+        dns-search: "tu.lsst.org"
         method: "manual"
       ipv6:
         method: "disabled"

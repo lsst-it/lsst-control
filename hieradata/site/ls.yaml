@@ -57,3 +57,9 @@ profile::core::firewall::firewall:
     action: "accept"
 
 profile::core::docker::version: "24.0.9"
+
+ccs_sal::lfa:
+  id: "%{alias('ccs_sal::lfa::id')}"
+  secret: "%{alias('ccs_sal::lfa::secret')}"
+  endpoint: "https://s3.ls.lsst.org/"
+  bucket: "rubinobs-lfa-ls"

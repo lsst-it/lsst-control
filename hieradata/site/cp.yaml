@@ -51,3 +51,9 @@ accounts::user_list:
 
 profile::core::common::disable_ipv6: true
 profile::core::docker::version: "24.0.9"
+
+ccs_sal::lfa:
+  id: "%{alias('ccs_sal::lfa::id')}"
+  secret: "%{alias('ccs_sal::lfa::secret')}"
+  endpoint: "https://s3.cp.lsst.org/"
+  bucket: "rubinobs-lfa-cp"

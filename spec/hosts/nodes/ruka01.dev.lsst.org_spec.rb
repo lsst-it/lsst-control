@@ -23,7 +23,7 @@ describe 'ruka01.dev.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'rke',
+          role: 'rke2server',
           site: 'dev',
           cluster: 'ruka',
           variant: 'r440',
@@ -32,9 +32,14 @@ describe 'ruka01.dev.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'docker', docker_version: '24.0.9'
       include_examples 'baremetal'
       include_examples 'ceph cluster'
+
+      it do
+        expect(catalogue.resource('class', 'rke2')[:config]).to include(
+          'node-label' => ['role=storage-node'],
+        )
+      end
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
@@ -45,27 +50,24 @@ describe 'ruka01.dev.lsst.org', :sitepp do
           groupmembers: {
             'ruka' => {
               'group' => 'ruka',
-              'member' => 'ruka[01-05]',
+              'member' => [
+                'ruka[01-05]',
+                'ruka[07-08]',
+              ],
             },
           },
         )
       end
 
       it do
-        is_expected.to contain_class('rke').with(
-          version: '1.5.12',
+        is_expected.to contain_class('rke2').with(
+          node_type: 'server',
+          release_series: '1.28',
+          version: '1.28.12~rke2r1',
         )
       end
 
-      it do
-        is_expected.to contain_class('cni::plugins').with(
-          version: '1.2.0',
-          checksum: 'f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37',
-          enable: ['macvlan'],
-        )
-      end
-
-      it { is_expected.to contain_class('cni::plugins::dhcp') }
+      it { is_expected.to contain_class('cni::plugins::dhcp::service') }
 
       include_context 'with nm interface'
 

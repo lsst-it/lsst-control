@@ -3,30 +3,31 @@
 require 'spec_helper'
 
 #
-# testing cluster/ruka & cluster/ruka/variant/r440
+# primarily testing cluster/ruka/variant/r430; for ruka cluster layer spec see
+# ruka01.dev.lsst.org.yaml
 #
-describe 'ruka01.dev.lsst.org', :sitepp do
+describe 'ruka07.dev.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
         override_facts(os_facts,
-                       fqdn: 'ruka01.dev.lsst.org',
+                       fqdn: 'ruka07.dev.lsst.org',
                        is_virtual: false,
                        virtual: 'physical',
                        dmi: {
                          'product' => {
-                           'name' => 'PowerEdge R440',
+                           'name' => 'PowerEdge C6420',
                          },
                        })
       end
       let(:node_params) do
         {
-          role: 'rke2server',
+          role: 'rke2agent',
           site: 'dev',
           cluster: 'ruka',
-          variant: 'r440',
+          variant: 'c6420',
         }
       end
 
@@ -50,7 +51,10 @@ describe 'ruka01.dev.lsst.org', :sitepp do
           groupmembers: {
             'ruka' => {
               'group' => 'ruka',
-              'member' => 'ruka[01-05]',
+              'member' => [
+                'ruka[01-05]',
+                'ruka[07-08]',
+              ],
             },
           },
         )
@@ -58,7 +62,7 @@ describe 'ruka01.dev.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_class('rke2').with(
-          node_type: 'server',
+          node_type: 'agent',
           release_series: '1.28',
           version: '1.28.12~rke2r1',
         )
@@ -68,33 +72,21 @@ describe 'ruka01.dev.lsst.org', :sitepp do
 
       include_context 'with nm interface'
 
-      it { is_expected.to have_nm__connection_resource_count(8) }
+      it { is_expected.to have_nm__connection_resource_count(5) }
 
-      %w[
-        eno1
-        eno2
-        ens2f0
-      ].each do |i|
-        context "with #{i}" do
-          let(:interface) { i }
-
-          it_behaves_like 'nm disabled interface'
-        end
-      end
-
-      context 'with ens2f1' do
-        let(:interface) { 'ens2f1' }
+      context 'with ens4f0' do
+        let(:interface) { 'ens4f0' }
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
       end
 
-      context 'with ens2f0.2101' do
-        let(:interface) { 'ens2f0.2101' }
+      context 'with ens4f0.2101' do
+        let(:interface) { 'ens4f0.2101' }
 
         it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm vlan interface', id: 2101, parent: 'ens2f0'
+        it_behaves_like 'nm vlan interface', id: 2101, parent: 'ens4f0'
         it_behaves_like 'nm bridge slave interface', master: 'br2101'
       end
 
@@ -106,11 +98,11 @@ describe 'ruka01.dev.lsst.org', :sitepp do
         it_behaves_like 'nm bridge interface'
       end
 
-      context 'with ens2f0.2505' do
-        let(:interface) { 'ens2f0.2505' }
+      context 'with ens4f0.2505' do
+        let(:interface) { 'ens4f0.2505' }
 
         it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm vlan interface', id: 2505, parent: 'ens2f0'
+        it_behaves_like 'nm vlan interface', id: 2505, parent: 'ens4f0'
         it_behaves_like 'nm bridge slave interface', master: 'br2505'
       end
 

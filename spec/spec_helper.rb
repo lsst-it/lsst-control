@@ -459,7 +459,12 @@ shared_examples 'lhn sysctls', :lhn_node do
 
   it do
     is_expected.to contain_sysctl__value('net.ipv4.tcp_congestion_control')
-      .with_value('htcp')
+      .with_value('bbr')
+  end
+
+  it do
+    is_expected.to contain_sysctl__value('net.ipv4.tcp_slow_start_after_idle')
+      .with_value(0)
   end
 
   it do

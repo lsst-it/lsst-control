@@ -1,18 +1,5 @@
 ---
 nm::connections:
-  ens1f1np1:
-    content:
-      connection:
-        id: "ens1f1np1"
-        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
-        type: "ethernet"
-        autoconnect: "false"
-        interface-name: "ens1f1np1"
-      ethernet: {}
-      ipv4:
-        method: "disabled"
-      ipv6:
-        method: "disabled"
   eno1:
     content:
       connection:

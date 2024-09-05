@@ -39,6 +39,7 @@ describe "#{role} role" do
           ].each do |cls|
             it { is_expected.to contain_class(cls) }
           end
+          it { is_expected.to contain_host('sdfembs3.sdf.slac.stanford.edu').with_ip('172.24.7.249') }
         end # host
       end # lsst_sites
     end # on os

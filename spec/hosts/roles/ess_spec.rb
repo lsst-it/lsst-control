@@ -36,6 +36,7 @@ describe "#{role} role" do
           include_examples 'common', os_facts: os_facts, site: site
           include_examples 'ftdi'
           include_examples 'rubinhat'
+          include_examples 'dco'
         end # host
       end # lsst_sites
     end # on os

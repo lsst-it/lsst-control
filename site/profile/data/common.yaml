@@ -161,8 +161,11 @@ profile::core::sysctl::lhn::sysctls:
   net.ipv4.tcp_wmem:
     value: "4096 65536 536870912"
     target: *tcpip
+  net.ipv4.tcp_slow_start_after_idle:
+    value: "0"
+    target: *tcpip
   net.ipv4.tcp_congestion_control:
-    value: "htcp"
+    value: "bbr"
     target: *tcpip
   net.ipv4.tcp_mtu_probing:
     value: 1

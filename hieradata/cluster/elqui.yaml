@@ -100,6 +100,21 @@ nm::connections:
         id: "1801"
         parent: "bond0"
       bridge-port: {}
+  bond0.1802:
+    content:
+      connection:
+        id: "bond0.1802"
+        uuid: "8b2e41ce-ec67-4809-8f91-c2ffff165eb8"
+        type: "vlan"
+        interface-name: "bond0.1802"
+        master: "br1802"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1802"
+        parent: "bond0"
+      bridge-port: {}
   br1801:
     content:
       connection:
@@ -107,6 +122,21 @@ nm::connections:
         uuid: "9db4c5c9-e050-40b2-a2e0-e868259ab312"
         type: "bridge"
         interface-name: "br1801"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  br1802:
+    content:
+      connection:
+        id: "br1802"
+        uuid: "6a6ec9f9-0378-447c-880e-55d1f65dcf09"
+        type: "bridge"
+        interface-name: "br1802"
       ethernet: {}
       bridge:
         stp: "false"

@@ -71,7 +71,7 @@ describe 'elqui06.cp.lsst.org', :sitepp do
         )
       end
 
-      it { is_expected.to have_nm__connection_resource_count(5 + 3) }
+      it { is_expected.to have_nm__connection_resource_count(5 + 3 + 2) }
 
       %w[
         enp13s0f4u1u2c2
@@ -106,19 +106,23 @@ describe 'elqui06.cp.lsst.org', :sitepp do
         it_behaves_like 'nm no-ip interface'
       end
 
-      Hash[*%w[
-        bond0.1801 br1801
-      ]].each do |slave, master|
-        context "with #{slave}" do
-          let(:interface) { slave }
+      %w[
+        1801
+        1802
+      ].each do |vlan|
+        iface = "bond0.#{vlan}"
+        context "with #{iface}" do
+          let(:interface) { iface }
 
           it_behaves_like 'nm enabled interface'
-          it_behaves_like 'nm bridge slave interface', master: master
+          it_behaves_like 'nm vlan interface', id: vlan, parent: 'bond0'
+          it_behaves_like 'nm bridge slave interface', master: "br#{vlan}"
         end
       end
 
       %w[
         br1801
+        br1802
       ].each do |i|
         context "with #{i}" do
           let(:interface) { i }

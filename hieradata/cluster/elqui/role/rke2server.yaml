@@ -1,7 +1,41 @@
 ---
 classes:
+  - "profile::core::sysctl::lhn"
   - "profile::core::sysctl::rp_filter"
 profile::core::sysctl::rp_filter::enable: false
 rke2::config:
   node-label:
     - "role=storage-node"
+# Only the rke2server nodes have the lhn interfaces as this was an easy way
+# limiting the number of nodes to fit in the /29 ELQUI-SVC-LHN vlan
+nm::connections:
+  bond0.1803:
+    content:
+      connection:
+        id: "bond0.1803"
+        uuid: "f8023063-3ece-4ea7-ba1e-d07053e788b2"
+        type: "vlan"
+        interface-name: "bond0.1803"
+        master: "br1803"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1803"
+        parent: "bond0"
+      bridge-port: {}
+  br1803:
+    content:
+      connection:
+        id: "br1803"
+        uuid: "26744673-4e9f-4454-94dc-6ce486e6376f"
+        type: "bridge"
+        interface-name: "br1803"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}

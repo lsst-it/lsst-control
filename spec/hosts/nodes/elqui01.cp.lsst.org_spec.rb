@@ -31,6 +31,7 @@ describe 'elqui01.cp.lsst.org', :sitepp do
       include_examples 'baremetal'
       include_context 'with nm interface'
       include_examples 'ceph cluster'
+      include_examples 'lhn sysctls'
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(
@@ -70,7 +71,7 @@ describe 'elqui01.cp.lsst.org', :sitepp do
         )
       end
 
-      it { is_expected.to have_nm__connection_resource_count(5 + 3) }
+      it { is_expected.to have_nm__connection_resource_count(5 + 3 + 4) }
 
       %w[
         enp13s0f4u1u2c2
@@ -105,19 +106,25 @@ describe 'elqui01.cp.lsst.org', :sitepp do
         it_behaves_like 'nm no-ip interface'
       end
 
-      Hash[*%w[
-        bond0.1801 br1801
-      ]].each do |slave, master|
-        context "with #{slave}" do
-          let(:interface) { slave }
+      %w[
+        1801
+        1802
+        1803
+      ].each do |vlan|
+        iface = "bond0.#{vlan}"
+        context "with #{iface}" do
+          let(:interface) { iface }
 
           it_behaves_like 'nm enabled interface'
-          it_behaves_like 'nm bridge slave interface', master: master
+          it_behaves_like 'nm vlan interface', id: vlan, parent: 'bond0'
+          it_behaves_like 'nm bridge slave interface', master: "br#{vlan}"
         end
       end
 
       %w[
         br1801
+        br1802
+        br1803
       ].each do |i|
         context "with #{i}" do
           let(:interface) { i }

@@ -112,7 +112,7 @@ mod 'simp/simpkv', '0.13.0'
 mod 'simp/simplib', '4.12.2'
 mod 'stm/debconf', '6.1.0'
 mod 'syseleven/restic', '2.7.0'
-mod 'theforeman/dhcp', git: 'https://github.com/lsst-it/puppet-dhcp', ref: '4d48173'  # https://github.com/theforeman/puppet-dhcp/pull/226
+mod 'theforeman/dhcp', '9.2.0'
 mod 'theforeman/dns', '10.4.0'
 mod 'theforeman/foreman', git: 'https://github.com/lsst-it/puppet-foreman', ref: '70b70bc'  # 20.2.0 + dep updates
 mod 'theforeman/foreman_proxy', git: 'https://github.com/lsst-it/puppet-foreman_proxy', ref: '39ef803'  # https://github.com/theforeman/puppet-foreman_proxy/pull/772 https://github.com/theforeman/puppet-foreman_proxy/pull/816

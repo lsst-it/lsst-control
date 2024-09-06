@@ -118,6 +118,6 @@ mod 'theforeman/foreman', git: 'https://github.com/lsst-it/puppet-foreman', ref:
 mod 'theforeman/foreman_proxy', git: 'https://github.com/lsst-it/puppet-foreman_proxy', ref: '90af64a'  # https://github.com/theforeman/puppet-foreman_proxy/pull/772 https://github.com/theforeman/puppet-foreman_proxy/pull/816
 mod 'theforeman/puppet', '20.0.0'
 mod 'theforeman/puppetserver_foreman', '4.0.0'
-mod 'theforeman/tftp', git: 'https://github.com/theforeman/puppet-tftp', ref: '6e49a28'  # stdlib 9.x
+mod 'theforeman/tftp', '9.1.0'
 mod 'treydock/clustershell', '3.0.0'
 mod 'treydock/perfsonar', '3.1.0'

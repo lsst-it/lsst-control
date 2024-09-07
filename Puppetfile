@@ -121,4 +121,4 @@ mod 'theforeman/puppet', '20.0.0'
 mod 'theforeman/puppetserver_foreman', '4.0.0'
 mod 'theforeman/tftp', '9.1.0'
 mod 'treydock/clustershell', '3.0.0'
-mod 'treydock/perfsonar', '4.1.0'
+mod 'treydock/perfsonar', git: 'https://github.com/lsst-it/puppet-module-perfsonar', ref: '5e427d3'  # 4.1.0 + https://github.com/treydock/puppet-module-perfsonar/pull/26

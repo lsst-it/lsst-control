@@ -45,7 +45,7 @@ describe "#{role} role" do
               state: 'NEW',
               ipset: 'aura src',
               dport: '22',
-              action: 'accept',
+              jump: 'accept',
             )
           end
         end # host

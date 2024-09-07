@@ -54,7 +54,7 @@ profile::core::firewall::firewall:
     state: "NEW"
     ipset: "ayekan src"
     dport: "9100"
-    action: "accept"
+    jump: "accept"
 
 profile::core::docker::version: "24.0.9"
 

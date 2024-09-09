@@ -163,6 +163,8 @@ ssh::server::match_block:
     <<: *authorized_keys
   dtapia_b:
     <<: *authorized_keys
+  gseriche_b:
+    <<: *authorized_keys
 # ipa server options
 # defines the uid/gid of the admin user
 # needs to be coordinated between master + replicas
@@ -246,6 +248,12 @@ accounts::user_list:
     purge_sshkeys: true
     sshkeys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC71rIbJq0BkvWS0vaUbvRMpnt64kmRjvP9Eac23YJkfAeRL8JZs8LO6M2FzMgwGUmH+8r7eUHNQrvZy+DzhejB7lD1sWk503/4k44q7X2g0ymnjMheNRsxSjwuqXGuCklIS8kMeiJsMBCvIF7fOJ9Eh4h5I7O+4vxogig2VxCeX+LFKKDLKjIyXlFTjpl3qOrEDhujCabejbAhAdz5u7dAnGINFM+9gLKi/TVbjb6BmSnBG1UxOkmK6SmtLdEioaLiOANscrGdc/pMnva1snS0QRlHksCjpcKza58QbEDUpzITSCkGyJRSTQcxrnzJHuS8L+/ssbeK0el97J6GkrRivJjJEJDmstLjd1mXGWhmqO/HYbX0s82TqoXTxw8P/kEaL3XVYOkAuNsypEtpH2oSv30fEdUOlJmy3PzcshW9mzTvdBbT8jQnFiO107lVmhGNAvtJFgeFEXGbnAHL33ff0kUNgOO7zdWfuTng5Hchwj5Gzgl0dOX7uxG/b5mk4mc= dtapia@Diegos-MacBook-Pro.local"
+  gseriche_b:  # backup access in case LDAP fails
+    groups:
+      - "wheel_b"
+    purge_sshkeys: true
+    sshkeys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCjv42Vmm3Q3qiEUKFjFpSKb52zKcrAOdy94KfiLsziCNYEFJHtqa8a9n25SF9RN+7mDK8DIal77mPtIoAOfIG+Tvh47Mhx0zNxZ3ja0Zp5VEBCLwsJUq6myBhdz6K0JSS26DMCy4MsbyF5FXPdjdq0YTDmPHW3PYO3L1hhtBKettC6Kb/e5e5YxXw/I39okKQPNJnaquLUqdBkv85DZ763c7SyKiScIpYlZDi/kPipZa8zJDsRlDHWkX9Cv6JJOFbT/jAmB5gCOnPZj/vfpzzi7wQG00LHhEDhrHH6vErF7/JHh7rrLu/Hd8ueYUOAQUaN1MjgIpFmRJlvXflvAneJVfA4CyV1H6oAsKTjgBo7tpbxBuRwPf5PhGsrhBohcJAI3nPZHt/nKeFXI52DdKzYV+XNkprxSQdEXJmw0E1ZjT1sfyGQUk+QnprzeAwMgDOpwKvh1x56DPPXZiGthdppQN/keVbOXwigu0MFm1vYyEYUNzbfZZ8XOOehR3R+YFU= geseriche@gseriche-m2-16.local"
   lssttech: &rm_user
     ensure: "absent"
     managehome: true

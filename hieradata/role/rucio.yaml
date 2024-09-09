@@ -2,7 +2,6 @@
 classes:
   - "profile::core::common"
   - "profile::core::debugutils"
-  - "profile::core::dmz"
   - "profile::core::rucio"
   - "python"
 

@@ -87,7 +87,7 @@ shared_examples 'rsyslog defaults' do |site:|
         },
       )
     end
-  when 'dmz', 'ls'
+  when 'ls'
     it do
       is_expected.to contain_rsyslog__component__action('graylogls').with(
         type: 'omfwd',

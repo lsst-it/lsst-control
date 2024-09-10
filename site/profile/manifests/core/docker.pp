@@ -58,7 +58,7 @@ class profile::core::docker (
     # lint:ignore:strict_indent
     content => @(EOS),
       [Unit]
-      After=network-online.target firewalld.service containerd.service sssd.service
+      After=network-online.target containerd.service sssd.service
       Requires=docker.socket containerd.service sssd.service
       | EOS
     # lint:endignore

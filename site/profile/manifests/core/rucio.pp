@@ -60,16 +60,4 @@ class profile::core::rucio () {
   package { $yum_packages:
     ensure   => 'present',
   }
-  firewalld_port { 'Enable 1094 TCP access to xrootd':
-    ensure   => present,
-    zone     => 'dmz',
-    port     => 1094,
-    protocol => 'tcp',
-  }
-  firewalld_port { 'Enable 1094 UDP access to xrootd':
-    ensure   => present,
-    zone     => 'dmz',
-    port     => 1094,
-    protocol => 'udp',
-  }
 }

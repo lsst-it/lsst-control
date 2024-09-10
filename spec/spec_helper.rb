@@ -387,6 +387,7 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
     cbarria_b
     csilva_b
     dtapia_b
+    gseriche_b
   ]
 
   (admin_users + ['root']).each do |user|

@@ -137,6 +137,33 @@ def node_files
   Dir.children(node_dir)
 end
 
+# wrapper around #override_facts from voxpupuli-test that generates lsst's
+# default [networking] node facts.
+def lsst_override_facts(base_facts, **overrides)
+  override_facts(base_facts, **override_facts(gen_net_facts, **overrides))
+end
+
+# depends on node_params being set
+def gen_net_facts
+  if nodename(:host) =~ %r{\.lsst\.org$}
+    fqdn = nodename(:host)
+    hostname = fqdn.split('.').first
+    domain = fqdn.split('.').drop(1).join('.')
+  else
+    hostname = node_params[:role]
+    domain = "#{node_params[:site]}.lsst.org"
+    fqdn = "#{hostname}.#{domain}"
+  end
+
+  {
+    networking: {
+      'hostname' => hostname,
+      'domain' => domain,
+      'fqdn' => fqdn,
+    },
+  }
+end
+
 shared_context 'with site.pp', :sitepp do
   before(:context) do
     RSpec.configuration.manifest = File.join(root_path, 'manifests', 'site.pp')

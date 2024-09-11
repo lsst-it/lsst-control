@@ -4,7 +4,7 @@ mod 'atsonkov/grubby', '0.3.2'
 mod 'blockops/tailscale', git: 'https://github.com/lsst-it/puppet-tailscale', ref: 'd06b499'  # 1.0.0 + https://gitlab.com/blockops/puppet-tailscale/-/merge_requests/13
 mod 'bodgit/scl', git: 'https://github.com/lsst-it/puppet-scl', ref: 'c367361'  # https://github.com/bodgit/puppet-scl/pull/2
 mod 'ccin2p3/etc_services', git: 'https://github.com/lsst-it/puppet-etc_services', ref: 'ff17b73' # https://github.com/ccin2p3/puppet-etc_services/pull/11
-mod 'ccin2p3/mit_krb5', git: 'https://github.com/lsst-it/puppet-mit_krb5.git', ref: 'f8f0242'  # https://github.com/ccin2p3/puppet-mit_krb5/pull/29 https://github.com/ccin2p3/puppet-mit_krb5/pull/34 https://github.com/ccin2p3/puppet-mit_krb5/pull/35
+mod 'ccin2p3/mit_krb5', git: 'https://github.com/lsst-it/puppet-mit_krb5.git', ref: '2365ca8'  # https://github.com/ccin2p3/puppet-mit_krb5/pull/29 https://github.com/ccin2p3/puppet-mit_krb5/pull/34 https://github.com/ccin2p3/puppet-mit_krb5/pull/38 (partial)
 mod 'cirrax/libvirt', '5.0.4'
 mod 'duritong/sysctl', git: 'https://github.com/duritong/puppet-sysctl', ref: '847ec1c'  # migrate to herculesteam/augeasproviders_sysctl; https://github.com/duritong/puppet-sysctl/pull/48
 mod 'jamtur01/httpauth', '0.0.6'

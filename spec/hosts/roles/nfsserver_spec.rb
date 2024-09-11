@@ -7,18 +7,16 @@ role = 'nfsserver'
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { os_facts }
-      let(:node_params) do
-        {
-          role: role,
-          site: site,
-        }
-      end
-
       describe 'nfsserver.cp.lsst.org', :sitepp do
         site = 'cp'
         let(:site) { site }
-        let(:facts) { override_facts(os_facts, fqdn: 'nfsserver.cp.lsst.org') }
+        let(:node_params) do
+          {
+            role: role,
+            site: site,
+          }
+        end
+        let(:facts) { lsst_override_facts(os_facts) }
 
         it { is_expected.to compile.with_all_deps }
 
@@ -140,7 +138,7 @@ describe "#{role} role" do
         it do
           is_expected.to contain_nfs__client__mount('/net/self/data/rsphome').with(
             share: 'rsphome',
-            server: facts[:fqdn],
+            server: facts[:networking]['fqdn'],
             atboot: true,
           )
         end
@@ -148,7 +146,7 @@ describe "#{role} role" do
         it do
           is_expected.to contain_nfs__client__mount('/net/self/data/project').with(
             share: 'project',
-            server: facts[:fqdn],
+            server: facts[:networking]['fqdn'],
             atboot: true,
           )
         end
@@ -156,7 +154,7 @@ describe "#{role} role" do
         it do
           is_expected.to contain_nfs__client__mount('/net/self/data/scratch').with(
             share: 'scratch',
-            server: facts[:fqdn],
+            server: facts[:networking]['fqdn'],
             atboot: true,
           )
         end

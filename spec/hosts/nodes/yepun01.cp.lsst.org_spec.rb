@@ -8,18 +8,17 @@ describe 'yepun01.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'yepun01.cp.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'Super Server',
-                         },
-                         'board' => {
-                           'product' => 'H12SSL-NT',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'Super Server',
+                              },
+                              'board' => {
+                                'product' => 'H12SSL-NT',
+                              },
+                            })
       end
       let(:node_params) do
         {

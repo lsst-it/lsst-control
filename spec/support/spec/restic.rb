@@ -3,7 +3,7 @@
 shared_examples 'restic common' do
   it do
     is_expected.to contain_class('restic').with(
-      bucket: "rubin-bm-backups/#{facts[:fqdn]}",
+      bucket: "rubin-bm-backups/#{facts[:networking]['fqdn']}",
       enable_backup: true,
       host: 's3.us-east-1.amazonaws.com',
     )

@@ -40,7 +40,7 @@ network::interfaces_hash:
     onboot: "no"
     type: "Ethernet"
 
-network::hostname: "%{facts.fqdn}"
+network::hostname: "%{facts.networking.fqdn}"
 network::mroutes_hash:
   em2:
     routes:
@@ -95,11 +95,11 @@ nfs::client_enabled: true
 nfs::client_mounts:
   /net/self/data/lsstdata:
     share: "lsstdata"
-    server: "%{facts.fqdn}"
+    server: "%{facts.networking.fqdn}"
     atboot: true
   /repo:
     share: "repo"
-    server: "%{facts.fqdn}"
+    server: "%{facts.networking.fqdn}"
     atboot: true
 
 profile::core::k5login::k5login:

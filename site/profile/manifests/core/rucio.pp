@@ -5,7 +5,7 @@ class profile::core::rucio () {
   include profile::core::letsencrypt
 
   #  Host FQDN
-  $fqdn = $facts[fqdn]
+  $fqdn = fact('networking.fqdn')
 
   #  Define XRootD Path
   $xrootd_path = '/opt/xrootd'

@@ -6,15 +6,14 @@ describe 'auxtel-dc01.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'auxtel-dc01.cp.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'PowerEdge R630',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'PowerEdge R630',
+                              },
+                            })
       end
       let(:node_params) do
         {

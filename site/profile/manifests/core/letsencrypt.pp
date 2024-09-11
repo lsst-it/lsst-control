@@ -5,7 +5,7 @@
 #     include profile::core::letsencrypt
 #     include augeas  # needed by perfsonar
 #
-#     $fqdn    = $facts['fqdn']
+#     $fqdn    = fact('networking.fqdn')
 #     $le_root = "/etc/letsencrypt/live/${fqdn}"
 #
 #     letsencrypt::certonly { $fqdn:
@@ -49,7 +49,7 @@ class profile::core::letsencrypt (
   ensure_packages(['python-s3transfer'])
 
   # XXX https://github.com/voxpupuli/puppet-letsencrypt/issues/230
-  if $facts['os']['name'] == 'CentOS' {
+  if fact('os.name') == 'CentOS' {
     ensure_packages(['python2-futures.noarch'])
   }
 

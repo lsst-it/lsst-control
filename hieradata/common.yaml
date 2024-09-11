@@ -430,7 +430,7 @@ sssd::main_config:
     auth_provider: "ipa"
     access_provider: "ipa"
     ldap_tls_cacert: "/etc/ipa/ca.crt"
-    ipa_hostname: "%{facts.fqdn}"
+    ipa_hostname: "%{facts.networking.fqdn}"
     chpass_provider: "ipa"
     ipa_server:
       - "_srv_"
@@ -472,9 +472,9 @@ mit_krb5::domain_realms:
     domains:
       - ".%{lookup('ipa::domain')}"
       - "%{lookup('ipa::domain')}"
-      - "%{facts.fqdn}"
-      - ".%{facts.domain}"
-      - "%{facts.domain}"
+      - "%{facts.networking.fqdn}"
+      - ".%{facts.networking.domain}"
+      - "%{facts.networking.domain}"
 
 openldap::client::tls_cacertdir: "/etc/openldap/certs"
 openldap::client::sasl_nocanon: true
@@ -489,7 +489,7 @@ profile::core::ipa::default:
     realm: "%{lookup('mit_krb5::default_realm')}"
     domain: "%{lookup('ipa::domain')}"
     server: "%{lookup('ipa::ipa_master_fqdn')}"
-    host: "%{facts.fqdn}"
+    host: "%{facts.networking.fqdn}"
     xmlrpc_uri: "https://%{lookup('ipa::ipa_master_fqdn')}/ipa/xml"
     enable_ra: "True"
 
@@ -501,7 +501,7 @@ resolv_conf::options:
 # Use NFSv4 on NFS enabled hosts.
 nfs::nfs_v4: true
 nfs::nfs_v4_client: true
-nfs::nfs_v4_idmap_domain: "%{::domain}"
+nfs::nfs_v4_idmap_domain: "%{facts.networking.domain}"
 
 profile::ccs::common::pkgurl: "https://repo-nexus.lsst.org/nexus/repository/ccs_private"
 ccs_hcu::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
@@ -562,7 +562,7 @@ profile::core::firewall::firewall:
     proto: "all"
     jump: "reject"
 
-restic::bucket: "rubin-bm-backups/%{facts.fqdn}"
+restic::bucket: "rubin-bm-backups/%{facts.networking.fqdn}"
 restic::enable_backup: true
 restic::host: "s3.us-east-1.amazonaws.com"
 
@@ -574,7 +574,7 @@ rke2::version: "1.28.12~rke2r1"
 rke2::versionlock: true
 rke2::config:
   server: "https://%{::cluster}.%{::site}.lsst.org:9345"
-  node-name: "%{facts.hostname}"
+  node-name: "%{facts.networking.hostname}"
   tls-san:
     - "%{::cluster}.%{::site}.lsst.org"
   disable:

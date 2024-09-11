@@ -30,8 +30,7 @@ end
 gem 'facter', ENV.fetch('FACTER_GEM_VERSION', nil), require: false, groups: [:test]
 gem 'rake', require: false
 
-# See: https://github.com/puppetlabs/puppet/issues/9268
-puppetversion = ENV['PUPPET_GEM_VERSION'] || '~> 7.28.0'
+puppetversion = ENV['PUPPET_GEM_VERSION'] || '~> 8.9'
 gem 'puppet', puppetversion, require: false, groups: [:test]
 
 # vim: syntax=ruby

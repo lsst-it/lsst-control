@@ -42,7 +42,7 @@ end
 
 # extract public hiera hierarchy
 def hiera_public_hierarchy
-  hc = YAML.load_file(control_hiera_config)
+  hc = YAML.load_file(control_hiera_config, aliases: true)
   hc['hierarchy'].find { |h| h['name'] == 'public hiera' }['paths']
 end
 
@@ -89,7 +89,7 @@ default_fact_files.each do |f|
   next unless File.exist?(f) && File.readable?(f) && File.size?(f)
 
   begin
-    default_facts.merge!(YAML.safe_load(File.read(f), [], [], true))
+    default_facts.merge!(YAML.safe_load(File.read(f)))
   rescue StandardError => e
     RSpec.configuration.reporter.message "WARNING: Unable to load #{f}: #{e}"
   end

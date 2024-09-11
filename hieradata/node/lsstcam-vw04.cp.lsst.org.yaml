@@ -9,10 +9,7 @@ nm::connections:
         interface-name: "enp114s0"
       ethernet: {}
       ipv4:
-        address1: "139.229.175.97/26,139.229.175.126"
-        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
-        dns-search: "cp.lsst.org;"
-        method: "manual"
+        method: "auto"
       ipv6:
         method: "disabled"
       proxy: {}

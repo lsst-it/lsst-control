@@ -36,9 +36,6 @@ describe 'lsstcam-vw04.cp.lsst.org', :sitepp do
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
         it_behaves_like 'nm manual interface'
-        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.175.97/26,139.229.175.126') }
-        it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.160.53;139.229.160.54;139.229.160.55;') }
-        it { expect(nm_keyfile['ipv4']['dns-search']).to eq('cp.lsst.org;') }
       end
     end # on os
   end # on_supported_os

@@ -9,7 +9,6 @@ describe "#{role} role" do
     next unless os =~ (%r{^centos-7-x86_64$}) || os =~ (%r{^almalinux-8-x86_64$})
 
     context "on #{os}" do
-      let(:facts) { os_facts }
       let(:node_params) do
         {
           role: role,
@@ -19,9 +18,9 @@ describe "#{role} role" do
       let(:smee_url) { 'https://smee.io/lpxrggGObEn5YTA' }
 
       describe 'foreman.dev.lsst.org', :sitepp do
-        os_facts.merge!(fqdn: 'foreman.dev.lsst.org')
         site = 'dev'
         let(:site) { site }
+        let(:facts) { lsst_override_facts(os_facts) }
         let(:ntpservers) do
           %w[
             ntp.shoa.cl
@@ -50,9 +49,9 @@ describe "#{role} role" do
       end # host
 
       describe 'foreman.tuc.lsst.cloud', :sitepp do
-        os_facts.merge!(fqdn: 'foreman.tuc.lsst.cloud')
         site = 'tu'
         let(:site) { site }
+        let(:facts) { lsst_override_facts(os_facts) }
         let(:ntpservers) do
           %w[
             140.252.1.140
@@ -80,9 +79,9 @@ describe "#{role} role" do
       end # host
 
       describe 'foreman.ls.lsst.org', :sitepp do
-        os_facts.merge!(fqdn: 'foreman.ls.lsst.org')
         site = 'ls'
         let(:site) { site }
+        let(:facts) { lsst_override_facts(os_facts) }
         let(:ntpservers) do
           %w[
             ntp.shoa.cl
@@ -111,9 +110,9 @@ describe "#{role} role" do
       end # host
 
       describe 'foreman.cp.lsst.org', :sitepp do
-        os_facts.merge!(fqdn: 'foreman.cp.lsst.org')
         site = 'cp'
         let(:site) { site }
+        let(:facts) { lsst_override_facts(os_facts) }
         let(:ntpservers) do
           %w[
             ntp.cp.lsst.org

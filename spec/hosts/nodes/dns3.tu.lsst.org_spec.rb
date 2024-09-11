@@ -8,15 +8,14 @@ describe 'dns3.tu.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'dns3.tu.lsst.org',
-                       is_virtual: true,
-                       virtual: 'kvm',
-                       dmi: {
-                         'product' => {
-                           'name' => 'KVM',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: true,
+                            virtual: 'kvm',
+                            dmi: {
+                              'product' => {
+                                'name' => 'KVM',
+                              },
+                            })
       end
       let(:node_params) do
         {

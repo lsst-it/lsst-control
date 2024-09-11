@@ -20,7 +20,7 @@ class profile::core::hardware {
     /PowerEdge/: {
       include ipmi
 
-      if $facts['has_dellperc'] {
+      if fact('has_dellperc') {
         include profile::core::perccli
       }
     }

@@ -27,7 +27,7 @@ files:
 profile::core::docker::storage_driver: "devicemapper"
 accounts::group_list:
   # this is duplicating the ipa gid as a local group
-  &docker_name docker-%{facts.hostname}:
+  &docker_name docker-%{facts.networking.hostname}:
     ensure: "present"
     gid: 70014
     forcelocal: true

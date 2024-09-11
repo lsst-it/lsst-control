@@ -8,15 +8,14 @@ describe 'vpn2.ls.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'vpn2.ls.lsst.org',
-                       is_virtual: true,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'PowerEdge R640',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: true,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'PowerEdge R640',
+                              },
+                            })
       end
       let(:node_params) do
         {

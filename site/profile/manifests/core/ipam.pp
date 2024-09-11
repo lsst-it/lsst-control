@@ -36,7 +36,7 @@ class profile::core::ipam (
     'mod_ssl',
   ]
 
-  $fqdn = $facts[fqdn]
+  $fqdn = fact('networking.fqdn')
   $le_root = "/etc/letsencrypt/live/${fqdn}"
   $my_cnf_master = @("MYCNF")
     [mysqld]

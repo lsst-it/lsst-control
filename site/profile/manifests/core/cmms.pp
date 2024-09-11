@@ -6,7 +6,7 @@ class profile::core::cmms (
 ) {
   include profile::core::letsencrypt
 
-  $fqdn  = $facts[fqdn]
+  $fqdn  = fact('networking.fqdn')
 
   #  Letsencrypt cert path
   $le_root = "/etc/letsencrypt/live/${fqdn}"

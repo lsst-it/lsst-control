@@ -231,9 +231,9 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
             'domains' => [
               '.lsst.cloud',
               'lsst.cloud',
-              facts[:fqdn],
-              ".#{facts[:domain]}",
-              facts[:domain],
+              facts[:networking]['fqdn'],
+              ".#{facts[:networking]['domain']}",
+              facts[:networking]['domain'],
             ],
           },
         },
@@ -260,7 +260,7 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
           dns_discovery_domain=#{site}._locations.lsst.cloud
           id_provider=ipa
           ipa_domain=lsst.cloud
-          ipa_hostname=#{facts[:fqdn]}
+          ipa_hostname=#{facts[:networking]['fqdn']}
           ipa_server=_srv_, ipa1.#{(site == 'dev') ? 'ls' : site}.lsst.org
           krb5_store_password_if_offline=true
           ldap_tls_cacert=/etc/ipa/ca.crt
@@ -292,7 +292,7 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
           dns_discovery_domain=#{site}._locations.lsst.cloud
           id_provider=ipa
           ipa_domain=lsst.cloud
-          ipa_hostname=#{facts[:fqdn]}
+          ipa_hostname=#{facts[:networking]['fqdn']}
           ipa_server=_srv_, ipa1.#{(site == 'dev') ? 'ls' : site}.lsst.org
           krb5_store_password_if_offline=true
           ldap_tls_cacert=/etc/ipa/ca.crt
@@ -866,7 +866,7 @@ shared_examples 'daq nfs exports' do
   it do
     is_expected.to contain_nfs__client__mount('/net/self/dsl').with(
       share: '/srv/nfs/dsl',
-      server: facts[:fqdn],
+      server: facts[:networking]['fqdn'],
       atboot: true,
     )
   end
@@ -874,7 +874,7 @@ shared_examples 'daq nfs exports' do
   it do
     is_expected.to contain_nfs__client__mount('/net/self/lsst-daq').with(
       share: '/srv/nfs/lsst-daq',
-      server: facts[:fqdn],
+      server: facts[:networking]['fqdn'],
       atboot: true,
     )
   end

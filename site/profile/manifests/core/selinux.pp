@@ -1,6 +1,6 @@
 class profile::core::selinux {
-  if ($facts['os']['selinux']['enabled']) {
-    notify { "os.selinux.enabled == ${facts['os']['selinux']['enabled']}":
+  if fact('os.selinux.enabled') {
+    notify { "os.selinux.enabled == ${fact('os.selinux.enabled')}":
       notify => Reboot['selinux'],
     }
   }

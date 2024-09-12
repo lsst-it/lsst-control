@@ -9,7 +9,7 @@ mod 'cirrax/libvirt', '5.0.4'
 mod 'duritong/sysctl', git: 'https://github.com/duritong/puppet-sysctl', ref: '847ec1c'  # migrate to herculesteam/augeasproviders_sysctl; https://github.com/duritong/puppet-sysctl/pull/48
 mod 'jamtur01/httpauth', '0.0.6'
 mod 'jcpunk/irqbalance', '1.0.6'
-mod 'jhoblitt/ipmi', '5.3.1'
+mod 'jhoblitt/ipmi', '6.0.0'
 mod 'lsst/anaconda', '0.1.0'
 mod 'lsst/ccs_daq', '1.1.0'
 mod 'lsst/ccs_database', '3.4.0'

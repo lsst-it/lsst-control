@@ -229,33 +229,6 @@ profile::archive::data::comcam::files:
     owner: &saluser 73006
     group: *saluser
 
-profile::archive::common::packages:
-  - "cmake"
-  - "gcc-c++"
-  - "git"
-
-profile::archive::common::group_list:
-  # this is duplicating the ipa gid as a local group
-  &docker_name docker-%{facts.hostname}:
-    ensure: "present"
-    gid: 70014
-    forcelocal: true
-profile::archive::common::user_list:
-  arc:
-    uid: 61000
-    gid: 61000
-    managehome: true
-    system: false
-    managevim: false
-  atadbot:
-    uid: 61002
-    gid: 61002
-    managehome: true
-    system: false
-    managevim: false
-    groups:
-      - *docker_name
-
 profile::core::dtn::sysctls:
   net.core.rmem_max:
     value: 2147483647

@@ -1,44 +1,27 @@
 # @summary
 #   Install required rucio packages
 #
-class profile::core::rucio () {
-  include profile::core::letsencrypt
-
-  #  Host FQDN
-  $fqdn = fact('networking.fqdn')
-
-  #  Define XRootD Path
-  $xrootd_path = '/opt/xrootd'
-
-  #  Define Yum Packages
-  $yum_packages = [
-    'gcc-c++',
-    'cmake3',
-    'krb5-devel',
-    'libuuid-devel',
-    'libxml2-devel',
-    'openssl-devel',
-    'systemd-devel',
-    'zlib-devel',
-    'devtoolset-7',
-    'xrootd',
-    'voms',
-  ]
-
-  #  Define PIP Packages
-  $pip_packages = [
-    'wheel',
-    'cryptography',
-    'rucio',
-  ]
-
-  #  Signed Certificate Location
-  $le_root = "/etc/letsencrypt/live/${fqdn}"
-
-  #  Generate and sign certificate
-  letsencrypt::certonly { $fqdn:
-    plugin      => 'dns-route53',
-    manage_cron => true,
+class profile::core::rucio {
+  yumrepo { 'xrootd-stable':
+    descr               => 'XRootD Stable Repository',
+    baseurl             => 'https://xrootd.web.cern.ch/repo/stable/el$releasever/$basearch',
+    skip_if_unavailable => 'true',
+    gpgcheck            => '1',
+    gpgkey              => 'https://xrootd.web.cern.ch/repo/RPM-GPG-KEY.txt',
+    enabled             => '1',
+    target              => '/etc/yum.repo.d/xrootd.repo',
+  }
+  -> package { 'xrootd':
+    ensure => 'installed',
+  }
+  file { [
+      '/lib/systemd/system/xrootd@.service',
+      '/lib/systemd/system/cmsd@.service',
+    ]:
+      ensure => file,
+      mode   => '0644',
+      owner  => 'saluser',
+      group  => 'saluser',
   }
 
   #  Copy the certificates into /etc/grid-security
@@ -59,5 +42,15 @@ class profile::core::rucio () {
   #  Install Yum Packages
   package { $yum_packages:
     ensure => 'present',
+  file { [
+      '/etc/xrootd',
+      '/var/log/xrootd',
+      '/var/run/xrootd',
+      '/var/spool/xrootd',
+    ]:
+      ensure => directory,
+      mode   => '0644',
+      owner  => 'saluser',
+      group  => 'saluser',
   }
 }

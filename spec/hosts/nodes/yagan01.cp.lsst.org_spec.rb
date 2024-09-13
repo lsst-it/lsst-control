@@ -45,14 +45,14 @@ describe 'yagan01.cp.lsst.org', :sitepp do
               'group' => 'yagan',
               'member' => 'yagan[01-20]',
             },
-          },
+          }
         )
       end
 
       it do
         is_expected.to contain_class('rke').with(
           version: '1.5.12',
-          checksum: 'f0d1f6981edbb4c93f525ee51bc2a8ad729ba33c04f21a95f5fc86af4a7af586',
+          checksum: 'f0d1f6981edbb4c93f525ee51bc2a8ad729ba33c04f21a95f5fc86af4a7af586'
         )
       end
 
@@ -60,7 +60,7 @@ describe 'yagan01.cp.lsst.org', :sitepp do
         is_expected.to contain_class('cni::plugins').with(
           version: '1.2.0',
           checksum: 'f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37',
-          enable: ['macvlan'],
+          enable: ['macvlan']
         )
       end
 

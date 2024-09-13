@@ -9,7 +9,7 @@ shared_examples 'sssd services' do
   it do
     is_expected.to contain_service('sssd').with(
       ensure: 'running',
-      enable: true,
+      enable: true
     )
   end
 
@@ -33,7 +33,7 @@ shared_examples 'sssd services' do
     it do
       is_expected.to contain_service(unit).with(
         ensure: 'stopped',
-        enable: false,
+        enable: false
       )
                                           .that_requires('Class[sssd]')
                                           .that_requires('Class[ipa]')

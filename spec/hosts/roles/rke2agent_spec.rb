@@ -13,7 +13,7 @@ shared_examples 'generic rke2agent' do |os_facts:, site:|
       node_type: 'agent',
       release_series: '1.28',
       version: '1.28.12~rke2r1',
-      versionlock: true,
+      versionlock: true
     )
   end
 
@@ -23,13 +23,13 @@ shared_examples 'generic rke2agent' do |os_facts:, site:|
 
   it do
     expect(catalogue.resource('class', 'rke2')[:config]).to include(
-      'disable' => ['rke2-ingress-nginx'],
+      'disable' => ['rke2-ingress-nginx']
     )
   end
 
   it do
     expect(catalogue.resource('class', 'rke2')[:config]).to include(
-      'disable-cloud-controller' => true,
+      'disable-cloud-controller' => true
     )
   end
 
@@ -47,13 +47,13 @@ shared_examples 'generic rke2agent' do |os_facts:, site:|
       backup_timer: '*-*-* 09:00:00',
       enable_forget: true,
       forget_timer: 'Mon..Sun 23:00:00',
-      forget_flags: '--keep-last 20',
+      forget_flags: '--keep-last 20'
     )
   end
 
   it do
     is_expected.to contain_grubby__kernel_opt('rootflags=pquota').with(
-      ensure: 'absent',
+      ensure: 'absent'
     )
   end
 end

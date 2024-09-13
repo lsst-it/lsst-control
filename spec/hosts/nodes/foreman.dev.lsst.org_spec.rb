@@ -52,7 +52,7 @@ describe 'foreman.dev.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_network__interface('ens192').with(
-          ipaddress: '139.229.134.5',
+          ipaddress: '139.229.134.5'
         )
       end
 
@@ -61,7 +61,7 @@ describe 'foreman.dev.lsst.org', :sitepp do
           network: '139.229.134.0',
           mask: '255.255.255.0',
           range: ['139.229.134.120 139.229.134.149'],
-          gateway: '139.229.134.254',
+          gateway: '139.229.134.254'
         )
       end
     end # on os

@@ -28,7 +28,7 @@ describe "#{role} role" do
             is_expected.to contain_nfs__client__mount('/dimm').with(
               share: 'dimm',
               server: 'nfs1.cp.lsst.org',
-              atboot: true,
+              atboot: true
             )
           end
 
@@ -38,7 +38,7 @@ describe "#{role} role" do
                 'SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", GROUP="users"',
                 'SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6015", GROUP="users"',
                 'SUBSYSTEM=="tty", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", GROUP="users"',
-              ],
+              ]
             )
           end
 
@@ -52,7 +52,7 @@ describe "#{role} role" do
               is_expected.to contain_file(d).with(
                 owner: 79_518,
                 group: 'users',
-                recurse: true,
+                recurse: true
               )
             end
           end

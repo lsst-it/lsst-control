@@ -28,7 +28,7 @@ describe "#{role} role" do
               ensure: 'directory',
               owner: 'dco',
               group: 'dco',
-              mode: '0777',
+              mode: '0777'
             )
           end
 
@@ -37,7 +37,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/net/obs-env').with(
                 share: 'obs-env',
                 server: 'nfs-obsenv.cp.lsst.org',
-                atboot: true,
+                atboot: true
               )
             end
           end

@@ -26,7 +26,7 @@ describe "#{role} role" do
             is_expected.to contain_nfs__client__mount('/project').with(
               share: 'project',
               server: 'nfs1.cp.lsst.org',
-              atboot: true,
+              atboot: true
             )
           end
 
@@ -34,7 +34,7 @@ describe "#{role} role" do
             is_expected.to contain_nfs__client__mount('/scratch').with(
               share: 'scratch',
               server: 'nfs1.cp.lsst.org',
-              atboot: true,
+              atboot: true
             )
           end
 
@@ -42,7 +42,7 @@ describe "#{role} role" do
             is_expected.to contain_nfs__client__mount('/lsstdata').with(
               share: 'lsstdata',
               server: 'nfs1.cp.lsst.org',
-              atboot: true,
+              atboot: true
             )
           end
 
@@ -50,7 +50,7 @@ describe "#{role} role" do
             is_expected.to contain_nfs__client__mount('/readonly/lsstdata/auxtel').with(
               share: 'auxtel/lsstdata',
               server: 'nfs-auxtel.cp.lsst.org',
-              atboot: true,
+              atboot: true
             )
           end
 
@@ -58,7 +58,7 @@ describe "#{role} role" do
             is_expected.to contain_nfs__client__mount('/repo/LATISS').with(
               share: 'auxtel/repo',
               server: 'nfs-auxtel.cp.lsst.org',
-              atboot: true,
+              atboot: true
             )
           end
 
@@ -66,7 +66,7 @@ describe "#{role} role" do
             is_expected.to contain_nfs__client__mount('/repo/LSSTComCam').with(
               share: 'repo',
               server: 'comcam-archiver.cp.lsst.org',
-              atboot: true,
+              atboot: true
             )
           end
         end # host

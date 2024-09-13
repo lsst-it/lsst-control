@@ -39,7 +39,7 @@ describe 'love01.cp.lsst.org', :sitepp do
               'gateway' => '139.229.170.254',
               'options' => ['parent=ens2f0'],
             },
-          },
+          }
         )
       end
     end # on os

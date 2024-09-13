@@ -24,7 +24,7 @@ describe "#{role} role" do
           it do
             is_expected.to contain_class('tailscale').with_up_options(
               'accept-dns' => false,
-              'hostname' => facts[:networking]['fqdn'],
+              'hostname' => facts[:networking]['fqdn']
             )
           end
 
@@ -46,7 +46,7 @@ describe "#{role} role" do
           }.each do |host, ip|
             it do
               is_expected.to contain_host(host).with(
-                ip: ip,
+                ip: ip
               )
             end
           end
@@ -84,7 +84,7 @@ describe "#{role} role" do
               it do
                 is_expected.to contain_yum__versionlock(pkg).with(
                   version: '4.6.8',
-                  release: '5.el7.centos.15',
+                  release: '5.el7.centos.15'
                 )
               end
             end
@@ -95,7 +95,7 @@ describe "#{role} role" do
               it do
                 is_expected.to contain_yum__versionlock(pkg).with(
                   version: '1.3.11.1',
-                  release: '3.el7_9',
+                  release: '3.el7_9'
                 )
               end
             end

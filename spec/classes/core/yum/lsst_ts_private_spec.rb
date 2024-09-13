@@ -16,7 +16,7 @@ describe 'profile::core::yum::lsst_ts_private' do
             ensure: 'present',
             enabled: true,
             username: nil,
-            password: nil,
+            password: nil
           )
         end
       end
@@ -37,7 +37,7 @@ describe 'profile::core::yum::lsst_ts_private' do
             ensure: 'present',
             enabled: true,
             username: 'foo',
-            password: sensitive('bar'),
+            password: sensitive('bar')
           )
         end
       end
@@ -58,7 +58,7 @@ describe 'profile::core::yum::lsst_ts_private' do
             ensure: 'present',
             enabled: true,
             username: 'foo',
-            password: sensitive('bar'),
+            password: sensitive('bar')
           )
         end
       end

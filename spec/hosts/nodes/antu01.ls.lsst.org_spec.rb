@@ -44,13 +44,13 @@ describe 'antu01.ls.lsst.org', :sitepp do
               'group' => 'antu',
               'member' => 'antu[01-04]',
             },
-          },
+          }
         )
       end
 
       it do
         is_expected.to contain_class('rke').with(
-          version: '1.5.12',
+          version: '1.5.12'
         )
       end
 

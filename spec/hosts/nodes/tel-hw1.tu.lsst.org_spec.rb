@@ -64,7 +64,7 @@ describe 'tel-hw1.tu.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/data').with(
           share: 'obs-env',
           server: 'nfs-obsenv.tu.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
     end # on os

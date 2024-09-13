@@ -32,7 +32,7 @@ describe "#{role} role" do
               keep_local_changes: true,
               user: 'dco',
               owner: 'dco',
-              group: 'dco',
+              group: 'dco'
             )
           end
 

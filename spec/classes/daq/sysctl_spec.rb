@@ -14,7 +14,7 @@ describe 'profile::daq::sysctl' do
 
       it do
         is_expected.to contain_file('/etc/sysctl.d/99-lsst-daq-ccs.conf').with(
-          ensure: :absent,
+          ensure: :absent
         )
       end
     end

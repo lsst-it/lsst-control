@@ -41,7 +41,7 @@ describe 'lsstcam-db01.ls.lsst.org', :sitepp do
               rest-server
               localdb
             ],
-          },
+          }
         )
       end
 

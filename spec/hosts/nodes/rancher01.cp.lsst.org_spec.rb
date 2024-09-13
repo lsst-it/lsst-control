@@ -32,7 +32,7 @@ describe 'rancher01.cp.lsst.org', :sitepp do
       it do
         is_expected.to contain_class('rke').with(
           version: '1.5.12',
-          checksum: 'f0d1f6981edbb4c93f525ee51bc2a8ad729ba33c04f21a95f5fc86af4a7af586',
+          checksum: 'f0d1f6981edbb4c93f525ee51bc2a8ad729ba33c04f21a95f5fc86af4a7af586'
         )
       end
 

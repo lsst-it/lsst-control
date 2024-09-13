@@ -14,7 +14,7 @@ shared_examples 'lsstcam-rsyslog' do
         'StreamDriver' => 'ossl',
         'StreamDriverMode' => '1',
         'StreamDriverAuthMode' => 'anon',
-      },
+      }
     )
   end
 end

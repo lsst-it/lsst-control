@@ -43,13 +43,13 @@ describe 'namkueyen01.dev.lsst.org', :sitepp do
               'group' => 'namkueyen',
               'member' => 'namkueyen[01-03]',
             },
-          },
+          }
         )
       end
 
       it do
         is_expected.to contain_class('rke').with(
-          version: '1.5.12',
+          version: '1.5.12'
         )
       end
 

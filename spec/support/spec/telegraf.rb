@@ -3,7 +3,7 @@
 shared_examples 'telegraf' do
   it do
     is_expected.to contain_class('telegraf').with(
-      ensure: 'absent',
+      ensure: 'absent'
     )
   end
 

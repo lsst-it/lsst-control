@@ -14,7 +14,7 @@ describe 'profile::util::kernel_param' do
         it do
           is_expected.to contain_grubby__kernel_opt(title).with(
             ensure: 'present',
-            scope: 'ALL',
+            scope: 'ALL'
           )
         end
 
@@ -22,7 +22,7 @@ describe 'profile::util::kernel_param' do
           is_expected.to contain_reboot(title).with(
             apply: 'finished',
             message: "set kernel parameter: #{title} to present",
-            when: 'refreshed',
+            when: 'refreshed'
           )
         end
 
@@ -36,7 +36,7 @@ describe 'profile::util::kernel_param' do
 
         it do
           is_expected.to contain_grubby__kernel_opt(title).with(
-            ensure: 'present',
+            ensure: 'present'
           )
         end
 
@@ -44,7 +44,7 @@ describe 'profile::util::kernel_param' do
           is_expected.to contain_reboot(title).with(
             apply: 'finished',
             message: "set kernel parameter: #{title} to present",
-            when: 'refreshed',
+            when: 'refreshed'
           )
         end
 
@@ -58,7 +58,7 @@ describe 'profile::util::kernel_param' do
 
         it do
           is_expected.to contain_grubby__kernel_opt(title).with(
-            ensure: 'present',
+            ensure: 'present'
           )
         end
 
@@ -70,7 +70,7 @@ describe 'profile::util::kernel_param' do
 
         it do
           is_expected.to contain_grubby__kernel_opt(title).with(
-            ensure: 'present',
+            ensure: 'present'
           )
         end
       end
@@ -80,7 +80,7 @@ describe 'profile::util::kernel_param' do
 
         it do
           is_expected.to contain_grubby__kernel_opt(title).with(
-            ensure: 'absent',
+            ensure: 'absent'
           )
         end
       end

@@ -38,7 +38,7 @@ describe 'azar03.cp.lsst.org', :sitepp do
               'gateway' => '139.229.178.254',
               'options' => ['parent=dds'],
             },
-          },
+          }
         )
       end
 
@@ -86,7 +86,7 @@ describe 'azar03.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/project').with(
           share: 'project',
           server: 'nfs1.cp.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
 
@@ -94,7 +94,7 @@ describe 'azar03.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/scratch').with(
           share: 'scratch',
           server: 'nfs1.cp.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
     end # on os

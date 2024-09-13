@@ -38,7 +38,7 @@ describe 'comcam-archiver.tu.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/self/data/lsstdata').with(
           share: 'lsstdata',
           server: 'comcam-archiver.tu.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
 
@@ -46,7 +46,7 @@ describe 'comcam-archiver.tu.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/repo').with(
           share: 'repo',
           server: 'comcam-archiver.tu.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
     end # on os

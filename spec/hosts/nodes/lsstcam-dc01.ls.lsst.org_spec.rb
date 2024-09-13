@@ -107,7 +107,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
           ensure: 'directory',
           owner: 72_055,
           group: 72_055,
-          mode: '0755',
+          mode: '0755'
         )
       end
 
@@ -116,7 +116,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
           ensure: 'file',
           owner: 'ccs-ipa',
           group: 'ccs-ipa',
-          mode: '0755',
+          mode: '0755'
         )
       end
 

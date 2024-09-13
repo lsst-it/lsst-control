@@ -8,9 +8,9 @@ describe 'profile::core::x2go' do
       let(:facts) { os_facts }
       let(:pre_condition) do
         <<~PP
-        sudo::conf { 'bogus':
-          content => '%foo ALL=(bar) NOPASSWD: ALL',
-        }
+          sudo::conf { 'bogus':
+            content => '%foo ALL=(bar) NOPASSWD: ALL',
+          }
         PP
       end
 

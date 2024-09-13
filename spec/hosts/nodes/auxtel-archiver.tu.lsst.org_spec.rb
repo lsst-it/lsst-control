@@ -62,7 +62,7 @@ describe 'auxtel-archiver.tu.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/data').with(
           share: 'auxtel',
           server: 'nfs-auxtel.tu.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
     end # on os

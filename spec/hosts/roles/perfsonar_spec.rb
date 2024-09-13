@@ -30,7 +30,7 @@ describe "#{role} role" do
 
           it do
             is_expected.to contain_yum__versionlock('perfsonar-toolkit').with(
-              version: perfsonar_version,
+              version: perfsonar_version
             )
           end
 
@@ -40,7 +40,7 @@ describe "#{role} role" do
               state: 'NEW',
               ipset: 'aura src',
               dport: '22',
-              jump: 'accept',
+              jump: 'accept'
             )
           end
         end # host

@@ -41,7 +41,7 @@ describe "#{role} role" do
             it do
               is_expected.to contain_service('virtproxyd').with(
                 enable: true,
-                tag: 'libvirt-libvirtd-conf',
+                tag: 'libvirt-libvirtd-conf'
               )
             end
 
@@ -72,7 +72,7 @@ describe "#{role} role" do
                 is_expected.to contain_service(svc).with(
                   ensure: 'running',
                   enable: true,
-                  tag: 'libvirt-libvirtd-conf',
+                  tag: 'libvirt-libvirtd-conf'
                 )
               end
             end
@@ -83,7 +83,7 @@ describe "#{role} role" do
               ensure: 'directory',
               owner: 'qemu',
               group: 'qemu',
-              mode: '0750',
+              mode: '0750'
             )
           end
         end # host

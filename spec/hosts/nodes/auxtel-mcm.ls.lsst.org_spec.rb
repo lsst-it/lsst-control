@@ -103,7 +103,7 @@ describe 'auxtel-mcm.ls.lsst.org', :sitepp do
               'group' => 'all',
               'member' => '@misc',
             },
-          },
+          }
         )
       end
     end # on os

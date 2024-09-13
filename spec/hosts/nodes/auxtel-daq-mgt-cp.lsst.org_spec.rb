@@ -42,7 +42,7 @@ describe 'auxtel-daq-mgt.cp.lsst.org', :sitepp do
           # ipv6init: 'no',
           netmask: '255.255.255.0',
           onboot: 'yes',
-          type: 'Ethernet',
+          type: 'Ethernet'
         )
       end
     end # on os

@@ -25,7 +25,7 @@ describe "#{role} role" do
 
           it do
             expect(catalogue.resource('class', 'ssh')[:server_options]).to include(
-              'Port' => [22, 2712],
+              'Port' => [22, 2712]
             )
           end
         end # host

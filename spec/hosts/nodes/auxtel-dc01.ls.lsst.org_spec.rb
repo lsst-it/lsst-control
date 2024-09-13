@@ -98,7 +98,7 @@ describe 'auxtel-dc01.ls.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/ccs-data').with(
           share: 'ccs-data',
           server: 'auxtel-fp01.ls.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
 
@@ -106,7 +106,7 @@ describe 'auxtel-dc01.ls.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/repo').with(
           share: 'auxtel/repo',
           server: 'nfs-auxtel.ls.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
     end # on os

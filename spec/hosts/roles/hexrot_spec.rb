@@ -34,7 +34,7 @@ describe "#{role} role" do
               package_source: 'docker-ce',
               socket_group: 70_014,
               socket_override: false,
-              storage_driver: 'devicemapper',
+              storage_driver: 'devicemapper'
             )
           end
 
@@ -46,7 +46,7 @@ describe "#{role} role" do
               provider: 'git',
               source: 'https://github.com/lsst-ts/ts_config_mttcs.git',
               revision: 'v0.12.8',
-              keep_local_changes: 'false',
+              keep_local_changes: 'false'
             )
           end
 
@@ -78,7 +78,7 @@ describe "#{role} role" do
               anaconda_version: 'Anaconda3-2023.07-2',
               python_env_name: 'py311',
               python_env_version: '3.11',
-              conda_packages: pkgs,
+              conda_packages: pkgs
             )
           end
 
@@ -88,10 +88,10 @@ describe "#{role} role" do
             is_expected.to contain_file('/etc/profile.d/hexrot_path.sh').with(
               ensure: 'file',
               mode: '0644',
-              content: <<~CONTENT,
-              export QT_API="PySide6"
-              export PYTEST_QT_API="PySide6"
-              export TS_CONFIG_MTTCS_DIR="/opt/ts_config_mttcs"
+              content: <<~CONTENT
+                export QT_API="PySide6"
+                export PYTEST_QT_API="PySide6"
+                export TS_CONFIG_MTTCS_DIR="/opt/ts_config_mttcs"
               CONTENT
             )
           end
@@ -100,7 +100,7 @@ describe "#{role} role" do
             is_expected.to contain_file('/rubin/mtm2/python').with(
               ensure: 'directory',
               owner: '73006',
-              group: '73006',
+              group: '73006'
             )
           end
 
@@ -109,7 +109,7 @@ describe "#{role} role" do
               ensure: 'link',
               owner: '73006',
               group: '73006',
-              target: '/opt/anaconda/envs/py311/bin/run_m2gui',
+              target: '/opt/anaconda/envs/py311/bin/run_m2gui'
             )
           end
 
@@ -119,7 +119,7 @@ describe "#{role} role" do
                 ensure: 'directory',
                 owner: '73006',
                 group: '73006',
-                recurse: 'true',
+                recurse: 'true'
               )
             end
           end
@@ -130,7 +130,7 @@ describe "#{role} role" do
                 ensure: 'directory',
                 owner: '73006',
                 group: '73006',
-                mode: '0775',
+                mode: '0775'
               )
             end
           end

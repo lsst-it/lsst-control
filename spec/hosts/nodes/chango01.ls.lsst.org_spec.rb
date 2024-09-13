@@ -37,13 +37,13 @@ describe 'chango01.ls.lsst.org', :sitepp do
               'group' => 'chango',
               'member' => 'chango[01-03]',
             },
-          },
+          }
         )
       end
 
       it do
         is_expected.to contain_class('profile::core::rke').with(
-          version: '1.5.12',
+          version: '1.5.12'
         )
       end
 

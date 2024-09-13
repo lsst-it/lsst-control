@@ -32,7 +32,7 @@ describe 'elqui06.cp.lsst.org', :sitepp do
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(
-          'node-label' => ['role=storage-node'],
+          'node-label' => ['role=storage-node']
         )
       end
 
@@ -47,7 +47,7 @@ describe 'elqui06.cp.lsst.org', :sitepp do
               'group' => 'elqui',
               'member' => 'elqui[01-18]',
             },
-          },
+          }
         )
       end
 
@@ -55,7 +55,7 @@ describe 'elqui06.cp.lsst.org', :sitepp do
         is_expected.to contain_class('rke2').with(
           node_type: 'agent',
           release_series: '1.28',
-          version: '1.28.12~rke2r1',
+          version: '1.28.12~rke2r1'
         )
       end
 
@@ -64,7 +64,7 @@ describe 'elqui06.cp.lsst.org', :sitepp do
           'device' => {
             'keep-configuration' => 'no',
             'allowed-connections' => 'except:origin:nm-initrd-generator',
-          },
+          }
         )
       end
 

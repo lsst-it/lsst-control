@@ -34,7 +34,7 @@ describe 'profile::core::firewall' do
         it do
           is_expected.to contain_firewall('001 accept all icmp').with(
             proto: 'icmp',
-            jump: 'accept',
+            jump: 'accept'
           )
         end
       end

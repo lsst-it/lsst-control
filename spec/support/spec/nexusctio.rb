@@ -4,7 +4,7 @@ shared_examples 'nexusctio' do
   it do
     is_expected.to contain_yumrepo('nexus-ctio').with(
       'baseurl' => 'http://cagvm3.ctio.noao.edu/nexus/repository/labview-rpm/rubin/',
-      'gpgcheck' => false,
+      'gpgcheck' => false
     )
   end
 
@@ -12,7 +12,7 @@ shared_examples 'nexusctio' do
     is_expected.to contain_file('/etc/pki/rpm-gpg/RPM-GPG-KEY-MSO').with(
       ensure: 'file',
       mode: '0644',
-      content: <<~GPG,
+      content: <<~GPG
           -----BEGIN PGP PUBLIC KEY BLOCK-----
         Version: GnuPG v2.0.22 (GNU/Linux)
 

@@ -33,7 +33,7 @@ describe "#{role} role" do
               ensure: 'file',
               owner: 'ccs-ipa',
               group: 'ccs-ipa',
-              mode: '0755',
+              mode: '0755'
             )
           end
 

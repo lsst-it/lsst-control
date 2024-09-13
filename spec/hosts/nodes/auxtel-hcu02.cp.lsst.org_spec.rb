@@ -36,7 +36,7 @@ describe 'auxtel-hcu02.cp.lsst.org', :sitepp do
           bootproto: 'dhcp',
           defroute: 'yes',
           onboot: 'yes',
-          type: 'Ethernet',
+          type: 'Ethernet'
         )
       end
 
@@ -46,7 +46,7 @@ describe 'auxtel-hcu02.cp.lsst.org', :sitepp do
           ipaddress: '192.168.1.1',
           netmask: '255.255.255.0',
           onboot: 'yes',
-          type: 'Ethernet',
+          type: 'Ethernet'
         )
       end
 
@@ -54,7 +54,7 @@ describe 'auxtel-hcu02.cp.lsst.org', :sitepp do
         is_expected.to contain_network__interface('enp7s0').with(
           bootproto: 'none',
           onboot: 'no',
-          type: 'Ethernet',
+          type: 'Ethernet'
         )
       end
 
@@ -62,7 +62,7 @@ describe 'auxtel-hcu02.cp.lsst.org', :sitepp do
         is_expected.to contain_network__interface('enp8s0').with(
           bootproto: 'none',
           onboot: 'no',
-          type: 'Ethernet',
+          type: 'Ethernet'
         )
       end
     end # on os

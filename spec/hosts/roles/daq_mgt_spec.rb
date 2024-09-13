@@ -15,14 +15,14 @@ shared_examples 'generic daq manager' do |os_facts:, site:|
       dnsdomain: [],
       interfaces: ['lsst-daq'],
       nameservers: [],
-      ntpservers: [],
+      ntpservers: []
     )
   end
 
   it do
     is_expected.to contain_class('chrony').with(
       port: 123,
-      queryhosts: ['192.168/16'],
+      queryhosts: ['192.168/16']
     )
   end
 
@@ -30,7 +30,7 @@ shared_examples 'generic daq manager' do |os_facts:, site:|
     is_expected.to contain_accounts__user('rce').with(
       uid: '62002',
       gid: '62002',
-      shell: '/sbin/nologin',
+      shell: '/sbin/nologin'
     )
   end
 
@@ -38,7 +38,7 @@ shared_examples 'generic daq manager' do |os_facts:, site:|
     is_expected.to contain_accounts__user('dsid').with(
       uid: '62003',
       gid: '62003',
-      shell: '/sbin/nologin',
+      shell: '/sbin/nologin'
     )
   end
 end

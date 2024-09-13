@@ -18,16 +18,14 @@ describe 'profile::core::letsencrypt' do
             ensure: 'present',
             version: '0.1.13',
             release: '1.el7.0.1',
-            arch: 'noarch',
+            arch: 'noarch'
           ).that_comes_before('Class[letsencrypt::plugin::dns_route53]')
                                                                       .that_comes_before('Package[python-s3transfer]')
         end
 
         it { is_expected.to contain_package('python-s3transfer') }
 
-        if os_facts[:os]['name'] == 'CentOS'
-          it { is_expected.to contain_package('python2-futures.noarch') }
-        end
+        it { is_expected.to contain_package('python2-futures.noarch') } if os_facts[:os]['name'] == 'CentOS'
 
         it { is_expected.to have_letsencrypt__certonly_resource_count(0) }
         it { is_expected.not_to contain_file('/root/.aws') }
@@ -53,14 +51,14 @@ describe 'profile::core::letsencrypt' do
         it do
           is_expected.to contain_letsencrypt__certonly('foo').with(
             plugin: 'dns-route53',
-            manage_cron: true,
+            manage_cron: true
           )
         end
 
         it do
           is_expected.to contain_letsencrypt__certonly('bar').with(
             plugin: 'dns-route53',
-            manage_cron: false,
+            manage_cron: false
           )
         end
       end
@@ -76,7 +74,7 @@ describe 'profile::core::letsencrypt' do
           is_expected.to contain_file('/root/.aws').with(
             ensure: 'directory',
             mode: '0700',
-            backup: false,
+            backup: false
           )
         end
 
@@ -85,7 +83,7 @@ describe 'profile::core::letsencrypt' do
             ensure: 'file',
             mode: '0600',
             backup: false,
-            content: 'foo',
+            content: 'foo'
           )
         end
       end

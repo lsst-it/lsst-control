@@ -79,7 +79,7 @@ describe 'azar01.ls.lsst.org', :sitepp do
               'gateway' => '139.229.152.126',
               'options' => ['parent=dds'],
             },
-          },
+          }
         )
       end
     end # on os

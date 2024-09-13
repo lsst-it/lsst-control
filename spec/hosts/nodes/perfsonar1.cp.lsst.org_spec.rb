@@ -40,7 +40,7 @@ describe 'perfsonar1.cp.lsst.org', :sitepp do
           bootproto: 'none',
           onboot: 'yes',
           type: 'Ethernet',
-          mtu: '9000',
+          mtu: '9000'
         )
       end
 
@@ -49,7 +49,7 @@ describe 'perfsonar1.cp.lsst.org', :sitepp do
           bootproto: 'none',
           onboot: 'yes',
           type: 'Ethernet',
-          mtu: '9000',
+          mtu: '9000'
         )
       end
 
@@ -62,7 +62,7 @@ describe 'perfsonar1.cp.lsst.org', :sitepp do
           ipaddress: '139.229.164.220',
           netmask: '255.255.255.254',
           nozeroconf: 'yes',
-          mtu: '9000',
+          mtu: '9000'
         )
       end
 
@@ -82,7 +82,7 @@ describe 'perfsonar1.cp.lsst.org', :sitepp do
             '198.32.252.234/31' => '139.229.164.254',
             '134.79.235.226/32' => '139.229.164.254',
             '134.79.235.242/32' => '139.229.164.254',
-          ],
+          ]
         )
       end
     end # on os

@@ -8,7 +8,7 @@ shared_examples 'rke profile' do
   it do
     is_expected.to contain_sysctl__value('net.bridge.bridge-nf-call-iptables').with(
       value: 1,
-      target: '/etc/sysctl.d/80-rke.conf',
+      target: '/etc/sysctl.d/80-rke.conf'
     ).that_requires('Kmod::Load[br_netfilter]').that_comes_before('Class[docker]')
   end
 

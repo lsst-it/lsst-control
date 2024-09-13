@@ -119,15 +119,6 @@ end
 # Note that this is violating the private api of `RSpec::Core::Configuration`.
 RSpec.configuration.instance_variable_set(:@after_suite_hooks, [])
 
-# Ensures that a module is defined
-# @param module_name Name of the module
-def ensure_module_defined(module_name)
-  module_name.split('::').reduce(Object) do |last_module, next_module|
-    last_module.const_set(next_module, Module.new) unless last_module.const_defined?(next_module, false)
-    last_module.const_get(next_module, false)
-  end
-end
-
 def node_dir
   File.join(control_hieradata_path, 'node')
 end

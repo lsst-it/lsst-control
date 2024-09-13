@@ -13,18 +13,18 @@ describe "#{role} role" do
         describe "#{role}.#{site}.lsst.org", :sitepp do
           let(:node_params) do
             {
-              role: role,
-              site: site,
+              role:,
+              site:,
             }
           end
           let(:facts) { lsst_override_facts(os_facts) }
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts, site: site
+          include_examples('common', os_facts:, site:)
           include_examples 'ipset'
-          include_examples 'firewall default', os_facts: os_facts
-          include_examples 'firewall node_exporter scraping', site: site
+          include_examples('firewall default', os_facts:)
+          include_examples('firewall node_exporter scraping', site:)
           include_examples 'restic common'
 
           it { is_expected.to contain_class('tang') }

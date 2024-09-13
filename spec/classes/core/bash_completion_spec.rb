@@ -9,7 +9,7 @@ describe 'profile::core::bash_completion' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'bash_completion', os_facts: os_facts
+      include_examples 'bash_completion', os_facts:
     end
   end
 end

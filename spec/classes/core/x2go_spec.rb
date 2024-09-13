@@ -17,7 +17,7 @@ describe 'profile::core::x2go' do
       context 'with no parameters' do
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'x2go packages', os_facts: os_facts
+        include_examples('x2go packages', os_facts:)
 
         it do
           is_expected.to contain_file('/etc/sudoers.d/x2goserver')

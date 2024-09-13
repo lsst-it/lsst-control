@@ -11,15 +11,15 @@ describe "#{role} role" do
         describe "#{role}.#{site}.lsst.org", :sitepp do
           let(:node_params) do
             {
-              role: role,
-              site: site,
+              role:,
+              site:,
             }
           end
           let(:facts) { lsst_override_facts(os_facts) }
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts, site: site
+          include_examples('common', os_facts:, site:)
           it { is_expected.to have_nfs__client__mount_resource_count(6) }
 
           it do

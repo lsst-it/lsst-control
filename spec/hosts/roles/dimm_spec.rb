@@ -11,15 +11,15 @@ describe "#{role} role" do
         describe "#{role}.#{site}.lsst.org", :sitepp do
           let(:node_params) do
             {
-              role: role,
-              site: site,
+              role:,
+              site:,
             }
           end
           let(:facts) { lsst_override_facts(os_facts) }
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts, site: site
+          include_examples('common', os_facts:, site:)
           it { is_expected.to contain_class('profile::core::yum::lsst_ts_private') }
           it { is_expected.to contain_package('ts_dimm_app-2.0-1.el8.x86_64') }
           it { is_expected.to contain_package('telnet') }

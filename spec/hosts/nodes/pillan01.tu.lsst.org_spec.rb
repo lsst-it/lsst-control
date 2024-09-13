@@ -98,7 +98,7 @@ describe 'pillan01.tu.lsst.org', :sitepp do
           let(:interface) { slave }
 
           it_behaves_like 'nm enabled interface'
-          it_behaves_like 'nm bridge slave interface', master: master
+          it_behaves_like 'nm bridge slave interface', master:
         end
       end
 

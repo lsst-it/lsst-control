@@ -20,8 +20,8 @@ describe "#{role} role" do
         describe "#{role}.#{site}.lsst.org", :sitepp do
           let(:node_params) do
             {
-              role: role,
-              site: site,
+              role:,
+              site:,
             }
           end
           let(:facts) { lsst_override_facts(os_facts) }

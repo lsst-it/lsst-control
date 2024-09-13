@@ -181,17 +181,17 @@ shared_examples 'krb5.conf content' do |match|
 end
 
 shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, node_exporter: true|
-  include_examples 'bash_completion', os_facts: os_facts
+  include_examples('bash_completion', os_facts:)
   include_examples 'convenience'
   include_examples 'telegraf'
-  include_examples 'rsyslog defaults', site: site
+  include_examples('rsyslog defaults', site:)
 
   unless no_auth
     # inspect config fragment instead of class params to ensure that %{uid} is not
     # being caught by hiera string interpolation
     include_examples 'krb5.conf content', %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}}
 
-    include_examples 'krb5.conf.d files', os_facts: os_facts
+    include_examples('krb5.conf.d files', os_facts:)
     include_examples 'sssd services'
 
     it { is_expected.to contain_class('ssh').that_requires('Class[ipa]') }
@@ -957,6 +957,6 @@ shared_examples 'fog_hack' do
   end
 end
 
-Dir['./spec/support/spec/**/*.rb'].sort.each { |f| require f }
+Dir['./spec/support/spec/**/*.rb'].each { |f| require f }
 
 # 'spec_overrides' from sync.yml will appear below this line

@@ -11,8 +11,8 @@ describe "#{role} role" do
         describe "#{role}.#{site}.lsst.org", :sitepp do
           let(:node_params) do
             {
-              role: role,
-              site: site,
+              role:,
+              site:,
             }
           end
           let(:facts) { lsst_override_facts(os_facts) }
@@ -22,11 +22,11 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts, site: site
-          include_examples 'generic perfsonar', os_facts: os_facts
+          include_examples('common', os_facts:, site:)
+          include_examples('generic perfsonar', os_facts:)
           include_examples 'ipset'
-          include_examples 'firewall default', os_facts: os_facts
-          include_examples 'firewall node_exporter scraping', site: site
+          include_examples('firewall default', os_facts:)
+          include_examples('firewall node_exporter scraping', site:)
 
           it do
             is_expected.to contain_yum__versionlock('perfsonar-toolkit').with(

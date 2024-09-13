@@ -11,8 +11,8 @@ describe "#{role} role" do
         describe "#{role}.#{site}.lsst.org", :sitepp do
           let(:node_params) do
             {
-              role: role,
-              site: site,
+              role:,
+              site:,
             }
           end
           let(:facts) do
@@ -29,9 +29,9 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts, site: site
+          include_examples('common', os_facts:, site:)
           include_examples 'docker'
-          include_examples 'gpio', os_facts: os_facts
+          include_examples('gpio', os_facts:)
           include_examples 'gpshat'
           include_examples 'pigpio'
         end # host

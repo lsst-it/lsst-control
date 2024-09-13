@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 shared_examples 'generic daq manager' do |os_facts:, site:|
-  include_examples 'common', os_facts: os_facts, site: site, chrony: false
+  include_examples 'common', os_facts:, site:, chrony: false
   include_examples 'lsst-daq sysctls'
-  include_examples 'nfsv2 enabled', os_facts: os_facts
+  include_examples('nfsv2 enabled', os_facts:)
   include_examples 'daq common'
 
   it { is_expected.to contain_class('hosts') }
@@ -54,15 +54,15 @@ describe "#{role} role" do
         describe "#{role}.#{site}.lsst.org", :sitepp do
           let(:node_params) do
             {
-              role: role,
-              site: site,
+              role:,
+              site:,
             }
           end
           let(:facts) { lsst_override_facts(os_facts) }
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'generic daq manager', os_facts: os_facts, site: site
+          include_examples 'generic daq manager', os_facts:, site:
         end # host
       end # lsst_sites
     end # on os

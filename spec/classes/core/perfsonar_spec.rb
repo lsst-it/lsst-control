@@ -11,7 +11,7 @@ describe 'profile::core::perfsonar' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'generic perfsonar', os_facts: os_facts
+      include_examples('generic perfsonar', os_facts:)
 
       context 'with version param' do
         context 'with 5.0.0' do
@@ -22,7 +22,7 @@ describe 'profile::core::perfsonar' do
             }
           end
 
-          include_examples 'generic perfsonar', os_facts: os_facts
+          include_examples 'generic perfsonar', os_facts:
         end
       end
     end

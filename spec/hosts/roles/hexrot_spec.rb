@@ -13,8 +13,8 @@ describe "#{role} role" do
         describe "#{role}.#{site}.lsst.org", :sitepp do
           let(:node_params) do
             {
-              role: role,
-              site: site,
+              role:,
+              site:,
             }
           end
           let(:facts) { lsst_override_facts(os_facts) }
@@ -22,8 +22,8 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples 'debugutils'
-          include_examples 'common', os_facts: os_facts, site: site
-          include_examples 'x2go packages', os_facts: os_facts
+          include_examples('common', os_facts:, site:)
+          include_examples('x2go packages', os_facts:)
           include_examples 'ni_packages'
           include_examples 'nexusctio'
           it { is_expected.to contain_class('mate') }

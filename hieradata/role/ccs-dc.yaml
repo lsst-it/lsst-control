@@ -8,6 +8,7 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::sysctl::lhn"
+  - "s3daemon"
 
 profile::ccs::common::sysctls: false
 

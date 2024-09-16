@@ -7,28 +7,26 @@ role = 'nfsserver'
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { os_facts }
-      let(:node_params) do
-        {
-          role: role,
-          site: site,
-        }
-      end
-
       describe 'nfsserver.cp.lsst.org', :sitepp do
         site = 'cp'
         let(:site) { site }
-        let(:facts) { override_facts(os_facts, fqdn: 'nfsserver.cp.lsst.org') }
+        let(:node_params) do
+          {
+            role:,
+            site:,
+          }
+        end
+        let(:facts) { lsst_override_facts(os_facts) }
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'common', os_facts: os_facts, site: site
+        include_examples('common', os_facts:, site:)
 
         it do
           is_expected.to contain_class('nfs').with(
             server_enabled: true,
             client_enabled: true,
-            nfs_v4_client: true,
+            nfs_v4_client: true
           )
         end
 
@@ -44,7 +42,7 @@ describe "#{role} role" do
             '139.229.175.0/26(rw,fsid=root,insecure,no_subtree_check,async,root_squash)',
             '139.229.175.128/25(rw,fsid=root,insecure,no_subtree_check,async,root_squash)',
             'azar03.cp.lsst.org(rw,fsid=root,insecure,no_subtree_check,async,root_squash)',
-            '139.229.191.0/25(rw,fsid=root,insecure,no_subtree_check,async,root_squash)',
+            '139.229.191.0/25(rw,fsid=root,insecure,no_subtree_check,async,root_squash)'
           )
         end
 
@@ -58,7 +56,7 @@ describe "#{role} role" do
               '139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
               '139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
               '139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)',
-              '139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)',
+              '139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)'
             )
         end
 
@@ -67,7 +65,7 @@ describe "#{role} role" do
             .to include(
               '139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
               '139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)',
-              'nfs2.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,no_root_squash)',
+              'nfs2.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,no_root_squash)'
             )
         end
 
@@ -81,7 +79,7 @@ describe "#{role} role" do
               '139.229.175.0/26(ro,nohide,insecure,no_subtree_check,async,root_squash)',
               '139.229.175.128/25(ro,nohide,insecure,no_subtree_check,async,root_squash)',
               'ts-csc-generic-01.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)',
-              'comcam-archiver.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)',
+              'comcam-archiver.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)'
             )
         end
 
@@ -97,7 +95,7 @@ describe "#{role} role" do
               '139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
               '139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)',
               '139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)',
-              'azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)',
+              'azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)'
             )
         end
 
@@ -112,7 +110,7 @@ describe "#{role} role" do
               '139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
               '139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)',
               '139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)',
-              'azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)',
+              'azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)'
             )
         end
 
@@ -124,7 +122,7 @@ describe "#{role} role" do
               '139.229.164.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
               '139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
               '139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
-              '139.229.191.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)',
+              '139.229.191.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)'
             )
         end
 
@@ -133,31 +131,31 @@ describe "#{role} role" do
             .to include(
               '139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
               '139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)',
-              'nfs2.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,no_root_squash)',
+              'nfs2.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,no_root_squash)'
             )
         end
 
         it do
           is_expected.to contain_nfs__client__mount('/net/self/data/rsphome').with(
             share: 'rsphome',
-            server: facts[:fqdn],
-            atboot: true,
+            server: facts[:networking]['fqdn'],
+            atboot: true
           )
         end
 
         it do
           is_expected.to contain_nfs__client__mount('/net/self/data/project').with(
             share: 'project',
-            server: facts[:fqdn],
-            atboot: true,
+            server: facts[:networking]['fqdn'],
+            atboot: true
           )
         end
 
         it do
           is_expected.to contain_nfs__client__mount('/net/self/data/scratch').with(
             share: 'scratch',
-            server: facts[:fqdn],
-            atboot: true,
+            server: facts[:networking]['fqdn'],
+            atboot: true
           )
         end
       end

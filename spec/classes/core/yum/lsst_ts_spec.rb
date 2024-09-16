@@ -13,7 +13,7 @@ describe 'profile::core::yum::lsst_ts' do
         is_expected.to contain_yumrepo('lsst-ts').with(
           descr: 'LSST Telescope and Site Packages',
           ensure: 'present',
-          enabled: true,
+          enabled: true
         )
       end
     end

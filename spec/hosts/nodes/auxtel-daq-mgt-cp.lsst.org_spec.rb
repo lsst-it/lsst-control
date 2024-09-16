@@ -8,15 +8,14 @@ describe 'auxtel-daq-mgt.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'auxtel-daq-mgt.cp.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'PowerEdge R630',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'PowerEdge R630',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -43,7 +42,7 @@ describe 'auxtel-daq-mgt.cp.lsst.org', :sitepp do
           # ipv6init: 'no',
           netmask: '255.255.255.0',
           onboot: 'yes',
-          type: 'Ethernet',
+          type: 'Ethernet'
         )
       end
     end # on os

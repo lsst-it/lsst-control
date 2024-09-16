@@ -26,7 +26,7 @@ describe 'profile::core::dtn' do
           is_expected.to contain_sysctl__value(s)
             .with(
               value: v,
-              target: '/etc/sysctl.d/93-tcp_ip.conf',
+              target: '/etc/sysctl.d/93-tcp_ip.conf'
             )
         end
       end

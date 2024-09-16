@@ -8,15 +8,14 @@ describe 'rancher01.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'rancher01.cp.lsst.org',
-                       is_virtual: true,
-                       virtual: 'kvm',
-                       dmi: {
-                         'product' => {
-                           'name' => 'KVM',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: true,
+                            virtual: 'kvm',
+                            dmi: {
+                              'product' => {
+                                'name' => 'KVM',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -33,7 +32,7 @@ describe 'rancher01.cp.lsst.org', :sitepp do
       it do
         is_expected.to contain_class('rke').with(
           version: '1.5.12',
-          checksum: 'f0d1f6981edbb4c93f525ee51bc2a8ad729ba33c04f21a95f5fc86af4a7af586',
+          checksum: 'f0d1f6981edbb4c93f525ee51bc2a8ad729ba33c04f21a95f5fc86af4a7af586'
         )
       end
 

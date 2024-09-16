@@ -8,15 +8,14 @@ describe 'comcam-archiver.tu.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'comcam-archiver.tu.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'PowerEdge R440',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'PowerEdge R440',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -39,7 +38,7 @@ describe 'comcam-archiver.tu.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/self/data/lsstdata').with(
           share: 'lsstdata',
           server: 'comcam-archiver.tu.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
 
@@ -47,7 +46,7 @@ describe 'comcam-archiver.tu.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/repo').with(
           share: 'repo',
           server: 'comcam-archiver.tu.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
     end # on os

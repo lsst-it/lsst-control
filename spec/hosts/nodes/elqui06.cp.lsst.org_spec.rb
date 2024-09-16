@@ -8,15 +8,14 @@ describe 'elqui06.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'elqui06.tu.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'AS -1115HS-TNR',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'AS -1115HS-TNR',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -33,7 +32,7 @@ describe 'elqui06.cp.lsst.org', :sitepp do
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(
-          'node-label' => ['role=storage-node'],
+          'node-label' => ['role=storage-node']
         )
       end
 
@@ -48,7 +47,7 @@ describe 'elqui06.cp.lsst.org', :sitepp do
               'group' => 'elqui',
               'member' => 'elqui[01-18]',
             },
-          },
+          }
         )
       end
 
@@ -56,7 +55,7 @@ describe 'elqui06.cp.lsst.org', :sitepp do
         is_expected.to contain_class('rke2').with(
           node_type: 'agent',
           release_series: '1.28',
-          version: '1.28.12~rke2r1',
+          version: '1.28.12~rke2r1'
         )
       end
 
@@ -65,7 +64,7 @@ describe 'elqui06.cp.lsst.org', :sitepp do
           'device' => {
             'keep-configuration' => 'no',
             'allowed-connections' => 'except:origin:nm-initrd-generator',
-          },
+          }
         )
       end
 
@@ -111,7 +110,7 @@ describe 'elqui06.cp.lsst.org', :sitepp do
           let(:interface) { slave }
 
           it_behaves_like 'nm enabled interface'
-          it_behaves_like 'nm bridge slave interface', master: master
+          it_behaves_like 'nm bridge slave interface', master:
         end
       end
 

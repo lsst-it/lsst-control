@@ -40,7 +40,7 @@ describe 'profile::ccs::file_transfer' do
         it do
           is_expected.to contain_service('s3daemon').with(
             ensure: 'running',
-            enable: true,
+            enable: true
           )
         end
       end

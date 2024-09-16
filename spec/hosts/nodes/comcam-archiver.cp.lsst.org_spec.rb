@@ -9,15 +9,14 @@ describe 'comcam-archiver.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'comcam-archiver.cp.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'PowerEdge R640',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'PowerEdge R640',
+                              },
+                            })
       end
 
       let(:node_params) do
@@ -37,7 +36,7 @@ describe 'comcam-archiver.cp.lsst.org', :sitepp do
           bootproto: 'dhcp',
           defroute: 'yes',
           onboot: 'yes',
-          type: 'Ethernet',
+          type: 'Ethernet'
         )
       end
 
@@ -49,7 +48,7 @@ describe 'comcam-archiver.cp.lsst.org', :sitepp do
           netmask: '255.255.255.0',
           nozeroconf: 'yes',
           onboot: 'yes',
-          type: 'Ethernet',
+          type: 'Ethernet'
         )
       end
 
@@ -57,7 +56,7 @@ describe 'comcam-archiver.cp.lsst.org', :sitepp do
         is_expected.to contain_network__interface('em3').with(
           bootproto: 'none',
           onboot: 'no',
-          type: 'Ethernet',
+          type: 'Ethernet'
         )
       end
 
@@ -65,7 +64,7 @@ describe 'comcam-archiver.cp.lsst.org', :sitepp do
         is_expected.to contain_network__interface('em4').with(
           bootproto: 'none',
           onboot: 'no',
-          type: 'Ethernet',
+          type: 'Ethernet'
         )
       end
 
@@ -73,7 +72,7 @@ describe 'comcam-archiver.cp.lsst.org', :sitepp do
         is_expected.to contain_network__interface('p2p1').with(
           bootproto: 'none',
           onboot: 'no',
-          type: 'Ethernet',
+          type: 'Ethernet'
         )
       end
 
@@ -81,7 +80,7 @@ describe 'comcam-archiver.cp.lsst.org', :sitepp do
         is_expected.to contain_network__interface('p2p2').with(
           bootproto: 'none',
           onboot: 'no',
-          type: 'Ethernet',
+          type: 'Ethernet'
         )
       end
 
@@ -94,7 +93,7 @@ describe 'comcam-archiver.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/self/data/lsstdata').with(
           share: 'lsstdata',
           server: 'comcam-archiver.cp.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
 
@@ -102,7 +101,7 @@ describe 'comcam-archiver.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/repo').with(
           share: 'repo',
           server: 'comcam-archiver.cp.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
     end # on os

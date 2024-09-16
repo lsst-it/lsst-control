@@ -117,29 +117,29 @@ nfs::client_enabled: true
 nfs::client_mounts:
   /net/self/data/home:
     share: "home"
-    server: "%{facts.fqdn}"
+    server: "%{facts.networking.fqdn}"
     atboot: true
   /net/self/data/jhome:
     share: "jhome"
-    server: "%{facts.fqdn}"
+    server: "%{facts.networking.fqdn}"
     atboot: true
   /net/self/data/lsstdata:
     share: "lsstdata"
-    server: "%{facts.fqdn}"
+    server: "%{facts.networking.fqdn}"
     atboot: true
   /net/self/data/project:
     share: "project"
-    server: "%{facts.fqdn}"
+    server: "%{facts.networking.fqdn}"
     atboot: true
   /net/self/data/scratch:
     share: "scratch"
-    server: "%{facts.fqdn}"
+    server: "%{facts.networking.fqdn}"
     atboot: true
   /net/self/dimm:
     share: "dimm"
-    server: "%{facts.fqdn}"
+    server: "%{facts.networking.fqdn}"
     atboot: true
   /net/self/data/rsphome:
     share: "rsphome"
-    server: "%{facts.fqdn}"
+    server: "%{facts.networking.fqdn}"
     atboot: true

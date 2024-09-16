@@ -23,7 +23,7 @@ shared_examples 'archive data auxtel' do
       ensure: 'directory',
       mode: '0755',
       owner: 1000,
-      group: 983,
+      group: 983
     )
   end
 end

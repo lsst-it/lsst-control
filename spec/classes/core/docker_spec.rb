@@ -14,7 +14,7 @@ describe 'profile::core::docker' do
       it do
         is_expected.to contain_systemd__dropin_file('wait-for-docker-group.conf').with(
           unit: 'docker.socket',
-          content: %r{SocketGroup=root},
+          content: %r{SocketGroup=root}
         )
       end
 
@@ -28,7 +28,7 @@ describe 'profile::core::docker' do
         it do
           is_expected.to contain_systemd__dropin_file('ceph.conf').with(
             unit: 'containerd.service',
-            content: <<~CONTENT,
+            content: <<~CONTENT
               # fix for ceph mons crashing
               # See: https://github.com/rook/rook/issues/10110#issuecomment-1464898937
               [Service]
@@ -43,7 +43,7 @@ describe 'profile::core::docker' do
       it do
         is_expected.to contain_file('/etc/docker').with(
           ensure: 'directory',
-          mode: '0755',
+          mode: '0755'
         ).that_comes_before('File[/etc/docker/daemon.json]')
       end
 
@@ -51,7 +51,7 @@ describe 'profile::core::docker' do
         is_expected.to contain_file('/etc/docker/daemon.json').with(
           ensure: 'file',
           mode: '0644',
-          content: %r{"live-restore": true},
+          content: %r{"live-restore": true}
         ).that_notifies('Service[docker]')
       end
     end

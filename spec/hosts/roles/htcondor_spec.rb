@@ -9,22 +9,17 @@ describe "#{role} role" do
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
-      let(:facts) { os_facts }
-      let(:node_params) do
-        {
-          role: role,
-          site: site,
-        }
-      end
-
       lsst_sites.each do |site|
         next if site == 'tu'
 
-        fqdn = "#{role}.#{site}.lsst.org"
-        override_facts(os_facts, fqdn: fqdn, networking: { 'fqdn' => fqdn })
-
-        describe fqdn, :sitepp do
-          let(:site) { site }
+        describe "#{role}.#{site}.lsst.org", :sitepp do
+          let(:node_params) do
+            {
+              role:,
+              site:,
+            }
+          end
+          let(:facts) { lsst_override_facts(os_facts) }
 
           it { is_expected.to compile.with_all_deps }
 
@@ -42,7 +37,7 @@ describe "#{role} role" do
             is_expected.to contain_file('/etc/profile.d/rubin.sh').with(
               ensure: 'file',
               mode: '0644',
-              content: <<~CONTENT,
+              content: <<~CONTENT
                 export DAF_BUTLER_REPOSITORY_INDEX=/project/data-repos.yaml
                 export PGPASSFILE=/home/$USER/.lsst/postgres-credentials.txt
                 export PGUSER=oods
@@ -67,20 +62,18 @@ describe "#{role} role" do
           it do
             is_expected.to contain_service('condor').with(
               ensure: 'running',
-              enable: true,
+              enable: true
             )
           end
 
-          if site == 'dev'
-            it { is_expected.to contain_class('htcondor').with_htcondor_host('htcondor-cm.dev.lsst.org') }
-          end
+          it { is_expected.to contain_class('htcondor').with_htcondor_host('htcondor-cm.dev.lsst.org') } if site == 'dev'
 
           if %w[ls dev].include?(site)
             it do
               is_expected.to contain_nfs__client__mount('/home').with(
                 share: 'rsphome',
                 server: 'nfs-rsphome.ls.lsst.org',
-                atboot: true,
+                atboot: true
               )
             end
 
@@ -88,7 +81,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/project').with(
                 share: 'project',
                 server: 'nfs-project.ls.lsst.org',
-                atboot: true,
+                atboot: true
               )
             end
           end
@@ -100,7 +93,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/repo/LATISS').with(
                 share: '/auxtel/repo/LATISS',
                 server: 'nfs-auxtel.ls.lsst.org',
-                atboot: true,
+                atboot: true
               )
             end
 
@@ -108,7 +101,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/data/lsstdata/BTS/auxtel').with(
                 share: '/auxtel/lsstdata/BTS/auxtel',
                 server: 'nfs-auxtel.ls.lsst.org',
-                atboot: true,
+                atboot: true
               )
             end
 
@@ -116,7 +109,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/datasets').with(
                 share: 'lsstdata',
                 server: 'nfs-lsstdata.ls.lsst.org',
-                atboot: true,
+                atboot: true
               )
             end
           end
@@ -128,7 +121,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/home').with(
                 share: 'rsphome',
                 server: 'nfs-rsphome.cp.lsst.org',
-                atboot: true,
+                atboot: true
               )
             end
 
@@ -136,7 +129,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/project').with(
                 share: 'project',
                 server: 'nfs1.cp.lsst.org',
-                atboot: true,
+                atboot: true
               )
             end
 
@@ -144,7 +137,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/repo/LATISS').with(
                 share: '/auxtel/repo/LATISS',
                 server: 'nfs-auxtel.cp.lsst.org',
-                atboot: true,
+                atboot: true
               )
             end
 
@@ -152,7 +145,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/repo/LSSTComCam').with(
                 share: '/repo/LSSTComCam',
                 server: 'comcam-archiver.cp.lsst.org',
-                atboot: true,
+                atboot: true
               )
             end
 
@@ -160,7 +153,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/readonly/lsstdata/other').with(
                 share: 'lsstdata',
                 server: 'nfs1.cp.lsst.org',
-                atboot: true,
+                atboot: true
               )
             end
 
@@ -168,7 +161,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/readonly/lsstdata/comcam').with(
                 share: 'lsstdata',
                 server: 'comcam-archiver.cp.lsst.org',
-                atboot: true,
+                atboot: true
               )
             end
 
@@ -176,21 +169,21 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/readonly/lsstdata/auxtel').with(
                 share: '/auxtel/lsstdata',
                 server: 'nfs-auxtel.cp.lsst.org',
-                atboot: true,
+                atboot: true
               )
             end
 
             it do
               is_expected.to contain_file('/data/lsstdata/base/comcam').with(
                 ensure: 'link',
-                target: '/readonly/lsstdata/comcam/base/comcam',
+                target: '/readonly/lsstdata/comcam/base/comcam'
               )
             end
 
             it do
               is_expected.to contain_file('/data/lsstdata/base/auxtel').with(
                 ensure: 'link',
-                target: '/readonly/lsstdata/auxtel/base/auxtel',
+                target: '/readonly/lsstdata/auxtel/base/auxtel'
               )
             end
           end

@@ -7,7 +7,7 @@ shared_examples 'gpsd' do
   it do
     is_expected.to contain_systemd__dropin_file('gpsd.conf').with(
       unit: 'gpsd.socket',
-      content: %r{#ListenStream=\[::1\]:2947},
+      content: %r{#ListenStream=\[::1\]:2947}
     )
   end
 end

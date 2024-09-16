@@ -8,15 +8,14 @@ describe 'azar03.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'azar03.cp.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'AS -1114S-WN10RT',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'AS -1114S-WN10RT',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -39,7 +38,7 @@ describe 'azar03.cp.lsst.org', :sitepp do
               'gateway' => '139.229.178.254',
               'options' => ['parent=dds'],
             },
-          },
+          }
         )
       end
 
@@ -87,7 +86,7 @@ describe 'azar03.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/project').with(
           share: 'project',
           server: 'nfs1.cp.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
 
@@ -95,7 +94,7 @@ describe 'azar03.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/scratch').with(
           share: 'scratch',
           server: 'nfs1.cp.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
     end # on os

@@ -7,35 +7,30 @@ role = 'perfsonar'
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { os_facts }
-      let(:node_params) do
-        {
-          role: role,
-          site: site,
-        }
-      end
-
       lsst_sites.each do |site|
-        fqdn = "#{role}.#{site}.lsst.org"
-        override_facts(os_facts, fqdn: fqdn, networking: { 'fqdn' => fqdn })
+        describe "#{role}.#{site}.lsst.org", :sitepp do
+          let(:node_params) do
+            {
+              role:,
+              site:,
+            }
+          end
+          let(:facts) { lsst_override_facts(os_facts) }
 
-        describe fqdn, :sitepp do
-          let(:site) { site }
-
-          let(:le_root) { "/etc/letsencrypt/live/#{facts[:fqdn]}" }
+          let(:le_root) { "/etc/letsencrypt/live/#{facts[:networking]['fqdn']}" }
           let(:perfsonar_version) { '5.0.8' }
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts, site: site
-          include_examples 'generic perfsonar', os_facts: os_facts
+          include_examples('common', os_facts:, site:)
+          include_examples('generic perfsonar', os_facts:)
           include_examples 'ipset'
-          include_examples 'firewall default', os_facts: os_facts
-          include_examples 'firewall node_exporter scraping', site: site
+          include_examples('firewall default', os_facts:)
+          include_examples('firewall node_exporter scraping', site:)
 
           it do
             is_expected.to contain_yum__versionlock('perfsonar-toolkit').with(
-              version: perfsonar_version,
+              version: perfsonar_version
             )
           end
 
@@ -45,7 +40,7 @@ describe "#{role} role" do
               state: 'NEW',
               ipset: 'aura src',
               dport: '22',
-              jump: 'accept',
+              jump: 'accept'
             )
           end
         end # host

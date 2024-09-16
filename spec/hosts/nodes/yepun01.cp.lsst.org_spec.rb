@@ -8,18 +8,17 @@ describe 'yepun01.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'yepun01.cp.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'Super Server',
-                         },
-                         'board' => {
-                           'product' => 'H12SSL-NT',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'Super Server',
+                              },
+                              'board' => {
+                                'product' => 'H12SSL-NT',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -43,14 +42,14 @@ describe 'yepun01.cp.lsst.org', :sitepp do
               'group' => 'yepun',
               'member' => 'yepun[01-05]',
             },
-          },
+          }
         )
       end
 
       it do
         is_expected.to contain_class('rke').with(
           version: '1.5.12',
-          checksum: 'f0d1f6981edbb4c93f525ee51bc2a8ad729ba33c04f21a95f5fc86af4a7af586',
+          checksum: 'f0d1f6981edbb4c93f525ee51bc2a8ad729ba33c04f21a95f5fc86af4a7af586'
         )
       end
 

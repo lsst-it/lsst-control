@@ -2,7 +2,6 @@
 
 require 'voxpupuli/test/spec_helper'
 require 'iniparse'
-include RspecPuppetFacts
 
 # foreman, puppetserver and termini versions
 FOREMAN_VERSION = '3.2.1'
@@ -42,7 +41,7 @@ end
 
 # extract public hiera hierarchy
 def hiera_public_hierarchy
-  hc = YAML.load_file(control_hiera_config)
+  hc = YAML.load_file(control_hiera_config, aliases: true)
   hc['hierarchy'].find { |h| h['name'] == 'public hiera' }['paths']
 end
 
@@ -89,7 +88,7 @@ default_fact_files.each do |f|
   next unless File.exist?(f) && File.readable?(f) && File.size?(f)
 
   begin
-    default_facts.merge!(YAML.safe_load(File.read(f), [], [], true))
+    default_facts.merge!(YAML.safe_load(File.read(f)))
   rescue StandardError => e
     RSpec.configuration.reporter.message "WARNING: Unable to load #{f}: #{e}"
   end
@@ -99,7 +98,7 @@ RSpec.configure do |c|
   c.default_facts = default_facts
   c.module_path = "#{File.join(root_path, 'site')}:#{File.join(fixtures_path, 'modules')}"
   c.hiera_config = File.join(fixtures_path, 'hiera-profile-mod.yaml')
-  c.before :each do
+  c.before do
     # set to strictest setting for testing
     # by default Puppet runs at warning level
     Puppet.settings[:strict] = :warning
@@ -120,21 +119,39 @@ end
 # Note that this is violating the private api of `RSpec::Core::Configuration`.
 RSpec.configuration.instance_variable_set(:@after_suite_hooks, [])
 
-# Ensures that a module is defined
-# @param module_name Name of the module
-def ensure_module_defined(module_name)
-  module_name.split('::').reduce(Object) do |last_module, next_module|
-    last_module.const_set(next_module, Module.new) unless last_module.const_defined?(next_module, false)
-    last_module.const_get(next_module, false)
-  end
-end
-
 def node_dir
   File.join(control_hieradata_path, 'node')
 end
 
 def node_files
   Dir.children(node_dir)
+end
+
+# wrapper around #override_facts from voxpupuli-test that generates lsst's
+# default [networking] node facts.
+def lsst_override_facts(base_facts, **overrides)
+  override_facts(base_facts, **override_facts(gen_net_facts, **overrides))
+end
+
+# depends on node_params being set
+def gen_net_facts
+  if nodename(:host) =~ %r{\.lsst\.org$}
+    fqdn = nodename(:host)
+    hostname = fqdn.split('.').first
+    domain = fqdn.split('.').drop(1).join('.')
+  else
+    hostname = node_params[:role]
+    domain = "#{node_params[:site]}.lsst.org"
+    fqdn = "#{hostname}.#{domain}"
+  end
+
+  {
+    networking: {
+      'hostname' => hostname,
+      'domain' => domain,
+      'fqdn' => fqdn,
+    },
+  }
 end
 
 shared_context 'with site.pp', :sitepp do
@@ -149,23 +166,23 @@ end
 shared_examples 'krb5.conf content' do |match|
   it do
     is_expected.to contain_concat__fragment('mit_krb5::libdefaults').with(
-      content: match,
+      content: match
     )
   end
 end
 
 shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, node_exporter: true|
-  include_examples 'bash_completion', os_facts: os_facts
+  include_examples('bash_completion', os_facts:)
   include_examples 'convenience'
   include_examples 'telegraf'
-  include_examples 'rsyslog defaults', site: site
+  include_examples('rsyslog defaults', site:)
 
   unless no_auth
     # inspect config fragment instead of class params to ensure that %{uid} is not
     # being caught by hiera string interpolation
     include_examples 'krb5.conf content', %r{default_ccache_name = FILE:/tmp/krb5cc_%{uid}}
 
-    include_examples 'krb5.conf.d files', os_facts: os_facts
+    include_examples('krb5.conf.d files', os_facts:)
     include_examples 'sssd services'
 
     it { is_expected.to contain_class('ssh').that_requires('Class[ipa]') }
@@ -204,12 +221,12 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
             'domains' => [
               '.lsst.cloud',
               'lsst.cloud',
-              facts[:fqdn],
-              ".#{facts[:domain]}",
-              facts[:domain],
+              facts[:networking]['fqdn'],
+              ".#{facts[:networking]['domain']}",
+              facts[:networking]['domain'],
             ],
           },
-        },
+        }
       ).that_requires('Class[ipa]')
     end
 
@@ -233,7 +250,7 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
           dns_discovery_domain=#{site}._locations.lsst.cloud
           id_provider=ipa
           ipa_domain=lsst.cloud
-          ipa_hostname=#{facts[:fqdn]}
+          ipa_hostname=#{facts[:networking]['fqdn']}
           ipa_server=_srv_, ipa1.#{site == 'dev' ? 'ls' : site}.lsst.org
           krb5_store_password_if_offline=true
           ldap_tls_cacert=/etc/ipa/ca.crt
@@ -265,7 +282,7 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
           dns_discovery_domain=#{site}._locations.lsst.cloud
           id_provider=ipa
           ipa_domain=lsst.cloud
-          ipa_hostname=#{facts[:fqdn]}
+          ipa_hostname=#{facts[:networking]['fqdn']}
           ipa_server=_srv_, ipa1.#{site == 'dev' ? 'ls' : site}.lsst.org
           krb5_store_password_if_offline=true
           ldap_tls_cacert=/etc/ipa/ca.crt
@@ -338,7 +355,7 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
               'dns' => 'none',
             },
             'logging' => {},
-          },
+          }
         )
       end
     end
@@ -377,7 +394,7 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
         leapsectz: 'right/UTC',
         local_stratum: false,
         logchange: 0.005,
-        port: 0,
+        port: 0
       )
     end
   end
@@ -396,7 +413,7 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
         type: 'user',
         options: {
           'AuthorizedKeysFile' => '.ssh/authorized_keys',
-        },
+        }
       )
     end
   end
@@ -406,7 +423,7 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
       is_expected.to contain_user(user).with(
         ensure: 'present',
         groups: ['wheel_b'],
-        purge_ssh_keys: true,
+        purge_ssh_keys: true
       )
     end
   end
@@ -432,7 +449,7 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
       site: node_params[:site],
       cluster: node_params[:cluster],
       variant: node_params[:variant],
-      subvariant: node_params[:subvariant],
+      subvariant: node_params[:subvariant]
     )
   end
 end
@@ -496,7 +513,7 @@ shared_examples 'nfsv2 enabled' do |os_facts:|
     it 'enables NFS V2 exports via /etc/sysconfig/nfs' do
       is_expected.to contain_augeas('enable nfs v2 exports').with(
         context: '/files/etc/sysconfig/nfs',
-        changes: 'set RPCNFSDARGS \'"-V 2"\'',
+        changes: 'set RPCNFSDARGS \'"-V 2"\''
       )
     end
   else
@@ -508,7 +525,7 @@ shared_examples 'nfsv2 enabled' do |os_facts:|
         changes: [
           'set vers2 yes',
           'set UDP yes',
-        ],
+        ]
       )
     end
   end
@@ -527,7 +544,7 @@ shared_examples 'daq common' do
         ensure: 'directory',
         owner: 'root',
         group: 'root',
-        mode: '0755',
+        mode: '0755'
       )
     end
   end
@@ -536,7 +553,7 @@ shared_examples 'daq common' do
     is_expected.to contain_mount('/srv/nfs/lsst-daq/daq-sdk').with(
       device: '/opt/lsst/daq-sdk',
       fstype: 'none',
-      options: 'defaults,bind',
+      options: 'defaults,bind'
     ).that_requires('File[/srv/nfs/lsst-daq/daq-sdk]')
   end
 
@@ -544,7 +561,7 @@ shared_examples 'daq common' do
     is_expected.to contain_mount('/srv/nfs/lsst-daq/rpt-sdk').with(
       device: '/opt/lsst/rpt-sdk',
       fstype: 'none',
-      options: 'defaults,bind',
+      options: 'defaults,bind'
     ).that_requires('File[/srv/nfs/lsst-daq/rpt-sdk]')
   end
 
@@ -552,7 +569,7 @@ shared_examples 'daq common' do
     is_expected.to contain_mount('/srv/nfs/dsl').with(
       device: '/opt/lsst/rpt-sdk',
       fstype: 'none',
-      options: 'defaults,bind',
+      options: 'defaults,bind'
     ).that_requires('File[/srv/nfs/dsl]')
   end
 end
@@ -602,7 +619,7 @@ shared_examples 'dco' do
       keep_local_changes: true,
       user: 'dco',
       owner: 'dco',
-      group: 'dco',
+      group: 'dco'
     )
   end
 
@@ -614,7 +631,7 @@ shared_examples 'dco' do
       keep_local_changes: true,
       user: 'dco',
       owner: 'dco',
-      group: 'dco',
+      group: 'dco'
     )
   end
 
@@ -626,7 +643,7 @@ shared_examples 'dco' do
       keep_local_changes: true,
       user: 'dco',
       owner: 'dco',
-      group: 'dco',
+      group: 'dco'
     )
   end
 end
@@ -634,9 +651,7 @@ end
 shared_context 'with nm interface' do
   let(:nm_keyfile_raw) do
     int = catalogue.resource('file', "/etc/NetworkManager/system-connections/#{interface}.nmconnection")
-    if int.nil?
-      raise "nm::connection[#{interface}] not found in catalogue"
-    end
+    raise "nm::connection[#{interface}] not found in catalogue" if int.nil?
 
     int[:content]
   end
@@ -731,13 +746,13 @@ end
 shared_examples 'ccs alerts' do
   it do
     is_expected.to contain_file('/etc/ccs/systemd-email').with(
-      content: %r{^EMAIL=#{alert_email}},
+      content: %r{^EMAIL=#{alert_email}}
     )
   end
 
   it do
     is_expected.to contain_file('/etc/monit.d/alert').with(
-      content: %r{^set alert #{alert_email}},
+      content: %r{^set alert #{alert_email}}
     )
   end
 end
@@ -746,7 +761,7 @@ shared_examples 'generic perfsonar' do
   it do
     is_expected.to contain_letsencrypt__certonly(facts[:networking]['fqdn']).with(
       plugin: 'dns-route53',
-      manage_cron: true,
+      manage_cron: true
     )
   end
 
@@ -758,7 +773,7 @@ shared_examples 'generic perfsonar' do
       protect: '0',
       gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-perfSONAR',
       gpgcheck: '1',
-      mirrorlist: 'absent',
+      mirrorlist: 'absent'
     )
   end
 
@@ -770,7 +785,7 @@ shared_examples 'generic perfsonar' do
       manage_repo: false,
       ssl_cert: "#{le_root}/cert.pem",
       ssl_chain_file: "#{le_root}/fullchain.pem",
-      ssl_key: "#{le_root}/privkey.pem",
+      ssl_key: "#{le_root}/privkey.pem"
     )
                                              .that_requires('Yumrepo[perfSONAR]')
                                              .that_requires('Class[epel]')
@@ -780,7 +795,7 @@ shared_examples 'generic perfsonar' do
   it do
     is_expected.to contain_service('yum-cron').with(
       ensure: 'stopped',
-      enable: false,
+      enable: false
     )
   end
 end
@@ -814,7 +829,7 @@ shared_examples 'x2go packages' do |os_facts:|
       ensure: 'file',
       owner: 'root',
       group: 'root',
-      mode: '0440',
+      mode: '0440'
     ).that_requires('Package[x2goserver]')
   end
 end
@@ -828,7 +843,7 @@ shared_examples 'daq nfs exports' do
     is_expected.to contain_class('nfs').with(
       server_enabled: true,
       client_enabled: true,
-      nfs_v4_client: false,
+      nfs_v4_client: false
     )
   end
 
@@ -839,16 +854,16 @@ shared_examples 'daq nfs exports' do
   it do
     is_expected.to contain_nfs__client__mount('/net/self/dsl').with(
       share: '/srv/nfs/dsl',
-      server: facts[:fqdn],
-      atboot: true,
+      server: facts[:networking]['fqdn'],
+      atboot: true
     )
   end
 
   it do
     is_expected.to contain_nfs__client__mount('/net/self/lsst-daq').with(
       share: '/srv/nfs/lsst-daq',
-      server: facts[:fqdn],
-      atboot: true,
+      server: facts[:networking]['fqdn'],
+      atboot: true
     )
   end
 end
@@ -865,7 +880,7 @@ shared_examples 'krb5.conf.d files' do |os_facts:|
                            ensure: 'link',
                            owner: 'root',
                            group: 'root',
-                           target: '/etc/crypto-policies/back-ends/krb5.config',
+                           target: '/etc/crypto-policies/back-ends/krb5.config'
                          ))
   end
 
@@ -874,9 +889,9 @@ shared_examples 'krb5.conf.d files' do |os_facts:|
                            ensure: 'file',
                            owner: 'root',
                            group: 'root',
-                           content: <<~CONTENT,
-        [libdefaults]
-            spake_preauth_groups = edwards25519
+                           content: <<~CONTENT
+                             [libdefaults]
+                                 spake_preauth_groups = edwards25519
                            CONTENT
                          ))
   end
@@ -885,9 +900,7 @@ end
 shared_examples 'baremetal' do |bmc: nil|
   include_examples 'ipmi'
   it do
-    if node_params[:role] == 'hypervisor'
-      is_expected.to contain_class('tuned').with_active_profile('virtual-host')
-    end
+    is_expected.to contain_class('tuned').with_active_profile('virtual-host') if node_params[:role] == 'hypervisor'
   end
 
   if bmc.nil?
@@ -922,7 +935,7 @@ shared_examples 'fog_hack' do
     is_expected.to contain_archive('fog-libvirt-0.11.0.gem').with(
       ensure: 'present',
       path: '/tmp/fog-libvirt-0.11.0.gem',
-      source: 'https://github.com/lsst-it/fog-libvirt/releases/download/v0.11.0/fog-libvirt-0.11.0.gem',
+      source: 'https://github.com/lsst-it/fog-libvirt/releases/download/v0.11.0/fog-libvirt-0.11.0.gem'
     ).that_notifies('Exec[install-fog-libvirt.0.11.0.gem]')
   end
 
@@ -930,11 +943,11 @@ shared_examples 'fog_hack' do
     is_expected.to contain_exec('install-fog-libvirt.0.11.0.gem').with(
       command: '/usr/bin/scl enable rh-ruby27 tfm -- gem install /tmp/fog-libvirt-0.11.0.gem',
       path: '/usr/bin:/bin',
-      refreshonly: true,
+      refreshonly: true
     ).that_requires('Package[libvirt-devel]')
   end
 end
 
-Dir['./spec/support/spec/**/*.rb'].sort.each { |f| require f }
+Dir['./spec/support/spec/**/*.rb'].each { |f| require f }
 
 # 'spec_overrides' from sync.yml will appear below this line

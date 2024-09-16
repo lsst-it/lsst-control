@@ -7,29 +7,24 @@ role = 'ipareplica'
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { os_facts }
-      let(:node_params) do
-        {
-          role: role,
-          site: site,
-        }
-      end
-
       lsst_sites.each do |site|
-        fqdn = "#{role}.#{site}.lsst.org"
-        override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
-
-        describe fqdn, :sitepp do
-          let(:site) { site }
+        describe "#{role}.#{site}.lsst.org", :sitepp do
+          let(:node_params) do
+            {
+              role:,
+              site:,
+            }
+          end
+          let(:facts) { lsst_override_facts(os_facts) }
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts, site: site, no_auth: true
+          include_examples 'common', os_facts:, site:, no_auth: true
 
           it do
             is_expected.to contain_class('tailscale').with_up_options(
               'accept-dns' => false,
-              'hostname' => facts[:fqdn],
+              'hostname' => facts[:networking]['fqdn']
             )
           end
 
@@ -51,25 +46,25 @@ describe "#{role} role" do
           }.each do |host, ip|
             it do
               is_expected.to contain_host(host).with(
-                ip: ip,
+                ip:
               )
             end
           end
 
           it do
-            is_expected.to contain_ini_setting('/etc/ipa/default.conf [global] host').with_value(facts[:fqdn])
+            is_expected.to contain_ini_setting('/etc/ipa/default.conf [global] host').with_value(facts[:networking]['fqdn'])
           end
 
           it do
-            is_expected.to contain_ini_setting('/etc/ipa/default.conf [global] server').with_value(facts[:fqdn])
+            is_expected.to contain_ini_setting('/etc/ipa/default.conf [global] server').with_value(facts[:networking]['fqdn'])
           end
 
           it do
-            is_expected.to contain_ini_setting('/etc/ipa/default.conf [global] xmlrpc_uri').with_value("https://#{facts[:fqdn]}/ipa/xml")
+            is_expected.to contain_ini_setting('/etc/ipa/default.conf [global] xmlrpc_uri').with_value("https://#{facts[:networking]['fqdn']}/ipa/xml")
           end
 
           it do
-            is_expected.to contain_class('openldap::client').with_uri("ldaps://#{facts[:fqdn]}")
+            is_expected.to contain_class('openldap::client').with_uri("ldaps://#{facts[:networking]['fqdn']}")
           end
 
           it { is_expected.to contain_class('ipa').with_enable_ip_address(false) }
@@ -89,7 +84,7 @@ describe "#{role} role" do
               it do
                 is_expected.to contain_yum__versionlock(pkg).with(
                   version: '4.6.8',
-                  release: '5.el7.centos.15',
+                  release: '5.el7.centos.15'
                 )
               end
             end
@@ -100,7 +95,7 @@ describe "#{role} role" do
               it do
                 is_expected.to contain_yum__versionlock(pkg).with(
                   version: '1.3.11.1',
-                  release: '3.el7_9',
+                  release: '3.el7_9'
                 )
               end
             end

@@ -9,15 +9,14 @@ describe 'auxtel-archiver.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'auxtel-archiver.cp.lsst.org',
-                       is_virtual: true,
-                       virtual: 'vmware',
-                       dmi: {
-                         'product' => {
-                           'name' => 'VMware7,1',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: true,
+                            virtual: 'vmware',
+                            dmi: {
+                              'product' => {
+                                'name' => 'VMware7,1',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -38,7 +37,7 @@ describe 'auxtel-archiver.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/data').with(
           share: 'auxtel',
           server: 'nfs-auxtel.cp.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
     end # on os

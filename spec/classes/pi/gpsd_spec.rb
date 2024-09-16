@@ -22,7 +22,7 @@ describe 'profile::pi::gpsd' do
         include_examples 'gpsd'
         it do
           is_expected.to contain_augeas('gpsd options').with(
-            changes: "set OPTIONS \"\\\"#{params[:options]}\\\"\"",
+            changes: "set OPTIONS \"\\\"#{params[:options]}\\\"\""
           )
         end
       end

@@ -22,14 +22,14 @@ describe 'profile::ccs::graphical' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'x2go packages', os_facts: os_facts
+      include_examples('x2go packages', os_facts:)
 
       if os_facts[:os]['release']['major'] == '7'
         it do
           unwanted_pkgs.each do |pkg|
             is_expected.to contain_yum__group('GNOME Desktop').with(
               ensure: 'present',
-              timeout: '1800',
+              timeout: '1800'
             ).that_notifies("Package[#{pkg}]")
           end
         end
@@ -37,7 +37,7 @@ describe 'profile::ccs::graphical' do
         it do
           is_expected.to contain_yum__group('MATE Desktop').with(
             ensure: 'present',
-            timeout: '900',
+            timeout: '900'
           )
         end
       else
@@ -45,7 +45,7 @@ describe 'profile::ccs::graphical' do
           unwanted_pkgs.each do |pkg|
             is_expected.to contain_yum__group('Server with GUI').with(
               ensure: 'present',
-              timeout: '900',
+              timeout: '900'
             ).that_notifies("Package[#{pkg}]")
           end
         end

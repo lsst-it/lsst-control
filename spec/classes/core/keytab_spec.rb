@@ -29,7 +29,7 @@ describe 'profile::core::keytab' do
         it do
           is_expected.to contain_profile__util__keytab('foo').with(
             uid: 1234,
-            keytab_base64: sensitive('Zm9v'),
+            keytab_base64: sensitive('Zm9v')
           )
         end
       end

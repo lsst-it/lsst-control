@@ -35,7 +35,7 @@ describe 'profile::core::yum' do
             ensure: 'present',
             version: '1',
             epoch: 1,
-            arch: 'noarch',
+            arch: 'noarch'
           )
         end
       end

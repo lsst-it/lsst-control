@@ -8,15 +8,14 @@ describe 'auxtel-archiver.ls.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'auxtel-archiver.ls.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'AS -1114S-WN10RT',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'AS -1114S-WN10RT',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -61,14 +60,14 @@ describe 'auxtel-archiver.ls.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/data').with(
           share: 'auxtel',
           server: 'nfs-auxtel.ls.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
 
       it do
         is_expected.to contain_k5login('/home/saluser/.k5login').with(
           ensure: 'present',
-          principals: ['ccs-ipa/auxtel-fp01.ls.lsst.org@LSST.CLOUD'],
+          principals: ['ccs-ipa/auxtel-fp01.ls.lsst.org@LSST.CLOUD']
         )
       end
     end # on os

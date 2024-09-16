@@ -13,7 +13,7 @@ ipa::ipa_role: "replica"
 ipa::configure_replica_ca: true
 ipa::enable_ip_address: false
 ipa::configure_dns_server: false
-ipa::ipa_server_fqdn: "%{facts.fqdn}"
+ipa::ipa_server_fqdn: "%{facts.networking.fqdn}"
 
 clustershell::groupmembers:
   ipa:
@@ -26,13 +26,13 @@ clustershell::groupmembers:
 
 profile::core::ipa::default:
   global:
-    server: "%{facts.fqdn}"
-    xmlrpc_uri: "https://%{facts.fqdn}/ipa/xml"
-openldap::client::uri: "ldaps://%{facts.fqdn}"
+    server: "%{facts.networking.fqdn}"
+    xmlrpc_uri: "https://%{facts.networking.fqdn}/ipa/xml"
+openldap::client::uri: "ldaps://%{facts.networking.fqdn}"
 
 tailscale::up_options:
   accept-dns: false  # leave /etc/resolv.conf alone
-  hostname: "%{facts.fqdn}"  # use fqdn instead of short hostname
+  hostname: "%{facts.networking.fqdn}"  # use fqdn instead of short hostname
 
 hosts::manage_fqdn: false  # avoid conflict with tailscale address
 hosts::entries:

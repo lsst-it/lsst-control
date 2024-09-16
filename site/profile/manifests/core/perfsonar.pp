@@ -11,11 +11,11 @@ class profile::core::perfsonar (
   include profile::core::letsencrypt
   include augeas  # needed by perfsonar
 
-  $fqdn    = $facts['networking']['fqdn']
+  $fqdn    = fact('networking.fqdn')
   $le_root = "/etc/letsencrypt/live/${fqdn}"
-  $os_version = $facts['os']['release']['major']
+  $os_version = fact('os.release.major')
   $gpgkey_path = '/etc/pki/rpm-gpg/RPM-GPG-KEY-perfSONAR'
-  $release_url = "https://software.internet2.edu/rpms/el${facts['os']['release']['major']}/x86_64/latest/packages/perfsonar-repo-0.11-1.noarch.rpm"
+  $release_url = "https://software.internet2.edu/rpms/el${fact('os.release.major')}/x86_64/latest/packages/perfsonar-repo-0.11-1.noarch.rpm"
   $gpgkey = "file://${gpgkey_path}"
 
   exec { 'RPM-GPG-KEY-perfSONAR':

@@ -8,15 +8,14 @@ describe 'lsstcam-aio02.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'lsstcam-aio02.cp.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'OptiPlex AIO 7410 35W',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'OptiPlex AIO 7410 35W',
+                              },
+                            })
       end
       let(:node_params) do
         {

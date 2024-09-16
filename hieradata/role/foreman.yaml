@@ -91,7 +91,7 @@ foreman::plugin::column_view::columns:
     after: "name"
     content: "params['cluster']"
 foreman::plugin::tasks::automatic_cleanup: true
-foreman_proxy::base_url: "https://%{facts.fqdn}"
+foreman_proxy::base_url: "https://%{facts.networking.fqdn}"
 foreman_proxy::bind_host: '*'
 foreman_proxy::bmc_default_provider: "ipmitool"
 foreman_proxy::bmc: true
@@ -132,15 +132,15 @@ foreman_proxy::realm: false  # krb5 support for ssh -- untested
 foreman_proxy::realm_provider: "freeipa"
 foreman_proxy::register_in_foreman: false  # do not re-register proxy on every agent run
 foreman_proxy::ssl_ca: "/etc/puppetlabs/puppet/ssl/certs/ca.pem"
-foreman_proxy::ssl_cert: "/etc/puppetlabs/puppet/ssl/certs/%{facts.fqdn}.pem"
-foreman_proxy::ssl_key: "/etc/puppetlabs/puppet/ssl/private_keys/%{facts.fqdn}.pem"
+foreman_proxy::ssl_cert: "/etc/puppetlabs/puppet/ssl/certs/%{facts.networking.fqdn}.pem"
+foreman_proxy::ssl_key: "/etc/puppetlabs/puppet/ssl/private_keys/%{facts.networking.fqdn}.pem"
 foreman_proxy::ssl_port: 8443
 foreman_proxy::ssl: true
 foreman_proxy::tftp_listen_on: "https"
 foreman_proxy::tftp_managed: true
 foreman_proxy::tftp_manage_wget: true
 foreman_proxy::tftp: true
-foreman_proxy::trusted_hosts: ["%{facts.fqdn}"]
+foreman_proxy::trusted_hosts: ["%{facts.networking.fqdn}"]
 foreman_proxy::version: "%{lookup('foreman::version')}"
 foreman::cli::version: "%{lookup('foreman::version')}"
 foreman::repo::configure_scl_repo: false

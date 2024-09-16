@@ -7,27 +7,22 @@ role = 'ccs-dc'
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { os_facts }
-      let(:node_params) do
-        {
-          role: role,
-          site: site,
-          cluster: 'comcam-ccs',
-        }
-      end
-
       lsst_sites.each do |site|
-        fqdn = "#{role}.#{site}.lsst.org"
-        override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
-
-        describe fqdn, :sitepp do
-          let(:site) { site }
+        describe "#{role}.#{site}.lsst.org", :sitepp do
+          let(:node_params) do
+            {
+              role:,
+              site:,
+              cluster: 'comcam-ccs',
+            }
+          end
+          let(:facts) { lsst_override_facts(os_facts) }
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts, site: site
-          include_examples 'ccs common', os_facts: os_facts
-          include_examples 'x2go packages', os_facts: os_facts
+          include_examples('common', os_facts:, site:)
+          include_examples('ccs common', os_facts:)
+          include_examples('x2go packages', os_facts:)
           include_examples 'lhn sysctls'
 
           %w[

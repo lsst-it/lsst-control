@@ -11,15 +11,14 @@ describe 'ruka01.dev.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'ruka01.dev.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'PowerEdge R440',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'PowerEdge R440',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -37,7 +36,7 @@ describe 'ruka01.dev.lsst.org', :sitepp do
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(
-          'node-label' => ['role=storage-node'],
+          'node-label' => ['role=storage-node']
         )
       end
 
@@ -55,7 +54,7 @@ describe 'ruka01.dev.lsst.org', :sitepp do
                 'ruka[07-08]',
               ],
             },
-          },
+          }
         )
       end
 
@@ -63,7 +62,7 @@ describe 'ruka01.dev.lsst.org', :sitepp do
         is_expected.to contain_class('rke2').with(
           node_type: 'server',
           release_series: '1.28',
-          version: '1.28.12~rke2r1',
+          version: '1.28.12~rke2r1'
         )
       end
 

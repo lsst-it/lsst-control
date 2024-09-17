@@ -79,3 +79,8 @@ profile::core::firewall::firewall:
     jump: "accept"
 
 profile::core::docker::version: "24.0.9"
+
+s3daemon::instances:
+  ruka:
+    s3_endpoint_url: "https://s3.ruka.dev.lsst.org"
+    port: 15570

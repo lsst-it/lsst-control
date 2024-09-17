@@ -585,8 +585,8 @@ rke2::config:
   disable-cloud-controller: true
 
 profile::core::kernel::pquota::ensure: "absent"  # temporary until profile::core::kernel::pquota profile is removed from roles which don't need it
-s3daemon::instances:
-  site:
-    s3_endpoint_url: "https://s3.%{::site}.lsst.org"
-    port: 15557
-    image: "ghcr.io/lsst-dm/s3daemon:sha-b5e72fa"
+# s3daemon::instances:
+#   site:
+#     s3_endpoint_url: "https://s3.%{::site}.lsst.org"
+#     port: 15557
+#     image: "ghcr.io/lsst-dm/s3daemon:sha-b5e72fa"

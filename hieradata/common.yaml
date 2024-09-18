@@ -442,9 +442,6 @@ sssd::package_name:
 sssd::service_names:
   - "sssd"
 
-telegraf::ensure: "absent"
-telegraf::purge_config_fragments: true
-
 mit_krb5::includedir:
   - "/etc/krb5.conf.d/"
   - "/var/lib/sss/pubconf/krb5.include.d/"

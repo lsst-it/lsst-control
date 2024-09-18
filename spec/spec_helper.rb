@@ -174,7 +174,6 @@ end
 shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, node_exporter: true|
   include_examples('bash_completion', os_facts:)
   include_examples 'convenience'
-  include_examples 'telegraf'
   include_examples('rsyslog defaults', site:)
 
   unless no_auth

@@ -11,7 +11,6 @@ group :test do
   gem 'librarian-puppet',                             require: false
   gem 'puppet-lint-package_ensure-check', '~> 0.2.0', require: false
   gem 'r10k',                                         require: false
-  gem 'toml-rb',                                      require: false # puppet/telegraf
 end
 
 group :development do

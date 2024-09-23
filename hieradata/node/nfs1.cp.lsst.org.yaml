@@ -18,3 +18,148 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
+
+# 139.229.146.0/24    antu
+# 139.229.160.0/24    cp general & yagan
+# 139.229.163.0/24    Summit Wireless Network
+# 139.229.164.0/24    RubinObs-LHN
+# 139.229.165.0/24    cp archive
+# 139.229.170.0/24    AuxTel
+# 139.229.175.0/26    comcam-ccs
+# 139.229.175.128/25  auxtel-ccs
+nfs::nfs_v4_export_root_clients: >-
+  %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.146.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.160.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.163.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.164.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.165.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.169.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.170.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.175.0/26(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.175.128/25(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  azar03.cp.lsst.org(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.191.0/25(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+nfs::nfs_exports_global:
+  /data/home:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
+  /data/jhome:
+    # nublado needs to be able to create user home dirs as root
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
+      nfs2.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
+  /data/lsstdata:
+    clients: >-
+      139.229.146.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.160.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.165.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.0/26(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.128/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      ts-csc-generic-01.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      comcam-archiver.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
+  /data/project:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.169.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
+  /data/scratch:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
+  /data/dimm:
+    clients: >-
+      %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.163.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.164.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.191.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
+  /data/rsphome:
+    # nublado needs to be able to create user home dirs as root
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
+      nfs2.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
+
+files:
+  /data/project:
+    ensure: "directory"
+    mode: "1777"
+  /data/project/shared:
+    ensure: "directory"
+    mode: "0755"
+  /data/project/shared/auxTel:
+    ensure: "directory"
+    mode: "2775"
+    owner: 0
+    group: 768  # jovyan, in the LSP context
+  /data/project/shared/auxTel/_parent:
+    ensure: "link"
+    target: "/readonly/lsstdata/auxtel/base/auxtel/oods/butler/repo"
+    owner: 0
+    group: 0
+  /data/project/shared/auxTel/rerun:
+    ensure: "directory"
+    mode: "2775"
+    owner: 0
+    group: 768  # jovyan, in the LSP context
+  /data/project/shared/auxTel/CALIB:
+    ensure: "directory"
+    mode: "2775"
+    owner: 0
+    group: 768  # jovyan, in the LSP context
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /net/self/data/home:
+    share: "home"
+    server: "%{facts.networking.fqdn}"
+    atboot: true
+  /net/self/data/jhome:
+    share: "jhome"
+    server: "%{facts.networking.fqdn}"
+    atboot: true
+  /net/self/data/lsstdata:
+    share: "lsstdata"
+    server: "%{facts.networking.fqdn}"
+    atboot: true
+  /net/self/data/project:
+    share: "project"
+    server: "%{facts.networking.fqdn}"
+    atboot: true
+  /net/self/data/scratch:
+    share: "scratch"
+    server: "%{facts.networking.fqdn}"
+    atboot: true
+  /net/self/dimm:
+    share: "dimm"
+    server: "%{facts.networking.fqdn}"
+    atboot: true
+  /net/self/data/rsphome:
+    share: "rsphome"
+    server: "%{facts.networking.fqdn}"
+    atboot: true

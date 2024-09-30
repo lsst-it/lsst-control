@@ -31,7 +31,7 @@ describe 'rancher01.dev.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_class('rke').with(
-          version: '1.5.12'
+          version: '1.6.2'
         )
       end
 

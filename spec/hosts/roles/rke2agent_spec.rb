@@ -8,13 +8,25 @@ shared_examples 'generic rke2agent' do |os_facts:, site:|
   include_examples 'k8snode profile'
   include_examples 'restic common'
 
-  it do
-    is_expected.to contain_class('rke2').with(
-      node_type: 'agent',
-      release_series: '1.28',
-      version: '1.28.12~rke2r1',
-      versionlock: true
-    )
+  case site
+  when 'dev'
+    it do
+      is_expected.to contain_class('rke2').with(
+        node_type: 'agent',
+        release_series: '1.29',
+        version: '1.29.9~rke2r1',
+        versionlock: true
+      )
+    end
+  else
+    it do
+      is_expected.to contain_class('rke2').with(
+        node_type: 'agent',
+        release_series: '1.28',
+        version: '1.28.12~rke2r1',
+        versionlock: true
+      )
+    end
   end
 
   it { expect(catalogue.resource('class', 'rke2')[:config]).to include('server') }

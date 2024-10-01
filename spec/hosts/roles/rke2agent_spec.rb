@@ -52,10 +52,14 @@ shared_examples 'generic rke2agent' do |os_facts:, site:|
       backup_path: %w[
         /etc/cni
         /etc/rancher
-        /var/lib/rancher/rke2/agent
+        /var/lib/rancher/rke2
         /var/lib/rook
       ],
-      backup_flags: '--exclude=/var/lib/rook/rook-ceph/log',
+      backup_flags: %w[
+        --exclude=/var/lib/rancher/rke2/agent/containerd
+        --exclude=/var/lib/rancher/rke2/agent/logs
+        --exclude=/var/lib/rook/rook-ceph/log
+      ],
       backup_timer: '*-*-* 09:00:00',
       enable_forget: true,
       forget_timer: 'Mon..Sun 23:00:00',

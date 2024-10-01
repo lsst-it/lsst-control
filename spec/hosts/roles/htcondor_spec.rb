@@ -143,8 +143,8 @@ describe "#{role} role" do
 
             it do
               is_expected.to contain_nfs__client__mount('/repo/LSSTComCam').with(
-                share: '/repo/LSSTComCam',
-                server: 'comcam-archiver.cp.lsst.org',
+                share: '/comcam/repo/LSSTComCam',
+                server: 'nfs3.cp.lsst.org',
                 atboot: true
               )
             end
@@ -159,8 +159,8 @@ describe "#{role} role" do
 
             it do
               is_expected.to contain_nfs__client__mount('/readonly/lsstdata/comcam').with(
-                share: 'lsstdata',
-                server: 'comcam-archiver.cp.lsst.org',
+                share: '/comcam/lsstdata',
+                server: 'nfs3.cp.lsst.org',
                 atboot: true
               )
             end

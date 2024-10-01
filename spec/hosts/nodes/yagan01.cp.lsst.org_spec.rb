@@ -67,7 +67,7 @@ describe 'yagan01.cp.lsst.org', :sitepp do
       it { is_expected.to contain_class('cni::plugins::dhcp') }
       it { is_expected.to contain_class('profile::core::ospl').with_enable_rundir(true) }
 
-      it { is_expected.to have_nm__connection_resource_count(11) }
+      it { is_expected.to have_nm__connection_resource_count(13) }
 
       %w[
         eno1np0
@@ -116,6 +116,22 @@ describe 'yagan01.cp.lsst.org', :sitepp do
 
       context 'with br1201' do
         let(:interface) { 'br1201' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm no-ip interface'
+        it_behaves_like 'nm bridge interface'
+      end
+
+      context 'with enp1s0f1.1702' do
+        let(:interface) { 'enp1s0f1.1702' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm vlan interface', id: 1702, parent: 'enp1s0f1'
+        it_behaves_like 'nm bridge slave interface', master: 'br1702'
+      end
+
+      context 'with br1702' do
+        let(:interface) { 'br1702' }
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm no-ip interface'

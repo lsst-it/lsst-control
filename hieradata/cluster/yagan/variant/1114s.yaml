@@ -56,6 +56,21 @@ nm::connections:
       ipv6:
         method: "disabled"
       proxy: {}
+  br1702:
+    content:
+      connection:
+        id: "br1702"
+        uuid: "886591a3-e878-4cf0-888a-0c97ab10ced4"
+        type: "bridge"
+        interface-name: "br1702"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
   br1800:
     content:
       connection:

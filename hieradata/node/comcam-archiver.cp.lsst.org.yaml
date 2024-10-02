@@ -1,105 +1,89 @@
 ---
-profile::core::nm_dispatch::interfaces:
-  em1:
-    - "/sbin/ethtool --set-ring ${DEV} rx 4096 tx 4096"
-    - "tc filter del dev ${DEV} chain 0 || true"
-    - "tc qdisc del dev ${DEV} root || true"
-    - "tc qdisc add dev ${DEV} root handle 1: htb default 1"
-    - "tc class add dev ${DEV} parent 1: classid 1:1 htb rate 10gbit burst 40mbit"
-    - "tc class add dev ${DEV} parent 1:1 classid 1:10 htb rate 2.5gbit burst 40mbit"
-    - "tc filter add dev ${DEV} parent 1: protocol ip matchall flowid 1:1"
-    - "tc filter add dev ${DEV} parent 1:1 protocol ip prio 1 u32 match ip dst 141.142.0.0/16 flowid 1:10"
-network::interfaces_hash:
-  em1:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  em2:  # dds
-    bootproto: "none"
-    defroute: "no"
-    ipaddress: "139.229.166.1"
-    netmask: "255.255.255.0"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  em3:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  em4:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  p2p1:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  p2p2:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-
-network::hostname: "%{facts.networking.fqdn}"
-network::mroutes_hash:
-  em2:
-    routes:
-      "139.229.147.0/24": "139.229.166.254"
-      #"139.229.166.0/24": "139.229.166.254"
-      "139.229.167.0/24": "139.229.166.254"
-      "139.229.170.0/24": "139.229.166.254"
-      "139.229.178.0/24": "139.229.166.254"
-  p2p1:
-    ensure: "absent"
-    routes: {}
-
-# 139.229.146.0/24    antu
-# 139.229.160.0/24    cp general & yagan
-# 139.229.165.0/24    cp archive
-# 139.229.175.0/26    comcam-ccs
-nfs::server_enabled: true
-nfs::nfs_v4_export_root_clients: >-
-  %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.146.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.160.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.165.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.170.0/24(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.175.0/26(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-nfs::nfs_exports_global:
-  /data/lsstdata:
-    clients: >-
-      %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
-  /data/repo:
-    clients: >-
-      %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
-  /data:
-    clients: >-
-      %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
+nm::connections:
+  eno1:
+    content:
+      connection:
+        id: "eno1"
+        uuid: "b28d29b1-83cc-4df2-9c65-22cd9d97d0af"
+        type: "ethernet"
+        interface-name: "eno1"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  eno2:
+    content:
+      connection:
+        id: "eno2"
+        uuid: "f4164d1b-28a7-4fba-a1a9-a73a62f912c2"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno3:
+    content:
+      connection:
+        id: "eno3"
+        uuid: "11adbb0c-62c3-4fde-bfff-afb451666c1c"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno3"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno4:
+    content:
+      connection:
+        id: "eno4"
+        uuid: "1a3d7970-1499-4de2-8c33-0ad5c8a9ece6"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno4"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  ens1f0:
+    content:
+      connection:
+        id: "ens1f0"
+        uuid: "d399d016-fd8c-4269-a86b-3e60ce7ff479"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens1f0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  ens1f1:
+    content:
+      connection:
+        id: "ens1f1"
+        uuid: "6725fed9-6087-4611-8282-543ddec0d1b1"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens1f1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
 
 nfs::client_enabled: true
 nfs::client_mounts:
-  /net/self/data/lsstdata:
-    share: "lsstdata"
-    server: "%{facts.networking.fqdn}"
-    atboot: true
-  /repo:
-    share: "repo"
-    server: "%{facts.networking.fqdn}"
+  /data:
+    share: "comcam"
+    server: "nfs3.cp.lsst.org"
     atboot: true
 
 profile::core::k5login::k5login:

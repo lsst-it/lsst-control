@@ -1,0 +1,7 @@
+---
+classes:
+  - "profile::core::common"
+
+sudo::configs:
+  niagara_sudoers:
+    content: "%niagara ALL=(ALL) NOPASSWD: /usr/bin/niagaradctl"

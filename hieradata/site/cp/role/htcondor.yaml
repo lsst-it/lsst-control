@@ -16,16 +16,16 @@ nfs::client_mounts:
     server: "nfs-auxtel.cp.lsst.org"
     atboot: true
   /repo/LSSTComCam:
-    share: "/repo/LSSTComCam"
-    server: "comcam-archiver.cp.lsst.org"
+    share: "/comcam/repo/LSSTComCam"
+    server: "nfs3.cp.lsst.org"
     atboot: true
   /readonly/lsstdata/other:
     share: "lsstdata"
     server: "nfs1.cp.lsst.org"
     atboot: true
   /readonly/lsstdata/comcam:
-    share: "lsstdata"
-    server: "comcam-archiver.cp.lsst.org"
+    share: "/comcam/lsstdata"
+    server: "nfs3.cp.lsst.org"
     atboot: true
   /readonly/lsstdata/auxtel:
     share: "/auxtel/lsstdata"

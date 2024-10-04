@@ -1,0 +1,31 @@
+---
+nfs::nfs_v4_export_root_clients: >-
+  %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.160.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.165.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+  azar03.cp.lsst.org(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
+nfs::nfs_exports_global:
+  /comcam:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      comcam-archiver.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
+  /lsstcam:
+    clients: >-
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /net/self/comcam:
+    share: "comcam"
+    server: "%{facts.networking.fqdn}"
+    atboot: true
+  /net/self/lsstcam:
+    share: "lsstcam"
+    server: "%{facts.networking.fqdn}"
+    atboot: true

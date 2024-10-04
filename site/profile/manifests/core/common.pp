@@ -25,9 +25,6 @@
 # @param manage_firewall
 #   Whether or not to include the firewall class
 #
-# @param install_telegraf
-#   If `true`, manage telegraf
-#
 # @param manage_scl
 #   If `true`, enable redhat scl repos
 #
@@ -54,7 +51,6 @@ class profile::core::common (
   Boolean $manage_ipa = true,
   Boolean $disable_ipv6 = false,
   Boolean $manage_firewall = true,
-  Boolean $install_telegraf = true,
   Boolean $manage_scl = true,
   Boolean $manage_repos = true,
   Boolean $manage_irqbalance = true,
@@ -72,7 +68,6 @@ class profile::core::common (
   include profile::core::convenience
   include profile::core::dielibwrapdie
   include profile::core::k5login
-  include profile::core::kernel
   include profile::core::keytab
   include profile::core::nm_dispatch
   include profile::core::node_info
@@ -116,8 +111,6 @@ class profile::core::common (
             include scl
           }
         }
-
-        include network
       }
       default: { # EL9+
         if $manage_network_manager {
@@ -130,10 +123,6 @@ class profile::core::common (
 
   if $manage_irqbalance {
     include irqbalance
-  }
-
-  if $install_telegraf {
-    include telegraf
   }
 
   if $manage_node_exporter {

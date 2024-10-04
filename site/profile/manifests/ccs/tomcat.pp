@@ -25,6 +25,9 @@
 # @param rest_pass
 #   Sensitive string giving password for the rest server.
 #
+# @param rest_dburl
+#   Optional string giving full value for rest.dbURL context parameter.
+#
 class profile::ccs::tomcat (
   Hash[String, Hash] $wars = {},
   Hash[String[1],String[1]] $jars = {},
@@ -34,6 +37,7 @@ class profile::ccs::tomcat (
   String[1] $rest_url      = 'lsstcam-db01:3306/ccsdbprod',
   Sensitive[String[1]] $rest_user = Sensitive('user'),
   Sensitive[String[1]] $rest_pass = Sensitive('pass'),
+  Optional[String[1]] $rest_dburl = undef,
 ) {
   include nginx
 
@@ -78,9 +82,12 @@ class profile::ccs::tomcat (
     require => Exec['wait for tomcat'],  # config dir creation
   }
 
+  ## Default value, can be overridden by rest_dburl parameter.
+  $dburl = "jdbc:mysql://${rest_url}?user=${rest_user.unwrap}&amp;password=${rest_pass.unwrap}&amp;autoReconnect=true"
+
   tomcat::config::context::parameter { 'org.lsst.ccs.imagenaming.rest.dbURL':
     catalina_base => $catalina_base,
-    value         => "jdbc:mysql://${rest_url}?user=${rest_user.unwrap}&amp;password=${rest_pass.unwrap}&amp;autoReconnect=true",
+    value         => pick($rest_dburl, $dburl),
     override      => false,
   }
 

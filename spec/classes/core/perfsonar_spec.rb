@@ -6,13 +6,12 @@ describe 'profile::core::perfsonar' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }
-      let(:fqdn) { facts[:fqdn] }
-      let(:le_root) { "/etc/letsencrypt/live/#{fqdn}" }
+      let(:le_root) { "/etc/letsencrypt/live/#{os_facts[:networking]['fqdn']}" }
       let(:perfsonar_version) { '4.4.0' }
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'generic perfsonar', os_facts: os_facts
+      include_examples('generic perfsonar', os_facts:)
 
       context 'with version param' do
         context 'with 5.0.0' do
@@ -23,7 +22,7 @@ describe 'profile::core::perfsonar' do
             }
           end
 
-          include_examples 'generic perfsonar', os_facts: os_facts
+          include_examples 'generic perfsonar', os_facts:
         end
       end
     end

@@ -18,7 +18,7 @@ nfs::client_enabled: true
 nfs::client_mounts:
   /net/self/ccs-data:
     share: "ccs-data"
-    server: "%{facts.fqdn}"
+    server: "%{facts.networking.fqdn}"
     atboot: true
 
 ccs_software::services:

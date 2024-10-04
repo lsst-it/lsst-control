@@ -20,7 +20,7 @@ class profile::core::hardware {
     /PowerEdge/: {
       include ipmi
 
-      if $facts['has_dellperc'] {
+      if fact('has_dellperc') {
         include profile::core::perccli
       }
     }
@@ -53,4 +53,12 @@ class profile::core::hardware {
     }
   }
   # lint:endignore
+
+  # Enable AMD pstate on systems that support it
+  if 'hw_pstate' in fact('cpuinfo.processor0.flags') {
+    # https://docs.kernel.org/admin-guide/pm/amd-pstate.html
+    profile::util::kernel_param { 'amd_pstate=active':
+      reboot => false,
+    }
+  }
 }

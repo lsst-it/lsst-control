@@ -7,3 +7,6 @@ grub_version: "grub2-mkconfig (GRUB) 2.02~beta2"  # simp/auditd
 ipmitool_mc_info:
   IPMI_Puppet_Service_Recommend: "running"
 ipa_server_version: '4.6.8'
+ipmi:
+  default:
+    channel: 1

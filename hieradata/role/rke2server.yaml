@@ -1,0 +1,117 @@
+---
+classes:
+  - "clustershell"
+  - "profile::core::common"
+  - "profile::core::debugutils"
+  - "profile::core::helm"
+  - "profile::core::k8snode"
+  - "profile::core::kernel::pquota"
+  - "profile::core::kubecompletion"
+  - "profile::core::ospl"
+  - "profile::core::velero"
+  - "restic"
+  - "rke2"
+
+rke2::node_type: "server"
+profile::core::helm::version: "3.10.3"
+profile::core::common::manage_node_exporter: false
+
+accounts::user_list:
+  rke2:
+    uid: &rke2 61616
+    gid: *rke2
+    managehome: true
+    managevim: false
+    purge_sshkeys: true
+    system: false
+files:
+  /home/rke2/.kube:
+    ensure: "directory"
+    force: true
+    group: *rke2
+    mode: "0700"
+    owner: *rke2
+    purge: true
+    recurse: true
+  /home/rke2/.kube/config:
+    ensure: "file"
+    mode: "0600"
+    show_diff: false
+    owner: *rke2
+    group: *rke2
+    source: "file:///etc/rancher/rke2/rke2.yaml"
+    require: "Class[Rke2]"
+  /home/rke2/.bash_profile:
+    ensure: "file"
+    mode: "0600"
+    owner: *rke2
+    group: *rke2
+    content: |
+      . ~/.bashrc
+  /home/rke2/.bashrc:
+    ensure: "file"
+    mode: "0600"
+    owner: *rke2
+    group: *rke2
+    content: |
+      # load .bashrc.d/ snippets
+      for i in `ls ~/.bashrc.d/*.sh`; do
+        . $i
+      done
+  /home/rke2/.bashrc.d:
+    ensure: "directory"
+    force: true
+    group: *rke2
+    mode: "0700"
+    owner: *rke2
+    purge: true
+    recurse: true
+  /home/rke2/.bashrc.d/vimode.sh: &bashrc
+    ensure: "file"
+    mode: "0600"
+    owner: *rke2
+    group: *rke2
+    content: |
+      # enable vi mode
+      set -o vi
+  /home/rke2/.bashrc.d/rke2.sh:
+    <<: *bashrc
+    content: |
+      export PATH="/var/lib/rancher/rke2/bin:${PATH}"
+  /home/rke2/.bashrc.d/etc_bashrc.sh:
+    <<: *bashrc
+    content: |
+      # Source global definitions
+      if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+      fi
+  /home/rke2/.bashrc.d/kubectl.sh:
+    <<: *bashrc
+    content: |
+      alias k='kubectl'
+      complete -o default -F __start_kubectl k
+  /home/rke2/.bashrc.d/git-prompt.sh:
+    <<: *bashrc
+    content: |
+      if [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
+        . /usr/share/git-core/contrib/completion/git-prompt.sh
+      fi
+      export GIT_PS1_SHOWDIRTYSTATE=true
+      export GIT_PS1_SHOWUNTRACKEDFILES=true
+      export PS1='[\u@\h \W$(declare -F __git_ps1 &>/dev/null && __git_ps1 " (%s)")]\$ '
+
+restic::repositories:
+  awsrepo:
+    backup_path:
+      - "/etc/cni"
+      - "/etc/rancher"
+      - "/var/lib/rancher/rke2"
+      - "/var/lib/rook"
+    backup_flags:
+      - "--exclude=/var/lib/rancher/rke2/agent/containerd"
+      - "--exclude=/var/lib/rancher/rke2/agent/logs"
+      - "--exclude=/var/lib/rook/rook-ceph/log"
+    backup_timer: "*-*-* 09:00:00"
+    enable_forget: true
+    forget_timer: "Mon..Sun 23:00:00"
+    forget_flags: "--keep-last 20"

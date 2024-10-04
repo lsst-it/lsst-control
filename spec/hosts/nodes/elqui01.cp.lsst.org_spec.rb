@@ -8,19 +8,18 @@ describe 'elqui01.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'elqui01.tu.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'AS -1115HS-TNR',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'AS -1115HS-TNR',
+                              },
+                            })
       end
       let(:node_params) do
         {
-          role: 'rke2',
+          role: 'rke2server',
           cluster: 'elqui',
           site: 'cp',
         }
@@ -30,10 +29,11 @@ describe 'elqui01.cp.lsst.org', :sitepp do
 
       include_examples 'baremetal'
       include_context 'with nm interface'
+      include_examples 'ceph cluster'
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(
-          'node-label' => ['role=storage-node'],
+          'node-label' => ['role=storage-node']
         )
       end
 
@@ -48,12 +48,16 @@ describe 'elqui01.cp.lsst.org', :sitepp do
               'group' => 'elqui',
               'member' => 'elqui[01-18]',
             },
-          },
+          }
         )
       end
 
       it do
-        is_expected.to contain_class('rke2')
+        is_expected.to contain_class('rke2').with(
+          node_type: 'server',
+          release_series: '1.28',
+          version: '1.28.12~rke2r1'
+        )
       end
 
       it do
@@ -61,7 +65,7 @@ describe 'elqui01.cp.lsst.org', :sitepp do
           'device' => {
             'keep-configuration' => 'no',
             'allowed-connections' => 'except:origin:nm-initrd-generator',
-          },
+          }
         )
       end
 
@@ -107,7 +111,7 @@ describe 'elqui01.cp.lsst.org', :sitepp do
           let(:interface) { slave }
 
           it_behaves_like 'nm enabled interface'
-          it_behaves_like 'nm bridge slave interface', master: master
+          it_behaves_like 'nm bridge slave interface', master:
         end
       end
 

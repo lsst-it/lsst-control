@@ -6,7 +6,7 @@ shared_examples 'docker' do |docker_version: nil|
       package_source: 'docker-ce',
       socket_group: 70_014,
       socket_override: false,
-      storage_driver: 'overlay2',
+      storage_driver: 'overlay2'
     )
   end
 
@@ -35,19 +35,19 @@ shared_examples 'docker' do |docker_version: nil|
 
   it do
     is_expected.to contain_yum__versionlock('containerd.io').with(
-      version: '1.6.21',
+      version: '1.6.21'
     )
   end
 
   it do
     is_expected.to contain_yum__versionlock('docker-scan-plugin').with(
-      version: '0.23.0',
+      version: '0.23.0'
     )
   end
 
   it do
     is_expected.to contain_yum__versionlock('docker-compose-plugin').with(
-      version: '2.17.3',
+      version: '2.17.3'
     )
   end
 
@@ -63,7 +63,7 @@ shared_examples 'docker' do |docker_version: nil|
                              max-file=2
                              max-size=50m
                              mode=non-blocking
-                           ],
+                           ]
                          ))
   end
 end

@@ -8,15 +8,14 @@ describe 'yagan11.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'yagan11.cp.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'AS -1114S-WN10RT',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'AS -1114S-WN10RT',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -44,14 +43,14 @@ describe 'yagan11.cp.lsst.org', :sitepp do
               'group' => 'yagan',
               'member' => 'yagan[01-20]',
             },
-          },
+          }
         )
       end
 
       it do
         is_expected.to contain_class('rke').with(
-          version: '1.5.10',
-          checksum: 'cd5d3e8cd77f955015981751c30022cead0bd78f14216fcd1c827c6a7e5cc26e',
+          version: '1.5.12',
+          checksum: 'f0d1f6981edbb4c93f525ee51bc2a8ad729ba33c04f21a95f5fc86af4a7af586'
         )
       end
 
@@ -59,7 +58,7 @@ describe 'yagan11.cp.lsst.org', :sitepp do
         is_expected.to contain_class('cni::plugins').with(
           version: '1.2.0',
           checksum: 'f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37',
-          enable: ['macvlan'],
+          enable: ['macvlan']
         )
       end
 

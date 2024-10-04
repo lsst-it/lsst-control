@@ -10,7 +10,7 @@ shared_examples 'rsyslog defaults' do |site:|
       config: {
         'file' => '/var/log/audit/audit.log',
         'Tag' => 'auditd',
-      },
+      }
     )
   end
 
@@ -20,7 +20,7 @@ shared_examples 'rsyslog defaults' do |site:|
       facility: '*.info;mail.none;authpriv.none;cron.none',
       config: {
         'file' => '/var/log/messages',
-      },
+      }
     )
   end
 
@@ -30,7 +30,7 @@ shared_examples 'rsyslog defaults' do |site:|
       facility: 'authpriv.*',
       config: {
         'file' => '/var/log/secure',
-      },
+      }
     )
   end
 
@@ -40,7 +40,7 @@ shared_examples 'rsyslog defaults' do |site:|
       facility: 'mail.*',
       config: {
         'file' => '/var/log/maillog',
-      },
+      }
     )
   end
 
@@ -50,7 +50,7 @@ shared_examples 'rsyslog defaults' do |site:|
       facility: 'cron.*',
       config: {
         'file' => '/var/log/cron',
-      },
+      }
     )
   end
 
@@ -60,7 +60,7 @@ shared_examples 'rsyslog defaults' do |site:|
       facility: '*.emerg',
       config: {
         'users' => '*',
-      },
+      }
     )
   end
 
@@ -70,7 +70,7 @@ shared_examples 'rsyslog defaults' do |site:|
       facility: 'local7.*',
       config: {
         'file' => '/var/log/boot.log',
-      },
+      }
     )
   end
 
@@ -84,10 +84,10 @@ shared_examples 'rsyslog defaults' do |site:|
           'Target' => 'collector.cp.lsst.org',
           'Port' => '5514',
           'Protocol' => 'udp',
-        },
+        }
       )
     end
-  when 'dmz', 'ls'
+  when 'ls'
     it do
       is_expected.to contain_rsyslog__component__action('graylogls').with(
         type: 'omfwd',
@@ -96,7 +96,7 @@ shared_examples 'rsyslog defaults' do |site:|
           'Target' => 'collector.ls.lsst.org',
           'Port' => '5514',
           'Protocol' => 'udp',
-        },
+        }
       )
     end
   when 'dev'
@@ -113,7 +113,7 @@ shared_examples 'rsyslog defaults' do |site:|
           'StreamDriver' => 'ossl',
           'StreamDriverMode' => '1',
           'StreamDriverAuthMode' => 'anon',
-        },
+        }
       )
     end
 
@@ -128,7 +128,7 @@ shared_examples 'rsyslog defaults' do |site:|
           'StreamDriver' => 'ossl',
           'StreamDriverMode' => '1',
           'StreamDriverAuthMode' => 'anon',
-        },
+        }
       )
     end
   when 'tu'
@@ -140,7 +140,7 @@ shared_examples 'rsyslog defaults' do |site:|
           'Target' => 'collector.tu.lsst.org',
           'Port' => '5514',
           'Protocol' => 'udp',
-        },
+        }
       )
     end
   end

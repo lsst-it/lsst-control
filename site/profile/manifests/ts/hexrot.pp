@@ -40,6 +40,8 @@ class profile::ts::hexrot {
   }
   file { ['/rubin/rotator/log', '/rubin/hexapod/log', '/rubin/mtm2/log']:
     ensure => directory,
+    owner  => 73006,
+    group  => 73006,
     mode   => '0775',
   }
 }

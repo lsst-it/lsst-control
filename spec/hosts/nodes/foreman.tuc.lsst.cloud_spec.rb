@@ -9,15 +9,14 @@ describe 'foreman.tuc.lsst.cloud', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'foreman.tuc.lsst.cloud',
-                       is_virtual: true,
-                       virtual: 'kvm',
-                       dmi: {
-                         'product' => {
-                           'name' => 'KVM',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: true,
+                            virtual: 'kvm',
+                            dmi: {
+                              'product' => {
+                                'name' => 'KVM',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -56,7 +55,7 @@ describe 'foreman.tuc.lsst.cloud', :sitepp do
           network: '140.252.146.32',
           mask: '255.255.255.224',
           range: ['140.252.146.60 140.252.146.62'],
-          gateway: '140.252.146.33',
+          gateway: '140.252.146.33'
         )
       end
 
@@ -65,7 +64,7 @@ describe 'foreman.tuc.lsst.cloud', :sitepp do
           network: '140.252.146.64',
           mask: '255.255.255.224',
           range: ['140.252.146.90 140.252.146.94'],
-          gateway: '140.252.146.65',
+          gateway: '140.252.146.65'
         )
       end
 
@@ -74,7 +73,7 @@ describe 'foreman.tuc.lsst.cloud', :sitepp do
           network: '140.252.146.128',
           mask: '255.255.255.192',
           range: ['140.252.146.181 140.252.146.190'],
-          gateway: '140.252.146.129',
+          gateway: '140.252.146.129'
         )
       end
 
@@ -83,7 +82,7 @@ describe 'foreman.tuc.lsst.cloud', :sitepp do
           network: '140.252.147.0',
           mask: '255.255.255.240',
           range: ['140.252.147.11 140.252.147.14'],
-          gateway: '140.252.147.1',
+          gateway: '140.252.147.1'
         )
       end
 
@@ -96,7 +95,7 @@ describe 'foreman.tuc.lsst.cloud', :sitepp do
           static_routes: [
             { 'network' => '140.252.147.48', 'mask' => '28', 'gateway' => '140.252.147.17' },
             { 'network' => '140.252.147.128', 'mask' => '27', 'gateway' => '140.252.147.17' },
-          ],
+          ]
         )
       end
 
@@ -105,7 +104,7 @@ describe 'foreman.tuc.lsst.cloud', :sitepp do
           network: '140.252.147.32',
           mask: '255.255.255.240',
           range: ['140.252.147.44 140.252.147.46'],
-          gateway: '140.252.147.33',
+          gateway: '140.252.147.33'
         )
       end
 
@@ -118,7 +117,7 @@ describe 'foreman.tuc.lsst.cloud', :sitepp do
           static_routes: [
             { 'network' => '140.252.147.16', 'mask' => '28', 'gateway' => '140.252.147.49' },
             { 'network' => '140.252.147.128', 'mask' => '27', 'gateway' => '140.252.147.49' },
-          ],
+          ]
         )
       end
 
@@ -127,7 +126,7 @@ describe 'foreman.tuc.lsst.cloud', :sitepp do
           network: '140.252.147.64',
           mask: '255.255.255.224',
           range: ['140.252.147.69 140.252.147.78'],
-          gateway: '140.252.147.65',
+          gateway: '140.252.147.65'
         )
       end
 
@@ -140,7 +139,7 @@ describe 'foreman.tuc.lsst.cloud', :sitepp do
           static_routes: [
             { 'network' => '140.252.147.16', 'mask' => '28', 'gateway' => '140.252.147.129' },
             { 'network' => '140.252.147.48', 'mask' => '28', 'gateway' => '140.252.147.129' },
-          ],
+          ]
         )
       end
 
@@ -152,7 +151,7 @@ describe 'foreman.tuc.lsst.cloud', :sitepp do
             '140.252.147.109 140.252.147.113',
             '140.252.147.124 140.252.147.126',
           ],
-          gateway: '140.252.147.97',
+          gateway: '140.252.147.97'
         )
       end
     end # on os

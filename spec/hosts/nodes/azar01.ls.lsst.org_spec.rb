@@ -8,15 +8,14 @@ describe 'azar01.ls.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'azar01.ls.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'AS -1114S-WN10RT',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'AS -1114S-WN10RT',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -80,7 +79,7 @@ describe 'azar01.ls.lsst.org', :sitepp do
               'gateway' => '139.229.152.126',
               'options' => ['parent=dds'],
             },
-          },
+          }
         )
       end
     end # on os

@@ -13,7 +13,7 @@ describe 'profile::core::yum::dell' do
         is_expected.to contain_yumrepo('dell').with(
           descr: 'Dell',
           ensure: 'present',
-          enabled: true,
+          enabled: true
         )
       end
     end

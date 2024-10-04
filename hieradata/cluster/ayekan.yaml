@@ -1,6 +1,7 @@
 ---
 clustershell::groupmembers:
   ayekan: {group: "ayekan", member: "ayekan[01-03]"}
+tuned::active_profile: "latency-performance"
 nm::connections:
   eno1np0:
     content: |

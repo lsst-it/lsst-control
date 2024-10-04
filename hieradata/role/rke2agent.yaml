@@ -1,0 +1,29 @@
+---
+classes:
+  - "clustershell"
+  - "profile::core::common"
+  - "profile::core::debugutils"
+  - "profile::core::k8snode"
+  - "profile::core::kernel::pquota"
+  - "profile::core::ospl"
+  - "restic"
+  - "rke2"
+
+rke2::node_type: "agent"
+profile::core::common::manage_node_exporter: false
+
+restic::repositories:
+  awsrepo:
+    backup_path:
+      - "/etc/cni"
+      - "/etc/rancher"
+      - "/var/lib/rancher/rke2"
+      - "/var/lib/rook"
+    backup_flags:
+      - "--exclude=/var/lib/rancher/rke2/agent/containerd"
+      - "--exclude=/var/lib/rancher/rke2/agent/logs"
+      - "--exclude=/var/lib/rook/rook-ceph/log"
+    backup_timer: "*-*-* 09:00:00"
+    enable_forget: true
+    forget_timer: "Mon..Sun 23:00:00"
+    forget_flags: "--keep-last 20"

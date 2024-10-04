@@ -5,7 +5,7 @@ require 'yaml'
 
 # extract public hiera hierachy
 def non_role_layers
-  hc = YAML.load_file(control_hiera_config)
+  hc = YAML.load_file(control_hiera_config, aliases: true)
   hc['hierarchy'][1]['paths'].grep_v(%r{role})
 end
 
@@ -18,7 +18,7 @@ describe 'hiera' do
         y_relpath = Pathname.new(y).relative_path_from(hieradata_pathname)
         describe y_relpath do
           # #safe_load failed on anchor/aliases
-          n = YAML.load_file(y)
+          n = YAML.load_file(y, aliases: true)
 
           it 'has no classes' do
             expect(n['classes']).to be_nil

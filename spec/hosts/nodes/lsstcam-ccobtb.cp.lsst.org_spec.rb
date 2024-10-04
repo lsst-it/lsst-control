@@ -2,21 +2,20 @@
 
 require 'spec_helper'
 
-describe 'lsstcam-ccobtb.lsst.org', :sitepp do
+describe 'lsstcam-ccobtb.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'lsstcam-ccobtb.cp.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'UNO-1483G-434AE',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'UNO-1483G-434AE',
+                              },
+                            })
       end
       let(:node_params) do
         {

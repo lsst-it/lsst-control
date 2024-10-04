@@ -11,15 +11,26 @@ class profile::core::perfsonar (
   include profile::core::letsencrypt
   include augeas  # needed by perfsonar
 
-  $fqdn    = $facts['networking']['fqdn']
+  $fqdn    = fact('networking.fqdn')
   $le_root = "/etc/letsencrypt/live/${fqdn}"
+  $os_version = fact('os.release.major')
+  $gpgkey_path = '/etc/pki/rpm-gpg/RPM-GPG-KEY-perfSONAR'
+  $release_url = "https://software.internet2.edu/rpms/el${fact('os.release.major')}/x86_64/latest/packages/perfsonar-repo-0.11-1.noarch.rpm"
+  $gpgkey = "file://${gpgkey_path}"
+
+  exec { 'RPM-GPG-KEY-perfSONAR':
+    path    => '/usr/bin:/bin:/usr/sbin:/sbin',
+    command => "curl -sSL ${release_url} | rpm2cpio - | cpio -i --quiet --to-stdout .${gpgkey_path} > ${gpgkey_path}",
+    creates => $gpgkey_path,
+    before  => Yumrepo['perfSONAR'],
+  }
 
   yumrepo { 'perfSONAR':
     descr      => 'perfSONAR RPM Repository - software.internet2.edu - main',
-    baseurl    => "http://software.internet2.edu/rpms/el7/x86_64/${version}/",
+    baseurl    => "http://software.internet2.edu/rpms/el${os_version}/x86_64/${version}/",
     enabled    => '1',
     protect    => '0',
-    gpgkey     => 'http://software.internet2.edu/rpms/RPM-GPG-KEY-perfSONAR',
+    gpgkey     => $gpgkey,
     gpgcheck   => '1',
     mirrorlist => 'absent',
   }

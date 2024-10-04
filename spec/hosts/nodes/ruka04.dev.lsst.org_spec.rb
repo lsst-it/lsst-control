@@ -12,19 +12,18 @@ describe 'ruka04.dev.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'ruka04.dev.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'PowerEdge R430',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'PowerEdge R430',
+                              },
+                            })
       end
       let(:node_params) do
         {
-          role: 'rke',
+          role: 'rke2server',
           site: 'dev',
           cluster: 'ruka',
           variant: 'r430',
@@ -34,6 +33,41 @@ describe 'ruka04.dev.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal'
+      include_examples 'ceph cluster'
+
+      it do
+        expect(catalogue.resource('class', 'rke2')[:config]).to include(
+          'node-label' => ['role=storage-node']
+        )
+      end
+
+      it do
+        is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
+      end
+
+      it do
+        is_expected.to contain_class('clustershell').with(
+          groupmembers: {
+            'ruka' => {
+              'group' => 'ruka',
+              'member' => [
+                'ruka[01-05]',
+                'ruka[07-08]',
+              ],
+            },
+          }
+        )
+      end
+
+      it do
+        is_expected.to contain_class('rke2').with(
+          node_type: 'server',
+          release_series: '1.29',
+          version: '1.29.9~rke2r1'
+        )
+      end
+
+      it { is_expected.to contain_class('cni::plugins::dhcp::service') }
 
       include_context 'with nm interface'
 

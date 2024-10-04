@@ -9,7 +9,7 @@ describe 'profile::core::gpio' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'gpio', os_facts: os_facts
+      include_examples 'gpio', os_facts:
     end
   end
 end

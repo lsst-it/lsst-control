@@ -8,15 +8,14 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'lsstcam-dc01.ls.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'AS -1114S-WN10RT',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'AS -1114S-WN10RT',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -108,7 +107,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
           ensure: 'directory',
           owner: 72_055,
           group: 72_055,
-          mode: '0755',
+          mode: '0755'
         )
       end
 
@@ -117,7 +116,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
           ensure: 'file',
           owner: 'ccs-ipa',
           group: 'ccs-ipa',
-          mode: '0755',
+          mode: '0755'
         )
       end
 

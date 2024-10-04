@@ -1,9 +1,4 @@
 ---
-profile::daq::daq_interface::hwaddr: "f8:f2:1e:71:bc:a0"
-profile::daq::daq_interface::uuid: "9129970c-d4b9-4602-82be-da776c06c064"
-profile::daq::daq_interface::was: "p3p1"
-profile::daq::daq_interface::mode: "dhcp-server"
-
 network::interfaces_hash:
   em1:  # fqdn
     bootproto: "dhcp"
@@ -55,9 +50,9 @@ nfs::nfs_v4_client: false  # XXX disable v4 because of DAQ
 nfs::client_mounts:
   /net/self/dsl:
     share: "/srv/nfs/dsl"
-    server: "%{facts.fqdn}"
+    server: "%{facts.networking.fqdn}"
     atboot: true
   /net/self/lsst-daq:
     share: "/srv/nfs/lsst-daq"
-    server: "%{facts.fqdn}"
+    server: "%{facts.networking.fqdn}"
     atboot: true

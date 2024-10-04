@@ -9,27 +9,22 @@ describe "#{role} role" do
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
-      let(:facts) { os_facts }
-      let(:node_params) do
-        {
-          role: role,
-          site: site,
-        }
-      end
-
       lsst_sites.each do |site|
-        fqdn = "#{role}.#{site}.lsst.org"
-        override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
-
-        describe fqdn, :sitepp do
-          let(:site) { site }
+        describe "#{role}.#{site}.lsst.org", :sitepp do
+          let(:node_params) do
+            {
+              role:,
+              site:,
+            }
+          end
+          let(:facts) { lsst_override_facts(os_facts) }
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts: os_facts, site: site
+          include_examples('common', os_facts:, site:)
           include_examples 'ipset'
-          include_examples 'firewall default', os_facts: os_facts
-          include_examples 'firewall node_exporter scraping', site: site
+          include_examples('firewall default', os_facts:)
+          include_examples('firewall node_exporter scraping', site:)
           include_examples 'restic common'
 
           it { is_expected.to contain_class('tang') }
@@ -43,7 +38,7 @@ describe "#{role} role" do
                 state: 'NEW',
                 ipset: 'dev src',
                 dport: '7500',
-                action: 'accept',
+                jump: 'accept'
               )
             end
           when 'tu'
@@ -53,7 +48,7 @@ describe "#{role} role" do
                 state: 'NEW',
                 ipset: 'tufde src',
                 dport: '7500',
-                action: 'accept',
+                jump: 'accept'
               )
             end
           when 'ls'
@@ -63,7 +58,7 @@ describe "#{role} role" do
                 state: 'NEW',
                 ipset: 'lsfde src',
                 dport: '7500',
-                action: 'accept',
+                jump: 'accept'
               )
             end
           when 'cp'
@@ -73,7 +68,7 @@ describe "#{role} role" do
                 state: 'NEW',
                 ipset: 'cpfde src',
                 dport: '7500',
-                action: 'accept',
+                jump: 'accept'
               )
             end
           end
@@ -86,7 +81,7 @@ describe "#{role} role" do
               backup_timer: '*-*-* *:47:00',
               enable_forget: true,
               forget_timer: '*-*-* 15:00:00',
-              forget_flags: '--keep-within 1y',
+              forget_flags: '--keep-within 1y'
             )
           end
         end # host

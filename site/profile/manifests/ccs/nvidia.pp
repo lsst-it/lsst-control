@@ -40,7 +40,7 @@ class profile::ccs::nvidia (String $ensure = 'present') {
       default: {}
     }
 
-    if $facts['efi'] {
+    if fact('efi') {
       $grubfile = '/boot/efi/EFI/centos/grub.cfg'
     } else {
       $grubfile = '/boot/grub2/grub.cfg'

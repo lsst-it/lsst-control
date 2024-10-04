@@ -11,7 +11,7 @@ classes:
 # ensure chrony is not running
 profile::core::common::manage_chrony: true
 profile::core::sysctl::rp_filter::enable: false
-profile::core::perfsonar::version: "4.4.6"
+profile::core::perfsonar::version: "5.0.8"
 chrony::service_enable: false
 chrony::service_ensure: "stopped"
 
@@ -22,7 +22,7 @@ profile::core::firewall::firewall:
     state: "NEW"
     ipset: "aura src"
     dport: "22"
-    action: "accept"
+    jump: "accept"
 
 files:
   # perfsonar packaging installs this one file with the wrong mode

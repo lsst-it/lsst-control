@@ -10,3 +10,5 @@ clustershell::groupmembers:
   quadbox: {group: "quadbox", member: "lsstcam-fcs,lsstcam-quad,lsstcam-rebps,lsstcam-vac"}
   uno: {group: "uno", member: "lsstcam-ccobtb,lsstcam-ccobwb,lsstcam-pcs[01-02]"}
   vw: {group: "vw", member: "lsstcam-vw[01-04]"}
+
+profile::ccs::monitoring::mrtg: true

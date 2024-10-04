@@ -21,7 +21,9 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7.7
+          ruby-version: 3.2.5
       - run: bundle install
       - name: Puppetfile recursive dependency check
-        run: bundle exec librarian-puppet install --verbose
+        run: |
+          echo "exclusion 'choria-mcollective'" >> Puppetfile
+          bundle exec librarian-puppet install --verbose

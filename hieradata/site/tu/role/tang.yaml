@@ -5,4 +5,4 @@ profile::core::firewall::firewall:
     state: "NEW"
     ipset: "tufde src"
     dport: "7500"
-    action: "accept"
+    jump: "accept"

@@ -17,7 +17,7 @@ describe 'profile::core::hardware' do
               'product' => {
                 'name' => 'PowerEdge',
               },
-            },
+            }
           )
         end
 
@@ -50,7 +50,7 @@ describe 'profile::core::hardware' do
               'product' => {
                 'name' => '1114S-WN10RT',
               },
-            },
+            }
           )
         end
 
@@ -82,7 +82,7 @@ describe 'profile::core::hardware' do
               'board' => {
                 'product' => 'H12SSL-NT',
               },
-            },
+            }
           )
         end
 
@@ -104,7 +104,7 @@ describe 'profile::core::hardware' do
               'product' => {
                 'name' => 'SSG-640SP-E1CR90',
               },
-            },
+            }
           )
         end
 
@@ -120,7 +120,7 @@ describe 'profile::core::hardware' do
             super().merge(
               dmi: {
                 'manufacturer' => 'VersLogic Corp.',
-              },
+              }
             )
           end
 
@@ -134,7 +134,7 @@ describe 'profile::core::hardware' do
             super().merge(
               dmi: {
                 'manufacturer' => 'Advantech',
-              },
+              }
             )
           end
 

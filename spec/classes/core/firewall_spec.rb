@@ -25,7 +25,7 @@ describe 'profile::core::firewall' do
             firewall: {
               '001 accept all icmp' => {
                 'proto' => 'icmp',
-                'action' => 'accept',
+                'jump' => 'accept',
               },
             },
           }
@@ -33,8 +33,8 @@ describe 'profile::core::firewall' do
 
         it do
           is_expected.to contain_firewall('001 accept all icmp').with(
-            'proto' => 'icmp',
-            'action' => 'accept',
+            proto: 'icmp',
+            jump: 'accept'
           )
         end
       end

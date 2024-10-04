@@ -9,7 +9,7 @@ describe 'profile::core::helm' do
     it do
       is_expected.to contain_class('helm_binary').with(
         version: '3.5.4',
-        checksum: 'a8ddb4e30435b5fd45308ecce5eaad676d64a5de9c89660b56face3fe990b318',
+        checksum: 'a8ddb4e30435b5fd45308ecce5eaad676d64a5de9c89660b56face3fe990b318'
       )
     end
   end
@@ -27,7 +27,7 @@ describe 'profile::core::helm' do
       it do
         is_expected.to contain_class('helm_binary').with(
           version: '3.6.3',
-          checksum: '07c100849925623dc1913209cd1a30f0a9b80a5b4d6ff2153c609d11b043e262',
+          checksum: '07c100849925623dc1913209cd1a30f0a9b80a5b4d6ff2153c609d11b043e262'
         )
       end
     end

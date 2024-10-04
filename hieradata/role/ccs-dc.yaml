@@ -10,3 +10,7 @@ classes:
   - "profile::core::sysctl::lhn"
 
 profile::ccs::common::sysctls: false
+
+hosts::entries:
+  sdfembs3.sdf.slac.stanford.edu:
+    ip: "172.24.7.249"

@@ -1,0 +1,6 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::nfsclient"
+
+nfs::client_enabled: true

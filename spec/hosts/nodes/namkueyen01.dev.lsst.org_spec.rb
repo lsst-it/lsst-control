@@ -8,15 +8,14 @@ describe 'namkueyen01.dev.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'namkueyen01.dev.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'PowerEdge R640',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'PowerEdge R640',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -31,6 +30,7 @@ describe 'namkueyen01.dev.lsst.org', :sitepp do
       include_examples 'docker', docker_version: '24.0.9'
       include_examples 'baremetal'
       include_context 'with nm interface'
+      include_examples 'ceph cluster'
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
@@ -43,13 +43,13 @@ describe 'namkueyen01.dev.lsst.org', :sitepp do
               'group' => 'namkueyen',
               'member' => 'namkueyen[01-03]',
             },
-          },
+          }
         )
       end
 
       it do
         is_expected.to contain_class('rke').with(
-          version: '1.5.12',
+          version: '1.6.2'
         )
       end
 

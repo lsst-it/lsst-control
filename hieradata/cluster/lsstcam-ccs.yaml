@@ -1,4 +1,18 @@
 ---
+rsyslog::feature_packages:
+  - "rsyslog-openssl"
+rsyslog::config::actions:
+  fluentbit_dev:
+    type: "omfwd"
+    facility: "*.*"
+    config:
+      target: "rsyslog.fluent.ayekan.dev.lsst.org"
+      port: 5140
+      protocol: "tcp"
+      StreamDriver: "ossl"
+      StreamDriverMode: "1"
+      StreamDriverAuthMode: "anon"
+
 postfix::manage_root_alias: false
 postfix::inet_protocols: "ipv4"
 postfix::inet_interfaces: "localhost"
@@ -57,6 +71,8 @@ ccs_monit::alert:
   ## lsstcam-alerts
   - "lsstcam-alerts-aaaah4qfu4lhjnjpl4wmbjyx2y@lsstc.slack.com"
 
+ccs_mrtg::loss_host: "lsstcam-mcm"
+
 accounts::group_list:
   lsstadm:
     gid: 24000  # XXX reserve GID
@@ -96,15 +112,12 @@ java_artisanal::java17::set_alternatives: true
 ccs_software::desktop: true
 ccs_software::env: "MainCamera"
 ccs_software::installations:
-  lsstcam-software-1.0.10:
-    aliases:
-      - "puppet-1.0.10"
-  lsstcam-software-1.0.11:
-    aliases:
-      - "puppet-1.0.11"
   lsstcam-software-1.0.12:
     aliases:
       - "puppet-1.0.12"
+  lsstcam-software-39.0.0:
+    aliases:
+      - "puppet-39.0.0"
 
 daq::daqsdk::purge: false
 

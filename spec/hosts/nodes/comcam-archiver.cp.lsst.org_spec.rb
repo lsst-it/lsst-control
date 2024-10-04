@@ -4,107 +4,65 @@ require 'spec_helper'
 
 describe 'comcam-archiver.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
-    # XXX networking needs to be updated to support EL8+
-    next unless os =~ %r{centos-7-x86_64}
+    next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'comcam-archiver.cp.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'PowerEdge R640',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'PowerEdge R640',
+                              },
+                            })
       end
-
       let(:node_params) do
         {
-          role: 'comcam-archiver',
+          role: 'nfsclient',
+          cluster: 'comcam-archive',
           site: 'cp',
-          cluster: 'comcam-archiver',
         }
       end
 
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal'
+      include_context 'with nm interface'
 
-      it do
-        is_expected.to contain_network__interface('em1').with(
-          bootproto: 'dhcp',
-          defroute: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
+      it { is_expected.to have_nm__connection_resource_count(6) }
+
+      %w[
+        eno2
+        eno3
+        eno4
+        ens1f0
+        ens1f1
+      ].each do |i|
+        context "with #{i}" do
+          let(:interface) { i }
+
+          it_behaves_like 'nm disabled interface'
+        end
       end
 
-      it do
-        is_expected.to contain_network__interface('em2').with(
-          bootproto: 'none',
-          defroute: 'no',
-          ipaddress: '139.229.166.1',
-          netmask: '255.255.255.0',
-          nozeroconf: 'yes',
-          onboot: 'yes',
-          type: 'Ethernet',
-        )
+      context 'with eno1' do
+        let(:interface) { 'eno1' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm ethernet interface'
       end
 
-      it do
-        is_expected.to contain_network__interface('em3').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
-      end
+      it { is_expected.to contain_class('nfs').with_client_enabled(true) }
 
       it do
-        is_expected.to contain_network__interface('em4').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
+        is_expected.to contain_nfs__client__mount('/data').with(
+          share: 'comcam',
+          server: 'nfs3.cp.lsst.org',
+          atboot: true
         )
       end
-
-      it do
-        is_expected.to contain_network__interface('p2p1').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('p2p2').with(
-          bootproto: 'none',
-          onboot: 'no',
-          type: 'Ethernet',
-        )
-      end
-
-      it { is_expected.to contain_class('nfs::server').with_nfs_v4(true) }
-      it { is_expected.to contain_nfs__server__export('/data/lsstdata') }
-      it { is_expected.to contain_nfs__server__export('/data/repo') }
-      it { is_expected.to contain_nfs__server__export('/data') }
-
-      it do
-        is_expected.to contain_nfs__client__mount('/net/self/data/lsstdata').with(
-          share: 'lsstdata',
-          server: 'comcam-archiver.cp.lsst.org',
-          atboot: true,
-        )
-      end
-
-      it do
-        is_expected.to contain_nfs__client__mount('/repo').with(
-          share: 'repo',
-          server: 'comcam-archiver.cp.lsst.org',
-          atboot: true,
-        )
-      end
-    end # on os
-  end # on_supported_os
-end # role
+    end
+  end # on os
+end # on_supported_os

@@ -2,7 +2,6 @@
 classes:
   - "accounts"
   - "ipa"
-  - "network"
   - "profile::core::cmms"
   - "puppet_agent"
   - "resolv_conf"

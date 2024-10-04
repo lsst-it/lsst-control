@@ -67,6 +67,8 @@ ccs_monit::alert:
   ## comcam-alerts
   - "x7z0x9c0t2k4r1n1@lsstc.slack.com"
 
+ccs_mrtg::loss_host: "comcam-mcm"
+
 java_artisanal::package: "jdk1.8"
 java_artisanal::dir: "jdk1.8.0_202-amd64"
 java_artisanal::set_alternatives: false
@@ -95,15 +97,12 @@ accounts::user_list:
 ccs_software::desktop: true
 ccs_software::env: "ComCam"
 ccs_software::installations:
-  comcam-software-2.4.7:
-    aliases:
-      - "puppet-2.4.7"
-  comcam-software-2.4.8:
-    aliases:
-      - "puppet-2.4.8"
   comcam-software-2.4.9:
     aliases:
       - "puppet-2.4.9"
+  comcam-software-39.0.0:
+    aliases:
+      - "puppet-39.0.0"
 
 daq::daqsdk::purge: false
 

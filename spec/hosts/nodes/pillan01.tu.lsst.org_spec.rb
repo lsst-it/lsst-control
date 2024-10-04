@@ -8,15 +8,14 @@ describe 'pillan01.tu.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'pillan01.tu.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'AS -1114S-WN10RT',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'AS -1114S-WN10RT',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -31,6 +30,7 @@ describe 'pillan01.tu.lsst.org', :sitepp do
       include_examples 'docker', docker_version: '24.0.9'
       include_examples 'baremetal'
       include_context 'with nm interface'
+      include_examples 'ceph cluster'
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
@@ -38,7 +38,7 @@ describe 'pillan01.tu.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_class('profile::core::rke').with(
-          version: '1.5.10',
+          version: '1.6.2'
         )
       end
 
@@ -46,7 +46,7 @@ describe 'pillan01.tu.lsst.org', :sitepp do
         is_expected.to contain_class('cni::plugins').with(
           version: '1.2.0',
           checksum: 'f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37',
-          enable: ['macvlan'],
+          enable: ['macvlan']
         )
       end
 
@@ -98,7 +98,7 @@ describe 'pillan01.tu.lsst.org', :sitepp do
           let(:interface) { slave }
 
           it_behaves_like 'nm enabled interface'
-          it_behaves_like 'nm bridge slave interface', master: master
+          it_behaves_like 'nm bridge slave interface', master:
         end
       end
 

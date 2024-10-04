@@ -8,15 +8,14 @@ describe 'antu01.ls.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'antu01.ls.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'AS -1115HS-TNR',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'AS -1115HS-TNR',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -31,6 +30,7 @@ describe 'antu01.ls.lsst.org', :sitepp do
 
       include_examples 'baremetal'
       include_context 'with nm interface'
+      include_examples 'ceph cluster'
       include_examples 'docker', docker_version: '24.0.9'
 
       it do
@@ -44,13 +44,13 @@ describe 'antu01.ls.lsst.org', :sitepp do
               'group' => 'antu',
               'member' => 'antu[01-04]',
             },
-          },
+          }
         )
       end
 
       it do
         is_expected.to contain_class('rke').with(
-          version: '1.5.10',
+          version: '1.5.12'
         )
       end
 

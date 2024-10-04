@@ -14,7 +14,7 @@ describe 'profile::util::keytab' do
 
       it do
         is_expected.to contain_file('/home/foo/.keytab').with(
-          ensure: 'absent',
+          ensure: 'absent'
         )
       end
 
@@ -25,7 +25,7 @@ describe 'profile::util::keytab' do
           group: 'root',
           mode: '0700',
           purge: true,
-          recurse: true,
+          recurse: true
         )
       end
 
@@ -36,13 +36,13 @@ describe 'profile::util::keytab' do
           group: 'root',
           mode: '0400',
           show_diff: false,
-          content: 'bar',
+          content: 'bar'
         )
       end
 
       it do
         is_expected.to contain_cron('k5start_root').with(
-          command: '/usr/bin/k5start -f /var/lib/keytab/foo -U -o 123 -k /tmp/krb5cc_123 -H 60 -F > /dev/null 2>&1',
+          command: '/usr/bin/k5start -f /var/lib/keytab/foo -U -o 123 -k /tmp/krb5cc_123 -H 60 -F > /dev/null 2>&1'
         )
       end
 

@@ -8,15 +8,14 @@ describe 'tel-hw1.tu.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'tel-hw1.tu.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'Super Server',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'Super Server',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -65,7 +64,7 @@ describe 'tel-hw1.tu.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/data').with(
           share: 'obs-env',
           server: 'nfs-obsenv.tu.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
     end # on os

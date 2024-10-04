@@ -9,15 +9,14 @@ describe 'perfsonar1.ls.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'perfsonar1.ls.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'PowerEdge R340',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'PowerEdge R340',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -40,7 +39,7 @@ describe 'perfsonar1.ls.lsst.org', :sitepp do
             bootproto: 'none',
             onboot: 'yes',
             type: 'Ethernet',
-            mtu: '9000',
+            mtu: '9000'
           )
         end
       end
@@ -54,7 +53,7 @@ describe 'perfsonar1.ls.lsst.org', :sitepp do
           ipaddress: '139.229.140.135',
           netmask: '255.255.255.254',
           nozeroconf: 'yes',
-          mtu: '9000',
+          mtu: '9000'
         )
       end
 
@@ -67,7 +66,7 @@ describe 'perfsonar1.ls.lsst.org', :sitepp do
           ipaddress: '10.7.26.2',
           netmask: '255.255.255.0',
           nozeroconf: 'yes',
-          mtu: '9000',
+          mtu: '9000'
         )
       end
 
@@ -80,7 +79,7 @@ describe 'perfsonar1.ls.lsst.org', :sitepp do
           ipaddress: '10.7.28.1',
           netmask: '255.255.255.0',
           nozeroconf: 'yes',
-          mtu: '9000',
+          mtu: '9000'
         )
       end
 
@@ -93,7 +92,7 @@ describe 'perfsonar1.ls.lsst.org', :sitepp do
           ipaddress: '139.229.140.137',
           netmask: '255.255.255.254',
           nozeroconf: 'yes',
-          mtu: '9000',
+          mtu: '9000'
         )
       end
 
@@ -106,7 +105,7 @@ describe 'perfsonar1.ls.lsst.org', :sitepp do
           ipaddress: '10.7.27.2',
           netmask: '255.255.255.0',
           nozeroconf: 'yes',
-          mtu: '9000',
+          mtu: '9000'
         )
       end
 
@@ -119,7 +118,7 @@ describe 'perfsonar1.ls.lsst.org', :sitepp do
           ipaddress: '10.7.29.1',
           netmask: '255.255.255.0',
           nozeroconf: 'yes',
-          mtu: '9000',
+          mtu: '9000'
         )
       end
 
@@ -150,7 +149,7 @@ describe 'perfsonar1.ls.lsst.org', :sitepp do
               '198.124.226.198/32' => via,
               '198.124.226.202/32' => via,
               '198.124.226.206/32' => via,
-            ],
+            ]
           )
         end
       end
@@ -175,7 +174,7 @@ describe 'perfsonar1.ls.lsst.org', :sitepp do
               '198.124.226.134/32' => via,
               '198.124.226.138/32' => via,
               '198.124.226.142/32' => via,
-            ],
+            ]
           )
         end
       end

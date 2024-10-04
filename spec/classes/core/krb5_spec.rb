@@ -10,7 +10,7 @@ describe 'profile::core::krb5' do
       context 'with no params' do
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'krb5.conf.d files', os_facts: os_facts
+        include_examples 'krb5.conf.d files', os_facts:
       end
     end
   end

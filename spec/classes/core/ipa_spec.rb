@@ -26,7 +26,7 @@ describe 'profile::core::ipa' do
           is_expected.to contain_ini_setting('/etc/ipa/default.conf [foo] bar').with(
             section: 'foo',
             setting: 'bar',
-            value: 'baz',
+            value: 'baz'
           ).that_requires('Class[ipa]')
         end
       end

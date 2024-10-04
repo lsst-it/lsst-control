@@ -1,0 +1,55 @@
+---
+nm::connections:
+  enp12s0f4u1u2c2:
+    content:
+      connection:
+        id: "enp12s0f4u1u2c2"
+        uuid: "283f3035-13d7-4c87-9d7a-7d47861fa1f9"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp12s0f4u1u2c2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp65s0f1:
+    content:
+      connection:
+        id: "enp65s0f1"
+        uuid: "688bf5bf-d649-34b4-15eb-b07c50ac43f8"
+        type: "ethernet"
+        interface-name: "enp65s0f1"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+  enp65s0f0:
+    content:
+      connection:
+        id: "enp65s0f0"
+        uuid: "46d19ce1-bcab-7e77-6fc7-b730b26c54b1"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp65s0f0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp65s0f0.1800:
+    content:
+      connection:
+        id: "enp65s0f0.1800"
+        uuid: "011f6c6f-3177-45c8-9ede-52195b2eff02"
+        type: "vlan"
+        interface-name: "enp65s0f0.1800"
+        master: "br1800"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1800"
+        parent: "enp65s0f0"
+      bridge-port: {}

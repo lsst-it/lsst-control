@@ -7,17 +7,6 @@ describe 'auxtel-fp01.ls.lsst.org', :sitepp do
     next if os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do
-      let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'auxtel-fp01.ls.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'PowerEdge R630',
-                         },
-                       })
-      end
       let(:node_params) do
         {
           role: 'atsdaq',
@@ -26,6 +15,16 @@ describe 'auxtel-fp01.ls.lsst.org', :sitepp do
           variant: '1114s',
           subvariant: 'daq-lhn',
         }
+      end
+      let(:facts) do
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'PowerEdge R630',
+                              },
+                            })
       end
 
       it { is_expected.to compile.with_all_deps }
@@ -109,7 +108,7 @@ describe 'auxtel-fp01.ls.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/self/ccs-data').with(
           share: 'ccs-data',
           server: 'auxtel-fp01.ls.lsst.org',
-          atboot: true,
+          atboot: true
         )
       end
     end # on os

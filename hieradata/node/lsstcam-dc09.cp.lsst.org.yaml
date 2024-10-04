@@ -16,3 +16,22 @@ nm::connections:
       ipv6:
         method: "disabled"
       proxy: {}
+  ens1f1np1:
+    content:
+      connection:
+        id: "ens1f1np1"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        interface-name: "ens1f1np1"
+      ethernet:
+        mtu: 9000
+      ipv4:
+        address1: "139.229.173.140/27,139.229.173.129"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+        never-default: "true"
+        route1: "172.24.7.0/24,139.229.173.129"
+      ipv6:
+        method: "ignore"
+      proxy: {}

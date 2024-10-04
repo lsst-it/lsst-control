@@ -4,3 +4,4 @@ classes:
   - "profile::core::docker"
   - "profile::pi::ftdi"
   - "profile::pi::rubinhat"
+  - "profile::ts::dco"

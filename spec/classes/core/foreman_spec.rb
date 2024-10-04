@@ -9,9 +9,9 @@ describe 'profile::core::foreman' do
       let(:params) { { smee_url: 'https://foo.example.org' } }
       let(:pre_condition) do
         <<~PP
-        class { 'puppet':
-          environment => 'production',
-        }
+          class { 'puppet':
+            environment => 'production',
+          }
         PP
       end
 
@@ -26,7 +26,7 @@ describe 'profile::core::foreman' do
               foo: {
                 description: 'bar',
               },
-            },
+            }
           )
         end
 
@@ -41,14 +41,14 @@ describe 'profile::core::foreman' do
                 parameter_type: 'baz',
                 value: 'bar',
               },
-            },
+            }
           )
         end
 
         it do
           is_expected.to contain_foreman_global_parameter('foo').with(
             parameter_type: 'baz',
-            value: 'bar',
+            value: 'bar'
           )
         end
       end

@@ -5,3 +5,4 @@ classes:
   - "profile::core::gpio"
   - "profile::pi::ftdi"
   - "profile::pi::pigpio"
+  - "profile::ts::dco"

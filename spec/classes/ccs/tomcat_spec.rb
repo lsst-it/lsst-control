@@ -35,14 +35,14 @@ describe 'profile::ccs::tomcat' do
             {
               target: '/opt/tomcat/catalina_base/conf/catalina.properties',
               content: 'org.lsst.ccs.web.trending.default.site=mysite',
-            },
+            }
           )
         end
 
         it do
           is_expected.to contain_service('tomcat').with(
             ensure: 'running',
-            enable: true,
+            enable: true
           )
         end
       end

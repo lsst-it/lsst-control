@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 shared_examples 'generic rke' do |os_facts:, site:|
-  include_examples 'common', os_facts: os_facts, site: site, node_exporter: false
+  include_examples 'common', os_facts:, site:, node_exporter: false
   include_examples 'debugutils'
   include_examples 'docker'
   include_examples 'rke profile'
@@ -13,7 +13,7 @@ shared_examples 'generic rke' do |os_facts:, site:|
   it do
     is_expected.to contain_class('kubectl').with(
       version: '1.28.10',
-      checksum: '389c17a9700a4b01ebb055e39b8bc0886330497440dde004b5ed90f2a3a028db',
+      checksum: '389c17a9700a4b01ebb055e39b8bc0886330497440dde004b5ed90f2a3a028db'
     )
   end
 
@@ -39,25 +39,31 @@ shared_examples 'generic rke' do |os_facts:, site:|
       backup_timer: '*-*-* 09:00:00',
       enable_forget: true,
       forget_timer: 'Mon..Sun 23:00:00',
-      forget_flags: '--keep-last 20',
+      forget_flags: '--keep-last 20'
     )
   end
 
   case site
-  when 'dev'
+  when 'dev', 'tu'
     it do
       is_expected.to contain_class('rke').with(
-        version: '1.5.12',
-        checksum: 'f0d1f6981edbb4c93f525ee51bc2a8ad729ba33c04f21a95f5fc86af4a7af586',
+        version: '1.6.2',
+        checksum: '68608a97432b4472d3e8f850a7bde0119582ea80fbb9ead923cd831ca97db1d7'
       )
     end
   else
     it do
       is_expected.to contain_class('rke').with(
-        version: '1.5.10',
-        checksum: 'cd5d3e8cd77f955015981751c30022cead0bd78f14216fcd1c827c6a7e5cc26e',
+        version: '1.5.12',
+        checksum: 'f0d1f6981edbb4c93f525ee51bc2a8ad729ba33c04f21a95f5fc86af4a7af586'
       )
     end
+  end
+
+  it do
+    is_expected.to contain_grubby__kernel_opt('rootflags=pquota').with(
+      ensure: 'absent'
+    )
   end
 end
 
@@ -68,24 +74,19 @@ describe "#{role} role" do
     next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
-      let(:facts) { os_facts }
-      let(:node_params) do
-        {
-          role: role,
-          site: site,
-        }
-      end
-
       lsst_sites.each do |site|
-        fqdn = "#{role}.#{site}.lsst.org"
-        describe fqdn, :sitepp do
-          let(:site) { site }
-
-          override_facts(os_facts, fqdn: fqdn, networking: { fqdn => fqdn })
+        describe "#{role}.#{site}.lsst.org", :sitepp do
+          let(:node_params) do
+            {
+              role:,
+              site:,
+            }
+          end
+          let(:facts) { lsst_override_facts(os_facts) }
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'generic rke', os_facts: os_facts, site: site
+          include_examples 'generic rke', os_facts:, site:
         end # host
       end # lsst_sites
     end # on os

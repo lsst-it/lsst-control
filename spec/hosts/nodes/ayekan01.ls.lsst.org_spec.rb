@@ -8,15 +8,14 @@ describe 'ayekan01.ls.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'ayekan01.ls.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'AS -1114S-WN10RT',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'AS -1114S-WN10RT',
+                              },
+                            })
       end
       let(:node_params) do
         {
@@ -28,6 +27,7 @@ describe 'ayekan01.ls.lsst.org', :sitepp do
 
       include_examples 'baremetal'
       include_context 'with nm interface'
+      include_examples 'ceph cluster'
       include_examples 'docker', docker_version: '24.0.9'
 
       it { is_expected.to compile.with_all_deps }
@@ -43,13 +43,13 @@ describe 'ayekan01.ls.lsst.org', :sitepp do
               'group' => 'ayekan',
               'member' => 'ayekan[01-03]',
             },
-          },
+          }
         )
       end
 
       it do
         is_expected.to contain_class('rke').with(
-          version: '1.5.12',
+          version: '1.6.2'
         )
       end
 

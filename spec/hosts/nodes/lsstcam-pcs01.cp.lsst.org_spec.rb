@@ -8,15 +8,14 @@ describe 'lsstcam-pcs01.cp.lsst.org', :sitepp do
 
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'lsstcam-pcs01.cp.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'UNO-148-B',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'UNO-148-B',
+                              },
+                            })
       end
       let(:node_params) do
         {

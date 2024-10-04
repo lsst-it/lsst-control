@@ -1,0 +1,21 @@
+---
+nfs::client_mounts:
+  /data:
+    share: "lsstcam"
+    server: "nfs3.cp.lsst.org"
+    atboot: true
+
+profile::core::k5login::k5login:
+  "/home/saluser/.k5login":
+    ensure: "present"
+    principals:
+      - "ccs-ipa/lsstcam-dc01.cp.lsst.org@LSST.CLOUD"
+      - "ccs-ipa/lsstcam-dc02.cp.lsst.org@LSST.CLOUD"
+      - "ccs-ipa/lsstcam-dc03.cp.lsst.org@LSST.CLOUD"
+      - "ccs-ipa/lsstcam-dc04.cp.lsst.org@LSST.CLOUD"
+      - "ccs-ipa/lsstcam-dc05.cp.lsst.org@LSST.CLOUD"
+      - "ccs-ipa/lsstcam-dc06.cp.lsst.org@LSST.CLOUD"
+      - "ccs-ipa/lsstcam-dc07.cp.lsst.org@LSST.CLOUD"
+      - "ccs-ipa/lsstcam-dc08.cp.lsst.org@LSST.CLOUD"
+      - "ccs-ipa/lsstcam-dc09.cp.lsst.org@LSST.CLOUD"
+      - "ccs-ipa/lsstcam-dc10.cp.lsst.org@LSST.CLOUD"

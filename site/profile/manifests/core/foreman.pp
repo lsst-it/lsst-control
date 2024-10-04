@@ -117,7 +117,7 @@ class profile::core::foreman (
   }
 
   # The foreman-selinux package is not managed by theforeman/foreman when selinux is disabled.  # This is to cleanup old installs.
-  unless $facts['os']['selinux']['enabled'] {
+  unless fact('os.selinux.enabled') {
     package { 'foreman-selinux':
       ensure => absent,
     }

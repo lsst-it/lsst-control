@@ -26,7 +26,7 @@ ccs_software::jdk8::package: "jdk1.8"
 ccs_software::jdk8::dir: "jdk1.8.0_202-amd64"
 ccs_software::jdk8::version: "2000:1.8.0_202-fcs"
 
-ccs_software::service_email: "auxtel-ccs-alerts-aaaadjkgtdl6pb2omvdi732xci@lsstc.slack.com"
+ccs_software::service_email: "auxtel-ccs-alerts-aaaaoikgy7stloxmg54kii7uwi@rubin-obs.slack.com"
 
 clustershell::groupmembers:
   misc: {group: "misc", member: "auxtel-mcm,auxtel-dc01,auxtel-fp01"}
@@ -34,7 +34,7 @@ clustershell::groupmembers:
   all: {group: "all", member: "@misc,@hcu"}
 
 ccs_monit::alert:
-  - "auxtel-ccs-alerts-aaaadjkgtdl6pb2omvdi732xci@lsstc.slack.com"
+  - "auxtel-ccs-alerts-aaaaoikgy7stloxmg54kii7uwi@rubin-obs.slack.com"
 
 java_artisanal::package: "jdk1.8"
 java_artisanal::dir: "jdk1.8.0_202-amd64"

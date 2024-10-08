@@ -65,11 +65,11 @@ ccs_software::global_properties:
   - "org.lsst.ccs.subsystem.agent.property.site=%{lookup('ccs_site')}"
 
 ## lsstcam-alerts
-ccs_software::service_email: "lsstcam-alerts-aaaah4qfu4lhjnjpl4wmbjyx2y@lsstc.slack.com"
+ccs_software::service_email: "lsstcam-alerts-aaaaoikijncrl3mtoosglrzsqm@rubin-obs.slack.com"
 
 ccs_monit::alert:
   ## lsstcam-alerts
-  - "lsstcam-alerts-aaaah4qfu4lhjnjpl4wmbjyx2y@lsstc.slack.com"
+  - "lsstcam-alerts-aaaaoikijncrl3mtoosglrzsqm@rubin-obs.slack.com"
 
 ccs_mrtg::loss_host: "lsstcam-mcm"
 

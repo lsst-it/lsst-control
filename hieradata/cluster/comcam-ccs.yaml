@@ -61,11 +61,11 @@ ccs_software::global_properties:
   - "org.lsst.ccs.subsystem.agent.property.site=%{lookup('ccs_site')}"
 
 ## comcam-alerts
-ccs_software::service_email: "x7z0x9c0t2k4r1n1@lsstc.slack.com"
+ccs_software::service_email: "comcam-alerts-aaaaoiphax6ggc2vzy5idxkmke@rubin-obs.slack.com"
 
 ccs_monit::alert:
   ## comcam-alerts
-  - "x7z0x9c0t2k4r1n1@lsstc.slack.com"
+  - "comcam-alerts-aaaaoiphax6ggc2vzy5idxkmke@rubin-obs.slack.com"
 
 ccs_mrtg::loss_host: "comcam-mcm"
 

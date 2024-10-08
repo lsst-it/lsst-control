@@ -25,7 +25,7 @@ describe 'lsstcam-db01.cp.lsst.org', :sitepp do
         }
       end
       let(:alert_email) do
-        'lsstcam-alerts-aaaah4qfu4lhjnjpl4wmbjyx2y@lsstc.slack.com'
+        'lsstcam-alerts-aaaaoikijncrl3mtoosglrzsqm@rubin-obs.slack.com'
       end
 
       it { is_expected.to compile.with_all_deps }

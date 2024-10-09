@@ -14,3 +14,5 @@ files:
 ccs_software::services:
   prod:
     - {name: "image-handling", user: "ccs-ipa", group: "ccs-ipa", workdir: "/home/ccs-ipa"}
+
+profile::ccs::file_transfer::s3daemon_repo_rev: "tickets/DM-46311"

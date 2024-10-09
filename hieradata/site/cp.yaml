@@ -57,3 +57,5 @@ ccs_sal::lfa:
   secret: "%{alias('ccs_sal::lfa::secret')}"
   endpoint: "https://s3.cp.lsst.org/"
   bucket: "rubinobs-lfa-cp"
+
+ccs_software::influx_url: "https://ccs-influxdb.cp.lsst.org:443"

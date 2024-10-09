@@ -38,3 +38,5 @@ ccs_sal::lfa:
   secret: "%{alias('ccs_sal::lfa::secret')}"
   endpoint: "https://s3.tu.lsst.org/"
   bucket: "rubinobs-lfa-tuc"
+
+ccs_software::influx_url: "https://ccs-influxdb.tu.lsst.org:443"

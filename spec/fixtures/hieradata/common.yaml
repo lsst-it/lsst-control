@@ -26,6 +26,8 @@ lookup_options:
     convert_to: "Sensitive"
   '^profile::core::puppetdb::ldap_bind_(user|pass)$':
     convert_to: "Sensitive"
+  '^s3daemon_.+::aws_.+$':
+    convert_to: "Sensitive"
 ccs_database::database: "comcamdbprod"
 ccs_database::password: "foo"
 foreman_proxy::plugin::dns::route53::aws_access_key: "foo"
@@ -50,4 +52,10 @@ profile::core::puppetdb::ldap_bind_user: "foo"
 restic::id: "foo"
 restic::key: "foo"
 restic::password: "foo"
+s3daemon_site::aws_access_key_id: "foo"
+s3daemon_site::aws_secret_access_key: "foo"
+s3daemon::instances:
+  site:
+    aws_access_key_id: "%{alias('s3daemon_site::aws_access_key_id')}"
+    aws_secret_access_key: "%{alias('s3daemon_site::aws_secret_access_key')}"
 tailscale::auth_key: "foo"

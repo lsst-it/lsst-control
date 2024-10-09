@@ -3,3 +3,4 @@
 # can be used to bootstrap nodes while a more specific role is being developed.
 classes:
   - "profile::core::common"
+  - "s3daemon"

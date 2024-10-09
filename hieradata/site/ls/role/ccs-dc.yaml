@@ -14,3 +14,8 @@ files:
 ccs_software::services:
   prod:
     - {name: "image-handling", user: "ccs-ipa", group: "ccs-ipa", workdir: "/home/ccs-ipa"}
+
+s3daemon::instances:
+  elqui:  # testing
+    s3_endpoint_url: "https://s3.elqui.cp.lsst.org"
+    port: 15558

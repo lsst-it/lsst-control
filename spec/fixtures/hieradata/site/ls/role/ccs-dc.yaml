@@ -1,0 +1,5 @@
+---
+s3daemon::instances:
+  elqui:
+    aws_access_key_id: "%{alias('s3daemon_secret::aws_access_key_id')}"
+    aws_secret_access_key: "%{alias('s3daemon_secret::aws_secret_access_key')}"

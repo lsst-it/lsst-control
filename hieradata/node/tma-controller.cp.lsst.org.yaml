@@ -1,0 +1,34 @@
+---
+nm::connections:
+  ens192:  #fqdn
+    content:
+      connection:
+        id: "ens192"
+        uuid: "03f82174-8b90-47f4-869d-16428a43cff9"
+        type: "ethernet"
+        interface-name: "ens192"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.178.46/24,139.229.178.254"
+        dns: "139.229.160.53;139.229.160.54;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  ens224:  #fqdn
+    content:
+      connection:
+        id: "ens224"
+        uuid: "7aeaea79-6950-49e2-8191-5d7f78803be7"
+        type: "ethernet"
+        interface-name: "ens224"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.171.55/24,139.229.171.254"
+        dns: "139.229.160.53;139.229.160.54;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}

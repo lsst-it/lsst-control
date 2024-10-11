@@ -2,11 +2,11 @@
 ccs_site: "tucson"
 ccs_sal::dds_interface: "comcam-mcm-dds.tu.lsst.org"
 
-ccs_software::service_email: "tucson-teststand-aler-aaaae4zsdubhmm3n7mowaugr2y@lsstc.slack.com"
+ccs_software::service_email: "tucson-teststand-aler-aaaaojrgfksil24tsex3nv2md4@rubin-obs.slack.com"
 
 ccs_monit::alert:
   ## tucson-teststand-alerts
-  - "tucson-teststand-aler-aaaae4zsdubhmm3n7mowaugr2y@lsstc.slack.com"
+  - "tucson-teststand-aler-aaaaojrgfksil24tsex3nv2md4@rubin-obs.slack.com"
 
 clustershell::groupmembers:
   all: {group: "all", member: "comcam-dc01,comcam-fp01,comcam-mcm"}

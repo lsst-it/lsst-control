@@ -28,7 +28,7 @@ describe 'auxtel-mcm.ls.lsst.org', :sitepp do
       end
 
       let(:alert_email) do
-        'base-teststand-alerts-aaaai5j4osevcaaobtog67nxlq@lsstc.slack.com'
+        'base-teststand-alerts-aaaaojwlqmczgqmavrwyopux5a@rubin-obs.slack.com'
       end
 
       it { is_expected.to compile.with_all_deps }

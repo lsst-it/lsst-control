@@ -35,3 +35,6 @@ ccs_hcu::canbus: true
 ccs_software::services:
   prod:
     - "fcs"
+    - {name: "carousel", enable: false}
+    - {name: "autochanger1", enable: false}
+    - {name: "autochanger2", enable: false}

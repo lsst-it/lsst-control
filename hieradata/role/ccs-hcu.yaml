@@ -13,7 +13,7 @@ packages:
   - "usbutils"
 
 ccs_hcu::canbus::module: "advSocketCAN"
-ccs_hcu::canbus::version: "1.0.1.0"
+ccs_hcu::canbus::version: "3.0.2.2"
 
 ccs_hcu::vldrive::module: "versaapi"
 ccs_hcu::vldrive::version: "1.5.0"

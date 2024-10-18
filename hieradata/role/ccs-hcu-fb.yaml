@@ -12,6 +12,9 @@ packages:
   - "telnet"
   - "usbutils"
 
+ccs_hcu::canbus: true
+ccs_hcu::aiousb: true
+
 ccs_hcu::canbus::module: "advSocketCAN"
 ccs_hcu::canbus::version: "3.0.2.2"
 
@@ -20,3 +23,12 @@ ccs_hcu::vldrive::version: "1.5.0"
 
 ccs_hcu::imanager::module: "imanager"
 ccs_hcu::imanager::version: "1.5.0"
+
+ccs_software::services:
+  prod:
+    - {name: "autochanger1", enable: false}
+    - {name: "autochanger2", enable: false}
+    - {name: "carousel", enable: false}
+    - {name: "fcs", enable: false}
+    - {name: "loader1", enable: false}
+    - {name: "loader2", enable: false}

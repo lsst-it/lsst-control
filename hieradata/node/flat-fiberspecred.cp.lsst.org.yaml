@@ -1,0 +1,42 @@
+---
+nm::connections:
+  enp2s0:  #fqdn
+    content:
+      connection:
+        id: "enp2s0"
+        uuid: "bbf23634-abd6-3929-8d21-ea1f3077b41d"
+        type: "ethernet"
+        interface-name: "enp2s0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp1s0:  # dds-auxtel|139.229.170.0/24
+    content:
+      connection:
+        id: "enp1s0"
+        uuid: "8515293a-ae5d-3af2-a8d4-949459e358a3"
+        type: "ethernet"
+        interface-name: "enp1s0"
+        master: "dds"
+        slave-type: "bridge"
+      ethernet: {}
+      bridge-port: {}
+  dds:
+    content:
+      connection:
+        id: "dds"
+        uuid: "025dd1cd-f319-4056-b65a-5fa8cbe5052d"
+        type: "bridge"
+        interface-name: "dds"
+      ethernet: {}
+      bridge:
+        stp: false
+      ipv4:
+        address1: "139.229.170.157/24"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}

@@ -4,7 +4,7 @@ nm::connections:
     content:
       connection:
         id: "enp2s0"
-        uuid: "651380a2-965d-4baa-8c34-5c4062434319"
+        uuid: "df58f0cf-0d0e-3857-b78d-6e5e4e02adb7"
         type: "ethernet"
         interface-name: "enp2s0"
       ethernet: {}
@@ -13,11 +13,11 @@ nm::connections:
       ipv6:
         method: "disabled"
       proxy: {}
-  enp1s0:  # misc-dds|140.252.147.128/27
+  enp1s0:  # dds-auxtel|139.229.170.0/24
     content:
       connection:
         id: "enp1s0"
-        uuid: "42f27e6a-4d8e-42b9-bb83-3db4b59e6d16"
+        uuid: "ef22f6a7-af7d-3301-a2f6-2d37eac012f0"
         type: "ethernet"
         interface-name: "enp1s0"
         master: "dds"
@@ -35,7 +35,7 @@ nm::connections:
       bridge:
         stp: false
       ipv4:
-        address1: "140.252.147.137/27"
+        address1: "139.229.170.156/24"
         method: "manual"
       ipv6:
         method: "disabled"

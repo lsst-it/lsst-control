@@ -43,7 +43,7 @@
 class profile::ccs::file_transfer (
   Sensitive[String[1]] $s3daemon_env_access,
   Sensitive[String[1]] $s3daemon_env_secret,
-  Boolean $s3daemon = false,
+  Boolean $s3daemon = true,
   Stdlib::HTTPUrl $s3daemon_repo_url = 'https://github.com/lsst-dm/s3daemon',
   Optional[String[1]] $s3daemon_repo_rev = undef,
   String $s3daemon_repo_directory = '/home/ccs-ipa/s3daemon/git',

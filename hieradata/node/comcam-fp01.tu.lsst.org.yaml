@@ -61,8 +61,6 @@ nfs::client_mounts:
     server: "%{facts.networking.fqdn}"
     atboot: true
 
-profile::ccs::file_transfer::s3daemon: true
-
 ccs_software::services:
   prod:
     - "h2db"

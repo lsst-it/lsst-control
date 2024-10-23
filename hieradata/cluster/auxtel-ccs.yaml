@@ -38,6 +38,8 @@ ccs_monit::alert:
 
 java_artisanal::package: "jdk1.8"
 java_artisanal::dir: "jdk1.8.0_202-amd64"
+java_artisanal::set_alternatives: false
+java_artisanal::java17::set_alternatives: true
 
 accounts::group_list:
   lsstadm:
@@ -78,6 +80,9 @@ ccs_daq::instrument: "%{lookup('ccs_instrument')}"
 ccs_sal::dds_domain: "%{lookup('ccs_site')}"
 ccs_sal::dds_interface: "auxtel-mcm-dds.cp.lsst.org"
 ccs_sal::instrument: "%{lookup('ccs_instrument')}"
+## Java 17
+ccs_sal::dds_extra: "export LD_PRELOAD=${JAVA_HOME}/lib/libjsig.so"
+ccs_sal::java_home: "/usr/lib/jvm/zulu-17"
 
 ccs_software::global_properties:
   - "org.lsst.ccs.lockservice=remote"
@@ -99,4 +104,5 @@ ccs_sal::rpms_private:
 daq::daqsdk::purge: false
 daq::daqsdk::version: "R5-V8.1"
 
+profile::ccs::tomcat::java_home: "/usr/lib/jvm/zulu-17"
 profile::ccs::tomcat::trending_site: "%{lookup('ccs_instrument')}"

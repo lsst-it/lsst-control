@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'fiber-spec01.tu.lsst.org', :sitepp do
+describe 'flat-fiberspecblue.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
@@ -19,8 +19,8 @@ describe 'fiber-spec01.tu.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'dco',
-          site: 'tu',
+          role: 'fiberspec',
+          site: 'cp',
         }
       end
 
@@ -52,7 +52,7 @@ describe 'fiber-spec01.tu.lsst.org', :sitepp do
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm bridge interface'
         it_behaves_like 'nm manual interface'
-        it { expect(nm_keyfile['ipv4']['address1']).to eq('140.252.147.137/27') }
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.170.156/24') }
       end
     end # on os
   end # on_supported_os

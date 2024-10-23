@@ -80,6 +80,7 @@ nm::connections:
       bond:
         miimon: "100"
         mode: "802.3ad"
+        xmit_hash_policy: "layer3+4"
       ipv4:
         method: "disabled"
       ipv6:

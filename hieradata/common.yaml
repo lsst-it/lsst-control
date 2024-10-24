@@ -196,7 +196,7 @@ sudo::configs:
   wheel_b:  # backup wheel group in case of LDAP failure.
     content: "%wheel_b ALL=(ALL) NOPASSWD: ALL"
   defaults:
-    priority: "00"
+    priority: 00
     content: |
       Defaults   !visiblepw
       Defaults    always_set_home

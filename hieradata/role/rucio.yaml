@@ -1,12 +1,20 @@
 ---
 classes:
   - "profile::core::common"
-  - "profile::core::debugutils"
+  - "profile::core::firewall"
+  - "profile::core::nfsclient"
   - "profile::core::rucio"
-  - "python"
 
-python::version: "python36"
-python::pip: "present"
-python::dev: "present"
-python::virtualenv: "present"
-profile::core::common::manage_firewall: false
+profile::core::firewall::firewall:
+  "254 accept incoming on port 1094 from SLAC subnet":
+    proto: "tcp"
+    state: "NEW"
+    dport: "1094"
+    source: "134.79.23.0/24"
+    jump: "accept"
+  "255 accept outgoing on port 1094 to SLAC subnet":
+    proto: "tcp"
+    state: "NEW"
+    sport: "1094"
+    destination: "134.79.23.0/24"
+    jump: "accept"

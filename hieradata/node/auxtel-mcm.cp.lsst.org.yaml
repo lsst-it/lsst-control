@@ -63,7 +63,7 @@ ccs_software::services:
   prod:
     - "mmm"
     - "cluster-monitor"
-    - "kafka-broker"
+    - "kafka-broker-service"
     - "localdb"
     - "lockmanager"
     - "rest-server"

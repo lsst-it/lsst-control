@@ -73,7 +73,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
             'S3ND_QUEUE_TIMEOUT' => '30s',
             'S3ND_UPLOAD_MAX_PARALLEL' => '25',
             'S3ND_UPLOAD_TRIES' => '5',
-            'S3ND_UPLOAD_PARTSIZE' => '50Mi',  # larger than test file size
+            'S3ND_UPLOAD_PARTSIZE' => '50Mi', # larger than test file size
             'S3ND_UPLOAD_BWLIMIT' => '160Mi',
           }
         )

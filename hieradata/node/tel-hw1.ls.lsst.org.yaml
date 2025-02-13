@@ -5,3 +5,7 @@ nfs::client_mounts:
     share: "obs-env"
     server: "nfs-obsenv.ls.lsst.org"
     atboot: true
+  /net/scratch:
+    share: "scratch"
+    server: "nfs-scratch.ls.lsst.org"
+    atboot: true

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'tel-hw1.ls.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
-    next if os =~ %r{centos-7-x86_64}
+    next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
@@ -73,6 +73,14 @@ describe 'tel-hw1.ls.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/obs-env').with(
           share: 'obs-env',
           server: 'nfs-obsenv.ls.lsst.org',
+          atboot: true
+        )
+      end
+
+      it do
+        is_expected.to contain_nfs__client__mount('/net/scratch').with(
+          share: 'scratch',
+          server: 'nfs-scratch.ls.lsst.org',
           atboot: true
         )
       end

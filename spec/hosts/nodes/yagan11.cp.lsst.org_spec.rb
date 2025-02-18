@@ -73,7 +73,7 @@ describe 'yagan11.cp.lsst.org', :sitepp do
 
       it { is_expected.to contain_class('profile::core::ospl').with_enable_rundir(true) }
 
-      it { is_expected.to have_nm__connection_resource_count(14) }
+      it { is_expected.to have_nm__connection_resource_count(12) }
 
       %w[
         eno1np0
@@ -109,7 +109,6 @@ describe 'yagan11.cp.lsst.org', :sitepp do
       end
 
       Hash[*%w[
-        bond0.1101 br1101
         bond0.1201 br1201
         bond0.1702 br1702
         bond0.1800 br1800
@@ -123,7 +122,6 @@ describe 'yagan11.cp.lsst.org', :sitepp do
       end
 
       %w[
-        br1101
         br1201
         br1702
         br1800

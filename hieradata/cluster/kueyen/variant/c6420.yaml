@@ -1,0 +1,29 @@
+---
+nm::connections:
+  ens4f0:
+    content:
+      connection:
+        id: "ens4f0"
+        uuid: "46d19ce1-bcab-7e77-6fc7-b730b26c54b1"
+        type: "ethernet"
+        interface-name: "ens4f0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+  ens4f0.2301:
+    content:
+      connection:
+        id: "ens4f0.2301"
+        uuid: "e74daaad-4d73-4015-bb26-83c460ddf572"
+        type: "vlan"
+        interface-name: "ens4f0.2301"
+        master: "br2301"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2301"
+        parent: "ens4f0"
+      bridge-port: {}

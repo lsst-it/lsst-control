@@ -51,12 +51,14 @@ nfs::nfs_exports_global:
       139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/jhome:
     # nublado needs to be able to create user home dirs as root
     clients: >-
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
+      139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
       nfs2.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
   /data/lsstdata:
     clients: >-
@@ -90,6 +92,7 @@ nfs::nfs_exports_global:
       139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/dimm:
     clients: >-
@@ -99,6 +102,7 @@ nfs::nfs_exports_global:
       139.229.164.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
       139.229.191.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/rsphome:
     # nublado needs to be able to create user home dirs as root

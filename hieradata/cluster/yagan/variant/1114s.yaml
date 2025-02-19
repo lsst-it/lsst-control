@@ -26,21 +26,67 @@ nm::connections:
         method: "disabled"
       ipv6:
         method: "disabled"
-  br1101:
+  bond0:
     content:
       connection:
-        id: "br1101"
-        uuid: "f40a7bfd-d023-4a9b-8a1e-df8962ae56f5"
-        type: "bridge"
-        interface-name: "br1101"
-      ethernet: {}
-      bridge:
-        stp: "false"
+        id: "bond0"
+        uuid: "a5075916-3795-4687-b6d3-69ffafe44052"
+        type: "bond"
+        interface-name: "bond0"
+      bond:
+        miimon: "100"
+        mode: "802.3ad"
+        xmit_hash_policy: "layer3+4"
       ipv4:
         method: "disabled"
       ipv6:
         method: "disabled"
       proxy: {}
+  bond0.1201:
+    content:
+      connection:
+        id: "bond0.1201"
+        uuid: "852e8121-c47c-4201-a3a8-cdae5c01359b"
+        type: "vlan"
+        interface-name: "bond0.1201"
+        master: "br1201"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1201"
+        parent: "bond0"
+      bridge-port: {}
+  bond0.1702:
+    content:
+      connection:
+        id: "bond0.1702"
+        uuid: "a436dbe0-8b98-4154-9d33-7d745be17d03"
+        type: "vlan"
+        interface-name: "bond0.1702"
+        master: "br1702"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1702"
+        parent: "bond0"
+      bridge-port: {}
+  bond0.1800:
+    content:
+      connection:
+        id: "bond0.1800"
+        uuid: "dcededda-3f15-4326-be19-90785ab7c8ca"
+        type: "vlan"
+        interface-name: "bond0.1800"
+        master: "br1800"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1800"
+        parent: "bond0"
+      bridge-port: {}
   br1201:
     content:
       connection:
@@ -82,12 +128,7 @@ nm::connections:
       bridge:
         stp: "false"
       ipv4:
-        method: "disabled"
-        route1: "139.229.180.0/24"
-        route1_options: "table=1800"
-        route2: "0.0.0.0/0,139.229.180.254"
-        route2_options: "table=1800"
-        routing-rule1: "priority 100 from 139.229.180.0/26 table 1800"
+        method: "auto"
       ipv6:
         method: "disabled"
       proxy: {}

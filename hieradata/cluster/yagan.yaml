@@ -1,7 +1,12 @@
 ---
 clustershell::groupmembers:
-  yagan: {group: "yagan", member: "yagan[01-20]"}
+  yagan:
+    group: "yagan"
+    member: "yagan[01-20]"
 profile::core::k8snode::enable_dhcp: true
 profile::core::ospl::enable_rundir: true
 tuned::active_profile: "latency-performance"
-cni::plugins::enable: ["macvlan", "static"]
+nm::conf:
+  device:
+    keep-configuration: "no"
+    allowed-connections: "except:origin:nm-initrd-generator"

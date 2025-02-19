@@ -105,7 +105,6 @@ describe 'pillan01.tu.lsst.org', :sitepp do
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm bond interface'
-        it { expect(nm_keyfile['bond']['xmit_hash_policy']).to eq('layer3+4') }
       end
 
       Hash[*%w[
@@ -123,6 +122,7 @@ describe 'pillan01.tu.lsst.org', :sitepp do
       end
 
       %w[
+        br3035
         br3065
         br3065
         br3085
@@ -134,15 +134,6 @@ describe 'pillan01.tu.lsst.org', :sitepp do
           it_behaves_like 'nm bridge interface'
           it_behaves_like 'nm no-ip interface'
         end
-      end
-
-      context 'with br3035' do
-        let(:interface) { 'br3035' }
-        let(:vlan) { '3035' }
-
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm no-ip interface'
-        it_behaves_like 'nm bridge interface'
       end
     end # on os
   end # on_supported_os

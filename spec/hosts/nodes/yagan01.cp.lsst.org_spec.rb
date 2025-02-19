@@ -19,7 +19,7 @@ describe 'yagan01.cp.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'rke',
+          role: 'rke2server',
           site: 'cp',
           cluster: 'yagan',
           variant: '1114s',
@@ -29,10 +29,15 @@ describe 'yagan01.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'docker', docker_version: '24.0.9'
       include_examples 'baremetal'
       include_context 'with nm interface'
       include_examples 'ceph cluster'
+
+      it do
+        expect(catalogue.resource('class', 'rke2')[:config]).to include(
+          'node-label' => ['role=storage-node']
+        )
+      end
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
@@ -50,30 +55,31 @@ describe 'yagan01.cp.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_class('rke').with(
-          version: '1.6.5',
-          checksum: '80694373496abd5033cb97c2512f2c36c933d301179881e1d28bf7b78efab3e7'
+        is_expected.to contain_class('rke2').with(
+          node_type: 'server',
+          release_series: '1.30',
+          version: '1.30.7~rke2r1'
         )
       end
 
       it do
-        is_expected.to contain_class('cni::plugins').with(
-          version: '1.2.0',
-          checksum: 'f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37',
-          enable: %w[macvlan static]
+        expect(catalogue.resource('class', 'nm')[:conf]).to include(
+          'device' => {
+            'keep-configuration' => 'no',
+            'allowed-connections' => 'except:origin:nm-initrd-generator',
+          }
         )
       end
 
       it { is_expected.to contain_class('cni::plugins::dhcp') }
       it { is_expected.to contain_class('profile::core::ospl').with_enable_rundir(true) }
 
-      it { is_expected.to have_nm__connection_resource_count(13) }
+      it { is_expected.to have_nm__connection_resource_count(12) }
 
       %w[
+        enp5s0f3u2u2c2
         eno1np0
         eno2np1
-        enp5s0f3u2u2c2
-        enp1s0f1
       ].each do |i|
         context "with #{i}" do
           let(:interface) { i }
@@ -82,81 +88,57 @@ describe 'yagan01.cp.lsst.org', :sitepp do
         end
       end
 
-      context 'with enp1s0f0' do
-        let(:interface) { 'enp1s0f0' }
+      %w[
+        enp1s0f0
+        enp1s0f1
+      ].each do |i|
+        context "with #{i}" do
+          let(:interface) { i }
 
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm dhcp interface'
-        it_behaves_like 'nm ethernet interface'
+          it_behaves_like 'nm enabled interface'
+          it_behaves_like 'nm ethernet interface'
+          it_behaves_like 'nm bond slave interface', master: 'bond0'
+        end
       end
 
-      context 'with enp1s0f1.1101' do
-        let(:interface) { 'enp1s0f1.1101' }
+      context 'with bond0' do
+        let(:interface) { 'bond0' }
 
         it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm vlan interface', id: 1101, parent: 'enp1s0f1'
-        it_behaves_like 'nm bridge slave interface', master: 'br1101'
-      end
-
-      context 'with br1101' do
-        let(:interface) { 'br1101' }
-
-        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm bond interface'
         it_behaves_like 'nm no-ip interface'
-        it_behaves_like 'nm bridge interface'
       end
 
-      context 'with enp1s0f1.1201' do
-        let(:interface) { 'enp1s0f1.1201' }
+      Hash[*%w[
+        bond0.1201 br1201
+        bond0.1702 br1702
+        bond0.1800 br1800
+      ]].each do |slave, master|
+        context "with #{slave}" do
+          let(:interface) { slave }
 
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm vlan interface', id: 1201, parent: 'enp1s0f1'
-        it_behaves_like 'nm bridge slave interface', master: 'br1201'
+          it_behaves_like 'nm enabled interface'
+          it_behaves_like 'nm bridge slave interface', master:
+        end
       end
 
-      context 'with br1201' do
-        let(:interface) { 'br1201' }
+      %w[
+        br1201
+        br1702
+        br1800
+      ].each do |i|
+        context "with #{i}" do
+          let(:interface) { i }
 
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm no-ip interface'
-        it_behaves_like 'nm bridge interface'
-      end
+          it_behaves_like 'nm enabled interface'
+          it_behaves_like 'nm bridge interface'
 
-      context 'with enp1s0f1.1702' do
-        let(:interface) { 'enp1s0f1.1702' }
-
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm vlan interface', id: 1702, parent: 'enp1s0f1'
-        it_behaves_like 'nm bridge slave interface', master: 'br1702'
-      end
-
-      context 'with br1702' do
-        let(:interface) { 'br1702' }
-
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm no-ip interface'
-        it_behaves_like 'nm bridge interface'
-      end
-
-      context 'with enp1s0f1.1800' do
-        let(:interface) { 'enp1s0f1.1800' }
-
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm vlan interface', id: 1800, parent: 'enp1s0f1'
-        it_behaves_like 'nm bridge slave interface', master: 'br1800'
-      end
-
-      context 'with br1800' do
-        let(:interface) { 'br1800' }
-
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm no-ip interface'
-        it_behaves_like 'nm bridge interface'
-        it { expect(nm_keyfile['ipv4']['route1']).to eq('139.229.180.0/24') }
-        it { expect(nm_keyfile['ipv4']['route1_options']).to eq('table=1800') }
-        it { expect(nm_keyfile['ipv4']['route2']).to eq('0.0.0.0/0,139.229.180.254') }
-        it { expect(nm_keyfile['ipv4']['route2_options']).to eq('table=1800') }
-        it { expect(nm_keyfile['ipv4']['routing-rule1']).to eq('priority 100 from 139.229.180.0/26 table 1800') }
+          if i == 'br1800'
+            it_behaves_like 'nm dhcp interface'
+          else
+            it_behaves_like 'nm no-ip interface'
+          end
+        end
       end
     end # on os
   end # on_supported_os

@@ -20,81 +20,20 @@ nm::connections:
         uuid: "688bf5bf-d649-34b4-15eb-b07c50ac43f8"
         type: "ethernet"
         interface-name: "enp197s0f0"
+        master: "bond0"
+        slave-type: "bond"
       ethernet: {}
-      ipv4:
-        method: "auto"
-      ipv6:
-        method: "disabled"
   enp197s0f1:
     content:
       connection:
         id: "enp197s0f1"
         uuid: "46d19ce1-bcab-7e77-6fc7-b730b26c54b1"
         type: "ethernet"
-        autoconnect: "false"
         interface-name: "enp197s0f1"
+        master: "bond0"
+        slave-type: "bond"
       ethernet: {}
-      ipv4:
-        method: "disabled"
-      ipv6:
-        method: "disabled"
-  enp197s0f1.1101:
+  bond0:
     content:
-      connection:
-        id: "enp197s0f1.1101"
-        uuid: "011f6c6f-3177-45c8-9ede-52195b2eff02"
-        type: "vlan"
-        interface-name: "enp197s0f1.1101"
-        master: "br1101"
-        slave-type: "bridge"
-      ethernet: {}
-      vlan:
-        flags: "1"
-        id: "1101"
-        parent: "enp197s0f1"
-      bridge-port: {}
-  enp197s0f1.1201:
-    content:
-      connection:
-        id: "enp197s0f1.1201"
-        uuid: "e74daaad-4d73-4015-bb26-83c460ddf572"
-        type: "vlan"
-        interface-name: "enp197s0f1.1201"
-        master: "br1201"
-        slave-type: "bridge"
-      ethernet: {}
-      vlan:
-        flags: "1"
-        id: "1201"
-        parent: "enp197s0f1"
-      bridge-port: {}
-  enp197s0f1.1702:
-    content:
-      connection:
-        id: "enp197s0f1.1702"
-        uuid: "dba89471-c57d-435c-a1c7-d9c4c6e59cbb"
-        type: "vlan"
-        interface-name: "enp197s0f1.1702"
-        master: "br1702"
-        slave-type: "bridge"
-      ethernet: {}
-      vlan:
-        flags: "1"
-        id: "1702"
-        parent: "enp197s0f1"
-      bridge-port: {}
-  enp197s0f1.1800:
-    content:
-      connection:
-        id: "enp197s0f1.1800"
-        uuid: "d5642f16-53c6-6053-7d4d-8c6ef5ae8a38"
-        type: "vlan"
-        interface-name: "enp197s0f1.1800"
-        master: "br1800"
-        slave-type: "bridge"
-      ethernet: {}
-      vlan:
-        flags: "1"
-        id: "1800"
-        parent: "enp197s0f1"
-      bridge-port: {}
+      ethernet:
+        cloned-mac-address: "%{facts.networking.interfaces.enp197s0f0.mac}"

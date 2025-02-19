@@ -1,0 +1,9 @@
+---
+classes:
+  - "profile::core::common"
+
+ssh::server::match_block:
+  svc_openvpn:
+    type: "user"
+    options:
+      AuthorizedKeysFile: ".ssh/authorized_keys"

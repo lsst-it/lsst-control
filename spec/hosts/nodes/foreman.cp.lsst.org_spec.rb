@@ -250,7 +250,7 @@ describe 'foreman.cp.lsst.org', :sitepp do
         is_expected.to contain_dhcp__pool('yagan-lhn').with(
           network: '139.229.180.0',
           mask: '255.255.255.0',
-          range: ['139.229.180.40 139.229.180.100'],
+          range: ['139.229.180.129 139.229.180.190'],
           gateway: '139.229.180.254',
           static_routes: [
             { 'network' => '134.79.20', 'mask' => '23', 'gateway' => '139.229.180.254' },

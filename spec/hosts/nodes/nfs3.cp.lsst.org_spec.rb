@@ -58,6 +58,7 @@ describe 'nfs3.cp.lsst.org', :sitepp do
           .to include(
             '139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
             '139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
+            '139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
             'azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)'
           )
       end

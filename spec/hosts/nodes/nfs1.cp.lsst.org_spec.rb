@@ -56,7 +56,8 @@ describe 'nfs1.cp.lsst.org', :sitepp do
             '139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
             '139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
             '139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)',
-            '139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)'
+            '139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)',
+            '139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)'
           )
       end
 
@@ -65,6 +66,7 @@ describe 'nfs1.cp.lsst.org', :sitepp do
           .to include(
             '139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
             '139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)',
+            '139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)',
             'nfs2.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,no_root_squash)'
           )
       end
@@ -112,6 +114,7 @@ describe 'nfs1.cp.lsst.org', :sitepp do
             '139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
             '139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)',
             '139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)',
+            '139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
             'azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)'
           )
       end
@@ -124,6 +127,7 @@ describe 'nfs1.cp.lsst.org', :sitepp do
             '139.229.164.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
             '139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
             '139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
+            '139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)',
             '139.229.191.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)'
           )
       end

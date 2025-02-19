@@ -1,0 +1,4 @@
+---
+rke2::config:
+  node-label:
+    - "local-storage=true"

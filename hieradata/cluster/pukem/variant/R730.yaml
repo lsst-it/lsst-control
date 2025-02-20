@@ -1,0 +1,68 @@
+---
+nm::connections:
+  em1:
+    content:
+      connection:
+        id: "em1"
+        uuid: "a293549c-25bb-443d-9f50-66d0479ec9c4"
+        type: "ethernet"
+        interface-name: "em1"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+  em2:
+    content:
+      connection:
+        id: "em2"
+        uuid: "ce37ec79-29c4-484e-ac96-2ddedfd788ac"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "em2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  em3:
+    content:
+      connection:
+        id: "em3"
+        uuid: "f96a5258-dc27-4a5d-9d69-6516a48e6849"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "em3"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  em4:
+    content:
+      connection:
+        id: "em4"
+        uuid: "4e7684d6-039a-4265-be10-155d82dd167f"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "em4"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  em2.1800:
+    content:
+      connection:
+        id: "em2.1800"
+        uuid: "ad9a45d6-7055-4b8c-8255-4cde6ced1f29"
+        type: "vlan"
+        interface-name: "em2.1800"
+        master: "br1800"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1800"
+        parent: "em2"
+      bridge-port: {}

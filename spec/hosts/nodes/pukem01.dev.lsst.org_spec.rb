@@ -1,41 +1,56 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
+
+#
 describe 'pukem01.dev.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
+
     context "on #{os}" do
       let(:facts) do
-        override_facts(os_facts,
-                       fqdn: 'pukem01.dev.lsst.org',
-                       is_virtual: false,
-                       virtual: 'physical',
-                       dmi: {
-                         'product' => {
-                           'name' => 'PowerEdge C6420',
-                         },
-                       })
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'PowerEdge C6420',
+                              },
+                            })
       end
       let(:node_params) do
         {
           role: 'rke2server',
-          cluster: 'pukem',
           site: 'dev',
+          cluster: 'pukem',
+          variant: 'R730',
         }
       end
+
       it { is_expected.to compile.with_all_deps }
+
       include_examples 'baremetal'
-      include_context 'with nm interface'
-      it { is_expected.to have_nm__connection_resource_count(1) }
-      context 'with ens4f0' do
-        let(:interface) { 'ens4f0' }
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm dhcp interface'
-        it_behaves_like 'nm ethernet interface'
-      end
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(
           'node-label' => ['role=storage-node']
+        )
+      end
+
+      it do
+        is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
+      end
+
+      it do
+        is_expected.to contain_class('clustershell').with(
+          groupmembers: {
+            'ruka' => {
+              'group' => 'pukem',
+              'member' => [
+                'pukem[01-03]',
+              ],
+            },
+          }
         )
       end
 
@@ -45,6 +60,32 @@ describe 'pukem01.dev.lsst.org', :sitepp do
           release_series: '1.30',
           version: '1.30.7~rke2r1'
         )
+      end
+
+      it { is_expected.to contain_class('cni::plugins::dhcp::service') }
+
+      include_context 'with nm interface'
+
+      it { is_expected.to have_nm__connection_resource_count(4) }
+
+      %w[
+        eno2
+        eno3
+        eno4
+      ].each do |i|
+        context "with #{i}" do
+          let(:interface) { i }
+
+          it_behaves_like 'nm disabled interface'
+        end
+      end
+
+      context 'with eno1' do
+        let(:interface) { 'eno1' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm ethernet interface'
       end
     end # on os
   end # on_supported_os

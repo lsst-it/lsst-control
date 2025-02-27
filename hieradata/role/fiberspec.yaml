@@ -2,4 +2,5 @@
 classes:
   - "profile::core::common"
   - "profile::core::fiberspec"
+  - "profile::core::nfsclient"
   - "profile::ts::dco"

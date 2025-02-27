@@ -61,6 +61,14 @@ describe 'auxtel-ill-control.cp.lsst.org', :sitepp do
         it { expect(nm_keyfile['ipv4']['route3']).to eq('139.229.167.0/24,139.229.170.254') }
         it { expect(nm_keyfile['ipv4']['route4']).to eq('139.229.178.0/24,139.229.170.254') }
       end
+
+      it do
+        is_expected.to contain_nfs__client__mount('/net/obs-env').with(
+          share: 'obs-env',
+          server: 'nfs-obsenv.cp.lsst.org',
+          atboot: true
+        )
+      end
     end # on os
   end # on_supported_os
 end

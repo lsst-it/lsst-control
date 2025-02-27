@@ -45,9 +45,7 @@ describe 'pukem01.dev.lsst.org', :sitepp do
           groupmembers: {
             'pukem' => {
               'group' => 'pukem',
-              'member' => [
-                'pukem[01-04]',
-              ],
+              'member' => 'pukem[01-04]',
             },
           }
         )

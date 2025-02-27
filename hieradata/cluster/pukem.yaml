@@ -1,6 +1,6 @@
 ---
 clustershell::groupmembers:
-  pukem: {group: "pukem", member: "pukem[01-03]"}
+  pukem: {group: "pukem", member: "pukem[01-04]"}
 profile::core::ospl::enable_rundir: true
 profile::core::k8snode::enable_dhcp: true
 tuned::active_profile: "latency-performance"

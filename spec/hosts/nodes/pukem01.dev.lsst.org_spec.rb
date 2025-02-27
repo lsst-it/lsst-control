@@ -43,10 +43,10 @@ describe 'pukem01.dev.lsst.org', :sitepp do
       it do
         is_expected.to contain_class('clustershell').with(
           groupmembers: {
-            'ruka' => {
+            'pukem' => {
               'group' => 'pukem',
               'member' => [
-                'pukem[01-03]',
+                'pukem[01-04]',
               ],
             },
           }

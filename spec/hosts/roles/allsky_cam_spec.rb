@@ -31,6 +31,14 @@ describe "#{role} role" do
 
           include_examples('common', os_facts:, site:)
           it { is_expected.to contain_package('libgphoto2') }
+
+          it do
+            is_expected.to contain_nfs__client__mount('/dimm').with(
+              share: 'dimm',
+              server: 'nfs-dimm.cp.lsst.org',
+              atboot: true
+            )
+          end
         end # host
       end # lsst_sites
     end # on os

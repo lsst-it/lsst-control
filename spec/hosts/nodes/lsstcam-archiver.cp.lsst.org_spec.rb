@@ -37,7 +37,7 @@ describe 'lsstcam-archiver.cp.lsst.org', :sitepp do
       it do
         is_expected.to contain_nfs__client__mount('/data').with(
           share: 'lsstcam',
-          server: 'nfs3.cp.lsst.org',
+          server: 'nfs-lsstcam.cp.lsst.org',
           atboot: true
         )
       end

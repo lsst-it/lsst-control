@@ -20,12 +20,12 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples('common', os_facts:, site:)
-          it { is_expected.to have_nfs__client__mount_resource_count(6) }
+          it { is_expected.to have_nfs__client__mount_resource_count(5) }
 
           it do
             is_expected.to contain_nfs__client__mount('/project').with(
               share: 'project',
-              server: 'nfs1.cp.lsst.org',
+              server: 'nfs-project.cp.lsst.org',
               atboot: true
             )
           end
@@ -33,15 +33,7 @@ describe "#{role} role" do
           it do
             is_expected.to contain_nfs__client__mount('/scratch').with(
               share: 'scratch',
-              server: 'nfs1.cp.lsst.org',
-              atboot: true
-            )
-          end
-
-          it do
-            is_expected.to contain_nfs__client__mount('/lsstdata').with(
-              share: 'lsstdata',
-              server: 'nfs1.cp.lsst.org',
+              server: 'nfs-scratch.cp.lsst.org',
               atboot: true
             )
           end
@@ -64,8 +56,8 @@ describe "#{role} role" do
 
           it do
             is_expected.to contain_nfs__client__mount('/repo/LSSTComCam').with(
-              share: 'repo',
-              server: 'comcam-archiver.cp.lsst.org',
+              share: 'comcam/repo',
+              server: 'nfs-comcam.cp.lsst.org',
               atboot: true
             )
           end

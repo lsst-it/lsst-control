@@ -59,7 +59,7 @@ describe 'comcam-archiver.cp.lsst.org', :sitepp do
       it do
         is_expected.to contain_nfs__client__mount('/data').with(
           share: 'comcam',
-          server: 'nfs3.cp.lsst.org',
+          server: 'nfs-comcam.cp.lsst.org',
           atboot: true
         )
       end

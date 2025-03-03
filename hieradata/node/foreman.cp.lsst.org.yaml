@@ -191,7 +191,7 @@ dhcp::pools:
     mask: "255.255.255.224"
     gateway: "139.229.181.30"
     range:
-      - "139.229.181.21 139.229.181.25"
+      - "139.229.181.27 139.229.181.27"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   ELQUI-SVC:
     network: "139.229.181.32"

@@ -65,7 +65,7 @@ describe 'auxtel-ill-control.cp.lsst.org', :sitepp do
       it do
         is_expected.to contain_nfs__client__mount('/net/obs-env').with(
           share: 'obs-env',
-          server: 'nfs-obsenv.cp.lsst.org',
+          server: 'nfs-obs-env.cp.lsst.org',
           atboot: true
         )
       end

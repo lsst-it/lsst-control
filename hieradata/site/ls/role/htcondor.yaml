@@ -19,7 +19,3 @@ nfs::client_mounts:
     share: "/auxtel/lsstdata/BTS/auxtel"
     server: "nfs-auxtel.ls.lsst.org"
     atboot: true
-  /datasets:
-    share: "lsstdata"
-    server: "nfs-lsstdata.ls.lsst.org"
-    atboot: true

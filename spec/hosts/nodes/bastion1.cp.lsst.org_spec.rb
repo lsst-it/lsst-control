@@ -2,52 +2,50 @@
 
 require 'spec_helper'
 
-describe 'lsstcam-archiver.cp.lsst.org', :sitepp do
+describe 'bastion1.cp.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next if os =~ %r{centos-7-x86_64}
 
     context "on #{os}" do
       let(:facts) do
         lsst_override_facts(os_facts,
-                            is_virtual: false,
-                            virtual: 'physical',
+                            is_virtual: true,
+                            virtual: 'kvm',
                             dmi: {
                               'product' => {
-                                'name' => 'AS -1114S-WN10RT',
+                                'name' => 'KVM',
                               },
                             })
       end
       let(:node_params) do
         {
-          role: 'nfsclient',
+          role: 'bastion',
           site: 'cp',
-          variant: '1114s',
         }
       end
 
       it { is_expected.to compile.with_all_deps }
 
-      principals = 1.upto(10).map do |i|
-        format('ccs-ipa/lsstcam-dc%02d.cp.lsst.org@LSST.CLOUD', i)
-      end
+      include_examples 'vm'
 
       it { is_expected.to contain_class('nfs').with_server_enabled(false) }
       it { is_expected.to contain_class('nfs').with_client_enabled(true) }
 
       it do
-        is_expected.to contain_nfs__client__mount('/data').with(
-          share: 'lsstcam',
-          server: 'nfs-lsstcam.cp.lsst.org',
+        is_expected.to contain_nfs__client__mount('/project').with(
+          share: 'project',
+          server: 'nfs-project.cp.lsst.org',
           atboot: true
         )
       end
 
       it do
-        is_expected.to contain_k5login('/home/saluser/.k5login').with(
-          ensure: 'present',
-          principals:
+        is_expected.to contain_nfs__client__mount('/scratch').with(
+          share: 'scratch',
+          server: 'nfs-scratch.cp.lsst.org',
+          atboot: true
         )
       end
     end # on os
   end # on_supported_os
-end # role
+end

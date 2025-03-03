@@ -83,7 +83,7 @@ nfs::client_enabled: true
 nfs::client_mounts:
   /data:
     share: "comcam"
-    server: "nfs3.cp.lsst.org"
+    server: "nfs-comcam.cp.lsst.org"
     atboot: true
 
 profile::core::k5login::k5login:

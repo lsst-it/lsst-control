@@ -88,7 +88,7 @@ describe 'azar03.cp.lsst.org', :sitepp do
       it do
         is_expected.to contain_nfs__client__mount('/net/project').with(
           share: 'project',
-          server: 'nfs1.cp.lsst.org',
+          server: 'nfs-project.cp.lsst.org',
           atboot: true
         )
       end
@@ -96,7 +96,7 @@ describe 'azar03.cp.lsst.org', :sitepp do
       it do
         is_expected.to contain_nfs__client__mount('/net/scratch').with(
           share: 'scratch',
-          server: 'nfs1.cp.lsst.org',
+          server: 'nfs-scratch.cp.lsst.org',
           atboot: true
         )
       end
@@ -104,7 +104,15 @@ describe 'azar03.cp.lsst.org', :sitepp do
       it do
         is_expected.to contain_nfs__client__mount('/data').with(
           share: 'lsstcam',
-          server: 'nfs3.cp.lsst.org',
+          server: 'nfs-lsstcam.cp.lsst.org',
+          atboot: true
+        )
+      end
+
+      it do
+        is_expected.to contain_nfs__client__mount('/net/obs-env').with(
+          share: 'obs-env',
+          server: 'nfs-obs-env.cp.lsst.org',
           atboot: true
         )
       end

@@ -29,89 +29,30 @@ network::interfaces_hash:
 # 139.229.175.128/25  auxtel-ccs
 nfs::nfs_v4_export_root_clients: >-
   %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.146.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.160.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.163.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.164.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.165.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.169.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.170.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.175.0/26(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.175.128/25(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.180.0/24(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-  azar03.cp.lsst.org(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
-  139.229.191.0/25(rw,fsid=root,insecure,no_subtree_check,async,root_squash)
 nfs::nfs_exports_global:
   /data/home:
     clients: >-
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/jhome:
     # nublado needs to be able to create user home dirs as root
     clients: >-
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
-      139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
-      nfs2.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
   /data/lsstdata:
     clients: >-
-      139.229.146.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.160.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.165.0/24(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.175.0/26(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.175.128/25(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      ts-csc-generic-01.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      comcam-archiver.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
+      %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
   /data/project:
     clients: >-
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.169.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/scratch:
     clients: >-
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.175.0/26(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.175.128/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      azar03.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/dimm:
     clients: >-
       %{facts.networking.ip}/32(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.163.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.164.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.165.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.170.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.191.0/25(rw,nohide,insecure,no_subtree_check,async,root_squash)
   /data/rsphome:
     # nublado needs to be able to create user home dirs as root
     clients: >-
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.146.0/24(rw,nohide,insecure,no_subtree_check,async,root_squash)
-      139.229.160.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
-      139.229.180.0/24(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
-      nfs2.cp.lsst.org(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
 
 files:
   /data/project:

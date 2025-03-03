@@ -1,0 +1,11 @@
+---
+nfs::client_enabled: true
+nfs::client_mounts:
+  /project:
+    share: "project"
+    server: "nfs-project.cp.lsst.org"
+    atboot: true
+  /scratch:
+    share: "scratch"
+    server: "nfs-scratch.cp.lsst.org"
+    atboot: true

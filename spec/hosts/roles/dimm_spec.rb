@@ -27,7 +27,7 @@ describe "#{role} role" do
           it do
             is_expected.to contain_nfs__client__mount('/dimm').with(
               share: 'dimm',
-              server: 'nfs1.cp.lsst.org',
+              server: 'nfs-dimm.cp.lsst.org',
               atboot: true
             )
           end

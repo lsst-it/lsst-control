@@ -104,14 +104,6 @@ describe "#{role} role" do
                 atboot: true
               )
             end
-
-            it do
-              is_expected.to contain_nfs__client__mount('/datasets').with(
-                share: 'lsstdata',
-                server: 'nfs-lsstdata.ls.lsst.org',
-                atboot: true
-              )
-            end
           end
 
           if site == 'cp'
@@ -128,7 +120,7 @@ describe "#{role} role" do
             it do
               is_expected.to contain_nfs__client__mount('/project').with(
                 share: 'project',
-                server: 'nfs1.cp.lsst.org',
+                server: 'nfs-project.cp.lsst.org',
                 atboot: true
               )
             end
@@ -144,15 +136,7 @@ describe "#{role} role" do
             it do
               is_expected.to contain_nfs__client__mount('/repo/LSSTComCam').with(
                 share: '/comcam/repo/LSSTComCam',
-                server: 'nfs3.cp.lsst.org',
-                atboot: true
-              )
-            end
-
-            it do
-              is_expected.to contain_nfs__client__mount('/readonly/lsstdata/other').with(
-                share: 'lsstdata',
-                server: 'nfs1.cp.lsst.org',
+                server: 'nfs-comcam.cp.lsst.org',
                 atboot: true
               )
             end
@@ -160,7 +144,7 @@ describe "#{role} role" do
             it do
               is_expected.to contain_nfs__client__mount('/readonly/lsstdata/comcam').with(
                 share: '/comcam/lsstdata',
-                server: 'nfs3.cp.lsst.org',
+                server: 'nfs-comcam.cp.lsst.org',
                 atboot: true
               )
             end

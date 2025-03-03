@@ -5,7 +5,7 @@ nfs::client_enabled: true
 nfs::client_mounts:
   /project:
     share: "project"
-    server: "nfs1.cp.lsst.org"
+    server: "nfs-project.cp.lsst.org"
     atboot: true
   /home:
     share: "rsphome"
@@ -17,15 +17,11 @@ nfs::client_mounts:
     atboot: true
   /repo/LSSTComCam:
     share: "/comcam/repo/LSSTComCam"
-    server: "nfs3.cp.lsst.org"
-    atboot: true
-  /readonly/lsstdata/other:
-    share: "lsstdata"
-    server: "nfs1.cp.lsst.org"
+    server: "nfs-comcam.cp.lsst.org"
     atboot: true
   /readonly/lsstdata/comcam:
     share: "/comcam/lsstdata"
-    server: "nfs3.cp.lsst.org"
+    server: "nfs-comcam.cp.lsst.org"
     atboot: true
   /readonly/lsstdata/auxtel:
     share: "/auxtel/lsstdata"

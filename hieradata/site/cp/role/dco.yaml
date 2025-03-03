@@ -3,5 +3,5 @@ nfs::client_enabled: true
 nfs::client_mounts:
   /net/obs-env:
     share: "obs-env"
-    server: "nfs-obsenv.cp.lsst.org"
+    server: "nfs-obs-env.cp.lsst.org"
     atboot: true

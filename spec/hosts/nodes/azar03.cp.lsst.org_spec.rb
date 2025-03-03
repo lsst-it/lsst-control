@@ -109,6 +109,14 @@ describe 'azar03.cp.lsst.org', :sitepp do
         )
       end
 
+      it do
+        is_expected.to contain_nfs__client__mount('/net/obs-env').with(
+          share: 'obs-env',
+          server: 'nfs-obs-env.cp.lsst.org',
+          atboot: true
+        )
+      end
+
       principals = 1.upto(10).map do |i|
         format('ccs-ipa/lsstcam-dc%02d.cp.lsst.org@LSST.CLOUD', i)
       end

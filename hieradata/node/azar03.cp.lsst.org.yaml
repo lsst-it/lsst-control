@@ -104,6 +104,10 @@ nfs::client_mounts:
     share: "lsstcam"
     server: "nfs-lsstcam.cp.lsst.org"
     atboot: true
+  /net/obs-env:
+    share: "obs-env"
+    server: "nfs-obs-env.cp.lsst.org"
+    atboot: true
 
 profile::core::k5login::k5login:
   "/home/saluser/.k5login":

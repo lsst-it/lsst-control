@@ -16,3 +16,7 @@ nfs::client_mounts:
     share: "dimm"
     server: "nfs-dimm.cp.lsst.org"
     atboot: true
+  /project:
+    share: "project"
+    server: "nfs-project.cp.lsst.org"
+    atboot: true

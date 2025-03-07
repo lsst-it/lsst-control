@@ -62,4 +62,3 @@ nm::connections:
 ccs_software::services:
   prod:
     - "ccob-thin"
-    - "pap-pdu"

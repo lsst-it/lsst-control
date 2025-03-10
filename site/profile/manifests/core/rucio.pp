@@ -58,6 +58,6 @@ class profile::core::rucio () {
 
   #  Install Yum Packages
   package { $yum_packages:
-    ensure   => 'present',
+    ensure => 'present',
   }
 }

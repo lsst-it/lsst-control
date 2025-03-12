@@ -6,7 +6,7 @@ class profile::ts::hexrot {
     ensure             => present,
     provider           => git,
     source             => 'https://github.com/lsst-ts/ts_config_mttcs.git',
-    revision           => 'v0.12.8',
+    revision           => 'v0.16.4',
     keep_local_changes => false,
   }
   file { '/etc/profile.d/hexrot_path.sh':
@@ -21,24 +21,35 @@ class profile::ts::hexrot {
     # lint:endignore
     require => Vcsrepo['/opt/ts_config_mttcs'],
   }
-  file { '/rubin/mtm2/python':
+  file { ['/rubin/mtm2/python', '/rubin/rotator/python', '/rubin/hexapod/python', '/rubin/dome/python']:
     ensure => directory,
     owner  => 73006,
     group  => 73006,
   }
-  file { '/rubin/mtm2/python/run_m2gui':
-    ensure => link,
-    owner  => 73006,
-    group  => 73006,
-    target => '/opt/anaconda/envs/py311/bin/run_m2gui',
+
+  $symlinks = {
+    '/rubin/mtm2/python/run_m2gui'     => '/opt/anaconda/envs/py311/bin/run_m2gui',
+    '/rubin/hexapod/python/run_hexgui' => '/opt/anaconda/envs/py311/bin/run_hexgui',
+    '/rubin/dome/python/run_mtdomegui' => '/opt/anaconda/envs/py311/bin/run_mtdomegui',
+    '/rubin/rotator/python/run_rotgui' => '/opt/anaconda/envs/py311/bin/run_rotgui',
   }
-  file { ['/rubin/rotator', '/rubin/hexapod', '/rubin/mtm2']:
+
+  $symlinks.each |$source, $target| {
+    file { $source:
+      ensure => link,
+      owner  => 73006,
+      group  => 73006,
+      target => $target,
+    }
+  }
+
+  file { ['/rubin/rotator', '/rubin/hexapod', '/rubin/mtm2', '/rubin/dome']:
     ensure  => directory,
     owner   => 73006,
     group   => 73006,
     recurse => true,
   }
-  file { ['/rubin/rotator/log', '/rubin/hexapod/log', '/rubin/mtm2/log']:
+  file { ['/rubin/rotator/log', '/rubin/hexapod/log', '/rubin/mtm2/log', '/rubin/dome/log']:
     ensure => directory,
     owner  => 73006,
     group  => 73006,

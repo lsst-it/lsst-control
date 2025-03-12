@@ -4,6 +4,7 @@ shared_examples 'ni_packages' do
   all_packages = [
     'runHexEui',
     'runRotEui',
+    'labview-2023-rte',
     'git',
     'mlocate',
     'wget',

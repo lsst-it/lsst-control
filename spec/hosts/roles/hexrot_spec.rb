@@ -27,6 +27,8 @@ describe "#{role} role" do
           include_examples 'ni_packages'
           include_examples 'nexusctio'
           it { is_expected.to contain_class('mate') }
+          it { is_expected.to contain_class('profile::util::xfce') }
+          it { is_expected.to contain_package('freeglut-devel') } # missing opengl lib
 
           # XXX hexrot uses devicemapper, so the docker example group isn't included
           it do
@@ -45,31 +47,59 @@ describe "#{role} role" do
               ensure: 'present',
               provider: 'git',
               source: 'https://github.com/lsst-ts/ts_config_mttcs.git',
-              revision: 'v0.12.8',
+              revision: 'v0.16.4',
               keep_local_changes: 'false'
             )
           end
 
           pkgs = {
+            'numpy' => {
+              'channel' => 'conda-forge',
+              'version' => '1.26.4',
+            },
             'pyside6' => {
               'channel' => 'conda-forge',
-              'version' => '6.7.0',
+              'version' => '6.7.2',
             },
             'qasync' => {
               'channel' => 'conda-forge',
-              'version' => '0.23.0',
+              'version' => '0.27.1',
             },
             'qt6-charts' => {
               'channel' => 'conda-forge',
-              'version' => '6.7.0',
+              'version' => '6.7.2',
+            },
+            'ts-guitool' => {
+              'channel' => 'lsstts',
+              'version' => '0.2.5',
+            },
+            'ts-hexgui' => {
+              'channel' => 'lsstts',
+              'version' => '0.4.1',
+            },
+            'ts-hexrotcomm' => {
+              'channel' => 'lsstts',
+              'version' => '1.3.3',
             },
             'ts-m2com' => {
               'channel' => 'lsstts',
-              'version' => '1.5.6',
+              'version' => '1.5.9',
             },
             'ts-m2gui' => {
               'channel' => 'lsstts',
-              'version' => '1.0.3',
+              'version' => '1.1.4',
+            },
+            'ts-mtdomecom' => {
+              'channel' => 'lsstts',
+              'version' => '0.2.4',
+            },
+            'ts-mtdomegui' => {
+              'channel' => 'lsstts',
+              'version' => '0.4.4',
+            },
+            'ts-rotgui' => {
+              'channel' => 'lsstts',
+              'version' => '0.4.1',
             },
           }
 
@@ -96,24 +126,35 @@ describe "#{role} role" do
             )
           end
 
-          it do
-            is_expected.to contain_file('/rubin/mtm2/python').with(
-              ensure: 'directory',
-              owner: '73006',
-              group: '73006'
-            )
+          ['/rubin/mtm2/python', '/rubin/rotator/python', '/rubin/hexapod/python', '/rubin/mtm2/python'].each do |path|
+            it do
+              is_expected.to contain_file(path).with(
+                ensure: 'directory',
+                owner: '73006',
+                group: '73006'
+              )
+            end
           end
 
-          it do
-            is_expected.to contain_file('/rubin/mtm2/python/run_m2gui').with(
-              ensure: 'link',
-              owner: '73006',
-              group: '73006',
-              target: '/opt/anaconda/envs/py311/bin/run_m2gui'
-            )
+          symlinks = {
+            '/rubin/mtm2/python/run_m2gui' => '/opt/anaconda/envs/py311/bin/run_m2gui',
+            '/rubin/hexapod/python/run_hexgui' => '/opt/anaconda/envs/py311/bin/run_hexgui',
+            '/rubin/dome/python/run_mtdomegui' => '/opt/anaconda/envs/py311/bin/run_mtdomegui',
+            '/rubin/rotator/python/run_rotgui' => '/opt/anaconda/envs/py311/bin/run_rotgui'
+          }
+
+          symlinks.each do |source, dst|
+            it do
+              is_expected.to contain_file(source).with(
+                ensure: 'link',
+                owner: '73006',
+                group: '73006',
+                target: dst
+              )
+            end
           end
 
-          ['/rubin/rotator', '/rubin/hexapod', '/rubin/mtm2'].each do |path|
+          ['/rubin/rotator', '/rubin/hexapod', '/rubin/mtm2', '/rubin/dome'].each do |path|
             it do
               is_expected.to contain_file(path).with(
                 ensure: 'directory',
@@ -124,7 +165,7 @@ describe "#{role} role" do
             end
           end
 
-          ['/rubin/rotator/log', '/rubin/hexapod/log', '/rubin/mtm2/log'].each do |path|
+          ['/rubin/rotator/log', '/rubin/hexapod/log', '/rubin/mtm2/log', '/rubin/dome/log'].each do |path|
             it do
               is_expected.to contain_file(path).with(
                 ensure: 'directory',

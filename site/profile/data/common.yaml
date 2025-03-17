@@ -181,6 +181,9 @@ profile::daq::sysctl::sysctls:
   net.core.wmem_max:
     value: 18874368
     target: *daqccs
+  kernel.sched_rt_runtime_us:
+    value: -1
+    target: *daqccs
 
 profile::archive::data::files:
   /data: &rootdir

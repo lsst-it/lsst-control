@@ -23,6 +23,7 @@ describe "#{role} role" do
 
           include_examples('common', os_facts:, site:)
           include_examples 'dco'
+          include_examples 'docker'
           include_examples 'fiberspec'
         end # host
       end # lsst_sites

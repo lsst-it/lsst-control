@@ -8,7 +8,7 @@ describe 'profile::daq::sysctl' do
       let(:facts) { os_facts }
 
       it { is_expected.to compile.with_all_deps }
-      it { is_expected.to have_sysctl__value_resource_count(2) }
+      it { is_expected.to have_sysctl__value_resource_count(3) }
 
       include_examples 'lsst-daq sysctls'
 

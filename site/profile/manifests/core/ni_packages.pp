@@ -5,6 +5,7 @@ class profile::core::ni_packages {
   $hexrot_packages = [
     'runHexEui',
     'runRotEui',
+    'labview-2023-rte',
   ]
   $packages = [
     'git',

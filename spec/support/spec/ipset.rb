@@ -30,9 +30,9 @@ shared_examples 'ipset' do
   end
 
   it do
-    is_expected.to contain_ipset__set('ayekan').with_set(
+    is_expected.to contain_ipset__set('antu').with_set(
       %w[
-        139.229.144.0/26
+        139.229.154.64/26
       ]
     ).that_comes_before('Class[firewall]')
   end

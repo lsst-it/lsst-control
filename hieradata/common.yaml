@@ -373,11 +373,11 @@ ipset::sets:
       - "140.252.146.0/23"
       - "198.19.0.0/16"
       - "10.0.0.0/8"
-  ayekan:  # ayekan cluster
+  antu:  # antu monitoring cluster ls
     ensure: "present"
     type: "hash:net"
     set:
-      - "139.229.144.0/26"
+      - "139.229.154.64/26"
   dev:  # dev site hosts
     ensure: "present"
     type: "hash:net"

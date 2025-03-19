@@ -56,12 +56,12 @@ end
 
 shared_examples 'firewall node_exporter scraping' do |site:|
   case site
-  when 'dev'
+  when 'dev', 'ls', 'cp'  # just not TU
     it do
       is_expected.to contain_firewall('100 accept node_exporter').with(
         proto: 'tcp',
         state: 'NEW',
-        ipset: 'ayekan src',
+        ipset: 'antu src',
         dport: '9100',
         jump: 'accept'
       )
@@ -72,16 +72,6 @@ shared_examples 'firewall node_exporter scraping' do |site:|
         proto: 'tcp',
         state: 'NEW',
         ipset: 'dev src',
-        dport: '9100',
-        jump: 'accept'
-      )
-    end
-  when 'ls'
-    it do
-      is_expected.to contain_firewall('100 accept node_exporter').with(
-        proto: 'tcp',
-        state: 'NEW',
-        ipset: 'ayekan src',
         dport: '9100',
         jump: 'accept'
       )

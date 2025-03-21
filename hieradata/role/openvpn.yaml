@@ -1,0 +1,7 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::openvpn"
+
+profile::core::openvpn::version: "3.0.0_2b84043e"
+profile::core::openvpn::cluster: "vpn.%{::site}.lsst.org"

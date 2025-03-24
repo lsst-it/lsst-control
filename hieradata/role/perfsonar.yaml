@@ -10,7 +10,7 @@ classes:
 # ensure chrony is not running
 profile::core::common::manage_chrony: true
 profile::core::sysctl::rp_filter::enable: false
-profile::core::perfsonar::version: "5.0.8"
+profile::core::perfsonar::version: "5.1.4"
 
 firewall::ensure: "running"
 profile::core::firewall::firewall:
@@ -35,8 +35,9 @@ files:
 perfsonar::manage_pscheduler_agent: true
 perfsonar::pscheduler_agent_config:
   remotes:
-    - url: "http://pwa.ampath.net/pub/config/new-lsst-scl-lsc"
+    - url: "https://ps-cma.amlight.net/psconfig/lhn-psconfig.json"
       configure-archives: true
+
 perfsonar::manage_lsregistrationdaemon: true
 perfsonar::lsregistrationdaemon_ensure: "stopped"
 perfsonar::lsregistrationdaemon_enable: false

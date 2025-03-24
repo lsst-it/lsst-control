@@ -6,6 +6,8 @@ clustershell::groupmembers:
       - "ruka[01-05]"
       - "ruka[07-08]"
 profile::core::k8snode::enable_dhcp: true
+rke2::release_series: "1.31"
+rke2::version: "1.31.6~rke2r1"
 tuned::active_profile: "latency-performance"
 nm::connections:
   br2101:

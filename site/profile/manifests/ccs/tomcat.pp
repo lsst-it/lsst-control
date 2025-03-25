@@ -28,6 +28,9 @@
 # @param rest_dburl
 #   Optional string giving full value for rest.dbURL context parameter.
 #
+# @param mrtg_dir
+#   Optional string with mrtg directory to serve.
+#
 class profile::ccs::tomcat (
   Hash[String, Hash] $wars = {},
   Hash[String[1],String[1]] $jars = {},
@@ -38,6 +41,7 @@ class profile::ccs::tomcat (
   Sensitive[String[1]] $rest_user = Sensitive('user'),
   Sensitive[String[1]] $rest_pass = Sensitive('pass'),
   Optional[String[1]] $rest_dburl = undef,
+  Optional[String[1]] $mrtg_dir = undef,
 ) {
   include nginx
 
@@ -73,13 +77,15 @@ class profile::ccs::tomcat (
     subscribe   => Service['tomcat'],
   }
 
-  file { "${catalina_base}/conf/Catalina/localhost/mrtg.xml":
-    ensure  => file,
-    owner   => 'tomcat',
-    group   => 'tomcat',
-    mode    => '0664',
-    content => '<Context docBase="/home/mrtg/comcam" path="/mrtg" />',
-    require => Exec['wait for tomcat'],  # config dir creation
+  if $mrtg_dir !~ Undef {
+    file { "${catalina_base}/conf/Catalina/localhost/mrtg.xml":
+      ensure  => file,
+      owner   => 'tomcat',
+      group   => 'tomcat',
+      mode    => '0664',
+      content => "<Context docBase=\"/home/mrtg/${mrtg_dir}\" path=\"/mrtg\" />",
+      require => Exec['wait for tomcat'],  # config dir creation
+    }
   }
 
   ## Default value, can be overridden by rest_dburl parameter.

@@ -26,3 +26,8 @@ s3daemon::instances:
     s3_endpoint_url: "https://s3.elqui.cp.lsst.org"
     port: 15590
     image: "%{alias('s3daemon_default_image')}"
+
+ccs_software::installations:
+  lsstcam-software-40.0.3:
+    aliases:
+      - "puppet-40.0.3"

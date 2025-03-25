@@ -25,6 +25,18 @@
 # @param rest_pass
 #   Sensitive string giving password for the rest server.
 #
+# @param efd_url
+#   String giving efd URL.
+#
+# @param efd_namespace
+#   String giving efd namespace.
+#
+# @param efd_user
+#   Sensitive string giving efd username.
+#
+# @param efd_pass
+#   Sensitive string giving efd password.
+#
 # @param rest_dburl
 #   Optional string giving full value for rest.dbURL context parameter.
 #
@@ -40,6 +52,10 @@ class profile::ccs::tomcat (
   String[1] $rest_url      = 'lsstcam-db01:3306/ccsdbprod',
   Sensitive[String[1]] $rest_user = Sensitive('user'),
   Sensitive[String[1]] $rest_pass = Sensitive('pass'),
+  String[1] $efd_url = 'https://summit-lsp.lsst.codes/influxdb/',
+  String[1] $efd_namespace = 'lsst.MTCamera',
+  Sensitive[String[1]] $efd_user  = Sensitive('user'),
+  Sensitive[String[1]] $efd_pass  = Sensitive('pass'),
   Optional[String[1]] $rest_dburl = undef,
   Optional[String[1]] $mrtg_dir = undef,
 ) {
@@ -229,6 +245,12 @@ class profile::ccs::tomcat (
 
   ## Hash of templates and any arguments they take.
   $rest_etc_files = {
+    'efdCredentials.properties' => {
+      'user'      => $efd_user,
+      'pass'      => $efd_pass,
+      'url'       => $efd_url,
+      'namespace' => $efd_namespace,
+    },
     'logging.properties' => {},
     'statusPersister.properties' => {
       'user' => $rest_user,

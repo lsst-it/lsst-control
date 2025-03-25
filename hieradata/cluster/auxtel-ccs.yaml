@@ -105,4 +105,5 @@ daq::daqsdk::purge: false
 daq::daqsdk::version: "R5-V12.1"
 
 profile::ccs::tomcat::java_home: "/usr/lib/jvm/zulu-17"
+profile::ccs::tomcat::rest_url: "auxtel-mcm:3306/atsccsdb"
 profile::ccs::tomcat::trending_site: "%{lookup('ccs_instrument')}"

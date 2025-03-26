@@ -6,7 +6,7 @@ require 'yaml'
 # extract public hiera hierachy
 def non_role_layers
   hc = YAML.load_file(control_hiera_config, aliases: true)
-  hc['hierarchy'][1]['paths'].grep_v(%r{role})
+  hc['hierarchy'].first['paths'].grep_v(%r{role})
 end
 
 hieradata_pathname = Pathname.new(control_hieradata_path)

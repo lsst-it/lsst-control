@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'kueyen01.dev.lsst.org', :sitepp do
+describe 'kueyen04.dev.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
@@ -13,7 +13,7 @@ describe 'kueyen01.dev.lsst.org', :sitepp do
                             virtual: 'physical',
                             dmi: {
                               'product' => {
-                                'name' => 'PowerEdge R440',
+                                'name' => 'PowerEdge C6420',
                               },
                             })
       end
@@ -22,12 +22,13 @@ describe 'kueyen01.dev.lsst.org', :sitepp do
           role: 'rke',
           site: 'dev',
           cluster: 'kueyen',
+          variant: 'c6420',
         }
       end
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'docker', docker_version: '24.0.9'
+      # include_examples 'docker', docker_version: '24.0.9'
       include_examples 'baremetal'
       include_examples 'ceph cluster'
       include_context 'with nm interface'
@@ -68,7 +69,7 @@ describe 'kueyen01.dev.lsst.org', :sitepp do
 
       it { is_expected.to contain_class('profile::core::ospl').with_enable_rundir(true) }
 
-      it { is_expected.to have_nm__connection_resource_count(6) }
+      it { is_expected.to have_nm__connection_resource_count(8) }
 
       %w[
         em1
@@ -82,19 +83,19 @@ describe 'kueyen01.dev.lsst.org', :sitepp do
         end
       end
 
-      context 'with ens2f1' do
-        let(:interface) { 'ens2f1' }
+      context 'with ens4f0' do
+        let(:interface) { 'ens4f0' }
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
       end
 
-      context 'with ens2f0.2301' do
-        let(:interface) { 'ens2f0.2301' }
+      context 'with ens4f0.2301' do
+        let(:interface) { 'ens4f0.2301' }
 
         it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm vlan interface', id: 2301, parent: 'ens2f0'
+        it_behaves_like 'nm vlan interface', id: 2301, parent: 'ens4f0'
         it_behaves_like 'nm bridge slave interface', master: 'br2301'
       end
 

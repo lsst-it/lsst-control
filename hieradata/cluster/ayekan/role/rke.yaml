@@ -2,3 +2,6 @@
 classes:
   - "profile::core::sysctl::rp_filter"
 profile::core::sysctl::rp_filter::enable: false
+cni::plugins::checksum: "b8e811578fb66023f90d2e238d80cec3bdfca4b44049af74c374d4fae0f9c090"
+cni::plugins::enable: ["macvlan"]
+cni::plugins::version: "1.6.2"

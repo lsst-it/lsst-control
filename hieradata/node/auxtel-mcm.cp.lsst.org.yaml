@@ -74,6 +74,8 @@ nm::connections:
         method: "disabled"
       proxy: {}
 
+profile::ccs::tomcat::rest_dburl: 'NOTUSED'
+
 ccs_software::global_properties:
   - "org.hibernate.engine.internal.level=WARNING"
   - ".level=WARNING"

@@ -123,6 +123,7 @@ daq::daqsdk::version: "R5-V12.1"
 
 profile::ccs::file_transfer::repo_ref: "IT-5486/s3"
 
+profile::ccs::tomcat::efd_namespace: "lsst.MTCamera"
 profile::ccs::tomcat::java_home: "/usr/lib/jvm/zulu-17"
 ## Note this is not the same as ccs_instrument.
 profile::ccs::tomcat::trending_site: "maincamera"

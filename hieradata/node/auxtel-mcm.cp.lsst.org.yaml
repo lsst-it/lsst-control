@@ -76,6 +76,12 @@ nm::connections:
 
 profile::ccs::tomcat::rest_dburl: 'NOTUSED'
 
+ccs_monit::hosts:
+  - "auxtel-dc01"
+  - "auxtel-fp01"
+  - "auxtel-hcu01"
+# - "auxtel-mcm"
+
 ccs_software::global_properties:
   - "org.hibernate.engine.internal.level=WARNING"
   - ".level=WARNING"

@@ -86,3 +86,18 @@ nm::connections:
         method: "disabled"
       ipv6:
         method: "disabled"
+
+ccs_monit::hosts:
+  - "comcam-db01"
+  - "comcam-dc01"
+  - "comcam-fp01"
+# - "comcam-hcu03"
+# - "comcam-lion01"
+# - "comcam-lion02"
+# - "comcam-lion03"
+# - "comcam-lion04"
+# - "comcam-lion05"
+# - "comcam-mcm"
+  - "comcam-vs01"
+# - "pathfinder-hcu01"
+# - "pathfinder-lion01"

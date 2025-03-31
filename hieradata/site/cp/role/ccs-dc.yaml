@@ -1,0 +1,4 @@
+---
+ccs_monit::disks:
+  /data:
+    space: 99

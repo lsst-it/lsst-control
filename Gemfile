@@ -4,7 +4,7 @@ source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
 group :test do
   gem 'coveralls',                 require: false
-  gem 'puppet_metadata', '~> 4.0', require: false
+  gem 'puppet_metadata', '~> 5.0', require: false
   gem 'simplecov-console',         require: false
   gem 'voxpupuli-test', '~> 9.0',  require: false
 

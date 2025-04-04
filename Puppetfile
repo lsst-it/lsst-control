@@ -81,7 +81,7 @@ mod 'puppetlabs/vcsrepo', '6.1.0'
 mod 'puppetlabs/xinetd', '3.4.1'
 mod 'puppetlabs/yumrepo_core', '2.1.0'
 mod 'puppet/letsencrypt', '11.1.0'
-mod 'puppet/lldpd', '7.0.0'
+mod 'puppet/lldpd', git: 'https://github.com/lsst-it/puppet-lldpd', ref: 'fae0265'  # https://github.com/lsst-it/puppet-lldp/pull/2 testing a fork as we wait for the main Forge release to accept apt 10.x
 mod 'puppet/mosquitto', '2.2.0'
 mod 'puppet/nfs', '3.0.0'
 mod 'puppet/nginx', '6.0.1'

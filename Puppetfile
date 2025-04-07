@@ -90,7 +90,7 @@ mod 'puppet/postfix',  '5.0.0'
 mod 'puppet/prometheus', '16.0.0'
 mod 'puppet/python', '7.4.0'
 mod 'puppet/quadlets', '1.2.0'
-mod 'puppet/r10k', '14.1.0'
+mod 'puppet/r10k', '14.2.0'
 mod 'puppet/redis', '11.1.0'
 mod 'puppet/rsyslog', '7.3.0'
 mod 'puppet/selinux', '5.0.0'
@@ -115,10 +115,10 @@ mod 'stm/debconf', '6.1.0'
 mod 'syseleven/restic', '2.8.1'
 mod 'theforeman/dhcp', '9.2.0'
 mod 'theforeman/dns', '11.0.1'
-mod 'theforeman/foreman', git: 'https://github.com/lsst-it/puppet-foreman', ref: '59ed5a5'  # 20.2.0 + dep updates
+mod 'theforeman/foreman', git: 'https://github.com/lsst-it/puppet-foreman', ref: 'b97d4ac'  # 20.2.0 + dep updates
 mod 'theforeman/foreman_proxy', git: 'https://github.com/lsst-it/puppet-foreman_proxy', ref: '90af64a'  # https://github.com/theforeman/puppet-foreman_proxy/pull/772 https://github.com/theforeman/puppet-foreman_proxy/pull/816
 mod 'theforeman/puppet', '20.1.0'
-mod 'theforeman/puppetserver_foreman', '4.0.0'
+mod 'theforeman/puppetserver_foreman', '4.1.0'
 mod 'theforeman/tftp', '9.1.0'
 mod 'treydock/clustershell', '4.0.0'
 mod 'treydock/perfsonar', git: 'https://github.com/lsst-it/puppet-module-perfsonar', ref: '1f36e12'  # 4.1.0 + https://github.com/treydock/puppet-module-perfsonar/pull/26

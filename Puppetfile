@@ -118,7 +118,7 @@ mod 'theforeman/dns', '11.0.1'
 mod 'theforeman/foreman', git: 'https://github.com/lsst-it/puppet-foreman', ref: '59ed5a5'  # 20.2.0 + dep updates
 mod 'theforeman/foreman_proxy', git: 'https://github.com/lsst-it/puppet-foreman_proxy', ref: '90af64a'  # https://github.com/theforeman/puppet-foreman_proxy/pull/772 https://github.com/theforeman/puppet-foreman_proxy/pull/816
 mod 'theforeman/puppet', '20.1.0'
-mod 'theforeman/puppetserver_foreman', '4.0.0'
+mod 'theforeman/puppetserver_foreman', '4.1.0'
 mod 'theforeman/tftp', '9.1.0'
 mod 'treydock/clustershell', '4.0.0'
 mod 'treydock/perfsonar', git: 'https://github.com/lsst-it/puppet-module-perfsonar', ref: '1f36e12'  # 4.1.0 + https://github.com/treydock/puppet-module-perfsonar/pull/26

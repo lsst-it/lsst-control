@@ -58,7 +58,7 @@ mod 'puppetlabs/concat', '9.1.0'
 mod 'puppetlabs/cron_core', '1.3.0'
 mod 'puppetlabs/docker', git: 'https://github.com/lsst-it/puppetlabs-docker', ref: '1f25605'  # https://github.com/lsst-it/puppetlabs-docker/pull/2 we are using a fork as we wait for the main Puppetlabs release to accept apt 10.x
 mod 'puppetlabs/facts', '1.7.0'
-mod 'puppetlabs/firewall', '8.1.3'
+mod 'puppetlabs/firewall', '8.1.4'
 mod 'puppetlabs/host_core', '1.3.0'
 mod 'puppetlabs/inifile', '6.2.0'
 mod 'puppetlabs/java', '11.1.0'

@@ -13,3 +13,6 @@ ccs_software::installations:
   ats-software-40.0.3:
     aliases:
       - "puppet-40.0.3"
+  ats-software-41.0.1:
+    aliases:
+      - "puppet-41.0.0"

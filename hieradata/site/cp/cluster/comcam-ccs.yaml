@@ -15,3 +15,6 @@ ccs_software::installations:
   comcam-software-40.0.3:
     aliases:
       - "puppet-40.0.3"
+  comcam-software-41.0.0:
+    aliases:
+      - "puppet-41.0.0"

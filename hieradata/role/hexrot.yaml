@@ -69,10 +69,10 @@ anaconda::conda_packages:
     version: "1.1.4"
   ts-mtdomegui:
     channel: "lsstts"
-    version: "0.4.6"
+    version: "0.4.7"
   ts-mtdomecom:
     channel: "lsstts"
-    version: "0.2.5"
+    version: "0.2.6"
   ts-rotgui:
     channel: "lsstts"
     version: "0.4.1"

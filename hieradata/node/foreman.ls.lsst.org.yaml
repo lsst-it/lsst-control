@@ -78,13 +78,6 @@ dhcp::pools:
     range:
       - "139.229.142.230 139.229.142.250"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  BDC-Ayekan:
-    network: "139.229.144.0"
-    mask: "255.255.255.192"
-    gateway: "139.229.144.62"
-    range:
-      - "139.229.144.40 139.229.144.59"
-    search_domains: "%{alias('dhcp::dnsdomain')}"
   BDC-Teststand-DDS:  # vlan2301
     network: "139.229.145.0"
     mask: "255.255.255.0"

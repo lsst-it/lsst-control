@@ -4,6 +4,10 @@ clustershell::groupmembers:
     group: "ayekan"
     member: "ayekan[01-03]"
 tuned::active_profile: "latency-performance"
+nm::conf:
+  device:
+    keep-configuration: "no"
+    allowed-connections: "except:origin:nm-initrd-generator"
 nm::connections:
   eno1np0:
     content:

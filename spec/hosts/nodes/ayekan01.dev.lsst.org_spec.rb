@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'ayekan01.ls.lsst.org', :sitepp do
+describe 'ayekan01.dev.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
@@ -55,8 +55,8 @@ describe 'ayekan01.ls.lsst.org', :sitepp do
       it do
         is_expected.to contain_class('rke2').with(
           node_type: 'server',
-          release_series: '1.30',
-          version: '1.30.7~rke2r1'
+          release_series: '1.31',
+          version: '1.31.6~rke2r1'
         )
       end
 

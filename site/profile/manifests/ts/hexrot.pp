@@ -1,12 +1,15 @@
 # @summary
 # Sets up repos and symlinks for hexrot
-
-class profile::ts::hexrot {
+# @param ts_config_mttcs_version
+#   sets the repo version of the config
+class profile::ts::hexrot (
+  String $ts_config_mttcs_version,
+) {
   vcsrepo { '/opt/ts_config_mttcs':
     ensure             => present,
     provider           => git,
     source             => 'https://github.com/lsst-ts/ts_config_mttcs.git',
-    revision           => 'v0.16.4',
+    revision           => $ts_config_mttcs_version,
     keep_local_changes => false,
   }
   file { '/etc/profile.d/hexrot_path.sh':

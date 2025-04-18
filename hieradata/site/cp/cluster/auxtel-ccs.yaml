@@ -8,8 +8,3 @@ s3daemon::instances:
     s3_endpoint_url: "https://s3dfrgw.slac.stanford.edu"
     port: 15580
     image: "%{alias('s3daemon_default_image')}"
-
-ccs_software::installations:
-  ats-software-40.0.3:
-    aliases:
-      - "puppet-40.0.3"

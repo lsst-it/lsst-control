@@ -32,3 +32,17 @@ dhcp::pools:
     range:
       - "139.229.134.120 139.229.134.149"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-Ayekan:
+    network: "139.229.144.0"
+    mask: "255.255.255.192"
+    gateway: "139.229.144.62"
+    range:
+      - "139.229.144.40 139.229.144.59"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  DEV-MGT:
+    network: "139.229.144.64"
+    mask: "255.255.255.192"
+    gateway: "139.229.144.126"
+    range:
+      - "139.229.144.100 139.229.144.123"
+    search_domains: "%{alias('dhcp::dnsdomain')}"

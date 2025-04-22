@@ -41,6 +41,7 @@ shared_examples 'ipset' do
     is_expected.to contain_ipset__set('dev').with_set(
       %w[
         139.229.134.0/24
+        139.229.144.0/26
       ]
     ).that_comes_before('Class[firewall]')
   end

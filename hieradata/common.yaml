@@ -383,6 +383,7 @@ ipset::sets:
     type: "hash:net"
     set:
       - "139.229.134.0/24"
+      - "139.229.144.0/26"  # ayekan
   tufde:  # tu/tts site hosts which might need FDE
     ensure: "present"
     type: "hash:net"

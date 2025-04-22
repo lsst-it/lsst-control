@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'ayekan01.ls.lsst.org', :sitepp do
+describe 'ayekan01.dev.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
@@ -19,18 +19,23 @@ describe 'ayekan01.ls.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'rke',
+          role: 'rke2server',
           site: 'dev',
           cluster: 'ayekan',
         }
       end
 
+      it { is_expected.to compile.with_all_deps }
+
       include_examples 'baremetal'
       include_context 'with nm interface'
       include_examples 'ceph cluster'
-      include_examples 'docker', docker_version: '24.0.9'
 
-      it { is_expected.to compile.with_all_deps }
+      it do
+        expect(catalogue.resource('class', 'rke2')[:config]).to include(
+          'node-label' => ['role=storage-node']
+        )
+      end
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
@@ -48,8 +53,19 @@ describe 'ayekan01.ls.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_class('rke').with(
-          version: '1.6.5'
+        is_expected.to contain_class('rke2').with(
+          node_type: 'server',
+          release_series: '1.31',
+          version: '1.31.6~rke2r1'
+        )
+      end
+
+      it do
+        expect(catalogue.resource('class', 'nm')[:conf]).to include(
+          'device' => {
+            'keep-configuration' => 'no',
+            'allowed-connections' => 'except:origin:nm-initrd-generator',
+          }
         )
       end
 

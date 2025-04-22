@@ -64,6 +64,24 @@ describe 'foreman.dev.lsst.org', :sitepp do
           gateway: '139.229.134.254'
         )
       end
+
+      it do
+        is_expected.to contain_dhcp__pool('BDC-Ayekan').with(
+          network: '139.229.144.0',
+          mask: '255.255.255.192',
+          range: ['139.229.144.40 139.229.144.59'],
+          gateway: '139.229.144.62'
+        )
+      end
+
+      it do
+        is_expected.to contain_dhcp__pool('DEV-MGT').with(
+          network: '139.229.144.64',
+          mask: '255.255.255.192',
+          range: ['139.229.144.100 139.229.144.123'],
+          gateway: '139.229.144.126'
+        )
+      end
     end # on os
   end # on_supported_os
 end # role

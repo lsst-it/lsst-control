@@ -2,3 +2,43 @@
 clustershell::groupmembers:
   luan: {group: "luan", member: "luan[01-05]"}
 tuned::active_profile: "latency-performance"
+
+nm::connections:
+  eno1np0:
+    content:
+      connection:
+        id: "eno1np0"
+        uuid: "8d5f0c26-a6c6-3704-92a5-c347e9fbbf28"
+        type: "ethernet"
+        interface-name: "eno1np0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+  eno2np1:
+    content:
+      connection:
+        id: "eno2np1"
+        uuid: "70f109c2-917e-36fd-8b0e-8ad233b026b9"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno2np1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp71s0f3u1u2c2:
+    content:
+      connection:
+        id: "enp71s0f3u1u2c2"
+        uuid: "337e7a75-2366-34f4-b778-829239ca3dd7"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp71s0f3u1u2c2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"

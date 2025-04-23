@@ -56,7 +56,7 @@ mod 'puppetlabs/apt', '10.0.1'
 mod 'puppetlabs/augeas_core', '1.5.0'
 mod 'puppetlabs/concat', '9.1.0'
 mod 'puppetlabs/cron_core', '1.3.0'
-mod 'puppetlabs/docker', git: 'https://github.com/lsst-it/puppetlabs-docker', ref: '1f25605'  # https://github.com/lsst-it/puppetlabs-docker/pull/2 we are using a fork as we wait for the main Puppetlabs release to accept apt 10.x
+mod 'puppetlabs/docker', '10.3.0'
 mod 'puppetlabs/facts', '1.7.0'
 mod 'puppetlabs/firewall', '8.1.5'
 mod 'puppetlabs/host_core', '1.3.0'

@@ -90,7 +90,7 @@ mod 'puppet/postfix',  '5.0.0'
 mod 'puppet/prometheus', '16.1.0'
 mod 'puppet/python', '7.4.0'
 mod 'puppet/quadlets', '1.2.0'
-mod 'puppet/r10k', '14.2.0'
+mod 'puppet/r10k', git: 'https://github.com/lsst-it/puppet-r10k', ref: 'e04040a'  # Using branch temporarily while waiting for approval here: https://github.com/voxpupuli/puppet-r10k/pull/679
 mod 'puppet/redis', '11.1.0'
 mod 'puppet/rsyslog', '7.3.0'
 mod 'puppet/selinux', '5.0.0'

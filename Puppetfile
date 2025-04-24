@@ -56,7 +56,7 @@ mod 'puppetlabs/apt', '10.0.1'
 mod 'puppetlabs/augeas_core', '1.5.0'
 mod 'puppetlabs/concat', '9.1.0'
 mod 'puppetlabs/cron_core', '1.3.0'
-mod 'puppetlabs/docker', git: 'https://github.com/lsst-it/puppetlabs-docker', ref: '1f25605'  # https://github.com/lsst-it/puppetlabs-docker/pull/2 we are using a fork as we wait for the main Puppetlabs release to accept apt 10.x
+mod 'puppetlabs/docker', '10.3.0'
 mod 'puppetlabs/facts', '1.7.0'
 mod 'puppetlabs/firewall', '8.1.5'
 mod 'puppetlabs/host_core', '1.3.0'
@@ -90,7 +90,7 @@ mod 'puppet/postfix',  '5.0.0'
 mod 'puppet/prometheus', '16.2.0'
 mod 'puppet/python', '7.4.0'
 mod 'puppet/quadlets', '1.2.0'
-mod 'puppet/r10k', git: 'https://github.com/lsst-it/puppet-r10k', ref: 'e04040a'  # Using branch temporarily while waiting for approval here: https://github.com/voxpupuli/puppet-r10k/pull/679
+mod 'puppet/r10k', git: 'https://github.com/lsst-it/puppet-r10k', ref: '78b200b'  # Using branch temporarily while waiting for approval here: https://github.com/voxpupuli/puppet-r10k/pull/679
 mod 'puppet/redis', '11.1.0'
 mod 'puppet/rsyslog', '7.3.0'
 mod 'puppet/selinux', '5.0.0'

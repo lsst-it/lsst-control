@@ -63,13 +63,10 @@ describe 'pukem04.dev.lsst.org', :sitepp do
 
       include_context 'with nm interface'
 
-      it { is_expected.to have_nm__connection_resource_count(5) }
+      it { is_expected.to have_nm__connection_resource_count(2) }
 
       %w[
         ens4f0
-        ens4f1
-        ens4f2
-        ens4f3
       ].each do |i|
         context "with #{i}" do
           let(:interface) { i }

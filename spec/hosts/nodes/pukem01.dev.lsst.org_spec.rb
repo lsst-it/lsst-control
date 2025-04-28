@@ -13,7 +13,7 @@ describe 'pukem01.dev.lsst.org', :sitepp do
                             virtual: 'physical',
                             dmi: {
                               'product' => {
-                                'name' => 'PowerEdge C6420',
+                                'name' => 'PowerEdge R730',
                               },
                             })
       end

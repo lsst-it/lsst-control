@@ -6,6 +6,7 @@ nm::connections:
         id: "ens4f0"
         uuid: "03da7500-2101-c722-2438-d0d006c28c73"
         type: "ethernet"
+        autoconnect: "false"
         interface-name: "ens4f0"
       ethernet: {}
       ipv4:

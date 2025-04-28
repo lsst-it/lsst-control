@@ -55,7 +55,7 @@ describe 'pukem04.dev.lsst.org', :sitepp do
         is_expected.to contain_class('rke2').with(
           node_type: 'agent',
           release_series: '1.31',
-          version: '1.31.6~rke2r1'
+          version: '1.31.7~rke2r1'
         )
       end
 

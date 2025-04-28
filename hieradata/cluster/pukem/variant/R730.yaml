@@ -1,0 +1,53 @@
+---
+nm::connections:
+  eno1:
+    content:
+      connection:
+        id: "eno1"
+        uuid: "a293549c-25bb-443d-9f50-66d0479ec9c4"
+        type: "ethernet"
+        interface-name: "eno1"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+  eno2:
+    content:
+      connection:
+        id: "eno2"
+        uuid: "ce37ec79-29c4-484e-ac96-2ddedfd788ac"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno3:
+    content:
+      connection:
+        id: "eno3"
+        uuid: "f96a5258-dc27-4a5d-9d69-6516a48e6849"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno3"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno4:
+    content:
+      connection:
+        id: "eno4"
+        uuid: "4e7684d6-039a-4265-be10-155d82dd167f"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "eno4"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"

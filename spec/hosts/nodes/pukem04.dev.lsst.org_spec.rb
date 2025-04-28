@@ -63,12 +63,13 @@ describe 'pukem04.dev.lsst.org', :sitepp do
 
       include_context 'with nm interface'
 
-      it { is_expected.to have_nm__connection_resource_count(4) }
+      it { is_expected.to have_nm__connection_resource_count(5) }
 
       %w[
-        eno2
-        eno3
-        eno4
+        ens4f0
+        ens4f1
+        ens4f2
+        ens4f3
       ].each do |i|
         context "with #{i}" do
           let(:interface) { i }
@@ -77,8 +78,8 @@ describe 'pukem04.dev.lsst.org', :sitepp do
         end
       end
 
-      context 'with eno1' do
-        let(:interface) { 'eno1' }
+      context 'with eno16' do
+        let(:interface) { 'eno16' }
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'

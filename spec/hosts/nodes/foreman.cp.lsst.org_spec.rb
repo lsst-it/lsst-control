@@ -264,8 +264,8 @@ describe 'foreman.cp.lsst.org', :sitepp do
       it do
         is_expected.to contain_dhcp__pool('ELQUI').with(
           network: '139.229.181.0',
-          mask: '255.255.255.224',
-          range: ['139.229.181.27 139.229.181.27'],
+          mask: '255.255.255.192',
+          range: ['139.229.181.50 139.229.181.59'],
           gateway: '139.229.181.30'
         )
       end

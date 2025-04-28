@@ -188,10 +188,10 @@ dhcp::pools:
       - {network: "134.79.235.240", mask: "28", gateway: "139.229.180.254"}
   ELQUI:
     network: "139.229.181.0"
-    mask: "255.255.255.224"
+    mask: "255.255.255.192"
     gateway: "139.229.181.30"
     range:
-      - "139.229.181.27 139.229.181.27"
+      - "139.229.181.50 139.229.181.59"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   IT-Contractors:
     network: "139.229.191.0"

@@ -77,5 +77,3 @@ profile::core::firewall::firewall:
     ipset: "dev src"  # allow ruka to access node_exporter
     dport: "9100"
     jump: "accept"
-
-profile::core::docker::version: "24.0.9"

@@ -62,8 +62,6 @@ profile::core::firewall::firewall:
     dport: "9100"
     jump: "accept"
 
-profile::core::docker::version: "24.0.9"
-
 ccs_sal::dds: false
 ccs_sal::kafka: true
 

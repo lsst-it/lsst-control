@@ -579,8 +579,8 @@ s3daemon_default_image: "ghcr.io/lsst-dm/s3daemon:sha-57e1aa9"
 pi::config::reboot: false  # XXX this should be removed when pi role/profile refactoring is complete
 pi::cmdline::reboot: false  # XXX this should be removed when pi role/profile refactoring is complete
 
-rke2::release_series: "1.30"
-rke2::version: "1.30.7~rke2r1"
+rke2::release_series: "1.31"
+rke2::version: "1.31.7~rke2r1"
 rke2::versionlock: true
 rke2::config:
   server: "https://%{::cluster}.%{::site}.lsst.org:9345"

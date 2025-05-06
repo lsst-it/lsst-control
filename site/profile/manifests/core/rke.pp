@@ -9,7 +9,7 @@
 #
 class profile::core::rke (
   Optional[Sensitive[String[1]]] $keytab_base64 = undef,
-  String                         $version       = '1.6.5',
+  String                         $version       = '1.7.6',
 ) {
   include kmod
   require ipa

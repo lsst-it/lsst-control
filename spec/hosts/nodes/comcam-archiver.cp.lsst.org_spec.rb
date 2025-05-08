@@ -19,8 +19,7 @@ describe 'comcam-archiver.cp.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'nfsclient',
-          cluster: 'comcam-archive',
+          role: 'generic',
           site: 'cp',
         }
       end
@@ -52,16 +51,6 @@ describe 'comcam-archiver.cp.lsst.org', :sitepp do
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
-      end
-
-      it { is_expected.to contain_class('nfs').with_client_enabled(true) }
-
-      it do
-        is_expected.to contain_nfs__client__mount('/data').with(
-          share: 'comcam',
-          server: 'nfs-comcam.cp.lsst.org',
-          atboot: true
-        )
       end
     end
   end # on os

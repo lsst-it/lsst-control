@@ -220,18 +220,6 @@ profile::archive::data::auxtel::files:
     owner: 1000  # XXX unreserved
     group: 983  # XXX unreserved
 
-profile::archive::data::comcam::files:
-  /data/repo/LSSTComCam:
-    ensure: "directory"
-    mode: "0777"
-    owner: &saluser 73006
-    group: *saluser
-  /data/repo/LSSTComCam/u:
-    ensure: "directory"
-    mode: "1777"
-    owner: &saluser 73006
-    group: *saluser
-
 profile::core::dtn::sysctls:
   net.core.rmem_max:
     value: 2147483647

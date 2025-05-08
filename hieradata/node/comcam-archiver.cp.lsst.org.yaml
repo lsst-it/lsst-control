@@ -78,16 +78,3 @@ nm::connections:
         method: "disabled"
       ipv6:
         method: "disabled"
-
-nfs::client_enabled: true
-nfs::client_mounts:
-  /data:
-    share: "comcam"
-    server: "nfs-comcam.cp.lsst.org"
-    atboot: true
-
-profile::core::k5login::k5login:
-  "/home/saluser/.k5login":
-    ensure: "present"
-    principals:
-      - "ccs-ipa/comcam-fp01.cp.lsst.org@LSST.CLOUD"

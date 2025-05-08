@@ -20,6 +20,7 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples('common', os_facts:, site:)
+          include_examples 'docker'
           it { is_expected.to contain_class('profile::core::yum::lsst_ts_private') }
           it { is_expected.to contain_package('ts_dimm_app-2.0-1.el8.x86_64') }
           it { is_expected.to contain_package('telnet') }

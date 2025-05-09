@@ -35,7 +35,7 @@ shared_examples 'docker' do |docker_version: nil|
 
   it do
     is_expected.to contain_yum__versionlock('containerd.io').with(
-      version: '1.6.21'
+      version: '1.7.22'
     )
   end
 
@@ -47,7 +47,7 @@ shared_examples 'docker' do |docker_version: nil|
 
   it do
     is_expected.to contain_yum__versionlock('docker-compose-plugin').with(
-      version: '2.17.3'
+      version: '2.24.6'
     )
   end
 

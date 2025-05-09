@@ -237,6 +237,7 @@ class profile::ccs::file_transfer (
     'compress',
     'fpack-in-place',
     'generate-sidecar',
+    'push-additional-usdf',
     'push-oods',
     'push-usdf',
   ]

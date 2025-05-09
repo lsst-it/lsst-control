@@ -19,7 +19,7 @@ describe 'rancher01.tu.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'rke',
+          role: 'rke2server',
           site: 'tu',
           cluster: 'rancher',
         }
@@ -27,11 +27,11 @@ describe 'rancher01.tu.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'docker', docker_version: '24.0.9'
-
       it do
-        is_expected.to contain_class('profile::core::rke').with(
-          version: '1.7.6'
+        is_expected.to contain_class('rke2').with(
+          node_type: 'server',
+          release_series: '1.31',
+          version: '1.31.7~rke2r1'
         )
       end
 

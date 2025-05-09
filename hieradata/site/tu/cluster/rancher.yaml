@@ -1,0 +1,5 @@
+---
+rke2::config:
+  server: "https://rancher-api.%{::site}.lsst.org:9345"
+  tls-san:
+    - "rancher-api.%{::site}.lsst.org"

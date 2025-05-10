@@ -116,7 +116,7 @@ mod 'syseleven/restic', '2.8.1'
 mod 'theforeman/dhcp', git: 'https://github.com/lsst-it/puppet-dhcp', ref: '6175b2a'  # Dependency updates waiting on: https://github.com/theforeman/puppet-dhcp/pull/241
 mod 'theforeman/dns', '11.1.0'
 mod 'theforeman/foreman', git: 'https://github.com/lsst-it/puppet-foreman', ref: '23f86f4'  # 20.2.0 + dep updates
-mod 'theforeman/foreman_proxy', git: 'https://github.com/lsst-it/puppet-foreman_proxy', ref: '90af64a'  # https://github.com/theforeman/puppet-foreman_proxy/pull/772 https://github.com/theforeman/puppet-foreman_proxy/pull/816
+mod 'theforeman/foreman_proxy', '28.0.1'
 mod 'theforeman/puppet', '21.0.0'
 mod 'theforeman/puppetserver_foreman', '4.2.0'
 mod 'theforeman/tftp', '9.1.0'

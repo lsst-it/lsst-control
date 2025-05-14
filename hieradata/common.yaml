@@ -575,6 +575,9 @@ restic::enable_backup: true
 restic::host: "s3.us-east-1.amazonaws.com"
 
 s3daemon_default_image: "ghcr.io/lsst-dm/s3daemon:sha-57e1aa9"
+s3nd_default_image: "ghcr.io/lsst-dm/s3nd:sha-1a94702"
+s3daemon::env:
+  AWS_REGION: "lfa"
 
 pi::config::reboot: false  # XXX this should be removed when pi role/profile refactoring is complete
 pi::cmdline::reboot: false  # XXX this should be removed when pi role/profile refactoring is complete

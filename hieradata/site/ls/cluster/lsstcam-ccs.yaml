@@ -15,6 +15,7 @@ ccs_monit::alert:
 
 s3daemon::instances:
   ls-lsstcam:
-    s3_endpoint_url: "https://s3.ls.lsst.org"
-    port: 15570
     image: "%{alias('s3daemon_default_image')}"
+    env:
+      S3_ENDPOINT_URL: "https://s3.ls.lsst.org"
+      S3DAEMON_PORT: 15570

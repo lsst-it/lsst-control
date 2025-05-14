@@ -3,10 +3,12 @@ profile::ccs::monitoring::mrtg: true
 
 s3daemon::instances:
   cp-comcam:
-    s3_endpoint_url: "https://s3.cp.lsst.org"
-    port: 15570
     image: "%{alias('s3daemon_default_image')}"
+    env:
+      S3_ENDPOINT_URL: "https://s3.cp.lsst.org"
+      S3DAEMON_PORT: 15570
   sdfembs3-comcam:
-    s3_endpoint_url: "https://sdfembs3.sdf.slac.stanford.edu"
-    port: 15580
     image: "%{alias('s3daemon_default_image')}"
+    env:
+      S3_ENDPOINT_URL: "https://sdfembs3.sdf.slac.stanford.edu"
+      S3DAEMON_PORT: 15580

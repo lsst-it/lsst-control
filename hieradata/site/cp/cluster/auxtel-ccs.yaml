@@ -5,8 +5,18 @@ s3daemon::instances:
     env:
       S3_ENDPOINT_URL: "https://s3.cp.lsst.org"
       S3DAEMON_PORT: 15570
+  cp-latiss-s3nd:
+    image: "%{alias('s3nd_default_image')}"
+    env:
+      S3ND_ENDPOINT_URL: "https://s3.cp.lsst.org"
+      S3ND_PORT: 15571
   s3dfrgw-latiss:
     image: "%{alias('s3daemon_default_image')}"
     env:
       S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
       S3DAEMON_PORT: 15580
+  s3dfrgw-latiss-s3nd:
+    image: "%{alias('s3nd_default_image')}"
+    env:
+      S3ND_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
+      S3ND_PORT: 15581

@@ -3,3 +3,12 @@ s3daemon::instances:
   ls-lsstcam:
     aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
     aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"
+  ls-lsstcam-s3nd:
+    aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
+    aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"
+  s3dfrgw-lsstcam:
+    aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
+    aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"
+  s3dfrgw-lsstcam-s3nd:
+    aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
+    aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"

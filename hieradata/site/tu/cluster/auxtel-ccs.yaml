@@ -15,10 +15,12 @@ postfix::relayhost: "[mail.lsst.org]:submission"
 
 s3daemon::instances:
   tu-latiss:
-    s3_endpoint_url: "https://s3.tu.lsst.org"
-    port: 15570
     image: "%{alias('s3daemon_default_image')}"
+    env:
+      S3_ENDPOINT_URL: "https://s3.tu.lsst.org"
+      S3DAEMON_PORT: 15570
   s3dfrgw-latiss:
-    s3_endpoint_url: "https://s3dfrgw.slac.stanford.edu"
-    port: 15580
     image: "%{alias('s3daemon_default_image')}"
+    env:
+      S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
+      S3DAEMON_PORT: 15580

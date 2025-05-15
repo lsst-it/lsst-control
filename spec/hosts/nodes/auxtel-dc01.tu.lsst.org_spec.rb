@@ -29,17 +29,21 @@ describe 'auxtel-dc01.tu.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3daemon__instance('tu-latiss').with(
-          s3_endpoint_url: 'https://s3.tu.lsst.org',
-          port: 15_570,
-          image: 'ghcr.io/lsst-dm/s3daemon:sha-57e1aa9'
+          image: 'ghcr.io/lsst-dm/s3daemon:sha-57e1aa9',
+          env: {
+            'S3_ENDPOINT_URL' => 'https://s3.tu.lsst.org',
+            'S3DAEMON_PORT' => 15_570,
+          }
         )
       end
 
       it do
         is_expected.to contain_s3daemon__instance('s3dfrgw-latiss').with(
-          s3_endpoint_url: 'https://s3dfrgw.slac.stanford.edu',
-          port: 15_580,
-          image: 'ghcr.io/lsst-dm/s3daemon:sha-57e1aa9'
+          image: 'ghcr.io/lsst-dm/s3daemon:sha-57e1aa9',
+          env: {
+            'S3_ENDPOINT_URL' => 'https://s3dfrgw.slac.stanford.edu',
+            'S3DAEMON_PORT' => 15_580,
+          }
         )
       end
 

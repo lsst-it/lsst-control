@@ -10,7 +10,7 @@ describe 'profile::nfs::client::csc' do
       context 'with default module data' do
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('nfs::client') }
-        it { is_expected.to have_nfs__client__mount_resource_count(6) }
+        it { is_expected.to have_nfs__client__mount_resource_count(2) }
       end
     end
   end

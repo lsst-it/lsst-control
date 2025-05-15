@@ -3,6 +3,12 @@ s3daemon::instances:
   ls-latiss:
     aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
     aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"
+  ls-latiss-s3nd:
+    aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
+    aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"
   s3dfrgw-latiss:
+    aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
+    aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"
+  s3dfrgw-latiss-s3nd:
     aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
     aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"

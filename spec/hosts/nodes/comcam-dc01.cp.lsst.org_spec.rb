@@ -39,7 +39,7 @@ describe 'comcam-dc01.cp.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3daemon__instance('cp-comcam-s3nd').with(
-          image: 'ghcr.io/lsst-dm/s3nd:sha-1a94702',
+          image: 'ghcr.io/lsst-dm/s3nd:sha-76c43ff',
           env: {
             'S3ND_ENDPOINT_URL' => 'https://s3.cp.lsst.org',
             'S3ND_PORT' => 15_571,
@@ -59,7 +59,7 @@ describe 'comcam-dc01.cp.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3daemon__instance('sdfembs3-comcam-s3nd').with(
-          image: 'ghcr.io/lsst-dm/s3nd:sha-1a94702',
+          image: 'ghcr.io/lsst-dm/s3nd:sha-76c43ff',
           env: {
             'S3ND_ENDPOINT_URL' => 'https://sdfembs3.sdf.slac.stanford.edu',
             'S3ND_PORT' => 15_581,

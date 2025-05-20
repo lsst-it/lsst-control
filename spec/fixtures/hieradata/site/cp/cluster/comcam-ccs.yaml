@@ -3,6 +3,12 @@ s3daemon::instances:
   cp-comcam:
     aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
     aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"
+  cp-comcam-s3nd:
+    aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
+    aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"
   sdfembs3-comcam:
+    aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
+    aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"
+  sdfembs3-comcam-s3nd:
     aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
     aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"

@@ -19,7 +19,7 @@ describe 'kueyen04.dev.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'rke',
+          role: 'rke2agent',
           site: 'dev',
           cluster: 'kueyen',
           variant: 'c6420',
@@ -28,13 +28,18 @@ describe 'kueyen04.dev.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      # include_examples 'docker', docker_version: '24.0.9'
       include_examples 'baremetal'
       include_examples 'ceph cluster'
       include_context 'with nm interface'
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
+      end
+
+      it do
+        expect(catalogue.resource('class', 'rke2')[:config]).to include(
+          'node-label' => ['role=storage-node']
+        )
       end
 
       it do
@@ -52,36 +57,14 @@ describe 'kueyen04.dev.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_class('rke').with(
-          version: '1.7.7'
+        is_expected.to contain_class('rke2').with(
+          node_type: 'agent',
+          release_series: '1.31',
+          version: '1.31.8~rke2r1'
         )
       end
 
-      it do
-        is_expected.to contain_class('cni::plugins').with(
-          version: '1.2.0',
-          checksum: 'f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37',
-          enable: %w[macvlan static]
-        )
-      end
-
-      it { is_expected.to contain_class('cni::plugins::dhcp') }
-
-      it { is_expected.to contain_class('profile::core::ospl').with_enable_rundir(true) }
-
-      it { is_expected.to have_nm__connection_resource_count(8) }
-
-      %w[
-        em1
-        em2
-        ens2f0
-      ].each do |i|
-        context "with #{i}" do
-          let(:interface) { i }
-
-          it_behaves_like 'nm disabled interface'
-        end
-      end
+      it { is_expected.to have_nm__connection_resource_count(3) }
 
       context 'with ens4f0' do
         let(:interface) { 'ens4f0' }

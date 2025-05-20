@@ -5,109 +5,23 @@ clustershell::groupmembers:
     member:
       - "kueyen[01-03]"
       - "kueyen[04-09]"
-profile::core::ospl::enable_rundir: true
 profile::core::k8snode::enable_dhcp: true
+rke2::release_series: "1.31"
+rke2::version: "1.31.8~rke2r1"
 tuned::active_profile: "latency-performance"
-cni::plugins::enable: ["macvlan", "static"]
 nm::connections:
-  em1:  #PXE Boot
-    content: |
-      [connection]
-      id=em1
-      uuid=f330f829-20cc-b829-67b0-18086a5fe6fa
-      type=ethernet
-      autoconnect=false
-      interface-name=em1
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
-  em2:  #embedded 2 no use.
-    content: |
-      [connection]
-      id=em2
-      uuid=f330f829-20cc-b829-67b0-18086a5fe6fa
-      type=ethernet
-      autoconnect=false
-      interface-name=em2
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
-  ens2f1:  #fqdn
-    content: |
-      [connection]
-      id=ens2f1
-      uuid=de9904c8-9577-1a17-36b1-34b94132f06a
-      type=ethernet
-      interface-name=ens2f1
-
-      [ethernet]
-
-      [ipv4]
-      method=auto
-
-      [ipv6]
-      method=disabled
-  ens2f0:
-    content: |
-      [connection]
-      id=ens2f0
-      uuid=46d19ce1-bcab-7e77-6fc7-b730b26c54b1
-      type=ethernet
-      autoconnect=false
-      interface-name=ens2f0
-
-      [ethernet]
-
-      [ipv4]
-      method=disabled
-
-      [ipv6]
-      method=disabled
-  ens2f0.2301:
-    content: |
-      [connection]
-      id=ens2f0.2301
-      uuid=e74daaad-4d73-4015-bb26-83c460ddf572
-      type=vlan
-      interface-name=ens2f0.2301
-      master=br2301
-      slave-type=bridge
-
-      [ethernet]
-
-      [vlan]
-      flags=1
-      id=2301
-      parent=ens2f0
-
-      [bridge-port]
   br2301:
-    content: |
-      [connection]
-      id=br2301
-      uuid=7dd05d98-a9c3-4569-a7c3-00316b13c0eb
-      type=bridge
-      interface-name=br2301
-
-      [ethernet]
-
-      [bridge]
-      stp=false
-
-      [ipv4]
-      method=auto
-
-      [ipv6]
-      method=disabled
-
-      [proxy]
+    content:
+      connection:
+        id: "br2301"
+        uuid: "7dd05d98-a9c3-4569-a7c3-00316b13c0eb"
+        type: "bridge"
+        interface-name: "br2301"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}

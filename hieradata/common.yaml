@@ -259,7 +259,7 @@ accounts::user_list:
       - "wheel_b"
     purge_sshkeys: true
     sshkeys:
-      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCjv42Vmm3Q3qiEUKFjFpSKb52zKcrAOdy94KfiLsziCNYEFJHtqa8a9n25SF9RN+7mDK8DIal77mPtIoAOfIG+Tvh47Mhx0zNxZ3ja0Zp5VEBCLwsJUq6myBhdz6K0JSS26DMCy4MsbyF5FXPdjdq0YTDmPHW3PYO3L1hhtBKettC6Kb/e5e5YxXw/I39okKQPNJnaquLUqdBkv85DZ763c7SyKiScIpYlZDi/kPipZa8zJDsRlDHWkX9Cv6JJOFbT/jAmB5gCOnPZj/vfpzzi7wQG00LHhEDhrHH6vErF7/JHh7rrLu/Hd8ueYUOAQUaN1MjgIpFmRJlvXflvAneJVfA4CyV1H6oAsKTjgBo7tpbxBuRwPf5PhGsrhBohcJAI3nPZHt/nKeFXI52DdKzYV+XNkprxSQdEXJmw0E1ZjT1sfyGQUk+QnprzeAwMgDOpwKvh1x56DPPXZiGthdppQN/keVbOXwigu0MFm1vYyEYUNzbfZZ8XOOehR3R+YFU= geseriche@gseriche-m2-16.local"
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC75sIYcLR8L7w8LGiC7kxBzlHxlK9g5DDB4kR4i67EQZreMMq59sZqnj19FDwZredBi/h2gVdkbYGZZZi6YkFj1FmmB4TCHQpDZmwkT358DKaG+/C5uFVNDLX/LeQmMQXsmmLlNg0q85YrlJw9VSNte54HDVG35kno104CYd+C15yw5KoR6Sj2t6wuE+wEasxBLNSSX8WsYWF+MUDQuWOx+0URT8dYZRO68NEHoqeFL1v8vcuYGwD3DGUSWDWBxq4xLJ7WgAyIMyp0pghausNiu5cBtjibBiGr8BTJm97ARFZ9dtA/b5EdAtpNuXLcDCF2kUUTYwRpAP3JndGEezmk8zbafFU9lNpNYHVuVEFQ+aLfRUsGgFbobchXEpqCFd3/fz/oxpQRTlaVonDwavqO2J/7BUyVK7+CxF0FbDLLTL9knVQZs5Q8wuyBj10S7MoMfrt/B0O60/5aINaP+KfnEY13A3IiTQGD+w+0afkl2p9qfxURwZhuSGPgNKkMp00= gseriche@LSST-Gonzalo-MacBook.local"
   lssttech: &rm_user
     ensure: "absent"
     managehome: true

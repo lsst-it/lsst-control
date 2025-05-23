@@ -43,7 +43,7 @@ describe 'chango01.ls.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_class('profile::core::rke').with(
-          version: '1.7.6'
+          version: '1.7.7'
         )
       end
 

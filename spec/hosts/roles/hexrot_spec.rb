@@ -91,11 +91,11 @@ describe "#{role} role" do
             },
             'ts-mtdomecom' => {
               'channel' => 'lsstts',
-              'version' => '0.2.8',
+              'version' => '0.2.11',
             },
             'ts-mtdomegui' => {
               'channel' => 'lsstts',
-              'version' => '0.4.9',
+              'version' => '0.4.11',
             },
             'ts-rotgui' => {
               'channel' => 'lsstts',

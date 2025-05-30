@@ -32,13 +32,13 @@ s3daemon::instances:
       S3ND_UPLOAD_TRIES: "5"
   sdfembs3-lsstcam:
     image: "%{alias('s3daemon_default_image')}"
-    env:
+    env: &sdfembs3
       S3_ENDPOINT_URL: "https://sdfembs3.sdf.slac.stanford.edu"
       S3DAEMON_PORT: 15580
       S3DAEMON_HOST: "0.0.0.0"  # allow connections from other nodes for testing
   sdfembs3-lsstcam-s3nd:
     image: "%{alias('s3nd_default_image')}"
-    env:
+    env: &sdfembss3nd
       S3ND_ENDPOINT_URL: "https://sdfembs3.sdf.slac.stanford.edu"
       S3ND_PORT: 15581
       S3ND_HOST: ""  # allow connections from other nodes for testing
@@ -48,3 +48,13 @@ s3daemon::instances:
       S3ND_UPLOAD_TRIES: "5"
       S3ND_UPLOAD_PARTSIZE: "50Mi"  # larger than test file size
       S3ND_UPLOAD_BWLIMIT: "160Mi"
+  sdfembs3-lsstcam-test:
+    image: "%{alias('s3daemon_default_image')}"
+    env:
+      <<: *sdfembs3
+      S3DAEMON_PORT: 15590
+  sdfembs3-lsstcam-test-s3nd:
+    image: "%{alias('s3nd_default_image')}"
+    env:
+      <<: *sdfembss3nd
+      S3ND_PORT: 15591

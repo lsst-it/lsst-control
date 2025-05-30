@@ -32,6 +32,10 @@ describe 'auxtel-dc01.ls.lsst.org', :sitepp do
       it do
         is_expected.to contain_s3daemon__instance('ls-latiss').with(
           image: 'ghcr.io/lsst-dm/s3daemon:sha-57e1aa9',
+          volumes: [
+            '/data:/data',
+            '/home:/home',
+          ],
           env: {
             'S3_ENDPOINT_URL' => 'https://s3.ls.lsst.org',
             'S3DAEMON_PORT' => 15_570,
@@ -42,6 +46,10 @@ describe 'auxtel-dc01.ls.lsst.org', :sitepp do
       it do
         is_expected.to contain_s3daemon__instance('ls-latiss-s3nd').with(
           image: 'ghcr.io/lsst-dm/s3nd:1.0.1',
+          volumes: [
+            '/data:/data',
+            '/home:/home',
+          ],
           env: {
             'S3ND_ENDPOINT_URL' => 'https://s3.ls.lsst.org',
             'S3ND_PORT' => 15_571,
@@ -52,6 +60,10 @@ describe 'auxtel-dc01.ls.lsst.org', :sitepp do
       it do
         is_expected.to contain_s3daemon__instance('s3dfrgw-latiss').with(
           image: 'ghcr.io/lsst-dm/s3daemon:sha-57e1aa9',
+          volumes: [
+            '/data:/data',
+            '/home:/home',
+          ],
           env: {
             'S3_ENDPOINT_URL' => 'https://s3dfrgw.slac.stanford.edu',
             'S3DAEMON_PORT' => 15_580,
@@ -62,6 +74,10 @@ describe 'auxtel-dc01.ls.lsst.org', :sitepp do
       it do
         is_expected.to contain_s3daemon__instance('s3dfrgw-latiss-s3nd').with(
           image: 'ghcr.io/lsst-dm/s3nd:1.0.1',
+          volumes: [
+            '/data:/data',
+            '/home:/home',
+          ],
           env: {
             'S3ND_ENDPOINT_URL' => 'https://s3dfrgw.slac.stanford.edu',
             'S3ND_PORT' => 15_581,

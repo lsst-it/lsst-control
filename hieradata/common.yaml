@@ -576,6 +576,9 @@ restic::host: "s3.us-east-1.amazonaws.com"
 
 s3daemon_default_image: "ghcr.io/lsst-dm/s3daemon:sha-57e1aa9"
 s3nd_default_image: "ghcr.io/lsst-dm/s3nd:1.0.1"
+s3daemon::volumes:
+  - "/data:/data"
+  - "/home:/home"
 s3daemon::env:
   AWS_REGION: "lfa"
 

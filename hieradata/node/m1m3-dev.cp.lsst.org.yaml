@@ -1,6 +1,0 @@
----
-network::interfaces_hash:
-  eth0:
-    bootproto: "dhcp"
-    onboot: "yes"
-    type: "Ethernet"

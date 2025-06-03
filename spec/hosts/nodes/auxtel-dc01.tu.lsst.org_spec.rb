@@ -43,7 +43,7 @@ describe 'auxtel-dc01.tu.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3daemon__instance('tu-latiss-s3nd').with(
-          image: 'ghcr.io/lsst-dm/s3nd:1.0.1',
+          image: 'ghcr.io/lsst-dm/s3nd:1.1.0',
           volumes: [
             '/data:/data',
             '/home:/home',
@@ -71,7 +71,7 @@ describe 'auxtel-dc01.tu.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3daemon__instance('s3dfrgw-latiss-s3nd').with(
-          image: 'ghcr.io/lsst-dm/s3nd:1.0.1',
+          image: 'ghcr.io/lsst-dm/s3nd:1.1.0',
           volumes: [
             '/data:/data',
             '/home:/home',

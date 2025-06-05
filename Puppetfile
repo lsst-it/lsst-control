@@ -115,7 +115,7 @@ mod 'stm/debconf', '6.2.0'
 mod 'syseleven/restic', '2.8.1'
 mod 'theforeman/dhcp', '9.3.0'
 mod 'theforeman/dns', '11.1.0'
-mod 'theforeman/foreman', git: 'https://github.com/lsst-it/puppet-foreman', ref: '23f86f4'  # 20.2.0 + dep updates
+mod 'theforeman/foreman', git: 'https://github.com/lsst-it/puppet-foreman', ref: '858ad03'
 mod 'theforeman/foreman_proxy', git: 'https://github.com/lsst-it/puppet-foreman_proxy', ref: '90af64a'  # https://github.com/theforeman/puppet-foreman_proxy/pull/772 https://github.com/theforeman/puppet-foreman_proxy/pull/816
 mod 'theforeman/puppet', '21.0.0'
 mod 'theforeman/puppetserver_foreman', '4.2.1'

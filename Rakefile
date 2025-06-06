@@ -20,6 +20,10 @@ task default: %w[
 begin
   require 'voxpupuli/test/rake'
 rescue LoadError
+  begin
+    require 'puppetlabs_spec_helper/rake_tasks'Add commentMore actions
+  rescue LoadError
+  end
 end
 
 # load optional tasks for acceptance

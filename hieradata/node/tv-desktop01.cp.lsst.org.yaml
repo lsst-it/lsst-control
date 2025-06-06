@@ -1,0 +1,17 @@
+---
+powertop::ensure: "absent"
+
+nm::connections:
+  enp5s0:
+    content:
+      connection:
+        id: "enp5s0"
+        uuid: "d0b09602-d300-4485-b005-3851181ee549"
+        type: "ethernet"
+        interface-name: "enp5s0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}

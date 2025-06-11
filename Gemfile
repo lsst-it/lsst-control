@@ -6,7 +6,7 @@ group :test do
   gem 'coveralls',                 require: false
   gem 'puppet_metadata', '~> 5.0', require: false
   gem 'simplecov-console',         require: false
-  gem 'voxpupuli-test', '~> 9.0',  require: false
+  gem 'voxpupuli-test', '~> 10.0',  require: false
 
   gem 'librarian-puppet',                             require: false
   gem 'puppet-lint-package_ensure-check', '~> 0.2.0', require: false

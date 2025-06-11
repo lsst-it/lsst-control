@@ -140,6 +140,8 @@ ccs_monit::hosts:
 # - "lsstcam-vw03"
   - "lsstcam-vw04"
 
+ccs_software::apc_pdu: true
+
 ccs_software::services:
   prod:
     - "platform-pdu"

@@ -1,5 +1,8 @@
 ---
-# Be advised that there is a rancher cluster per site and changes here will
-# apply to all of them.
 clustershell::groupmembers:
   rancher: {group: "rancher", member: "rancher[1-3]"}
+
+rke2::config:
+  server: "https://rancher-api.%{::site}.lsst.org:9345"
+  tls-san:
+    - "rancher-api.%{::site}.lsst.org"

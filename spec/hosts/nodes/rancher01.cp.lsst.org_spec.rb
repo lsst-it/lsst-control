@@ -19,7 +19,7 @@ describe 'rancher01.cp.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'rke',
+          role: 'rke2server',
           site: 'cp',
           cluster: 'rancher',
         }
@@ -27,39 +27,16 @@ describe 'rancher01.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'docker', docker_version: '24.0.9'
-
       it do
-        is_expected.to contain_class('rke').with(
-          version: '1.7.6',
-          checksum: 'a6ef89ac3042e066b0596cb38d5bff0192b84a7d4b6ed5b14cddc4bcfd5c9cd9'
+        is_expected.to contain_class('rke2').with(
+          node_type: 'server',
+          release_series: '1.31',
+          version: '1.31.7~rke2r1'
         )
       end
 
       include_examples 'vm'
-      include_context 'with nm interface'
-      it do
-        is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
-      end
-
-      it { is_expected.to have_nm__connection_resource_count(2) }
-
-      context 'with enp1s0' do
-        let(:interface) { 'enp1s0' }
-
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm ethernet interface'
-        it_behaves_like 'nm dhcp interface'
-      end
-
-      context 'with enp2s0' do
-        let(:interface) { 'enp2s0' }
-
-        it_behaves_like 'nm enabled interface'
-        it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
-        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
-      end
+      it { is_expected.to have_nm__connection_resource_count(0) }
     end # on os
   end # on_supported_os
 end

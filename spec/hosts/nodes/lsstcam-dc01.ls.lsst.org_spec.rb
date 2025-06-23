@@ -46,7 +46,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3daemon__instance('ls-lsstcam-s3nd').with(
-          image: 'ghcr.io/lsst-dm/s3nd:1.1.0',
+          image: 'ghcr.io/lsst-dm/s3nd:1.5.1',
           volumes: [
             '/data:/data',
             '/home:/home',
@@ -76,7 +76,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3daemon__instance('s3dfrgw-lsstcam-s3nd').with(
-          image: 'ghcr.io/lsst-dm/s3nd:1.1.0',
+          image: 'ghcr.io/lsst-dm/s3nd:1.5.1',
           volumes: [
             '/data:/data',
             '/home:/home',
@@ -87,10 +87,10 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
             'S3ND_HOST' => '',
             'S3ND_UPLOAD_TIMEOUT' => '10s',
             'S3ND_QUEUE_TIMEOUT' => '30s',
-            'S3ND_UPLOAD_MAX_PARALLEL' => '25',
-            'S3ND_UPLOAD_TRIES' => '5',
-            'S3ND_UPLOAD_PARTSIZE' => '50Mi', # larger than test file size
-            'S3ND_UPLOAD_BWLIMIT' => '160Mi',
+            'S3ND_UPLOAD_MAX_PARALLEL' => '27',
+            'S3ND_UPLOAD_TRIES' => '3',
+            'S3ND_UPLOAD_PARTSIZE' => '100Mi',
+            'S3ND_UPLOAD_BWLIMIT' => '4Gi',
           }
         )
       end

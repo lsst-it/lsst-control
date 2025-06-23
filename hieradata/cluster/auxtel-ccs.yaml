@@ -78,6 +78,9 @@ ccs_software::installations:
   ats-software-41.0.3:
     aliases:
       - "puppet-41.0.3"
+  ats-software-41.0.4:
+    aliases:
+      - "puppet-41.0.4"
 
 ## Used in lookups:
 ccs_site: "summit"

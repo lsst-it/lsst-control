@@ -575,7 +575,7 @@ restic::enable_backup: true
 restic::host: "s3.us-east-1.amazonaws.com"
 
 s3daemon_default_image: "ghcr.io/lsst-dm/s3daemon:sha-57e1aa9"
-s3nd_default_image: "ghcr.io/lsst-dm/s3nd:1.1.0"
+s3nd_default_image: "ghcr.io/lsst-dm/s3nd:1.5.1"
 s3daemon::volumes:
   - "/data:/data"
   - "/home:/home"

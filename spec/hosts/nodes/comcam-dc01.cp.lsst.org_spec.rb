@@ -43,7 +43,7 @@ describe 'comcam-dc01.cp.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3daemon__instance('cp-comcam-s3nd').with(
-          image: 'ghcr.io/lsst-dm/s3nd:1.5.1',
+          image: 'ghcr.io/lsst-dm/s3nd:1.5.2',
           volumes: [
             '/data:/data',
             '/home:/home',
@@ -71,7 +71,7 @@ describe 'comcam-dc01.cp.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3daemon__instance('sdfembs3-comcam-s3nd').with(
-          image: 'ghcr.io/lsst-dm/s3nd:1.5.1',
+          image: 'ghcr.io/lsst-dm/s3nd:1.5.2',
           volumes: [
             '/data:/data',
             '/home:/home',

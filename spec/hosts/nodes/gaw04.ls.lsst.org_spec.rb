@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'gaw01.ls.lsst.org', :sitepp do
+describe 'gaw04.ls.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
@@ -22,7 +22,7 @@ describe 'gaw01.ls.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'rke2server',
+          role: 'rke2agent',
           site: 'ls',
           cluster: 'gaw',
         }
@@ -53,7 +53,7 @@ describe 'gaw01.ls.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_class('rke2').with(
-          node_type: 'server',
+          node_type: 'agent',
           release_series: '1.31',
           version: '1.31.8~rke2r1'
         )

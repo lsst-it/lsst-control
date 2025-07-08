@@ -47,7 +47,7 @@ nm::connections:
 nfs::server_enabled: false
 nfs::client_enabled: true
 nfs::client_mounts:
-  /data:
+  /net/obs-env:
     share: "obs-env"
     server: "nfs-obsenv.tu.lsst.org"
     atboot: true

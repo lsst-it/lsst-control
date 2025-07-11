@@ -63,7 +63,7 @@ shared_examples 'lsstcam-dc.cp' do
         'S3ND_PORT' => 15_581,
         'S3ND_HOST' => '',
         'S3ND_QUEUE_TIMEOUT' => '30s',
-        'S3ND_UPLOAD_BWLIMIT' => '4Gi',
+        'S3ND_UPLOAD_BWLIMIT' => '3Gi',
         'S3ND_UPLOAD_MAX_PARALLEL' => '27',
         'S3ND_UPLOAD_PARTSIZE' => '100Mi',
         'S3ND_UPLOAD_TIMEOUT' => '10s',

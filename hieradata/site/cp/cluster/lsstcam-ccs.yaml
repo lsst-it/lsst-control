@@ -26,7 +26,7 @@ s3daemon::instances:
       S3ND_ENDPOINT_URL: "https://s3.cp.lsst.org"
       S3ND_PORT: 15571
       S3ND_HOST: ""  # allow connections from other nodes for testing
-      S3ND_QUEUE_TIMEOUT: "30s"
+      S3ND_QUEUE_TIMEOUT: "15s"
       S3ND_UPLOAD_MAX_PARALLEL: "27"
       S3ND_UPLOAD_PARTSIZE: "100Mi"
       S3ND_UPLOAD_TIMEOUT: "3s"
@@ -43,11 +43,11 @@ s3daemon::instances:
       S3ND_ENDPOINT_URL: "https://sdfembs3.sdf.slac.stanford.edu"
       S3ND_PORT: 15581
       S3ND_HOST: ""  # allow connections from other nodes for testing
-      S3ND_QUEUE_TIMEOUT: "30s"
+      S3ND_QUEUE_TIMEOUT: "15s"
       S3ND_UPLOAD_BWLIMIT: "3Gi"
       S3ND_UPLOAD_MAX_PARALLEL: "27"
       S3ND_UPLOAD_PARTSIZE: "100Mi"
-      S3ND_UPLOAD_TIMEOUT: "10s"
+      S3ND_UPLOAD_TIMEOUT: "4s"
       S3ND_UPLOAD_TRIES: "3"
   sdfembs3-lsstcam-test:
     image: "%{alias('s3daemon_default_image')}"
@@ -59,5 +59,3 @@ s3daemon::instances:
     env:
       <<: *sdfembss3nd
       S3ND_PORT: 15591
-      S3ND_QUEUE_TIMEOUT: "15s"
-      S3ND_UPLOAD_TIMEOUT: "4s"

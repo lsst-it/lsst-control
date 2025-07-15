@@ -26,6 +26,8 @@ describe 'observer01.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
+      it { is_expected.to contain_package('powertop').with_ensure('absent') }
+
       include_examples 'baremetal no bmc'
       include_context 'with nm interface'
 

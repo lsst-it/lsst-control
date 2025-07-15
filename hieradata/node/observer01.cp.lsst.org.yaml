@@ -1,4 +1,6 @@
 ---
+powertop::ensure: "absent"
+
 nm::connections:
   enp10s0:
     content:

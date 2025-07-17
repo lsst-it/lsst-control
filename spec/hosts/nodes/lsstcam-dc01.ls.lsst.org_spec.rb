@@ -30,22 +30,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       it do
-        is_expected.to contain_s3daemon__instance('ls-lsstcam').with(
-          image: 'ghcr.io/lsst-dm/s3daemon:sha-57e1aa9',
-          volumes: [
-            '/data:/data',
-            '/home:/home',
-          ],
-          env: {
-            'S3_ENDPOINT_URL' => 'https://s3.ls.lsst.org',
-            'S3DAEMON_PORT' => 15_570,
-            'S3DAEMON_HOST' => '0.0.0.0',
-          }
-        )
-      end
-
-      it do
-        is_expected.to contain_s3daemon__instance('ls-lsstcam-s3nd').with(
+        is_expected.to contain_s3nd__instance('ls-lsstcam').with(
           image: 'ghcr.io/lsst-dm/s3nd:1.6.0',
           volumes: [
             '/data:/data',
@@ -60,22 +45,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_s3daemon__instance('s3dfrgw-lsstcam').with(
-          image: 'ghcr.io/lsst-dm/s3daemon:sha-57e1aa9',
-          volumes: [
-            '/data:/data',
-            '/home:/home',
-          ],
-          env: {
-            'S3_ENDPOINT_URL' => 'https://s3dfrgw.slac.stanford.edu',
-            'S3DAEMON_PORT' => 15_580,
-            'S3DAEMON_HOST' => '0.0.0.0',
-          }
-        )
-      end
-
-      it do
-        is_expected.to contain_s3daemon__instance('s3dfrgw-lsstcam-s3nd').with(
+        is_expected.to contain_s3nd__instance('s3dfrgw-lsstcam').with(
           image: 'ghcr.io/lsst-dm/s3nd:1.6.0',
           volumes: [
             '/data:/data',
@@ -85,18 +55,18 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
             'S3ND_ENDPOINT_URL' => 'https://s3dfrgw.slac.stanford.edu',
             'S3ND_PORT' => 15_581,
             'S3ND_HOST' => '',
-            'S3ND_QUEUE_TIMEOUT' => '30s',
+            'S3ND_QUEUE_TIMEOUT' => '15s',
             'S3ND_UPLOAD_BWLIMIT' => '4Gi',
             'S3ND_UPLOAD_MAX_PARALLEL' => '27',
             'S3ND_UPLOAD_PARTSIZE' => '100Mi',
-            'S3ND_UPLOAD_TIMEOUT' => '10s',
+            'S3ND_UPLOAD_TIMEOUT' => '4s',
             'S3ND_UPLOAD_TRIES' => '3',
           }
         )
       end
 
       it do
-        is_expected.to contain_s3daemon__instance('s3dfrgw-lsstcam-test-s3nd').with(
+        is_expected.to contain_s3nd__instance('s3dfrgw-lsstcam-test').with(
           image: 'ghcr.io/lsst-dm/s3nd:1.6.0',
           volumes: [
             '/data:/data',
@@ -106,11 +76,11 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
             'S3ND_ENDPOINT_URL' => 'https://s3dfrgw.slac.stanford.edu',
             'S3ND_PORT' => 15_591,
             'S3ND_HOST' => '',
-            'S3ND_QUEUE_TIMEOUT' => '30s',
+            'S3ND_QUEUE_TIMEOUT' => '15s',
             'S3ND_UPLOAD_BWLIMIT' => '4Gi',
             'S3ND_UPLOAD_MAX_PARALLEL' => '27',
             'S3ND_UPLOAD_PARTSIZE' => '100Mi',
-            'S3ND_UPLOAD_TIMEOUT' => '10s',
+            'S3ND_UPLOAD_TIMEOUT' => '4s',
             'S3ND_UPLOAD_TRIES' => '3',
           }
         )

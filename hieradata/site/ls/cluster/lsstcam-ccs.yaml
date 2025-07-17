@@ -13,41 +13,27 @@ ccs_software::installations:
 ccs_monit::alert:
   - "base-teststand-alerts-aaaaojwlqmczgqmavrwyopux5a@rubin-obs.slack.com"
 
-s3daemon::instances:
+s3nd::instances:
   ls-lsstcam:
-    image: "%{alias('s3daemon_default_image')}"
-    env:
-      S3_ENDPOINT_URL: "https://s3.ls.lsst.org"
-      S3DAEMON_PORT: 15570
-      S3DAEMON_HOST: "0.0.0.0"  # allow connections from other nodes for testing
-  ls-lsstcam-s3nd:  # untuned because s3.ls.lsst.org is currently low performance
     image: "%{alias('s3nd_default_image')}"
     env:
       S3ND_ENDPOINT_URL: "https://s3.ls.lsst.org"
       S3ND_PORT: 15571
       S3ND_HOST: ""  # allow connections from other nodes for testing
   s3dfrgw-lsstcam:
-    image: "%{alias('s3daemon_default_image')}"
-    env:
-      S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
-      S3DAEMON_PORT: 15580
-      S3DAEMON_HOST: "0.0.0.0"  # allow connections from other nodes for testing
-  # needs to be tuned for s3dfrgw; tests in 2024 shows s3dfrgw as having very
-  # slow performance compared to sdfembs3
-  s3dfrgw-lsstcam-s3nd:
     image: "%{alias('s3nd_default_image')}"
-    env: &s3dfrgws3nd
+    env: &s3dfrgw
       S3ND_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
       S3ND_PORT: 15581
       S3ND_HOST: ""  # allow connections from other nodes for testing
-      S3ND_QUEUE_TIMEOUT: "30s"
+      S3ND_QUEUE_TIMEOUT: "15s"
       S3ND_UPLOAD_BWLIMIT: "4Gi"
       S3ND_UPLOAD_MAX_PARALLEL: "27"
       S3ND_UPLOAD_PARTSIZE: "100Mi"
-      S3ND_UPLOAD_TIMEOUT: "10s"
+      S3ND_UPLOAD_TIMEOUT: "4s"
       S3ND_UPLOAD_TRIES: "3"
-  s3dfrgw-lsstcam-test-s3nd:
+  s3dfrgw-lsstcam-test:
     image: "%{alias('s3nd_default_image')}"
     env:
-      <<: *s3dfrgws3nd
+      <<: *s3dfrgw
       S3ND_PORT: 15591

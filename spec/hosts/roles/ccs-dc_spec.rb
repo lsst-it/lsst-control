@@ -24,7 +24,6 @@ describe "#{role} role" do
           include_examples('ccs common', os_facts:)
           include_examples('x2go packages', os_facts:)
           include_examples 'lhn sysctls'
-          include_examples 's3daemon'
 
           %w[
             ccs_daq
@@ -35,8 +34,9 @@ describe "#{role} role" do
           ].each do |cls|
             it { is_expected.to contain_class(cls) }
           end
+
           it { is_expected.to contain_host('sdfembs3.sdf.slac.stanford.edu').with_ip('172.24.7.249') }
-        end # host
+        end # hos
       end # lsst_sites
     end # on os
   end # on_supported_os

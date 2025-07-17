@@ -8,3 +8,8 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
+  - "s3nd"
+
+hosts::entries:
+  sdfembs3.sdf.slac.stanford.edu:
+    ip: "172.24.7.249"

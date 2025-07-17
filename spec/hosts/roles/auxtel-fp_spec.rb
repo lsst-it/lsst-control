@@ -23,6 +23,9 @@ describe "#{role} role" do
           include_examples('common', os_facts:, site:)
           include_examples('ccs common', os_facts:)
           include_examples 'lsst-daq sysctls'
+          include_examples 's3nd'
+
+          it { is_expected.to contain_host('sdfembs3.sdf.slac.stanford.edu').with_ip('172.24.7.249') }
         end # host
       end # lsst_sites
     end # on os

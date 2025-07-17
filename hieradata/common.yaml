@@ -107,7 +107,7 @@ lookup_options:
   cni::plugins::enable:
     merge:
       strategy: "deep"
-  s3daemon::instances:
+  s3nd::instances:
     merge:
       strategy: "deep"
 
@@ -574,12 +574,11 @@ restic::bucket: "rubin-bm-backups/%{facts.networking.fqdn}"
 restic::enable_backup: true
 restic::host: "s3.us-east-1.amazonaws.com"
 
-s3daemon_default_image: "ghcr.io/lsst-dm/s3daemon:sha-57e1aa9"
 s3nd_default_image: "ghcr.io/lsst-dm/s3nd:1.6.0"
-s3daemon::volumes:
+s3nd::volumes:
   - "/data:/data"
   - "/home:/home"
-s3daemon::env:
+s3nd::env:
   AWS_REGION: "lfa"
 
 pi::config::reboot: false  # XXX this should be removed when pi role/profile refactoring is complete

@@ -26,7 +26,7 @@ lookup_options:
     convert_to: "Sensitive"
   '^profile::core::puppetdb::ldap_bind_(user|pass)$':
     convert_to: "Sensitive"
-  '^s3daemon_.+::aws_.+$':
+  '^s3nd_test::aws_.+$':
     convert_to: "Sensitive"
 ccs_database::database: "comcamdbprod"
 ccs_database::password: "foo"
@@ -52,6 +52,6 @@ profile::core::puppetdb::ldap_bind_user: "foo"
 restic::id: "foo"
 restic::key: "foo"
 restic::password: "foo"
-s3daemon_test::aws_access_key_id: "foo"
-s3daemon_test::aws_secret_access_key: "foo"
+s3nd_test::aws_access_key_id: "foo"
+s3nd_test::aws_secret_access_key: "foo"
 tailscale::auth_key: "foo"

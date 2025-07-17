@@ -13,14 +13,8 @@ clustershell::groupmembers:
 
 profile::ccs::monitoring::mrtg: true
 
-s3daemon::instances:
+s3nd::instances:
   cp-lsstcam:
-    image: "%{alias('s3daemon_default_image')}"
-    env:
-      S3_ENDPOINT_URL: "https://s3.cp.lsst.org"
-      S3DAEMON_PORT: 15570
-      S3DAEMON_HOST: "0.0.0.0"  # allow connections from other nodes for testing
-  cp-lsstcam-s3nd:
     image: "%{alias('s3nd_default_image')}"
     env:
       S3ND_ENDPOINT_URL: "https://s3.cp.lsst.org"
@@ -32,12 +26,6 @@ s3daemon::instances:
       S3ND_UPLOAD_TIMEOUT: "3s"
       S3ND_UPLOAD_TRIES: "5"
   sdfembs3-lsstcam:
-    image: "%{alias('s3daemon_default_image')}"
-    env: &sdfembs3
-      S3_ENDPOINT_URL: "https://sdfembs3.sdf.slac.stanford.edu"
-      S3DAEMON_PORT: 15580
-      S3DAEMON_HOST: "0.0.0.0"  # allow connections from other nodes for testing
-  sdfembs3-lsstcam-s3nd:
     image: "%{alias('s3nd_default_image')}"
     env: &sdfembss3nd
       S3ND_ENDPOINT_URL: "https://sdfembs3.sdf.slac.stanford.edu"
@@ -50,11 +38,6 @@ s3daemon::instances:
       S3ND_UPLOAD_TIMEOUT: "4s"
       S3ND_UPLOAD_TRIES: "3"
   sdfembs3-lsstcam-test:
-    image: "%{alias('s3daemon_default_image')}"
-    env:
-      <<: *sdfembs3
-      S3DAEMON_PORT: 15590
-  sdfembs3-lsstcam-test-s3nd:
     image: "%{alias('s3nd_default_image')}"
     env:
       <<: *sdfembss3nd

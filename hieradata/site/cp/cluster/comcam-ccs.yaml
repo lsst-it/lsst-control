@@ -1,23 +1,13 @@
 ---
 profile::ccs::monitoring::mrtg: true
 
-s3daemon::instances:
+s3nd::instances:
   cp-comcam:
-    image: "%{alias('s3daemon_default_image')}"
-    env:
-      S3_ENDPOINT_URL: "https://s3.cp.lsst.org"
-      S3DAEMON_PORT: 15570
-  cp-comcam-s3nd:
     image: "%{alias('s3nd_default_image')}"
     env:
       S3ND_ENDPOINT_URL: "https://s3.cp.lsst.org"
       S3ND_PORT: 15571
   sdfembs3-comcam:
-    image: "%{alias('s3daemon_default_image')}"
-    env:
-      S3_ENDPOINT_URL: "https://sdfembs3.sdf.slac.stanford.edu"
-      S3DAEMON_PORT: 15580
-  sdfembs3-comcam-s3nd:
     image: "%{alias('s3nd_default_image')}"
     env:
       S3ND_ENDPOINT_URL: "https://sdfembs3.sdf.slac.stanford.edu"

@@ -1,5 +1,6 @@
 ---
 powertop::ensure: "absent"
+zoom::ensure: "present"
 
 nm::connections:
   enp4s0:  #fqdn

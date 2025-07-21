@@ -2,22 +2,7 @@
 
 shared_examples 'lsstcam-dc.cp' do
   it do
-    is_expected.to contain_s3daemon__instance('cp-lsstcam').with(
-      image: 'ghcr.io/lsst-dm/s3daemon:sha-57e1aa9',
-      volumes: [
-        '/data:/data',
-        '/home:/home',
-      ],
-      env: {
-        'S3_ENDPOINT_URL' => 'https://s3.cp.lsst.org',
-        'S3DAEMON_PORT' => 15_570,
-        'S3DAEMON_HOST' => '0.0.0.0',
-      }
-    )
-  end
-
-  it do
-    is_expected.to contain_s3daemon__instance('cp-lsstcam-s3nd').with(
+    is_expected.to contain_s3nd__instance('cp-lsstcam').with(
       image: 'ghcr.io/lsst-dm/s3nd:1.6.0',
       volumes: [
         '/data:/data',
@@ -37,22 +22,7 @@ shared_examples 'lsstcam-dc.cp' do
   end
 
   it do
-    is_expected.to contain_s3daemon__instance('sdfembs3-lsstcam').with(
-      image: 'ghcr.io/lsst-dm/s3daemon:sha-57e1aa9',
-      volumes: [
-        '/data:/data',
-        '/home:/home',
-      ],
-      env: {
-        'S3_ENDPOINT_URL' => 'https://sdfembs3.sdf.slac.stanford.edu',
-        'S3DAEMON_PORT' => 15_580,
-        'S3DAEMON_HOST' => '0.0.0.0',
-      }
-    )
-  end
-
-  it do
-    is_expected.to contain_s3daemon__instance('sdfembs3-lsstcam-s3nd').with(
+    is_expected.to contain_s3nd__instance('sdfembs3-lsstcam').with(
       image: 'ghcr.io/lsst-dm/s3nd:1.6.0',
       volumes: [
         '/data:/data',
@@ -73,22 +43,7 @@ shared_examples 'lsstcam-dc.cp' do
   end
 
   it do
-    is_expected.to contain_s3daemon__instance('sdfembs3-lsstcam-test').with(
-      image: 'ghcr.io/lsst-dm/s3daemon:sha-57e1aa9',
-      volumes: [
-        '/data:/data',
-        '/home:/home',
-      ],
-      env: {
-        'S3_ENDPOINT_URL' => 'https://sdfembs3.sdf.slac.stanford.edu',
-        'S3DAEMON_PORT' => 15_590,
-        'S3DAEMON_HOST' => '0.0.0.0',
-      }
-    )
-  end
-
-  it do
-    is_expected.to contain_s3daemon__instance('sdfembs3-lsstcam-test-s3nd').with(
+    is_expected.to contain_s3nd__instance('sdfembs3-lsstcam-test').with(
       image: 'ghcr.io/lsst-dm/s3nd:1.6.0',
       volumes: [
         '/data:/data',

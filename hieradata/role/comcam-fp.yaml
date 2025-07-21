@@ -10,8 +10,13 @@ classes:
   - "profile::core::nfsclient"
   - "profile::core::nfsserver"
   - "profile::core::sysctl::lhn"
+  - "s3nd"
 
 profile::ccs::common::sysctls: false
+
+hosts::entries:
+  sdfembs3.sdf.slac.stanford.edu:
+    ip: "172.24.7.249"
 
 ccs_software::services:
   prod:

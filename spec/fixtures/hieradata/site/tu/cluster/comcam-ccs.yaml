@@ -1,14 +1,8 @@
 ---
-s3daemon::instances:
+s3nd::instances:
   tu-comcam:
-    aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
-    aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"
-  tu-comcam-s3nd:
-    aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
-    aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"
+    aws_access_key_id: "%{alias('s3nd_test::aws_access_key_id')}"
+    aws_secret_access_key: "%{alias('s3nd_test::aws_secret_access_key')}"
   s3dfrgw-comcam:
-    aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
-    aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"
-  s3dfrgw-comcam-s3nd:
-    aws_access_key_id: "%{alias('s3daemon_test::aws_access_key_id')}"
-    aws_secret_access_key: "%{alias('s3daemon_test::aws_secret_access_key')}"
+    aws_access_key_id: "%{alias('s3nd_test::aws_access_key_id')}"
+    aws_secret_access_key: "%{alias('s3nd_test::aws_secret_access_key')}"

@@ -23,10 +23,12 @@ describe "#{role} role" do
           include_examples('common', os_facts:, site:)
           include_examples('x2go packages', os_facts:)
           include_examples 'lhn sysctls'
+          include_examples 's3nd'
           it { is_expected.not_to contain_class('dhcp') }
           it { is_expected.to contain_class('dhcp::disable') }
           it { is_expected.to contain_class('ccs_daq') }
           it { is_expected.to contain_class('daq::daqsdk') }
+          it { is_expected.to contain_host('sdfembs3.sdf.slac.stanford.edu').with_ip('172.24.7.249') }
 
           it do
             is_expected.to contain_file('/home/ccs-ipa/bin/fhe').with(

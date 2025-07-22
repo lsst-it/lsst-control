@@ -48,12 +48,12 @@ nm::connections:
 nfs::server_enabled: true
 nfs::nfs_v4_export_root_clients: >-
   %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
-  auxtel-mcm.tu.lsst.org(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  auxtel-dc01.tu.lsst.org(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
 nfs::nfs_exports_global:
   /data:
     clients: >-
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
-      auxtel-mcm.tu.lsst.org(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      auxtel-dc01.tu.lsst.org(ro,nohide,insecure,no_subtree_check,async,root_squash)
 
 nfs::client_enabled: true
 nfs::client_mounts:

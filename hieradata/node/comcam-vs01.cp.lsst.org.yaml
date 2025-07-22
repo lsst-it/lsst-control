@@ -87,7 +87,7 @@ nm::connections:
 nfs::client_enabled: true
 nfs::nfs_v4_client: true
 nfs::client_mounts:
-  /net/ccs-data:
-    share: "/ccs-data"
+  /data:
+    share: "data"
     server: "comcam-fp01.cp.lsst.org"
     atboot: true

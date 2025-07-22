@@ -43,3 +43,10 @@ nm::connections:
       ipv6:
         method: "disabled"
       proxy: {}
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /data:
+    share: "data"
+    server: "auxtel-fp01.tu.lsst.org"
+    atboot: true

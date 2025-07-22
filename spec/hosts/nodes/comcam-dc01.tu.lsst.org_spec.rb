@@ -58,6 +58,14 @@ describe 'comcam-dc01.tu.lsst.org', :sitepp do
         it_behaves_like 'nm bridge interface'
         it { expect(nm_keyfile['ipv4']['ignore-auto-dns']).to be true }
       end
+
+      it do
+        is_expected.to contain_nfs__client__mount('/data').with(
+          share: 'data',
+          server: 'comcam-fp01.tu.lsst.org',
+          atboot: true
+        )
+      end
     end # on os
   end # on_supported_os
 end

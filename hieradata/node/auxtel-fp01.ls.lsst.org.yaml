@@ -7,7 +7,7 @@ nfs::nfs_v4_export_root_clients: >-
   auxtel-fp01.ls.lsst.org(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
   auxtel-mcm.ls.lsst.org(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
 nfs::nfs_exports_global:
-  /ccs-data:
+  /data:
     clients: >-
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
       auxtel-dc01.ls.lsst.org(ro,nohide,insecure,no_subtree_check,async,root_squash)
@@ -16,8 +16,8 @@ nfs::nfs_exports_global:
 
 nfs::client_enabled: true
 nfs::client_mounts:
-  /net/self/ccs-data:
-    share: "ccs-data"
+  /net/self/data:
+    share: "data"
     server: "%{facts.networking.fqdn}"
     atboot: true
 

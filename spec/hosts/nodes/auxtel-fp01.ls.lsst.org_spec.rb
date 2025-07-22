@@ -131,11 +131,11 @@ describe 'auxtel-fp01.ls.lsst.org', :sitepp do
       it { is_expected.to contain_systemd__unit_file('ats-ih.service').with_content(%r{^User=ccs-ipa}) }
 
       it { is_expected.to contain_class('nfs::server').with_nfs_v4(true) }
-      it { is_expected.to contain_nfs__server__export('/ccs-data') }
+      it { is_expected.to contain_nfs__server__export('/data') }
 
       it do
-        is_expected.to contain_nfs__client__mount('/net/self/ccs-data').with(
-          share: 'ccs-data',
+        is_expected.to contain_nfs__client__mount('/net/self/data').with(
+          share: 'data',
           server: 'auxtel-fp01.ls.lsst.org',
           atboot: true
         )

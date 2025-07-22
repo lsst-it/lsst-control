@@ -109,7 +109,15 @@ describe 'comcam-fp01.cp.lsst.org', :sitepp do
 
       it { is_expected.to contain_host('sdfembs3.sdf.slac.stanford.edu').with_ip('172.24.7.249') }
       it { is_expected.to contain_class('nfs::server').with_nfs_v4(true) }
-      it { is_expected.to contain_nfs__server__export('/ccs-data') }
+      it { is_expected.to contain_nfs__server__export('/data') }
+
+      it do
+        is_expected.to contain_nfs__client__mount('/net/self/data').with(
+          share: 'data',
+          server: 'comcam-fp01.cp.lsst.org',
+          atboot: true
+        )
+      end
     end # on os
   end # on_supported_os
 end

@@ -69,6 +69,14 @@ describe 'comcam-dc01.cp.lsst.org', :sitepp do
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm bridge interface'
       end
+
+      it do
+        is_expected.to contain_nfs__client__mount('/data').with(
+          share: 'data',
+          server: 'comcam-fp01.cp.lsst.org',
+          atboot: true
+        )
+      end
     end
   end # on os
 end # on_supported_os

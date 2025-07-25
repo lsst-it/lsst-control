@@ -75,3 +75,5 @@ ccs_sal::lfa:
   bucket: "rubinobs-lfa-ls"
 
 ccs_software::influx_url: "https://ccs-influxdb.ls.lsst.org:443"
+
+s3nd_default_image_ls: "ghcr.io/lsst-dm/s3nd:1.7.0"

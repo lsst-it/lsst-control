@@ -31,7 +31,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3nd__instance('ls-lsstcam').with(
-          image: 'ghcr.io/lsst-dm/s3nd:1.7.0',
+          image: 'ghcr.io/lsst-dm/s3nd:1.7.1',
           volumes: [
             '/data:/data',
             '/home:/home',
@@ -46,7 +46,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3nd__instance('s3dfrgw-lsstcam').with(
-          image: 'ghcr.io/lsst-dm/s3nd:1.7.0',
+          image: 'ghcr.io/lsst-dm/s3nd:1.7.1',
           volumes: [
             '/data:/data',
             '/home:/home',
@@ -67,7 +67,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3nd__instance('s3dfrgw-lsstcam-test').with(
-          image: 'ghcr.io/lsst-dm/s3nd:1.7.0',
+          image: 'ghcr.io/lsst-dm/s3nd:1.7.1',
           volumes: [
             '/data:/data',
             '/home:/home',

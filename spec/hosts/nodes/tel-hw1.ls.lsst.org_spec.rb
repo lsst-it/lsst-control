@@ -84,6 +84,14 @@ describe 'tel-hw1.ls.lsst.org', :sitepp do
           atboot: true
         )
       end
+
+      it do
+        is_expected.to contain_nfs__client__mount('/project').with(
+          share: 'project',
+          server: 'nfs-project.ls.lsst.org',
+          atboot: true
+        )
+      end
     end # on os
   end # on_supported_os
 end # role

@@ -16,11 +16,11 @@ postfix::relayhost: "[mail.lsst.org]:submission"
 s3nd::instances:
   tu-comcam:
     image: "%{alias('s3nd_default_image_tu')}"
+    port: 15571
     env:
       S3ND_ENDPOINT_URL: "https://s3.tu.lsst.org"
-      S3ND_PORT: 15571
   s3dfrgw-comcam:
     image: "%{alias('s3nd_default_image_tu')}"
+    port: 15581
     env:
       S3ND_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
-      S3ND_PORT: 15581

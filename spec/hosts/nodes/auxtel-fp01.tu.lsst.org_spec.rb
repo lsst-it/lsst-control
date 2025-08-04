@@ -33,13 +33,13 @@ describe 'auxtel-fp01.tu.lsst.org', :sitepp do
       it do
         is_expected.to contain_s3nd__instance('tu-latiss').with(
           image: 'ghcr.io/lsst-dm/s3nd:1.8.0',
+          port: 15_571,
           volumes: [
             '/data:/data',
             '/home:/home',
           ],
           env: {
             'S3ND_ENDPOINT_URL' => 'https://s3.tu.lsst.org',
-            'S3ND_PORT' => 15_571,
           }
         )
       end
@@ -47,13 +47,13 @@ describe 'auxtel-fp01.tu.lsst.org', :sitepp do
       it do
         is_expected.to contain_s3nd__instance('s3dfrgw-latiss').with(
           image: 'ghcr.io/lsst-dm/s3nd:1.8.0',
+          port: 15_581,
           volumes: [
             '/data:/data',
             '/home:/home',
           ],
           env: {
             'S3ND_ENDPOINT_URL' => 'https://s3dfrgw.slac.stanford.edu',
-            'S3ND_PORT' => 15_581,
           }
         )
       end

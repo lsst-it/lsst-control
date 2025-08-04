@@ -1,12 +1,12 @@
 ---
 s3nd::instances:
   cp-latiss:
-    image: "%{alias('s3nd_default_image')}"
+    image: "%{alias('s3nd_default_image_cp')}"
     env:
       S3ND_ENDPOINT_URL: "https://s3.cp.lsst.org"
       S3ND_PORT: 15571
   sdfembs3-latiss:
-    image: "%{alias('s3nd_default_image')}"
+    image: "%{alias('s3nd_default_image_cp')}"
     env:
       S3ND_ENDPOINT_URL: "https://sdfembs3.sdf.slac.stanford.edu"
       S3ND_PORT: 15581

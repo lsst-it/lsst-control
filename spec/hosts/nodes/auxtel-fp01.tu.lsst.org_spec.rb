@@ -32,7 +32,7 @@ describe 'auxtel-fp01.tu.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3nd__instance('tu-latiss').with(
-          image: 'ghcr.io/lsst-dm/s3nd:1.6.0',
+          image: 'ghcr.io/lsst-dm/s3nd:1.8.0',
           volumes: [
             '/data:/data',
             '/home:/home',
@@ -46,7 +46,7 @@ describe 'auxtel-fp01.tu.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3nd__instance('s3dfrgw-latiss').with(
-          image: 'ghcr.io/lsst-dm/s3nd:1.6.0',
+          image: 'ghcr.io/lsst-dm/s3nd:1.8.0',
           volumes: [
             '/data:/data',
             '/home:/home',

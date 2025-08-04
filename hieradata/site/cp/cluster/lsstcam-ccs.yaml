@@ -15,7 +15,7 @@ profile::ccs::monitoring::mrtg: true
 
 s3nd::instances:
   cp-lsstcam:
-    image: "%{alias('s3nd_default_image')}"
+    image: "%{alias('s3nd_default_image_cp')}"
     env:
       S3ND_ENDPOINT_URL: "https://s3.cp.lsst.org"
       S3ND_PORT: 15571
@@ -26,7 +26,7 @@ s3nd::instances:
       S3ND_UPLOAD_TIMEOUT: "3s"
       S3ND_UPLOAD_TRIES: "5"
   sdfembs3-lsstcam:
-    image: "%{alias('s3nd_default_image')}"
+    image: "%{alias('s3nd_default_image_cp')}"
     env: &sdfembss3nd
       S3ND_ENDPOINT_URL: "https://sdfembs3.sdf.slac.stanford.edu"
       S3ND_PORT: 15581
@@ -38,7 +38,7 @@ s3nd::instances:
       S3ND_UPLOAD_TIMEOUT: "4s"
       S3ND_UPLOAD_TRIES: "3"
   sdfembs3-lsstcam-test:
-    image: "%{alias('s3nd_default_image')}"
+    image: "%{alias('s3nd_default_image_cp')}"
     env:
       <<: *sdfembss3nd
       S3ND_PORT: 15591

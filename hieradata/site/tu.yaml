@@ -40,3 +40,5 @@ ccs_sal::lfa:
   bucket: "rubinobs-lfa-tuc"
 
 ccs_software::influx_url: "https://ccs-influxdb.tu.lsst.org:443"
+
+s3nd_default_image_tu: "%{alias('s3nd_default_image')}"

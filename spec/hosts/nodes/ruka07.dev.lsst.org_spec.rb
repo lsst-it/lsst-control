@@ -42,6 +42,15 @@ describe 'ruka07.dev.lsst.org', :sitepp do
       end
 
       it do
+        expect(catalogue.resource('class', 'nm')[:conf]).to include(
+          'device' => {
+            'keep-configuration' => 'no',
+            'allowed-connections' => 'except:origin:nm-initrd-generator',
+          }
+        )
+      end
+
+      it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
       end
 

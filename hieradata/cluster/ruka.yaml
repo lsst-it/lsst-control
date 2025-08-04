@@ -7,6 +7,10 @@ clustershell::groupmembers:
       - "ruka[07-08]"
 profile::core::k8snode::enable_dhcp: true
 tuned::active_profile: "latency-performance"
+nm::conf:
+  device:
+    keep-configuration: "no"
+    allowed-connections: "except:origin:nm-initrd-generator"
 nm::connections:
   br2101:
     content:

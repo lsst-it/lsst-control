@@ -66,6 +66,15 @@ describe 'ruka01.dev.lsst.org', :sitepp do
         )
       end
 
+      it do
+        expect(catalogue.resource('class', 'nm')[:conf]).to include(
+          'device' => {
+            'keep-configuration' => 'no',
+            'allowed-connections' => 'except:origin:nm-initrd-generator',
+          }
+        )
+      end
+
       it { is_expected.to contain_class('cni::plugins::dhcp::service') }
 
       include_context 'with nm interface'

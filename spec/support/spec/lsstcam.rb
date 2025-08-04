@@ -11,7 +11,6 @@ shared_examples 'lsstcam-dc.cp' do
       ],
       env: {
         'S3ND_ENDPOINT_URL' => 'https://s3.cp.lsst.org',
-        'S3ND_HOST' => '',
         'S3ND_QUEUE_TIMEOUT' => '15s',
         'S3ND_UPLOAD_MAX_PARALLEL' => '27',
         'S3ND_UPLOAD_PARTSIZE' => '100Mi',
@@ -31,7 +30,6 @@ shared_examples 'lsstcam-dc.cp' do
       ],
       env: {
         'S3ND_ENDPOINT_URL' => 'https://sdfembs3.sdf.slac.stanford.edu',
-        'S3ND_HOST' => '',
         'S3ND_QUEUE_TIMEOUT' => '15s',
         'S3ND_UPLOAD_BWLIMIT' => '4Gi',
         'S3ND_UPLOAD_MAX_PARALLEL' => '27',
@@ -52,7 +50,6 @@ shared_examples 'lsstcam-dc.cp' do
       ],
       env: {
         'S3ND_ENDPOINT_URL' => 'https://sdfembs3.sdf.slac.stanford.edu',
-        'S3ND_HOST' => '',
         'S3ND_QUEUE_TIMEOUT' => '15s',
         'S3ND_UPLOAD_BWLIMIT' => '4Gi',
         'S3ND_UPLOAD_MAX_PARALLEL' => '27',

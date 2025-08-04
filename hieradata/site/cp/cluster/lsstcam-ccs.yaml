@@ -19,7 +19,6 @@ s3nd::instances:
     port: 15571
     env:
       S3ND_ENDPOINT_URL: "https://s3.cp.lsst.org"
-      S3ND_HOST: ""  # allow connections from other nodes for testing
       S3ND_QUEUE_TIMEOUT: "15s"
       S3ND_UPLOAD_MAX_PARALLEL: "27"
       S3ND_UPLOAD_PARTSIZE: "100Mi"
@@ -30,7 +29,6 @@ s3nd::instances:
     port: 15581
     env: &sdfembss3nd
       S3ND_ENDPOINT_URL: "https://sdfembs3.sdf.slac.stanford.edu"
-      S3ND_HOST: ""  # allow connections from other nodes for testing
       S3ND_QUEUE_TIMEOUT: "15s"
       S3ND_UPLOAD_BWLIMIT: "4Gi"
       S3ND_UPLOAD_MAX_PARALLEL: "27"

@@ -16,15 +16,15 @@ ccs_monit::alert:
 s3nd::instances:
   ls-lsstcam:
     image: "%{alias('s3nd_default_image_ls')}"
+    port: 15571
     env:
       S3ND_ENDPOINT_URL: "https://s3.ls.lsst.org"
-      S3ND_PORT: 15571
       S3ND_HOST: ""  # allow connections from other nodes for testing
   s3dfrgw-lsstcam:
     image: "%{alias('s3nd_default_image_ls')}"
+    port: 15581
     env: &s3dfrgw
       S3ND_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
-      S3ND_PORT: 15581
       S3ND_HOST: ""  # allow connections from other nodes for testing
       S3ND_QUEUE_TIMEOUT: "15s"
       S3ND_UPLOAD_BWLIMIT: "4Gi"
@@ -34,6 +34,6 @@ s3nd::instances:
       S3ND_UPLOAD_TRIES: "3"
   s3dfrgw-lsstcam-test:
     image: "%{alias('s3nd_default_image_ls')}"
+    port: 15591
     env:
       <<: *s3dfrgw
-      S3ND_PORT: 15591

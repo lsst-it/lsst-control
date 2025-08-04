@@ -4,13 +4,13 @@ shared_examples 'lsstcam-dc.cp' do
   it do
     is_expected.to contain_s3nd__instance('cp-lsstcam').with(
       image: 'ghcr.io/lsst-dm/s3nd:1.8.0',
+      port: 15_571,
       volumes: [
         '/data:/data',
         '/home:/home',
       ],
       env: {
         'S3ND_ENDPOINT_URL' => 'https://s3.cp.lsst.org',
-        'S3ND_PORT' => 15_571,
         'S3ND_HOST' => '',
         'S3ND_QUEUE_TIMEOUT' => '15s',
         'S3ND_UPLOAD_MAX_PARALLEL' => '27',
@@ -24,13 +24,13 @@ shared_examples 'lsstcam-dc.cp' do
   it do
     is_expected.to contain_s3nd__instance('sdfembs3-lsstcam').with(
       image: 'ghcr.io/lsst-dm/s3nd:1.8.0',
+      port: 15_581,
       volumes: [
         '/data:/data',
         '/home:/home',
       ],
       env: {
         'S3ND_ENDPOINT_URL' => 'https://sdfembs3.sdf.slac.stanford.edu',
-        'S3ND_PORT' => 15_581,
         'S3ND_HOST' => '',
         'S3ND_QUEUE_TIMEOUT' => '15s',
         'S3ND_UPLOAD_BWLIMIT' => '4Gi',
@@ -45,13 +45,13 @@ shared_examples 'lsstcam-dc.cp' do
   it do
     is_expected.to contain_s3nd__instance('sdfembs3-lsstcam-test').with(
       image: 'ghcr.io/lsst-dm/s3nd:1.8.0',
+      port: 15_591,
       volumes: [
         '/data:/data',
         '/home:/home',
       ],
       env: {
         'S3ND_ENDPOINT_URL' => 'https://sdfembs3.sdf.slac.stanford.edu',
-        'S3ND_PORT' => 15_591,
         'S3ND_HOST' => '',
         'S3ND_QUEUE_TIMEOUT' => '15s',
         'S3ND_UPLOAD_BWLIMIT' => '4Gi',

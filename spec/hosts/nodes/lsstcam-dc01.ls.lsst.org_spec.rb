@@ -39,7 +39,6 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
           ],
           env: {
             'S3ND_ENDPOINT_URL' => 'https://s3.ls.lsst.org',
-            'S3ND_HOST' => '',
           }
         )
       end
@@ -54,7 +53,6 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
           ],
           env: {
             'S3ND_ENDPOINT_URL' => 'https://s3dfrgw.slac.stanford.edu',
-            'S3ND_HOST' => '',
             'S3ND_QUEUE_TIMEOUT' => '15s',
             'S3ND_UPLOAD_BWLIMIT' => '4Gi',
             'S3ND_UPLOAD_MAX_PARALLEL' => '27',
@@ -75,7 +73,6 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
           ],
           env: {
             'S3ND_ENDPOINT_URL' => 'https://s3dfrgw.slac.stanford.edu',
-            'S3ND_HOST' => '',
             'S3ND_QUEUE_TIMEOUT' => '15s',
             'S3ND_UPLOAD_BWLIMIT' => '4Gi',
             'S3ND_UPLOAD_MAX_PARALLEL' => '27',

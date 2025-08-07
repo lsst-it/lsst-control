@@ -60,7 +60,7 @@ describe 'foreman.dev.lsst.org', :sitepp do
         is_expected.to contain_dhcp__pool('IT-Dev').with(
           network: '139.229.134.0',
           mask: '255.255.255.0',
-          range: ['139.229.134.120 139.229.134.149'],
+          range: ['139.229.134.120 139.229.134.179'],
           gateway: '139.229.134.254'
         )
       end

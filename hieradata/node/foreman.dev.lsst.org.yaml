@@ -30,7 +30,7 @@ dhcp::pools:
     mask: "255.255.255.0"
     gateway: "139.229.134.254"
     range:
-      - "139.229.134.120 139.229.134.149"
+      - "139.229.134.120 139.229.134.179"
     search_domains: "%{alias('dhcp::dnsdomain')}"
   BDC-Ayekan:
     network: "139.229.144.0"

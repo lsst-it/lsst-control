@@ -1,0 +1,29 @@
+---
+nm::connections:
+  ens4f0:
+    content:
+      connection:
+        id: "ens4f0"
+        uuid: "8c1155c9-8543-3a63-a80e-6114c99cfb7d"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens4f0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  eno16:
+    content:
+      connection:
+        id: "eno16"
+        uuid: "c25191e8-83c9-3bee-a945-e8c96c87d9ea"
+        type: "ethernet"
+        interface-name: "eno16"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}

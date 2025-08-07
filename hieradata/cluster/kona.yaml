@@ -1,0 +1,5 @@
+---
+clustershell::groupmembers:
+  kona: {group: "kona", member: "kona[01-04]"}
+profile::core::k8snode::enable_dhcp: true
+tuned::active_profile: "latency-performance"

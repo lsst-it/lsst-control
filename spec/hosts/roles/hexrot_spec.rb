@@ -71,11 +71,11 @@ describe "#{role} role" do
             },
             'ts-guitool' => {
               'channel' => 'lsstts',
-              'version' => '0.2.6',
+              'version' => '0.3.0',
             },
             'ts-hexgui' => {
               'channel' => 'lsstts',
-              'version' => '0.4.2',
+              'version' => '0.5.0',
             },
             'ts-hexrotcomm' => {
               'channel' => 'lsstts',
@@ -91,7 +91,7 @@ describe "#{role} role" do
             },
             'ts-mtdomecom' => {
               'channel' => 'lsstts',
-              'version' => '0.2.13',
+              'version' => '0.2.15',
             },
             'ts-mtdomegui' => {
               'channel' => 'lsstts',

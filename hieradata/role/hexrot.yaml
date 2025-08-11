@@ -36,7 +36,7 @@ accounts::group_list:
     gid: 70014
     forcelocal: true
 
-profile::ts::hexrot::ts_config_mttcs_version: "v0.17.1"
+profile::ts::hexrot::ts_config_mttcs_version: "v0.17.4"
 
 anaconda::anaconda_version: "Anaconda3-2023.07-2"
 anaconda::python_env_name: "py312"

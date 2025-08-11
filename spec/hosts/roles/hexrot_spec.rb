@@ -47,7 +47,7 @@ describe "#{role} role" do
               ensure: 'present',
               provider: 'git',
               source: 'https://github.com/lsst-ts/ts_config_mttcs.git',
-              revision: 'v0.17.1',
+              revision: 'v0.17.4',
               keep_local_changes: 'false'
             )
           end

@@ -30,15 +30,8 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           include_examples('common', os_facts:, site:)
+          it { is_expected.to contain_package('awscli2') }
           it { is_expected.to contain_package('libgphoto2') }
-
-          it do
-            is_expected.to contain_nfs__client__mount('/dimm').with(
-              share: 'dimm',
-              server: 'nfs-dimm.cp.lsst.org',
-              atboot: true
-            )
-          end
 
           it do
             is_expected.to contain_nfs__client__mount('/project').with(

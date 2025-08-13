@@ -50,8 +50,9 @@ describe 'ruka01.dev.lsst.org', :sitepp do
             'ruka' => {
               'group' => 'ruka',
               'member' => [
-                'ruka[01-05]',
-                'ruka[07-08]',
+                'ruka[01-02]',
+                'ruka[04-05]',
+                'ruka[07-10]',
               ],
             },
           }

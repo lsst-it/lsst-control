@@ -3,8 +3,9 @@ clustershell::groupmembers:
   ruka:
     group: "ruka"
     member:
-      - "ruka[01-05]"
-      - "ruka[07-08]"
+      - "ruka[01-02]"
+      - "ruka[04-05]"
+      - "ruka[07-10]"
 profile::core::k8snode::enable_dhcp: true
 tuned::active_profile: "latency-performance"
 nm::conf:

@@ -76,4 +76,4 @@ ccs_sal::lfa:
 
 ccs_software::influx_url: "https://ccs-influxdb.ls.lsst.org:443"
 
-s3nd_default_image_ls: "ghcr.io/lsst-dm/s3nd:1.9.0"
+s3nd_default_image_ls: "ghcr.io/lsst-dm/deliverator:1.9.1"

@@ -202,8 +202,9 @@ class profile::ccs::tomcat (
     ensure  => present,
     members => {
       'localhost:8080' => {
-        server => 'localhost',
-        port   => 8080,
+        server    => 'localhost',
+        port      => 8080,
+        max_fails => 0,
       },
     },
   }

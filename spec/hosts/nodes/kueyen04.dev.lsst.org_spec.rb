@@ -53,7 +53,7 @@ describe 'kueyen04.dev.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_class('rke').with(
-          version: '1.7.7'
+          version: '1.7.8'
         )
       end
 

@@ -3,7 +3,7 @@
 shared_examples 'lsstcam-dc.cp' do
   it do
     is_expected.to contain_s3nd__instance('cp-lsstcam').with(
-      image: 'ghcr.io/lsst-dm/deliverator:1.11.1',
+      image: 'ghcr.io/lsst-dm/deliverator:2.0.1',
       port: 15_571,
       volumes: [
         '/data:/data',
@@ -22,7 +22,7 @@ shared_examples 'lsstcam-dc.cp' do
 
   it do
     is_expected.to contain_s3nd__instance('sdfembs3-lsstcam').with(
-      image: 'ghcr.io/lsst-dm/deliverator:1.11.1',
+      image: 'ghcr.io/lsst-dm/deliverator:2.0.1',
       port: 15_581,
       volumes: [
         '/data:/data',
@@ -42,7 +42,7 @@ shared_examples 'lsstcam-dc.cp' do
 
   it do
     is_expected.to contain_s3nd__instance('sdfembs3-lsstcam-test').with(
-      image: 'ghcr.io/lsst-dm/deliverator:1.11.1',
+      image: 'ghcr.io/lsst-dm/deliverator:2.0.1',
       port: 15_591,
       volumes: [
         '/data:/data',

@@ -574,7 +574,7 @@ restic::bucket: "rubin-bm-backups/%{facts.networking.fqdn}"
 restic::enable_backup: true
 restic::host: "s3.us-east-1.amazonaws.com"
 
-s3nd_default_image: "ghcr.io/lsst-dm/deliverator:1.11.0"
+s3nd_default_image: "ghcr.io/lsst-dm/deliverator:1.11.1"
 s3nd::volumes:
   - "/data:/data"
   - "/home:/home"

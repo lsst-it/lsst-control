@@ -29,7 +29,7 @@ describe 'comcam-fp01.tu.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3nd__instance('tu-comcam').with(
-          image: 'ghcr.io/lsst-dm/deliverator:2.0.1',
+          image: 'ghcr.io/lsst-dm/deliverator:2.1.0',
           port: 15_571,
           volumes: [
             '/data:/data',
@@ -43,7 +43,7 @@ describe 'comcam-fp01.tu.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3nd__instance('s3dfrgw-comcam').with(
-          image: 'ghcr.io/lsst-dm/deliverator:2.0.1',
+          image: 'ghcr.io/lsst-dm/deliverator:2.1.0',
           port: 15_581,
           volumes: [
             '/data:/data',

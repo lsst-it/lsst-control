@@ -362,6 +362,24 @@ describe 'foreman.cp.lsst.org', :sitepp do
           gateway: '10.18.5.254'
         )
       end
+
+      it do
+        is_expected.to contain_dhcp__pool('MERKEN-FQDN').with(
+          network: '139.229.161.64',
+          mask: '255.255.255.240',
+          range: ['139.229.161.65 139.229.161.75'],
+          gateway: '139.229.161.78'
+        )
+      end
+
+      it do
+        is_expected.to contain_dhcp__pool('MERKEN-METALLB').with(
+          network: '139.229.161.80',
+          mask: '255.255.255.224',
+          range: ['139.229.161.81 139.229.161.107'],
+          gateway: '139.229.161.110'
+        )
+      end
     end # on os
   end # on_supported_os
 end # role

@@ -365,19 +365,19 @@ describe 'foreman.cp.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_dhcp__pool('MERKEN-FQDN').with(
-          network: '139.229.161.64',
+          network: '139.229.161.96',
           mask: '255.255.255.240',
-          range: ['139.229.161.65 139.229.161.75'],
-          gateway: '139.229.161.78'
+          range: ['139.229.161.97 139.229.161.107'],
+          gateway: '139.229.161.110'
         )
       end
 
       it do
         is_expected.to contain_dhcp__pool('MERKEN-METALLB').with(
-          network: '139.229.161.80',
+          network: '139.229.161.64',
           mask: '255.255.255.224',
-          range: ['139.229.161.81 139.229.161.107'],
-          gateway: '139.229.161.110'
+          range: ['139.229.161.65 139.229.161.91'],
+          gateway: '139.229.161.94'
         )
       end
     end # on os

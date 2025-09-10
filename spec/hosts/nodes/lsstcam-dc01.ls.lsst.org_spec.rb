@@ -31,7 +31,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3nd__instance('ls-lsstcam').with(
-          image: 'ghcr.io/lsst-dm/deliverator:2.3.0',
+          image: 'ghcr.io/lsst-dm/deliverator:2.4.0',
           port: 15_571,
           volumes: [
             '/data:/data',
@@ -45,7 +45,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3nd__instance('s3dfrgw-lsstcam').with(
-          image: 'ghcr.io/lsst-dm/deliverator:2.3.0',
+          image: 'ghcr.io/lsst-dm/deliverator:2.4.0',
           port: 15_581,
           volumes: [
             '/data:/data',
@@ -65,7 +65,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3nd__instance('s3dfrgw-lsstcam-test').with(
-          image: 'ghcr.io/lsst-dm/deliverator:2.3.0',
+          image: 'ghcr.io/lsst-dm/deliverator:2.4.0',
           port: 15_591,
           volumes: [
             '/data:/data',

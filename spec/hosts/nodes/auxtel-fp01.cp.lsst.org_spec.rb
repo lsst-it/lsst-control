@@ -33,7 +33,7 @@ describe 'auxtel-fp01.cp.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3nd__instance('cp-latiss').with(
-          image: 'ghcr.io/lsst-dm/deliverator:2.2.0',
+          image: 'ghcr.io/lsst-dm/deliverator:2.3.0',
           port: 15_571,
           volumes: [
             '/data:/data',
@@ -47,7 +47,7 @@ describe 'auxtel-fp01.cp.lsst.org', :sitepp do
 
       it do
         is_expected.to contain_s3nd__instance('sdfembs3-latiss').with(
-          image: 'ghcr.io/lsst-dm/deliverator:2.2.0',
+          image: 'ghcr.io/lsst-dm/deliverator:2.3.0',
           port: 15_581,
           volumes: [
             '/data:/data',

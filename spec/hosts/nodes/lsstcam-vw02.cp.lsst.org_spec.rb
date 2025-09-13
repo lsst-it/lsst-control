@@ -31,8 +31,8 @@ describe 'lsstcam-vw02.cp.lsst.org', :sitepp do
       include_context 'with nm interface'
       it { is_expected.to have_nm__connection_resource_count(1) }
 
-      context 'with enp4s0' do
-        let(:interface) { 'enp4s0' }
+      context 'with enp3s0' do
+        let(:interface) { 'enp3s0' }
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'

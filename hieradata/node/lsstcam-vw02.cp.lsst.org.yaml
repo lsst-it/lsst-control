@@ -2,13 +2,13 @@
 powertop::ensure: "absent"
 
 nm::connections:
-  enp4s0:  #fqdn
+  enp3s0:  #fqdn
     content:
       connection:
-        id: "enp4s0"
-        uuid: "5ac1f3f9-8e9f-46c1-b30f-a887c5ab4432"
+        id: "enp3s0"
+        uuid: "4756d211-f630-3344-b624-60196f85ed62"
         type: "ethernet"
-        interface-name: "enp4s0"
+        interface-name: "enp3s0"
       ethernet: {}
       ipv4:
         address1: "139.229.175.92/26,139.229.175.126"

@@ -107,7 +107,7 @@ mod 'saz/sudo', '9.0.2'
 mod 'saz/timezone', '7.0.0'
 mod 'simp/auditd', '8.14.5'
 mod 'simp/dconf', '0.6.0'
-mod 'simp/mate', '1.6.0'
+mod 'simp/mate', git: 'https://github.com/lsst-it/pupmod-simp-mate', ref: 'cfc42b0' # Official version has had no release since 2023
 mod 'simp/polkit', '6.9.0'
 mod 'simp/simpkv', '0.13.0'
 mod 'simp/simplib', '4.14.0'

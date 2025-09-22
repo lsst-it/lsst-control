@@ -19,7 +19,7 @@ describe 'antu01.ls.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'rke',
+          role: 'rke2server',
           site: 'ls',
           cluster: 'antu',
         }
@@ -30,7 +30,12 @@ describe 'antu01.ls.lsst.org', :sitepp do
       include_examples 'baremetal'
       include_context 'with nm interface'
       include_examples 'ceph cluster'
-      include_examples 'docker', docker_version: '25.0.3'
+
+      it do
+        expect(catalogue.resource('class', 'rke2')[:config]).to include(
+          'node-label' => ['role=storage-node']
+        )
+      end
 
       it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
@@ -48,8 +53,10 @@ describe 'antu01.ls.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_class('rke').with(
-          version: '1.8.0'
+        is_expected.to contain_class('rke2').with(
+          node_type: 'server',
+          release_series: '1.32',
+          version: '1.32.2~rke2r1'
         )
       end
 

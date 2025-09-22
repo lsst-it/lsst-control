@@ -4,7 +4,7 @@ nm::connections:
     content:
       connection:
         id: "enp1s0"
-        uuid: "5fd87e1-15f2-4a15-b290-ffbe705e86ae"
+        uuid: "5de223e4-a29e-35e2-97fa-9b01275ad3ef"
         type: "ethernet"
         interface-name: "enp1s0"
       ethernet: {}

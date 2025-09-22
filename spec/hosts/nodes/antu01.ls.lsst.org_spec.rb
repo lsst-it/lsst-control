@@ -54,6 +54,15 @@ describe 'antu01.ls.lsst.org', :sitepp do
         )
       end
 
+      it do
+        expect(catalogue.resource('class', 'nm')[:conf]).to include(
+          'device' => {
+            'keep-configuration' => 'no',
+            'allowed-connections' => 'except:origin:nm-initrd-generator',
+          }
+        )
+      end
+
       it { is_expected.to have_nm__connection_resource_count(5) }
 
       %w[

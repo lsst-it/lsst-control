@@ -1,0 +1,74 @@
+---
+name: "DHCP Pool Validation"
+permissions:
+  contents: "read"
+
+"on":
+  pull_request:
+    paths:
+      - "hieradata/node/**/*.yaml"
+      - "hieradata/node/**/*.yml"
+      - "utils/dhcp-check.py"
+  push:
+    branches:
+      - "production"
+    paths:
+      - "hieradata/node/**/*.yaml"
+      - "hieradata/node/**/*.yml"
+      - "utils/dhcp-check.py"
+
+jobs:
+  validate-dhcp-pools:
+    runs-on: "ubuntu-latest"
+    name: "Validate DHCP Pool Configurations"
+
+    steps:
+      - name: "Checkout Repository"
+        uses: "actions/checkout@v4"
+
+      - name: "Set up Python"
+        uses: "actions/setup-python@v4"
+        with:
+          python-version: "3.11"
+
+      - name: "Install Python Dependencies"
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f utils/requirements-dhcp.txt ]; then
+            pip install -r utils/requirements-dhcp.txt
+          else
+            pip install PyYAML
+          fi
+
+      - name: "Run DHCP Pool Validation"
+        run: |
+          python utils/dhcp-check.py
+        env:
+          PYTHONPATH: "${{ github.workspace }}"
+
+      - name: "Check for DHCP Pool Changes"
+        if: "github.event_name == 'pull_request'"
+        run: |
+          echo "## DHCP Pool Validation Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Get list of changed DHCP-related files
+          CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}..HEAD | grep -E 'hieradata/node/.*\.ya?ml$' | head -10)
+
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "✅ No DHCP configuration files were modified in this PR." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "📝 **Modified DHCP Configuration Files:**" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "$CHANGED_FILES" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "All files have been validated and passed DHCP pool checks ✅" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: "Validation Success"
+        run: |
+          echo "🎉 All DHCP pool configurations are valid!"
+          echo "✅ Network configurations meet ISC DHCPD requirements"
+          echo "✅ No subnet/mask conflicts detected"
+          echo "✅ Gateway and range validations passed"

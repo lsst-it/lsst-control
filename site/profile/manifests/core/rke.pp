@@ -37,10 +37,10 @@ class profile::core::rke (
   }
 
   $rke_checksum = $version ? {
-    '1.6.5'      => '80694373496abd5033cb97c2512f2c36c933d301179881e1d28bf7b78efab3e7',
     '1.7.6'      => 'a6ef89ac3042e066b0596cb38d5bff0192b84a7d4b6ed5b14cddc4bcfd5c9cd9',
     '1.7.7'      => '4317d54ed5251d71c82b631083907c526dc74808941deebc392369108b7a4b10',
     '1.7.8'      => '9494448f684ab0f3f79c62aa9736cd718743ad94e78a291f49eafec8bc71abde',
+    '1.8.0'      => '8815da0452ae14a45566b534c48a2af6286ee73f800208ba6ec59188cb9a8d25',
     default  => undef,
   }
   unless ($rke_checksum) {

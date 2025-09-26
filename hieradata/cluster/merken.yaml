@@ -1,0 +1,127 @@
+---
+clustershell::groupmembers:
+  merken: {group: "merken", member: "merken[01-04]"}
+tuned::active_profile: "latency-performance"
+nm::conf:
+  device:
+    keep-configuration: "no"
+    allowed-connections: "except:origin:nm-initrd-generator"
+
+nm::connections:
+  enp65s0f0:
+    content:
+      connection:
+        id: "enp65s0f0"
+        uuid: "8e402e97-89f5-40e0-b0d1-52bbe0ea1496"
+        type: "ethernet"
+        interface-name: "enp65s0f0"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp65s0f1:
+    content:
+      connection:
+        id: "enp65s0f1"
+        uuid: "bc796d5f-c928-4265-8fe3-7d1bf34c3015"
+        type: "ethernet"
+        interface-name: "enp65s0f1"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  bond0:
+    content:
+      connection:
+        id: "bond0"
+        uuid: "b9c03f5b-adab-4857-8f73-0f7599656a62"
+        type: "bond"
+        interface-name: "bond0"
+      ethernet:
+        cloned-mac-address: "%{facts.networking.interfaces.enp65s0f0.mac}"
+      bond:
+        mode: "802.3ad"
+        miimon: "100"
+        xmit_hash_policy: "layer3+4"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  bond0.1131:
+    content:
+      connection:
+        id: "bond0.1131"
+        uuid: "4f98595d-f363-40f1-b4c1-5a87f63d0f4a"
+        type: "vlan"
+        interface-name: "bond0.1131"
+        master: "br1131"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1131"
+        parent: "bond0"
+      bridge-port: {}
+  bond0.1130:
+    content:
+      connection:
+        id: "bond0.1130"
+        uuid: "16f1ff81-ea90-4d99-a4db-30f2acd1c810"
+        type: "vlan"
+        interface-name: "bond0.1130"
+        master: "br1130"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1130"
+        parent: "bond0"
+      bridge-port: {}
+  br1131:
+    content:
+      connection:
+        id: "br1131"
+        uuid: "b5c7a6ef-b449-4729-b944-ec45c40b40cc"
+        type: "bridge"
+        interface-name: "br1131"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  br1130:
+    content:
+      connection:
+        id: "br1130"
+        uuid: "975148dc-d5d3-46d9-97f2-66a41041bbd5"
+        type: "bridge"
+        interface-name: "br1130"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp12s0f4u1u2c2:
+    content:
+      connection:
+        id: "enp12s0f4u1u2c2"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp12s0f4u1u2c2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"

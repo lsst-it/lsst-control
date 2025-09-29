@@ -110,7 +110,7 @@ mod 'simp/dconf', '1.0.0'
 mod 'simp/mate', git: 'https://github.com/lsst-it/pupmod-simp-mate', ref: 'cfc42b0' # Official version has had no release since 2023
 mod 'simp/polkit', '6.9.0'
 mod 'simp/simpkv', '0.13.0'
-mod 'simp/simplib', '4.14.0'
+mod 'simp/simplib', '4.14.2'
 mod 'stm/debconf', '6.2.0'
 mod 'syseleven/restic', '2.8.1'
 mod 'theforeman/dhcp', '9.3.0'

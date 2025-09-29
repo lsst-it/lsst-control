@@ -1,0 +1,6 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::openvpn_as"
+
+profile::core::openvpn_as::version: 'latest'

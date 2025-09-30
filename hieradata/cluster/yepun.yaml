@@ -2,3 +2,96 @@
 clustershell::groupmembers:
   yepun: {group: "yepun", member: "yepun[01-05]"}
 tuned::active_profile: "latency-performance"
+nm::conf:
+  device:
+    keep-configuration: "no"
+    allowed-connections: "except:origin:nm-initrd-generator"
+
+nm::connections:
+  eno1np0:
+    content:
+      connection:
+        id: "eno1np0"
+        uuid: "3e516a55-fffc-44ab-828c-5ca7b17c7bbf"
+        type: "ethernet"
+        interface-name: "eno1np0"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno2np1:
+    content:
+      connection:
+        id: "eno2np1"
+        uuid: "20178b7c-af05-4235-929b-fb2c4126e234"
+        type: "ethernet"
+        interface-name: "eno2np1"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  bond0:
+    content:
+      connection:
+        id: "bond0"
+        uuid: "9dbf4a45-880a-491d-83cc-275db7197980"
+        type: "bond"
+        interface-name: "bond0"
+      ethernet:
+        cloned-mac-address: "%{facts.networking.interfaces.eno1np0.mac}"
+      bond:
+        mode: "802.3ad"
+        miimon: "100"
+        xmit_hash_policy: "layer3+4"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  bond0.1101:
+    content:
+      connection:
+        id: "bond0.1101"
+        uuid: "4f98595d-f363-40f1-b4c1-5a87f63d0f4a"
+        type: "vlan"
+        interface-name: "bond0.1101"
+        master: "br1101"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1101"
+        parent: "bond0"
+      bridge-port: {}
+  br1101:
+    content:
+      connection:
+        id: "br1101"
+        uuid: "b5c7a6ef-b449-4729-b944-ec45c40b40cc"
+        type: "bridge"
+        interface-name: "br1101"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp71s0f3u1u1c2:
+    content:
+      connection:
+        id: "enp71s0f3u1u1c2"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp71s0f3u1u1c2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"

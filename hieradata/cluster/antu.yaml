@@ -50,7 +50,7 @@ nm::connections:
         type: "bond"
         interface-name: "bond0"
       ethernet:
-        cloned-mac-address: "%{facts.networking.interfaces.enp1s0f0np0.mac}"
+        cloned-mac-address: "%{facts.networking.interfaces.enp65s0f0.mac}"
       bond:
         miimon: "100"
         mode: "802.3ad"

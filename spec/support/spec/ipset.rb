@@ -70,6 +70,7 @@ shared_examples 'ipset' do
         139.229.152.128/26
         139.229.152.192/26
         139.229.154.0/26
+        139.229.154.96/28
       ]
     ).that_comes_before('Class[firewall]')
   end

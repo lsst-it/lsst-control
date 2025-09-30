@@ -4,21 +4,91 @@ clustershell::groupmembers:
     group: "antu"
     member: "antu[01-04]"
 tuned::active_profile: "latency-performance"
+nm::conf:
+  device:
+    keep-configuration: "no"
+    allowed-connections: "except:origin:nm-initrd-generator"
 nm::connections:
-  enp65s0f0.2130:
+  enp12s0f4u1u2c2:  # bmc
     content:
       connection:
-        id: "enp65s0f0.2130"
-        uuid: "e74daaad-4d73-4015-bb26-83c460ddf572"
+        id: "enp12s0f4u1u2c2"
+        uuid: "f330f829-20cc-b829-67b0-18086a5fe6fa"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp12s0f4u1u2c2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp65s0f0:  # bdc-b04-lf02
+    content:
+      connection:
+        id: "enp65s0f0"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        interface-name: "enp65s0f0"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}
+  enp65s0f1:  # bdc-b04-lf01
+    content:
+      connection:
+        id: "enp65s0f1"
+        uuid: "688bf5bf-d649-34b4-15eb-b07c50ac43f8"
+        type: "ethernet"
+        interface-name: "enp65s0f1"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}
+  bond0:
+    content:
+      connection:
+        id: "bond0"
+        uuid: "3c5900d8-49af-4364-8f4d-9fb8f8c9d089"
+        type: "bond"
+        interface-name: "bond0"
+      ethernet:
+        cloned-mac-address: "%{facts.networking.interfaces.enp1s0f0np0.mac}"
+      bond:
+        miimon: "100"
+        mode: "802.3ad"
+        xmit_hash_policy: "layer3+4"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  bond0.2130:
+    content:
+      connection:
+        id: "bond0.2130"
+        uuid: "f1512a73-a30e-492f-8e43-d2d90d11dd2f"
         type: "vlan"
-        interface-name: "enp65s0f0.2130"
+        interface-name: "bond0.2130"
         master: "br2130"
         slave-type: "bridge"
       ethernet: {}
       vlan:
         flags: "1"
         id: "2130"
-        parent: "enp65s0f0"
+        parent: "bond0"
+      bridge-port: {}
+  bond0.2131:
+    content:
+      connection:
+        id: "bond0.2131"
+        uuid: "5861c0e1-5a35-4f32-927f-eb2aa7b84e2e"
+        type: "vlan"
+        interface-name: "bond0.2131"
+        master: "br2131"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2131"
+        parent: "bond0"
       bridge-port: {}
   br2130:
     content:
@@ -32,6 +102,21 @@ nm::connections:
         stp: "false"
       ipv4:
         method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  br2131:
+    content:
+      connection:
+        id: "br2131"
+        uuid: "7dd05d98-a9c3-4569-a7c3-00316b13c0eb"
+        type: "bridge"
+        interface-name: "br2131"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
       ipv6:
         method: "disabled"
       proxy: {}

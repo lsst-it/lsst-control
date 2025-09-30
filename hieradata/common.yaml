@@ -406,6 +406,7 @@ ipset::sets:
       - "139.229.152.128/26"  # vlan2503
       - "139.229.152.192/26"  # vlan2504
       - "139.229.154.0/26"  # vlan2507
+      - "139.229.154.96/28"  # vlan2131
   cpfde:  # cps site hosts which might need FDE
     ensure: "present"
     type: "hash:net"

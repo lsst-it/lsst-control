@@ -1,0 +1,6 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::openvpnas"
+
+profile::core::openvpnas::version: "3.0.1_84b60e70"

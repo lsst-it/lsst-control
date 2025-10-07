@@ -1,13 +1,16 @@
 ---
 nfs::nfs_v4_export_root_clients: >-
   %{facts.networking.ip}/32(ro,fsid=root,insecure,no_subtree_check,async,root_squash)
+  139.229.175.64/26(rw,fsid=root,insecure,no_subtree_check,async,no_root_squash)
 nfs::nfs_exports_global:
   /comcam:
     clients: >-
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.64/26(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
   /lsstcam:
     clients: >-
       %{facts.networking.ip}/32(ro,nohide,insecure,no_subtree_check,async,root_squash)
+      139.229.175.64/26(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
 
 nfs::client_enabled: true
 nfs::client_mounts:

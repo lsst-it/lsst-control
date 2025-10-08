@@ -62,7 +62,7 @@ shared_examples 'generic foreman' do
 
   it do
     is_expected.to contain_class('foreman::repo').with(
-      repo: '3.2'
+      repo: '3.16'
     )
   end
 

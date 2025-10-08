@@ -258,7 +258,7 @@ shared_examples 'generic foreman' do
 
   it do
     is_expected.to contain_yumrepo('pc_repo').with(
-      baseurl: "http://yum.puppet.com/puppet7/el/#{facts[:os]['release']['major']}/x86_64"
+      baseurl: "http://yum.puppet.com/puppet8/el/#{facts[:os]['release']['major']}/x86_64"
     )
   end
 end

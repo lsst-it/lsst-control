@@ -4,7 +4,7 @@ require 'voxpupuli/test/spec_helper'
 require 'iniparse'
 
 # foreman, puppetserver and termini versions
-FOREMAN_VERSION = '3.2.1'
+FOREMAN_VERSION = '3.16.0'
 PUPPETAGENT_VERSION = '7.27.0'
 PUPPETSERVER_VERSION = '7.14.0'
 TERMINI_VERSION = PUPPETSERVER_VERSION

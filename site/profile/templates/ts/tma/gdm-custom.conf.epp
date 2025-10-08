@@ -1,0 +1,12 @@
+[daemon]
+WaylandEnable=false
+DefaultSession=xfce.desktop
+
+[security]
+
+[xdmcp]
+
+[chooser]
+
+[debug]
+

@@ -15,6 +15,7 @@ nm::connections:
       ipv6:
         method: "ignore"
       proxy: {}
+ccs_database::cronjob_partitions: true
 ccs_software::services:
   prod:
     - "rest-server"

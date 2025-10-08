@@ -2,3 +2,7 @@
 clustershell::groupmembers:
   lukay: {group: "lukay", member: "lukay[01-04]"}
 tuned::active_profile: "latency-performance"
+nm::conf:
+  device:
+    keep-configuration: "no"
+    allowed-connections: "except:origin:nm-initrd-generator"

@@ -1,0 +1,119 @@
+---
+nm::connections:
+  bond0.1511:
+    content:
+      connection:
+        id: "bond0.1511"
+        uuid: "7d826576-d640-44ee-a338-39a5116d6a0c"
+        type: "vlan"
+        interface-name: "bond0.1511"
+        master: "br1511"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1511"
+        parent: "bond0"
+      bridge-port: {}
+  bond0.1400:
+    content:
+      connection:
+        id: "bond0.1400"
+        uuid: "7ac7c82f-f4c2-4b81-aeb5-48878147ed91"
+        type: "vlan"
+        interface-name: "bond0.1400"
+        master: "br1400"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1400"
+        parent: "bond0"
+      bridge-port: {}
+  br1511:
+    content:
+      connection:
+        id: "br1511"
+        uuid: "284aebf3-7772-4814-9c57-2f6ad3c790e7"
+        type: "bridge"
+        interface-name: "br1511"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        address1: "139.229.175.112/26,139.229.175.126"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  br1400:
+    content:
+      connection:
+        id: "br1400"
+        uuid: "7dd05d98-a9c3-4569-a7c3-00316b13c0eb"
+        type: "bridge"
+        interface-name: "br1400"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        address1: "139.229.170.57/24,139.229.170.254"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+        never-default: "true"
+        route1: "139.229.147.0/24,139.229.170.254"
+        route2: "139.229.166.0/24,139.229.170.254"
+        route3: "139.229.167.0/24,139.229.170.254"
+        route4: "139.229.178.0/24,139.229.170.254"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+
+ccs_monit::hosts:
+# - "lsstcam-aio01"
+# - "lsstcam-aio02"
+  - "lsstcam-aio05"
+  - "lsstcam-aio06"
+  - "lsstcam-ccobtb"
+# - "lsstcam-ccobwb"
+  - "lsstcam-db01"
+  - "lsstcam-dc01"
+  - "lsstcam-dc02"
+  - "lsstcam-dc03"
+  - "lsstcam-dc04"
+  - "lsstcam-dc05"
+  - "lsstcam-dc06"
+  - "lsstcam-dc07"
+  - "lsstcam-dc08"
+  - "lsstcam-dc09"
+  - "lsstcam-dc10"
+  - "lsstcam-fb01"
+  - "lsstcam-fb02"
+# - "lsstcam-fb03"
+# - "lsstcam-fb04"
+  - "lsstcam-mcm"
+# - "lsstcam-moxa1"
+# - "lsstcam-moxa2"
+  - "lsstcam-pcs01"
+  - "lsstcam-pcs02"
+  - "lsstcam-quad"
+  - "lsstcam-rebps"
+  - "lsstcam-shutter01"
+# - "lsstcam-shutter01-ptp"
+# - "lsstcam-shutter02"
+# - "lsstcam-shutter02-ptp"
+  - "lsstcam-vac"
+  - "lsstcam-vs01"
+  - "lsstcam-vw01"
+  - "lsstcam-vw02"
+# - "lsstcam-vw03"
+  - "lsstcam-vw04"
+
+ccs_software::apc_pdu: true
+
+ccs_software::services:
+  prod:
+    - "platform-pdu"

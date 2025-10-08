@@ -1,0 +1,70 @@
+---
+nm::connections:
+  bond0.1511:
+    content:
+      connection:
+        id: "bond0.1511"
+        uuid: "3e3a9862-afaf-4152-8d64-b29594eb0371"
+        type: "vlan"
+        interface-name: "bond0.1511"
+        master: "br1511"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1511"
+        parent: "bond0"
+      bridge-port: {}
+  bond0.1701:
+    content:
+      connection:
+        id: "bond0.1701"
+        uuid: "027aca69-b253-4c46-b96a-4ef535a4a792"
+        type: "vlan"
+        interface-name: "bond0.1701"
+        master: "br1701"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1701"
+        parent: "bond0"
+      bridge-port: {}
+  br1511:
+    content:
+      connection:
+        id: "br1511"
+        uuid: "f964273f-06a3-4047-9e12-5b6baa3ddde0"
+        type: "bridge"
+        interface-name: "br1511"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        address1: "139.229.175.107/26,139.229.175.126"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  br1701:
+    content:
+      connection:
+        id: "br1701"
+        uuid: "0629aa2f-8cde-4bfa-8013-b6f7beea1fc0"
+        type: "bridge"
+        interface-name: "br1701"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        address1: "139.229.173.148/27,139.229.173.129"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+        never-default: "true"
+        route1: "172.24.7.0/24,139.229.173.129"
+      ipv6:
+        method: "disabled"
+      proxy: {}

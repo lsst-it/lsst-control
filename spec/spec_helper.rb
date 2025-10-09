@@ -7,7 +7,7 @@ require 'iniparse'
 FOREMAN_VERSION = '3.16.0'
 PUPPETAGENT_VERSION = '7.27.0'
 PUPPETSERVER_VERSION = '8.7.0'
-TERMINI_VERSION = PUPPETSERVER_VERSION
+TERMINI_VERSION = '8.8.1'
 
 # facterdb does not include puppetlabs/stdlib facts
 add_stdlib_facts

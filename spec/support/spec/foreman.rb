@@ -17,7 +17,6 @@ shared_examples 'foreman' do
   it { is_expected.to contain_foreman__cli__plugin('foreman_remote_execution') }
   it { is_expected.to contain_foreman__plugin('templates') }
   it { is_expected.to contain_foreman__cli__plugin('foreman_templates') }
-  it { is_expected.to contain_foreman__plugin('column_view') }
   it { is_expected.to contain_foreman_proxy__plugin('dynflow') }
   it { is_expected.to contain_foreman__plugin('discovery') }
   it { is_expected.to contain_foreman__cli__plugin('foreman_discovery') }

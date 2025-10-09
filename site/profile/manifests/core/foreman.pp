@@ -39,7 +39,6 @@ class profile::core::foreman (
   include foreman::compute::libvirt
   include foreman::compute::vmware
   include foreman_envsync
-  include foreman::plugin::column_view
   include foreman::plugin::discovery
   include foreman::plugin::puppet
   include foreman::plugin::remote_execution

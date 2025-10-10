@@ -111,7 +111,7 @@ mod 'simp/mate', git: 'https://github.com/lsst-it/pupmod-simp-mate', ref: 'cfc42
 mod 'simp/polkit', '6.9.0'
 mod 'simp/simpkv', '0.13.0'
 mod 'simp/simplib', '4.14.2'
-mod 'stm/debconf', '6.2.0'
+mod 'stm/debconf', '7.0.1'
 mod 'syseleven/restic', '2.8.1'
 mod 'theforeman/dhcp', '9.3.0'
 mod 'theforeman/dns', '11.1.0'

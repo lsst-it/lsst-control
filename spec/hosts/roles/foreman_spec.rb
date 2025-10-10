@@ -6,7 +6,7 @@ role = 'foreman'
 
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
-    next unless os =~ (%r{^centos-7-x86_64$}) || os =~ (%r{^almalinux-8-x86_64$})
+    next unless os =~ (%r{^almalinux-9-x86_64$})
 
     context "on #{os}" do
       let(:node_params) do

@@ -129,11 +129,6 @@ class profile::core::foreman (
     require => Class['foreman'],
   }
 
-  if fact('os.family') == 'RedHat' and fact('os.release.major') == '7' {
-    include scl
-    Class['scl'] -> Class['foreman']
-  }
-
   # XXX theforeman/puppet does not manage the yumrepo.  puppetlabs/puppet_agent
   # is hardwired to manage the puppet package and conflicts with
   # theforeman/puppet.  We should try to submit support to

@@ -1,0 +1,52 @@
+---
+nm::connections:
+  enp1s0:
+    content:
+      connection:
+        id: "enp1s0"
+        uuid: "1aa9cca6-8596-4e4e-96a6-e4a1028cd8d2"
+        type: "ethernet"
+        interface-name: "enp1s0"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.134.114/24,139.229.134.254"
+        dns: "139.229.134.53;139.229.134.54;139.229.134.55;"
+        dns-search: "dev.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+
+dhcp::interfaces:
+  - "enp1s0bogus"
+
+dhcp::authoritative: true
+dhcp::pxeserver: "139.229.134.5"  # foreman.dev.lsst.org
+dhcp::options:
+  - "voip-tftp-server code 150 = { ip-address }"
+  - "space cisco"
+  - "cisco.wlc code 241 = array of ip-address"
+  - "local-encapsulation code 43 = encapsulate cisco"
+# theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
+dhcp::pools:
+  IT-Dev:
+    network: "139.229.134.0"
+    mask: "255.255.255.0"
+    gateway: "139.229.134.254"
+    range:
+      - "139.229.134.120 139.229.134.179"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  BDC-Ayekan:
+    network: "139.229.144.0"
+    mask: "255.255.255.192"
+    gateway: "139.229.144.62"
+    range:
+      - "139.229.144.40 139.229.144.59"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  DEV-MGT:
+    network: "139.229.144.64"
+    mask: "255.255.255.192"
+    gateway: "139.229.144.126"
+    range:
+      - "139.229.144.100 139.229.144.123"
+    search_domains: "%{alias('dhcp::dnsdomain')}"

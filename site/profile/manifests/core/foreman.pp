@@ -115,13 +115,6 @@ class profile::core::foreman (
     provider => 'puppetserver_gem',
   }
 
-  # The foreman-selinux package is not managed by theforeman/foreman when selinux is disabled.  # This is to cleanup old installs.
-  unless fact('os.selinux.enabled') {
-    package { 'foreman-selinux':
-      ensure => absent,
-    }
-  }
-
   # theforeman/foreman manages yum repos directly.  The foreman-release package
   # is not needed after bootstraping and can be removed.
   package { 'foreman-release':

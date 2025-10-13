@@ -44,7 +44,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples('common', os_facts:, site:)
+        include_examples('common', os_facts:, site:, puppet_version: '8.10.0')
         include_examples 'generic foreman'
       end # host
 
@@ -74,7 +74,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples('common', os_facts:, site:)
+        include_examples('common', os_facts:, site:, puppet_version: '8.10.0')
         include_examples 'generic foreman'
       end # host
 
@@ -105,7 +105,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples('common', os_facts:, site:)
+        include_examples('common', os_facts:, site:, puppet_version: '8.10.0')
         include_examples 'generic foreman'
       end # host
 
@@ -135,7 +135,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples('common', os_facts:, site:)
+        include_examples('common', os_facts:, site:, puppet_version: '8.10.0')
         include_examples 'generic foreman'
       end # host
     end

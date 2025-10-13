@@ -171,7 +171,7 @@ shared_examples 'krb5.conf content' do |match|
   end
 end
 
-shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, node_exporter: true|
+shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, node_exporter: true, puppet_version: nil|
   include_examples('bash_completion', os_facts:)
   include_examples 'convenience'
   include_examples('rsyslog defaults', site:)
@@ -304,6 +304,8 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
       # 7.24.0 is the last version of puppet-agent to support aarch64 on RHEL 7
       # see: http://yum.puppet.com/puppet7/el/7/aarch64/
       let(:puppetagent_version) { '7.24.0' }
+    elsif !puppet_version.nil?
+      let(:puppetagent_version) { puppet_version }
     else
       let(:puppetagent_version) { PUPPETAGENT_VERSION }
     end

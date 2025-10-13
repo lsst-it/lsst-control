@@ -8,22 +8,23 @@ class profile::ccs::autologin (Boolean $enable = true) {
   if $enable {
     ensure_packages(['gdm'])
 
-    exec { 'Enable autologin for graphical ccs user':
+    exec { 'Enable timedlogin for graphical ccs user':
       path    => ['/usr/bin'],
-      unless  => 'grep -q ^AutomaticLogin /etc/gdm/custom.conf',
+      unless  => 'grep -q ^TimedLogin /etc/gdm/custom.conf',
       # lint:ignore:strict_indent
       command => @("CMD"/L),
         sed -i '/^\[daemon.*/a\\
-        AutomaticLogin=ccs\n\
-        AutomaticLoginEnable=true' /etc/gdm/custom.conf
+        TimedLogin=ccs\n\
+        TimedLoginDelay=60\n\
+        TimedLoginEnable=true' /etc/gdm/custom.conf
         | CMD
       # lint:endignore
     }
   } else {
-    exec { 'Disable autologin for graphical ccs user':
+    exec { 'Disable timedlogin for graphical ccs user':
       path    => ['/usr/bin'],
-      onlyif  => 'grep -q ^AutomaticLogin=ccs /etc/gdm/custom.conf',
-      command => 'sed -i "/^AutomaticLogin/d" /etc/gdm/custom.conf',
+      onlyif  => 'grep -q ^TimedLogin=ccs /etc/gdm/custom.conf',
+      command => 'sed -i "/^TimedLogin/d" /etc/gdm/custom.conf',
     }
   }
 }

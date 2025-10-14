@@ -1,6 +1,7 @@
 ---
 classes:
   - "profile::ccs::autologin"
+  - "profile::ccs::autologout"
   - "profile::ccs::common"
   - "profile::ccs::graphical"
   - "profile::core::common"

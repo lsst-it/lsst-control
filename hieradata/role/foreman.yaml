@@ -3,13 +3,13 @@ classes:
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::dhcp"
-  - "profile::core::docker"
-  - "profile::core::docker::prune"
   - "profile::core::foreman"
   - "profile::core::foreman::fog_hack"
   - "profile::core::podman::prune"
 
 profile::core::restic::enable: true
+packages:
+  - "podman-docker"
 
 dhcp::bootp: true
 dhcp::ddns_update_style: "none"
@@ -309,6 +309,9 @@ files:
     content: |
       :filters:
         - !ruby/regexp '/^(?!profile::)/'
+  /etc/containers/nodocker:
+    ensure: "file"
+    mode: "0444"
 
 restic::repositories:
   foreman:

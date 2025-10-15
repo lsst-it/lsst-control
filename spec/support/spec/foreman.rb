@@ -45,7 +45,6 @@ end
 
 shared_examples 'generic foreman' do
   include_examples 'debugutils'
-  include_examples 'docker'
   include_examples 'fog_hack'
   include_examples 'foreman'
   include_examples 'restic common'
@@ -257,6 +256,8 @@ shared_examples 'generic foreman' do
       baseurl: "http://yum.puppet.com/puppet8/el/#{facts[:os]['release']['major']}/x86_64"
     )
   end
+
+  it { is_expected.to contain_package('podman-docker') }
 
   it do
     is_expected.to contain_restic__repository('foreman').with(

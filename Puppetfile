@@ -1,5 +1,7 @@
 forge 'https://forgeapi.puppetlabs.com'
 
+exclusion 'choria-mcollective'
+
 mod 'atsonkov/grubby', '0.3.2'
 mod 'blockops/tailscale', git: 'https://github.com/lsst-it/puppet-tailscale', ref: 'bc7e880'  # https://github.com/lsst-it/puppet-tailscale/pull/3 we are using a fork as we wait for the main Forge release to accept apt 10.x
 mod 'bodgit/scl', git: 'https://github.com/lsst-it/puppet-scl', ref: 'c367361'  # https://github.com/bodgit/puppet-scl/pull/2
@@ -90,7 +92,7 @@ mod 'puppet/postfix',  '6.0.0'
 mod 'puppet/prometheus', '17.0.0'
 mod 'puppet/python', '8.0.0'
 mod 'puppet/quadlets', '2.2.1'
-mod 'puppet/r10k', git: 'https://github.com/lsst-it/puppet-r10k', ref: '78b200b'  # Using branch temporarily while waiting for approval here: https://github.com/voxpupuli/puppet-r10k/pull/679
+mod 'puppet/r10k', '15.0.0'
 mod 'puppet/redis', '11.1.0'
 mod 'puppet/rsyslog', '7.3.0'
 mod 'puppet/selinux', '5.0.0'

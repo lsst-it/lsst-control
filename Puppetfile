@@ -118,7 +118,7 @@ mod 'theforeman/dns', '11.1.0'
 mod 'theforeman/foreman', '27.2.0'
 mod 'theforeman/foreman_proxy', '28.2.0'
 mod 'theforeman/puppet', '21.1.0'
-mod 'theforeman/puppetserver_foreman', '4.2.2'
+mod 'theforeman/puppetserver_foreman', '4.3.0'
 mod 'theforeman/tftp', git: 'https://github.com/lsst-it/puppet-tftp', ref: 'a27be8a' # Official module does not support EL8
 mod 'treydock/clustershell', '4.0.0'
 mod 'treydock/perfsonar', git: 'https://github.com/lsst-it/puppet-module-perfsonar', ref: '6e9449e'  # 4.1.0 + https://github.com/treydock/puppet-module-perfsonar/pull/26

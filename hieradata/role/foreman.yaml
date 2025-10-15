@@ -5,7 +5,11 @@ classes:
   - "profile::core::dhcp"
   - "profile::core::foreman"
   - "profile::core::foreman::fog_hack"
+<<<<<<< HEAD
   - "profile::core::podman::prune"
+=======
+  - "restic"
+>>>>>>> 1a408390 ((role/foreman) add restic)
 
 packages:
   - "podman-docker"
@@ -311,3 +315,14 @@ files:
   /etc/containers/nodocker:
     ensure: "file"
     mode: "0444"
+
+restic::repositories:
+  foreman:
+    backup_path:
+      - "/tmp/foreman-backups"
+    backup_pre_cmd: "/bin/foreman-maintain backup online /tmp/foreman-backups -y"
+    backup_post_cmd: "rm -rf /tmp/foreman-backups"
+    backup_timer: "*-*-* 09:00:00"
+    enable_forget: true
+    forget_timer: "Mon..Sun 23:00:00"
+    forget_flags: "--keep-last 90"

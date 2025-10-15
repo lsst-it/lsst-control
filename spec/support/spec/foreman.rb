@@ -47,6 +47,7 @@ shared_examples 'generic foreman' do
   include_examples 'debugutils'
   include_examples 'fog_hack'
   include_examples 'foreman'
+  include_examples 'restic common'
 
   it do
     is_expected.to contain_class('foreman').with(
@@ -257,4 +258,18 @@ shared_examples 'generic foreman' do
   end
 
   it { is_expected.to contain_package('podman-docker') }
+
+  it do
+    is_expected.to contain_restic__repository('foreman').with(
+      backup_path: %w[
+        /tmp/foreman-backups
+      ],
+      backup_pre_cmd: '/bin/foreman-maintain backup online /tmp/foreman-backups -y',
+      backup_post_cmd: 'rm -rf /tmp/foreman-backups',
+      backup_timer: '*-*-* 09:00:00',
+      enable_forget: true,
+      forget_timer: 'Mon..Sun 23:00:00',
+      forget_flags: '--keep-last 90'
+    )
+  end
 end

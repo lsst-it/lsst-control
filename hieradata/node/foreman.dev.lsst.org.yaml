@@ -14,7 +14,7 @@ network::interfaces_hash:
     type: "Ethernet"
 
 dhcp::interfaces:
-  - "ens192"
+  - "enp1s0"
 
 dhcp::authoritative: true
 dhcp::pxeserver: "139.229.134.5"  # foreman.dev.lsst.org

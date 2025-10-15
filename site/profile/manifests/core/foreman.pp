@@ -99,16 +99,6 @@ class profile::core::foreman (
     }
   }
 
-  # el7 systemd is too old to support periodic graceful restarts of a service unit.
-  # Using cron seems slightly more obvious than creating a timer unit than triggers a one shot
-  # service to restart the original service unit.
-  cron { 'webhook':
-    command => '/usr/bin/systemctl restart webhook > /dev/null 2>&1',
-    user    => 'root',
-    hour    => 4,
-    minute  => 42,
-  }
-
   package { 'hiera-eyaml':
     provider => 'puppetserver_gem',
   }

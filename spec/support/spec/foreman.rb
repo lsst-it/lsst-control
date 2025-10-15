@@ -2,10 +2,6 @@
 
 shared_examples 'foreman' do
   it do
-    is_expected.to contain_cron('webhook').with_command('/usr/bin/systemctl restart webhook > /dev/null 2>&1')
-  end
-
-  it do
     is_expected.to contain_cron('smee').with_command('/usr/bin/systemctl restart smee > /dev/null 2>&1')
   end
 

@@ -247,8 +247,8 @@ shared_examples 'generic foreman' do
   it do
     is_expected.to contain_class('smee').with(
       url: smee_url,
-      path: '/payload',
-      port: 8088
+      path: '/api/v1/r10k/environment',
+      port: 4000
     )
   end
 

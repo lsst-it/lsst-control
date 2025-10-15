@@ -88,8 +88,8 @@ class profile::core::foreman (
     assert_type(Stdlib::HTTPSUrl, $smee_url)
     class { 'smee':
       url  => $smee_url,
-      path => '/payload',
-      port => 8088,
+      path => '/api/v1/r10k/environment',
+      port => 4000,
     }
     cron { 'smee':
       command => '/usr/bin/systemctl restart smee > /dev/null 2>&1',

@@ -7,7 +7,6 @@ mod 'ccin2p3/etc_services', git: 'https://github.com/lsst-it/puppet-etc_services
 mod 'ccin2p3/mit_krb5', git: 'https://github.com/lsst-it/puppet-mit_krb5.git', ref: '2365ca8'  # https://github.com/ccin2p3/puppet-mit_krb5/pull/29 https://github.com/ccin2p3/puppet-mit_krb5/pull/34 https://github.com/ccin2p3/puppet-mit_krb5/pull/38 (partial)
 mod 'cirrax/libvirt', '5.1.0'
 mod 'duritong/sysctl', git: 'https://github.com/duritong/puppet-sysctl', ref: '847ec1c'  # migrate to herculesteam/augeasproviders_sysctl; https://github.com/duritong/puppet-sysctl/pull/48
-mod 'jamtur01/httpauth', '0.0.6'
 mod 'jcpunk/irqbalance', '1.0.7'
 mod 'jhoblitt/ipmi', '6.1.0'
 mod 'lsst/anaconda', '0.1.0'

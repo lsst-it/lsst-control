@@ -53,6 +53,7 @@ shared_examples 'generic foreman' do
   include_examples 'docker'
   include_examples 'fog_hack'
   include_examples 'foreman'
+  include_examples 'restic common'
 
   it do
     is_expected.to contain_class('foreman').with(
@@ -259,6 +260,19 @@ shared_examples 'generic foreman' do
   it do
     is_expected.to contain_yumrepo('pc_repo').with(
       baseurl: "http://yum.puppet.com/puppet7/el/#{facts[:os]['release']['major']}/x86_64"
+    )
+  end
+
+  it do
+    is_expected.to contain_restic__repository('foreman').with(
+      backup_path: %w[
+        /tmp/foreman-backups
+      ],
+      backup_pre_cmd: "/bin/bash -c 'rm -rf /tmp/foreman-backups && /bin/foreman-maintain backup online /tmp/foreman-backups -y'",
+      backup_timer: '*-*-* 09:00:00',
+      enable_forget: true,
+      forget_timer: 'Mon..Sun 23:00:00',
+      forget_flags: '--keep-last 90'
     )
   end
 end

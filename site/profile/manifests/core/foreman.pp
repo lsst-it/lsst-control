@@ -84,8 +84,6 @@ class profile::core::foreman (
     }
   }
 
-  # smee has some startup problems due to too new (?) nodejs on EL8
-  # https://gist.github.com/bastelfreak/6d0d3bc324633f04c5b1fc432e871192
   if $manage_smee {
     assert_type(Stdlib::HTTPSUrl, $smee_url)
     class { 'smee':
@@ -96,7 +94,7 @@ class profile::core::foreman (
     cron { 'smee':
       command => '/usr/bin/systemctl restart smee > /dev/null 2>&1',
       user    => 'root',
-      hour    => 4,
+      hour    => '*',
       minute  => 42,
     }
   }

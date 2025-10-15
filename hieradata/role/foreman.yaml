@@ -286,6 +286,8 @@ profile::core::systemd::dropin_file:
       [Service]
       MemoryLimit=17179869184
 
+smee::image: "ghcr.io/lsst-it/smee-client:4.3.1"
+
 files:
   /etc/foreman-proxy/settings.d:
     ensure: "directory"

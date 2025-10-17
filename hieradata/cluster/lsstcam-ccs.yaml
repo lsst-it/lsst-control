@@ -100,8 +100,11 @@ ccs_software::jdk8::version: "2000:1.8.0_202-fcs"
 
 clustershell::groupmembers:
   misc: {group: "misc", member: "lsstcam-db01,lsstcam-mcm,lsstcam-vs01"}
+  misc-new: {group: "misc-new", member: "lsstcam-db02,lsstcam-mcm1,lsstcam-vs1"}
   dc: {group: "dc", member: "lsstcam-dc[01-10]"}
+  dc-new: {group: "dc-new", member: "lsstcam-dc[1-9,100]"}
   all: {group: "all", member: "@dc,@misc"}
+  all-new: {group: "all-new", member: "@dc-new,@misc-new"}
 
 
 java_artisanal::package: "jdk1.8"

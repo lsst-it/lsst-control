@@ -97,8 +97,11 @@ class profile::ccs::file_transfer (
     'generate-sidecar',
     'push-additional-oods',
     'push-additional-usdf',
+    'push-additional-usdf-s3nd',
     'push-oods',
     'push-usdf',
+    'push-usdf-s3nd',
+    'send-s3nd',
   ]
   $script_files.each | String $scriptfile | {
     file { "${directory}/${scriptfile}":

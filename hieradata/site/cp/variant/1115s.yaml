@@ -1,0 +1,72 @@
+---
+nm::connections:
+  enp34s0f0:
+    content:
+      connection:
+        id: "enp34s0f0"
+        uuid: "3e516a55-fffc-44ab-828c-5ca7b17c7bbf"
+        type: "ethernet"
+        interface-name: "enp34s0f0"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp34s0f1:
+    content:
+      connection:
+        id: "enp34s0f1"
+        uuid: "20178b7c-af05-4235-929b-fb2c4126e234"
+        type: "ethernet"
+        interface-name: "enp34s0f1"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet:
+        mtu: 9000
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  bond0:
+    content:
+      connection:
+        id: "bond0"
+        uuid: "9dbf4a45-880a-491d-83cc-275db7197980"
+        type: "bond"
+        interface-name: "bond0"
+      ethernet:
+        cloned-mac-address: "%{facts.networking.interfaces.enp34s0f0.mac}"
+      bond:
+        mode: "802.3ad"
+        miimon: "100"
+        xmit_hash_policy: "layer3+4"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp73s0f4u1u1c2:
+    content:
+      connection:
+        id: "enp73s0f4u1u1c2"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp73s0f4u1u1c2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  ens2f1np1:
+    content:
+      connection:
+        id: "ens2f1np1"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens2f1np1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"

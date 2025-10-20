@@ -1,0 +1,40 @@
+---
+nm::connections:
+  bond0.1511:
+    content:
+      connection:
+        id: "bond0.1511"
+        uuid: "4f98595d-f363-40f1-b4c1-5a87f63d0f4a"
+        type: "vlan"
+        interface-name: "bond0.1511"
+        master: "br1511"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1511"
+        parent: "bond0"
+      bridge-port: {}
+  br1511:
+    content:
+      connection:
+        id: "br1511"
+        uuid: "4c165306-b660-4574-8a78-4e22911b1499"
+        type: "bridge"
+        interface-name: "br1511"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        address1: "139.229.175.111/26,139.229.175.126"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+ccs_database::cronjob_partitions: true
+ccs_software::services:
+  prod:
+    - "rest-server"
+    - "localdb"

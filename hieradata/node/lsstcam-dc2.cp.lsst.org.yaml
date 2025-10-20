@@ -1,0 +1,79 @@
+---
+nm::connections:
+  bond0.1511:
+    content:
+      connection:
+        id: "bond0.1511"
+        uuid: "986a941d-b6aa-4bcf-95aa-59ac9db32e08"
+        type: "vlan"
+        interface-name: "bond0.1511"
+        master: "br1511"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1511"
+        parent: "bond0"
+      bridge-port: {}
+  bond0.1701:
+    content:
+      connection:
+        id: "bond0.1701"
+        uuid: "f5706ccb-aab2-4743-88ac-15480a977a0b"
+        type: "vlan"
+        interface-name: "bond0.1701"
+        master: "br1701"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1701"
+        parent: "bond0"
+      bridge-port: {}
+  br1511:
+    content:
+      connection:
+        id: "br1511"
+        uuid: "a1453775-327f-4f8c-89fe-00222aad4482"
+        type: "bridge"
+        interface-name: "br1511"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        address1: "139.229.175.102/26,139.229.175.126"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  br1701:
+    content:
+      connection:
+        id: "br1701"
+        uuid: "4547b653-1d00-4431-bd7b-18cf43ec4d06"
+        type: "bridge"
+        interface-name: "br1701"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        address1: "139.229.173.143/27,139.229.173.129"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+        never-default: "true"
+        route1: "172.24.7.0/24,139.229.173.129"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+
+## The role ccs-dc adds the image-handling service to all lsstcam-dc*.cp nodes.
+## However, dc02.cp is a special case, where the service should not be present.
+lookup_options:
+  ccs_software::services:
+    merge:
+      strategy: "first"
+
+ccs_software::services:

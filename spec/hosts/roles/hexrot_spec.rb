@@ -71,55 +71,55 @@ describe "#{role} role" do
             },
             'ts-guitool' => {
               'channel' => 'lsstts',
-              'version' => '0.3.0',
+              'version' => '0.3.1',
             },
             'ts-hexgui' => {
               'channel' => 'lsstts',
-              'version' => '0.5.0',
+              'version' => '0.5.2',
             },
             'ts-hexrotcomm' => {
               'channel' => 'lsstts',
-              'version' => '1.3.5',
+              'version' => '1.3.6',
             },
             'ts-m2com' => {
               'channel' => 'lsstts',
-              'version' => '1.5.13',
+              'version' => '1.5.14',
             },
             'ts-m2gui' => {
               'channel' => 'lsstts',
-              'version' => '1.1.6',
+              'version' => '1.1.9',
             },
             'ts-mtdomecom' => {
               'channel' => 'lsstts',
-              'version' => '0.3.1',
+              'version' => '0.3.2',
             },
             'ts-mtdomegui' => {
               'channel' => 'lsstts',
-              'version' => '0.5.1',
+              'version' => '0.5.4',
             },
             'ts-rotgui' => {
               'channel' => 'lsstts',
-              'version' => '0.4.2',
+              'version' => '0.4.5',
             },
             'ts-salobj' => {
               'channel' => 'lsstts',
-              'version' => '8.2.1',
+              'version' => '8.2.6',
             },
             'ts-tcpip' => {
               'channel' => 'lsstts',
-              'version' => '2.1.0',
+              'version' => '2.2.2',
             },
             'ts-xml' => {
               'channel' => 'lsstts',
-              'version' => '24.0.0',
+              'version' => '24.2.1',
             },
           }
 
           it do
             is_expected.to contain_class('anaconda').with(
               anaconda_version: 'Anaconda3-2023.07-2',
-              python_env_name: 'py312',
-              python_env_version: '3.12',
+              python_env_name: 'py313',
+              python_env_version: '3.13',
               conda_packages: pkgs
             )
           end

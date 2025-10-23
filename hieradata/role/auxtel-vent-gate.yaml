@@ -7,3 +7,4 @@ classes:
   - "profile::pi::darkmode"
   - "profile::pi::ftdi"
   - "profile::pi::pigpio"
+  - "profile::ts::dco"

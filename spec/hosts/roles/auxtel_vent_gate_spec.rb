@@ -38,6 +38,7 @@ describe "#{role} role" do
           include_examples 'darkmode'
           include_examples 'ftdi'
           include_examples 'pigpio'
+          include_examples 'dco'
         end # host
       end # lsst_sites
     end # on os

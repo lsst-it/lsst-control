@@ -5,5 +5,14 @@
   ],
   "ignorePaths": ["**/hieradata/**"],
   "labels": ["enhancement"],
-  "prConcurrentLimit": 2
+  "prConcurrentLimit": 2,
+  "packageRules": [
+    {
+      "matchManagers": ["puppet"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "schedule": ["on monday"]
+    }
+  ]
 }

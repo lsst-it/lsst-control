@@ -19,7 +19,7 @@ describe 'auxtel-archiver.tu.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'auxtel-archiver',
+          role: 'generic',
           site: 'tu',
         }
       end
@@ -53,17 +53,6 @@ describe 'auxtel-archiver.tu.lsst.org', :sitepp do
         it_behaves_like 'nm bridge interface'
         it_behaves_like 'nm manual interface'
         it { expect(nm_keyfile['ipv4']['address1']).to eq('140.252.147.133/27') }
-      end
-
-      it { is_expected.to contain_class('nfs').with_server_enabled(false) }
-      it { is_expected.to contain_class('nfs').with_client_enabled(true) }
-
-      it do
-        is_expected.to contain_nfs__client__mount('/data').with(
-          share: 'auxtel',
-          server: 'nfs-auxtel.tu.lsst.org',
-          atboot: true
-        )
       end
     end # on os
   end # on_supported_os

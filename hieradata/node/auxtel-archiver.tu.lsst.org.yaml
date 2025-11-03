@@ -45,17 +45,3 @@ network::mroutes_hash:
     routes:
       "140.252.147.16/28": "140.252.147.129"
       "140.252.147.48/28": "140.252.147.129"
-
-nfs::server_enabled: false
-nfs::client_enabled: true
-nfs::client_mounts:
-  /data:
-    share: "auxtel"
-    server: "nfs-auxtel.tu.lsst.org"
-    atboot: true
-
-profile::core::k5login::k5login:
-  "/home/saluser/.k5login":
-    ensure: "present"
-    principals:
-      - "ccs-ipa/auxtel-fp01.tu.lsst.org@LSST.CLOUD"

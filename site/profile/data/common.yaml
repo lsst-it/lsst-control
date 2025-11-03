@@ -169,40 +169,6 @@ profile::daq::sysctl::sysctls:
     value: -1
     target: *daqccs
 
-profile::archive::data::files:
-  /data: &rootdir
-    ensure: "directory"
-    mode: "0755"
-    owner: 0
-    group: 0
-  /data/lsstdata:
-    <<: *rootdir
-  /data/repo: &saldir
-    ensure: "directory"
-    mode: "0755"
-    owner: &saluser 73006
-    group: *saluser
-  /data/staging:
-    <<: *saldir
-  /repo:
-    <<: *saldir
-
-profile::archive::data::auxtel::files:
-  /data/repo/LATISS:
-    ensure: "directory"
-    mode: "0777"
-    owner: &saluser 73006
-    group: *saluser
-  /data/repo/LATISS/u:
-    ensure: "directory"
-    mode: "1777"
-    owner: &saluser 73006
-    group: *saluser
-  /data/allsky:
-    ensure: "directory"
-    mode: "0755"
-    owner: 1000  # XXX unreserved
-    group: 983  # XXX unreserved
 
 profile::core::dtn::sysctls:
   net.core.rmem_max:

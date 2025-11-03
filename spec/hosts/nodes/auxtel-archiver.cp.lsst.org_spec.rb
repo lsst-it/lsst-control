@@ -20,26 +20,14 @@ describe 'auxtel-archiver.cp.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'auxtel-archiver',
+          role: 'generic',
           site: 'cp',
-          cluster: 'auxtel-archiver',
         }
       end
 
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'vm'
-
-      it { is_expected.to contain_class('nfs').with_server_enabled(false) }
-      it { is_expected.to contain_class('nfs').with_client_enabled(true) }
-
-      it do
-        is_expected.to contain_nfs__client__mount('/data').with(
-          share: 'auxtel',
-          server: 'nfs-auxtel.cp.lsst.org',
-          atboot: true
-        )
-      end
     end # on os
   end # on_supported_os
 end # role

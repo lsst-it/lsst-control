@@ -400,7 +400,6 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
 
   admin_users = %w[
     jhoblitt_b
-    cbarria_b
     csilva_b
     dtapia_b
     gseriche_b
@@ -432,6 +431,8 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
     sysadmin
     athebo
     athebo_b
+    cbarria
+    cbarria_b
     hreinking_b
   ].each do |user|
     it { is_expected.to contain_user(user).with_ensure('absent') }

@@ -104,7 +104,7 @@ mod 'saz/resolv_conf', '8.0.1'
 mod 'saz/ssh', '14.1.0'
 mod 'saz/sudo', '9.0.2'
 mod 'saz/timezone', git: 'https://github.com/lsst-it/puppet-timezone', ref: '3ff6331' # Waiting for this update: https://github.com/saz/puppet-timezone/pull/119
-mod 'simp/auditd', '8.14.5'
+mod 'simp/auditd', '9.0.0'
 mod 'simp/dconf', '1.0.0'
 mod 'simp/mate', git: 'https://github.com/lsst-it/pupmod-simp-mate', ref: 'cfc42b0' # Official version has had no release since 2023
 mod 'simp/polkit', '6.9.0'

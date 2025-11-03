@@ -100,7 +100,7 @@ mod 'puppet/tang', '1.0.0'
 mod 'puppet/tuned', '1.1.0'
 mod 'puppet/yum', '7.3.0'
 mod 'richardc/datacat', '0.6.2'
-mod 'saz/resolv_conf', '7.0.0'
+mod 'saz/resolv_conf', '8.0.1'
 mod 'saz/ssh', '13.1.0'
 mod 'saz/sudo', '9.0.2'
 mod 'saz/timezone', git: 'https://github.com/lsst-it/puppet-timezone', ref: '3ff6331' # Waiting for this update: https://github.com/saz/puppet-timezone/pull/119

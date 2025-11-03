@@ -163,8 +163,6 @@ ssh::server::match_block:
       AuthorizedKeysFile: ".ssh/authorized_keys"
   jhoblitt_b:
     <<: *authorized_keys
-  cbarria_b:
-    <<: *authorized_keys
   csilva_b:
     <<: *authorized_keys
   dtapia_b:
@@ -236,12 +234,6 @@ accounts::user_list:
     purge_sshkeys: true
     sshkeys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDZFV9AL2qPh6CV+DeY32oyg0jCkxkbCHVSPHOoikDkwzwMW/7QQdRI8TJ0h8vpFi15pNyu+n7s7MJSWdg5yUvTCataVpOndDElDz10DaEcGIHNq8/qjEPiHulj/KUoDkEU+yMoWY8jRs3ARyL+6p6LDUBsWpzIY8jMOaEVUJjlVt+0ih2a/D3re0daws6w3mBbmLjitHLS5f2YJKlStIHWCWjMXvP5tqUsvhHvIQH/csBQGXnUiRxR8YSJK9u3CMvTzx6PnC7p98yRCOOrMRQ7yT7vuXyXsk7qoUpArUe/T5nEcwRA/21QVurJ1s3in/mpFI0Ogg5kD7NpFqoTq6itBxbPz7DwaOyjEltJBjQAEvuvfHDJYsBTM3fpfEt5jR8ieuDta1214tr5qVOmR17JonssV7/ksizATm1KkMA7+Q8CWCgrFdZmEMaFjav2U72EWyLRe5utxQV+dWPnxd13NxVu6sgM3CBEC4HzOBMf+upt8tMvjLBjci1sbhCAvvU= github2"
-  cbarria_b:  # backup access in case LDAP fails
-    groups:
-      - "wheel_b"
-    purge_sshkeys: true
-    sshkeys:
-      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6Iv2NrQicUm7IHkglP1LM8aetFx68efqeNbLVnxCvoPZf9kx+EDiqpReFHjxLMJ9LvH/z4+9uYDTumdO9kzKwJwFFQ9vIt3nhekZ50fS3Wv8/21nZBPwzupdmFdJLiuiU7fjaHcSPIK2er53MISGq1Zgo50zk3EpzyGfDqWDhNsGLHehBeCADCK4euSUcXbGuQTbKcucaZKD/RMUzcM+7C5gi7290ie+K3ksO4vYeRPYIQtcXXZsP8fnIH4IJ+ZKvBVqceJJGifsyM4NqF8bGXZPPIqehbJFUUdnRy071HpvO7VQo3O0QVq6ewKje3EVBQYFcBzc9ZswDnstINNnL cbarria@foreman.dev.lsst.org"
   csilva_b:  # backup access in case LDAP fails
     groups:
       - "wheel_b"
@@ -269,6 +261,10 @@ accounts::user_list:
   athebo:
     <<: *rm_user
   athebo_b:
+    <<: *rm_user
+  cbarria:
+    <<: *rm_user
+  cbarria_b:
     <<: *rm_user
   hreinking_b:
     <<: *rm_user

@@ -9,7 +9,7 @@ class profile::ccs::nvidia (String $ensure = 'present') {
   if $ensure =~ /(present|absent)/ {
     ## This takes care of the /etc/kernel/postinst.d/ part,
     ## so long as the nvidia driver is installed with the dkms option.
-    ensure_packages(['dkms', 'gcc', 'kernel-devel', 'kernel-headers'])
+    stdlib::ensure_packages(['dkms', 'gcc', 'kernel-devel', 'kernel-headers'])
 
     $file = 'disable-nouveau.conf'
 

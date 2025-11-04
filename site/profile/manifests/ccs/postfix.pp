@@ -18,6 +18,6 @@ class profile::ccs::postfix (
     content => $auth.unwrap,
   }
 
-  ensure_packages($packages)
+  stdlib::ensure_packages($packages)
   Package[$packages] -> Class['postfix']
 }

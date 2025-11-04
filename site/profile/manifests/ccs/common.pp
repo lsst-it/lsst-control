@@ -50,6 +50,6 @@ class profile::ccs::common (
   }
 
   if $packages {
-    ensure_packages($packages)
+    stdlib::ensure_packages($packages)
   }
 }

@@ -46,11 +46,11 @@ class profile::core::letsencrypt (
       Package['python-s3transfer'],
     ],
   }
-  ensure_packages(['python-s3transfer'])
+  stdlib::ensure_packages(['python-s3transfer'])
 
   # XXX https://github.com/voxpupuli/puppet-letsencrypt/issues/230
   if fact('os.name') == 'CentOS' {
-    ensure_packages(['python2-futures.noarch'])
+    stdlib::ensure_packages(['python2-futures.noarch'])
   }
 
   if ($certonly) {

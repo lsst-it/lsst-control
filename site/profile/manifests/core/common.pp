@@ -114,7 +114,7 @@ class profile::core::common (
       }
       default: { # EL9+
         if $manage_network_manager {
-          ensure_packages(['NetworkManager-initscripts-updown'])
+          stdlib::ensure_packages(['NetworkManager-initscripts-updown'])
           include nm
         }
       }

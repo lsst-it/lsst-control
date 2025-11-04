@@ -13,7 +13,7 @@ class profile::ccs::graphical (
   if $install {
     include profile::core::x2go
 
-    ensure_packages(['gdm'])
+    stdlib::ensure_packages(['gdm'])
 
     service { 'gdm':
       enable => true,
@@ -62,7 +62,7 @@ class profile::ccs::graphical (
         notify  => Package[$unwanted_gnome_pkgs],
       }
       ## There doesn't seem to be a group for this in epel9.
-      ensure_packages([
+      stdlib::ensure_packages([
           'mate-desktop',
           'mate-applets',
           'mate-menu',
@@ -80,11 +80,11 @@ class profile::ccs::graphical (
       ensure => purged,
     }
 
-    ensure_packages(['icewm'])
+    stdlib::ensure_packages(['icewm'])
   }
 
   if $officeapps {
-    ensure_packages(['libreoffice-base'])
+    stdlib::ensure_packages(['libreoffice-base'])
 
     if fact('os.release.major') == '9' {
       include 'google_chrome'

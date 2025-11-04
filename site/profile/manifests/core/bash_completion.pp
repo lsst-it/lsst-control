@@ -7,5 +7,5 @@
 class profile::core::bash_completion (
   Array[String[1]] $packages,
 ) {
-  ensure_packages($packages)
+  stdlib::ensure_packages($packages)
 }

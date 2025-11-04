@@ -107,7 +107,8 @@ foreman::plugin::column_view::columns:
     content: "params['cluster']"
 foreman::plugin::tasks::automatic_cleanup: true
 foreman_proxy::base_url: "https://%{facts.networking.fqdn}"
-foreman_proxy::bind_host: '*'
+foreman_proxy::bind_host:
+  - '*'
 foreman_proxy::bmc_default_provider: "ipmitool"
 foreman_proxy::bmc: true
 foreman_proxy::dhcp_listen_on: "https"

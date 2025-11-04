@@ -27,5 +27,5 @@ class profile::core::ni_packages {
     ensure          => present,
     install_options => ['--enablerepo','nexus-ctio'];
   }
-  ensure_packages($packages)
+  stdlib::ensure_packages($packages)
 }

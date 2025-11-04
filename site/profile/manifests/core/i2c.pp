@@ -8,12 +8,12 @@ class profile::core::i2c (
   Optional[Array[String[1]]] $packages = undef,
 ) {
   if $packages {
-    ensure_packages($packages)
+    stdlib::ensure_packages($packages)
   }
 
   # packages which do not exists in el7; mv to hiera when el7 is no longer supported
   if fact('os.family') == 'RedHat' and fact('os.release.major') == '9' {
-    ensure_packages(['python3-i2c-tools'])
+    stdlib::ensure_packages(['python3-i2c-tools'])
   }
 
   systemd::udev::rule { 'i2c.rules':

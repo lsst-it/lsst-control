@@ -19,5 +19,5 @@ $packages = lookup(
 )
 
 if ($packages) {
-  ensure_packages($packages)
+  stdlib::ensure_packages($packages)
 }

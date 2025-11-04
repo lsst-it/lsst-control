@@ -6,7 +6,7 @@
 #
 class profile::ccs::autologin (Boolean $enable = true) {
   if $enable {
-    ensure_packages(['gdm'])
+    stdlib::ensure_packages(['gdm'])
 
     exec { 'Enable timedlogin for graphical ccs user':
       path    => ['/usr/bin'],

@@ -104,5 +104,5 @@ class profile::core::docker (
     notify  => Service['docker'],
   }
 
-  ensure_packages(['docker-compose-plugin'])
+  stdlib::ensure_packages(['docker-compose-plugin'])
 }

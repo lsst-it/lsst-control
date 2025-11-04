@@ -4,8 +4,7 @@ require 'spec_helper'
 
 describe 'foreman.dev.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
-    # XXX networking needs to be updated to support EL8+
-    next unless os =~ %r{centos-7-x86_64}
+    next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
@@ -41,19 +40,26 @@ describe 'foreman.dev.lsst.org', :sitepp do
       end
       let(:dhcp_interfaces) do
         %w[
-          ens192
+          enp1s0
         ]
       end
+
+      include_context 'with nm interface'
 
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'vm'
       include_examples 'dhcp server'
 
-      it do
-        is_expected.to contain_network__interface('ens192').with(
-          ipaddress: '139.229.134.5'
-        )
+      context 'with enp1s0' do
+        let(:interface) { 'enp1s0' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.134.5/24,139.229.134.254') }
+        it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.134.53;139.229.134.54;139.229.134.55;') }
+        it { expect(nm_keyfile['ipv4']['dns-search']).to eq('dev.lsst.org;') }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
       end
 
       it do

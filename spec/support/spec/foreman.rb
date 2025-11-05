@@ -45,7 +45,6 @@ end
 
 shared_examples 'generic foreman' do
   include_examples 'debugutils'
-  include_examples 'fog_hack'
   include_examples 'foreman'
   include_examples 'restic common'
 

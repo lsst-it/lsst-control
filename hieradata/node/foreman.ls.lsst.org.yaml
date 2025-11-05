@@ -18,7 +18,7 @@ nm::connections:
       proxy: {}
 
 dhcp::interfaces:
-  - "eth0"
+  - "enp1s0"
 
 dhcp::authoritative: true
 dhcp::pxeserver: "139.229.135.5"  # foreman.ls.lsst.org

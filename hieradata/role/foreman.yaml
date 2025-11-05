@@ -294,7 +294,7 @@ profile::core::systemd::dropin_file:
     #notify_service: true  # needs camptocamp/systemd > 3.0.0
     content: |
       [Service]
-      MemoryLimit=17179869184
+      MemoryMax=17179869184
 
 smee::image: "ghcr.io/lsst-it/smee-client:4.3.1"
 

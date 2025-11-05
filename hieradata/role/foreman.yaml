@@ -4,10 +4,13 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::dhcp"
   - "profile::core::foreman"
+<<<<<<< HEAD
   - "profile::core::foreman::fog_hack"
 <<<<<<< HEAD
   - "profile::core::podman::prune"
 =======
+=======
+>>>>>>> 88da7572 ((profile::core::foreman::fog_hack) rm; This is not needed on el9.)
   - "restic"
 >>>>>>> 1a408390 ((role/foreman) add restic)
 

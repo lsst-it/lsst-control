@@ -9,7 +9,7 @@ shared_examples 'generic rke2agent' do |os_facts:, site:|
   include_examples 'restic common'
 
   case site
-  when 'dev'
+  when 'dev', 'tu'
     it do
       is_expected.to contain_class('rke2').with(
         node_type: 'agent',

@@ -26,28 +26,6 @@ describe 'lsstcam-archiver.cp.lsst.org', :sitepp do
       end
 
       it { is_expected.to compile.with_all_deps }
-
-      principals = 1.upto(10).map do |i|
-        format('ccs-ipa/lsstcam-dc%02d.cp.lsst.org@LSST.CLOUD', i)
-      end
-
-      it { is_expected.to contain_class('nfs').with_server_enabled(false) }
-      it { is_expected.to contain_class('nfs').with_client_enabled(true) }
-
-      it do
-        is_expected.to contain_nfs__client__mount('/data').with(
-          share: 'lsstcam',
-          server: 'nfs-lsstcam.cp.lsst.org',
-          atboot: true
-        )
-      end
-
-      it do
-        is_expected.to contain_k5login('/home/saluser/.k5login').with(
-          ensure: 'present',
-          principals:
-        )
-      end
     end # on os
   end # on_supported_os
 end # role

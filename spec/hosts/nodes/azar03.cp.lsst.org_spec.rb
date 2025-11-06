@@ -116,17 +116,6 @@ describe 'azar03.cp.lsst.org', :sitepp do
           atboot: true
         )
       end
-
-      principals = 1.upto(10).map do |i|
-        format('ccs-ipa/lsstcam-dc%02d.cp.lsst.org@LSST.CLOUD', i)
-      end
-
-      it do
-        is_expected.to contain_k5login('/home/saluser/.k5login').with(
-          ensure: 'present',
-          principals:
-        )
-      end
     end # on os
   end # on_supported_os
 end

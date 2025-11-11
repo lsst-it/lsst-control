@@ -1,0 +1,8 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::docker"
+  - "profile::pi::add_usb"
+  - "profile::pi::darkmode"
+  - "profile::pi::ftdi"
+  - "profile::ts::dco"

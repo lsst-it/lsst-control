@@ -39,6 +39,12 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
           ],
           env: {
             'S3ND_ENDPOINT_URL' => 'https://s3.ls.lsst.org',
+            'S3ND_QUEUE_TIMEOUT' => '20s',
+            'S3ND_UPLOAD_BWLIMIT' => '1Gi',
+            'S3ND_UPLOAD_MAX_PARALLEL' => '27',
+            'S3ND_UPLOAD_PARTSIZE' => '100Mi',
+            'S3ND_UPLOAD_TIMEOUT' => '15s',
+            'S3ND_UPLOAD_TRIES' => '2',
           }
         )
       end

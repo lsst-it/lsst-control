@@ -3,6 +3,7 @@ classes:
   - "clustershell"
   - "ipa"
   - "profile::core::common"
+  - "profile::core::restic"
   - "tailscale"
 
 profile::core::common::disable_ipv6: true
@@ -60,3 +61,14 @@ hosts::entries:
     ip: "100.91.143.57"
   ipa3.cp.lsst.org:
     ip: "100.94.76.56"
+
+restic::repositories:
+  ipa:
+    backup_path:
+      - "/var/lib/ipa/backup"
+    backup_pre_cmd: "mkdir /var/lib/ipa/backup;/sbin/ipa-backup"
+    backup_post_cmd: "rm -rf /var/lib/ipa/backup"
+    backup_timer: "*-*-* 9:23:00"
+    enable_forget: true
+    forget_timer: "*-*-* 10:23:00"
+    forget_flags: "--keep-last 90"

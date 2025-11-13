@@ -1,0 +1,30 @@
+---
+nm::connections:
+  ens192:
+    content:
+      connection:
+        id: "ens192"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
+        type: "ethernet"
+        interface-name: "ens192"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+
+nfs::client_enabled: true
+nfs::client_mounts:
+  /net/obs-env:
+    share: "obs-env"
+    server: "nfs-obs-env.cp.lsst.org"
+    atboot: true
+  /net/scratch:
+    share: "scratch"
+    server: "nfs-scratch.cp.lsst.org"
+    atboot: true
+  /project:
+    share: "project"
+    server: "nfs-project.cp.lsst.org"
+    atboot: true

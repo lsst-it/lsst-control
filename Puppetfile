@@ -74,7 +74,7 @@ mod 'puppetlabs/reboot', '5.1.0'
 mod 'puppetlabs/selinux_core', '1.4.0'
 mod 'puppetlabs/sshkeys_core', '2.5.1'
 mod 'puppetlabs/stdlib', '9.7.0'
-mod 'puppetlabs/tomcat', '7.4.0'
+mod 'puppetlabs/tomcat', git: 'https://github.com/lsst-it/puppetlabs-tomcat', ref: '11c0817' # Using this fork while we wait for dependencies to be merged here: https://github.com/puppetlabs/puppetlabs-tomcat/pull/581
 mod 'puppetlabs/transition', '2.0.0'
 mod 'puppetlabs/vcsrepo', '7.0.0'
 mod 'puppetlabs/xinetd', '3.4.1'

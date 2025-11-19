@@ -86,7 +86,7 @@ mod 'puppet/nfs', '3.0.0'
 mod 'puppet/nginx', '7.0.1'
 mod 'puppet/openldap', '9.1.0'
 mod 'puppet/postfix',  '6.0.0'
-mod 'puppet/prometheus', '16.5.0'
+mod 'puppet/prometheus', '17.0.0'
 mod 'puppet/python', '8.0.0'
 mod 'puppet/quadlets', '2.2.1'
 mod 'puppet/r10k', git: 'https://github.com/lsst-it/puppet-r10k', ref: '78b200b'  # Using branch temporarily while waiting for approval here: https://github.com/voxpupuli/puppet-r10k/pull/679

@@ -245,7 +245,7 @@ accounts::user_list:
       - "wheel_b"
     purge_sshkeys: true
     sshkeys:
-      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC71rIbJq0BkvWS0vaUbvRMpnt64kmRjvP9Eac23YJkfAeRL8JZs8LO6M2FzMgwGUmH+8r7eUHNQrvZy+DzhejB7lD1sWk503/4k44q7X2g0ymnjMheNRsxSjwuqXGuCklIS8kMeiJsMBCvIF7fOJ9Eh4h5I7O+4vxogig2VxCeX+LFKKDLKjIyXlFTjpl3qOrEDhujCabejbAhAdz5u7dAnGINFM+9gLKi/TVbjb6BmSnBG1UxOkmK6SmtLdEioaLiOANscrGdc/pMnva1snS0QRlHksCjpcKza58QbEDUpzITSCkGyJRSTQcxrnzJHuS8L+/ssbeK0el97J6GkrRivJjJEJDmstLjd1mXGWhmqO/HYbX0s82TqoXTxw8P/kEaL3XVYOkAuNsypEtpH2oSv30fEdUOlJmy3PzcshW9mzTvdBbT8jQnFiO107lVmhGNAvtJFgeFEXGbnAHL33ff0kUNgOO7zdWfuTng5Hchwj5Gzgl0dOX7uxG/b5mk4mc= dtapia@Diegos-MacBook-Pro.local"
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC95cR24f+6f8qH5qxfO4OSulm0xdUPVTX4gGNCK/ZURyB2YQyEspxEQwYMonxwGgBDtJXUpLqC8iYB3MyrIadPAOT5kJVwLbzTUtFBunJDZ9Wv0/AWyY0JPMh4rNBcgZwClvlzWzP5S1btR1wUnGEEF9pGsQ/Z3h6N026V30wl2SlAHKRXOSAT+gQ0ACPrA5UVpRpCg8HFFBHSZlYk9tGERSa/evDqPbsA6bhv4O5GsEV1SLFt6H1iqQpMPm7lS9JNqWVKNF6HiJiMqMKcVsFVBLQgAqt6liV4LaYXywd/FMmlZb8tAMEcxohLwEvQGz55RPxxyLao5wq84P+Ubphz7n72B3vpVPgXOaJQQIe1OsO9EVJr0ztvvtcyod3PlUgF5w5gvnnrTuW2Vzi8NXcuHe3FE67eSB8F6UUc/aBXEjKKwJgR2kuEoRn6mi5WSno4D5mWCQSMJc3S7zMCZuVoLzN2hqQOyWGLbowNEl0ZZZTKYaQ/nxpGYXTLG5rz8kU= dtapia@s-MacBook-Pro.local"
   gseriche_b:  # backup access in case LDAP fails
     groups:
       - "wheel_b"

@@ -23,7 +23,7 @@ group :system_tests do
 end
 
 group :release do
-  gem 'voxpupuli-release', '~> 4.0', require: false
+  gem 'voxpupuli-release', '~> 5.0', require: false
 end
 
 gem 'facter', ENV.fetch('FACTER_GEM_VERSION', nil), require: false, groups: [:test]

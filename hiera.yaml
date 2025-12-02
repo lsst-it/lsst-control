@@ -6,7 +6,7 @@ hierarchy:
   - name: "private hiera yaml"
     datadir: "/etc/puppetlabs/code/hieradata/private/%{environment}"
     paths: &paths
-      - "node/%{fqdn}.yaml"
+      - "node/%{facts.networking.fqdn}.yaml"
       - "site/%{site}/cluster/%{cluster}/variant/%{variant}/subvariant/%{subvariant}/%{facts.os.family}/major/%{facts.os.release.major}.yaml"
       - "site/%{site}/cluster/%{cluster}/variant/%{variant}/subvariant/%{subvariant}.yaml"
       - "site/%{site}/cluster/%{cluster}/variant/%{variant}/%{facts.os.family}/major/%{facts.os.release.major}.yaml"
@@ -44,7 +44,7 @@ hierarchy:
     lookup_key: "eyaml_lookup_key"  # eyaml backend
     datadir: "/etc/puppetlabs/code/hieradata/private/%{environment}"
     paths:
-      - "node/%{fqdn}.eyaml"
+      - "node/%{facts.networking.fqdn}.yaml"
       - "site/%{site}/cluster/%{cluster}/variant/%{variant}/subvariant/%{subvariant}/%{facts.os.family}/major/%{facts.os.release.major}.eyaml"
       - "site/%{site}/cluster/%{cluster}/variant/%{variant}/subvariant/%{subvariant}.eyaml"
       - "site/%{site}/cluster/%{cluster}/variant/%{variant}/%{facts.os.family}/major/%{facts.os.release.major}.eyaml"

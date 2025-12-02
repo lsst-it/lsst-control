@@ -7,7 +7,7 @@
 #   release of fog-libvirt is made.
 #
 class profile::core::foreman::fog_hack {
-  ensure_packages(['libvirt-devel'])
+  stdlib::ensure_packages(['libvirt-devel'])
 
   archive { 'fog-libvirt-0.11.0.gem':
     ensure => present,

@@ -47,7 +47,7 @@ describe "#{role} role" do
               ensure: 'present',
               provider: 'git',
               source: 'https://github.com/lsst-ts/ts_config_mttcs.git',
-              revision: 'v0.17.4',
+              revision: 'v0.18.3-alpha.1',
               keep_local_changes: 'false'
             )
           end
@@ -59,67 +59,67 @@ describe "#{role} role" do
             },
             'pyside6' => {
               'channel' => 'conda-forge',
-              'version' => '6.8.3',
+              'version' => '6.9.2',
             },
             'qasync' => {
               'channel' => 'conda-forge',
-              'version' => '0.27.1',
+              'version' => '0.28.0',
             },
             'qt6-charts' => {
               'channel' => 'conda-forge',
-              'version' => '6.8.3',
+              'version' => '6.9.2',
             },
             'ts-guitool' => {
               'channel' => 'lsstts',
-              'version' => '0.3.0',
+              'version' => '0.3.2',
             },
             'ts-hexgui' => {
               'channel' => 'lsstts',
-              'version' => '0.5.0',
+              'version' => '0.5.3',
             },
             'ts-hexrotcomm' => {
               'channel' => 'lsstts',
-              'version' => '1.3.5',
+              'version' => '1.3.6',
             },
             'ts-m2com' => {
               'channel' => 'lsstts',
-              'version' => '1.5.11',
+              'version' => '1.5.14',
             },
             'ts-m2gui' => {
               'channel' => 'lsstts',
-              'version' => '1.1.6',
+              'version' => '1.1.10',
             },
             'ts-mtdomecom' => {
               'channel' => 'lsstts',
-              'version' => '0.2.15',
+              'version' => '0.3.5',
             },
             'ts-mtdomegui' => {
               'channel' => 'lsstts',
-              'version' => '0.4.13',
+              'version' => '0.5.7',
             },
             'ts-rotgui' => {
               'channel' => 'lsstts',
-              'version' => '0.4.2',
+              'version' => '0.4.6',
             },
             'ts-salobj' => {
               'channel' => 'lsstts',
-              'version' => '8.2.1',
+              'version' => '8.2.6',
             },
             'ts-tcpip' => {
               'channel' => 'lsstts',
-              'version' => '2.1.0',
+              'version' => '2.2.2',
             },
             'ts-xml' => {
               'channel' => 'lsstts',
-              'version' => '23.1.0',
+              'version' => '24.2.1',
             },
           }
 
           it do
             is_expected.to contain_class('anaconda').with(
               anaconda_version: 'Anaconda3-2023.07-2',
-              python_env_name: 'py312',
-              python_env_version: '3.12',
+              python_env_name: 'py313',
+              python_env_version: '3.13',
               conda_packages: pkgs
             )
           end

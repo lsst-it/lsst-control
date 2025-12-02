@@ -16,7 +16,7 @@ class profile::core::dtn (
   }
 
   if $packages {
-    ensure_packages($packages)
+    stdlib::ensure_packages($packages)
   }
 
   # Stop irqbalance

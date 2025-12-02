@@ -26,8 +26,8 @@ describe 'profile::core::rke' do
 
         it do
           is_expected.to contain_class('rke').with(
-            version: '1.7.7',
-            checksum: '4317d54ed5251d71c82b631083907c526dc74808941deebc392369108b7a4b10'
+            version: '1.8.0',
+            checksum: '8815da0452ae14a45566b534c48a2af6286ee73f800208ba6ec59188cb9a8d25'
           )
         end
       end
@@ -68,25 +68,6 @@ describe 'profile::core::rke' do
       end
 
       context 'with version param' do
-        context 'when 1.6.5' do
-          let(:params) do
-            {
-              version: '1.6.5',
-            }
-          end
-
-          it { is_expected.to compile.with_all_deps }
-
-          include_examples 'rke profile'
-
-          it do
-            is_expected.to contain_class('rke').with(
-              version: '1.6.5',
-              checksum: '80694373496abd5033cb97c2512f2c36c933d301179881e1d28bf7b78efab3e7'
-            )
-          end
-        end
-
         context 'when 1.7.6' do
           let(:params) do
             {
@@ -106,10 +87,10 @@ describe 'profile::core::rke' do
           end
         end
 
-        context 'when 1.7.8' do
+        context 'when 1.7.7' do
           let(:params) do
             {
-              version: '1.7.8',
+              version: '1.7.7',
             }
           end
 
@@ -119,8 +100,27 @@ describe 'profile::core::rke' do
 
           it do
             is_expected.to contain_class('rke').with(
-              version: '1.7.8',
-              checksum: '9494448f684ab0f3f79c62aa9736cd718743ad94e78a291f49eafec8bc71abde'
+              version: '1.7.7',
+              checksum: '4317d54ed5251d71c82b631083907c526dc74808941deebc392369108b7a4b10'
+            )
+          end
+        end
+
+        context 'when 1.8.0' do
+          let(:params) do
+            {
+              version: '1.8.0',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+
+          include_examples 'rke profile'
+
+          it do
+            is_expected.to contain_class('rke').with(
+              version: '1.8.0',
+              checksum: '8815da0452ae14a45566b534c48a2af6286ee73f800208ba6ec59188cb9a8d25'
             )
           end
         end

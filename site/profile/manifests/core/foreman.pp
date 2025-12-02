@@ -160,7 +160,7 @@ class profile::core::foreman (
   }
 
   # for bmc management
-  ensure_packages(['ipmitool'])
+  stdlib::ensure_packages(['ipmitool'])
 
   package { 'oauth':
     ensure   => installed,

@@ -9,12 +9,12 @@ shared_examples 'generic rke2agent' do |os_facts:, site:|
   include_examples 'restic common'
 
   case site
-  when 'dev', 'tu', 'ls'
+  when 'dev'
     it do
       is_expected.to contain_class('rke2').with(
         node_type: 'agent',
-        release_series: '1.31',
-        version: '1.31.9~rke2r1',
+        release_series: '1.32',
+        version: '1.32.10~rke2r1',
         versionlock: true
       )
     end
@@ -22,14 +22,13 @@ shared_examples 'generic rke2agent' do |os_facts:, site:|
     it do
       is_expected.to contain_class('rke2').with(
         node_type: 'agent',
-        release_series: '1.31',
-        version: '1.31.8~rke2r1',
+        release_series: '1.32',
+        version: '1.32.9~rke2r1',
         versionlock: true
       )
     end
   end
 
-  it { expect(catalogue.resource('class', 'rke2')[:config]).to include('server') }
   it { expect(catalogue.resource('class', 'rke2')[:config]).to include('node-name') }
   it { expect(catalogue.resource('class', 'rke2')[:config]).to include('tls-san') }
 

@@ -10,7 +10,7 @@ class profile::core::k8snode (
   $pkgs = [
     'gdisk',  # used to cleanup after rook-ceph
   ]
-  ensure_packages($pkgs)
+  stdlib::ensure_packages($pkgs)
 
   if $enable_dhcp {
     if $enable_dhcp == 'service_only' {

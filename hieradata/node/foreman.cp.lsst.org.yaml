@@ -46,6 +46,20 @@ dhcp::pools:
     range:
       - "139.229.161.40 139.229.161.42"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  MERKEN-FQDN:
+    network: "139.229.161.96"
+    mask: "255.255.255.240"
+    gateway: "139.229.161.110"
+    range:
+      - "139.229.161.97 139.229.161.107"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  MERKEN-METALLB:
+    network: "139.229.161.64"
+    mask: "255.255.255.224"
+    gateway: "139.229.161.94"
+    range:
+      - "139.229.161.65 139.229.161.91"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   IT-BMC:
     network: "139.229.162.0"
     mask: "255.255.255.0"

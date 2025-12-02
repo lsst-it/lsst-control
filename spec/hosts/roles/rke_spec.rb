@@ -43,21 +43,11 @@ shared_examples 'generic rke' do |os_facts:, site:|
     )
   end
 
-  case site
-  when 'ls'
-    it do
-      is_expected.to contain_class('rke').with(
-        version: '1.7.8',
-        checksum: '9494448f684ab0f3f79c62aa9736cd718743ad94e78a291f49eafec8bc71abde'
-      )
-    end
-  else
-    it do
-      is_expected.to contain_class('rke').with(
-        version: '1.7.7',
-        checksum: '4317d54ed5251d71c82b631083907c526dc74808941deebc392369108b7a4b10'
-      )
-    end
+  it do
+    is_expected.to contain_class('rke').with(
+      version: '1.8.0',
+      checksum: '8815da0452ae14a45566b534c48a2af6286ee73f800208ba6ec59188cb9a8d25'
+    )
   end
 
   it do

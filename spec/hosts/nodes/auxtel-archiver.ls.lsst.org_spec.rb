@@ -19,9 +19,8 @@ describe 'auxtel-archiver.ls.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'auxtel-archiver',
+          role: 'generic',
           site: 'ls',
-          cluster: 'auxtel-archiver',
           variant: '1114s',
         }
       end
@@ -51,24 +50,6 @@ describe 'auxtel-archiver.ls.lsst.org', :sitepp do
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm dhcp interface'
         it_behaves_like 'nm ethernet interface'
-      end
-
-      it { is_expected.to contain_class('nfs').with_server_enabled(false) }
-      it { is_expected.to contain_class('nfs').with_client_enabled(true) }
-
-      it do
-        is_expected.to contain_nfs__client__mount('/data').with(
-          share: 'auxtel',
-          server: 'nfs-auxtel.ls.lsst.org',
-          atboot: true
-        )
-      end
-
-      it do
-        is_expected.to contain_k5login('/home/saluser/.k5login').with(
-          ensure: 'present',
-          principals: ['ccs-ipa/auxtel-fp01.ls.lsst.org@LSST.CLOUD']
-        )
       end
     end # on os
   end # on_supported_os

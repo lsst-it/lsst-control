@@ -149,8 +149,8 @@ class profile::core::ipam (
   }
 
   #  Packages installation
-  ensure_packages($mariadb_packages)
-  ensure_packages($packages)
+  stdlib::ensure_packages($mariadb_packages)
+  stdlib::ensure_packages($packages)
 
   #  HTTPD File definition
   file { '/etc/httpd/conf.d/ipam.conf':

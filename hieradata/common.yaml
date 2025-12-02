@@ -163,8 +163,6 @@ ssh::server::match_block:
       AuthorizedKeysFile: ".ssh/authorized_keys"
   jhoblitt_b:
     <<: *authorized_keys
-  cbarria_b:
-    <<: *authorized_keys
   csilva_b:
     <<: *authorized_keys
   dtapia_b:
@@ -236,12 +234,6 @@ accounts::user_list:
     purge_sshkeys: true
     sshkeys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDZFV9AL2qPh6CV+DeY32oyg0jCkxkbCHVSPHOoikDkwzwMW/7QQdRI8TJ0h8vpFi15pNyu+n7s7MJSWdg5yUvTCataVpOndDElDz10DaEcGIHNq8/qjEPiHulj/KUoDkEU+yMoWY8jRs3ARyL+6p6LDUBsWpzIY8jMOaEVUJjlVt+0ih2a/D3re0daws6w3mBbmLjitHLS5f2YJKlStIHWCWjMXvP5tqUsvhHvIQH/csBQGXnUiRxR8YSJK9u3CMvTzx6PnC7p98yRCOOrMRQ7yT7vuXyXsk7qoUpArUe/T5nEcwRA/21QVurJ1s3in/mpFI0Ogg5kD7NpFqoTq6itBxbPz7DwaOyjEltJBjQAEvuvfHDJYsBTM3fpfEt5jR8ieuDta1214tr5qVOmR17JonssV7/ksizATm1KkMA7+Q8CWCgrFdZmEMaFjav2U72EWyLRe5utxQV+dWPnxd13NxVu6sgM3CBEC4HzOBMf+upt8tMvjLBjci1sbhCAvvU= github2"
-  cbarria_b:  # backup access in case LDAP fails
-    groups:
-      - "wheel_b"
-    purge_sshkeys: true
-    sshkeys:
-      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6Iv2NrQicUm7IHkglP1LM8aetFx68efqeNbLVnxCvoPZf9kx+EDiqpReFHjxLMJ9LvH/z4+9uYDTumdO9kzKwJwFFQ9vIt3nhekZ50fS3Wv8/21nZBPwzupdmFdJLiuiU7fjaHcSPIK2er53MISGq1Zgo50zk3EpzyGfDqWDhNsGLHehBeCADCK4euSUcXbGuQTbKcucaZKD/RMUzcM+7C5gi7290ie+K3ksO4vYeRPYIQtcXXZsP8fnIH4IJ+ZKvBVqceJJGifsyM4NqF8bGXZPPIqehbJFUUdnRy071HpvO7VQo3O0QVq6ewKje3EVBQYFcBzc9ZswDnstINNnL cbarria@foreman.dev.lsst.org"
   csilva_b:  # backup access in case LDAP fails
     groups:
       - "wheel_b"
@@ -253,7 +245,7 @@ accounts::user_list:
       - "wheel_b"
     purge_sshkeys: true
     sshkeys:
-      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC71rIbJq0BkvWS0vaUbvRMpnt64kmRjvP9Eac23YJkfAeRL8JZs8LO6M2FzMgwGUmH+8r7eUHNQrvZy+DzhejB7lD1sWk503/4k44q7X2g0ymnjMheNRsxSjwuqXGuCklIS8kMeiJsMBCvIF7fOJ9Eh4h5I7O+4vxogig2VxCeX+LFKKDLKjIyXlFTjpl3qOrEDhujCabejbAhAdz5u7dAnGINFM+9gLKi/TVbjb6BmSnBG1UxOkmK6SmtLdEioaLiOANscrGdc/pMnva1snS0QRlHksCjpcKza58QbEDUpzITSCkGyJRSTQcxrnzJHuS8L+/ssbeK0el97J6GkrRivJjJEJDmstLjd1mXGWhmqO/HYbX0s82TqoXTxw8P/kEaL3XVYOkAuNsypEtpH2oSv30fEdUOlJmy3PzcshW9mzTvdBbT8jQnFiO107lVmhGNAvtJFgeFEXGbnAHL33ff0kUNgOO7zdWfuTng5Hchwj5Gzgl0dOX7uxG/b5mk4mc= dtapia@Diegos-MacBook-Pro.local"
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC95cR24f+6f8qH5qxfO4OSulm0xdUPVTX4gGNCK/ZURyB2YQyEspxEQwYMonxwGgBDtJXUpLqC8iYB3MyrIadPAOT5kJVwLbzTUtFBunJDZ9Wv0/AWyY0JPMh4rNBcgZwClvlzWzP5S1btR1wUnGEEF9pGsQ/Z3h6N026V30wl2SlAHKRXOSAT+gQ0ACPrA5UVpRpCg8HFFBHSZlYk9tGERSa/evDqPbsA6bhv4O5GsEV1SLFt6H1iqQpMPm7lS9JNqWVKNF6HiJiMqMKcVsFVBLQgAqt6liV4LaYXywd/FMmlZb8tAMEcxohLwEvQGz55RPxxyLao5wq84P+Ubphz7n72B3vpVPgXOaJQQIe1OsO9EVJr0ztvvtcyod3PlUgF5w5gvnnrTuW2Vzi8NXcuHe3FE67eSB8F6UUc/aBXEjKKwJgR2kuEoRn6mi5WSno4D5mWCQSMJc3S7zMCZuVoLzN2hqQOyWGLbowNEl0ZZZTKYaQ/nxpGYXTLG5rz8kU= dtapia@s-MacBook-Pro.local"
   gseriche_b:  # backup access in case LDAP fails
     groups:
       - "wheel_b"
@@ -269,6 +261,10 @@ accounts::user_list:
   athebo:
     <<: *rm_user
   athebo_b:
+    <<: *rm_user
+  cbarria:
+    <<: *rm_user
+  cbarria_b:
     <<: *rm_user
   hreinking_b:
     <<: *rm_user
@@ -406,12 +402,14 @@ ipset::sets:
       - "139.229.152.128/26"  # vlan2503
       - "139.229.152.192/26"  # vlan2504
       - "139.229.154.0/26"  # vlan2507
+      - "139.229.154.96/28"  # vlan2131
   cpfde:  # cps site hosts which might need FDE
     ensure: "present"
     type: "hash:net"
     set:
       - "139.229.160.0/24"  # vlan1101
       - "139.229.161.0/27"  # vlan1102
+      - "139.229.161.96/28"  # vlan1131
       - "139.229.175.128/25"  # vlan1502
       - "139.229.175.0/26"  # vlan1510
       - "139.229.175.64/26"  # vlan1511
@@ -574,19 +572,21 @@ restic::bucket: "rubin-bm-backups/%{facts.networking.fqdn}"
 restic::enable_backup: true
 restic::host: "s3.us-east-1.amazonaws.com"
 
-s3nd_default_image: "ghcr.io/lsst-dm/s3nd:1.8.0"
+s3nd_default_image: "ghcr.io/lsst-dm/deliverator:2.4.0"
+
 s3nd::volumes:
   - "/data:/data"
   - "/home:/home"
 s3nd::env:
   AWS_REGION: "lfa"
   S3ND_HOST: ""  # allow connections from other nodes for metrics collection & testing
+  S3ND_UPLOAD_TIMEOUT_FACTOR: "2"
 
 pi::config::reboot: false  # XXX this should be removed when pi role/profile refactoring is complete
 pi::cmdline::reboot: false  # XXX this should be removed when pi role/profile refactoring is complete
 
-rke2::release_series: "1.31"
-rke2::version: "1.31.8~rke2r1"
+rke2::release_series: "1.32"
+rke2::version: "1.32.9~rke2r1"
 rke2::versionlock: true
 rke2::config:
   server: "https://%{::cluster}.%{::site}.lsst.org:9345"

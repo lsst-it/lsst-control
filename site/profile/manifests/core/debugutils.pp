@@ -8,6 +8,6 @@ class profile::core::debugutils (
   Array[String] $packages,
 ) {
   unless (empty($packages)) {
-    ensure_packages($packages)
+    stdlib::ensure_packages($packages)
   }
 }

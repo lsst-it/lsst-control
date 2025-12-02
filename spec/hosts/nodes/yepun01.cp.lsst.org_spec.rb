@@ -22,7 +22,7 @@ describe 'yepun01.cp.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'rke',
+          role: 'rke2server',
           site: 'cp',
           cluster: 'yepun',
         }
@@ -30,7 +30,6 @@ describe 'yepun01.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'docker', docker_version: '25.0.3'
       include_examples 'baremetal'
       include_context 'with nm interface'
       include_examples 'ceph cluster'
@@ -47,13 +46,86 @@ describe 'yepun01.cp.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_class('rke').with(
-          version: '1.7.7',
-          checksum: '4317d54ed5251d71c82b631083907c526dc74808941deebc392369108b7a4b10'
+        is_expected.to contain_class('rke2').with(
+          node_type: 'server',
+          release_series: '1.32',
+          version: '1.32.9~rke2r1'
         )
       end
 
-      it { is_expected.to have_nm__connection_resource_count(0) }
+      it do
+        expect(catalogue.resource('class', 'nm')[:conf]).to include(
+          'device' => {
+            'keep-configuration' => 'no',
+            'allowed-connections' => 'except:origin:nm-initrd-generator',
+          }
+        )
+      end
+
+      it { is_expected.to have_nm__connection_resource_count(6) }
+
+      %w[
+        enp71s0f3u1u1c2
+      ].each do |i|
+        context "with #{i}" do
+          let(:interface) { i }
+
+          it_behaves_like 'nm disabled interface'
+        end
+      end
+
+      %w[
+        eno1np0
+        eno2np1
+      ].each do |i|
+        context "with #{i}" do
+          let(:interface) { i }
+
+          it_behaves_like 'nm named interface'
+          it_behaves_like 'nm ethernet interface'
+          it_behaves_like 'nm no-ip interface'
+          it { expect(nm_keyfile['connection']['master']).to eq('bond0') }
+          it { expect(nm_keyfile['connection']['slave-type']).to eq('bond') }
+          it { expect(nm_keyfile_raw).to match(%r{^\[ethernet\]$}) }
+          it { expect(nm_keyfile_raw).to match(%r{^\[ipv4\]$}) }
+          it { expect(nm_keyfile_raw).to match(%r{^\[ipv6\]$}) }
+        end
+      end
+
+      context 'with bond0' do
+        let(:interface) { 'bond0' }
+
+        it_behaves_like 'nm named interface'
+        it_behaves_like 'nm no-ip interface'
+        it { expect(nm_keyfile['connection']['type']).to eq('bond') }
+        it { expect(nm_keyfile['bond']['miimon']).to eq(100) }
+        it { expect(nm_keyfile['bond']['mode']).to eq('802.3ad') }
+        it { expect(nm_keyfile['bond']['xmit_hash_policy']).to eq('layer3+4') }
+        it { expect(nm_keyfile_raw).to match(%r{^\[ethernet\]$}) }
+        it { expect(nm_keyfile_raw).not_to match(%r{^\[proxy\]$}) }
+      end
+
+      %w[
+        1101
+      ].each do |vlan|
+        iface = "bond0.#{vlan}"
+
+        context "with #{iface}" do
+          let(:interface) { iface }
+
+          it_behaves_like 'nm enabled interface'
+          it_behaves_like 'nm vlan interface', id: vlan.to_i, parent: 'bond0'
+          it_behaves_like 'nm bridge slave interface', master: "br#{vlan}"
+        end
+      end
+
+      context 'with br1101' do
+        let(:interface) { 'br1101' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm bridge interface'
+        it_behaves_like 'nm dhcp interface'
+      end
     end # on os
   end # on_supported_os
 end

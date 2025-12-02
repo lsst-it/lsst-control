@@ -54,8 +54,8 @@ describe 'pukem01.dev.lsst.org', :sitepp do
       it do
         is_expected.to contain_class('rke2').with(
           node_type: 'server',
-          release_series: '1.31',
-          version: '1.31.9~rke2r1'
+          release_series: '1.32',
+          version: '1.32.10~rke2r1'
         )
       end
 

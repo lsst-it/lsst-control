@@ -16,7 +16,7 @@ class profile::pi::gpsd (
   Optional[String[1]] $options = undef,
 ) {
   if $packages {
-    ensure_packages($packages)
+    stdlib::ensure_packages($packages)
   }
 
   if $options {

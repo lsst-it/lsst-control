@@ -8,7 +8,7 @@ class profile::core::gpio (
   Optional[Array[String[1]]] $packages = undef,
 ) {
   if $packages {
-    ensure_packages($packages)
+    stdlib::ensure_packages($packages)
   }
 
   systemd::udev::rule { 'gpio.rules':

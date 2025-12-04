@@ -3,19 +3,11 @@ classes:
   - "profile::core::common"
   - "profile::core::nfsclient"
 packages:
+  - "awscli2"
   - "libgphoto2"
-
-files:
-  /dimm:
-    ensure: "directory"
-    mode: "1777"
 
 nfs::client_enabled: true
 nfs::client_mounts:
-  /dimm:
-    share: "dimm"
-    server: "nfs-dimm.cp.lsst.org"
-    atboot: true
   /project:
     share: "project"
     server: "nfs-project.cp.lsst.org"

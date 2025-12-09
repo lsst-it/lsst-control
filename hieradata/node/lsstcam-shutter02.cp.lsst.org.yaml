@@ -37,3 +37,7 @@ nm::connections:
       ipv6:
         method: "disabled"
       proxy: {}
+
+chrony::queryhosts:
+  - "192.168.10/24"
+chrony::port: undef

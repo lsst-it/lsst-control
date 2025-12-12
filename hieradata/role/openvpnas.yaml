@@ -1,0 +1,24 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::openvpnas"
+
+profile::core::openvpnas::version: "3.0.2_87c70987"
+
+profile::core::openvpnas::vpn_groups:
+  vpn-default:
+    superuser: false
+  vpn-it:
+    superuser: true
+  vpn-science:
+    superuser: false
+  vpn-users:
+    superuser: false
+  vpn-cucm:
+    superuser: false
+  vpn-tssw:
+    superuser: false
+  vpn-comm:
+    superuser: false
+  vpn-clyso:
+    superuser: false

@@ -37,3 +37,7 @@ ccs_hcu::shutter: true
 ccs_software::services:
   prod:
     - "shutter"
+
+chrony::queryhosts:
+  - "192.168.10/24"
+chrony::port: 123

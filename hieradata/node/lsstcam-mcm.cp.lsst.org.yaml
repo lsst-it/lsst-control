@@ -145,3 +145,7 @@ ccs_software::apc_pdu: true
 ccs_software::services:
   prod:
     - "platform-pdu"
+
+sudo::configs:
+  observers_ccs:
+    content: "%observers ALL=(ccs) PASSWD: ALL"

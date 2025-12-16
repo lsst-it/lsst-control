@@ -4,8 +4,7 @@ require 'spec_helper'
 
 describe 'perfsonar1.ls.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
-    # XXX networking needs to be updated to support EL8+
-    next unless os =~ %r{centos-7-x86_64}
+    next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
@@ -28,155 +27,55 @@ describe 'perfsonar1.ls.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'baremetal'
+      include_context 'with nm interface'
+      it { is_expected.to have_nm__connection_resource_count(3) }
 
-      it { is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/50-em1').with_content(%r{rx 2047 tx 511}) }
-      it { is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/50-p2p1').with_content(%r{.*rx 4096 tx 4096.*}) }
-      it { is_expected.to contain_file('/etc/NetworkManager/dispatcher.d/50-p2p2').with_content(%r{.*rx 4096 tx 4096.*}) }
+      context 'with eno1' do
+        let(:interface) { 'eno1' }
 
-      %w[p2p1 p2p2].each do |i|
-        it do
-          is_expected.to contain_network__interface(i).with(
-            bootproto: 'none',
-            onboot: 'yes',
-            type: 'Ethernet',
-            mtu: '9000'
-          )
-        end
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm dhcp interface'
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['ethtool']['ring-rx']).to eq(2047) }
+        it { expect(nm_keyfile['ethtool']['ring-tx']).to eq(2047) }
       end
 
-      it do
-        is_expected.to contain_network__interface('p2p1.360').with(
-          bootproto: 'none',
-          onboot: 'yes',
-          vlan: 'yes',
-          type: 'vlan',
-          ipaddress: '139.229.140.135',
-          netmask: '255.255.255.254',
-          nozeroconf: 'yes',
-          mtu: '9000'
-        )
+      context 'with enp1s0f0' do
+        let(:interface) { 'enp1s0f0' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm manual interface'
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.140.135/31') }
+        it { expect(nm_keyfile['ipv4']['gateway']).to eq('139.229.140.134') }
+        it { expect(nm_keyfile['ethernet']['mtu']).to eq(9000) }
+        it { expect(nm_keyfile['ipv4']['route1']).to eq('139.229.140.13/32,139.229.140.134') }
+        it { expect(nm_keyfile['ipv4']['route2']).to eq('198.32.252.209/32,139.229.140.134') }
+        it { expect(nm_keyfile['ipv4']['route3']).to eq('198.124.226.130/32,139.229.140.134') }
+        it { expect(nm_keyfile['ipv4']['route4']).to eq('198.124.226.134/32,139.229.140.134') }
+        it { expect(nm_keyfile['ipv4']['route5']).to eq('198.124.226.138/32,139.229.140.134') }
+        it { expect(nm_keyfile['ipv4']['route6']).to eq('198.124.226.142/32,139.229.140.134') }
+        it { expect(nm_keyfile['ipv4']['route7']).to eq('134.73.235.226/32,139.229.140.134') }
+        it { expect(nm_keyfile['ipv4']['route8']).to eq('134.79.22.159/32,139.229.140.134') }
       end
 
-      it do
-        is_expected.to contain_network__interface('p2p1.726').with(
-          bootproto: 'none',
-          onboot: 'yes',
-          vlan: 'yes',
-          type: 'vlan',
-          ipaddress: '10.7.26.2',
-          netmask: '255.255.255.0',
-          nozeroconf: 'yes',
-          mtu: '9000'
-        )
-      end
+      context 'with enp1s0f1' do
+        let(:interface) { 'enp1s0f1' }
 
-      it do
-        is_expected.to contain_network__interface('p2p1.728').with(
-          bootproto: 'none',
-          onboot: 'yes',
-          vlan: 'yes',
-          type: 'vlan',
-          ipaddress: '10.7.28.1',
-          netmask: '255.255.255.0',
-          nozeroconf: 'yes',
-          mtu: '9000'
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('p2p2.370').with(
-          bootproto: 'none',
-          onboot: 'yes',
-          vlan: 'yes',
-          type: 'vlan',
-          ipaddress: '139.229.140.137',
-          netmask: '255.255.255.254',
-          nozeroconf: 'yes',
-          mtu: '9000'
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('p2p2.727').with(
-          bootproto: 'none',
-          onboot: 'yes',
-          vlan: 'yes',
-          type: 'vlan',
-          ipaddress: '10.7.27.2',
-          netmask: '255.255.255.0',
-          nozeroconf: 'yes',
-          mtu: '9000'
-        )
-      end
-
-      it do
-        is_expected.to contain_network__interface('p2p2.729').with(
-          bootproto: 'none',
-          onboot: 'yes',
-          vlan: 'yes',
-          type: 'vlan',
-          ipaddress: '10.7.29.1',
-          netmask: '255.255.255.0',
-          nozeroconf: 'yes',
-          mtu: '9000'
-        )
-      end
-
-      context 'with p2p1.360 routes' do
-        let(:via) { '139.229.140.134' }
-
-        it do
-          is_expected.to contain_network__mroute('p2p1.360').with(
-            routes: [
-              '139.229.140.134/31' => 'p2p1.360',
-              '139.229.140.0/22' => via,
-              '139.229.144.248/32' => via,
-              '10.128.0.0/20' => via,
-              '10.125.0.0/20' => via,
-              '198.17.196.0/24' => via,
-              '198.32.252.39/32' => via,
-              '198.32.252.192/31' => via,
-              '198.32.252.208/31' => via,
-              '198.32.252.210/31' => via,
-              '198.32.252.216/31' => via,
-              '198.32.252.218/31' => via,
-              '198.32.252.232/31' => via,
-              '198.32.252.234/31' => via,
-              '199.36.153.8/30' => via,
-              '134.79.235.226/32' => via,
-              '134.79.235.242/32' => via,
-              '198.124.226.194/32' => via,
-              '198.124.226.198/32' => via,
-              '198.124.226.202/32' => via,
-              '198.124.226.206/32' => via,
-            ]
-          )
-        end
-      end
-
-      context 'with p2p2.370 routes' do
-        let(:via) { '139.229.140.136' }
-
-        it do
-          is_expected.to contain_network__mroute('p2p2.370').with(
-            routes: [
-              '139.229.140.136/31' => 'p2p2.370',
-              '139.229.140.0/22' => via,
-              '139.229.144.248/32' => via,
-              '10.128.0.0/20' => via,
-              '10.125.0.0/20' => via,
-              '198.17.196.0/24' => via,
-              '198.32.252.194/31' => via,
-              '199.36.153.8/30' => via,
-              '134.79.235.226/32' => via,
-              '134.79.235.242/32' => via,
-              '198.124.226.130/32' => via,
-              '198.124.226.134/32' => via,
-              '198.124.226.138/32' => via,
-              '198.124.226.142/32' => via,
-            ]
-          )
-        end
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm manual interface'
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.140.137/31') }
+        it { expect(nm_keyfile['ipv4']['gateway']).to eq('139.229.140.136') }
+        it { expect(nm_keyfile['ethernet']['mtu']).to eq(9000) }
+        it { expect(nm_keyfile['ipv4']['route1']).to eq('139.229.140.15/32,139.229.140.136') }
+        it { expect(nm_keyfile['ipv4']['route2']).to eq('198.32.252.217/32,139.229.140.136') }
+        it { expect(nm_keyfile['ipv4']['route3']).to eq('198.124.226.194/32,139.229.140.136') }
+        it { expect(nm_keyfile['ipv4']['route4']).to eq('198.124.226.198/32,139.229.140.136') }
+        it { expect(nm_keyfile['ipv4']['route5']).to eq('198.124.226.202/32,139.229.140.136') }
+        it { expect(nm_keyfile['ipv4']['route6']).to eq('198.124.226.206/32,139.229.140.136') }
+        it { expect(nm_keyfile['ipv4']['route7']).to eq('134.79.235.242/32,139.229.140.136') }
+        it { expect(nm_keyfile['ipv4']['route8']).to eq('134.79.22.212/32,139.229.140.136') }
       end
     end # on os
   end # on_supported_os

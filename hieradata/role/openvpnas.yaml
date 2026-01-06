@@ -22,3 +22,9 @@ profile::core::openvpnas::vpn_groups:
     superuser: false
   vpn-clyso:
     superuser: false
+
+rsyslog::config::custom_config:
+  openvpnas_forward:
+    target: 'openvpnas.conf'
+    content: |
+      if $programname == 'openvpnas' then @collector.ls.lsst.org:5143

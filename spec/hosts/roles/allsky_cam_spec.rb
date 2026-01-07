@@ -32,6 +32,7 @@ describe "#{role} role" do
           include_examples('common', os_facts:, site:)
           it { is_expected.to contain_package('awscli2') }
           it { is_expected.to contain_package('libgphoto2') }
+          it { is_expected.to contain_package('usbutils') }
 
           it do
             is_expected.to contain_nfs__client__mount('/project').with(

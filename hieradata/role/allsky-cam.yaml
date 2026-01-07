@@ -5,6 +5,7 @@ classes:
 packages:
   - "awscli2"
   - "libgphoto2"
+  - "usbutils"
 
 nfs::client_enabled: true
 nfs::client_mounts:

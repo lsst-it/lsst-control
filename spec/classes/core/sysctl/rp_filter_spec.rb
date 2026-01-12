@@ -30,6 +30,18 @@ describe 'profile::core::sysctl::rp_filter' do
             'mac' => 'a0:36:9f:c7:79:d4',
             'mtu' => 1500,
           },
+          'calif5a51df52c8' => {
+            'mac' => 'ee:ee:ee:ee:ee:ee',
+            'mtu' => 1450,
+            'operational_state' => 'up',
+            'physical' => false
+          },
+          'califaf7803c29b' => {
+            'mac' => 'ee:ee:ee:ee:ee:ee',
+            'mtu' => 1450,
+            'operational_state' => 'up',
+            'physical' => false
+          },
         }
       end
       let(:facts) do
@@ -45,11 +57,20 @@ describe 'profile::core::sysctl::rp_filter' do
         p2p1/2505
       ]
 
+      excluded_interfaces = %w[
+        calif5a51df52c8
+        califaf7803c29b
+      ]
+
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to have_sysctl__value_resource_count(interfaces.count) }
 
       interfaces.each do |int|
         it { is_expected.to contain_sysctl__value("net.ipv4.conf.#{int}.rp_filter") }
+      end
+
+      excluded_interfaces.each do |int|
+        it { is_expected.not_to contain_sysctl__value("net.ipv4.conf.#{int}.rp_filter") }
       end
     end
   end

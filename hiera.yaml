@@ -44,7 +44,7 @@ hierarchy:
     lookup_key: "eyaml_lookup_key"  # eyaml backend
     datadir: "/etc/puppetlabs/code/hieradata/private/%{environment}"
     paths:
-      - "node/%{facts.networking.fqdn}.yaml"
+      - "node/%{facts.networking.fqdn}.eyaml"
       - "site/%{site}/cluster/%{cluster}/variant/%{variant}/subvariant/%{subvariant}/%{facts.os.family}/major/%{facts.os.release.major}.eyaml"
       - "site/%{site}/cluster/%{cluster}/variant/%{variant}/subvariant/%{subvariant}.eyaml"
       - "site/%{site}/cluster/%{cluster}/variant/%{variant}/%{facts.os.family}/major/%{facts.os.release.major}.eyaml"

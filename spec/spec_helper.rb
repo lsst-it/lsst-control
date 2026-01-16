@@ -402,7 +402,6 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
     jhoblitt_b
     csilva_b
     dtapia_b
-    gseriche_b
   ]
 
   (admin_users + ['root']).each do |user|
@@ -434,6 +433,7 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
     cbarria
     cbarria_b
     hreinking_b
+    gseriche_b
   ].each do |user|
     it { is_expected.to contain_user(user).with_ensure('absent') }
   end

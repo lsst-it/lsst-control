@@ -14,7 +14,7 @@ Hiera Layers
 ------------
 
 Direct inclusion of classes via hiera is allowed but, by convention, restricted
-to `role` layers.
+to `role` layers. TEST
 
 | Layer                                                                                                                   | Class Inclusion Allowed |
 | -----                                                                                                                   | ----------------------- |

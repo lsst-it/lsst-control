@@ -14,7 +14,8 @@ class profile::core::sysctl::rp_filter (
     default => 0
   }
 
-  $interfaces = ['all', 'default'] + fact('networking.interfaces').keys
+  # ignore cali* interfaces (Calico virtual interfaces)
+  $interfaces = ['all', 'default'] + fact('networking.interfaces').filter |$k, $v| { $k !~ /^cali/ }.keys
   $interfaces.each |String $i| {
     # E.g., p2p1.360 -> p2p1/360
     $sysctl_dev = regsubst($i, /\./, '/', 'G')

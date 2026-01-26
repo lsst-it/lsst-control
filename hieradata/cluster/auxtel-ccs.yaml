@@ -108,7 +108,7 @@ ccs_sal::rpms_private:
   OpenSpliceDDS: "OpenSpliceDDS-6.10.4-1.el8.x86_64.rpm"
 
 daq::daqsdk::purge: false
-daq::daqsdk::version: "R5-V12.1"
+daq::daqsdk::version: "R5-V13.12"
 
 profile::ccs::tomcat::efd_namespace: "lsst.ATCamera"
 profile::ccs::tomcat::java_home: "/usr/lib/jvm/zulu-17"

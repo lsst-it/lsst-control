@@ -110,7 +110,7 @@ ccs_software::installations:
 
 daq::daqsdk::purge: false
 
-daq::daqsdk::version: "R5-V12.1"
+daq::daqsdk::version: "R5-V13.12"
 
 profile::ccs::tomcat::efd_namespace: "lsst.CCCamera"
 profile::ccs::tomcat::java_home: "/usr/lib/jvm/zulu-17"

@@ -50,6 +50,17 @@ dhcp::pools:
       - "1.0.0.1"
       - "1.1.1.1"
       - "8.8.8.8"
+  RUBINOBS-DMZ:
+    network: "139.229.154.112"
+    mask: "255.255.255.240"
+    gateway: "139.229.154.126"
+    range:
+      - "139.229.154.113 139.229.154.120"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+    nameservers:
+      - "1.0.0.1"
+      - "1.1.1.1"
+      - "8.8.8.8"
   Archive-LHN:
     network: "139.229.140.0"
     mask: "255.255.255.224"

@@ -85,6 +85,16 @@ describe 'foreman.ls.lsst.org', :sitepp do
       end
 
       it do
+        is_expected.to contain_dhcp__pool('RUBINOBS-DMZ').with(
+          network: '139.229.154.112',
+          mask: '255.255.255.240',
+          range: ['139.229.154.113 139.229.154.120'],
+          gateway: '139.229.154.126',
+          nameservers: ['1.0.0.1', '1.1.1.1', '8.8.8.8']
+        )
+      end
+
+      it do
         is_expected.to contain_dhcp__pool('Archive-LHN').with(
           network: '139.229.140.0',
           mask: '255.255.255.224',

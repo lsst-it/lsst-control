@@ -1,6 +1,8 @@
 ---
 powertop::ensure: "absent"
 
+include: 'google_chrome'
+
 nm::connections:
   enp7s0:
     content:

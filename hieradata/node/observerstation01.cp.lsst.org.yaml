@@ -1,6 +1,9 @@
 ---
 powertop::ensure: "absent"
 
+packages:
+  - "google-chrome-stable"
+
 nm::connections:
   enp7s0:
     content:

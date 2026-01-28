@@ -98,15 +98,15 @@ accounts::user_list:
 ccs_software::desktop: true
 ccs_software::env: "ComCam"
 ccs_software::installations:
-  comcam-software-42.0.6:
-    aliases:
-      - "puppet-42.0.6"
   comcam-software-43.0.0:
     aliases:
       - "puppet-43.0.0"
   comcam-software-43.0.1:
     aliases:
       - "puppet-43.0.1"
+  comcam-software-43.0.2:
+    aliases:
+      - "puppet-43.0.2"
 
 daq::daqsdk::purge: false
 

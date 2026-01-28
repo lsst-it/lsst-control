@@ -66,15 +66,15 @@ accounts::user_list:
 ccs_software::desktop: true
 ccs_software::env: "AuxTel"
 ccs_software::installations:
-  ats-software-42.0.6:
-    aliases:
-      - "puppet-42.0.6"
   ats-software-43.0.0:
     aliases:
       - "puppet-43.0.0"
   ats-software-43.0.1:
     aliases:
       - "puppet-43.0.1"
+  ats-software-43.0.2:
+    aliases:
+      - "puppet-43.0.2"
 
 ## Used in lookups:
 ccs_site: "summit"

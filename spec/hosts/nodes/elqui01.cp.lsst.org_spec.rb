@@ -57,7 +57,7 @@ describe 'elqui01.cp.lsst.org', :sitepp do
         is_expected.to contain_class('rke2').with(
           node_type: 'server',
           release_series: '1.32',
-          version: '1.32.10~rke2r1'
+          version: '1.32.11~rke2r1'
         )
       end
 

@@ -71,6 +71,7 @@ class profile::core::common (
   include profile::core::keytab
   include profile::core::nm_dispatch
   include profile::core::node_info
+  include profile::core::restic
   include profile::core::selinux
   include profile::core::systemd
   include rsyslog

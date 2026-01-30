@@ -5,3 +5,14 @@ classes:
 sudo::configs:
   niagara_sudoers:
     content: "%niagara ALL=(ALL) NOPASSWD: /usr/bin/niagaradctl"
+
+profile::core::restic::enable: true
+restic::repositories:
+  awsrepo:
+    backup_path:
+      - "/etc/mosquitto"
+      - "/opt/Niagara"
+    backup_timer: "*-*-* 09:00:00"
+    enable_forget: true
+    forget_timer: "Mon..Sun 23:00:00"
+    forget_flags: "--keep-last 20"

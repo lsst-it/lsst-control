@@ -55,7 +55,7 @@ dhcp::pools:
     mask: "255.255.255.240"
     gateway: "139.229.154.126"
     range:
-      - "139.229.154.113 139.229.154.120"
+      - "139.229.154.113 139.229.154.118"
     search_domains: "%{alias('dhcp::dnsdomain')}"
     nameservers:
       - "1.0.0.1"

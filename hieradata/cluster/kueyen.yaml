@@ -6,8 +6,8 @@ clustershell::groupmembers:
       - "kueyen[01-03]"
       - "kueyen[04-09]"
 profile::core::k8snode::enable_dhcp: true
-rke2::release_series: "1.31"
-rke2::version: "1.31.8~rke2r1"
+rke2::release_series: "1.32"
+rke2::version: "1.32.11~rke2r1"
 tuned::active_profile: "latency-performance"
 nm::connections:
   br2301:

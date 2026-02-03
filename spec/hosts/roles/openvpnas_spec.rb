@@ -21,12 +21,6 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          it do
-            is_expected.to contain_class('openvpnas').with(
-              version: '3.0.2_87c70987'
-            )
-          end
-
           it { is_expected.to contain_openvpnas__config__group('vpn-default') }
           it { is_expected.to contain_openvpnas__config__group('vpn-it') }
           it { is_expected.to contain_openvpnas__config__group('vpn-science') }

@@ -7,6 +7,7 @@ classes:
   - "profile::core::common"
   - "profile::core::debugutils"
   - "profile::core::nfsclient"
+  - "profile::core::podman::prune"
   - "profile::core::sysctl::lhn"
 
 profile::ccs::common::sysctls: false

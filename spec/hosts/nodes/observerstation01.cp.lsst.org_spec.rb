@@ -33,8 +33,8 @@ describe 'observerstation01.cp.lsst.org', :sitepp do
 
       it { is_expected.to have_nm__connection_resource_count(1) }
 
-      context 'with enp7s0' do
-        let(:interface) { 'enp7s0' }
+      context 'with enp6s0' do
+        let(:interface) { 'enp6s0' }
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'

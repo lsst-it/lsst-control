@@ -1,0 +1,45 @@
+---
+powertop::ensure: "absent"
+
+nm::connections:
+  enp0s20f0u3u5:
+    content:
+      connection:
+        id: "enp0s20f0u3u5"
+        uuid: "96c27f38-dc54-4f60-84ea-6bbc06b471f3"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp0s20f0u3u5"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp0s31f6:
+    content:
+      connection:
+        id: "enp0s31f6"
+        uuid: "ee0a2431-1bce-4d39-9a3c-3c0d99e7ba77"
+        type: "ethernet"
+        interface-name: "enp0s31f6"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  wlp2s0:
+    content:
+      connection:
+        id: "wlp2s0"
+        uuid: "993d6511-58ab-4d23-87cb-7ea4a38f7b26"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "wlp2s0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}

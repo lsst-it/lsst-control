@@ -47,7 +47,7 @@ describe "#{role} role" do
               ensure: 'present',
               provider: 'git',
               source: 'https://github.com/lsst-ts/ts_config_mttcs.git',
-              revision: 'v0.18.3-alpha.1',
+              revision: 'v0.22.0',
               keep_local_changes: 'false'
             )
           end
@@ -71,35 +71,35 @@ describe "#{role} role" do
             },
             'ts-guitool' => {
               'channel' => 'lsstts',
-              'version' => '0.3.2',
+              'version' => '0.3.3',
             },
             'ts-hexgui' => {
               'channel' => 'lsstts',
-              'version' => '0.5.3',
+              'version' => '0.5.4',
             },
             'ts-hexrotcomm' => {
               'channel' => 'lsstts',
-              'version' => '1.3.6',
+              'version' => '1.3.7',
             },
             'ts-m2com' => {
               'channel' => 'lsstts',
-              'version' => '1.5.14',
+              'version' => '1.5.15',
             },
             'ts-m2gui' => {
               'channel' => 'lsstts',
-              'version' => '1.1.10',
+              'version' => '1.1.11',
             },
             'ts-mtdomecom' => {
               'channel' => 'lsstts',
-              'version' => '0.3.5',
+              'version' => '0.3.10',
             },
             'ts-mtdomegui' => {
               'channel' => 'lsstts',
-              'version' => '0.5.7',
+              'version' => '0.6.2',
             },
             'ts-rotgui' => {
               'channel' => 'lsstts',
-              'version' => '0.4.6',
+              'version' => '0.5.1',
             },
             'ts-salobj' => {
               'channel' => 'lsstts',
@@ -111,7 +111,7 @@ describe "#{role} role" do
             },
             'ts-xml' => {
               'channel' => 'lsstts',
-              'version' => '24.2.1',
+              'version' => '26.0.0',
             },
           }
 

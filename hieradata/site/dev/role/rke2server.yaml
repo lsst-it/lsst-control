@@ -1,0 +1,3 @@
+---
+rke2::release_series: "1.33"
+rke2::version: "1.33.0~rke2r1"

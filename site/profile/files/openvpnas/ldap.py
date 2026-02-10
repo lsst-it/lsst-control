@@ -83,6 +83,8 @@ def post_auth(authcred, attributes, authret, info):
                     group = "vpn-comm"
                 elif 'vpn-clyso' in ldap_groups:
                     group = "vpn-clyso"
+                elif 'vpn-electric' in ldap_groups:
+                    group = "vpn-electric"
         if group:
             print("***** POST_AUTH: User group mapping found for %r, setting OpenVPN connection group to %r ..." % (info['user_dn'], group))
             authret['proplist']['conn_group'] = group

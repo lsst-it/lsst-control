@@ -1,41 +1,27 @@
 ---
-network::interfaces_hash:
-  eth0:  # fqdn - vlan3040
-    bootproto: "none"
-    defroute: "yes"
-    dns1: "%{lookup('dhcp::nameservers.0')}"
-    dns2: "%{lookup('dhcp::nameservers.1')}"
-    domain: "tuc.lsst.cloud"
-    gateway: "140.252.146.65"
-    ipaddress: "140.252.146.80"
-    macaddr: "52:54:00:d4:45:77"
-    netmask: "255.255.255.224"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  eth1:  # dds vrf - vlan3085
-    bootproto: "none"
-    defroute: "no"
-    gateway: "140.252.147.129"
-    ipaddress: "140.252.147.132"
-    macaddr: "52:54:00:d4:45:78"
-    netmask: "255.255.255.224"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-
-network::mroutes_hash:
-  eth1:
-    routes:
-      "140.252.147.16/28": "140.252.147.129"
-      "140.252.147.48/28": "140.252.147.129"
+nm::connections:
+  enp1s0:
+    content:
+      connection:
+        id: "enp1s0"
+        uuid: "73fb7aee-3f9c-4a2e-b356-750453b16c95"
+        type: "ethernet"
+        interface-name: "enp1s0"
+      ethernet: {}
+      ipv4:
+        address1: "140.252.146.82/24,140.252.146.65"
+        dns: "140.252.146.71;140.252.146.72;140.252.146.73;"
+        dns-search: "tu.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
 
 dhcp::interfaces:
-  - "eth0"
-  - "eth1"
+  - "enp1s0bogus"
 
 dhcp::authoritative: true
-dhcp::pxeserver: "140.252.146.80"
+dhcp::pxeserver: "140.252.146.80"  # foreman.ls.lsst.org
 # theforeman/dhcp 5.0.1 only supports `option domain-search` per pool
 dhcp::pools:
   vlan3030:  # pillan

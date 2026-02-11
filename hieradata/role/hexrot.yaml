@@ -36,7 +36,7 @@ accounts::group_list:
     gid: 70014
     forcelocal: true
 
-profile::ts::hexrot::ts_config_mttcs_version: "v0.18.3-alpha.1"
+profile::ts::hexrot::ts_config_mttcs_version: "v0.22.0"
 
 anaconda::anaconda_version: "Anaconda3-2023.07-2"
 anaconda::python_env_name: "py313"
@@ -56,28 +56,28 @@ anaconda::conda_packages:
     version: "6.9.2"
   ts-guitool:
     channel: "lsstts"
-    version: "0.3.2"
+    version: "0.3.3"
   ts-hexgui:
     channel: "lsstts"
-    version: "0.5.3"
+    version: "0.5.4"
   ts-hexrotcomm:
     channel: "lsstts"
-    version: "1.3.6"
+    version: "1.3.7"
   ts-m2com:
     channel: "lsstts"
-    version: "1.5.14"
+    version: "1.5.15"
   ts-m2gui:
     channel: "lsstts"
-    version: "1.1.10"
+    version: "1.1.11"
   ts-mtdomecom:
     channel: "lsstts"
-    version: "0.3.5"
+    version: "0.3.10"
   ts-mtdomegui:
     channel: "lsstts"
-    version: "0.5.7"
+    version: "0.6.2"
   ts-rotgui:
     channel: "lsstts"
-    version: "0.4.6"
+    version: "0.5.1"
   ts-salobj:
     channel: "lsstts"
     version: "8.2.6"
@@ -86,4 +86,4 @@ anaconda::conda_packages:
     version: "2.2.2"
   ts-xml:
     channel: "lsstts"
-    version: "24.2.1"
+    version: "26.0.0"

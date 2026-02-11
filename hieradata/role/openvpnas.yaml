@@ -22,6 +22,8 @@ profile::core::openvpnas::vpn_groups:
     superuser: false
   vpn-clyso:
     superuser: false
+  vpn-electric:
+    superuser: false
 
 rsyslog::config::custom_config:
   openvpnas_forward:

@@ -35,6 +35,7 @@ describe "#{role} role" do
           it { is_expected.to contain_openvpnas__config__group('vpn-comm') }
           it { is_expected.to contain_openvpnas__config__group('vpn-clyso') }
           it { is_expected.to contain_openvpnas__config__group('vpn-users') }
+          it { is_expected.to contain_openvpnas__config__group('vpn-electric') }
 
           include_examples('common', os_facts:, site:)
         end # host

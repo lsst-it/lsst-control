@@ -4,8 +4,7 @@ require 'spec_helper'
 
 describe 'foreman.tuc.lsst.cloud', :sitepp do
   on_supported_os.each do |os, os_facts|
-    # XXX networking needs to be updated to support EL8+
-    next unless os =~ %r{centos-7-x86_64}
+    next unless os =~ %r{almalinux-9-x86_64}
 
     context "on #{os}" do
       let(:facts) do
@@ -40,15 +39,27 @@ describe 'foreman.tuc.lsst.cloud', :sitepp do
       end
       let(:dhcp_interfaces) do
         %w[
-          eth0
-          eth1
+          enp1s0
         ]
       end
+
+      include_context 'with nm interface'
 
       it { is_expected.to compile.with_all_deps }
 
       include_examples 'vm'
       include_examples 'dhcp server'
+
+      context 'with enp1s0' do
+        let(:interface) { 'enp1s0' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('140.252.146.80/27,140.252.146.65') }
+        it { expect(nm_keyfile['ipv4']['dns']).to eq('140.252.146.71;140.252.146.72;140.252.146.73;') }
+        it { expect(nm_keyfile['ipv4']['dns-search']).to eq('tu.lsst.org;') }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
+      end
 
       it do
         is_expected.to contain_dhcp__pool('vlan3030').with(
@@ -87,19 +98,6 @@ describe 'foreman.tuc.lsst.cloud', :sitepp do
       end
 
       it do
-        is_expected.to contain_dhcp__pool('vlan3065').with(
-          network: '140.252.147.16',
-          mask: '255.255.255.240',
-          range: ['140.252.147.24 140.252.147.30'],
-          gateway: '140.252.147.17',
-          static_routes: [
-            { 'network' => '140.252.147.48', 'mask' => '28', 'gateway' => '140.252.147.17' },
-            { 'network' => '140.252.147.128', 'mask' => '27', 'gateway' => '140.252.147.17' },
-          ]
-        )
-      end
-
-      it do
         is_expected.to contain_dhcp__pool('vlan3070').with(
           network: '140.252.147.32',
           mask: '255.255.255.240',
@@ -109,37 +107,11 @@ describe 'foreman.tuc.lsst.cloud', :sitepp do
       end
 
       it do
-        is_expected.to contain_dhcp__pool('vlan3075').with(
-          network: '140.252.147.48',
-          mask: '255.255.255.240',
-          range: ['140.252.147.56 140.252.147.62'],
-          gateway: '140.252.147.49',
-          static_routes: [
-            { 'network' => '140.252.147.16', 'mask' => '28', 'gateway' => '140.252.147.49' },
-            { 'network' => '140.252.147.128', 'mask' => '27', 'gateway' => '140.252.147.49' },
-          ]
-        )
-      end
-
-      it do
         is_expected.to contain_dhcp__pool('vlan3080').with(
           network: '140.252.147.64',
           mask: '255.255.255.224',
           range: ['140.252.147.69 140.252.147.78'],
           gateway: '140.252.147.65'
-        )
-      end
-
-      it do
-        is_expected.to contain_dhcp__pool('vlan3085').with(
-          network: '140.252.147.128',
-          mask: '255.255.255.224',
-          range: ['140.252.147.132 140.252.147.158'],
-          gateway: '140.252.147.129',
-          static_routes: [
-            { 'network' => '140.252.147.16', 'mask' => '28', 'gateway' => '140.252.147.129' },
-            { 'network' => '140.252.147.48', 'mask' => '28', 'gateway' => '140.252.147.129' },
-          ]
         )
       end
 

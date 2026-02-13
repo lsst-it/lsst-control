@@ -63,6 +63,10 @@ class profile::core::openvpnas (
     key   => 'auth.ldap.0.users_base_dn',
     value => 'cn=accounts,dc=lsst,dc=cloud',
   }
+  openvpnas::config::key { 'auth.ldap.0.add_req':
+    key   => 'auth.ldap.0.add_req',
+    value => 'memberOf=cn=vpn,cn=groups,cn=accounts,dc=lsst,dc=cloud',
+  }
   openvpnas::config::key { 'auth.ldap.0.uname_attr':
     key   => 'auth.ldap.0.uname_attr',
     value => 'uid',

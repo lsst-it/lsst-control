@@ -60,6 +60,13 @@ describe 'profile::core::openvpnas' do
         end
 
         it do
+          is_expected.to contain_openvpnas__config__key('auth.ldap.0.add_req').with(
+            key: 'auth.ldap.0.add_req',
+            value: 'memberOf=cn=vpn,cn=groups,cn=accounts,dc=lsst,dc=cloud'
+          )
+        end
+
+        it do
           is_expected.to contain_openvpnas__config__key('auth.ldap.0.uname_attr').with(
             key: 'auth.ldap.0.uname_attr',
             value: 'uid'

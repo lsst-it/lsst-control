@@ -48,6 +48,18 @@ describe "#{role} role" do
               is_expected.to contain_host(host).with(
                 ip:
               )
+
+              is_expected.to contain_restic__repository('ipa').with(
+                backup_path: %w[
+                  /var/lib/ipa/backup
+                ],
+                backup_pre_cmd: 'mkdir /var/lib/ipa/backup;/sbin/ipa-backup',
+                backup_post_cmd: 'rm -rf /var/lib/ipa/backup',
+                backup_timer: '*-*-* 9:23:00',
+                enable_forget: true,
+                forget_timer: '*-*-* 10:23:00',
+                forget_flags: '--keep-last 90'
+              )
             end
           end
 

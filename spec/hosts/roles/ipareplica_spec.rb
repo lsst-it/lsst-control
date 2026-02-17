@@ -53,8 +53,7 @@ describe "#{role} role" do
                 backup_path: %w[
                   /var/lib/ipa/backup
                 ],
-                backup_pre_cmd: 'mkdir /var/lib/ipa/backup;/sbin/ipa-backup',
-                backup_post_cmd: 'rm -rf /var/lib/ipa/backup',
+                backup_pre_cmd: "/bin/bash -c 'rm -rf /var/lib/ipa/backup && mkdir /var/lib/ipa/backup && /sbin/ipa-backup'",
                 backup_timer: '*-*-* 9:23:00',
                 enable_forget: true,
                 forget_timer: '*-*-* 10:23:00',

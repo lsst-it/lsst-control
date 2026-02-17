@@ -303,7 +303,7 @@ restic::repositories:
   foreman:
     backup_path:
       - "/tmp/foreman-backups"
-    backup_pre_cmd: "/bin/bash -c 'rm -rf /tmp/foreman-backups && /bin/foreman-maintain backup online /tmp/foreman-backups -y'"
+    backup_pre_cmd: "/bin/bash -c 'rm -rf /tmp/foreman-backups && /bin/foreman-maintain backup online -y /tmp/foreman-backups'"
     backup_timer: "*-*-* 09:00:00"
     enable_forget: true
     forget_timer: "Mon..Sun 23:00:00"

@@ -9,6 +9,8 @@ classes:
   - "profile::core::foreman::fog_hack"
   - "profile::core::podman::prune"
 
+profile::core::restic::enable: true
+
 dhcp::bootp: true
 dhcp::ddns_update_style: "none"
 dhcp::default_lease_time: &lease_time 86400
@@ -296,3 +298,13 @@ files:
     content: |
       :filters:
         - !ruby/regexp '/^(?!profile::)/'
+
+restic::repositories:
+  foreman:
+    backup_path:
+      - "/tmp/foreman-backups"
+    backup_pre_cmd: "/bin/bash -c 'rm -rf /tmp/foreman-backups && /bin/foreman-maintain backup online /tmp/foreman-backups -y'"
+    backup_timer: "*-*-* 09:00:00"
+    enable_forget: true
+    forget_timer: "Mon..Sun 23:00:00"
+    forget_flags: "--keep-last 90"

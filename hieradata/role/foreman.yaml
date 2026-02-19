@@ -4,7 +4,6 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::dhcp"
   - "profile::core::foreman"
-  - "profile::core::foreman::fog_hack"
   - "profile::core::podman::prune"
 
 profile::core::restic::enable: true

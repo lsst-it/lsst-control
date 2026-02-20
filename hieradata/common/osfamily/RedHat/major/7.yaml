@@ -5,7 +5,6 @@ profile::core::yum::versionlock:
     version: "%{lookup('puppet_agent::package_version')}"
     release: "1.el7"
     before: "Package[puppet-agent]"
-profile::ts::opensplicedds::ensure: "6.10.4-6.el7"
 sssd::main_config:
   pam:
     pam_response_filter:

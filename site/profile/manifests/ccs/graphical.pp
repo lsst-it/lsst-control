@@ -43,38 +43,24 @@ class profile::ccs::graphical (
     ## Although people sometimes want to eg use vnc,
     ## so it does end up being needed on servers too.
     ## "Server with GUI" instead? Not much smaller.
-    # Packages not present on EL8 or EL9
-    if fact('os.release.major') == '7' {
-      yum::group { 'GNOME Desktop':
-        ensure  => present,
-        timeout => 1800,
-        notify  => Package[$unwanted_gnome_pkgs],
-      }
-      yum::group { 'MATE Desktop':
-        ensure  => present,
-        timeout => 900,
-      }
+    yum::group { 'Server with GUI':
+      ensure  => present,
+      timeout => 900,
+      notify  => Package[$unwanted_gnome_pkgs],
     }
-    else {
-      yum::group { 'Server with GUI':
-        ensure  => present,
-        timeout => 900,
-        notify  => Package[$unwanted_gnome_pkgs],
-      }
-      ## There doesn't seem to be a group for this in epel9.
-      stdlib::ensure_packages([
-          'mate-desktop',
-          'mate-applets',
-          'mate-menu',
-          'mate-panel',
-          'mate-session-manager',
-          'mate-terminal',
-          'mate-themes',
-          'mate-utils',
-          'marco',
-          'caja',
-      ])
-    }
+    ## There doesn't seem to be a group for this in epel9.
+    stdlib::ensure_packages([
+        'mate-desktop',
+        'mate-applets',
+        'mate-menu',
+        'mate-panel',
+        'mate-session-manager',
+        'mate-terminal',
+        'mate-themes',
+        'mate-utils',
+        'marco',
+        'caja',
+    ])
 
     package { $unwanted_gnome_pkgs:
       ensure => purged,

@@ -619,18 +619,6 @@ shared_examples 'dco' do
   end
 
   it do
-    is_expected.to contain_vcsrepo('/home/dco/ts_ddsconfig').with(
-      ensure: 'present',
-      provider: 'git',
-      source: 'https://github.com/lsst-ts/ts_ddsconfig.git',
-      keep_local_changes: true,
-      user: 'dco',
-      owner: 'dco',
-      group: 'dco'
-    )
-  end
-
-  it do
     is_expected.to contain_vcsrepo('/home/dco/docker-compose-admin').with(
       ensure: 'present',
       provider: 'git',

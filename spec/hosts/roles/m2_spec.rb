@@ -25,13 +25,6 @@ describe "#{role} role" do
           it { is_expected.to contain_class('profile::core::common') }
           it { is_expected.to contain_class('profile::core::debugutils') }
           it { is_expected.to contain_class('profile::core::ni_packages') }
-          it { is_expected.to contain_class('profile::ts::opensplicedds') }
-          it { is_expected.to contain_yumrepo('lsst-ts-private') }
-
-          it do
-            is_expected.to contain_package('OpenSpliceDDS')
-              .that_requires('Yumrepo[lsst-ts-private]')
-          end
         end # host
       end # lsst_sites
     end # on os

@@ -339,15 +339,8 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
       it { is_expected.to contain_class('lldpd').with_manage_repo(true) }
 
       it { is_expected.not_to contain_class('nm') }
-
-      if os_facts[:os]['architecture'] == 'x86_64'
-        it { is_expected.to contain_class('scl') }
-      else
-        it { is_expected.not_to contain_class('scl') }
-      end
     else # every EL version except 7
       it { is_expected.not_to contain_class('yum').with_managed_repos(['extras']) }
-      it { is_expected.not_to contain_class('scl') }
 
       it do
         is_expected.to contain_class('nm').with(

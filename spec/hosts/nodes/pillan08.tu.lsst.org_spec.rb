@@ -73,7 +73,6 @@ describe 'pillan08.tu.lsst.org', :sitepp do
       end
 
       it { is_expected.to contain_class('cni::plugins::dhcp::service') }
-      it { is_expected.to contain_class('profile::core::ospl').with_enable_rundir(true) }
 
       # 2 extra instances in the catalog for the rename interfaces
       it { is_expected.to have_nm__connection_resource_count(14 + 2) }

@@ -5,7 +5,6 @@ clustershell::groupmembers:
     member:
       - "kueyen[01-03]"
       - "kueyen[04-09]"
-profile::core::ospl::enable_rundir: true
 profile::core::k8snode::enable_dhcp: true
 tuned::active_profile: "latency-performance"
 cni::plugins::enable: ["macvlan", "static"]

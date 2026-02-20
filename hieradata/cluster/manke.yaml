@@ -3,7 +3,6 @@ clustershell::groupmembers:
   manke:
     group: "manke"
     member: "manke[01-10]"
-profile::core::ospl::enable_rundir: true
 profile::core::k8snode::enable_dhcp: true
 tuned::active_profile: "latency-performance"
 nm::conf:

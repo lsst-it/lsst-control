@@ -26,18 +26,6 @@ class profile::core::hardware {
     }
     /1114S-WN10RT/: {
       include ipmi
-
-      # EL7 only
-      if fact('os.family') == 'RedHat' and fact('os.release.major') == '7' {
-        # aspm is suspected of causing problems with internal NVMes
-        include profile::core::kernel::pcie_aspm
-        # apst is suspected of causing problems with NVMes
-        include profile::core::kernel::nvme_apst
-        # attempt to improve NVMe hotplug support on el7
-        profile::util::kernel_param { 'pci=pcie_bus_perf':
-          reboot => false,
-        }
-      }
     }
     /SSG-640SP-E1CR90/: {
       include ipmi

@@ -12,6 +12,3 @@ for _dir in /opt/lsst/ccs/prod/bin /usr/local/bin; do
     [ -e $_dir ] && [[ $PATH != *$_dir* ]] && PATH=$_dir:$PATH
 done
 unset _dir
-
-# shellcheck disable=SC1091
-[ ! -e /opt/rh/rh-git218 ] || source scl_source enable rh-git218

@@ -25,9 +25,6 @@
 # @param manage_firewall
 #   Whether or not to include the firewall class
 #
-# @param manage_scl
-#   If `true`, enable redhat scl repos
-#
 # @param manage_repos
 #   If `true`, manage core os yum repos
 #
@@ -51,7 +48,6 @@ class profile::core::common (
   Boolean $manage_ipa = true,
   Boolean $disable_ipv6 = false,
   Boolean $manage_firewall = true,
-  Boolean $manage_scl = true,
   Boolean $manage_repos = true,
   Boolean $manage_irqbalance = true,
   Boolean $manage_resolv_conf = true,
@@ -103,22 +99,9 @@ class profile::core::common (
       }
     }
 
-    # on EL7 only
-    case fact('os.release.major') {
-      '7': {
-        if fact('os.architecture') == 'x86_64' {
-          # no scl repos for aarch64
-          if $manage_scl {
-            include scl
-          }
-        }
-      }
-      default: { # EL9+
-        if $manage_network_manager {
-          stdlib::ensure_packages(['NetworkManager-initscripts-updown'])
-          include nm
-        }
-      }
+    if $manage_network_manager {
+      stdlib::ensure_packages(['NetworkManager-initscripts-updown'])
+      include nm
     }
   }
 

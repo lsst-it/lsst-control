@@ -3,8 +3,6 @@
 #   Provides base packages for SAL/DDS diagnostics
 #
 class profile::ccs::sal_dx {
-  require profile::ts::opensplicedds
-
   $directory = '/opt/lsst-ts'
   $packages = [
     'vim',

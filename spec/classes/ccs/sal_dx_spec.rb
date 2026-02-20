@@ -9,12 +9,6 @@ describe 'profile::ccs::sal_dx' do
 
       context 'with no params' do
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_yumrepo('lsst-ts-private') }
-
-        it do
-          is_expected.to contain_package('OpenSpliceDDS')
-            .that_requires('Yumrepo[lsst-ts-private]')
-        end
       end
     end
   end

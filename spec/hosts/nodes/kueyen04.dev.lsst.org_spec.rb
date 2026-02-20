@@ -67,8 +67,6 @@ describe 'kueyen04.dev.lsst.org', :sitepp do
 
       it { is_expected.to contain_class('cni::plugins::dhcp') }
 
-      it { is_expected.to contain_class('profile::core::ospl').with_enable_rundir(true) }
-
       it { is_expected.to have_nm__connection_resource_count(8) }
 
       %w[

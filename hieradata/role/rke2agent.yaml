@@ -5,7 +5,6 @@ classes:
   - "profile::core::debugutils"
   - "profile::core::k8snode"
   - "profile::core::kernel::pquota"
-  - "profile::core::ospl"
   - "restic"
   - "rke2"
 

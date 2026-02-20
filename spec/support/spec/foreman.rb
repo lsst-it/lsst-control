@@ -2,10 +2,6 @@
 
 shared_examples 'foreman' do
   it do
-    is_expected.to contain_cron('webhook').with_command('/usr/bin/systemctl restart webhook > /dev/null 2>&1')
-  end
-
-  it do
     is_expected.to contain_cron('smee').with_command('/usr/bin/systemctl restart smee > /dev/null 2>&1')
   end
 
@@ -17,7 +13,6 @@ shared_examples 'foreman' do
   it { is_expected.to contain_foreman__cli__plugin('foreman_remote_execution') }
   it { is_expected.to contain_foreman__plugin('templates') }
   it { is_expected.to contain_foreman__cli__plugin('foreman_templates') }
-  it { is_expected.to contain_foreman__plugin('column_view') }
   it { is_expected.to contain_foreman_proxy__plugin('dynflow') }
   it { is_expected.to contain_foreman__plugin('discovery') }
   it { is_expected.to contain_foreman__cli__plugin('foreman_discovery') }
@@ -50,8 +45,6 @@ end
 
 shared_examples 'generic foreman' do
   include_examples 'debugutils'
-  include_examples 'docker'
-  include_examples 'fog_hack'
   include_examples 'foreman'
   include_examples 'restic common'
 
@@ -63,7 +56,7 @@ shared_examples 'generic foreman' do
 
   it do
     is_expected.to contain_class('foreman::repo').with(
-      repo: '3.2'
+      repo: '3.16'
     )
   end
 
@@ -252,16 +245,18 @@ shared_examples 'generic foreman' do
   it do
     is_expected.to contain_class('smee').with(
       url: smee_url,
-      path: '/payload',
-      port: 8088
+      path: '/api/v1/r10k/environment',
+      port: 4000
     )
   end
 
   it do
     is_expected.to contain_yumrepo('pc_repo').with(
-      baseurl: "http://yum.puppet.com/puppet7/el/#{facts[:os]['release']['major']}/x86_64"
+      baseurl: "http://yum.puppet.com/puppet8/el/#{facts[:os]['release']['major']}/x86_64"
     )
   end
+
+  it { is_expected.to contain_package('podman-docker') }
 
   it do
     is_expected.to contain_restic__repository('foreman').with(

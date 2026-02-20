@@ -12,11 +12,11 @@
 #
 # lint:ignore:top_scope_facts
 class profile::core::node_info (
-  Optional[String[1]] $site = $::site,
-  Optional[String[1]] $role = $::role,
-  Optional[String[1]] $cluster = $::cluster,
-  Optional[String[1]] $variant = $::variant,
-  Optional[String[1]] $subvariant = $::subvariant,
+  Optional[String] $site = $::site,
+  Optional[String] $role = $::role,
+  Optional[String] $cluster = $::cluster,
+  Optional[String] $variant = $::variant,
+  Optional[String] $subvariant = $::subvariant,
 ) {
 # lint:endignore
 }

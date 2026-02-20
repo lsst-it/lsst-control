@@ -39,7 +39,6 @@ class profile::core::foreman (
   include foreman::compute::libvirt
   include foreman::compute::vmware
   include foreman_envsync
-  include foreman::plugin::column_view
   include foreman::plugin::discovery
   include foreman::plugin::puppet
   include foreman::plugin::remote_execution
@@ -85,42 +84,23 @@ class profile::core::foreman (
     }
   }
 
-  # smee has some startup problems due to too new (?) nodejs on EL8
-  # https://gist.github.com/bastelfreak/6d0d3bc324633f04c5b1fc432e871192
   if $manage_smee {
     assert_type(Stdlib::HTTPSUrl, $smee_url)
     class { 'smee':
       url  => $smee_url,
-      path => '/payload',
-      port => 8088,
+      path => '/api/v1/r10k/environment',
+      port => 4000,
     }
     cron { 'smee':
       command => '/usr/bin/systemctl restart smee > /dev/null 2>&1',
       user    => 'root',
-      hour    => 4,
+      hour    => '*',
       minute  => 42,
     }
   }
 
-  # el7 systemd is too old to support periodic graceful restarts of a service unit.
-  # Using cron seems slightly more obvious than creating a timer unit than triggers a one shot
-  # service to restart the original service unit.
-  cron { 'webhook':
-    command => '/usr/bin/systemctl restart webhook > /dev/null 2>&1',
-    user    => 'root',
-    hour    => 4,
-    minute  => 42,
-  }
-
   package { 'hiera-eyaml':
     provider => 'puppetserver_gem',
-  }
-
-  # The foreman-selinux package is not managed by theforeman/foreman when selinux is disabled.  # This is to cleanup old installs.
-  unless fact('os.selinux.enabled') {
-    package { 'foreman-selinux':
-      ensure => absent,
-    }
   }
 
   # theforeman/foreman manages yum repos directly.  The foreman-release package
@@ -128,11 +108,6 @@ class profile::core::foreman (
   package { 'foreman-release':
     ensure  => absent,
     require => Class['foreman'],
-  }
-
-  if fact('os.family') == 'RedHat' and fact('os.release.major') == '7' {
-    include scl
-    Class['scl'] -> Class['foreman']
   }
 
   # XXX theforeman/puppet does not manage the yumrepo.  puppetlabs/puppet_agent
@@ -143,11 +118,11 @@ class profile::core::foreman (
   # puppet_agent::osfamily::redhat uses puppet_agent::* variables.
   yumrepo { 'pc_repo':
     ensure   => 'present',
-    baseurl  => "http://yum.puppet.com/puppet7/el/${fact('os.release.major')}/x86_64",
-    descr    => 'Puppet Labs puppet7 Repository',
+    baseurl  => "http://yum.puppet.com/puppet8/el/${fact('os.release.major')}/x86_64",
+    descr    => 'Puppet Labs puppet8 Repository',
     enabled  => true,
     gpgcheck => '1',
-    gpgkey   => "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppet\n  file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppet-20250406",
+    gpgkey   => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppet8-release',
     before   => Class['puppet'],
   }
 

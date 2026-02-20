@@ -1,5 +1,7 @@
 forge 'https://forgeapi.puppetlabs.com'
 
+exclusion 'choria-mcollective'
+
 mod 'atsonkov/grubby', '0.3.2'
 mod 'blockops/tailscale', git: 'https://github.com/lsst-it/puppet-tailscale', ref: 'bc7e880'  # https://github.com/lsst-it/puppet-tailscale/pull/3 we are using a fork as we wait for the main Forge release to accept apt 10.x
 mod 'bodgit/scl', git: 'https://github.com/lsst-it/puppet-scl', ref: 'c367361'  # https://github.com/bodgit/puppet-scl/pull/2
@@ -35,7 +37,7 @@ mod 'lsst/powertop', '0.1.2'
 mod 'lsst/rke', '2.2.0'
 mod 'lsst/rke2', '2.0.0'
 mod 'lsst/s3nd', '1.2.1'
-mod 'lsst/smee', '2.4.0'
+mod 'lsst/smee', '3.0.0'
 mod 'puppet/alternatives', '6.0.0'
 mod 'puppet/archive', '8.1.0'
 mod 'puppet/augeas', '2.0.0'
@@ -90,7 +92,7 @@ mod 'puppet/postfix',  '6.0.0'
 mod 'puppet/prometheus', '17.0.0'
 mod 'puppet/python', '8.0.0'
 mod 'puppet/quadlets', '2.2.1'
-mod 'puppet/r10k', git: 'https://github.com/lsst-it/puppet-r10k', ref: '78b200b'  # Using branch temporarily while waiting for approval here: https://github.com/voxpupuli/puppet-r10k/pull/679
+mod 'puppet/r10k', '15.0.0'
 mod 'puppet/redis', '11.1.0'
 mod 'puppet/rsyslog', '7.3.0'
 mod 'puppet/selinux', '5.0.0'
@@ -115,10 +117,10 @@ mod 'stm/debconf', '7.0.1'
 mod 'syseleven/restic', '2.8.1'
 mod 'theforeman/dhcp', '9.4.0'
 mod 'theforeman/dns', '11.1.0'
-mod 'theforeman/foreman', git: 'https://github.com/lsst-it/puppet-foreman', ref: '23f86f4'  # 20.2.0 + dep updates
-mod 'theforeman/foreman_proxy', git: 'https://github.com/lsst-it/puppet-foreman_proxy', ref: '90af64a'  # https://github.com/theforeman/puppet-foreman_proxy/pull/772 https://github.com/theforeman/puppet-foreman_proxy/pull/816
+mod 'theforeman/foreman', '27.2.0'
+mod 'theforeman/foreman_proxy', '28.2.0'
 mod 'theforeman/puppet', '21.1.0'
-mod 'theforeman/puppetserver_foreman', '4.2.2'
-mod 'theforeman/tftp', git: 'https://github.com/lsst-it/puppet-tftp', ref: 'a27be8a' # Official module does not support EL8
+mod 'theforeman/puppetserver_foreman', '4.3.0'
+mod 'theforeman/tftp', '10.0.0'
 mod 'treydock/clustershell', '4.0.0'
 mod 'treydock/perfsonar', git: 'https://github.com/lsst-it/puppet-module-perfsonar', ref: '6e9449e'  # 4.1.0 + https://github.com/treydock/puppet-module-perfsonar/pull/26

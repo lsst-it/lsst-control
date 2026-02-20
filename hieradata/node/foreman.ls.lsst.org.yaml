@@ -1,20 +1,24 @@
 ---
-network::interfaces_hash:
-  eth0:  # fqdn
-    bootproto: "none"
-    defroute: "yes"
-    dns1: "%{lookup('dhcp::nameservers.0')}"
-    dns2: "%{lookup('dhcp::nameservers.1')}"
-    domain: "%{lookup('dhcp::dnsdomain.0')}"
-    ipaddress: "139.229.135.5"
-    gateway: "139.229.135.254"
-    netmask: "255.255.255.0"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
+nm::connections:
+  enp1s0:  # fqdn
+    content:
+      connection:
+        id: "enp1s0"
+        uuid: "b99c7656-4a18-36dd-9aa7-9b2dff15ae7f"
+        type: "ethernet"
+        interface-name: "enp1s0"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.135.5/24,139.229.135.254"
+        dns: "139.229.135.53;139.229.135.54;139.229.135.55;"
+        dns-search: "ls.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
 
 dhcp::interfaces:
-  - "eth0"
+  - "enp1s0"
 
 dhcp::authoritative: true
 dhcp::pxeserver: "139.229.135.5"  # foreman.ls.lsst.org

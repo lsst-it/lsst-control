@@ -4,10 +4,10 @@ require 'voxpupuli/test/spec_helper'
 require 'iniparse'
 
 # foreman, puppetserver and termini versions
-FOREMAN_VERSION = '3.2.1'
+FOREMAN_VERSION = '3.16.0'
 PUPPETAGENT_VERSION = '7.27.0'
-PUPPETSERVER_VERSION = '7.14.0'
-TERMINI_VERSION = PUPPETSERVER_VERSION
+PUPPETSERVER_VERSION = '8.7.0'
+TERMINI_VERSION = '8.8.1'
 
 # facterdb does not include puppetlabs/stdlib facts
 add_stdlib_facts
@@ -171,7 +171,7 @@ shared_examples 'krb5.conf content' do |match|
   end
 end
 
-shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, node_exporter: true|
+shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, node_exporter: true, puppet_version: nil|
   include_examples('bash_completion', os_facts:)
   include_examples 'convenience'
   include_examples('rsyslog defaults', site:)
@@ -304,6 +304,8 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
       # 7.24.0 is the last version of puppet-agent to support aarch64 on RHEL 7
       # see: http://yum.puppet.com/puppet7/el/7/aarch64/
       let(:puppetagent_version) { '7.24.0' }
+    elsif !puppet_version.nil?
+      let(:puppetagent_version) { puppet_version }
     else
       let(:puppetagent_version) { PUPPETAGENT_VERSION }
     end
@@ -927,26 +929,6 @@ end
 
 shared_examples 'ipmi' do
   it { is_expected.to contain_class('ipmi') }
-end
-
-shared_examples 'fog_hack' do
-  it { is_expected.to contain_package('libvirt-devel') }
-
-  it do
-    is_expected.to contain_archive('fog-libvirt-0.11.0.gem').with(
-      ensure: 'present',
-      path: '/tmp/fog-libvirt-0.11.0.gem',
-      source: 'https://github.com/lsst-it/fog-libvirt/releases/download/v0.11.0/fog-libvirt-0.11.0.gem'
-    ).that_notifies('Exec[install-fog-libvirt.0.11.0.gem]')
-  end
-
-  it do
-    is_expected.to contain_exec('install-fog-libvirt.0.11.0.gem').with(
-      command: '/usr/bin/scl enable rh-ruby27 tfm -- gem install /tmp/fog-libvirt-0.11.0.gem',
-      path: '/usr/bin:/bin',
-      refreshonly: true
-    ).that_requires('Package[libvirt-devel]')
-  end
 end
 
 Dir['./spec/support/spec/**/*.rb'].each { |f| require f }

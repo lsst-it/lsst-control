@@ -6,7 +6,7 @@ role = 'foreman'
 
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
-    next unless os =~ (%r{^centos-7-x86_64$}) || os =~ (%r{^almalinux-8-x86_64$})
+    next unless os =~ (%r{^almalinux-9-x86_64$})
 
     context "on #{os}" do
       let(:node_params) do
@@ -44,7 +44,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples('common', os_facts:, site:)
+        include_examples('common', os_facts:, site:, puppet_version: '8.10.0')
         include_examples 'generic foreman'
       end # host
 
@@ -74,7 +74,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples('common', os_facts:, site:)
+        include_examples('common', os_facts:, site:, puppet_version: '8.10.0')
         include_examples 'generic foreman'
       end # host
 
@@ -105,7 +105,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples('common', os_facts:, site:)
+        include_examples('common', os_facts:, site:, puppet_version: '8.10.0')
         include_examples 'generic foreman'
       end # host
 
@@ -135,7 +135,7 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples('common', os_facts:, site:)
+        include_examples('common', os_facts:, site:, puppet_version: '8.10.0')
         include_examples 'generic foreman'
       end # host
     end

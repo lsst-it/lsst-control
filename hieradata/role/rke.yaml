@@ -10,7 +10,6 @@ classes:
   - "profile::core::kernel::pquota"
   - "profile::core::kubecompletion"
   - "profile::core::rke"
-  - "profile::core::velero"
   - "restic"
 
 packages:

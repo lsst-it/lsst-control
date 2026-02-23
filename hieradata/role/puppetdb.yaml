@@ -16,7 +16,7 @@ profile::core::puppetdb::ldap_servers:
   - "ipa2.ls.lsst.org"
   - "ipa3.ls.lsst.org"
 puppetdb::database_listen_address: "localhost"
-puppetdb::globals::version: "7.14.0"
+puppetdb::globals::version: "8.8.1"
 puppetdb::listen_address: "localhost"  # http only
 puppetdb::manage_package_repo: false
 puppetdb::postgres_version: "15"

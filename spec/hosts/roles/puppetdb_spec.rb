@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-PUPPETDB_VERSION = '7.14.0'
+PUPPETDB_VERSION = '8.8.1'
 
 shared_examples 'puppetdb' do
   %w[

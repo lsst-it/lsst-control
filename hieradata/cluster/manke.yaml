@@ -36,6 +36,32 @@ nm::connections:
         method: "disabled"
       ipv6:
         method: "disabled"
+  enp129s0f0:
+    content:
+      connection:
+        id: "enp129s0f0"
+        uuid: "688bf5bf-d649-34b4-15eb-b07c50ac43f8"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp129s0f0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp129s0f1:
+    content:
+      connection:
+        id: "enp129s0f1"
+        uuid: "46d19ce1-bcab-7e77-6fc7-b730b26c54b1"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp129s0f1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
   enp4s0f3u2u2c2:
     content:
       connection:
@@ -49,23 +75,23 @@ nm::connections:
         method: "disabled"
       ipv6:
         method: "disabled"
-  enp129s0f0:
+  enp197s0f0np0:
     content:
       connection:
-        id: "enp129s0f0"
-        uuid: "688bf5bf-d649-34b4-15eb-b07c50ac43f8"
+        id: "enp197s0f0np0"
+        uuid: "5b227a30-83c2-375b-ae45-e7257b458b21"
         type: "ethernet"
-        interface-name: "enp129s0f0"
+        interface-name: "enp197s0f0np0"
         master: "bond0"
         slave-type: "bond"
       ethernet: {}
-  enp129s0f1:
+  enp197s0f1np1:
     content:
       connection:
-        id: "enp129s0f1"
-        uuid: "46d19ce1-bcab-7e77-6fc7-b730b26c54b1"
+        id: "enp197s0f1np1"
+        uuid: "8e1b167b-36e0-3d41-8231-966df6542e64"
         type: "ethernet"
-        interface-name: "enp129s0f1"
+        interface-name: "enp197s0f1np1"
         master: "bond0"
         slave-type: "bond"
       ethernet: {}
@@ -73,11 +99,11 @@ nm::connections:
     content:
       connection:
         id: "bond0"
-        uuid: "b34d20f3-ecf3-4b8f-8d3b-addea02010e9"
+        uuid: "70f5f42a-51ee-49bf-8fb1-8aa909435de8"
         type: "bond"
         interface-name: "bond0"
       ethernet:
-        cloned-mac-address: "%{facts.networking.interfaces.enp129s0f0.mac}"
+        cloned-mac-address: "%{facts.networking.interfaces.enp197s0f0np0.mac}"
       bond:
         miimon: "100"
         mode: "802.3ad"
@@ -91,7 +117,7 @@ nm::connections:
     content:
       connection:
         id: "bond0.2501"
-        uuid: "fce2a357-528f-428f-88da-3d8a9d049c13"
+        uuid: "ca272d31-691b-4581-9C54-2128178098ce"
         type: "vlan"
         interface-name: "bond0.2501"
         master: "br2501"
@@ -151,7 +177,7 @@ nm::connections:
     content:
       connection:
         id: "br2501"
-        uuid: "8d5c6641-c8ee-41a3-830c-d81d0a7f3a90"
+        uuid: "bad4f051-ac5d-463a-a574-ebcf8852eb6e"
         type: "bridge"
         interface-name: "br2501"
       ethernet: {}

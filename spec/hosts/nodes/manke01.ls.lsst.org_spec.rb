@@ -64,12 +64,14 @@ describe 'manke01.ls.lsst.org', :sitepp do
 
       it { is_expected.to contain_class('cni::plugins::dhcp::service') }
 
-      it { is_expected.to have_nm__connection_resource_count(14) }
+      it { is_expected.to have_nm__connection_resource_count(16) }
 
       %w[
         eno1np0
         eno2np1
         enp4s0f3u2u2c2
+        enp129s0f0
+        enp129s0f1
       ].each do |i|
         context "with #{i}" do
           let(:interface) { i }
@@ -79,8 +81,8 @@ describe 'manke01.ls.lsst.org', :sitepp do
       end
 
       %w[
-        enp129s0f0
-        enp129s0f1
+        enp197s0f0np0
+        enp197s0f1np1
       ].each do |i|
         context "with #{i}" do
           let(:interface) { i }

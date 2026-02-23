@@ -1,30 +1,57 @@
 ---
-ccs_hcu::filter_changer: true
-
-ccs_hcu::imanager: true
-ccs_hcu::imanager::version: "1.5.1"
-
-ccs_software::services:
-  prod:
-    - "bonn-shutter"
-    - "comcam-fcs"
-
-network::interfaces_hash:
+nm::connections:
   eno1:  # fqdn
-    bootproto: "dhcp"
-    defroute: "yes"
-    nozeroconf: "yes"
-    onboot: "yes"
-    type: "Ethernet"
-  enp6s0:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  enp7s0:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
-  enp8s0:  # not connected
-    bootproto: "none"
-    onboot: "no"
-    type: "Ethernet"
+    content:
+      connection:
+        id: "eno1"
+        uuid: "d4c24e30-bcf0-4232-a532-97eeebfb859c"
+        type: "ethernet"
+        interface-name: "eno1"
+      ethernet: {}
+      ipv4:
+        method: "manual"
+        address1: "139.229.175.4/26,139.229.175.60"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp6s0:
+    content:
+      connection:
+        id: "enp6s0"
+        uuid: "e377179b-1f3c-44d1-b437-388185c630d7"
+        type: "ethernet"
+        interface-name: "enp6s0"
+        autoconnect: "false"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp7s0:
+    content:
+      connection:
+        id: "enp7s0"
+        uuid: "b5abaeaa-e81c-4252-b042-f7bee82c81a0"
+        type: "ethernet"
+        interface-name: "enp7s0"
+        autoconnect: "false"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp8s0:
+    content:
+      connection:
+        id: "enp8s0"
+        uuid: "406674eb-e5b9-4f2c-ba0e-510ac90f24c8"
+        type: "ethernet"
+        interface-name: "enp8s0"
+        autoconnect: "false"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"

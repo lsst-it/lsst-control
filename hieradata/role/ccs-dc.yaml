@@ -15,3 +15,7 @@ profile::ccs::common::sysctls: false
 hosts::entries:
   sdfembs3.sdf.slac.stanford.edu:
     ip: "172.24.7.249"
+
+sudo::configs:
+  observers_ccs:
+    content: "%observers ALL=(ccs) PASSWD: ALL"

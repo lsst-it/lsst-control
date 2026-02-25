@@ -3,3 +3,5 @@ ccs_software::services:
   prod:
     - "rest-server"
     - "localdb"
+
+ccs_database::cronjob_command: "localdb -app backup-utilities -pk 4 -r -fp 5 -c"

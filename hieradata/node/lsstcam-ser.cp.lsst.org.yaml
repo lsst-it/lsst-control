@@ -1,0 +1,57 @@
+---
+nm::connections:
+  eno1:  # fqdn
+    content:
+      connection:
+        id: "eno1"
+        uuid: "CHANGE-ME"
+        type: "ethernet"
+        interface-name: "eno1"
+      ethernet: {}
+      ipv4:
+        method: "manual"
+        address1: "139.229.175.124/26,139.229.175.126"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp6s0:
+    content:
+      connection:
+        id: "enp6s0"
+        uuid: "CHANGE-ME"
+        type: "ethernet"
+        interface-name: "enp6s0"
+        autoconnect: "false"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp7s0:
+    content:
+      connection:
+        id: "enp7s0"
+        uuid: "CHANGE-ME"
+        type: "ethernet"
+        interface-name: "enp7s0"
+        autoconnect: "false"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp8s0:
+    content:
+      connection:
+        id: "enp8s0"
+        uuid: "CHANGE-ME"
+        type: "ethernet"
+        interface-name: "enp8s0"
+        autoconnect: "false"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"

@@ -29,7 +29,11 @@ describe "#{role} role" do
                 '1.0.0.1',
                 '1.1.1.1',
                 '8.8.8.8',
-              ]
+              ],
+              dnssec_validation: 'auto',
+              additional_options: {
+                'validate-except' => '{ "lsst.local"; }',
+              }
             )
           end
 

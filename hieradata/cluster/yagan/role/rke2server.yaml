@@ -4,5 +4,7 @@ classes:
 profile::core::sysctl::rp_filter::enable: false
 profile::core::k8snode::enable_dhcp: 'service_only'
 rke2::config:
+  kubelet-arg:
+    - "max-pods=250"
   node-label:
     - "role=storage-node"

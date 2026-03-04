@@ -579,8 +579,8 @@ s3nd::env:
 pi::config::reboot: false  # XXX this should be removed when pi role/profile refactoring is complete
 pi::cmdline::reboot: false  # XXX this should be removed when pi role/profile refactoring is complete
 
-rke2::release_series: "1.32"
-rke2::version: "1.32.11~rke2r1"
+rke2::release_series: "1.33"
+rke2::version: "1.33.0~rke2r1"
 rke2::versionlock: true
 rke2::config:
   server: "https://%{::cluster}.%{::site}.lsst.org:9345"

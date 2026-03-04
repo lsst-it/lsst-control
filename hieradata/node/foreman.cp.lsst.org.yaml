@@ -94,17 +94,6 @@ dhcp::pools:
     range:
       - "139.229.165.200 139.229.165.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  CDS-ARCH-DDS:
-    network: "139.229.166.0"
-    mask: "255.255.255.0"
-    gateway: "139.229.166.254"
-    range:
-      - "139.229.166.100 139.229.166.249"
-    static_routes:
-      - {network: "139.229.147", mask: "24", gateway: "139.229.166.254"}
-      - {network: "139.229.167", mask: "24", gateway: "139.229.166.254"}
-      - {network: "139.229.170", mask: "24", gateway: "139.229.166.254"}
-      - {network: "139.229.178", mask: "24", gateway: "139.229.166.254"}
   ESS-Sensors:
     network: "139.229.168.0"
     mask: "255.255.255.128"

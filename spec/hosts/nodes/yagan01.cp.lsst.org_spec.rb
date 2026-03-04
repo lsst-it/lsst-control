@@ -35,6 +35,7 @@ describe 'yagan01.cp.lsst.org', :sitepp do
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(
+          'kubelet-arg' => ['max-pods=250'],
           'node-label' => ['role=storage-node']
         )
       end

@@ -33,7 +33,7 @@ nm::connections:
       ipv6:
         method: "disabled"
       proxy: {}
-ccs_database::cronjob_partitions: true
+ccs_database::cronjob_command: "localdb -app backup-utilities -fp 5 -c"
 ccs_software::services:
   prod:
     - "rest-server"

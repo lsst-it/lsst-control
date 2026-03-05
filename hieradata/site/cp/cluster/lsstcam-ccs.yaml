@@ -16,6 +16,8 @@ clustershell::groupmembers:
 
 profile::ccs::monitoring::mrtg: true
 
+profile::ccs::tomcat::rest_url: "lsstcam-db02:3306/ccsdbprod"
+
 s3nd::instances:
   cp-lsstcam:
     image: "%{alias('s3nd_default_image_cp')}"

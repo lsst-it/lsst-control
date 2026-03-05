@@ -1,0 +1,76 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+
+describe 'lsstcam-ser.cp.lsst.org', :sitepp do
+  on_supported_os.each do |os, os_facts|
+    next unless os =~ %r{almalinux-9-x86_64}
+
+    context "on #{os}" do
+      let(:facts) do
+        lsst_override_facts(os_facts,
+                            is_virtual: false,
+                            virtual: 'physical',
+                            dmi: {
+                              'product' => {
+                                'name' => 'UNO-1483G-434AE',
+                              },
+                            })
+      end
+
+      let(:node_params) do
+        {
+          role: 'ccs-generic',
+          site: 'cp',
+        }
+      end
+
+      it { is_expected.to compile.with_all_deps }
+
+      it { is_expected.to contain_package('powertop').with_ensure('absent') }
+
+      include_context 'with nm interface'
+      it { is_expected.to have_nm__connection_resource_count(4) }
+
+      context 'with eno1' do
+        let(:interface) { 'eno1' }
+
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
+        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+      end
+
+      context 'with enp6s0' do
+        let(:interface) { 'enp6s0' }
+
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['connection']['autoconnect']).to eq('false') }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.175.124/26,139.229.175.127') }
+        it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.160.53;139.229.160.54;139.229.160.55;') }
+        it { expect(nm_keyfile['ipv4']['dns-search']).to eq('cp.lsst.org;') }
+        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+      end
+
+      context 'with enp7s0' do
+        let(:interface) { 'enp7s0' }
+
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['connection']['autoconnect']).to eq('false') }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('disabled') }
+        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+      end
+
+      context 'with enp8s0' do
+        let(:interface) { 'enp8s0' }
+
+        it_behaves_like 'nm ethernet interface'
+        it { expect(nm_keyfile['connection']['autoconnect']).to eq('false') }
+        it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('192.168.30.50/24') }
+        it { expect(nm_keyfile['ipv6']['method']).to eq('disabled') }
+      end
+    end
+  end
+end

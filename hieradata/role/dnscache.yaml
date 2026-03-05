@@ -5,6 +5,9 @@ classes:
 dns::forward: "only"
 dns::listen_on_v6: false
 dns::sysconfig_startup_options: "-4"
+dns::dnssec_validation: "auto"
+dns::additional_options:
+  "validate-except": '{ "lsst.local"; }'
 dns::additional_directives:
   - "logging {"
   - "    channel queries_syslog {"

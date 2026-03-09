@@ -1,0 +1,135 @@
+---
+nm::connections:
+  enp34s0f0:
+    content:
+      connection:
+        id: "enp34s0f0"
+        uuid: "f330f829-20cc-b829-67b0-18086a5fe6fa"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp34s0f0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp34s0f1:
+    content:
+      connection:
+        id: "enp34s0f1"
+        uuid: "de9904c8-9577-1a17-36b1-34b94132f06a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp34s0f1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  ens2f0np0:
+    content:
+      connection:
+        id: "ens2f0np0"
+        uuid: "725e4be3-6ce4-3e3d-aba2-7ae0a6ae55"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens2f0np0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  ens2f1np1:
+    content:
+      connection:
+        id: "ens2f1np1"
+        uuid: "46d19ce1-bcab-7e77-6fc7-b730b26c54b1"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "ens2f1np1"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp73s0f4u1u1c2:
+    content:
+      connection:
+        id: "enp73s0f4u1u1c2"
+        uuid: "6d32c5b5-85c3-307b-9f3e-9498192da162"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp73s0f4u1u1c2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp1s0f0np0:
+    content:
+      connection:
+        id: "enp1s0f0np0"
+        uuid: "b05efcfc-b20c-3371-8601-454d5602e8bb"
+        type: "ethernet"
+        interface-name: "enp1s0f0np0"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}
+  enp1s0f1np1:
+    content:
+      connection:
+        id: "enp1s0f1np1"
+        uuid: "72e9d0a2-c012-3f98-be08-fb5fc422b8e1"
+        type: "ethernet"
+        interface-name: "enp1s0f1np1"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}
+  bond0:
+    content:
+      connection:
+        id: "bond0"
+        uuid: "b34d20f3-ecf3-4b8f-8d3b-addea02010e9"
+        type: "bond"
+        interface-name: "bond0"
+      ethernet:
+        cloned-mac-address: "%{facts.networking.interfaces.enp1s0f0np0.mac}"
+      bond:
+        miimon: "100"
+        mode: "802.3ad"
+        xmit_hash_policy: "layer3+4"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  bond0.1101:
+    content:
+      connection:
+        id: "bond0.1101"
+        uuid: "fce2a357-528f-428f-88da-3d8a9d049c13"
+        type: "vlan"
+        interface-name: "bond0.1101"
+        master: "br1101"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "1101"
+        parent: "bond0"
+      bridge-port: {}
+  br1101:
+    content:
+      connection:
+        id: "br1101"
+        uuid: "8d5c6641-c8ee-41a3-830c-d81d0a7f3a90"
+        type: "bridge"
+        interface-name: "br1101"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}

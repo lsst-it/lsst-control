@@ -54,6 +54,13 @@ describe 'comcam-hcu03.cp.lsst.org', :sitepp do
 
           it_behaves_like 'nm disabled interface'
         end
+
+        it { is_expected.to contain_class('ccs_hcu').with(filter_changer: true) }
+
+        it { is_expected.to contain_class('ccs_hcu::imanager') }
+        it { is_expected.to contain_class('ccs_hcu::imanager').with(version: '1.5.1') }
+
+        it { is_expected.to contain_class('ccs_software') }
       end
     end # on os
   end # on_supported_os

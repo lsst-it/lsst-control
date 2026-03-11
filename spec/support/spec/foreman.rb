@@ -26,7 +26,7 @@ shared_examples 'foreman' do
       owner: 'foreman-proxy',
       group: 'foreman-proxy',
       mode: '0644',
-      source: 'puppet:///modules/profile/foreman/udev_fact.zip'
+      source: 'puppet:///modules/profile/foreman/udev_fact.zip',
     )
   end
 
@@ -38,32 +38,32 @@ shared_examples 'foreman' do
       ensure: 'directory',
       owner: 'puppet',
       group: 'puppet',
-      mode: '0500'
+      mode: '0500',
     ).that_requires('Class[puppet]')
   end
 end
 
 shared_examples 'generic foreman' do
-  include_examples 'debugutils'
-  include_examples 'foreman'
-  include_examples 'restic common'
+  it_behaves_like 'debugutils'
+  it_behaves_like 'foreman'
+  it_behaves_like 'restic common'
 
   it do
     is_expected.to contain_class('foreman').with(
-      version: FOREMAN_VERSION
+      version: FOREMAN_VERSION,
     )
   end
 
   it do
     is_expected.to contain_class('foreman::repo').with(
-      repo: '3.16'
+      repo: '3.16',
     )
   end
 
   it do
     is_expected.to contain_class('foreman_proxy').with(
       bmc_default_provider: 'ipmitool',
-      bmc: true
+      bmc: true,
     )
   end
 
@@ -84,13 +84,13 @@ shared_examples 'generic foreman' do
 
   it do
     is_expected.to contain_yum__versionlock('puppetserver').with(
-      version: PUPPETSERVER_VERSION
+      version: PUPPETSERVER_VERSION,
     )
   end
 
   it do
     is_expected.to contain_yum__versionlock('puppetdb-termini').with(
-      version: TERMINI_VERSION
+      version: TERMINI_VERSION,
     )
   end
 
@@ -98,7 +98,7 @@ shared_examples 'generic foreman' do
     is_expected.to contain_class('foreman_proxy::plugin::discovery').with(
       image_name: 'fdi-image-4.99.99-6224850.tar',
       install_images: true,
-      source_url: 'https://github.com/lsst-it/foreman-discovery-image/releases/download/lsst-4.99.99/'
+      source_url: 'https://github.com/lsst-it/foreman-discovery-image/releases/download/lsst-4.99.99/',
     )
   end
 
@@ -109,13 +109,13 @@ shared_examples 'generic foreman' do
       server_puppetserver_version: PUPPETSERVER_VERSION,
       server_reports: 'foreman,puppetdb',
       server_storeconfigs: true,
-      server_version: PUPPETSERVER_VERSION
+      server_version: PUPPETSERVER_VERSION,
     )
   end
 
   it 'has global ProxyCommand knocked out with --' do
     expect(catalogue.resource('class', 'ssh')[:client_options]).to include(
-      'ProxyCommand' => ''
+      'ProxyCommand' => '',
     )
   end
 
@@ -126,7 +126,7 @@ shared_examples 'generic foreman' do
         'options' => {
           'ProxyCommand' => '/usr/bin/sss_ssh_knownhostsproxy -p %p %h',
         },
-      }
+      },
     )
   end
 
@@ -137,7 +137,7 @@ shared_examples 'generic foreman' do
         'options' => {
           'StrictHostKeyChecking' => 'no',
         },
-      }
+      },
     )
   end
 
@@ -148,7 +148,7 @@ shared_examples 'generic foreman' do
         'options' => {
           'StrictHostKeyChecking' => 'no',
         },
-      }
+      },
     )
   end
 
@@ -220,7 +220,7 @@ shared_examples 'generic foreman' do
         'foreman_envsync',
         '/bin/foreman_envsync',
         '--verbose',
-      ]
+      ],
     )
   end
 
@@ -237,7 +237,7 @@ shared_examples 'generic foreman' do
         'basedir' => '/etc/puppetlabs/code/hieradata/private',
         'invalid_branches' => 'correct',
         'ignore_branch_prefixes' => ignore_branch_prefixes,
-      }
+      },
     )
   end
 
@@ -247,13 +247,13 @@ shared_examples 'generic foreman' do
     is_expected.to contain_class('smee').with(
       url: smee_url,
       path: '/api/v1/r10k/environment',
-      port: 4000
+      port: 4000,
     )
   end
 
   it do
     is_expected.to contain_yumrepo('pc_repo').with(
-      baseurl: "http://yum.puppet.com/puppet8/el/#{facts[:os]['release']['major']}/x86_64"
+      baseurl: "http://yum.puppet.com/puppet8/el/#{facts[:os]['release']['major']}/x86_64",
     )
   end
 
@@ -268,7 +268,7 @@ shared_examples 'generic foreman' do
       backup_timer: '*-*-* 09:00:00',
       enable_forget: true,
       forget_timer: 'Mon..Sun 23:00:00',
-      forget_flags: '--keep-last 90'
+      forget_flags: '--keep-last 90',
     )
   end
 end

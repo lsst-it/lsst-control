@@ -9,7 +9,7 @@ describe 'profile::pi::ttyusb' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'ttyusb'
+      it_behaves_like 'ttyusb'
     end
   end
 end

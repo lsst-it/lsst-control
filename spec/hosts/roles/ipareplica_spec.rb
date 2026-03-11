@@ -19,12 +19,12 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'common', os_facts:, site:, no_auth: true
+          it_behaves_like 'common', os_facts:, site:, no_auth: true
 
           it do
             is_expected.to contain_class('tailscale').with_up_options(
               'accept-dns' => false,
-              'hostname' => facts[:networking]['fqdn']
+              'hostname' => facts[:networking]['fqdn'],
             )
           end
 
@@ -46,7 +46,7 @@ describe "#{role} role" do
           }.each do |host, ip|
             it do
               is_expected.to contain_host(host).with(
-                ip:
+                ip:,
               )
 
               is_expected.to contain_restic__repository('ipa').with(
@@ -57,7 +57,7 @@ describe "#{role} role" do
                 backup_timer: '*-*-* 9:23:00',
                 enable_forget: true,
                 forget_timer: '*-*-* 10:23:00',
-                forget_flags: '--keep-last 90'
+                forget_flags: '--keep-last 90',
               )
             end
           end
@@ -95,7 +95,7 @@ describe "#{role} role" do
               it do
                 is_expected.to contain_yum__versionlock(pkg).with(
                   version: '4.6.8',
-                  release: '5.el7.centos.15'
+                  release: '5.el7.centos.15',
                 )
               end
             end
@@ -106,7 +106,7 @@ describe "#{role} role" do
               it do
                 is_expected.to contain_yum__versionlock(pkg).with(
                   version: '1.3.11.1',
-                  release: '3.el7_9'
+                  release: '3.el7_9',
                 )
               end
             end

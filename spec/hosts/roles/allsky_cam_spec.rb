@@ -29,7 +29,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples('common', os_facts:, site:)
+          it_behaves_like('common', os_facts:, site:)
           it { is_expected.to contain_package('awscli2') }
           it { is_expected.to contain_package('libgphoto2') }
           it { is_expected.to contain_package('usbutils') }
@@ -38,7 +38,7 @@ describe "#{role} role" do
             is_expected.to contain_nfs__client__mount('/project').with(
               share: 'project',
               server: 'nfs-project.cp.lsst.org',
-              atboot: true
+              atboot: true,
             )
           end
         end # host

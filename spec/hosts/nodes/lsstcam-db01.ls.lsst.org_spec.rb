@@ -31,8 +31,8 @@ describe 'lsstcam-db01.ls.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
-      include_examples 'ccs alerts'
+      it_behaves_like 'baremetal'
+      it_behaves_like 'ccs alerts'
 
       it do
         is_expected.to contain_class('ccs_software').with(
@@ -41,7 +41,7 @@ describe 'lsstcam-db01.ls.lsst.org', :sitepp do
               rest-server
               localdb
             ],
-          }
+          },
         )
       end
 

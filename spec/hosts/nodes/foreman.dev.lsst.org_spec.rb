@@ -48,8 +48,8 @@ describe 'foreman.dev.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'vm'
-      include_examples 'dhcp server'
+      it_behaves_like 'vm'
+      it_behaves_like 'dhcp server'
 
       context 'with enp1s0' do
         let(:interface) { 'enp1s0' }
@@ -67,7 +67,7 @@ describe 'foreman.dev.lsst.org', :sitepp do
           network: '139.229.134.0',
           mask: '255.255.255.0',
           range: ['139.229.134.120 139.229.134.179'],
-          gateway: '139.229.134.254'
+          gateway: '139.229.134.254',
         )
       end
 
@@ -76,7 +76,7 @@ describe 'foreman.dev.lsst.org', :sitepp do
           network: '139.229.144.0',
           mask: '255.255.255.192',
           range: ['139.229.144.40 139.229.144.59'],
-          gateway: '139.229.144.62'
+          gateway: '139.229.144.62',
         )
       end
 
@@ -85,7 +85,7 @@ describe 'foreman.dev.lsst.org', :sitepp do
           network: '139.229.144.64',
           mask: '255.255.255.192',
           range: ['139.229.144.100 139.229.144.123'],
-          gateway: '139.229.144.126'
+          gateway: '139.229.144.126',
         )
       end
     end # on os

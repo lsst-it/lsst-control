@@ -31,11 +31,11 @@ describe 'rancher01.dev.lsst.org', :sitepp do
         is_expected.to contain_class('rke2').with(
           node_type: 'server',
           release_series: '1.33',
-          version: '1.33.0~rke2r1'
+          version: '1.33.0~rke2r1',
         )
       end
 
-      include_examples 'vm'
+      it_behaves_like 'vm'
       it { is_expected.to have_nm__connection_resource_count(0) }
     end # on os
   end # on_supported_os

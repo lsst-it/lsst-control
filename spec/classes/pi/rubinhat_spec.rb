@@ -9,7 +9,7 @@ describe 'profile::pi::rubinhat' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'rubinhat'
+      it_behaves_like 'rubinhat'
     end
   end
 end

@@ -19,13 +19,13 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples('common', os_facts:, site:)
+          it_behaves_like('common', os_facts:, site:)
           it { is_expected.to contain_class('profile::core::common') }
           it { is_expected.to contain_class('profile::core::dtn') }
 
           it do
             expect(catalogue.resource('class', 'ssh')[:server_options]).to include(
-              'Port' => [22, 2712]
+              'Port' => [22, 2712],
             )
           end
         end # host

@@ -27,7 +27,7 @@ describe 'love01.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
+      it_behaves_like 'baremetal'
 
       it do
         is_expected.to contain_class('docker::networks').with(
@@ -39,7 +39,7 @@ describe 'love01.cp.lsst.org', :sitepp do
               'gateway' => '139.229.170.254',
               'options' => ['parent=ens2f0'],
             },
-          }
+          },
         )
       end
     end # on os

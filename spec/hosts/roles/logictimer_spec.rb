@@ -29,11 +29,11 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples('common', os_facts:, site:)
-          include_examples 'docker'
-          include_examples('gpio', os_facts:)
-          include_examples 'gpshat'
-          include_examples 'pigpio'
+          it_behaves_like('common', os_facts:, site:)
+          it_behaves_like 'docker'
+          it_behaves_like('gpio', os_facts:)
+          it_behaves_like 'gpshat'
+          it_behaves_like 'pigpio'
         end # host
       end # lsst_sites
     end # on os

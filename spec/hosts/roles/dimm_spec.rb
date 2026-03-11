@@ -19,8 +19,8 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples('common', os_facts:, site:)
-          include_examples 'docker'
+          it_behaves_like('common', os_facts:, site:)
+          it_behaves_like 'docker'
           it { is_expected.to contain_class('profile::core::yum::lsst_ts_private') }
           it { is_expected.to contain_package('ts_dimm_app-2.0-1.el8.x86_64') }
           it { is_expected.to contain_package('telnet') }
@@ -29,7 +29,7 @@ describe "#{role} role" do
             is_expected.to contain_nfs__client__mount('/dimm').with(
               share: 'dimm',
               server: 'nfs-dimm.cp.lsst.org',
-              atboot: true
+              atboot: true,
             )
           end
 
@@ -39,7 +39,7 @@ describe "#{role} role" do
                 'SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", GROUP="users"',
                 'SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6015", GROUP="users"',
                 'SUBSYSTEM=="tty", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", GROUP="users"',
-              ]
+              ],
             )
           end
 
@@ -53,7 +53,7 @@ describe "#{role} role" do
               is_expected.to contain_file(d).with(
                 owner: 79_518,
                 group: 'users',
-                recurse: true
+                recurse: true,
               )
             end
           end

@@ -50,16 +50,16 @@ class profile::ccs::graphical (
     }
     ## There doesn't seem to be a group for this in epel9.
     stdlib::ensure_packages([
-        'mate-desktop',
-        'mate-applets',
-        'mate-menu',
-        'mate-panel',
-        'mate-session-manager',
-        'mate-terminal',
-        'mate-themes',
-        'mate-utils',
-        'marco',
-        'caja',
+      'mate-desktop',
+      'mate-applets',
+      'mate-menu',
+      'mate-panel',
+      'mate-session-manager',
+      'mate-terminal',
+      'mate-themes',
+      'mate-utils',
+      'marco',
+      'caja',
     ])
 
     package { $unwanted_gnome_pkgs:

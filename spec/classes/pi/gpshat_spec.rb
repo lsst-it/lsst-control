@@ -9,7 +9,7 @@ describe 'profile::pi::gpshat' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'gpshat'
+      it_behaves_like 'gpshat'
     end
   end
 end

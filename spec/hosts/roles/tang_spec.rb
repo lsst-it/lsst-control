@@ -21,11 +21,11 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples('common', os_facts:, site:)
-          include_examples 'ipset'
-          include_examples('firewall default', os_facts:)
-          include_examples('firewall node_exporter scraping', site:)
-          include_examples 'restic common'
+          it_behaves_like('common', os_facts:, site:)
+          it_behaves_like 'ipset'
+          it_behaves_like('firewall default', os_facts:)
+          it_behaves_like('firewall node_exporter scraping', site:)
+          it_behaves_like 'restic common'
 
           it { is_expected.to contain_class('tang') }
           it { is_expected.to contain_package('jose') }
@@ -38,7 +38,7 @@ describe "#{role} role" do
                 state: 'NEW',
                 ipset: 'dev src',
                 dport: '7500',
-                jump: 'accept'
+                jump: 'accept',
               )
             end
           when 'tu'
@@ -48,7 +48,7 @@ describe "#{role} role" do
                 state: 'NEW',
                 ipset: 'tufde src',
                 dport: '7500',
-                jump: 'accept'
+                jump: 'accept',
               )
             end
           when 'ls'
@@ -58,7 +58,7 @@ describe "#{role} role" do
                 state: 'NEW',
                 ipset: 'lsfde src',
                 dport: '7500',
-                jump: 'accept'
+                jump: 'accept',
               )
             end
           when 'cp'
@@ -68,7 +68,7 @@ describe "#{role} role" do
                 state: 'NEW',
                 ipset: 'cpfde src',
                 dport: '7500',
-                jump: 'accept'
+                jump: 'accept',
               )
             end
           end
@@ -81,7 +81,7 @@ describe "#{role} role" do
               backup_timer: '*-*-* *:47:00',
               enable_forget: true,
               forget_timer: '*-*-* 15:00:00',
-              forget_flags: '--keep-within 1y'
+              forget_flags: '--keep-within 1y',
             )
           end
         end # host

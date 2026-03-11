@@ -26,15 +26,15 @@ describe 'core02.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples('baremetal',
-                       bmc: {
-                         lan1: {
-                           ip: '139.229.162.2',
-                           netmask: '255.255.255.0',
-                           gateway: '139.229.162.254',
-                           type: 'static',
-                         },
-                       })
+      it_behaves_like('baremetal',
+                      bmc: {
+                        lan1: {
+                          ip: '139.229.162.2',
+                          netmask: '255.255.255.0',
+                          gateway: '139.229.162.254',
+                          type: 'static',
+                        },
+                      })
       include_context 'with nm interface'
 
       it { is_expected.to have_nm__connection_resource_count(9) }

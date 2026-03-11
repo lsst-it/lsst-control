@@ -17,7 +17,7 @@ describe 'profile::core::rke' do
       context 'with no params' do
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'rke profile'
+        it_behaves_like 'rke profile'
 
         it do
           is_expected.not_to contain_profile__util__keytab('rke')
@@ -27,7 +27,7 @@ describe 'profile::core::rke' do
         it do
           is_expected.to contain_class('rke').with(
             version: '1.8.0',
-            checksum: '8815da0452ae14a45566b534c48a2af6286ee73f800208ba6ec59188cb9a8d25'
+            checksum: '8815da0452ae14a45566b534c48a2af6286ee73f800208ba6ec59188cb9a8d25',
           )
         end
       end
@@ -42,7 +42,7 @@ describe 'profile::core::rke' do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'rke profile'
+          it_behaves_like 'rke profile'
 
           it { is_expected.not_to contain_profile__util__keytab('rke') }
         end
@@ -56,12 +56,12 @@ describe 'profile::core::rke' do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'rke profile'
+          it_behaves_like 'rke profile'
 
           it do
             is_expected.to contain_profile__util__keytab('rke').with(
               uid: 75_500,
-              keytab_base64: sensitive('42')
+              keytab_base64: sensitive('42'),
             )
           end
         end
@@ -77,12 +77,12 @@ describe 'profile::core::rke' do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'rke profile'
+          it_behaves_like 'rke profile'
 
           it do
             is_expected.to contain_class('rke').with(
               version: '1.7.6',
-              checksum: 'a6ef89ac3042e066b0596cb38d5bff0192b84a7d4b6ed5b14cddc4bcfd5c9cd9'
+              checksum: 'a6ef89ac3042e066b0596cb38d5bff0192b84a7d4b6ed5b14cddc4bcfd5c9cd9',
             )
           end
         end
@@ -96,12 +96,12 @@ describe 'profile::core::rke' do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'rke profile'
+          it_behaves_like 'rke profile'
 
           it do
             is_expected.to contain_class('rke').with(
               version: '1.7.7',
-              checksum: '4317d54ed5251d71c82b631083907c526dc74808941deebc392369108b7a4b10'
+              checksum: '4317d54ed5251d71c82b631083907c526dc74808941deebc392369108b7a4b10',
             )
           end
         end
@@ -115,12 +115,12 @@ describe 'profile::core::rke' do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'rke profile'
+          it_behaves_like 'rke profile'
 
           it do
             is_expected.to contain_class('rke').with(
               version: '1.8.0',
-              checksum: '8815da0452ae14a45566b534c48a2af6286ee73f800208ba6ec59188cb9a8d25'
+              checksum: '8815da0452ae14a45566b534c48a2af6286ee73f800208ba6ec59188cb9a8d25',
             )
           end
         end

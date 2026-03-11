@@ -28,14 +28,14 @@ describe 'auxtel-vent-gates01.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples('common', os_facts:, site: 'cp')
-      include_examples 'docker'
-      include_examples('gpio', os_facts:)
-      include_examples('i2c', os_facts:)
-      include_examples 'darkmode'
-      include_examples 'ftdi'
-      include_examples 'pigpio'
-      include_examples 'dco'
+      it_behaves_like('common', os_facts:, site: 'cp')
+      it_behaves_like 'docker'
+      it_behaves_like('gpio', os_facts:)
+      it_behaves_like('i2c', os_facts:)
+      it_behaves_like 'darkmode'
+      it_behaves_like 'ftdi'
+      it_behaves_like 'pigpio'
+      it_behaves_like 'dco'
     end
   end
 end

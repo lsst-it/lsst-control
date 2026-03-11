@@ -9,7 +9,7 @@ describe 'profile::core::debugutils' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'debugutils'
+      it_behaves_like 'debugutils'
     end
   end
 end

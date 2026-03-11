@@ -10,14 +10,14 @@ shared_examples 'firewall default' do |os_facts:|
     is_expected.to contain_firewall('000 accept established').with(
       proto: 'all',
       state: %w[RELATED ESTABLISHED],
-      jump: 'accept'
+      jump: 'accept',
     )
   end
 
   it do
     is_expected.to contain_firewall('001 accept all icmp').with(
       proto: 'icmp',
-      jump: 'accept'
+      jump: 'accept',
     )
   end
 
@@ -25,7 +25,7 @@ shared_examples 'firewall default' do |os_facts:|
     is_expected.to contain_firewall('002 accept all loopback').with(
       proto: 'all',
       iniface: 'lo',
-      jump: 'accept'
+      jump: 'accept',
     )
   end
 
@@ -34,14 +34,14 @@ shared_examples 'firewall default' do |os_facts:|
       proto: 'udp',
       sport: %w[67 68],
       dport: %w[67 68],
-      jump: 'accept'
+      jump: 'accept',
     )
   end
 
   it do
     is_expected.to contain_firewall('990 reject all').with(
       proto: 'all',
-      jump: 'reject'
+      jump: 'reject',
     )
   end
 
@@ -49,21 +49,21 @@ shared_examples 'firewall default' do |os_facts:|
     is_expected.to contain_firewall('991 reject forward all').with(
       chain: 'FORWARD',
       proto: 'all',
-      jump: 'reject'
+      jump: 'reject',
     )
   end
 end
 
 shared_examples 'firewall node_exporter scraping' do |site:|
   case site
-  when 'dev', 'ls', 'cp'  # just not TU
+  when 'dev', 'ls', 'cp' # just not TU
     it do
       is_expected.to contain_firewall('100 accept node_exporter').with(
         proto: 'tcp',
         state: 'NEW',
         ipset: 'antu src',
         dport: '9100',
-        jump: 'accept'
+        jump: 'accept',
       )
     end
 
@@ -73,7 +73,7 @@ shared_examples 'firewall node_exporter scraping' do |site:|
         state: 'NEW',
         ipset: 'dev src',
         dport: '9100',
-        jump: 'accept'
+        jump: 'accept',
       )
     end
   end

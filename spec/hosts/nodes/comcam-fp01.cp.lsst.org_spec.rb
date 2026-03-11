@@ -37,7 +37,7 @@ describe 'comcam-fp01.cp.lsst.org', :sitepp do
           ],
           env: {
             'S3ND_ENDPOINT_URL' => 'https://s3.cp.lsst.org',
-          }
+          },
         )
       end
 
@@ -51,7 +51,7 @@ describe 'comcam-fp01.cp.lsst.org', :sitepp do
           ],
           env: {
             'S3ND_ENDPOINT_URL' => 'https://sdfembs3.sdf.slac.stanford.edu',
-          }
+          },
         )
       end
 
@@ -115,7 +115,7 @@ describe 'comcam-fp01.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/self/data').with(
           share: 'data',
           server: 'comcam-fp01.cp.lsst.org',
-          atboot: true
+          atboot: true,
         )
       end
     end # on os

@@ -21,7 +21,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples('common', os_facts:, site:)
+          it_behaves_like('common', os_facts:, site:)
 
           it do
             is_expected.to contain_class('dns').with(
@@ -33,7 +33,7 @@ describe "#{role} role" do
               dnssec_validation: 'auto',
               additional_options: {
                 'validate-except' => '{ "lsst.local"; }',
-              }
+              },
             )
           end
 

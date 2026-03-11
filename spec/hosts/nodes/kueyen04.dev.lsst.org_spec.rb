@@ -29,8 +29,8 @@ describe 'kueyen04.dev.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       # include_examples 'docker', docker_version: '24.0.9'
-      include_examples 'baremetal'
-      include_examples 'ceph cluster'
+      it_behaves_like 'baremetal'
+      it_behaves_like 'ceph cluster'
       include_context 'with nm interface'
 
       it do
@@ -44,16 +44,16 @@ describe 'kueyen04.dev.lsst.org', :sitepp do
               'group' => 'kueyen',
               'member' => [
                 'kueyen[01-03]',
-                'kueyen[04-09]'
+                'kueyen[04-09]',
               ],
             },
-          }
+          },
         )
       end
 
       it do
         is_expected.to contain_class('rke').with(
-          version: '1.8.0'
+          version: '1.8.0',
         )
       end
 
@@ -61,7 +61,7 @@ describe 'kueyen04.dev.lsst.org', :sitepp do
         is_expected.to contain_class('cni::plugins').with(
           version: '1.2.0',
           checksum: 'f3a841324845ca6bf0d4091b4fc7f97e18a623172158b72fc3fdcdb9d42d2d37',
-          enable: %w[macvlan static]
+          enable: %w[macvlan static],
         )
       end
 

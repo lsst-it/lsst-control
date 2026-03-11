@@ -30,9 +30,9 @@ describe 'lukay01.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'docker', docker_version: '25.0.3'
-      include_examples 'baremetal'
-      include_examples 'ceph cluster'
+      it_behaves_like 'docker', docker_version: '25.0.3'
+      it_behaves_like 'baremetal'
+      it_behaves_like 'ceph cluster'
       include_context 'with nm interface'
 
       it do
@@ -42,14 +42,14 @@ describe 'lukay01.cp.lsst.org', :sitepp do
               'group' => 'lukay',
               'member' => 'lukay[01-04]',
             },
-          }
+          },
         )
       end
 
       it do
         is_expected.to contain_class('rke').with(
           version: '1.8.0',
-          checksum: '8815da0452ae14a45566b534c48a2af6286ee73f800208ba6ec59188cb9a8d25'
+          checksum: '8815da0452ae14a45566b534c48a2af6286ee73f800208ba6ec59188cb9a8d25',
         )
       end
 

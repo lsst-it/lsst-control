@@ -67,7 +67,7 @@ describe 'profile::core::common' do
             }
           end
 
-          include_examples 'no node_exporter'
+          it_behaves_like 'no node_exporter'
         end
 
         context 'when true' do

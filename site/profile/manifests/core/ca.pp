@@ -6,6 +6,6 @@
 #
 class profile::core::ca {
   ensure_resource('package', 'ca-certificates', {
-      'ensure' => 'latest',
+    'ensure' => 'latest',
   })
 }

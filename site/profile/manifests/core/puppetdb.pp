@@ -86,20 +86,20 @@ class profile::core::puppetdb (
           ],
         },
       ],
-      ;
+    ;
     'puppetboard-proxy':
       port       => 443,
       proxy_pass => {
         path => '/',
         url  => 'http://127.0.0.1:8088/',
       },
-      ;
+    ;
     'puppetdb-proxy':
       port       => 8443,
       proxy_pass => {
         path => '/',
         url  => 'http://127.0.0.1:8080/',
       },
-      ;
+    ;
   }
 }

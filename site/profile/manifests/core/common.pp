@@ -159,8 +159,8 @@ class profile::core::common (
   }
 
   ensure_resource('service', 'NetworkManager', {
-      ensure => running,
-      enable => true,
+    ensure => running,
+    enable => true,
   })
 
   # foreman provisioning templates created a `ifcfg-` on many hosts.  This seemed harmless but

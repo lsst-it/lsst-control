@@ -19,7 +19,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'docker'
+          it_behaves_like 'docker'
 
           it { is_expected.to contain_class('profile::core::common') }
           it { is_expected.to contain_class('profile::core::docker') }

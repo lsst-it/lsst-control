@@ -26,14 +26,14 @@ describe 'nfs3.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
+      it_behaves_like 'baremetal'
       include_context 'with nm interface'
 
       it do
         is_expected.to contain_nfs__client__mount('/net/self/comcam').with(
           share: 'comcam',
           server: facts[:networking]['fqdn'],
-          atboot: true
+          atboot: true,
         )
       end
 
@@ -41,7 +41,7 @@ describe 'nfs3.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/self/lsstcam').with(
           share: 'lsstcam',
           server: facts[:networking]['fqdn'],
-          atboot: true
+          atboot: true,
         )
       end
     end # on os

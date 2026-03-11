@@ -33,8 +33,8 @@ describe 'auxtel-mcm.ls.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
-      include_examples 'ccs alerts'
+      it_behaves_like 'baremetal'
+      it_behaves_like 'ccs alerts'
       include_context 'with nm interface'
 
       it { is_expected.to have_nm__connection_resource_count(7) }
@@ -102,7 +102,7 @@ describe 'auxtel-mcm.ls.lsst.org', :sitepp do
               'group' => 'all',
               'member' => '@misc',
             },
-          }
+          },
         )
       end
     end # on os

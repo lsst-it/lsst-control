@@ -26,7 +26,7 @@ describe 'auxtel-daq-mgt.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
+      it_behaves_like 'baremetal'
       include_context 'with nm interface'
       it { is_expected.to contain_host('auxtel-sm').with_ip('192.168.101.2') }
       it { is_expected.to have_nm__connection_resource_count(7) }

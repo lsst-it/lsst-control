@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 task default: %w[
-  check:symlinks
   check:git_ignore
   check:dot_underscore
   check:test_file

@@ -17,7 +17,7 @@ shared_examples 'puppetdb' do
   it do
     is_expected.to contain_letsencrypt__certonly(facts[:networking]['fqdn']).with(
       plugin: 'dns-route53',
-      manage_cron: true
+      manage_cron: true,
     )
   end
 
@@ -35,7 +35,7 @@ shared_examples 'puppetdb' do
       java_args: {
         '-Xmx' => '1g',
         '-Xms' => '512m',
-      }
+      },
     )
   end
 
@@ -43,7 +43,7 @@ shared_examples 'puppetdb' do
     is_expected.to contain_class('postgresql::globals').with(
       manage_package_repo: false,
       manage_dnf_module: true,
-      version: '15'
+      version: '15',
     )
   end
 
@@ -52,7 +52,7 @@ shared_examples 'puppetdb' do
       proto: 'tcp',
       state: 'NEW',
       dport: '80',
-      jump: 'accept'
+      jump: 'accept',
     )
   end
 
@@ -61,7 +61,7 @@ shared_examples 'puppetdb' do
       proto: 'tcp',
       state: 'NEW',
       dport: '443',
-      jump: 'accept'
+      jump: 'accept',
     )
   end
 
@@ -70,7 +70,7 @@ shared_examples 'puppetdb' do
       proto: 'tcp',
       state: 'NEW',
       dport: '8081',
-      jump: 'accept'
+      jump: 'accept',
     )
   end
 
@@ -79,7 +79,7 @@ shared_examples 'puppetdb' do
       proto: 'tcp',
       state: 'NEW',
       dport: '8443',
-      jump: 'accept'
+      jump: 'accept',
     )
   end
 end
@@ -104,7 +104,7 @@ shared_examples 'puppetboard' do
         "PUPPETDB_CERT=/etc/puppetlabs/puppet/ssl/certs/#{facts[:networking]['fqdn']}.pem",
         'SECRET_KEY=foo',
         'DEFAULT_ENVIRONMENT=*',
-      ]
+      ],
     )
   end
 end
@@ -128,33 +128,33 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples('common', os_facts:, site:)
-          include_examples 'docker'
+          it_behaves_like('common', os_facts:, site:)
+          it_behaves_like 'docker'
           it { is_expected.to contain_cron__job('docker_prune') }
 
-          include_examples 'ipset'
-          include_examples('firewall default', os_facts:)
-          include_examples('firewall node_exporter scraping', site:)
-          include_examples 'puppetdb'
-          include_examples 'puppetboard'
+          it_behaves_like 'ipset'
+          it_behaves_like('firewall default', os_facts:)
+          it_behaves_like('firewall node_exporter scraping', site:)
+          it_behaves_like 'puppetdb'
+          it_behaves_like 'puppetboard'
 
           case site
           when 'dev', 'ls'
             it do
               expect(catalogue.resource('apache::vhost', 'puppetboard-proxy')[:directories].first).to include(
-                'auth_ldap_url' => '"ldaps://ipa1.ls.lsst.org ipa2.ls.lsst.org ipa3.ls.lsst.org/cn=users,cn=accounts,dc=lsst,dc=cloud?uid?sub?(objectClass=posixAccount)"'
+                'auth_ldap_url' => '"ldaps://ipa1.ls.lsst.org ipa2.ls.lsst.org ipa3.ls.lsst.org/cn=users,cn=accounts,dc=lsst,dc=cloud?uid?sub?(objectClass=posixAccount)"',
               )
             end
           when 'tu'
             it do
               expect(catalogue.resource('apache::vhost', 'puppetboard-proxy')[:directories].first).to include(
-                'auth_ldap_url' => '"ldaps://ipa1.tu.lsst.org ipa2.tu.lsst.org ipa3.tu.lsst.org/cn=users,cn=accounts,dc=lsst,dc=cloud?uid?sub?(objectClass=posixAccount)"'
+                'auth_ldap_url' => '"ldaps://ipa1.tu.lsst.org ipa2.tu.lsst.org ipa3.tu.lsst.org/cn=users,cn=accounts,dc=lsst,dc=cloud?uid?sub?(objectClass=posixAccount)"',
               )
             end
           when 'cp'
             it do
               expect(catalogue.resource('apache::vhost', 'puppetboard-proxy')[:directories].first).to include(
-                'auth_ldap_url' => '"ldaps://ipa1.cp.lsst.org ipa2.cp.lsst.org ipa3.cp.lsst.org/cn=users,cn=accounts,dc=lsst,dc=cloud?uid?sub?(objectClass=posixAccount)"'
+                'auth_ldap_url' => '"ldaps://ipa1.cp.lsst.org ipa2.cp.lsst.org ipa3.cp.lsst.org/cn=users,cn=accounts,dc=lsst,dc=cloud?uid?sub?(objectClass=posixAccount)"',
               )
             end
           end

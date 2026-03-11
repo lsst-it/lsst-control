@@ -5,7 +5,7 @@ shared_examples 'add_usb' do
     is_expected.to contain_systemd__udev__rule('add_usb.rules').with(
       rules: [
         'SUBSYSTEM=="tty", ACTION=="add", RUN+="/usr/local/bin/add_usb.sh \'$devnode\'"',
-      ]
+      ],
     )
   end
 
@@ -13,7 +13,7 @@ shared_examples 'add_usb' do
     is_expected.to contain_file('/usr/local/bin/add_usb.sh').with(
       ensure: 'file',
       mode: '0755',
-      content: <<~CONTENT
+      content: <<~CONTENT,
         #!/bin/bash
         tty_path=$1
         tty_device=$(basename "$tty_path")

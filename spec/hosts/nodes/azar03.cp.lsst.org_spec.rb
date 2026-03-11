@@ -26,7 +26,7 @@ describe 'azar03.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
+      it_behaves_like 'baremetal'
 
       it do
         is_expected.to contain_class('docker::networks').with(
@@ -38,7 +38,7 @@ describe 'azar03.cp.lsst.org', :sitepp do
               'gateway' => '139.229.178.254',
               'options' => ['parent=dds'],
             },
-          }
+          },
         )
       end
 
@@ -89,7 +89,7 @@ describe 'azar03.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/project').with(
           share: 'project',
           server: 'nfs-project.cp.lsst.org',
-          atboot: true
+          atboot: true,
         )
       end
 
@@ -97,7 +97,7 @@ describe 'azar03.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/scratch').with(
           share: 'scratch',
           server: 'nfs-scratch.cp.lsst.org',
-          atboot: true
+          atboot: true,
         )
       end
 
@@ -105,7 +105,7 @@ describe 'azar03.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/data').with(
           share: 'lsstcam',
           server: 'nfs-lsstcam.cp.lsst.org',
-          atboot: true
+          atboot: true,
         )
       end
 
@@ -113,7 +113,7 @@ describe 'azar03.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/obs-env').with(
           share: 'obs-env',
           server: 'nfs-obs-env.cp.lsst.org',
-          atboot: true
+          atboot: true,
         )
       end
     end # on os

@@ -9,7 +9,7 @@ describe 'profile::pi::ftdi' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'ftdi'
+      it_behaves_like 'ftdi'
     end
   end
 end

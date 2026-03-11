@@ -6,7 +6,7 @@ role = 'foreman'
 
 describe "#{role} role" do
   on_supported_os.each do |os, os_facts|
-    next unless os =~ (%r{^almalinux-9-x86_64$})
+    next unless os =~ %r{^almalinux-9-x86_64$}
 
     context "on #{os}" do
       let(:node_params) do
@@ -44,8 +44,8 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples('common', os_facts:, site:, puppet_version: '8.10.0')
-        include_examples 'generic foreman'
+        it_behaves_like('common', os_facts:, site:, puppet_version: '8.10.0')
+        it_behaves_like 'generic foreman'
       end # host
 
       describe 'foreman.tuc.lsst.cloud', :sitepp do
@@ -74,8 +74,8 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples('common', os_facts:, site:, puppet_version: '8.10.0')
-        include_examples 'generic foreman'
+        it_behaves_like('common', os_facts:, site:, puppet_version: '8.10.0')
+        it_behaves_like 'generic foreman'
       end # host
 
       describe 'foreman.ls.lsst.org', :sitepp do
@@ -105,8 +105,8 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples('common', os_facts:, site:, puppet_version: '8.10.0')
-        include_examples 'generic foreman'
+        it_behaves_like('common', os_facts:, site:, puppet_version: '8.10.0')
+        it_behaves_like 'generic foreman'
       end # host
 
       describe 'foreman.cp.lsst.org', :sitepp do
@@ -135,8 +135,8 @@ describe "#{role} role" do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples('common', os_facts:, site:, puppet_version: '8.10.0')
-        include_examples 'generic foreman'
+        it_behaves_like('common', os_facts:, site:, puppet_version: '8.10.0')
+        it_behaves_like 'generic foreman'
       end # host
     end
   end

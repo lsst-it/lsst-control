@@ -9,7 +9,7 @@ describe 'profile::pi::pigpio' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'pigpio'
+      it_behaves_like 'pigpio'
     end
   end
 end

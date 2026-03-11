@@ -21,11 +21,11 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'debugutils'
-          include_examples('common', os_facts:, site:)
-          include_examples('x2go packages', os_facts:)
-          include_examples 'ni_packages'
-          include_examples 'nexusctio'
+          it_behaves_like 'debugutils'
+          it_behaves_like('common', os_facts:, site:)
+          it_behaves_like('x2go packages', os_facts:)
+          it_behaves_like 'ni_packages'
+          it_behaves_like 'nexusctio'
           it { is_expected.to contain_class('mate') }
           it { is_expected.to contain_class('profile::util::xfce') }
           it { is_expected.to contain_package('freeglut-devel') } # missing opengl lib
@@ -36,7 +36,7 @@ describe "#{role} role" do
               package_source: 'docker-ce',
               socket_group: 70_014,
               socket_override: false,
-              storage_driver: 'devicemapper'
+              storage_driver: 'devicemapper',
             )
           end
 
@@ -48,7 +48,7 @@ describe "#{role} role" do
               provider: 'git',
               source: 'https://github.com/lsst-ts/ts_config_mttcs.git',
               revision: 'v0.22.0',
-              keep_local_changes: 'false'
+              keep_local_changes: 'false',
             )
           end
 
@@ -120,7 +120,7 @@ describe "#{role} role" do
               anaconda_version: 'Anaconda3-2023.07-2',
               python_env_name: 'py313',
               python_env_version: '3.13',
-              conda_packages: pkgs
+              conda_packages: pkgs,
             )
           end
 
@@ -130,7 +130,7 @@ describe "#{role} role" do
             is_expected.to contain_file('/etc/profile.d/hexrot_path.sh').with(
               ensure: 'file',
               mode: '0644',
-              content: <<~CONTENT
+              content: <<~CONTENT,
                 export QT_API="PySide6"
                 export PYTEST_QT_API="PySide6"
                 export TS_CONFIG_MTTCS_DIR="/opt/ts_config_mttcs"
@@ -143,7 +143,7 @@ describe "#{role} role" do
               is_expected.to contain_file(path).with(
                 ensure: 'directory',
                 owner: '73006',
-                group: '73006'
+                group: '73006',
               )
             end
           end
@@ -152,7 +152,7 @@ describe "#{role} role" do
             '/rubin/mtm2/python/run_m2gui' => '/opt/anaconda/envs/py311/bin/run_m2gui',
             '/rubin/hexapod/python/run_hexgui' => '/opt/anaconda/envs/py311/bin/run_hexgui',
             '/rubin/dome/python/run_mtdomegui' => '/opt/anaconda/envs/py311/bin/run_mtdomegui',
-            '/rubin/rotator/python/run_rotgui' => '/opt/anaconda/envs/py311/bin/run_rotgui'
+            '/rubin/rotator/python/run_rotgui' => '/opt/anaconda/envs/py311/bin/run_rotgui',
           }
 
           symlinks.each do |source, dst|
@@ -161,7 +161,7 @@ describe "#{role} role" do
                 ensure: 'link',
                 owner: '73006',
                 group: '73006',
-                target: dst
+                target: dst,
               )
             end
           end
@@ -172,7 +172,7 @@ describe "#{role} role" do
                 ensure: 'directory',
                 owner: '73006',
                 group: '73006',
-                recurse: 'true'
+                recurse: 'true',
               )
             end
           end
@@ -183,7 +183,7 @@ describe "#{role} role" do
                 ensure: 'directory',
                 owner: '73006',
                 group: '73006',
-                mode: '0775'
+                mode: '0775',
               )
             end
           end

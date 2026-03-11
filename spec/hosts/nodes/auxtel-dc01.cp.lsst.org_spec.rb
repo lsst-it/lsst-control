@@ -27,7 +27,7 @@ describe 'auxtel-dc01.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
+      it_behaves_like 'baremetal'
       include_context 'with nm interface'
       it { is_expected.to have_nm__connection_resource_count(2) }
 
@@ -53,7 +53,7 @@ describe 'auxtel-dc01.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/data').with(
           share: 'data',
           server: 'auxtel-fp01.cp.lsst.org',
-          atboot: true
+          atboot: true,
         )
       end
 
@@ -61,7 +61,7 @@ describe 'auxtel-dc01.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/repo').with(
           share: 'auxtel/repo',
           server: 'nfs-auxtel.cp.lsst.org',
-          atboot: true
+          atboot: true,
         )
       end
     end

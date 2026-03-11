@@ -29,11 +29,11 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples('common', os_facts:, site:)
-          include_examples 'ftdi'
-          include_examples 'rubinhat'
-          include_examples 'dco'
-          include_examples 'add_usb'
+          it_behaves_like('common', os_facts:, site:)
+          it_behaves_like 'ftdi'
+          it_behaves_like 'rubinhat'
+          it_behaves_like 'dco'
+          it_behaves_like 'add_usb'
         end # host
       end # lsst_sites
     end # on os

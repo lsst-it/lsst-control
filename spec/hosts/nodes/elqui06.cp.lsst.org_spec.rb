@@ -27,26 +27,26 @@ describe 'elqui06.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
+      it_behaves_like 'baremetal'
       include_context 'with nm interface'
-      include_examples 'ceph cluster'
-      include_examples 'lhn sysctls'
+      it_behaves_like 'ceph cluster'
+      it_behaves_like 'lhn sysctls'
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(
-          'node-label' => include('role=storage-node')
+          'node-label' => include('role=storage-node'),
         )
       end
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(
-          'node-label' => include('metallb/speaker=true')
+          'node-label' => include('metallb/speaker=true'),
         )
       end
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(
-          'node-taint' => ['metallb/speaker=true:NoExecute']
+          'node-taint' => ['metallb/speaker=true:NoExecute'],
         )
       end
 
@@ -61,7 +61,7 @@ describe 'elqui06.cp.lsst.org', :sitepp do
               'group' => 'elqui',
               'member' => 'elqui[01-18]',
             },
-          }
+          },
         )
       end
 
@@ -69,7 +69,7 @@ describe 'elqui06.cp.lsst.org', :sitepp do
         is_expected.to contain_class('rke2').with(
           node_type: 'agent',
           release_series: '1.33',
-          version: '1.33.0~rke2r1'
+          version: '1.33.0~rke2r1',
         )
       end
 
@@ -78,7 +78,7 @@ describe 'elqui06.cp.lsst.org', :sitepp do
           'device' => {
             'keep-configuration' => 'no',
             'allowed-connections' => 'except:origin:nm-initrd-generator',
-          }
+          },
         )
       end
 

@@ -28,7 +28,7 @@ describe 'azar01.ls.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
+      it_behaves_like 'baremetal'
       include_context 'with nm interface'
       it { is_expected.to have_nm__connection_resource_count(7) }
 
@@ -79,7 +79,7 @@ describe 'azar01.ls.lsst.org', :sitepp do
               'gateway' => '139.229.152.126',
               'options' => ['parent=dds'],
             },
-          }
+          },
         )
       end
     end # on os

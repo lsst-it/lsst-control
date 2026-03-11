@@ -25,12 +25,12 @@ define profile::util::keytab (
   }
 
   ensure_resource('file', $keytab_dir, {
-      'ensure' => 'directory',
-      owner    => 'root',
-      group    => 'root',
-      mode     => '0700',
-      purge    => true,
-      recurse  => true,
+    'ensure' => 'directory',
+    owner    => 'root',
+    group    => 'root',
+    mode     => '0700',
+    purge    => true,
+    recurse  => true,
   })
   file { $keytab_path:
     ensure    => file,

@@ -37,7 +37,7 @@ describe "#{role} role" do
             is_expected.to contain_file('/etc/profile.d/rubin.sh').with(
               ensure: 'file',
               mode: '0644',
-              content: <<~CONTENT
+              content: <<~CONTENT,
                 export DAF_BUTLER_REPOSITORY_INDEX=/project/data-repos.yaml
                 export PGPASSFILE=/home/$USER/.lsst/postgres-credentials.txt
                 export PGUSER=oods
@@ -62,7 +62,7 @@ describe "#{role} role" do
           it do
             is_expected.to contain_service('condor').with(
               ensure: 'running',
-              enable: true
+              enable: true,
             )
           end
 
@@ -73,7 +73,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/home').with(
                 share: 'rsphome',
                 server: 'nfs-rsphome.ls.lsst.org',
-                atboot: true
+                atboot: true,
               )
             end
 
@@ -81,7 +81,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/project').with(
                 share: 'project',
                 server: 'nfs-project.ls.lsst.org',
-                atboot: true
+                atboot: true,
               )
             end
           end
@@ -93,7 +93,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/repo/LATISS').with(
                 share: '/auxtel/repo/LATISS',
                 server: 'nfs-auxtel.ls.lsst.org',
-                atboot: true
+                atboot: true,
               )
             end
 
@@ -101,7 +101,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/data/lsstdata/BTS/auxtel').with(
                 share: '/auxtel/lsstdata/BTS/auxtel',
                 server: 'nfs-auxtel.ls.lsst.org',
-                atboot: true
+                atboot: true,
               )
             end
           end
@@ -113,7 +113,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/home').with(
                 share: 'rsphome',
                 server: 'nfs-rsphome.cp.lsst.org',
-                atboot: true
+                atboot: true,
               )
             end
 
@@ -121,7 +121,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/project').with(
                 share: 'project',
                 server: 'nfs-project.cp.lsst.org',
-                atboot: true
+                atboot: true,
               )
             end
 
@@ -129,7 +129,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/repo/LATISS').with(
                 share: '/auxtel/repo/LATISS',
                 server: 'nfs-auxtel.cp.lsst.org',
-                atboot: true
+                atboot: true,
               )
             end
 
@@ -137,7 +137,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/repo/LSSTComCam').with(
                 share: '/comcam/repo/LSSTComCam',
                 server: 'nfs-comcam.cp.lsst.org',
-                atboot: true
+                atboot: true,
               )
             end
 
@@ -145,7 +145,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/readonly/lsstdata/comcam').with(
                 share: '/comcam/lsstdata',
                 server: 'nfs-comcam.cp.lsst.org',
-                atboot: true
+                atboot: true,
               )
             end
 
@@ -153,21 +153,21 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/readonly/lsstdata/auxtel').with(
                 share: '/auxtel/lsstdata',
                 server: 'nfs-auxtel.cp.lsst.org',
-                atboot: true
+                atboot: true,
               )
             end
 
             it do
               is_expected.to contain_file('/data/lsstdata/base/comcam').with(
                 ensure: 'link',
-                target: '/readonly/lsstdata/comcam/base/comcam'
+                target: '/readonly/lsstdata/comcam/base/comcam',
               )
             end
 
             it do
               is_expected.to contain_file('/data/lsstdata/base/auxtel').with(
                 ensure: 'link',
-                target: '/readonly/lsstdata/auxtel/base/auxtel'
+                target: '/readonly/lsstdata/auxtel/base/auxtel',
               )
             end
           end

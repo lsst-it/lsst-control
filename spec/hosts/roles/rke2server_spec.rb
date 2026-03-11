@@ -3,17 +3,17 @@
 require 'spec_helper'
 
 shared_examples 'generic rke2server' do |os_facts:, site:|
-  include_examples 'common', os_facts:, site:, node_exporter: false
-  include_examples 'debugutils'
-  include_examples 'k8snode profile'
-  include_examples 'restic common'
+  it_behaves_like 'common', os_facts:, site:, node_exporter: false
+  it_behaves_like 'debugutils'
+  it_behaves_like 'k8snode profile'
+  it_behaves_like 'restic common'
 
   it do
     is_expected.to contain_class('rke2').with(
       node_type: 'server',
       release_series: '1.33',
       version: '1.33.0~rke2r1',
-      versionlock: true
+      versionlock: true,
     )
   end
 
@@ -28,13 +28,13 @@ shared_examples 'generic rke2server' do |os_facts:, site:|
         rke2-snapshot-controller
         rke2-snapshot-controller-crd
         rke2-snapshot-validation-webhook
-      ]
+      ],
     )
   end
 
   it do
     expect(catalogue.resource('class', 'rke2')[:config]).to include(
-      'disable-cloud-controller' => true
+      'disable-cloud-controller' => true,
     )
   end
 
@@ -44,7 +44,7 @@ shared_examples 'generic rke2server' do |os_facts:, site:|
   it do
     is_expected.to contain_accounts__user('rke2').with(
       uid: '61616',
-      gid: '61616'
+      gid: '61616',
     )
   end
 
@@ -70,13 +70,13 @@ shared_examples 'generic rke2server' do |os_facts:, site:|
       backup_timer: '*-*-* 09:00:00',
       enable_forget: true,
       forget_timer: 'Mon..Sun 23:00:00',
-      forget_flags: '--keep-last 20'
+      forget_flags: '--keep-last 20',
     )
   end
 
   it do
     is_expected.to contain_grubby__kernel_opt('rootflags=pquota').with(
-      ensure: 'absent'
+      ensure: 'absent',
     )
   end
 end
@@ -100,7 +100,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'generic rke2server', os_facts:, site:
+          it_behaves_like 'generic rke2server', os_facts:, site:
         end # host
       end # lsst_sites
     end # on os

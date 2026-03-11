@@ -28,11 +28,11 @@ describe 'pukem01.dev.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
+      it_behaves_like 'baremetal'
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(
-          'node-label' => ['role=storage-node']
+          'node-label' => ['role=storage-node'],
         )
       end
 
@@ -47,7 +47,7 @@ describe 'pukem01.dev.lsst.org', :sitepp do
               'group' => 'pukem',
               'member' => 'pukem[01-04]',
             },
-          }
+          },
         )
       end
 
@@ -55,7 +55,7 @@ describe 'pukem01.dev.lsst.org', :sitepp do
         is_expected.to contain_class('rke2').with(
           node_type: 'server',
           release_series: '1.33',
-          version: '1.33.0~rke2r1'
+          version: '1.33.0~rke2r1',
         )
       end
 

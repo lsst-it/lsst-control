@@ -12,7 +12,7 @@ describe 'profile::core::k8snode' do
       context 'with no params' do
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'k8snode profile'
+        it_behaves_like 'k8snode profile'
 
         it { is_expected.not_to contain_class('cni::plugins') }
         it { is_expected.not_to contain_class('cni::plugins::dhcp') }
@@ -28,7 +28,7 @@ describe 'profile::core::k8snode' do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'k8snode profile'
+          it_behaves_like 'k8snode profile'
 
           it { is_expected.not_to contain_class('cni::plugins') }
           it { is_expected.not_to contain_class('cni::plugins::dhcp') }
@@ -43,7 +43,7 @@ describe 'profile::core::k8snode' do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'k8snode profile'
+          it_behaves_like 'k8snode profile'
 
           it { is_expected.to contain_class('cni::plugins') }
           it { is_expected.to contain_class('cni::plugins::dhcp') }
@@ -58,7 +58,7 @@ describe 'profile::core::k8snode' do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'k8snode profile'
+          it_behaves_like 'k8snode profile'
 
           it { is_expected.not_to contain_class('cni::plugins') }
           it { is_expected.not_to contain_class('cni::plugins::dhcp') }

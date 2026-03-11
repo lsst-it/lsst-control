@@ -15,7 +15,7 @@ describe 'profile::util::xfce' do
         is_expected.to contain_yum__group('Xfce')
           .with(
             ensure: 'present',
-            timeout: 600
+            timeout: 600,
           )
       }
 
@@ -27,7 +27,7 @@ describe 'profile::util::xfce' do
             .with(
               path: '/etc/gdm/custom.conf',
               match: '^#?WaylandEnable=',
-              line: 'WaylandEnable=false'
+              line: 'WaylandEnable=false',
             )
         }
       end
@@ -40,7 +40,7 @@ describe 'profile::util::xfce' do
             .with(
               path: '/etc/gdm/custom.conf',
               match: '^#?WaylandEnable=',
-              line: 'WaylandEnable=true'
+              line: 'WaylandEnable=true',
             )
         }
       end
@@ -53,7 +53,7 @@ describe 'profile::util::xfce' do
             .with(
               command: 'systemctl set-default graphical.target',
               unless: 'systemctl get-default | grep -q graphical.target',
-              path: ['/bin', '/usr/bin', '/sbin', '/usr/sbin']
+              path: ['/bin', '/usr/bin', '/sbin', '/usr/sbin'],
             )
         }
       end
@@ -66,7 +66,7 @@ describe 'profile::util::xfce' do
             .with(
               command: 'systemctl set-default multi-user.target',
               unless: 'systemctl get-default | grep -q multi-user.target',
-              path: ['/bin', '/usr/bin', '/sbin', '/usr/sbin']
+              path: ['/bin', '/usr/bin', '/sbin', '/usr/sbin'],
             )
         }
       end

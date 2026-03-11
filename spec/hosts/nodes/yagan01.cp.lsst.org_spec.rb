@@ -29,14 +29,14 @@ describe 'yagan01.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
+      it_behaves_like 'baremetal'
       include_context 'with nm interface'
-      include_examples 'ceph cluster'
+      it_behaves_like 'ceph cluster'
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(
           'kubelet-arg' => ['max-pods=250'],
-          'node-label' => ['role=storage-node']
+          'node-label' => ['role=storage-node'],
         )
       end
 
@@ -51,7 +51,7 @@ describe 'yagan01.cp.lsst.org', :sitepp do
               'group' => 'yagan',
               'member' => 'yagan[01-20]',
             },
-          }
+          },
         )
       end
 
@@ -59,7 +59,7 @@ describe 'yagan01.cp.lsst.org', :sitepp do
         is_expected.to contain_class('rke2').with(
           node_type: 'server',
           release_series: '1.33',
-          version: '1.33.0~rke2r1'
+          version: '1.33.0~rke2r1',
         )
       end
 
@@ -68,7 +68,7 @@ describe 'yagan01.cp.lsst.org', :sitepp do
           'device' => {
             'keep-configuration' => 'no',
             'allowed-connections' => 'except:origin:nm-initrd-generator',
-          }
+          },
         )
       end
 

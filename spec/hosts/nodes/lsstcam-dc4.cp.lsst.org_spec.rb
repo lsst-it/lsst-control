@@ -30,9 +30,9 @@ describe 'lsstcam-dc4.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'lsstcam-rsyslog'
-      include_examples 'lsstcam-dc.cp'
-      include_examples 'baremetal'
+      it_behaves_like 'lsstcam-rsyslog'
+      it_behaves_like 'lsstcam-dc.cp'
+      it_behaves_like 'baremetal'
       include_context 'with nm interface'
 
       it { is_expected.to have_nm__connection_resource_count(11) }

@@ -11,7 +11,7 @@ describe 'profile::core::fiberspec' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'fiberspec'
+      it_behaves_like 'fiberspec'
     end
   end
 end

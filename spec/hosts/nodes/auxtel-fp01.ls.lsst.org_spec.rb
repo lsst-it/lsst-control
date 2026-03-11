@@ -29,7 +29,7 @@ describe 'auxtel-fp01.ls.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
+      it_behaves_like 'baremetal'
       include_context 'with nm interface'
 
       it do
@@ -42,7 +42,7 @@ describe 'auxtel-fp01.ls.lsst.org', :sitepp do
           ],
           env: {
             'S3ND_ENDPOINT_URL' => 'https://s3.ls.lsst.org',
-          }
+          },
         )
       end
 
@@ -56,7 +56,7 @@ describe 'auxtel-fp01.ls.lsst.org', :sitepp do
           ],
           env: {
             'S3ND_ENDPOINT_URL' => 'https://s3dfrgw.slac.stanford.edu',
-          }
+          },
         )
       end
 
@@ -137,7 +137,7 @@ describe 'auxtel-fp01.ls.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/self/data').with(
           share: 'data',
           server: 'auxtel-fp01.ls.lsst.org',
-          atboot: true
+          atboot: true,
         )
       end
     end # on os

@@ -6,7 +6,7 @@ nm::connections:
     content:
       connection:
         id: "eno1"
-        uuid: "d4c24e30-bcf0-4232-a532-97eeebfb859c"
+        uuid: "d000facf-758b-3e4f-8167-7fb6a9596678"
         type: "ethernet"
         interface-name: "eno1"
       ethernet: {}
@@ -19,7 +19,7 @@ nm::connections:
     content:
       connection:
         id: "enp6s0"
-        uuid: "e377179b-1f3c-44d1-b437-388185c630d7"
+        uuid: "99d79814-4f5b-3773-bb09-a4184c4d8619"
         type: "ethernet"
         interface-name: "enp6s0"
         autoconnect: "false"
@@ -35,7 +35,7 @@ nm::connections:
     content:
       connection:
         id: "enp7s0"
-        uuid: "b5abaeaa-e81c-4252-b042-f7bee82c81a0"
+        uuid: "a810efe3-7038-34ef-b09f-03f634d8220b"
         type: "ethernet"
         interface-name: "enp7s0"
         autoconnect: "false"
@@ -48,7 +48,7 @@ nm::connections:
     content:
       connection:
         id: "enp8s0"
-        uuid: "406674eb-e5b9-4f2c-ba0e-510ac90f24c8"
+        uuid: "928f6bef-4db6-3ed3-be36-cbc50748f616"
         type: "ethernet"
         interface-name: "enp8s0"
         autoconnect: "false"

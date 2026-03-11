@@ -7,7 +7,7 @@ describe 'profile::daq::common' do
     context "on #{os}" do
       let(:facts) { os_facts }
 
-      include_examples 'daq common'
+      it_behaves_like 'daq common'
     end
   end
 end

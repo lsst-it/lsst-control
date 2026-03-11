@@ -9,7 +9,7 @@ describe 'profile::core::openvpnas' do
     context "on #{os}" do
       let(:facts) do
         os_facts.merge(
-          networking: { fqdn: 'foo.example.com' }
+          networking: { fqdn: 'foo.example.com' },
         )
       end
 
@@ -27,7 +27,7 @@ describe 'profile::core::openvpnas' do
         it do
           is_expected.to contain_letsencrypt__certonly(fqdn).with(
             plugin: 'dns-route53',
-            manage_cron: true
+            manage_cron: true,
           )
         end
 
@@ -40,7 +40,7 @@ describe 'profile::core::openvpnas' do
             manage_service: true,
             manage_web_certs: true,
             cert_source_path: le_root,
-            require: "Letsencrypt::Certonly[#{fqdn}]"
+            require: "Letsencrypt::Certonly[#{fqdn}]",
           )
         end
 
@@ -48,56 +48,56 @@ describe 'profile::core::openvpnas' do
         it do
           is_expected.to contain_openvpnas__config__key('auth.ldap.0.enable').with(
             key: 'auth.ldap.0.enable',
-            value: true
+            value: true,
           )
         end
 
         it do
           is_expected.to contain_openvpnas__config__key('auth.ldap.0.users_base_dn').with(
             key: 'auth.ldap.0.users_base_dn',
-            value: 'cn=accounts,dc=lsst,dc=cloud'
+            value: 'cn=accounts,dc=lsst,dc=cloud',
           )
         end
 
         it do
           is_expected.to contain_openvpnas__config__key('auth.ldap.0.uname_attr').with(
             key: 'auth.ldap.0.uname_attr',
-            value: 'uid'
+            value: 'uid',
           )
         end
 
         it do
           is_expected.to contain_openvpnas__config__key('auth.module.type').with(
             key: 'auth.module.type',
-            value: 'ldap'
+            value: 'ldap',
           )
         end
 
         it do
           is_expected.to contain_openvpnas__config__key('auth.ldap.0.server.0.host').with(
             key: 'auth.ldap.0.server.0.host',
-            value: 'ipa1.cp.lsst.org'
+            value: 'ipa1.cp.lsst.org',
           )
         end
 
         it do
           is_expected.to contain_openvpnas__config__key('auth.ldap.0.server.1.host').with(
             key: 'auth.ldap.0.server.1.host',
-            value: 'ipa1.ls.lsst.org'
+            value: 'ipa1.ls.lsst.org',
           )
         end
 
         it do
           is_expected.to contain_openvpnas__config__key('auth.ldap.0.bind_dn').with(
             key: 'auth.ldap.0.bind_dn',
-            value: 'uid=svc_openvpnas,cn=users,cn=accounts,dc=lsst,dc=cloud'
+            value: 'uid=svc_openvpnas,cn=users,cn=accounts,dc=lsst,dc=cloud',
           )
         end
 
         it do
           is_expected.to contain_openvpnas__config__key('auth.ldap.0.bind_pw').with(
             key: 'auth.ldap.0.bind_pw',
-            value: 'testpassword'
+            value: 'testpassword',
           )
         end
 
@@ -108,7 +108,7 @@ describe 'profile::core::openvpnas' do
             owner: 'root',
             group: 'root',
             mode: '0644',
-            source: 'puppet:///modules/profile/openvpnas/ldap.py'
+            source: 'puppet:///modules/profile/openvpnas/ldap.py',
           )
         end
 
@@ -118,7 +118,7 @@ describe 'profile::core::openvpnas' do
             refreshonly: true,
             subscribe: 'File[/root/ldap.py]',
             path: ['/usr/local/openvpn_as/scripts', '/usr/bin', '/bin'],
-            require: ['Openvpnas::Config::Key[auth.module.type]']
+            require: ['Openvpnas::Config::Key[auth.module.type]'],
           )
         end
 
@@ -135,7 +135,7 @@ describe 'profile::core::openvpnas' do
               'vpn-default' => { 'superuser' => false },
               'vpn-it' => { 'superuser' => true },
               'vpn-science' => { 'superuser' => false },
-            }
+            },
           }
         end
 
@@ -145,21 +145,21 @@ describe 'profile::core::openvpnas' do
         it do
           is_expected.to contain_openvpnas__config__group('vpn-default').with(
             user: 'vpn-default',
-            superuser: false
+            superuser: false,
           )
         end
 
         it do
           is_expected.to contain_openvpnas__config__group('vpn-it').with(
             user: 'vpn-it',
-            superuser: true
+            superuser: true,
           )
         end
 
         it do
           is_expected.to contain_openvpnas__config__group('vpn-science').with(
             user: 'vpn-science',
-            superuser: false
+            superuser: false,
           )
         end
 
@@ -174,7 +174,7 @@ describe 'profile::core::openvpnas' do
               'Openvpnas::Config::Group[vpn-it]',
               'Openvpnas::Config::Group[vpn-science]',
               'Openvpnas::Config::Key[auth.module.type]',
-            ]
+            ],
           )
         end
       end
@@ -183,7 +183,7 @@ describe 'profile::core::openvpnas' do
         let(:params) do
           {
             version: '3.0.2_87c70987',
-            bind_pw: 'my-secret-password'
+            bind_pw: 'my-secret-password',
           }
         end
 
@@ -192,7 +192,7 @@ describe 'profile::core::openvpnas' do
         it do
           is_expected.to contain_openvpnas__config__key('auth.ldap.0.bind_pw').with(
             key: 'auth.ldap.0.bind_pw',
-            value: 'my-secret-password'
+            value: 'my-secret-password',
           )
         end
       end

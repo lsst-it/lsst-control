@@ -3,17 +3,17 @@
 require 'spec_helper'
 
 shared_examples 'generic rke' do |os_facts:, site:|
-  include_examples 'common', os_facts:, site:, node_exporter: false
-  include_examples 'debugutils'
-  include_examples 'docker'
-  include_examples 'rke profile'
-  include_examples 'k8snode profile'
-  include_examples 'restic common'
+  it_behaves_like 'common', os_facts:, site:, node_exporter: false
+  it_behaves_like 'debugutils'
+  it_behaves_like 'docker'
+  it_behaves_like 'rke profile'
+  it_behaves_like 'k8snode profile'
+  it_behaves_like 'restic common'
 
   it do
     is_expected.to contain_class('kubectl').with(
       version: '1.28.10',
-      checksum: '389c17a9700a4b01ebb055e39b8bc0886330497440dde004b5ed90f2a3a028db'
+      checksum: '389c17a9700a4b01ebb055e39b8bc0886330497440dde004b5ed90f2a3a028db',
     )
   end
 
@@ -39,20 +39,20 @@ shared_examples 'generic rke' do |os_facts:, site:|
       backup_timer: '*-*-* 09:00:00',
       enable_forget: true,
       forget_timer: 'Mon..Sun 23:00:00',
-      forget_flags: '--keep-last 20'
+      forget_flags: '--keep-last 20',
     )
   end
 
   it do
     is_expected.to contain_class('rke').with(
       version: '1.8.0',
-      checksum: '8815da0452ae14a45566b534c48a2af6286ee73f800208ba6ec59188cb9a8d25'
+      checksum: '8815da0452ae14a45566b534c48a2af6286ee73f800208ba6ec59188cb9a8d25',
     )
   end
 
   it do
     is_expected.to contain_grubby__kernel_opt('rootflags=pquota').with(
-      ensure: 'absent'
+      ensure: 'absent',
     )
   end
 end
@@ -76,7 +76,7 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'generic rke', os_facts:, site:
+          it_behaves_like 'generic rke', os_facts:, site:
         end # host
       end # lsst_sites
     end # on os

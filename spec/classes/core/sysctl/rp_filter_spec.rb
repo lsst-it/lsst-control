@@ -21,7 +21,7 @@ describe 'profile::core::sysctl::rp_filter' do
             'network' => '127.0.0.0',
           },
           'p2p1' => {
-            'dhcp' => '1.2.3.4',  # this looks like a bug in facter
+            'dhcp' => '1.2.3.4', # this looks like a bug in facter
             'mac' => 'a0:36:9f:c7:79:d4',
             'mtu' => 1500,
           },
@@ -34,13 +34,13 @@ describe 'profile::core::sysctl::rp_filter' do
             'mac' => 'ee:ee:ee:ee:ee:ee',
             'mtu' => 1450,
             'operational_state' => 'up',
-            'physical' => false
+            'physical' => false,
           },
           'califaf7803c29b' => {
             'mac' => 'ee:ee:ee:ee:ee:ee',
             'mtu' => 1450,
             'operational_state' => 'up',
-            'physical' => false
+            'physical' => false,
           },
         }
       end

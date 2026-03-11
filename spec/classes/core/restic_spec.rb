@@ -15,7 +15,7 @@ describe 'profile::core::restic' do
       context 'with enable param' do
         let(:params) do
           {
-            enable: true
+            enable: true,
           }
         end
 

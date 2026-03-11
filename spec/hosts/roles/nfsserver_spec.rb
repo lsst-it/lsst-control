@@ -19,13 +19,13 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples('common', os_facts:, site:)
+          it_behaves_like('common', os_facts:, site:)
 
           it do
             is_expected.to contain_class('nfs').with(
               server_enabled: true,
               client_enabled: false,
-              nfs_v4_client: true
+              nfs_v4_client: true,
             )
           end
         end

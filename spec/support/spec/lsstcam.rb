@@ -16,7 +16,7 @@ shared_examples 'lsstcam-dc.cp' do
         'S3ND_UPLOAD_PARTSIZE' => '100Mi',
         'S3ND_UPLOAD_TIMEOUT' => '3s',
         'S3ND_UPLOAD_TRIES' => '5',
-      }
+      },
     )
   end
 
@@ -36,7 +36,7 @@ shared_examples 'lsstcam-dc.cp' do
         'S3ND_UPLOAD_PARTSIZE' => '100Mi',
         'S3ND_UPLOAD_TIMEOUT' => '4s',
         'S3ND_UPLOAD_TRIES' => '3',
-      }
+      },
     )
   end
 
@@ -56,7 +56,7 @@ shared_examples 'lsstcam-dc.cp' do
         'S3ND_UPLOAD_PARTSIZE' => '100Mi',
         'S3ND_UPLOAD_TIMEOUT' => '4s',
         'S3ND_UPLOAD_TRIES' => '3',
-      }
+      },
     )
   end
 end

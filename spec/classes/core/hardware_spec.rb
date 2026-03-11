@@ -17,13 +17,13 @@ describe 'profile::core::hardware' do
               'product' => {
                 'name' => 'PowerEdge',
               },
-            }
+            },
           )
         end
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'powertop'
+        it_behaves_like 'powertop'
         it { is_expected.to contain_class('ipmi') }
         it { is_expected.not_to contain_class('profile::core::kernel::pcie_aspm') }
         it { is_expected.not_to contain_class('profile::core::kernel::nvme_apst') }
@@ -50,13 +50,13 @@ describe 'profile::core::hardware' do
               'product' => {
                 'name' => '1114S-WN10RT',
               },
-            }
+            },
           )
         end
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'powertop'
+        it_behaves_like 'powertop'
         it { is_expected.to contain_class('ipmi') }
 
         if (os_facts[:os]['family'] == 'RedHat') && (os_facts[:os]['release']['major'] == '7')
@@ -82,13 +82,13 @@ describe 'profile::core::hardware' do
               'board' => {
                 'product' => 'H12SSL-NT',
               },
-            }
+            },
           )
         end
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'powertop'
+        it_behaves_like 'powertop'
         it { is_expected.to contain_class('ipmi') }
         it { is_expected.not_to contain_class('profile::core::perccli') }
         it { is_expected.not_to contain_class('profile::core::kernel::pcie_aspm') }
@@ -104,13 +104,13 @@ describe 'profile::core::hardware' do
               'product' => {
                 'name' => 'SSG-640SP-E1CR90',
               },
-            }
+            },
           )
         end
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'powertop'
+        it_behaves_like 'powertop'
         it { is_expected.to contain_class('ipmi') }
       end  # SSG-640SP-E1CR90
 
@@ -120,13 +120,13 @@ describe 'profile::core::hardware' do
             super().merge(
               dmi: {
                 'manufacturer' => 'VersLogic Corp.',
-              }
+              },
             )
           end
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'powertop'
+          it_behaves_like 'powertop'
         end  # VersLogic Corp.
 
         context 'when Advantech' do
@@ -134,13 +134,13 @@ describe 'profile::core::hardware' do
             super().merge(
               dmi: {
                 'manufacturer' => 'Advantech',
-              }
+              },
             )
           end
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples 'powertop'
+          it_behaves_like 'powertop'
         end  # Advantech
       end
     end

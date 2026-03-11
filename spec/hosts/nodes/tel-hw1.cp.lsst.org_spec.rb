@@ -44,7 +44,7 @@ describe 'tel-hw1.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/obs-env').with(
           share: 'obs-env',
           server: 'nfs-obs-env.cp.lsst.org',
-          atboot: true
+          atboot: true,
         )
       end
 
@@ -52,7 +52,7 @@ describe 'tel-hw1.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/net/scratch').with(
           share: 'scratch',
           server: 'nfs-scratch.cp.lsst.org',
-          atboot: true
+          atboot: true,
         )
       end
 
@@ -60,7 +60,7 @@ describe 'tel-hw1.cp.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/project').with(
           share: 'project',
           server: 'nfs-project.cp.lsst.org',
-          atboot: true
+          atboot: true,
         )
       end
     end # on os

@@ -229,18 +229,18 @@ class profile::ccs::tomcat (
   $etc_path = "${dirname($rest_etc_path)}"
 
   ensure_resources('file', {
-      $etc_path => {
-        ensure => directory,
-        owner  => $adm_user,
-        group  => $adm_group,
-        mode   => '2775',
-      },
-      $rest_etc_path => {
-        ensure => directory,
-        owner  => 'tomcat',
-        group  => $adm_group,
-        mode   => '2770',
-      },
+    $etc_path => {
+      ensure => directory,
+      owner  => $adm_user,
+      group  => $adm_group,
+      mode   => '2775',
+    },
+    $rest_etc_path => {
+      ensure => directory,
+      owner  => 'tomcat',
+      group  => $adm_group,
+      mode   => '2770',
+    },
   })
 
   ## Hash of templates and any arguments they take.

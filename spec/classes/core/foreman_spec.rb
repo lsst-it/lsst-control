@@ -17,7 +17,7 @@ describe 'profile::core::foreman' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'foreman'
+      it_behaves_like 'foreman'
 
       context 'with foreman_hostgroup param' do
         let(:params) do
@@ -26,7 +26,7 @@ describe 'profile::core::foreman' do
               foo: {
                 description: 'bar',
               },
-            }
+            },
           )
         end
 
@@ -41,14 +41,14 @@ describe 'profile::core::foreman' do
                 parameter_type: 'baz',
                 value: 'bar',
               },
-            }
+            },
           )
         end
 
         it do
           is_expected.to contain_foreman_global_parameter('foo').with(
             parameter_type: 'baz',
-            value: 'bar'
+            value: 'bar',
           )
         end
       end

@@ -9,7 +9,7 @@ describe 'profile::core::convenience' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'convenience'
+      it_behaves_like 'convenience'
     end
 
     it { is_expected.to contain_package('screen') }

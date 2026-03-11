@@ -20,10 +20,10 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples('common', os_facts:, site:)
-          include_examples('x2go packages', os_facts:)
-          include_examples 'lhn sysctls'
-          include_examples 's3nd'
+          it_behaves_like('common', os_facts:, site:)
+          it_behaves_like('x2go packages', os_facts:)
+          it_behaves_like 'lhn sysctls'
+          it_behaves_like 's3nd'
           it { is_expected.not_to contain_class('dhcp') }
           it { is_expected.to contain_class('dhcp::disable') }
           it { is_expected.to contain_class('ccs_daq') }
@@ -35,7 +35,7 @@ describe "#{role} role" do
               ensure: 'file',
               owner: 'ccs-ipa',
               group: 'ccs-ipa',
-              mode: '0755'
+              mode: '0755',
             )
           end
 

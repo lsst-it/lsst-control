@@ -1,7 +1,7 @@
 ---
 inherit_gem:
   voxpupuli-test: rubocop.yml
-require:
+plugins:
   - rubocop-rspec
   - rubocop-rake
 AllCops:
@@ -15,4 +15,8 @@ Naming/FileName:
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 RSpec/BeforeAfterAll:
+  Enabled: false
+RSpec/LeakyLocalVariable:
+  Enabled: false
+RSpec/MissingExpectationTargetMethod:
   Enabled: false

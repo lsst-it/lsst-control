@@ -45,7 +45,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
             'S3ND_UPLOAD_PARTSIZE' => '100Mi',
             'S3ND_UPLOAD_TIMEOUT' => '15s',
             'S3ND_UPLOAD_TRIES' => '2',
-          }
+          },
         )
       end
 
@@ -65,7 +65,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
             'S3ND_UPLOAD_PARTSIZE' => '100Mi',
             'S3ND_UPLOAD_TIMEOUT' => '4s',
             'S3ND_UPLOAD_TRIES' => '3',
-          }
+          },
         )
       end
 
@@ -85,11 +85,11 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
             'S3ND_UPLOAD_PARTSIZE' => '100Mi',
             'S3ND_UPLOAD_TIMEOUT' => '4s',
             'S3ND_UPLOAD_TRIES' => '3',
-          }
+          },
         )
       end
 
-      include_examples 'baremetal'
+      it_behaves_like 'baremetal'
       include_context 'with nm interface'
       it { is_expected.to have_nm__connection_resource_count(10) }
 
@@ -167,7 +167,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
           ensure: 'directory',
           owner: 72_055,
           group: 72_055,
-          mode: '0755'
+          mode: '0755',
         )
       end
 
@@ -176,7 +176,7 @@ describe 'lsstcam-dc01.ls.lsst.org', :sitepp do
           ensure: 'file',
           owner: 'ccs-ipa',
           group: 'ccs-ipa',
-          mode: '0755'
+          mode: '0755',
         )
       end
 

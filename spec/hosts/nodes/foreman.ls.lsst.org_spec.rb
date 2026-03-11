@@ -48,8 +48,8 @@ describe 'foreman.ls.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'vm'
-      include_examples 'dhcp server'
+      it_behaves_like 'vm'
+      it_behaves_like 'dhcp server'
 
       context 'with enp1s0' do
         let(:interface) { 'enp1s0' }
@@ -67,7 +67,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.135.0',
           mask: '255.255.255.0',
           range: ['139.229.135.192 139.229.135.249'],
-          gateway: '139.229.135.254'
+          gateway: '139.229.135.254',
         )
       end
 
@@ -76,7 +76,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.137.0',
           mask: '255.255.255.0',
           range: ['139.229.137.1 139.229.137.200'],
-          gateway: '139.229.137.254'
+          gateway: '139.229.137.254',
         )
       end
 
@@ -86,7 +86,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           mask: '255.255.255.0',
           range: ['139.229.138.200 139.229.138.250'],
           gateway: '139.229.138.254',
-          nameservers: ['1.0.0.1', '1.1.1.1', '8.8.8.8']
+          nameservers: ['1.0.0.1', '1.1.1.1', '8.8.8.8'],
         )
       end
 
@@ -96,7 +96,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           mask: '255.255.255.240',
           range: ['139.229.154.113 139.229.154.118'],
           gateway: '139.229.154.126',
-          nameservers: ['1.0.0.1', '1.1.1.1', '8.8.8.8']
+          nameservers: ['1.0.0.1', '1.1.1.1', '8.8.8.8'],
         )
       end
 
@@ -105,7 +105,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.140.0',
           mask: '255.255.255.224',
           range: ['139.229.140.24 139.229.140.30'],
-          gateway: '139.229.140.1'
+          gateway: '139.229.140.1',
         )
       end
 
@@ -114,7 +114,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.141.0',
           mask: '255.255.255.224',
           gateway: '139.229.141.30',
-          range: ['139.229.141.20 139.229.141.26']
+          range: ['139.229.141.20 139.229.141.26'],
         )
       end
 
@@ -123,7 +123,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.141.32',
           mask: '255.255.255.240',
           gateway: '139.229.141.46',
-          range: ['139.229.141.40 139.229.141.42']
+          range: ['139.229.141.40 139.229.141.42'],
         )
       end
 
@@ -132,7 +132,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.142.0',
           mask: '255.255.255.0',
           gateway: '139.229.142.254',
-          range: ['139.229.142.230 139.229.142.250']
+          range: ['139.229.142.230 139.229.142.250'],
         )
       end
 
@@ -141,7 +141,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.145.0',
           mask: '255.255.255.0',
           range: ['139.229.145.225 139.229.145.249'],
-          gateway: '139.229.145.254'
+          gateway: '139.229.145.254',
         )
       end
 
@@ -150,7 +150,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.146.0',
           mask: '255.255.255.0',
           range: ['139.229.146.225 139.229.146.249'],
-          gateway: '139.229.146.254'
+          gateway: '139.229.146.254',
         )
       end
 
@@ -159,7 +159,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.147.0',
           mask: '255.255.255.0',
           range: ['139.229.147.225 139.229.147.249'],
-          gateway: '139.229.147.254'
+          gateway: '139.229.147.254',
         )
       end
 
@@ -168,7 +168,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.148.0',
           mask: '255.255.255.0',
           range: ['139.229.148.225 139.229.148.249'],
-          gateway: '139.229.148.254'
+          gateway: '139.229.148.254',
         )
       end
 
@@ -177,7 +177,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.149.0',
           mask: '255.255.255.0',
           range: ['139.229.149.225 139.229.149.249'],
-          gateway: '139.229.149.254'
+          gateway: '139.229.149.254',
         )
       end
 
@@ -186,7 +186,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.150.0',
           mask: '255.255.255.128',
           range: ['139.229.150.112 139.229.150.125'],
-          gateway: '139.229.150.126'
+          gateway: '139.229.150.126',
         )
       end
 
@@ -195,7 +195,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.151.0',
           mask: '255.255.255.0',
           range: ['139.229.151.201 139.229.151.249'],
-          gateway: '139.229.151.254'
+          gateway: '139.229.151.254',
         )
       end
 
@@ -203,7 +203,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
         is_expected.to contain_dhcp__pool('DDS-BTS').with(
           network: '139.229.152.0',
           mask: '255.255.255.128',
-          range: ['139.229.152.70 139.229.152.120']
+          range: ['139.229.152.70 139.229.152.120'],
         )
       end
 
@@ -212,7 +212,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.152.128',
           mask: '255.255.255.192',
           range: ['139.229.152.171 139.229.152.180'],
-          gateway: '139.229.152.190'
+          gateway: '139.229.152.190',
         )
       end
 
@@ -221,7 +221,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.152.192',
           mask: '255.255.255.192',
           range: ['139.229.152.210 139.229.152.250'],
-          gateway: '139.229.152.254'
+          gateway: '139.229.152.254',
         )
       end
 
@@ -236,7 +236,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
             { 'network' => '134.79.23', 'mask' => '24', 'gateway' => '139.229.153.254' },
             { 'network' => '134.79.235.224', 'mask' => '28', 'gateway' => '139.229.153.254' },
             { 'network' => '134.79.235.240', 'mask' => '28', 'gateway' => '139.229.153.254' },
-          ]
+          ],
         )
       end
 
@@ -245,7 +245,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.154.0',
           mask: '255.255.255.192',
           range: ['139.229.154.49 139.229.154.58'],
-          gateway: '139.229.154.62'
+          gateway: '139.229.154.62',
         )
       end
 
@@ -254,7 +254,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.159.128',
           mask: '255.255.255.128',
           range: ['139.229.159.129 139.229.159.230'],
-          gateway: '139.229.159.254'
+          gateway: '139.229.159.254',
         )
       end
 
@@ -263,7 +263,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '10.50.3.0',
           mask: '255.255.255.0',
           range: ['10.50.3.1 10.50.3.249'],
-          gateway: '10.50.3.254'
+          gateway: '10.50.3.254',
         )
       end
 
@@ -273,7 +273,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           mask: '255.255.255.0',
           range: ['10.49.3.1 10.49.3.249'],
           gateway: '10.49.3.254',
-          options: ['cisco.wlc 139.229.134.100']
+          options: ['cisco.wlc 139.229.134.100'],
         )
       end
 
@@ -283,7 +283,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           mask: '255.255.255.0',
           range: ['10.49.1.1 10.49.1.249'],
           gateway: '10.49.1.254',
-          options: ['voip-tftp-server 139.229.134.102']
+          options: ['voip-tftp-server 139.229.134.102'],
         )
       end
 
@@ -292,7 +292,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '10.50.1.0',
           mask: '255.255.255.0',
           range: ['10.50.1.200 10.50.1.249'],
-          gateway: '10.50.1.254'
+          gateway: '10.50.1.254',
         )
       end
 
@@ -301,7 +301,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '10.49.7.0',
           mask: '255.255.255.0',
           range: ['10.49.7.1 10.49.7.249'],
-          gateway: '10.49.7.254'
+          gateway: '10.49.7.254',
         )
       end
 
@@ -310,7 +310,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.154.96',
           mask: '255.255.255.240',
           range: ['139.229.154.102 139.229.154.107'],
-          gateway: '139.229.154.110'
+          gateway: '139.229.154.110',
         )
       end
 
@@ -319,7 +319,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.139.0',
           mask: '255.255.255.0',
           range: ['139.229.139.230 139.229.139.250'],
-          gateway: '139.229.139.254'
+          gateway: '139.229.139.254',
         )
       end
 
@@ -328,7 +328,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
           network: '139.229.154.64',
           mask: '255.255.255.224',
           range: ['139.229.154.88 139.229.154.91'],
-          gateway: '139.229.154.94'
+          gateway: '139.229.154.94',
         )
       end
     end # on os

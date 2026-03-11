@@ -31,7 +31,7 @@ roles_without_spec.each do |role|
 
             it { is_expected.to compile.with_all_deps }
 
-            include_examples 'common', os_facts:, site:
+            it_behaves_like 'common', os_facts:, site:
           end # host
         end # site
       end # on os

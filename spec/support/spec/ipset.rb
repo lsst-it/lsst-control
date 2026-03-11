@@ -10,7 +10,7 @@ shared_examples 'ipset' do
         139.229.0.0/16
         198.19.0.0/16
         10.0.0.0/8
-      ]
+      ],
     ).that_comes_before('Class[firewall]')
   end
 
@@ -25,7 +25,7 @@ shared_examples 'ipset' do
         140.252.146.0/23
         198.19.0.0/16
         10.0.0.0/8
-      ]
+      ],
     ).that_comes_before('Class[firewall]')
   end
 
@@ -33,7 +33,7 @@ shared_examples 'ipset' do
     is_expected.to contain_ipset__set('antu').with_set(
       %w[
         139.229.154.64/26
-      ]
+      ],
     ).that_comes_before('Class[firewall]')
   end
 
@@ -42,7 +42,7 @@ shared_examples 'ipset' do
       %w[
         139.229.134.0/24
         139.229.144.0/26
-      ]
+      ],
     ).that_comes_before('Class[firewall]')
   end
 
@@ -54,7 +54,7 @@ shared_examples 'ipset' do
         140.252.147.0/28
         140.252.147.32/28
         140.252.147.64/27
-      ]
+      ],
     ).that_comes_before('Class[firewall]')
   end
 
@@ -71,7 +71,7 @@ shared_examples 'ipset' do
         139.229.152.192/26
         139.229.154.0/26
         139.229.154.96/28
-      ]
+      ],
     ).that_comes_before('Class[firewall]')
   end
 
@@ -86,7 +86,7 @@ shared_examples 'ipset' do
         139.229.175.64/26
         139.229.180.0/24
         139.229.181.0/27
-      ]
+      ],
     ).that_comes_before('Class[firewall]')
   end
 end

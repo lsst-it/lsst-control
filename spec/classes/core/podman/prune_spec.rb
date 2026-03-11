@@ -19,7 +19,7 @@ describe 'profile::core::podman::prune' do
           user:        'root',
           command:     'systemd-cat -t podman-prune podman system prune -a --filter "until=$((14*24))h" --force',
           environment: ['PATH="/bin"'],
-          description: 'Run podman system prune'
+          description: 'Run podman system prune',
         )
       end
     end

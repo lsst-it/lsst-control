@@ -24,22 +24,22 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples('common', os_facts:, site:)
-          include_examples('generic perfsonar', os_facts:)
-          include_examples 'ipset'
-          include_examples('firewall default', os_facts:)
-          include_examples('firewall node_exporter scraping', site:)
+          it_behaves_like('common', os_facts:, site:)
+          it_behaves_like('generic perfsonar', os_facts:)
+          it_behaves_like 'ipset'
+          it_behaves_like('firewall default', os_facts:)
+          it_behaves_like('firewall node_exporter scraping', site:)
 
           it do
             is_expected.to contain_yum__versionlock('perfsonar-toolkit').with(
-              version: perfsonar_version
+              version: perfsonar_version,
             )
           end
 
           it do
             is_expected.to contain_file('/etc/perfsonar/psconfig/pscheduler-agent.json').with(
               ensure: 'file',
-              content: <<~JSON
+              content: <<~JSON,
                 {
                   "remotes": [
                     {
@@ -58,7 +58,7 @@ describe "#{role} role" do
               state: 'NEW',
               ipset: 'aura src',
               dport: '22',
-              jump: 'accept'
+              jump: 'accept',
             )
           end
         end # host

@@ -20,9 +20,9 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples('common', os_facts:, site:)
-          include_examples 'docker'
-          include_examples 'dco'
+          it_behaves_like('common', os_facts:, site:)
+          it_behaves_like 'docker'
+          it_behaves_like 'dco'
 
           it do
             is_expected.to contain_vcsrepo('/home/dco/LOVE-integration-tools').with(
@@ -32,7 +32,7 @@ describe "#{role} role" do
               keep_local_changes: true,
               user: 'dco',
               owner: 'dco',
-              group: 'dco'
+              group: 'dco',
             )
           end
 

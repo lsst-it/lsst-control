@@ -5,7 +5,7 @@ shared_examples 'i2c' do |os_facts:|
     is_expected.to contain_systemd__udev__rule('i2c.rules').with(
       rules: [
         'KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"',
-      ]
+      ],
     )
   end
 
@@ -13,7 +13,7 @@ shared_examples 'i2c' do |os_facts:|
     is_expected.to contain_group('i2c').with(
       ensure: 'present',
       forcelocal: true,
-      system: true
+      system: true,
     )
   end
 
@@ -26,7 +26,7 @@ shared_examples 'i2c' do |os_facts:|
   if os_facts[:cpuinfo]&.[]('processor')&.[]('Model') =~ %r{Raspberry Pi}
     it do
       is_expected.to contain_pi__config__fragment('i2c').with(
-        content: 'dtparam=i2c_arm=on'
+        content: 'dtparam=i2c_arm=on',
       )
     end
   end

@@ -14,7 +14,7 @@ describe 'profile::core::i2c' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'i2c', os_facts:
+      it_behaves_like 'i2c', os_facts:
     end
   end
 end

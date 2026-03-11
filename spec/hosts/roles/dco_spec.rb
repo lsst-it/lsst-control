@@ -19,16 +19,16 @@ describe "#{role} role" do
 
           it { is_expected.to compile.with_all_deps }
 
-          include_examples('common', os_facts:, site:)
-          include_examples 'docker'
-          include_examples 'dco'
+          it_behaves_like('common', os_facts:, site:)
+          it_behaves_like 'docker'
+          it_behaves_like 'dco'
 
           it do
             is_expected.to contain_file('/home/dco/docker_tmp').with(
               ensure: 'directory',
               owner: 'dco',
               group: 'dco',
-              mode: '0777'
+              mode: '0777',
             )
           end
 
@@ -37,7 +37,7 @@ describe "#{role} role" do
               is_expected.to contain_nfs__client__mount('/net/obs-env').with(
                 share: 'obs-env',
                 server: 'nfs-obs-env.cp.lsst.org',
-                atboot: true
+                atboot: true,
               )
             end
           end

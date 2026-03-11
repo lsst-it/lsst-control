@@ -15,7 +15,7 @@ describe 'profile::core::sssd' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'sssd services'
+      it_behaves_like 'sssd services'
     end
   end
 end

@@ -3,7 +3,7 @@
 shared_examples 'rubinhat' do
   it do
     is_expected.to contain_pi__config__fragment('rubinhat').with(
-      content: <<~CONTENT
+      content: <<~CONTENT,
         enable_uart=1
         dtoverlay=disable-bt
         dtoverlay=uart1
@@ -28,7 +28,7 @@ shared_examples 'rubinhat' do
         'ATTR{iomem_base}=="0xFE201600", SYMLINK:="serial2"',
         'ATTR{iomem_base}=="0xFE201800", SYMLINK:="serial3"',
         'ATTR{iomem_base}=="0xFE201A00", SYMLINK:="serial4"',
-      ]
+      ],
     )
   end
 end

@@ -3,7 +3,7 @@
 shared_examples 'darkmode' do
   it do
     is_expected.to contain_pi__config__fragment('darkmode').with(
-      content: <<~CONTENT
+      content: <<~CONTENT,
         [pi4]
         # Disable the PWR LED
         dtparam=pwr_led_trigger=default-on

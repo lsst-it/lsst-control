@@ -63,13 +63,13 @@ class profile::core::letsencrypt (
         ensure => directory,
         mode   => '0700',
         backup => false,
-        ;
+      ;
       '/root/.aws/credentials':
         ensure  => file,
         mode    => '0600',
         backup  => false,
         content => $aws_credentials.unwrap,
-        ;
+      ;
     }
 
     # aws credentials required by dns_route53 plugin.

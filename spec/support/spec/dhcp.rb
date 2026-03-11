@@ -6,7 +6,7 @@ shared_examples 'dhcp server' do
       interfaces: dhcp_interfaces,
       nameservers:,
       ntpservers:,
-      option_static_route: true
+      option_static_route: true,
     )
   end
 end

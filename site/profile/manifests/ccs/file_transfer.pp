@@ -40,10 +40,10 @@ class profile::ccs::file_transfer (
   $parent = "${dirname($directory)}"
 
   ensure_resource('file', $parent, {
-      ensure => directory,
-      owner  => $user,
-      group  => $group,
-      mode   => '0755',
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
+    mode   => '0755',
   })
 
   file { $directory:

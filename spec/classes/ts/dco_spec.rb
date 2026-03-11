@@ -9,7 +9,7 @@ describe 'profile::ts::dco' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'dco'
+      it_behaves_like 'dco'
     end
   end
 end

@@ -28,8 +28,8 @@ describe 'auxtel-hcu02.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal no bmc'
-      include_examples 'powertop'
+      it_behaves_like 'baremetal no bmc'
+      it_behaves_like 'powertop'
       it { is_expected.to have_network__interface_resource_count(4) }
 
       it do
@@ -37,7 +37,7 @@ describe 'auxtel-hcu02.cp.lsst.org', :sitepp do
           bootproto: 'dhcp',
           defroute: 'yes',
           onboot: 'yes',
-          type: 'Ethernet'
+          type: 'Ethernet',
         )
       end
 
@@ -47,7 +47,7 @@ describe 'auxtel-hcu02.cp.lsst.org', :sitepp do
           ipaddress: '192.168.1.1',
           netmask: '255.255.255.0',
           onboot: 'yes',
-          type: 'Ethernet'
+          type: 'Ethernet',
         )
       end
 
@@ -55,7 +55,7 @@ describe 'auxtel-hcu02.cp.lsst.org', :sitepp do
         is_expected.to contain_network__interface('enp7s0').with(
           bootproto: 'none',
           onboot: 'no',
-          type: 'Ethernet'
+          type: 'Ethernet',
         )
       end
 
@@ -63,7 +63,7 @@ describe 'auxtel-hcu02.cp.lsst.org', :sitepp do
         is_expected.to contain_network__interface('enp8s0').with(
           bootproto: 'none',
           onboot: 'no',
-          type: 'Ethernet'
+          type: 'Ethernet',
         )
       end
     end # on os

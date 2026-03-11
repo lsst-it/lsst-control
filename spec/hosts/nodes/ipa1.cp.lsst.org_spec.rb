@@ -26,7 +26,7 @@ describe 'ipa1.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'vm'
+      it_behaves_like 'vm'
     end # on os
   end # on_supported_os
 end

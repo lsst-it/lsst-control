@@ -26,7 +26,7 @@ describe 'dns1.dev.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'vm'
+      it_behaves_like 'vm'
       include_context 'with nm interface'
       it { is_expected.to have_nm__connection_resource_count(1) }
 

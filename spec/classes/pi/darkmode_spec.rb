@@ -9,7 +9,7 @@ describe 'profile::pi::darkmode' do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'darkmode'
+      it_behaves_like 'darkmode'
     end
   end
 end

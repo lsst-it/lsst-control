@@ -26,7 +26,7 @@ describe 'comcam-archiver.tu.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      include_examples 'baremetal'
+      it_behaves_like 'baremetal'
     end # on os
   end # on_supported_os
 end # role

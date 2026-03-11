@@ -28,7 +28,7 @@ describe 'dsm-laptop01.cp.lsst.org', :sitepp do
 
       it { is_expected.to contain_package('powertop').with_ensure('absent') }
 
-      include_examples 'baremetal no bmc'
+      it_behaves_like 'baremetal no bmc'
       include_context 'with nm interface'
 
       it { is_expected.to have_nm__connection_resource_count(3) }

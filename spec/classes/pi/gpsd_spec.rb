@@ -10,7 +10,7 @@ describe 'profile::pi::gpsd' do
       context 'without params' do
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'gpsd'
+        it_behaves_like 'gpsd'
         it { is_expected.not_to contain_augeas('gpsd options') }
       end
 
@@ -19,10 +19,10 @@ describe 'profile::pi::gpsd' do
 
         it { is_expected.to compile.with_all_deps }
 
-        include_examples 'gpsd'
+        it_behaves_like 'gpsd'
         it do
           is_expected.to contain_augeas('gpsd options').with(
-            changes: "set OPTIONS \"\\\"#{params[:options]}\\\"\""
+            changes: "set OPTIONS \"\\\"#{params[:options]}\\\"\"",
           )
         end
       end

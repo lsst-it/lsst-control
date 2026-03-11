@@ -9,7 +9,7 @@ mod 'ccin2p3/mit_krb5', git: 'https://github.com/lsst-it/puppet-mit_krb5.git', r
 mod 'cirrax/libvirt', '6.0.0'
 mod 'duritong/sysctl', git: 'https://github.com/duritong/puppet-sysctl', ref: '847ec1c'  # migrate to herculesteam/augeasproviders_sysctl; https://github.com/duritong/puppet-sysctl/pull/48
 mod 'jcpunk/irqbalance', '1.0.7'
-mod 'jhoblitt/ipmi', '6.1.0'
+mod 'jhoblitt/ipmi', '7.0.0'
 mod 'lsst/anaconda', '0.1.0'
 mod 'lsst/ccs_daq', '1.1.0'
 mod 'lsst/ccs_database', '4.0.0'

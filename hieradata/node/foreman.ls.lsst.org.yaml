@@ -229,7 +229,7 @@ dhcp::pools:
     range:
       - "139.229.154.102 139.229.154.107"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  BDC-BMC-PUBLIC:
+  BDC-BMC-PUBLIC:  # vlan2140
     network: "139.229.139.0"
     mask: "255.255.255.0"
     gateway: "139.229.139.254"
@@ -242,4 +242,25 @@ dhcp::pools:
     gateway: "139.229.154.94"
     range:
       - "139.229.154.88 139.229.154.91"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  MACHI:  # vlan2141
+    network: "139.229.143.0"
+    mask: "255.255.255.128"
+    gateway: "139.229.143.126"
+    range:
+      - "139.229.143.83 139.229.143.123"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  TOKI:  # vlan2142
+    network: "139.229.143.128"
+    mask: "255.255.255.224"
+    gateway: "139.229.143.158"
+    range:
+      - "139.229.143.147 139.229.143.155"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  LONKO:  # vlan2143
+    network: "139.229.143.160"
+    mask: "255.255.255.224"
+    gateway: "139.229.143.190"
+    range:
+      - "139.229.143.178 139.229.143.187"
     search_domains: "%{alias('dhcp::dnsdomain')}"

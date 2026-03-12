@@ -167,6 +167,8 @@ ssh::server::match_block:
     <<: *authorized_keys
   dtapia_b:
     <<: *authorized_keys
+  berb_b:
+    <<: *authorized_keys
 # ipa server options
 # defines the uid/gid of the admin user
 # needs to be coordinated between master + replicas
@@ -244,6 +246,12 @@ accounts::user_list:
     purge_sshkeys: true
     sshkeys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC95cR24f+6f8qH5qxfO4OSulm0xdUPVTX4gGNCK/ZURyB2YQyEspxEQwYMonxwGgBDtJXUpLqC8iYB3MyrIadPAOT5kJVwLbzTUtFBunJDZ9Wv0/AWyY0JPMh4rNBcgZwClvlzWzP5S1btR1wUnGEEF9pGsQ/Z3h6N026V30wl2SlAHKRXOSAT+gQ0ACPrA5UVpRpCg8HFFBHSZlYk9tGERSa/evDqPbsA6bhv4O5GsEV1SLFt6H1iqQpMPm7lS9JNqWVKNF6HiJiMqMKcVsFVBLQgAqt6liV4LaYXywd/FMmlZb8tAMEcxohLwEvQGz55RPxxyLao5wq84P+Ubphz7n72B3vpVPgXOaJQQIe1OsO9EVJr0ztvvtcyod3PlUgF5w5gvnnrTuW2Vzi8NXcuHe3FE67eSB8F6UUc/aBXEjKKwJgR2kuEoRn6mi5WSno4D5mWCQSMJc3S7zMCZuVoLzN2hqQOyWGLbowNEl0ZZZTKYaQ/nxpGYXTLG5rz8kU= dtapia@s-MacBook-Pro.local"
+  berb_b:
+    groups:
+      - "wheel_b"
+    purge_sshkeys: true
+    sshkeys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/dmrGjBK6QFPky2cezmUzDaBS0SoOeoCSVT9ozAgYfxxQnK7Ux+8wI6zIqcmOHFO9svaUN38/3pr8ZzcEmWYFxh7pj9oWSFDis1dJ5L+MCtJ1h/4kw7xJvU/sF5ah6yOa+bOVcHFqNOhdL9RQ02Ss9ZPIkqmnmbWXXqX8cMtXBtodVucRrbaIOjC105fLPnis3wEdKgAk9aL2JXatbL4BANU/h15H0+4PyHTXY2IKuKnG4EMNFN1ALSkVso96G5XT6FOAKmN7EaUHphDQ6Wur2sdmL5xuBOioLBF4zorFtAAofcLlLDZkJauxSK9Ho+ryx0z2okTlSiG8QfpG5EvCg0F+5vESIYJ01tskwa23maGRWX43mxkGxXBFWIU0YAaXMcf0FOsZgajzdHU5LNqX9B5zdY+2J9n39hQl5i9KxtTFHt8ktRRkR+oXKFKNTxMRcw2WugezC2Y5UnpI1K1xZRK5Y7sNb1wsgINM0FQMhyMiZ0m8kQL3gfkI7Jud34E= berb@192.168.1.26"
   lssttech: &rm_user
     ensure: "absent"
     managehome: true

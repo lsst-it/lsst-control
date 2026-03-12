@@ -331,6 +331,33 @@ describe 'foreman.ls.lsst.org', :sitepp do
           gateway: '139.229.154.94',
         )
       end
+
+      it do
+        is_expected.to contain_dhcp__pool('MACHI').with(
+          network: '139.229.143.0',
+          mask: '255.255.255.128',
+          gateway: '139.229.143.126',
+          range: ['139.229.143.83 139.229.143.123'],
+        )
+      end
+
+      it do
+        is_expected.to contain_dhcp__pool('TOKI').with(
+          network: '139.229.143.128',
+          mask: '255.255.255.224',
+          gateway: '139.229.143.158',
+          range: ['139.229.143.147 139.229.143.155'],
+        )
+      end
+
+      it do
+        is_expected.to contain_dhcp__pool('LONKO').with(
+          network: '139.229.143.160',
+          mask: '255.255.255.224',
+          gateway: '139.229.143.190',
+          range: ['139.229.143.178 139.229.143.187'],
+        )
+      end
     end # on os
   end # on_supported_os
 end # role

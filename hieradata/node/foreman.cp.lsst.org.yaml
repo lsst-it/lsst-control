@@ -240,6 +240,13 @@ dhcp::pools:
     range:
       - "10.18.7.150 10.18.7.249"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  SUMMIT-DMZ:
+    network: "10.19.2.0"
+    mask: "255.255.255.248"
+    gateway: "10.19.2.1"
+    range:
+      - "10.19.2.2 10.19.2.6"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   IT-AP:
     network: "10.17.3.0"
     mask: "255.255.255.0"

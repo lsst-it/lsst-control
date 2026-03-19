@@ -30,4 +30,10 @@ class profile::core::k8snode (
     value  => 1048576,
     target => '/etc/sysctl.d/80-rke.conf',
   }
+
+  # nodes with many ceph osds need a lot of async io request slots
+  sysctl::value { 'fs.aio-max-nr':
+    value  => 1048576,
+    target => '/etc/sysctl.d/85-ceph.conf',
+  }
 }

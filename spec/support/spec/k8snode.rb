@@ -16,4 +16,11 @@ shared_examples 'k8snode profile' do
       target: '/etc/sysctl.d/80-rke.conf',
     )
   end
+
+  it do
+    is_expected.to contain_sysctl__value('fs.aio-max-nr').with(
+      value: 1_048_576,
+      target: '/etc/sysctl.d/85-ceph.conf',
+    )
+  end
 end

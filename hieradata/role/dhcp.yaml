@@ -6,7 +6,7 @@ classes:
 
 dhcp::bootp: true
 dhcp::ddns_update_style: "none"
-dhcp::default_lease_time: &lease_time 86400
+dhcp::default_lease_time: &lease_time 900
 dhcp::logfacility: "daemon"
 dhcp::max_lease_time: *lease_time
 dhcp::option_static_route: true

@@ -33,6 +33,10 @@ class profile::core::hardware {
     /1115HS-TNR/: {
       include ipmi
     }
+
+    /ASG-2015S-E1CR24H/: {
+      include ipmi
+    }
   }
   # On SM H12SSL-NT dmi.product.name == "Super Server", which isn't very helpful
   case fact('dmi.board.product') {

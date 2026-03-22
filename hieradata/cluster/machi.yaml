@@ -1,0 +1,92 @@
+---
+clustershell::groupmembers:
+  machi:
+    group: "machi"
+    member: "machi[01-48]"
+  toki:
+    group: "toki"
+    member: "toki[01-18]"
+tuned::active_profile: "latency-performance"
+nm::conf:
+  device:
+    keep-configuration: "no"
+    allowed-connections: "except:origin:nm-initrd-generator"
+nm::connections:
+  bond0:
+    content:
+      connection:
+        id: "bond0"
+        uuid: "b7ab47e6-3ca1-4816-be47-17654533b09e"
+        type: "bond"
+        interface-name: "bond0"
+      ethernet:
+        cloned-mac-address: "%{facts.networking.interfaces.enp130s0f0np0.mac}"
+      bond:
+        miimon: "100"
+        mode: "802.3ad"
+        xmit_hash_policy: "layer3+4"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  bond0.2141:
+    content:
+      connection:
+        id: "bond0.2141"
+        uuid: "e75010ad-ba75-4a46-869b-f6765908d6b5"
+        type: "vlan"
+        interface-name: "bond0.2141"
+        master: "br2141"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2141"
+        parent: "bond0"
+      bridge-port: {}
+  bond0.2505:
+    content:
+      connection:
+        id: "bond0.2505"
+        uuid: "cff59c77-b335-4ba8-a8c9-59c8e661b1f5"
+        type: "vlan"
+        interface-name: "bond0.2505"
+        master: "br2505"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2505"
+        parent: "bond0"
+      bridge-port: {}
+  br2141:
+    content:
+      connection:
+        id: "br2141"
+        uuid: "eb85bd0d-4c59-435a-a23a-84fed273cf3e"
+        type: "bridge"
+        interface-name: "br2141"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  br2505:
+    content:
+      connection:
+        id: "br2505"
+        uuid: "78b5f1cf-63ec-49be-a592-2ea57596e268"
+        type: "bridge"
+        interface-name: "br2505"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}

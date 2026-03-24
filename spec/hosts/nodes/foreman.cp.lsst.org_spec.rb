@@ -299,6 +299,15 @@ describe 'foreman.cp.lsst.org', :sitepp do
       end
 
       it do
+        is_expected.to contain_dhcp__pool('SUMMIT-DMZ').with(
+          network: '10.19.2.0',
+          mask: '255.255.255.248',
+          range: ['10.19.2.2 10.19.2.6'],
+          gateway: '10.19.2.1',
+        )
+      end
+
+      it do
         is_expected.to contain_dhcp__pool('IT-AP').with(
           network: '10.17.3.0',
           mask: '255.255.255.0',

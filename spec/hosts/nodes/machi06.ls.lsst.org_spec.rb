@@ -50,9 +50,9 @@ describe 'machi06.ls.lsst.org', :sitepp do
               'group' => 'machi',
               'member' => 'machi[01-48]',
             },
-            'toki' => {
-              'group' => 'toki',
-              'member' => 'toki[01-18]',
+            'toqui' => {
+              'group' => 'toqui',
+              'member' => 'toqui[01-18]',
             },
           },
         )

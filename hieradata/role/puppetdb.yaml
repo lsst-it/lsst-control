@@ -22,8 +22,8 @@ puppetdb::manage_package_repo: false
 puppetdb::postgres_version: "15"
 puppetdb::ssl_listen_address: "0.0.0.0"
 puppetdb::java_args:
-  "-Xmx": "1g"
-  "-Xms": "512m"
+  "-Xmx": "3g"
+  "-Xms": "1536m"
 
 profile::core::firewall::firewall:
   "250 accept http - redirect to 443":

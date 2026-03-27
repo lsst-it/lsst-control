@@ -33,8 +33,8 @@ shared_examples 'puppetdb' do
     is_expected.to contain_class('puppetdb').with(
       listen_address: 'localhost',
       java_args: {
-        '-Xmx' => '1g',
-        '-Xms' => '512m',
+        '-Xmx' => '3g',
+        '-Xms' => '1536m',
       },
     )
   end

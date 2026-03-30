@@ -161,8 +161,6 @@ ssh::server::match_block:
     type: "user"
     options:
       AuthorizedKeysFile: ".ssh/authorized_keys"
-  jhoblitt_b:
-    <<: *authorized_keys
   csilva_b:
     <<: *authorized_keys
   dtapia_b:
@@ -228,12 +226,6 @@ accounts::user_defaults:
 accounts::user_list:
   root:
     password: "%{root_pw}"
-  jhoblitt_b:  # backup access in case LDAP fails
-    groups:
-      - "wheel_b"
-    purge_sshkeys: true
-    sshkeys:
-      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDZFV9AL2qPh6CV+DeY32oyg0jCkxkbCHVSPHOoikDkwzwMW/7QQdRI8TJ0h8vpFi15pNyu+n7s7MJSWdg5yUvTCataVpOndDElDz10DaEcGIHNq8/qjEPiHulj/KUoDkEU+yMoWY8jRs3ARyL+6p6LDUBsWpzIY8jMOaEVUJjlVt+0ih2a/D3re0daws6w3mBbmLjitHLS5f2YJKlStIHWCWjMXvP5tqUsvhHvIQH/csBQGXnUiRxR8YSJK9u3CMvTzx6PnC7p98yRCOOrMRQ7yT7vuXyXsk7qoUpArUe/T5nEcwRA/21QVurJ1s3in/mpFI0Ogg5kD7NpFqoTq6itBxbPz7DwaOyjEltJBjQAEvuvfHDJYsBTM3fpfEt5jR8ieuDta1214tr5qVOmR17JonssV7/ksizATm1KkMA7+Q8CWCgrFdZmEMaFjav2U72EWyLRe5utxQV+dWPnxd13NxVu6sgM3CBEC4HzOBMf+upt8tMvjLBjci1sbhCAvvU= github2"
   csilva_b:  # backup access in case LDAP fails
     groups:
       - "wheel_b"
@@ -269,6 +261,10 @@ accounts::user_list:
   hreinking_b:
     <<: *rm_user
   gseriche_b:
+    <<: *rm_user
+  jhoblitt_b:
+    <<: *rm_user
+  jhoblitt:
     <<: *rm_user
 docker::log_driver: "json-file"
 docker::log_opt:

@@ -264,8 +264,6 @@ accounts::user_list:
     <<: *rm_user
   jhoblitt_b:
     <<: *rm_user
-  jhoblitt:
-    <<: *rm_user
 docker::log_driver: "json-file"
 docker::log_opt:
   - "max-file=2"

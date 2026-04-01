@@ -430,7 +430,6 @@ shared_examples 'common' do |os_facts:, site:, no_auth: false, chrony: true, nod
     hreinking_b
     gseriche_b
     jhoblitt_b
-    jhoblitt
   ].each do |user|
     it { is_expected.to contain_user(user).with_ensure('absent') }
   end

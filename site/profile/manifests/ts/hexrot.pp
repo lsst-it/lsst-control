@@ -31,10 +31,10 @@ class profile::ts::hexrot (
   }
 
   $symlinks = {
-    '/rubin/mtm2/python/run_m2gui'     => '/opt/anaconda/envs/py311/bin/run_m2gui',
-    '/rubin/hexapod/python/run_hexgui' => '/opt/anaconda/envs/py311/bin/run_hexgui',
-    '/rubin/dome/python/run_mtdomegui' => '/opt/anaconda/envs/py311/bin/run_mtdomegui',
-    '/rubin/rotator/python/run_rotgui' => '/opt/anaconda/envs/py311/bin/run_rotgui',
+    '/rubin/mtm2/python/run_m2gui'     => '/opt/anaconda/envs/py313/bin/run_m2gui',
+    '/rubin/hexapod/python/run_hexgui' => '/opt/anaconda/envs/py313/bin/run_hexgui',
+    '/rubin/dome/python/run_mtdomegui' => '/opt/anaconda/envs/py313/bin/run_mtdomegui',
+    '/rubin/rotator/python/run_rotgui' => '/opt/anaconda/envs/py313/bin/run_rotgui',
   }
 
   $symlinks.each |$source, $target| {

@@ -49,7 +49,7 @@ describe 'yepun01.cp.lsst.org', :sitepp do
         is_expected.to contain_class('rke2').with(
           node_type: 'server',
           release_series: '1.33',
-          version: '1.33.0~rke2r1',
+          version: '1.33.4~rke2r1',
         )
       end
 

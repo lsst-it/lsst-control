@@ -113,15 +113,15 @@ java_artisanal::java17::set_alternatives: true
 ccs_software::desktop: true
 ccs_software::env: "MainCamera"
 ccs_software::installations:
-  lsstcam-software-42.0.7:
-    aliases:
-      - "puppet-42.0.7"
-  lsstcam-software-43.0.2:
-    aliases:
-      - "puppet-43.0.2"
   lsstcam-software-43.0.3:
     aliases:
       - "puppet-43.0.3"
+  lsstcam-software-43.1.0:
+    aliases:
+      - "puppet-43.1.0"
+  lsstcam-software-44.0.0:
+    aliases:
+      - "puppet-44.0.0"
 
 daq::daqsdk::purge: false
 

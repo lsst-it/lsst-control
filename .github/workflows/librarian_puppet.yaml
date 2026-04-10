@@ -26,4 +26,4 @@ jobs:
       - name: Puppetfile recursive dependency check
         run: |
           echo "exclusion 'choria-mcollective'" >> Puppetfile
-          bundle exec librarian-puppet install --verbose
+          bundle exec r10k puppetfile install --verbose

@@ -1,13 +1,14 @@
 #!/bin/bash
-cantaloupe_pid=`pgrep -f cantaloupe`
+# This file is managed by Puppet; changes may be overwritten.
+cantaloupe_pid=$(pgrep -f cantaloupe)
 if [ -z "$cantaloupe_pid" ]; then
    exit
-fi 
-rss=`ps -p $cantaloupe_pid --no-headers -o rss`
-mem_avail=`cat /proc/meminfo  | grep MemAvailable | sed -e 's/MemAvailable:\s*\(.*\) kB/\1/'`
-now=`date '+%Y-%m-%d %H:%M'`
-echo $now $rss $mem_avail  >> mem-monitor.log
-if [ $mem_avail -lt 20000000 ] || [ $rss -gt 90000000 ]; then
+fi
+rss=$(ps -p "$cantaloupe_pid" --no-headers -o rss)
+mem_avail=$(grep MemAvailable /proc/meminfo | sed -e 's/MemAvailable:\s*\(.*\) kB/\1/')
+now=$(date '+%Y-%m-%d %H:%M')
+echo "$now" "$rss" "$mem_avail" >> mem-monitor.log
+if [ "$mem_avail" -lt 20000000 ] || [ "$rss" -gt 90000000 ]; then
    echo "Killing cantaloupe!!!" >> mem-monitor.log
-   kill $cantaloupe_pid
-fi 
+   kill "$cantaloupe_pid"
+fi

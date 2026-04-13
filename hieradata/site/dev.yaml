@@ -1,38 +1,5 @@
 ---
 ipa::ipa_master_fqdn: "ipa1.ls.lsst.org"
-rsyslog::feature_packages:
-  - "rsyslog-openssl"
-rsyslog::config::actions:
-  fluentbit_dev:
-    type: "omfwd"
-    facility: "*.*"
-    config:
-      target: "rsyslog.fluent.ayekan.dev.lsst.org"
-      port: 5140
-      protocol: "tcp"
-      StreamDriver: "ossl"
-      StreamDriverMode: "1"
-      StreamDriverAuthMode: "anon"
-  fluentbit_ruka:
-    type: "omfwd"
-    facility: "*.*"
-    config:
-      target: "rsyslog.fluent.ruka.dev.lsst.org"
-      port: 5140
-      protocol: "tcp"
-      StreamDriver: "ossl"
-      StreamDriverMode: "1"
-      StreamDriverAuthMode: "anon"
-  fluentbit_kueyen:
-    type: "omfwd"
-    facility: "*.*"
-    config:
-      target: "rsyslog.fluent.kueyen.dev.lsst.org"
-      port: 5140
-      protocol: "tcp"
-      StreamDriver: "ossl"
-      StreamDriverMode: "1"
-      StreamDriverAuthMode: "anon"
 # The following keys are shared between the `dhcp` and `resolv_conf` classes:
 # - dhcp::dnsdomain
 # - dhcp::nameservers

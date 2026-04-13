@@ -28,7 +28,6 @@ describe 'lsstcam-dc01.cp.lsst.org', :sitepp do
 
       it { is_expected.to compile.with_all_deps }
 
-      it_behaves_like 'lsstcam-rsyslog'
       it_behaves_like 'lsstcam-dc.cp'
 
       it_behaves_like 'baremetal'

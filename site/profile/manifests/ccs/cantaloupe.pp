@@ -123,7 +123,8 @@ class profile::ccs::cantaloupe (
   systemd::unit_file { 'cantaloupe.service':
     content => epp("${module_name}/ccs/service.epp", $epp_vars),
   }
-  -> service { 'cantaloupe':
+  ~> service { 'cantaloupe':
+    ensure => 'running',
     enable => true,
   }
 

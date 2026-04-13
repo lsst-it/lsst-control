@@ -11,6 +11,12 @@
 #   String specifying installation group
 # @param version
 #   String specifying version component of installation directory
+# @param pkgurl
+#   String specifying url to fetch binaries from
+# @param pkgurl_user
+#   String specifying username for pkgurl
+# @param pkgurl_pass
+#   String specifying password for pkgurl
 #
 class profile::ccs::cantaloupe (
   String $directory = '/home/ccs/cantaloupe',
@@ -18,6 +24,9 @@ class profile::ccs::cantaloupe (
   String $user  = 'ccs',
   String $group = 'ccs',
   String $version = '5.0',
+  String $pkgurl = $profile::ccs::common::pkgurl,
+  Variant[Sensitive[String[1]],String[1]] $pkgurl_user = $profile::ccs::common::pkgurl_user,
+  Sensitive[String[1]] $pkgurl_pass = $profile::ccs::common::pkgurl_pass,
 ) {
   [$directory, $data_directory].each | String $dir | {
     file { $dir:
@@ -92,9 +101,9 @@ class profile::ccs::cantaloupe (
 
   archive { $jartmp:
     ensure   => present,
-    source   => "${profile::ccs::common::pkgurl}/${jarfile}",
-    username => $profile::ccs::common::pkgurl_user.unwrap,
-    password => $profile::ccs::common::pkgurl_pass.unwrap,
+    source   => "${pkgurl}/${jarfile}",
+    username => $pkgurl_user.unwrap,
+    password => $pkgurl_pass.unwrap,
   }
 
   file { "${version_directory}/${jarfile}":

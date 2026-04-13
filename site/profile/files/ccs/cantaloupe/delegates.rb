@@ -1,3 +1,6 @@
+# rubocop:disable all
+# This file is managed by Puppet; changes may be overwritten.
+
 require 'java'
 java_import java.sql.DriverManager
 

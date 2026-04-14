@@ -55,6 +55,7 @@ profile::ccs::common::packages:
   - "nano"
   - "parallel"
   - "rsync"
+  - "rsyslog-logrotate"
   - "screen"
   - "tcl"
   - "tcl-devel"

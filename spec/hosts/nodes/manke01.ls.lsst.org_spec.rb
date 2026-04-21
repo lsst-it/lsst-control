@@ -48,7 +48,7 @@ describe 'manke01.ls.lsst.org', :sitepp do
           groupmembers: {
             'manke' => {
               'group' => 'manke',
-              'member' => 'manke[01-10]',
+              'member' => 'manke[01-11]',
             },
           },
         )

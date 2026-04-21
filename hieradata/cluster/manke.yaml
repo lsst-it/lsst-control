@@ -2,7 +2,7 @@
 clustershell::groupmembers:
   manke:
     group: "manke"
-    member: "manke[01-10]"
+    member: "manke[01-11]"
 profile::core::k8snode::enable_dhcp: true
 tuned::active_profile: "latency-performance"
 nm::conf:

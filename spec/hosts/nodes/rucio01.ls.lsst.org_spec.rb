@@ -44,7 +44,7 @@ describe 'rucio01.ls.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/repo/LATISS').with(
           share: '/auxtel/repo/LATISS',
           server: 'nfs-auxtel.ls.lsst.org',
-          atboot: true
+          atboot: true,
         )
       end
 
@@ -52,7 +52,7 @@ describe 'rucio01.ls.lsst.org', :sitepp do
         is_expected.to contain_nfs__client__mount('/datasets').with(
           share: '/lsstdata',
           server: 'nfs-lsstdata.ls.lsst.org',
-          atboot: true
+          atboot: true,
         )
       end
     end

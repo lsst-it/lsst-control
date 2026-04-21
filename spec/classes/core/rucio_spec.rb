@@ -19,7 +19,7 @@ describe 'profile::core::rucio' do
           gpgcheck: '1',
           gpgkey: 'https://xrootd.web.cern.ch/repo/RPM-GPG-KEY.txt',
           enabled: '1',
-          target: '/etc/yum.repo.d/xrootd.repo'
+          target: '/etc/yum.repos.d/xrootd.repo',
         )
       end
 
@@ -29,7 +29,7 @@ describe 'profile::core::rucio' do
             ensure: 'file',
             mode: '0644',
             owner: 'saluser',
-            group: 'saluser'
+            group: 'saluser',
           )
         end
       end
@@ -38,9 +38,9 @@ describe 'profile::core::rucio' do
         it do
           is_expected.to contain_file(path).with(
             ensure: 'directory',
-            mode: '0644',
+            mode: '0755',
             owner: 'saluser',
-            group: 'saluser'
+            group: 'saluser',
           )
         end
       end

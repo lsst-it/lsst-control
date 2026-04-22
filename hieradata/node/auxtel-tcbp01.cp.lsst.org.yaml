@@ -1,0 +1,31 @@
+---
+powertop::ensure: "absent"
+
+nm::connections:
+  enp2s0:
+    content:
+      connection:
+        id: "enp2s0"
+        uuid: "01cf654a-6796-3fef-a031-e9b8952cd206"
+        type: "ethernet"
+        interface-name: "enp2s0"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp0s31f6:
+    content:
+      connection:
+        id: "enp0s31f6"
+        uuid: "9e03d06d-d4b2-4b84-be68-ffa2bb517239"
+        type: "ethernet"
+        interface-name: "enp0s31f6"
+      ethernet: {}
+      ipv4:
+        method: "manual"
+        address1: "10.0.0.10/8"
+      ipv6:
+        method: "disabled"
+      proxy: {}

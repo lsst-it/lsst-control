@@ -55,3 +55,28 @@ accounts::user_list:
     <<: *daq_user
     uid: 62003
     gid: 62003
+
+# SSH key and config for rce service account to connect to RCE embedded
+# systems on the DAQ network (192.168.100.0/24).
+# The .ssh directory is created by the accounts module (managehome: true).
+# The private key content is in lsst-puppet-hiera-private/role/daq-mgt.eyaml.
+files:
+  "/home/rce/.ssh/config":
+    ensure: "file"
+    mode: "0644"
+    owner: &rce_uid 62002
+    group: *rce_uid
+    backup: false
+    show_diff: false
+    content: |
+      # Managed by Puppet - do not edit
+      Host 192.168.100.*
+          User root
+          Port 22
+          IdentityFile ~/.ssh/rce_rsa
+          StrictHostKeyChecking no
+          UserKnownHostsFile /dev/null
+          LogLevel ERROR
+          ForwardX11 no
+          ForwardAgent no
+          BatchMode yes

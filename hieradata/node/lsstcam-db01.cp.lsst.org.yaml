@@ -16,6 +16,7 @@ nm::connections:
         method: "ignore"
       proxy: {}
 ccs_database::cronjob_command: "localdb -app backup-utilities -fp 5 -c"
+ccs_database::service_manage: false
 ccs_software::services:
   prod:
     - "rest-server"

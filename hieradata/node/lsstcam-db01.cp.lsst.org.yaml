@@ -15,9 +15,10 @@ nm::connections:
       ipv6:
         method: "ignore"
       proxy: {}
-ccs_database::cronjob_command: "localdb -app backup-utilities -fp 5 -c"
+## Moved to lsstcam-db02:
 ccs_database::service_manage: false
-ccs_software::services:
-  prod:
-    - "rest-server"
-    - "localdb"
+#ccs_database::cronjob_command: "localdb -app backup-utilities -fp 5 -c"
+#ccs_software::services:
+#  prod:
+#    - "rest-server"
+#    - "localdb"

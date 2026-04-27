@@ -51,12 +51,12 @@ shared_examples 'generic daq manager' do |os_facts:, site:|
       owner: 62_002,
       group: 62_002,
     ).with_content(%r{Host 192\.168\.100\.\*})
-      .with_content(%r{IdentityFile ~/.ssh/rce_rsa})
-      .with_content(%r{User root})
-      .with_content(%r{StrictHostKeyChecking no})
-      .with_content(%r{ForwardX11 no})
-      .with_content(%r{ForwardAgent no})
-      .with_content(%r{BatchMode yes})
+                                                        .with_content(%r{IdentityFile ~/.ssh/rce_rsa})
+                                                        .with_content(%r{User root})
+                                                        .with_content(%r{StrictHostKeyChecking no})
+                                                        .with_content(%r{ForwardX11 no})
+                                                        .with_content(%r{ForwardAgent no})
+                                                        .with_content(%r{BatchMode yes})
   end
 end
 

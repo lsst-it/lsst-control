@@ -60,21 +60,6 @@ nm::connections:
         id: "2505"
         parent: "bond0"
       bridge-port: {}
-  br2141:
-    content:
-      connection:
-        id: "br2141"
-        uuid: "eb85bd0d-4c59-435a-a23a-84fed273cf3e"
-        type: "bridge"
-        interface-name: "br2141"
-      ethernet: {}
-      bridge:
-        stp: "false"
-      ipv4:
-        method: "auto"
-      ipv6:
-        method: "disabled"
-      proxy: {}
   br2505:
     content:
       connection:

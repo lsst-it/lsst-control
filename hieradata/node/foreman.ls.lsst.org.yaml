@@ -250,7 +250,7 @@ dhcp::pools:
     range:
       - "139.229.143.83 139.229.143.123"
     search_domains: "%{alias('dhcp::dnsdomain')}"
-  TOKI:  # vlan2142
+  TOQUI:  # vlan2142
     network: "139.229.143.128"
     mask: "255.255.255.224"
     gateway: "139.229.143.158"

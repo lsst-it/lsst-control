@@ -342,7 +342,7 @@ describe 'foreman.ls.lsst.org', :sitepp do
       end
 
       it do
-        is_expected.to contain_dhcp__pool('TOKI').with(
+        is_expected.to contain_dhcp__pool('TOQUI').with(
           network: '139.229.143.128',
           mask: '255.255.255.224',
           gateway: '139.229.143.158',

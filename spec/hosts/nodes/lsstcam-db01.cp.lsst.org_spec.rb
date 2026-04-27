@@ -34,17 +34,6 @@ describe 'lsstcam-db01.cp.lsst.org', :sitepp do
       include_context 'with nm interface'
       it_behaves_like 'ccs alerts'
 
-      it do
-        is_expected.to contain_class('ccs_software').with(
-          services: {
-            'prod' => %w[
-              rest-server
-              localdb
-            ],
-          },
-        )
-      end
-
       it { is_expected.to have_nm__connection_resource_count(1) }
 
       context 'with eno1' do

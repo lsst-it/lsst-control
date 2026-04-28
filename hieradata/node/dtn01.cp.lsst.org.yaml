@@ -1,0 +1,74 @@
+---
+nm::connections:
+  eno2np1:
+    content:
+      connection:
+        id: "eno2np1"
+        uuid: "9aa61a65-009b-4ccf-9e6d-b60cabf33d5e"
+        type: "ethernet"
+        interface-name: "eno2np1"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+      ethtool:
+        ring-rx: 2047
+        ring-tx: 2047
+  enp129s0f0np0:
+    content:
+      connection:
+        id: "enp129s0f0np0"
+        uuid: "316c2b56-8f98-4c98-a2c4-9c6cd1de3454"
+        type: "ethernet"
+        interface-name: "enp129s0f0np0"
+      ethernet:
+        mtu: 9000
+      ipv4:
+        address1: "139.229.140.17/31"
+        gateway: "139.229.140.16"
+        method: "manual"
+        never-default: "true"
+        route1: "139.229.140.135/32,139.229.140.16"
+        route2: "198.32.252.209/32,139.229.140.16"
+        route3: "198.124.226.130/32,139.229.140.16"
+        route4: "198.124.226.134/32,139.229.140.16"
+        route5: "198.124.226.138/32,139.229.140.16"
+        route6: "198.124.226.142/32,139.229.140.16"
+        route7: "134.79.235.226/32,139.229.140.16"
+        route8: "134.79.22.159/32,139.229.140.16"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+      ethtool:
+        ring-rx: 8192
+        ring-tx: 8192
+  enp129s0f1np1:
+    content:
+      connection:
+        id: "enp129s0f1np1"
+        uuid: "f67944c1-87b2-4394-9757-b5a924343ba4"
+        type: "ethernet"
+        interface-name: "enp129s0f1np1"
+      ethernet:
+        mtu: 9000
+      ipv4:
+        address1: "139.229.140.19/31"
+        gateway: "139.229.140.18"
+        method: "manual"
+        never-default: "true"
+        route1: "139.229.140.137/32,139.229.140.18"
+        route2: "198.32.252.217/32,139.229.140.18"
+        route3: "198.124.226.194/32,139.229.140.18"
+        route4: "198.124.226.198/32,139.229.140.18"
+        route5: "198.124.226.202/32,139.229.140.18"
+        route6: "198.124.226.206/32,139.229.140.18"
+        route7: "134.79.235.242/32,139.229.140.18"
+        route8: "134.79.22.212/32,139.229.140.18"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+      ethtool:
+        ring-rx: 8192
+        ring-tx: 8192

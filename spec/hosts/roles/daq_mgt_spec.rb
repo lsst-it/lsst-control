@@ -41,6 +41,23 @@ shared_examples 'generic daq manager' do |os_facts:, site:|
       shell: '/sbin/nologin',
     )
   end
+
+  # rce SSH config for connecting to RCE embedded systems
+  # Note: /home/rce/.ssh directory is created by the accounts module (managehome: true)
+  it do
+    is_expected.to contain_file('/home/rce/.ssh/config').with(
+      ensure: 'file',
+      mode: '0644',
+      owner: 62_002,
+      group: 62_002,
+    ).with_content(%r{Host 192\.168\.100\.\*})
+                                                        .with_content(%r{IdentityFile ~/.ssh/rce_rsa})
+                                                        .with_content(%r{User root})
+                                                        .with_content(%r{StrictHostKeyChecking no})
+                                                        .with_content(%r{ForwardX11 no})
+                                                        .with_content(%r{ForwardAgent no})
+                                                        .with_content(%r{BatchMode yes})
+  end
 end
 
 role = 'daq-mgt'

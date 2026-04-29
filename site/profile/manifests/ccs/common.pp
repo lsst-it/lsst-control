@@ -7,6 +7,8 @@
 #   String specifying password for pkgurl
 # @param sysctls
 #   if `true`, enable `profile::ccs::sysctl` sysctls.
+# @param cantaloupe
+#   Boolean specifying whether to manage cantaloupe.
 # @param pkgurl
 #   String specifying URL to fetch sources from
 # @param packages
@@ -16,6 +18,7 @@ class profile::ccs::common (
   Variant[Sensitive[String[1]],String[1]] $pkgurl_user,
   Sensitive[String[1]] $pkgurl_pass,
   Boolean $sysctls = true,
+  Boolean $cantaloupe = false,
   String $pkgurl = 'https://example.org',
   Optional[Array[String[1]]] $packages = undef,
 ) {
@@ -28,6 +31,10 @@ class profile::ccs::common (
 
   if ($sysctls) {
     include profile::daq::sysctl
+  }
+
+  if ($cantaloupe) {
+    include profile::ccs::cantaloupe
   }
 
   if fact('os.release.major') == '9' {

@@ -268,4 +268,11 @@ class profile::ccs::tomcat (
       content => epp("${module_name}/ccs/tomcat/${file}.epp", $epp_vars),
     }
   }
+
+  file { '/etc/logrotate.d/tomcat':
+    source => "puppet:///modules/${module_name}/ccs/tomcat/logrotate.conf",
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+  }
 }

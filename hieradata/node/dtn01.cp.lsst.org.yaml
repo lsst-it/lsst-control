@@ -16,18 +16,22 @@ nm::connections:
       ethtool:
         ring-rx: 2047
         ring-tx: 2047
+
   enp129s0f0np0:
     content:
       connection:
         id: "enp129s0f0np0"
-        uuid: "316c2b56-8f98-4c98-a2c4-9c6cd1de3454"
+        uuid: "0c0b5312-ecb3-36e0-b5ca-abc3e4383cad"
         type: "ethernet"
         interface-name: "enp129s0f0np0"
       ethernet:
         mtu: 9000
+        ring-rx: "8192"
+        ring-tx: "8192"
       ipv4:
-        address1: "139.229.140.17/31"
-        gateway: "139.229.140.16"
+        address1: "139.229.140.17/31,139.229.140.16"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
         method: "manual"
         never-default: "true"
         route1: "139.229.140.135/32,139.229.140.16"
@@ -38,24 +42,26 @@ nm::connections:
         route6: "198.124.226.142/32,139.229.140.16"
         route7: "134.79.235.226/32,139.229.140.16"
         route8: "134.79.22.159/32,139.229.140.16"
+        route9: "172.24.7.48/32,139.229.140.16"
       ipv6:
         method: "disabled"
       proxy: {}
-      ethtool:
-        ring-rx: 8192
-        ring-tx: 8192
+
   enp129s0f1np1:
     content:
       connection:
         id: "enp129s0f1np1"
-        uuid: "f67944c1-87b2-4394-9757-b5a924343ba4"
+        uuid: "03da7500-2101-c722-2438-d0d006c28c73"
         type: "ethernet"
         interface-name: "enp129s0f1np1"
       ethernet:
         mtu: 9000
+        ring-rx: "8192"
+        ring-tx: "8192"
       ipv4:
-        address1: "139.229.140.19/31"
-        gateway: "139.229.140.18"
+        address1: "139.229.140.19/31,139.229.140.18"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
         method: "manual"
         never-default: "true"
         route1: "139.229.140.137/32,139.229.140.18"
@@ -69,6 +75,3 @@ nm::connections:
       ipv6:
         method: "disabled"
       proxy: {}
-      ethtool:
-        ring-rx: 8192
-        ring-tx: 8192

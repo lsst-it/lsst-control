@@ -68,3 +68,5 @@ nm::connections:
       ipv6:
         method: "disabled"
       proxy: {}
+
+profile::ccs::common::cantaloupe: true

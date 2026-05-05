@@ -14,3 +14,6 @@ resolv_conf::nameservers:
   - "1.1.1.1"
 
 mit_krb5::default_realm: "example.org"
+
+profile::core::toqui_bridge::ips:
+  toqui01: "139.229.143.49/25"

@@ -8,13 +8,25 @@ shared_examples 'generic rke2server' do |os_facts:, site:|
   it_behaves_like 'k8snode profile'
   it_behaves_like 'restic common'
 
-  it do
-    is_expected.to contain_class('rke2').with(
-      node_type: 'server',
-      release_series: '1.33',
-      version: '1.33.4~rke2r1',
-      versionlock: true,
-    )
+  case site
+  when 'dev'
+    it do
+      is_expected.to contain_class('rke2').with(
+        node_type: 'server',
+        release_series: '1.34',
+        version: '1.34.7~rke2r1',
+        versionlock: true,
+      )
+    end
+  else
+    it do
+      is_expected.to contain_class('rke2').with(
+        node_type: 'server',
+        release_series: '1.33',
+        version: '1.33.4~rke2r1',
+        versionlock: true,
+      )
+    end
   end
 
   it { expect(catalogue.resource('class', 'rke2')[:config]).to include('server') }

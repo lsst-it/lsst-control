@@ -59,8 +59,8 @@ describe 'pillan08.tu.lsst.org', :sitepp do
       it do
         is_expected.to contain_class('rke2').with(
           node_type: 'agent',
-          release_series: '1.33',
-          version: '1.33.4~rke2r1',
+          release_series: '1.34',
+          version: '1.34.7~rke2r1',
         )
       end
 

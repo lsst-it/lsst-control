@@ -96,13 +96,9 @@ class profile::ccs::file_transfer (
     'fpack-in-place',
     'generate-sidecar',
     'push-additional-oods',
-    'push-additional-oods-s3nd',
     'push-additional-usdf',
-    'push-additional-usdf-s3nd',
     'push-oods',
-    'push-oods-s3nd',
     'push-usdf',
-    'push-usdf-s3nd',
     'send-s3nd',
   ]
   $script_files.each | String $scriptfile | {

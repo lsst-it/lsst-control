@@ -33,7 +33,7 @@ describe 'ayekan01.dev.lsst.org', :sitepp do
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(
-          'kubelet-arg' => ['max-pods=250'],
+          'kubelet-arg' => ['max-pods=250', 'system-reserved=memory=4Gi', 'kube-reserved=memory=4Gi'],
           'node-label' => ['role=storage-node'],
         )
       end

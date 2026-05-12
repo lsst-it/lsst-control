@@ -4,5 +4,8 @@ classes:
 profile::core::sysctl::rp_filter::enable: false
 profile::core::k8snode::enable_dhcp: 'service_only'
 rke2::config:
+  kubelet-arg:
+    - "system-reserved=memory=4Gi"
+    - "kube-reserved=memory=4Gi"
   node-label:
     - "role=storage-node"

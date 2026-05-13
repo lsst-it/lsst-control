@@ -6,5 +6,9 @@ profile::core::k8snode::enable_dhcp: 'service_only'
 rke2::config:
   kubelet-arg:
     - "max-pods=250"
+    - "system-reserved=memory=4Gi"
+    - "kube-reserved=memory=4Gi"
+    - "image-gc-high-threshold=70"
+    - "image-gc-low-threshold=60"
   node-label:
     - "role=storage-node"

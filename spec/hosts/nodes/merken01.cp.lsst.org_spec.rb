@@ -58,6 +58,12 @@ describe 'merken01.cp.lsst.org', :sitepp do
       end
 
       it do
+        expect(catalogue.resource('class', 'rke2')[:config]).to include(
+          'kubelet-arg' => ['system-reserved=memory=4Gi', 'kube-reserved=memory=4Gi', 'image-gc-high-threshold=70', 'image-gc-low-threshold=60'],
+        )
+      end
+
+      it do
         expect(catalogue.resource('class', 'nm')[:conf]).to include(
           'device' => {
             'keep-configuration' => 'no',

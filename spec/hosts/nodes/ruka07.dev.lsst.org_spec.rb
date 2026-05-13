@@ -37,6 +37,7 @@ describe 'ruka07.dev.lsst.org', :sitepp do
 
       it do
         expect(catalogue.resource('class', 'rke2')[:config]).to include(
+          'kubelet-arg' => ['system-reserved=memory=4Gi', 'kube-reserved=memory=4Gi', 'image-gc-high-threshold=70', 'image-gc-low-threshold=60'],
           'node-label' => ['role=storage-node'],
         )
       end

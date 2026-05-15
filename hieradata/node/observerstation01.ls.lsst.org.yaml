@@ -2,13 +2,13 @@
 powertop::ensure: "absent"
 
 nm::connections:
-  enp6s0:
+  enp7s0:
     content:
       connection:
-        id: "enp6s0"
-        uuid: "c4e68dd3-c701-4578-968d-17bd8ccc9b5c"
+        id: "enp7s0"
+        uuid: "3ec103aa-3423-48b9-bb70-52a85d43aa09"
         type: "ethernet"
-        interface-name: "enp6s0"
+        interface-name: "enp7s0"
       ethernet: {}
       ipv4:
         method: "auto"

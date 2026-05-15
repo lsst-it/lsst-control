@@ -1,0 +1,29 @@
+---
+nm::connections:
+  enp3s0:
+    content:
+      connection:
+        id: "enp3s0"
+        uuid: "2a86d222-6dd2-3de1-9c53-637abe36bd3a"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp3s0"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp0s31f6:
+    content:
+      connection:
+        id: "enp0s31f6"
+        uuid: "468467ae-7586-36e5-8d08-5707a24a8275"
+        type: "ethernet"
+        interface-name: "enp0s31f6"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}

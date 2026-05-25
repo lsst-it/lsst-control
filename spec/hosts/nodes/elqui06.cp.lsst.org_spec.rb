@@ -51,6 +51,12 @@ describe 'elqui06.cp.lsst.org', :sitepp do
       end
 
       it do
+        expect(catalogue.resource('class', 'rke2')[:config]).to include(
+          'kubelet-arg' => ['system-reserved=memory=4Gi', 'kube-reserved=memory=4Gi', 'image-gc-high-threshold=70', 'image-gc-low-threshold=60'],
+        )
+      end
+
+      it do
         is_expected.to contain_class('profile::core::sysctl::rp_filter').with_enable(false)
       end
 

@@ -35,6 +35,13 @@ describe 'yepun01.cp.lsst.org', :sitepp do
       it_behaves_like 'ceph cluster'
 
       it do
+        expect(catalogue.resource('class', 'rke2')[:config]).to include(
+          'kubelet-arg' => ['system-reserved=memory=4Gi', 'kube-reserved=memory=4Gi', 'image-gc-high-threshold=70', 'image-gc-low-threshold=60'],
+          'node-label' => ['role=storage-node'],
+        )
+      end
+
+      it do
         is_expected.to contain_class('clustershell').with(
           groupmembers: {
             'yepun' => {

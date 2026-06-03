@@ -80,9 +80,9 @@ describe 'auxtel-mcm.ls.lsst.org', :sitepp do
       it { is_expected.to contain_file('/etc/ccs/ccsGlobal.properties').with_content(%r{^org.hibernate.engine.internal.level=WARNING}) }
       it { is_expected.to contain_file('/etc/ccs/ccsGlobal.properties').with_content(%r{^.level=WARNING}) }
 
-      it { is_expected.to contain_file('/etc/ccs/setup-sal-kafka').with_content(%r{^export LSST_KAFKA_BROKER_ADDR=sasquatch-base-kafka-bootstrap.lsst.codes:9094}) }
+      it { is_expected.to contain_file('/etc/ccs/setup-sal').with_content(%r{^export LSST_KAFKA_BROKER_ADDR=sasquatch-base-kafka-bootstrap.lsst.codes:9094}) }
 
-      it { is_expected.to contain_file('/etc/ccs/setup-sal-kafka').with_content(%r{^export LSST_SCHEMA_REGISTRY_URL=https://base-lsp.lsst.codes/schema-registry}) }
+      it { is_expected.to contain_file('/etc/ccs/setup-sal').with_content(%r{^export LSST_SCHEMA_REGISTRY_URL=https://base-lsp.lsst.codes/schema-registry}) }
 
       it { is_expected.to contain_class('Ccs_software::Service') }
       it { is_expected.to contain_service('cluster-monitor') }

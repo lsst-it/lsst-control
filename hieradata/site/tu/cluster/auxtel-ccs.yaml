@@ -1,6 +1,5 @@
 ---
 ccs_site: "tucson"
-ccs_sal::dds_interface: "auxtel-mcm-dds.tu.lsst.org"
 
 ccs_software::service_email: "tucson-teststand-aler-aaaaojrgfksil24tsex3nv2md4@rubin-obs.slack.com"
 

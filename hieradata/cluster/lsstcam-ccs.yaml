@@ -22,13 +22,8 @@ sudo::configs:
 
 ccs_database::database: "ccsdbprod"
 
-ccs_sal::ospl_home: "/opt/OpenSpliceDDS/V6.10.4/HDE/x86_64.linux"
 ## Do not add instrument- prefix to service names.
 ccs_sal::prefix_service: false
-ccs_sal::rpms:
-  ts_sal_utils: "ts_sal_utils-9.0.0-1.x86_64.rpm"
-ccs_sal::rpms_private:
-  OpenSpliceDDS: "OpenSpliceDDS-6.10.4-1.el8.x86_64.rpm"
 
 ## Used in lookups:
 ccs_site: "summit"
@@ -38,11 +33,6 @@ ccs_daq::instrument: "%{lookup('ccs_instrument')}"
 ccs_daq::apps_noinstrument: true
 
 ccs_sal::instrument: "%{lookup('ccs_instrument')}"
-ccs_sal::dds_domain: "%{lookup('ccs_site')}"
-ccs_sal::dds_interface: "lsstcam-mcm-dds"
-## Java 17
-ccs_sal::dds_extra: "export LD_PRELOAD=${JAVA_HOME}/lib/libjsig.so"
-ccs_sal::java_home: "/usr/lib/jvm/zulu-17"
 
 ccs_software::global_properties:
   - "org.lsst.ccs.lockservice=remote"

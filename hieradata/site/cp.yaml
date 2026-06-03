@@ -65,8 +65,6 @@ profile::core::firewall::firewall:
     dport: "9100"
     jump: "accept"
 
-ccs_sal::dds: false
-ccs_sal::kafka: true
 ccs_sal::kafka_broker_address: "sasquatch-summit-kafka-bootstrap.lsst.codes:9094"
 ccs_sal::kafka_registry_url: "https://summit-lsp.lsst.codes/schema-registry"
 

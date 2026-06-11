@@ -67,6 +67,8 @@ ccs_software::service_email: "comcam-alerts-aaaaoiphax6ggc2vzy5idxkmke@rubin-obs
 ccs_monit::alert:
   ## comcam-alerts
   - "comcam-alerts-aaaaoiphax6ggc2vzy5idxkmke@rubin-obs.slack.com"
+## Requires (private) setting for webhook_url.
+ccs_monit::webhook: true
 
 ccs_mrtg::loss_host: "comcam-mcm"
 

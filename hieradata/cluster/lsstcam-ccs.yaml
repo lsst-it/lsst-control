@@ -57,6 +57,8 @@ ccs_software::service_email: "lsstcam-alerts-aaaaoikijncrl3mtoosglrzsqm@rubin-ob
 ccs_monit::alert:
   ## lsstcam-alerts
   - "lsstcam-alerts-aaaaoikijncrl3mtoosglrzsqm@rubin-obs.slack.com"
+## Requires (private) setting for webhook_url.
+ccs_monit::webhook: true
 
 ccs_mrtg::loss_host: "lsstcam-mcm"
 

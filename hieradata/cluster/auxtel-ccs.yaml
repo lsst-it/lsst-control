@@ -37,6 +37,8 @@ ccs_database::database: "atsccsdb"
 
 ccs_monit::alert:
   - "auxtel-ccs-alerts-aaaaoikgy7stloxmg54kii7uwi@rubin-obs.slack.com"
+## Requires (private) setting for webhook_url.
+ccs_monit::webhook: true
 
 java_artisanal::package: "jdk1.8"
 java_artisanal::dir: "jdk1.8.0_202-amd64"

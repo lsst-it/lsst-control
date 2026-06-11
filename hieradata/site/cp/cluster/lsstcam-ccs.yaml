@@ -1,17 +1,18 @@
 ---
 clustershell::groupmembers:
   aio: {group: "aio", member: "lsstcam-aio[01-02,05-06]"}
-  all: {group: "all", member: "@aio,@dc,@hcu,@misc,@vw"}
-  all-new: {group: "all-new", member: "@dc-new,@misc-new"}
-  dc: {group: "dc", member: "lsstcam-dc[01-10]"}
-  dc-new: {group: "dc-new", member: "lsstcam-dc[1-9,100]"}
+  all: {group: "all", member: "@aio,@dc,@dc-old,@hcu,@misc,@vw"}
+  dc-old: {group: "dc-old", member: "lsstcam-dc[01-10]"}
+  dc: {group: "dc", member: "lsstcam-dc[1-9,100]"}
+  dc-new: {group: "dc-new", member: "@dc"}
   hcu: {group: "hcu", member: "@lion,@uno"}
-  lion: {group: "lion", member: "@quadbox,lsstcam-fb[01-04],lsstcam-shutter[01-02]"}
-  misc: {group: "misc", member: "lsstcam-db01,lsstcam-mcm,lsstcam-vs01"}
-  misc-new: {group: "misc-new", member: "lsstcam-db02,lsstcam-mcm1,lsstcam-vs1"}
+  ## Unclear is this should include "lsstcam-turbotest", which is a lion,
+  ## but not really part of lsstcam.
+  lion: {group: "lion", member: "@quadbox,lsstcam-fb[01-03],lsstcam-shutter[01-02]"}
+  misc: {group: "misc", member: "lsstcam-db[01-02],lsstcam-mcm,lsstcam-mcm1,lsstcam-vs01,lsstcam-vs1"}
   moxa: {group: "moxa", member: "lsstcam-moxa[1-2]"}
   quadbox: {group: "quadbox", member: "lsstcam-fcs,lsstcam-quad,lsstcam-rebps,lsstcam-vac"}
-  uno: {group: "uno", member: "lsstcam-ccobtb,lsstcam-ccobwb,lsstcam-pcs[01-02]"}
+  uno: {group: "uno", member: "lsstcam-ccobtb,lsstcam-ccobwb,lsstcam-pcs[01-02],lsstcam-ser"}
   vw: {group: "vw", member: "lsstcam-vw[01-04]"}
 
 profile::ccs::monitoring::mrtg: true

@@ -1,6 +1,33 @@
 # frozen_string_literal: true
 
 shared_examples 'lsstcam-dc.cp' do
+  it 'pins the sdfembs3 endpoint via the s3nd watchdog' do
+    is_expected.to contain_host('sdfembs3.sdf.slac.stanford.edu').with(
+      ensure: 'present',
+      ip: '172.24.7.249',
+    )
+  end
+
+  it do
+    is_expected.to contain_systemd__timer('s3nd-watchdog.timer').with(
+      ensure: 'present',
+      active: true,
+      enable: true,
+    )
+  end
+
+  it 'restarts only the instances targeting sdfembs3 on failover' do
+    is_expected.to contain_file('/etc/sysconfig/s3nd-watchdog').with(
+      content: %r{^WATCHDOG_UNITS="s3nd-sdfembs3-lsstcam-test\.service s3nd-sdfembs3-lsstcam\.service"$},
+    )
+  end
+
+  it 'knows all four sdfembs3 receivers' do
+    is_expected.to contain_file('/etc/sysconfig/s3nd-watchdog').with(
+      content: %r{^WATCHDOG_RECEIVERS="172\.24\.7\.249 172\.24\.7\.247 172\.24\.7\.248 172\.24\.7\.250"$},
+    )
+  end
+
   it do
     is_expected.to contain_s3nd__instance('cp-lsstcam').with(
       image: 'ghcr.io/lsst-dm/deliverator:2.4.0',

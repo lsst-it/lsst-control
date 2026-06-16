@@ -1,6 +1,5 @@
 ---
 ccs_site: "base"
-ccs_sal::dds_interface: "lsstcam-mcm-dds.ls.lsst.org"
 
 ## base-teststand-alerts
 ccs_software::service_email: "base-teststand-alerts-aaaaojwlqmczgqmavrwyopux5a@rubin-obs.slack.com"

@@ -30,6 +30,7 @@ describe "#{role} role" do
           it { is_expected.to compile.with_all_deps }
 
           it_behaves_like('common', os_facts:, site:)
+          it_behaves_like 'gphoto2'
           it { is_expected.to contain_package('awscli2') }
           it { is_expected.to contain_package('libgphoto2') }
           it { is_expected.to contain_package('usbutils') }

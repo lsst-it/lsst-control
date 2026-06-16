@@ -27,6 +27,7 @@ ccs_software::jdk8::dir: "jdk1.8.0_202-amd64"
 ccs_software::jdk8::version: "2000:1.8.0_202-fcs"
 
 ccs_software::service_email: "auxtel-ccs-alerts-aaaaoikgy7stloxmg54kii7uwi@rubin-obs.slack.com"
+ccs_software::webhook: true
 
 clustershell::groupmembers:
   misc: {group: "misc", member: "auxtel-mcm,auxtel-dc01,auxtel-fp01"}

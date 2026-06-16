@@ -52,6 +52,7 @@ ccs_software::global_properties:
 
 ## comcam-alerts
 ccs_software::service_email: "comcam-alerts-aaaaoiphax6ggc2vzy5idxkmke@rubin-obs.slack.com"
+ccs_software::webhook: true
 
 ccs_monit::alert:
   ## comcam-alerts

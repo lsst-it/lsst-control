@@ -43,6 +43,7 @@ ccs_software::global_properties:
 
 ## lsstcam-alerts
 ccs_software::service_email: "lsstcam-alerts-aaaaoikijncrl3mtoosglrzsqm@rubin-obs.slack.com"
+ccs_software::webhook: true
 
 ccs_monit::alert:
   ## lsstcam-alerts

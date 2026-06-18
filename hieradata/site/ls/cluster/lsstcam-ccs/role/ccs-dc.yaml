@@ -1,0 +1,22 @@
+---
+# canary scope for the s3nd endpoint watchdog (IT-6942): only the lsstcam dc
+# nodes at ls. to roll out to all ls s3nd nodes, move the two keys below to
+# site/ls.yaml and drop the hosts::entries pins from role/ccs-dc.yaml.
+#
+# sdfembs3.sdf.slac.stanford.edu is not resolvable outside slac and is pinned
+# in /etc/hosts. the watchdog health checks the pinned receiver and fails
+# over to a healthy alternate, restarting the s3nd instances which target it
+# (see the 2026-05-09 incident: a single receiver served 503s for 36h).
+# 172.24.7.249 is listed first so the historical pin is kept until the
+# watchdog has a reason to move.
+s3nd::watchdog:
+  endpoint_hostname: "sdfembs3.sdf.slac.stanford.edu"
+  receivers:
+    - "172.24.7.249"
+    - "172.24.7.247"
+    - "172.24.7.248"
+    - "172.24.7.250"
+
+# mask the static pin from role/ccs-dc.yaml: the watchdog declares the Host
+# resource itself and a second declaration is a compile error.
+hosts::entries: {}

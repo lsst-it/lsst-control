@@ -90,7 +90,7 @@ ccs_software::kafka_files:
   data-int:
     bootstrap_url: "sasquatch-int-kafka-bootstrap.lsst.cloud:9094"
     registry_url: "https://data-int.lsst.cloud/schema-registry"
-  summit:
+  properties:
     bootstrap_url: "sasquatch-summit-kafka-bootstrap.lsst.codes:9094"
     registry_url: "https://summit-lsp.lsst.codes/schema-registry"
 
@@ -99,7 +99,7 @@ ccs_software::kafka_auths:
   data-int:
     - "%{alias('ccs_software::kafka_auths::data-int::user')}"
     - "%{alias('ccs_software::kafka_auths::data-int::pass')}"
-  summit:
+  properties:
     - "%{alias('ccs_software::kafka_auths::summit::user')}"
     - "%{alias('ccs_software::kafka_auths::summit::pass')}"
 

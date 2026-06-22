@@ -1,0 +1,15 @@
+---
+ccs_software::services:
+  prod:
+    - "kafka-broker-service"
+
+ccs_software::kafka_files:
+  properties:
+    bootstrap_url: "sasquatch-base-kafka-bootstrap.lsst.codes:9094"
+    registry_url: "https://base-lsp.lsst.codes/schema-registry"
+
+## These are set in the private hiera.
+ccs_software::kafka_auths:
+  properties:
+    - "%{alias('ccs_software::kafka_auths::base::user')}"
+    - "%{alias('ccs_software::kafka_auths::base::pass')}"

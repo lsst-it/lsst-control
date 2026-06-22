@@ -26,7 +26,7 @@ ccs_software::jdk8::dir: "jdk1.8.0_202-amd64"
 ccs_software::jdk8::version: "2000:1.8.0_202-fcs"
 
 clustershell::groupmembers:
-  misc: {group: "misc", member: "comcam-db01,comcam-fp01,comcam-mcm,comcam-vw01"}
+  misc: {group: "misc", member: "comcam-db02,comcam-fp01,comcam-mcm,comcam-vw01"}
   dc: {group: "dc", member: "comcam-dc01"}
   all: {group: "all", member: "@dc,@misc,@uno,@lion"}
   uno: {group: "uno", member: "comcam-hcu03"}
@@ -106,5 +106,5 @@ daq::daqsdk::version: "R5-V13.12"
 
 profile::ccs::tomcat::efd_namespace: "lsst.CCCamera"
 profile::ccs::tomcat::java_home: "/usr/lib/jvm/zulu-17"
-profile::ccs::tomcat::rest_url: "comcam-db01:3306/comcamdbprod"
+profile::ccs::tomcat::rest_url: "comcam-db02:3306/comcamdbprod"
 profile::ccs::tomcat::trending_site: "%{lookup('ccs_instrument')}"

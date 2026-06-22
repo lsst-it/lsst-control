@@ -78,3 +78,8 @@ nm::connections:
         method: "disabled"
       ipv6:
         method: "disabled"
+
+ccs_software::services:
+  prod:
+    - "rest-server"
+    - "localdb"

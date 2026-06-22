@@ -88,7 +88,7 @@ nm::connections:
         method: "disabled"
 
 ccs_monit::hosts:
-  - "comcam-db01"
+  - "comcam-db02"
   - "comcam-dc01"
   - "comcam-fp01"
 # - "comcam-hcu03"

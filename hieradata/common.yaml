@@ -508,11 +508,6 @@ nfs::nfs_v4_idmap_domain: "%{facts.networking.domain}"
 profile::ccs::common::pkgurl: "https://repo-nexus.lsst.org/nexus/repository/ccs_private"
 ccs_hcu::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
 ccs_monit::pkgurl: "%{lookup('profile::ccs::common::pkgurl')}"
-## The following is no longer used by ccs_sal and should not be needed.
-## However without it, for unknown reasons the following error was thrown:
-##  Class[Ccs_sal]: expects a value for parameter 'rpms'
-ccs_sal::rpms:
-  ts_sal_utilsKafka: "ts_sal_utilsKafka-10.1.1-1.x86_64.rpm"
 
 systemd::manage_udevd: true
 

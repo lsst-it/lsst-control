@@ -5,3 +5,6 @@ classes:
   - "profile::core::fiberspec"
   - "profile::core::nfsclient"
   - "profile::ts::dco"
+
+systemd::udev_log: 'debug'
+systemd::udev_reload: true

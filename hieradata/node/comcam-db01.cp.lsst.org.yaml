@@ -17,3 +17,9 @@ network::interfaces_hash:
     bootproto: "none"
     onboot: "no"
     type: "Ethernet"
+## Moved to comcam-db02:
+ccs_database::service_manage: false
+#ccs_software::services:
+#  prod:
+#    - "rest-server"
+#    - "localdb"

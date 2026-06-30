@@ -67,6 +67,7 @@ class profile::ccs::graphical (
     }
 
     stdlib::ensure_packages(['icewm'])
+    stdlib::ensure_packages(['xpra'])
   }
 
   if $officeapps {

@@ -54,6 +54,7 @@ profile::ccs::common::packages:
   - "maven"
   - "nano"
   - "parallel"
+  - "pciutils"
   - "rsync"
   - "rsyslog-logrotate"
   - "screen"

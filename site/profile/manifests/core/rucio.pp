@@ -2,6 +2,7 @@
 #   Install required rucio packages
 #
 class profile::core::rucio {
+  String[1] $version,
   include profile::core::letsencrypt
 
   #  Host FQDN
@@ -27,7 +28,10 @@ class profile::core::rucio {
   }
 
   -> package { 'xrootd':
-    ensure => 'installed',
+    ensure              => 'installed',
+    version             => $version,
+    versionlock_enable  => true,
+    versionlocl_release => '1.el9',
   }
 
   file { [

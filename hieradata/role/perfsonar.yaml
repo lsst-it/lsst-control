@@ -38,6 +38,17 @@ perfsonar::pscheduler_agent_config:
     - url: "https://ps-cma.amlight.net/psconfig/lhn-psconfig.json"
       configure-archives: true
 
+# These services should be running for pS to work
+pscheduler::scheduler_ensure: "running"
+pscheduler::scheduler_enable: true
+pscheduler::runner_ensure: "running"
+pscheduler::runner_enable: true
+pscheduler::archiver_ensure: "running"
+pscheduler::archiver_enable: true
+pscheduler::ticker_ensure: "running"
+pscheduler::ticker_enable: true
+owamp::server_ensure: "running"
+owamp::server_enable: true
 perfsonar::manage_lsregistrationdaemon: true
-perfsonar::lsregistrationdaemon_ensure: "stopped"
-perfsonar::lsregistrationdaemon_enable: false
+perfsonar::lsregistrationdaemon_ensure: "running"
+perfsonar::lsregistrationdaemon_enable: true

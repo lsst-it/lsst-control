@@ -17,17 +17,30 @@ class profile::core::rucio {
   }
 
   yumrepo { 'xrootd-stable':
-    descr               => 'XRootD Stable Repository',
-    baseurl             => 'https://xrootd.web.cern.ch/repo/stable/el$releasever/$basearch',
-    skip_if_unavailable => 'true',
-    gpgcheck            => '1',
-    gpgkey              => 'https://xrootd.web.cern.ch/repo/RPM-GPG-KEY.txt',
-    enabled             => '1',
-    target              => '/etc/yum.repos.d/xrootd.repo',
+    ensure => absent,
+    target => '/etc/yum.repos.d/xrootd.repo',
   }
 
-  -> package { 'xrootd':
-    ensure => 'installed',
+  $xrootd_version = '1:5.9.6-1.el9'
+  $davix_version  = '0.8.10-1.el9'
+
+  package { [
+      'xrootd',
+      'xrootd-libs',
+      'xrootd-server',
+      'xrootd-server-libs',
+      'xrootd-client',
+      'xrootd-client-libs',
+      'xrootd-selinux',
+      'xrdcl-http',
+    ]:
+      ensure  => $xrootd_version,
+      require => Yumrepo['xrootd-stable'],
+  }
+
+  package { 'davix':
+    ensure  => $davix_version,
+    require => Yumrepo['xrootd-stable'],
   }
 
   file { [

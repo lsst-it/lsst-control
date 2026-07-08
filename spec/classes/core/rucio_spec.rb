@@ -13,13 +13,31 @@ describe 'profile::core::rucio' do
 
       it do
         is_expected.to contain_yumrepo('xrootd-stable').with(
-          descr: 'XRootD Stable Repository',
-          baseurl: 'https://xrootd.web.cern.ch/repo/stable/el$releasever/$basearch',
-          skip_if_unavailable: 'true',
-          gpgcheck: '1',
-          gpgkey: 'https://xrootd.web.cern.ch/repo/RPM-GPG-KEY.txt',
-          enabled: '1',
+          ensure: 'absent',
           target: '/etc/yum.repos.d/xrootd.repo',
+        )
+      end
+
+      %w[
+        xrootd
+        xrootd-libs
+        xrootd-server
+        xrootd-server-libs
+        xrootd-client
+        xrootd-client-libs
+        xrootd-selinux
+        xrdcl-http
+      ].each do |pkg|
+        it do
+          is_expected.to contain_package(pkg).with(
+            ensure: '1:5.9.6-1.el9',
+          )
+        end
+      end
+
+      it do
+        is_expected.to contain_package('davix').with(
+          ensure: '0.8.10-1.el9',
         )
       end
 

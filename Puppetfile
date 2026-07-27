@@ -6,7 +6,7 @@ mod 'atsonkov/grubby', '0.3.2'
 mod 'blockops/tailscale', git: 'https://github.com/lsst-it/puppet-tailscale', ref: 'bc7e880'  # https://github.com/lsst-it/puppet-tailscale/pull/3 we are using a fork as we wait for the main Forge release to accept apt 10.x
 mod 'ccin2p3/etc_services', git: 'https://github.com/lsst-it/puppet-etc_services', ref: 'ff17b73' # https://github.com/ccin2p3/puppet-etc_services/pull/11
 mod 'ccin2p3/mit_krb5', git: 'https://github.com/lsst-it/puppet-mit_krb5.git', ref: '2365ca8'  # https://github.com/ccin2p3/puppet-mit_krb5/pull/29 https://github.com/ccin2p3/puppet-mit_krb5/pull/34 https://github.com/ccin2p3/puppet-mit_krb5/pull/38 (partial)
-mod 'cirrax/libvirt', '6.0.0'
+mod 'cirrax/libvirt', '6.1.0'
 mod 'duritong/sysctl', git: 'https://github.com/duritong/puppet-sysctl', ref: '847ec1c'  # migrate to herculesteam/augeasproviders_sysctl; https://github.com/duritong/puppet-sysctl/pull/48
 mod 'jcpunk/irqbalance', '2.0.1'
 mod 'jhoblitt/ipmi', '8.0.0'

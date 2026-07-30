@@ -1,0 +1,35 @@
+---
+nm::connections:
+  enp12s0f4u1u1c2:  # bmc
+    content:
+      connection:
+        id: "enp12s0f4u1u1c2"
+        uuid: "5547cbfA-005b-430c-be9a-5b1e2b799bed"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp12s0f4u1u1c2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  enp65s0f0np0:  # 100G
+    content:
+      connection:
+        id: "enp65s0f0np0"
+        uuid: "c37fedd9-f412-40ac-8d87-06ce1437992c"
+        type: "ethernet"
+        interface-name: "enp65s0f0np0"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}
+  enp65s0f1np1:  # 100G
+    content:
+      connection:
+        id: "enp65s0f1np1"
+        uuid: "d43296f5-8391-4499-9975-12e26e2677fb"
+        type: "ethernet"
+        interface-name: "enp65s0f1np1"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}

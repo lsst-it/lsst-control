@@ -10,7 +10,7 @@ classes:
 # ensure chrony is not running
 profile::core::common::manage_chrony: true
 profile::core::sysctl::rp_filter::enable: false
-profile::core::perfsonar::version: "5.1.4"
+profile::core::perfsonar::version: "5.2.5"
 
 firewall::ensure: "running"
 profile::core::firewall::firewall:

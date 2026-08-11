@@ -64,12 +64,14 @@ describe 'manke01.ls.lsst.org', :sitepp do
 
       it { is_expected.to contain_class('cni::plugins::dhcp::service') }
 
-      it { is_expected.to have_nm__connection_resource_count(14) }
+      it { is_expected.to have_nm__connection_resource_count(12) }
 
       %w[
         eno1np0
         eno2np1
         enp4s0f3u2u2c2
+        enp129s0f0
+        enp129s0f1
       ].each do |i|
         context "with #{i}" do
           let(:interface) { i }
@@ -79,8 +81,8 @@ describe 'manke01.ls.lsst.org', :sitepp do
       end
 
       %w[
-        enp129s0f0
-        enp129s0f1
+        enp197s0f0np0
+        enp197s0f1np1
       ].each do |i|
         context "with #{i}" do
           let(:interface) { i }
@@ -102,8 +104,6 @@ describe 'manke01.ls.lsst.org', :sitepp do
 
       %w[
         2501
-        2502
-        2504
         2505
       ].each do |vlan|
         iface = "bond0.#{vlan}"
@@ -116,23 +116,15 @@ describe 'manke01.ls.lsst.org', :sitepp do
         end
       end
 
-      %w[
-        br2501
-        br2502
-        br2504
-      ].each do |i|
-        context "with #{i}" do
-          let(:interface) { i }
+      context 'with br2501' do
+        let(:interface) { 'br2501' }
 
-          it_behaves_like 'nm enabled interface'
-          it_behaves_like 'nm bridge interface'
-
-          if i == 'br2501'
-            it_behaves_like 'nm dhcp interface'
-          else
-            it_behaves_like 'nm no-ip interface'
-          end
-        end
+        it_behaves_like 'nm enabled interface'
+        it_behaves_like 'nm bridge interface'
+        it_behaves_like 'nm manual interface'
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.151.1/24,139.229.151.254') }
+        it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.134.53;139.229.134.54;139.229.134.55;') }
+        it { expect(nm_keyfile['ipv4']['dns-search']).to eq('ls.lsst.org;') }
       end
 
       context 'with br2505' do

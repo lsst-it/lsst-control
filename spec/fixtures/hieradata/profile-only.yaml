@@ -17,3 +17,6 @@ mit_krb5::default_realm: "example.org"
 
 profile::core::toqui_bridge::ips:
   toqui01: "139.229.143.49/25"
+
+profile::core::manke_bridge::ips:
+  manke01: "139.229.151.1/24"

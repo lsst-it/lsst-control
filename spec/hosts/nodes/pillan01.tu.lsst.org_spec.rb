@@ -57,7 +57,7 @@ describe 'pillan01.tu.lsst.org', :sitepp do
         is_expected.to contain_class('rke2').with(
           node_type: 'server',
           release_series: '1.35',
-          version: '1.35.1~rke2r1',
+          version: '1.35.3~rke2r1',
         )
       end
 

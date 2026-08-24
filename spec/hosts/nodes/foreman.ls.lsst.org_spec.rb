@@ -119,6 +119,24 @@ describe 'foreman.ls.lsst.org', :sitepp do
       end
 
       it do
+        is_expected.to contain_dhcp__pool('CHANGO-FQDN').with(
+          network: '139.229.141.48',
+          mask: '255.255.255.240',
+          gateway: '139.229.141.62',
+          range: ['139.229.141.49 139.229.141.59'],
+        )
+      end
+
+      it do
+        is_expected.to contain_dhcp__pool('CHANGO-METALLB').with(
+          network: '139.229.141.64',
+          mask: '255.255.255.240',
+          gateway: '139.229.141.78',
+          range: ['139.229.141.65 139.229.141.75'],
+        )
+      end
+
+      it do
         is_expected.to contain_dhcp__pool('IT-HYPERVISOR').with(
           network: '139.229.141.32',
           mask: '255.255.255.240',

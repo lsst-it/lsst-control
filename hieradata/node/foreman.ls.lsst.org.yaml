@@ -79,6 +79,20 @@ dhcp::pools:
     range:
       - "139.229.141.20 139.229.141.26"
     search_domains: "%{alias('dhcp::dnsdomain')}"
+  CHANGO-FQDN:  # vlan2144
+    network: "139.229.141.48"
+    mask: "255.255.255.240"
+    gateway: "139.229.141.62"
+    range:
+      - "139.229.141.49 139.229.141.59"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
+  CHANGO-METALLB:  # vlan2145
+    network: "139.229.141.64"
+    mask: "255.255.255.240"
+    gateway: "139.229.141.78"
+    range:
+      - "139.229.141.65 139.229.141.75"
+    search_domains: "%{alias('dhcp::dnsdomain')}"
   IT-HYPERVISOR:  # vlan2104
     network: "139.229.141.32"
     mask: "255.255.255.240"

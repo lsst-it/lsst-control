@@ -9,7 +9,7 @@ shared_examples 'generic rke2server' do |os_facts:, site:|
   it_behaves_like 'restic common'
 
   case site
-  when 'dev', 'tu'
+  when 'dev', 'tu', 'ls'
     it do
       is_expected.to contain_class('rke2').with(
         node_type: 'server',

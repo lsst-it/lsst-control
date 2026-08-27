@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'kueyen01.cp.lsst.org', :sitepp do
+describe 'kueyen01.dev.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 

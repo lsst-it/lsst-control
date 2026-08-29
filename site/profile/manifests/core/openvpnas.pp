@@ -11,10 +11,15 @@
 #   Hash of VPN groups to create with their properties.
 #   Example: { 'vpn-it' => { 'superuser' => true }, 'vpn-default' => { 'superuser' => false } }
 #
+# @param ldap_add_req
+#   LDAP additional requirement filter for OpenVPN AS (auth.ldap.0.add_req).
+#   Defaults to requiring membership in the 'vpn' group; can be overridden per-node in Hiera.
+#
 class profile::core::openvpnas (
   String[1] $version,
   Optional[String[1]] $bind_pw = undef,
   Hash[String, Hash] $vpn_groups = {},
+  String[1] $ldap_add_req = 'memberOf=cn=vpn,cn=groups,cn=accounts,dc=lsst,dc=cloud',
 ) {
   include profile::core::letsencrypt
   $fqdn    = $facts['networking']['fqdn']
@@ -62,6 +67,10 @@ class profile::core::openvpnas (
   openvpnas::config::key { 'auth.ldap.0.users_base_dn':
     key   => 'auth.ldap.0.users_base_dn',
     value => 'cn=accounts,dc=lsst,dc=cloud',
+  }
+  openvpnas::config::key { 'auth.ldap.0.add_req':
+    key   => 'auth.ldap.0.add_req',
+    value => $ldap_add_req,
   }
   openvpnas::config::key { 'auth.ldap.0.uname_attr':
     key   => 'auth.ldap.0.uname_attr',

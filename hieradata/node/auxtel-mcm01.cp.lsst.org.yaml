@@ -1,0 +1,29 @@
+---
+nm::connections:
+  ens192:  #fqdn
+    content:
+      connection:
+        id: "ens192"
+        uuid: "b88d5fbc-a1be-3456-85e4-20b513b11915"
+        type: "ethernet"
+        interface-name: "ens192"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  ens224:
+    content:
+      connection:
+        id: "ens224"
+        uuid: "87c7b1dd-3e0b-370f-8450-815616b55299"
+        type: "ethernet"
+        interface-name: "ens224"
+      ethernet: {}
+      ipv4:
+        method: "auto"
+        never-default: "true"
+      ipv6:
+        method: "disabled"
+      proxy: {}

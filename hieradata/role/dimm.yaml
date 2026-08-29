@@ -7,7 +7,7 @@ classes:
 
 packages:
   - 'telnet'
-  - 'ts_dimm_app-2.0-1.el8.x86_64'
+  - 'ts_dimm_app-2.0-3.el9.x86_64'
 
 nfs::client_enabled: true
 nfs::client_mounts:

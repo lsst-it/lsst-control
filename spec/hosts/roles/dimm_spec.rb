@@ -22,7 +22,7 @@ describe "#{role} role" do
           it_behaves_like('common', os_facts:, site:)
           it_behaves_like 'docker'
           it { is_expected.to contain_class('profile::core::yum::lsst_ts_private') }
-          it { is_expected.to contain_package('ts_dimm_app-2.0-1.el8.x86_64') }
+          it { is_expected.to contain_package('ts_dimm_app-2.0-3.el9.x86_64') }
           it { is_expected.to contain_package('telnet') }
 
           it do

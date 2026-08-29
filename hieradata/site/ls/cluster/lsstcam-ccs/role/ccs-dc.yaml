@@ -1,8 +1,7 @@
 ---
 # canary scope for the s3nd endpoint watchdog (IT-6942): only the lsstcam dc
-# nodes for now. to roll out to all cp s3nd nodes, move the two keys below to
-# site/cp.yaml and drop the hosts::entries pins from role/{auxtel-fp,
-# comcam-fp,ccs-dc}.yaml and node/{auxtel,comcam}-fp01.cp.lsst.org.yaml.
+# nodes at ls. to roll out to all ls s3nd nodes, move the two keys below to
+# site/ls.yaml and drop the hosts::entries pins from role/ccs-dc.yaml.
 #
 # sdfembs3.sdf.slac.stanford.edu is not resolvable outside slac and is pinned
 # in /etc/hosts. the watchdog health checks the pinned receiver and fails
@@ -21,23 +20,3 @@ s3nd::watchdog:
 # mask the static pin from role/ccs-dc.yaml: the watchdog declares the Host
 # resource itself and a second declaration is a compile error.
 hosts::entries: {}
-
-files:
-  "/data":
-    ensure: "directory"
-    mode: "0755"
-    owner: 0
-    group: 0
-  "/data/ccs-ipa-data":
-    ensure: "directory"
-    mode: "0755"
-    owner: &ccsipauser 72055
-    group: *ccsipauser
-
-## Note: node/lsstcam-dc02.cp should not have image-handling,
-## and so specifically redefines services to be empty.
-## If you want to add more services here, they will also need to be
-## added to that node.
-ccs_software::services:
-  prod:
-    - {name: "image-handling", user: "ccs-ipa", group: "ccs-ipa", workdir: "/home/ccs-ipa"}

@@ -5,7 +5,7 @@
 #   Version of perfsonar to install / pin.
 #
 class profile::core::perfsonar (
-  String[1] $version = '4.4.0'
+  String[1] $version = '5.2.5'
 ) {
   include epel
   include profile::core::letsencrypt

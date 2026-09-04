@@ -167,6 +167,8 @@ ssh::server::match_block:
     <<: *authorized_keys
   berb_b:
     <<: *authorized_keys
+  chenriquez_b:
+    <<: *authorized_keys
 # ipa server options
 # defines the uid/gid of the admin user
 # needs to be coordinated between master + replicas
@@ -244,6 +246,12 @@ accounts::user_list:
     purge_sshkeys: true
     sshkeys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/dmrGjBK6QFPky2cezmUzDaBS0SoOeoCSVT9ozAgYfxxQnK7Ux+8wI6zIqcmOHFO9svaUN38/3pr8ZzcEmWYFxh7pj9oWSFDis1dJ5L+MCtJ1h/4kw7xJvU/sF5ah6yOa+bOVcHFqNOhdL9RQ02Ss9ZPIkqmnmbWXXqX8cMtXBtodVucRrbaIOjC105fLPnis3wEdKgAk9aL2JXatbL4BANU/h15H0+4PyHTXY2IKuKnG4EMNFN1ALSkVso96G5XT6FOAKmN7EaUHphDQ6Wur2sdmL5xuBOioLBF4zorFtAAofcLlLDZkJauxSK9Ho+ryx0z2okTlSiG8QfpG5EvCg0F+5vESIYJ01tskwa23maGRWX43mxkGxXBFWIU0YAaXMcf0FOsZgajzdHU5LNqX9B5zdY+2J9n39hQl5i9KxtTFHt8ktRRkR+oXKFKNTxMRcw2WugezC2Y5UnpI1K1xZRK5Y7sNb1wsgINM0FQMhyMiZ0m8kQL3gfkI7Jud34E= berb@192.168.1.26"
+  chenriquez_b:
+    groups:
+      - "wheel_b"
+    purge_sshkeys: true
+    sshkeys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCj/HKsR1nIq9Wk3OOhmloA18ywrVZQZcdNIuXTYbtPUp7VcboCuwmwODkKX3qnU64sZRurRFseEsmEm/crpEmJ8q4Nvn1A7I1bzB/1pCob/adZPQN/MhjOzt0dEI6++/0ucnW15vw7kMyEaC7SEyNu+KQYl2a0xAjpwN6oHINPhSQ3nZGw2KSU/wBIRJrhVUY/9OWcVjPOa78gCPbdNHEtEuSf6yeyUQxndzj8pqiS+aoUZyhYob+MIiKY4OBhAfuM5P4wNGiqVkSzmuzxPRc+ydZiVu8NwQwuXW9hEoQX1xMsOc3PP6J2e4ilYydy1vRnoRHFIQubbaf1+QlC3Ztfkr6qq9DANeSIZWgpvQCz6Yr8GN8ufXonsCgkKndlqtXU25zl/5htTkXBq+bNdr8UokPgyOg18gPerx9tp3+G/k4K375JpKHuOx1uObNxmluZNm5k4fsd1yaaQfflF4RTQFRgjd+bm6Kfy/fRmKBnn23780zad8YVDqK8NZSRiAZce34FTTdyXJbAg5Du+wHQmU4TDHiKs6VxYLRVeLXlY+cYAATKqcWrq9T8ak1l2BLBxJsbQ7LRRTyzAPFBRcrPloy4eV9XviM2bfUJj7ULPjsQp2tO7+AywEYV5SyirxR6/IV5A14ne5fegRn8jdlDoKz7ymeGuGCLUzxQtTN0iw== carlos.henriquez@gmail.com"
   lssttech: &rm_user
     ensure: "absent"
     managehome: true

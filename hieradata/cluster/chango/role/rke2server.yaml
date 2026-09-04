@@ -1,0 +1,12 @@
+---
+classes:
+  - "profile::core::sysctl::rp_filter"
+profile::core::sysctl::rp_filter::enable: false
+rke2::config:
+  kubelet-arg:
+    - "system-reserved=memory=4Gi"
+    - "kube-reserved=memory=4Gi"
+    - "image-gc-high-threshold=70"
+    - "image-gc-low-threshold=60"
+  node-label:
+    - "role=storage-node"

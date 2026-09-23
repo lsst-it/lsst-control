@@ -1,0 +1,40 @@
+---
+nm::connections:
+  enp0s31f6:
+    content:
+      connection:
+        id: "enp0s31f6"
+        uuid: "3B40CBC1-6AB8-455B-97C1-0E357AC408A2"
+        type: "ethernet"
+        interface-name: "enp0s31f6"
+      ethernet: {}
+      ipv4:
+        address1: "139.229.175.120/26,139.229.175.126"
+        dns: "139.229.160.53;139.229.160.54;139.229.160.55;"
+        dns-search: "cp.lsst.org;"
+        method: "manual"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+  enp3s0:
+    content:
+      connection:
+        id: "enp3s0"
+        uuid: "D0114166-69BA-4CA1-843A-96444645CA29"
+        type: "ethernet"
+        interface-name: "enp3s0"
+      ethernet: {}
+      ipv4:
+        method: "manual"
+        address1: "192.168.1.122/24"
+      ipv6:
+        method: "disabled"
+      proxy: {}
+
+ccs_hcu::quadbox: true
+
+ccs_software::services:
+  prod:
+    - "hex"
+    - "thermal"
+    - "vacuum"

@@ -1,3 +1,101 @@
 ---
 clustershell::groupmembers:
-  chango: {group: "chango", member: "chango[01-03]"}
+  chango:
+    group: "chango"
+    member: "chango[01-03]"
+profile::core::k8snode::enable_dhcp: true
+tuned::active_profile: "latency-performance"
+nm::conf:
+  device:
+    keep-configuration: "no"
+    allowed-connections: "except:origin:nm-initrd-generator"
+
+nm::connections:
+  enp0s20f0u1u2c2:  # bmc
+    content:
+      connection:
+        id: "enp0s20f0u1u2c2"
+        uuid: "5ed51e6f-038e-3728-910a-4920647eb8fe"
+        type: "ethernet"
+        autoconnect: "false"
+        interface-name: "enp0s20f0u1u2c2"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno1:
+    content:
+      connection:
+        id: "eno1"
+        uuid: "ae3919db-c11f-30bc-8a1e-36ba14ec8ebd"
+        type: "ethernet"
+        interface-name: "eno1"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  eno2:
+    content:
+      connection:
+        id: "eno2"
+        uuid: "abc18230-d72b-3bf4-b984-467294b5ceb5"
+        type: "ethernet"
+        interface-name: "eno2"
+        master: "bond0"
+        slave-type: "bond"
+      ethernet: {}
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  bond0:
+    content:
+      connection:
+        id: "bond0"
+        uuid: "b9c03f5b-adab-4857-8f73-0f7599656a62"
+        type: "bond"
+        interface-name: "bond0"
+      ethernet:
+        cloned-mac-address: "%{facts.networking.interfaces.eno1.mac}"
+      bond:
+        mode: "802.3ad"
+        miimon: "100"
+        xmit_hash_policy: "layer3+4"
+      ipv4:
+        method: "disabled"
+      ipv6:
+        method: "disabled"
+  bond0.2144:
+    content:
+      connection:
+        id: "bond0.2144"
+        uuid: "4f98595d-f363-40f1-b4c1-5a87f63d0f4a"
+        type: "vlan"
+        interface-name: "bond0.2144"
+        master: "br2144"
+        slave-type: "bridge"
+      ethernet: {}
+      vlan:
+        flags: "1"
+        id: "2144"
+        parent: "bond0"
+      bridge-port: {}
+  br2144:
+    content:
+      connection:
+        id: "br2144"
+        uuid: "7dd05d98-a9c3-4569-a7c3-00316b13c0eb"
+        type: "bridge"
+        interface-name: "br2144"
+      ethernet: {}
+      bridge:
+        stp: "false"
+      ipv4:
+        method: "auto"
+      ipv6:
+        method: "disabled"
+      proxy: {}

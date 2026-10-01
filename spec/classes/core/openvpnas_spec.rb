@@ -60,6 +60,13 @@ describe 'profile::core::openvpnas' do
         end
 
         it do
+          is_expected.to contain_openvpnas__config__key('auth.ldap.0.add_req').with(
+            key: 'auth.ldap.0.add_req',
+            value: 'memberOf=cn=vpn,cn=groups,cn=accounts,dc=lsst,dc=cloud'
+          )
+        end
+
+        it do
           is_expected.to contain_openvpnas__config__key('auth.ldap.0.uname_attr').with(
             key: 'auth.ldap.0.uname_attr',
             value: 'uid',
@@ -193,6 +200,24 @@ describe 'profile::core::openvpnas' do
           is_expected.to contain_openvpnas__config__key('auth.ldap.0.bind_pw').with(
             key: 'auth.ldap.0.bind_pw',
             value: 'my-secret-password',
+          )
+        end
+      end
+
+      context 'with custom ldap_add_req' do
+        let(:params) do
+          {
+            version: '3.0.2_87c70987',
+            ldap_add_req: 'memberOf=cn=vpn-backup,cn=groups,cn=accounts,dc=lsst,dc=cloud'
+          }
+        end
+
+        it { is_expected.to compile.with_all_deps }
+
+        it do
+          is_expected.to contain_openvpnas__config__key('auth.ldap.0.add_req').with(
+            key: 'auth.ldap.0.add_req',
+            value: 'memberOf=cn=vpn-backup,cn=groups,cn=accounts,dc=lsst,dc=cloud'
           )
         end
       end

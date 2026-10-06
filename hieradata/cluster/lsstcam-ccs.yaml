@@ -40,6 +40,11 @@ ccs_software::global_properties:
   - "org.lsst.ccs.subsystem.agent.property.cluster=%{lookup('ccs_instrument')}"
   - "org.lsst.ccs.subsystem.agent.property.site=%{lookup('ccs_site')}"
   - "org.lsst.ccs.InfluxDb.default.tags=%{lookup('ccs_instrument')}|%{lookup('ccs_instrument')}-%{lookup('ccs_site')}"
+  - "system.property.ccs.jg.physical=FINE"
+  - "system.property.ccs.jg.connect=FINE"
+  - "system.property.ccs.jg.retransmit=suppress:FINE;suppress-bundler:FINE;brief;WARNING"
+  - "system.property.ccs.jg.hseqno=true"
+  - "system.property.ccs.jg.member=coordinator:INFO"
 
 ## lsstcam-alerts
 ccs_software::service_email: "lsstcam-alerts-aaaaoikijncrl3mtoosglrzsqm@rubin-obs.slack.com"

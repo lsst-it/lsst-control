@@ -1,0 +1,26 @@
+---
+classes:
+  - "profile::core::common"
+  - "profile::core::debugutils"
+  - "profile::core::docker"
+  - "profile::ts::tma"
+
+packages:
+  - "git"
+  - "git-lfs"
+  - "perl-File-Copy"
+  - "unzip"
+
+profile::ts::tma::tma_db_repo: "git@github.com:lsst-ts/ts_tma_mariadb-docker.git"
+profile::ts::tma::tma_db_path: "/opt/tma/mariadb-docker"
+profile::ts::tma::opman_path: "/opt/tma/operation-manager"
+profile::ts::tma::pxi_0_ip: "10.0.0.10"
+profile::ts::tma::pxi_1_ip: "10.0.0.11"
+
+profile::ts::tma::labview_rpm_url: "https://repo-nexus.lsst.org/nexus/repository/ts_yum/releases/ni-labview-2024-pro-24.3.2.49152-0%2Bf0-rhel9.noarch.rpm"
+profile::ts::tma::vipm_url: "https://repo-nexus.lsst.org/nexus/repository/tma_artifacts/labview/vipm-22.1.2354-linux.zip"
+profile::ts::tma::vipm_root: "/usr/local/JKI/VIPM"
+profile::ts::tma::vipc_path: "/usr/local/JKI/VIPM/LSST_tma_dependencies.vipc"
+profile::ts::tma::vipc_url: "https://github.com/lsst-ts/ts_tma_vipm_dependency/raw/develop/LSST_tma_dependencies.vipc"
+
+profile::ts::tma::enable_graphical: true

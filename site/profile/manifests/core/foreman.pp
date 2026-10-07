@@ -142,6 +142,13 @@ class profile::core::foreman (
     provider => 'puppet_gem',
   }
 
+  # needed by `puppet generate types` to load the httpauth provider
+  # (webrick is no longer bundled with ruby >= 3.0)
+  package { 'webrick':
+    ensure   => installed,
+    provider => 'puppet_gem',
+  }
+
   file { '/etc/puppetlabs/puppet/eyaml':
     ensure  => directory,
     owner   => 'puppet',

@@ -55,7 +55,7 @@ describe 'perfsonar1.ls.lsst.org', :sitepp do
         it { expect(nm_keyfile['ipv4']['route4']).to eq('198.124.226.134/32,139.229.140.134') }
         it { expect(nm_keyfile['ipv4']['route5']).to eq('198.124.226.138/32,139.229.140.134') }
         it { expect(nm_keyfile['ipv4']['route6']).to eq('198.124.226.142/32,139.229.140.134') }
-        it { expect(nm_keyfile['ipv4']['route7']).to eq('134.73.235.226/32,139.229.140.134') }
+        it { expect(nm_keyfile['ipv4']['route7']).to eq('134.79.235.226/32,139.229.140.134') }
         it { expect(nm_keyfile['ipv4']['route8']).to eq('134.79.22.159/32,139.229.140.134') }
       end
 

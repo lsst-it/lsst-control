@@ -1,0 +1,2 @@
+---
+profile::core::openvpnas::ldap_add_req: 'memberOf=cn=vpn-backup,cn=groups,cn=accounts,dc=lsst,dc=cloud'

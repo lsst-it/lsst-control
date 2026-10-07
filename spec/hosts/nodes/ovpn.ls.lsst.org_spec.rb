@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'vpn1.ls.lsst.org', :sitepp do
+describe 'ovpn.ls.lsst.org', :sitepp do
   on_supported_os.each do |os, os_facts|
     next unless os =~ %r{almalinux-9-x86_64}
 
@@ -19,7 +19,7 @@ describe 'vpn1.ls.lsst.org', :sitepp do
       end
       let(:node_params) do
         {
-          role: 'generic',
+          role: 'openvpnas',
           site: 'ls',
         }
       end
@@ -34,7 +34,7 @@ describe 'vpn1.ls.lsst.org', :sitepp do
 
         it_behaves_like 'nm enabled interface'
         it_behaves_like 'nm ethernet interface'
-        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.138.2/24,139.229.138.254') }
+        it { expect(nm_keyfile['ipv4']['address1']).to eq('139.229.154.119/28,139.229.154.126') }
         it { expect(nm_keyfile['ipv4']['dns']).to eq('139.229.135.53;139.229.135.54;139.229.135.55;') }
         it { expect(nm_keyfile['ipv4']['dns-search']).to eq('ls.lsst.org;') }
         it { expect(nm_keyfile['ipv4']['method']).to eq('manual') }

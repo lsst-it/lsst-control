@@ -35,7 +35,7 @@ mod 'lsst/pi', '1.0.0'
 mod 'lsst/powertop', '0.1.2'
 mod 'lsst/rke', '2.2.0'
 mod 'lsst/rke2', '2.0.0'
-mod 'lsst/s3nd', '1.3.0'
+mod 'lsst/s3nd', git: 'https://github.com/lsst-it/puppet-s3nd', ref: 'IT-6942-s3nd-endpoint-watchdog' # XXX pin to 1.4.0 once released
 mod 'lsst/smee', '3.0.0'
 mod 'puppet/alternatives', '6.0.0'
 mod 'puppet/archive', '8.1.0'

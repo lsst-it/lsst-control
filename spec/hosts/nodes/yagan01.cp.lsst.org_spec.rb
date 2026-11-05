@@ -74,7 +74,7 @@ describe 'yagan01.cp.lsst.org', :sitepp do
 
       it { is_expected.to contain_class('cni::plugins::dhcp::service') }
 
-      it { is_expected.to have_nm__connection_resource_count(12) }
+      it { is_expected.to have_nm__connection_resource_count(10) }
 
       %w[
         enp5s0f3u2u2c2
@@ -110,7 +110,6 @@ describe 'yagan01.cp.lsst.org', :sitepp do
       end
 
       Hash[*%w[
-        bond0.1201 br1201
         bond0.1702 br1702
         bond0.1800 br1800
       ]].each do |slave, master|
@@ -123,7 +122,6 @@ describe 'yagan01.cp.lsst.org', :sitepp do
       end
 
       %w[
-        br1201
         br1702
         br1800
       ].each do |i|

@@ -42,21 +42,6 @@ nm::connections:
       ipv6:
         method: "disabled"
       proxy: {}
-  bond0.1201:
-    content:
-      connection:
-        id: "bond0.1201"
-        uuid: "852e8121-c47c-4201-a3a8-cdae5c01359b"
-        type: "vlan"
-        interface-name: "bond0.1201"
-        master: "br1201"
-        slave-type: "bridge"
-      ethernet: {}
-      vlan:
-        flags: "1"
-        id: "1201"
-        parent: "bond0"
-      bridge-port: {}
   bond0.1702:
     content:
       connection:
@@ -87,21 +72,6 @@ nm::connections:
         id: "1800"
         parent: "bond0"
       bridge-port: {}
-  br1201:
-    content:
-      connection:
-        id: "br1201"
-        uuid: "7dd05d98-a9c3-4569-a7c3-00316b13c0eb"
-        type: "bridge"
-        interface-name: "br1201"
-      ethernet: {}
-      bridge:
-        stp: "false"
-      ipv4:
-        method: "disabled"
-      ipv6:
-        method: "disabled"
-      proxy: {}
   br1702:
     content:
       connection:

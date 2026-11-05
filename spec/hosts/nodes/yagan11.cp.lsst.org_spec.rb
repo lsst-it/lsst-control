@@ -72,7 +72,7 @@ describe 'yagan11.cp.lsst.org', :sitepp do
         )
       end
 
-      it { is_expected.to have_nm__connection_resource_count(12) }
+      it { is_expected.to have_nm__connection_resource_count(10) }
 
       %w[
         eno1np0
@@ -108,7 +108,6 @@ describe 'yagan11.cp.lsst.org', :sitepp do
       end
 
       Hash[*%w[
-        bond0.1201 br1201
         bond0.1702 br1702
         bond0.1800 br1800
       ]].each do |slave, master|
@@ -121,7 +120,6 @@ describe 'yagan11.cp.lsst.org', :sitepp do
       end
 
       %w[
-        br1201
         br1702
         br1800
       ].each do |i|

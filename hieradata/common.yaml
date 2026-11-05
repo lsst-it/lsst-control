@@ -258,7 +258,8 @@ accounts::user_list:
     groups:
       - "wheel_b"
     purge_sshkeys: true
-    sshkeys: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+OVsaXwH42IZjWmFaJolfu0rxc/dvkjbkxG6DcFXf/juUwceYi6FsoAzgk9bx11V+6sh3qhpgrwELpcAykL7oaxIhBTNoI8hixAe5qU3rLe2KVZG/hwT3+W/eM0K95q6DSX7Relj9tlYfiQA6GOToTk16JWU2ZD9TR1pHpoIPP9LK1xPXaxliwswoFfaEdArW7NS7hyb+Vlp0i2DGWNKdNEYaCLSv4T+FEMNovoflrcefEXE14Xl15srst6vpf4H0dQfP8VtSyoDDhfoh4VOBoCoBGV/zEygh4hTPsMEL449e0Yrn1zfFRFOUxI1zY3eY12mXhPgYW5bx9SFXYIoJ adam@i7-wired.fsf.net"
+    sshkeys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+OVsaXwH42IZjWmFaJolfu0rxc/dvkjbkxG6DcFXf/juUwceYi6FsoAzgk9bx11V+6sh3qhpgrwELpcAykL7oaxIhBTNoI8hixAe5qU3rLe2KVZG/hwT3+W/eM0K95q6DSX7Relj9tlYfiQA6GOToTk16JWU2ZD9TR1pHpoIPP9LK1xPXaxliwswoFfaEdArW7NS7hyb+Vlp0i2DGWNKdNEYaCLSv4T+FEMNovoflrcefEXE14Xl15srst6vpf4H0dQfP8VtSyoDDhfoh4VOBoCoBGV/zEygh4hTPsMEL449e0Yrn1zfFRFOUxI1zY3eY12mXhPgYW5bx9SFXYIoJ adam@i7-wired.fsf.net"
   lssttech: &rm_user
     ensure: "absent"
     managehome: true

@@ -34,3 +34,7 @@ ccs_software::services:
     - "ats"
     - "ats-power"
     - "bonn-shutter"
+
+sudo::configs:
+  observers_ccs:
+    content: "%observers ALL=(ccs) PASSWD: ALL"

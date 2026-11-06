@@ -41,3 +41,7 @@ nm::connections:
 chrony::queryhosts:
   - "192.168.10/24"
 chrony::port: 123
+
+sudo::configs:
+  observers_ccs:
+    content: "%observers ALL=(ccs) PASSWD: ALL"

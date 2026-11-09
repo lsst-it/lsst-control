@@ -31,6 +31,9 @@
 # @param efd_namespace
 #   String giving efd namespace.
 #
+# @param efd_database
+#   Optional string giving efd database (default same as namespace).
+#
 # @param efd_user
 #   Sensitive string giving efd username.
 #
@@ -56,6 +59,7 @@ class profile::ccs::tomcat (
   String[1] $efd_namespace = 'lsst.MTCamera',
   Sensitive[String[1]] $efd_user  = Sensitive('user'),
   Sensitive[String[1]] $efd_pass  = Sensitive('pass'),
+  Optional[String[1]] $efd_database = undef,
   Optional[String[1]] $rest_dburl = undef,
   Optional[String[1]] $mrtg_dir = undef,
 ) {
@@ -250,6 +254,7 @@ class profile::ccs::tomcat (
       'pass'      => $efd_pass,
       'url'       => $efd_url,
       'namespace' => $efd_namespace,
+      'database'  => pick($efd_database,$efd_namespace),
     },
     'logging.properties' => {},
     'statusPersister.properties' => {

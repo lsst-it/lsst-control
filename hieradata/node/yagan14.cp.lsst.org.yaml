@@ -1,0 +1,4 @@
+---
+rke2::config:
+  kubelet-arg:
+    - "runtime-request-timeout=10m"

@@ -26,3 +26,7 @@ ccs_software::services:
     - "cluster-monitor"
     - "lockmanager"
     - "mmm"
+
+sudo::configs:
+  observers_ccs:
+    content: "%observers ALL=(ccs) PASSWD: ALL"

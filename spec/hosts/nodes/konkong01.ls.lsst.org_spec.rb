@@ -86,16 +86,18 @@ describe 'konkong01.ls.lsst.org', :sitepp do
         end
       end
 
-      %w[
-        enp129s0f0
-        enp129s0f1
-      ].each do |i|
+      {
+        'enp129s0f0' => nil,
+        # explicit true overrides site/ls/variant/1114s.yaml autoconnect=false (deep merge)
+        'enp129s0f1' => true,
+      }.each do |i, autoconnect|
         context "with #{i}" do
           let(:interface) { i }
 
-          it_behaves_like 'nm enabled interface'
+          it_behaves_like 'nm named interface'
           it_behaves_like 'nm ethernet interface'
           it_behaves_like 'nm bond slave interface', master: 'bond0'
+          it { expect(nm_keyfile['connection']['autoconnect']).to eq(autoconnect) }
         end
       end
 

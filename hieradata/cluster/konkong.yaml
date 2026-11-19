@@ -63,6 +63,8 @@ nm::connections:
         id: "enp129s0f1"
         uuid: "46d19ce1-bcab-7e77-6fc7-b730b26c54b1"
         type: "ethernet"
+        # nm::connections deep-merges; overrides site/ls/variant/1114s.yaml autoconnect=false
+        autoconnect: "true"
         interface-name: "enp129s0f1"
         master: "bond0"
         slave-type: "bond"

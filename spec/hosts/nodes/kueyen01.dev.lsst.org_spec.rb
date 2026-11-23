@@ -28,6 +28,8 @@ describe 'kueyen01.dev.lsst.org', :sitepp do
       it { is_expected.to compile.with_all_deps }
 
       it_behaves_like 'baremetal'
+      it { is_expected.to contain_class('prometheus::ipmi_exporter') }
+
       include_context 'with nm interface'
 
       it do

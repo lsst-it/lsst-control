@@ -536,6 +536,7 @@ nm::conf:
     dns: "none"
 
 prometheus::node_exporter::version: "1.6.1"
+prometheus::ipmi_exporter::version: "1.10.1"
 
 # profile::core::firewall is not included by default; including it in a role is
 # used to opt-in to configuring filtering instead of the default of disabling

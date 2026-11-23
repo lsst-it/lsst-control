@@ -25,6 +25,15 @@ describe 'profile::core::hardware' do
 
         it_behaves_like 'powertop'
         it { is_expected.to contain_class('ipmi') }
+        it { is_expected.not_to contain_class('prometheus::ipmi_exporter') }
+
+        context 'with manage_ipmi_exporter: true' do
+          let(:params) { { manage_ipmi_exporter: true } }
+
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.to contain_class('prometheus::ipmi_exporter') }
+        end
+
         it { is_expected.not_to contain_class('profile::core::kernel::pcie_aspm') }
         it { is_expected.not_to contain_class('profile::core::kernel::nvme_apst') }
         it { is_expected.not_to contain_profile__util__kernel_param('pci=pcie_bus_perf') }
@@ -141,6 +150,12 @@ describe 'profile::core::hardware' do
           it { is_expected.to compile.with_all_deps }
 
           it_behaves_like 'powertop'
+
+          context 'with manage_ipmi_exporter: true' do
+            let(:params) { { manage_ipmi_exporter: true } }
+
+            it { is_expected.not_to contain_class('prometheus::ipmi_exporter') }
+          end
         end  # Advantech
       end
     end

@@ -2,7 +2,12 @@
 #   Manage packages and services needed on different hardware platforms.
 #   For *baremetal* only.
 #
-class profile::core::hardware {
+# @param manage_ipmi_exporter
+#   If `true`, install prometheus ipmi_exporter on hosts with a managed BMC.
+#
+class profile::core::hardware (
+  Boolean $manage_ipmi_exporter = false,
+) {
   case fact('dmi.manufacturer') {
     /Advantech/, /VersaLogic Corporation/: {
       class { 'powertop':
@@ -45,6 +50,12 @@ class profile::core::hardware {
     }
   }
   # lint:endignore
+
+  # ipmi_exporter reads the BMC in-band via /dev/ipmi0, so it only makes sense
+  # on hosts where the ipmi class was included above.
+  if $manage_ipmi_exporter and defined(Class['ipmi']) {
+    include prometheus::ipmi_exporter
+  }
 
   # Enable AMD pstate on systems that support it
   if 'hw_pstate' in fact('cpuinfo.processor0.flags') {

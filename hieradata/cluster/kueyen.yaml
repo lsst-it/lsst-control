@@ -6,6 +6,7 @@ clustershell::groupmembers:
       - "kueyen[01-04]"
 profile::core::k8snode::enable_dhcp: true
 tuned::active_profile: "latency-performance"
+profile::core::hardware::manage_ipmi_exporter: true
 nm::conf:
   device:
     keep-configuration: "no"
